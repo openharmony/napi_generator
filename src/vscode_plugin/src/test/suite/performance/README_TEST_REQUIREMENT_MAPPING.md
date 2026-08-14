@@ -1998,3 +1998,2003 @@
 | 1864 | `conversion_tsfunc.part06.test.ts` | `dts2cpp_func_0340` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: undefined): void`（1 参数 [undefined] → 返回 void）的解析结果与性能。扩充-修饰：可选参数 undefined。 |
 | 1865 | `conversion_tsfunc.part06.test.ts` | `dts2cpp_func_0341` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: symbol): void`（1 参数 [symbol] → 返回 void）的解析结果与性能。扩充-修饰：可选参数 symbol。 |
 | 1866 | `conversion_tsfunc.part06.test.ts` | `dts2cpp_func_0342` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: bigint): void`（1 参数 [bigint] → 返回 void）的解析结果与性能。扩充-修饰：可选参数 bigint。 |
+| 1867 | `conversion_tsfunc.part06.test.ts` | `dts2cpp_func_0343` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: object): void`（1 参数 [object] → 返回 void）的解析结果与性能。扩充-修饰：可选参数 object。 |
+| 1868 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0344` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number[]): void`（1 参数 [number[]] → 返回 void）的解析结果与性能。扩充-修饰：可选参数 number[]。 |
+| 1869 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0345` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: string[]): void`（1 参数 [string[]] → 返回 void）的解析结果与性能。扩充-修饰：可选参数 string[]。 |
+| 1870 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0346` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: boolean[]): void`（1 参数 [boolean[]] → 返回 void）的解析结果与性能。扩充-修饰：可选参数 boolean[]。 |
+| 1871 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0347` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: Array<number>): void`（1 参数 [Array<number>] → 返回 void）的解析结果与性能。扩充-修饰：可选参数 Array<number>。 |
+| 1872 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0348` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: Map<string, number>): void`（1 参数 [Map<string, number>] → 返回 void）的解析结果与性能。扩充-修饰：可选参数 Map<string, number>。 |
+| 1873 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0349` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number[]): void`（1 参数 [number[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 number[]。 |
+| 1874 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0350` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: string[]): void`（1 参数 [string[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 string[]。 |
+| 1875 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0351` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: boolean[]): void`（1 参数 [boolean[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 boolean[]。 |
+| 1876 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0352` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: any[]): void`（1 参数 [any[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 any[]。 |
+| 1877 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0353` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: unknown[]): void`（1 参数 [unknown[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 unknown[]。 |
+| 1878 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0354` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: null[]): void`（1 参数 [null[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 null[]。 |
+| 1879 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0355` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: undefined[]): void`（1 参数 [undefined[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 undefined[]。 |
+| 1880 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0356` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: symbol[]): void`（1 参数 [symbol[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 symbol[]。 |
+| 1881 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0357` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: bigint[]): void`（1 参数 [bigint[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 bigint[]。 |
+| 1882 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0358` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: object[]): void`（1 参数 [object[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 object[]。 |
+| 1883 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0359` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number[][]): void`（1 参数 [number[][]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 number[][]。 |
+| 1884 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0360` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: string[][]): void`（1 参数 [string[][]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 string[][]。 |
+| 1885 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0361` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: boolean[][]): void`（1 参数 [boolean[][]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 boolean[][]。 |
+| 1886 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0362` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: Array<number>[]): void`（1 参数 [Array<number>[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 Array<number>[]。 |
+| 1887 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0363` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: Map<string, number>[]): void`（1 参数 [Map<string, number>[]] → 返回 void）的解析结果与性能。扩充-修饰：rest 参数 Map<string, number>[]。 |
+| 1888 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0364` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): void`（1 参数 [number] → 返回 void）的解析结果与性能。扩充-修饰：默认值参数 number = 0。 |
+| 1889 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0365` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: string): void`（1 参数 [string] → 返回 void）的解析结果与性能。扩充-修饰：默认值参数 string = "x"。 |
+| 1890 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0366` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: boolean): void`（1 参数 [boolean] → 返回 void）的解析结果与性能。扩充-修饰：默认值参数 boolean = true。 |
+| 1891 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0367` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: "lit"): void`（1 参数 ["lit"] → 返回 void）的解析结果与性能。扩充-修饰：默认值参数 "lit" = "lit"。 |
+| 1892 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0368` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: 42): void`（1 参数 [42] → 返回 void）的解析结果与性能。扩充-修饰：默认值参数 42 = 42。 |
+| 1893 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0369` | 性能测试 | 2 | dts2cpp funcs 签名 `(: { a: number; b: number }): void`（1 参数 [{ a: number; b: number }] → 返回 void）的解析结果与性能。扩充-修饰：解构参数（对象双成员）。 |
+| 1894 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0370` | 性能测试 | 2 | dts2cpp funcs 签名 `(: { a: number; b: string; c: boolean }): void`（1 参数 [{ a: number; b: string; c: boolean }] → 返回 void）的解析结果与性能。扩充-修饰：解构参数（对象三成员）。 |
+| 1895 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0371` | 性能测试 | 2 | dts2cpp funcs 签名 `(: { a: { b: number } }): void`（1 参数 [{ a: { b: number } }] → 返回 void）的解析结果与性能。扩充-修饰：解构参数（对象嵌套）。 |
+| 1896 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0372` | 性能测试 | 2 | dts2cpp funcs 签名 `(: [number, string]): void`（1 参数 [[number, string]] → 返回 void）的解析结果与性能。扩充-修饰：解构参数（元组双元素）。 |
+| 1897 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0373` | 性能测试 | 2 | dts2cpp funcs 签名 `(: [number, string, boolean]): void`（1 参数 [[number, string, boolean]] → 返回 void）的解析结果与性能。扩充-修饰：解构参数（元组三元素）。 |
+| 1898 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0374` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：UpperCamel。 |
+| 1899 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0375` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：lowerCamel。 |
+| 1900 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0376` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：snake_case。 |
+| 1901 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0377` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：Trailing2。 |
+| 1902 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0378` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：_leading。 |
+| 1903 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0379` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：Double__Under。 |
+| 1904 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0380` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：f。 |
+| 1905 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0381` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：f1。 |
+| 1906 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0382` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：F。 |
+| 1907 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0383` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：F1。 |
+| 1908 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0384` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：fn。 |
+| 1909 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0385` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：func1。 |
+| 1910 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0386` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：handler。 |
+| 1911 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0387` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：callback。 |
+| 1912 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0388` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：process。 |
+| 1913 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0389` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：parse。 |
+| 1914 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0390` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：convert。 |
+| 1915 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0391` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：transform。 |
+| 1916 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0392` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：serialize。 |
+| 1917 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0393` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：deserialize。 |
+| 1918 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0394` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：中文函数。 |
+| 1919 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0395` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：getData。 |
+| 1920 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0396` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：setData。 |
+| 1921 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0397` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：updateAll。 |
+| 1922 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0398` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：deleteById。 |
+| 1923 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0399` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：findByName。 |
+| 1924 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0400` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：createNew。 |
+| 1925 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0401` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：destroyAll。 |
+| 1926 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0402` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：registerFn。 |
+| 1927 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0403` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-命名：unregisterFn。 |
+| 1928 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0404` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-多函数：同文件 2 个函数。 |
+| 1929 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0405` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-多函数：同文件 3 个函数。 |
+| 1930 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0406` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-多函数：同文件 4 个函数。 |
+| 1931 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0407` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-多函数：同文件 5 个函数。 |
+| 1932 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0408` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-多函数：同文件 6 个函数。 |
+| 1933 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0409` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-多函数：同文件 7 个函数。 |
+| 1934 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0410` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-多函数：同文件 8 个函数。 |
+| 1935 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0411` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-多函数：同文件 9 个函数。 |
+| 1936 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0412` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-多函数：同文件 10 个函数。 |
+| 1937 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0413` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: T): T`（1 参数 [T] → 返回 T）的解析结果与性能。扩充-泛型：单泛型返回 T。 |
+| 1938 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0414` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: T): T[]`（1 参数 [T] → 返回 T[]）的解析结果与性能。扩充-泛型：泛型返回数组。 |
+| 1939 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0415` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: T[]): T`（1 参数 [T[]] → 返回 T）的解析结果与性能。扩充-泛型：泛型数组入参。 |
+| 1940 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0416` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: A, b: B): void`（2 参数 [A, B] → 返回 void）的解析结果与性能。扩充-泛型：双泛型。 |
+| 1941 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0417` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: T): void`（1 参数 [T] → 返回 void）的解析结果与性能。扩充-泛型：泛型约束。 |
+| 1942 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0418` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: T): T | null`（1 参数 [T] → 返回 T | null）的解析结果与性能。扩充-泛型：泛型返回联合。 |
+| 1943 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0419` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: T[]): void`（1 参数 [T[]] → 返回 void）的解析结果与性能。扩充-泛型：泛型+rest。 |
+| 1944 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0420` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: T): Promise<T>`（1 参数 [T] → 返回 Promise<T>）的解析结果与性能。扩充-泛型：泛型返回 Promise。 |
+| 1945 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0421` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: T): void`（1 参数 [T] → 返回 void）的解析结果与性能。扩充-泛型：泛型可选。 |
+| 1946 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0422` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: A, b: B, c: C): void`（3 参数 [A, B, C] → 返回 void）的解析结果与性能。扩充-泛型：三泛型。 |
+| 1947 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0423` | 性能测试 | 2 | dts2cpp funcs 签名 `(): 无注解(undefined)`（0 参数 [] → 返回 无注解(undefined)）的解析结果与性能。扩充-边界：无参无返回。 |
+| 1948 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0424` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): 无注解(undefined)`（1 参数 [number] → 返回 无注解(undefined)）的解析结果与性能。扩充-边界：空函数体。 |
+| 1949 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0425` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-边界：export。 |
+| 1950 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0426` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-边界：declare。 |
+| 1951 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0427` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number): number`（1 参数 [number] → 返回 number）的解析结果与性能。扩充-边界：namespace。 |
+| 1952 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0428` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: typeof globalThis): void`（1 参数 [typeof globalThis] → 返回 void）的解析结果与性能。扩充-边界：typeof 参数。 |
+| 1953 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0429` | 性能测试 | 2 | dts2cpp funcs 签名 `(参数: number): string`（1 参数 [number] → 返回 string）的解析结果与性能。扩充-边界：中文名/参数。 |
+| 1954 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0430` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: 中文类型): void`（1 参数 [中文类型] → 返回 void）的解析结果与性能。扩充-边界：中文类型。 |
+| 1955 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0431` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: unknown & null): never`（1 参数 [unknown & null] → 返回 never）的解析结果与性能。扩充-边界：交集参数。 |
+| 1956 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0432` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: (string | number)[]): void`（1 参数 [(string | number)[]] → 返回 void）的解析结果与性能。扩充-边界：rest 联合。 |
+| 1957 | `conversion_tsfunc.part07.test.ts` | `dts2cpp_func_0433` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: string | null): void`（1 参数 [string | null] → 返回 void）的解析结果与性能。扩充-边界：可选联合。 |
+| 1958 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0434` | 性能测试 | 2 | dts2cpp funcs 签名 `(selector: string): Element`（1 参数 [string] → 返回 Element）的解析结果与性能。函数类型-$：$ 命名的选择器函数。 |
+| 1959 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0435` | 性能测试 | 2 | dts2cpp funcs 签名 `(id: number): string`（1 参数 [number] → 返回 string）的解析结果与性能。函数类型-$：$get/$set 命名函数。 |
+| 1960 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0436` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number, b: number): number`（2 参数 [number, number] → 返回 number）的解析结果与性能。函数类型-$：$$ 双美元命名。 |
+| 1961 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0437` | 性能测试 | 2 | dts2cpp funcs 签名 `(key: string): any`（1 参数 [string] → 返回 any）的解析结果与性能。函数类型-$：$ 包裹命名。 |
+| 1962 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0438` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: string): void`（1 参数 [string] → 返回 void）的解析结果与性能。函数类型-$：后缀 $ 命名函数。 |
+| 1963 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0439` | 性能测试 | 2 | dts2cpp funcs 签名 `(event: string, cb: () => void): void`（2 参数 [string, () => void] → 返回 void）的解析结果与性能。函数类型-on/off：独立 on/off 事件函数。 |
+| 1964 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0440` | 性能测试 | 2 | dts2cpp funcs 签名 `(event: string, cb: (data: any) => void): void`（2 参数 [string, (data: any) => void] → 返回 void）的解析结果与性能。函数类型-on/off：带 data 回调的 on/off。 |
+| 1965 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0441` | 性能测试 | 2 | dts2cpp funcs 签名 `(event: string, cb: () => void): void`（2 参数 [string, () => void] → 返回 void）的解析结果与性能。函数类型-on/off：once/on 组合。 |
+| 1966 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0442` | 性能测试 | 2 | dts2cpp funcs 签名 `(cb: (data: string) => void): void`（1 参数 [(data: string) => void] → 返回 void）的解析结果与性能。函数类型-on/off：onX/offX 命名模式。 |
+| 1967 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0443` | 性能测试 | 2 | dts2cpp funcs 签名 `(event: string, cb: () => void): void`（2 参数 [string, () => void] → 返回 void）的解析结果与性能。函数类型-on/off：addListener/removeListener 事件模式。 |
+| 1968 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0444` | 性能测试 | 2 | dts2cpp funcs 签名 `(): 无注解(undefined)`（0 参数 [] → 返回 无注解(undefined)）的解析结果与性能。函数类型-arrowfunc：独立箭头函数常量（解析不产出 funcs）。 |
+| 1969 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0445` | 性能测试 | 2 | dts2cpp funcs 签名 `(fn: (a: number) => number, v: number): number`（2 参数 [(a: number) => number, number] → 返回 number）的解析结果与性能。函数类型-arrowfunc：箭头函数类型入参。 |
+| 1970 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0446` | 性能测试 | 2 | dts2cpp funcs 签名 `(): (a: string) => void`（0 参数 [] → 返回 (a: string) => void）的解析结果与性能。函数类型-arrowfunc：箭头函数类型返回。 |
+| 1971 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0447` | 性能测试 | 2 | dts2cpp funcs 签名 `(h: Handler): void`（1 参数 [Handler] → 返回 void）的解析结果与性能。函数类型-arrowfunc：箭头函数类型 alias 入参。 |
+| 1972 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0448` | 性能测试 | 2 | dts2cpp funcs 签名 `(arr: number[], fn: (v: number, i: number) => number): number[]`（2 参数 [number[], (v: number, i: number) => number] → 返回 number[]）的解析结果与性能。函数类型-arrowfunc：双参箭头回调。 |
+| 1973 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0449` | 性能测试 | 2 | dts2cpp funcs 签名 `(cb: (data: string) => void): void`（1 参数 [(data: string) => void] → 返回 void）的解析结果与性能。函数类型-threadsafe_func：createThreadSafeFunction。 |
+| 1974 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0450` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number, cb: (err: Error | null, result: number) => void): void`（2 参数 [number, (err: Error | null, result: number) => void] → 返回 void）的解析结果与性能。函数类型-threadsafe_func：threadsafeFunc 回调参数。 |
+| 1975 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0451` | 性能测试 | 2 | dts2cpp funcs 签名 `(cb: (err: Error | null, result: number[]) => void): Promise<number>`（1 参数 [(err: Error | null, result: number[]) => void] → 返回 Promise<number>）的解析结果与性能。函数类型-threadsafe_func：异步回调 + Promise 返回。 |
+| 1976 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0452` | 性能测试 | 2 | dts2cpp funcs 签名 `(cb: (err: Error | null, data: string) => void): void`（1 参数 [(err: Error | null, data: string) => void] → 返回 void）的解析结果与性能。函数类型-threadsafe_func：callback/callbackWithError。 |
+| 1977 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0453` | 性能测试 | 2 | dts2cpp funcs 签名 `(data: any, cb: (err: Error | null) => void): void`（2 参数 [any, (err: Error | null) => void] → 返回 void）的解析结果与性能。函数类型-threadsafe_func：消息线程回调模式。 |
+| 1978 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0454` | 性能测试 | 2 | dts2cpp funcs 签名 `(cb: (err: Error | null, handle: number) => void): void`（1 参数 [(err: Error | null, handle: number) => void] → 返回 void）的解析结果与性能。函数类型-threadsafe_func：资源句柄回调模式。 |
+| 1979 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0455` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: Foo): void`（1 参数 [Foo] → 返回 void）的解析结果与性能。import-自定义文件：具名导入 + 函数。 |
+| 1980 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0456` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: Foo): void`（1 参数 [Foo] → 返回 void）的解析结果与性能。import-自定义文件：默认导入 + 函数。 |
+| 1981 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0457` | 性能测试 | 2 | dts2cpp funcs 签名 `(): ns.Bar`（0 参数 [] → 返回 ns.Bar）的解析结果与性能。import-自定义文件：命名空间导入 + 限定返回。 |
+| 1982 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0458` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: B): void`（1 参数 [B] → 返回 void）的解析结果与性能。import-自定义文件：别名导入。 |
+| 1983 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0459` | 性能测试 | 2 | dts2cpp funcs 签名 `(): void`（0 参数 [] → 返回 void）的解析结果与性能。import-自定义文件：副作用导入。 |
+| 1984 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0460` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: Foo): Foo`（1 参数 [Foo] → 返回 Foo）的解析结果与性能。import-自定义文件：导入 + export 函数。 |
+| 1985 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0461` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: Map<string, number>): void`（1 参数 [Map<string, number>] → 返回 void）的解析结果与性能。import-自定义文件：导入同名类型 + 泛型参数。 |
+| 1986 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0462` | 性能测试 | 2 | dts2cpp funcs 签名 `(id: number): Data`（1 参数 [number] → 返回 Data）的解析结果与性能。import-自定义文件：导入类型作参数/返回。 |
+| 1987 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0463` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: A, b: B, c: C): void`（3 参数 [A, B, C] → 返回 void）的解析结果与性能。import-自定义文件：三类型导入 + 三参函数。 |
+| 1988 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0464` | 性能测试 | 2 | dts2cpp funcs 签名 `(cb: Callback): void`（1 参数 [Callback] → 返回 void）的解析结果与性能。import-自定义文件：导入回调类型。 |
+| 1989 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0465` | 性能测试 | 2 | dts2cpp funcs 签名 `(): 无注解(undefined)`（0 参数 [] → 返回 无注解(undefined)）的解析结果与性能。namespace-变量：const/let/var 变量声明（不产出对象）。 |
+| 1990 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0466` | 性能测试 | 2 | dts2cpp funcs 签名 `(): 无注解(undefined)`（0 参数 [] → 返回 无注解(undefined)）的解析结果与性能。namespace-变量+函数：变量声明 + 函数。 |
+| 1991 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0467` | 性能测试 | 2 | dts2cpp funcs 签名 `(b: number): string`（1 参数 [number] → 返回 string）的解析结果与性能。namespace-变量+函数：export namespace 混合。 |
+| 1992 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0468` | 性能测试 | 2 | dts2cpp funcs 签名 `(b: number): string`（1 参数 [number] → 返回 string）的解析结果与性能。namespace-变量+函数：declare namespace 签名。 |
+| 1993 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0469` | 性能测试 | 2 | dts2cpp funcs 签名 `(): 无注解(undefined)`（0 参数 [] → 返回 无注解(undefined)）的解析结果与性能。namespace-变量+函数：嵌套 namespace。 |
+| 1994 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0470` | 性能测试 | 2 | dts2cpp funcs 签名 `(): void`（0 参数 [] → 返回 void）的解析结果与性能。namespace-变量+函数：容器变量 + 函数。 |
+| 1995 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0471` | 性能测试 | 2 | dts2cpp funcs 签名 `(a: number, b: number): number`（2 参数 [number, number] → 返回 number）的解析结果与性能。namespace-变量+函数：工具 namespace 双函数。 |
+| 1996 | `conversion_tsfunc.part08.test.ts` | `dts2cpp_func_0472` | 性能测试 | 2 | dts2cpp funcs 签名 `(path: string): Promise<string>`（1 参数 [string] → 返回 Promise<string>）的解析结果与性能。namespace-变量+函数：Promise 返回的 namespace 函数。 |
+| 1997 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0001` | 性能测试 | 2 | dts2cpp type 对齐 parsetstype test_1：一般对象字面量类型（2 成员 + 2 方法签名） 的解析结果与性能。 |
+| 1998 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0002` | 性能测试 | 2 | dts2cpp type 对齐 test_2：30 成员 + 12 方法签名 + 箭头函数属性全类型覆盖 的解析结果与性能。 |
+| 1999 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0003` | 性能测试 | 2 | dts2cpp type 对齐 test_4：交叉类型 RHS（交叉部分不深入解析） 的解析结果与性能。 |
+| 2000 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0004` | 性能测试 | 2 | dts2cpp type 对齐 test_5：定长数组成员与箭头函数属性 的解析结果与性能。 |
+| 2001 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0005` | 性能测试 | 2 | dts2cpp type 对齐 test_7：可选成员/参数方法签名 的解析结果与性能。 |
+| 2002 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0006` | 性能测试 | 2 | dts2cpp type 对齐 test_8：多种注释 的解析结果与性能。 |
+| 2003 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0007` | 性能测试 | 2 | dts2cpp type 对齐 test_9：修饰符成员（const 独立为成员） 的解析结果与性能。 |
+| 2004 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0008` | 性能测试 | 2 | dts2cpp type 对齐 test_10：索引签名成员 的解析结果与性能。 |
+| 2005 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0009` | 性能测试 | 2 | dts2cpp type 对齐 test_13：泛型/字面量/嵌套泛型成员 的解析结果与性能。 |
+| 2006 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0010` | 性能测试 | 2 | dts2cpp type 对齐 test_14：ReadonlyArray/元组成员 的解析结果与性能。 |
+| 2007 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0011` | 性能测试 | 2 | dts2cpp type 对齐 test_16：元组成员 的解析结果与性能。 |
+| 2008 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0012` | 性能测试 | 2 | dts2cpp type 对齐 test_17：keyof 成员 的解析结果与性能。 |
+| 2009 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0013` | 性能测试 | 2 | dts2cpp type 对齐 test_19：索引访问类型成员 的解析结果与性能。 |
+| 2010 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0014` | 性能测试 | 2 | dts2cpp type 对齐 test_20：条件类型成员 的解析结果与性能。 |
+| 2011 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0015` | 性能测试 | 2 | dts2cpp type 对齐 test_22：模板字面与泛型方法签名 的解析结果与性能。 |
+| 2012 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0016` | 性能测试 | 2 | dts2cpp type 对齐 test_23：内在字符串操作类型成员 的解析结果与性能。 |
+| 2013 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0017` | 性能测试 | 2 | dts2cpp type 对齐 test_24：export type 的解析结果与性能。 |
+| 2014 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0018` | 性能测试 | 2 | dts2cpp type 对齐 test_26：declare namespace 嵌套 type 的解析结果与性能。 |
+| 2015 | `conversion_tstype.part01.test.ts` | `dts2cpp_type_0019` | 性能测试 | 2 | dts2cpp type 对齐 test_42：单行 type 的解析结果与性能。 |
+| 2016 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0020` | 性能测试 | 2 | dts2cpp type 对齐 test_45：中文 type 名交叉 RHS 的解析结果与性能。 |
+| 2017 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0021` | 性能测试 | 2 | dts2cpp type 对齐 test_49：两个空 type 的解析结果与性能。 |
+| 2018 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0022` | 性能测试 | 2 | dts2cpp type 对齐 test_70：重载方法签名 的解析结果与性能。 |
+| 2019 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0023` | 性能测试 | 2 | dts2cpp type 扩充：20 成员全基本类型/容器/元组矩阵 的解析结果与性能。 |
+| 2020 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0024` | 性能测试 | 2 | dts2cpp type 扩充：30 成员进阶类型矩阵 的解析结果与性能。 |
+| 2021 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0025` | 性能测试 | 2 | dts2cpp type 扩充：50 成员全类型矩阵（规模压测） 的解析结果与性能。 |
+| 2022 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0026` | 性能测试 | 2 | dts2cpp type 扩充：20 方法签名返回类型矩阵 的解析结果与性能。 |
+| 2023 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0027` | 性能测试 | 2 | dts2cpp type 扩充：10 方法签名参数形态矩阵 的解析结果与性能。 |
+| 2024 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0028` | 性能测试 | 2 | dts2cpp type 扩充：4 箭头函数属性形态（可选/rest/泛型） 的解析结果与性能。 |
+| 2025 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0029` | 性能测试 | 2 | dts2cpp type 扩充：同文件两个 type 的解析结果与性能。 |
+| 2026 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0030` | 性能测试 | 2 | dts2cpp type 扩充：同文件三个 type（多声明吞吐） 的解析结果与性能。 |
+| 2027 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0031` | 性能测试 | 2 | dts2cpp type 扩充：双泛型 type 的解析结果与性能。 |
+| 2028 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0032` | 性能测试 | 2 | dts2cpp type 扩充：中文 type/成员/方法 的解析结果与性能。 |
+| 2029 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0033` | 性能测试 | 2 | dts2cpp type 扩充：空 type 的解析结果与性能。 |
+| 2030 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0034` | 性能测试 | 2 | dts2cpp type 扩充：字面量/交集/模板/联合成员矩阵 的解析结果与性能。 |
+| 2031 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0035` | 性能测试 | 2 | dts2cpp type 扩充：字面量联合参数与返回方法签名 的解析结果与性能。 |
+| 2032 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0036` | 性能测试 | 2 | dts2cpp type 扩充：10 成员 + 10 方法签名混合大集合 的解析结果与性能。 |
+| 2033 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0037` | 性能测试 | 2 | dts2cpp type 扩充：判别联合 type 交叉体系 的解析结果与性能。 |
+| 2034 | `conversion_tstype.part02.test.ts` | `dts2cpp_type_0038` | 性能测试 | 2 | dts2cpp type 扩充：函数类型别名引用成员（同文件 2 个 type） 的解析结果与性能。 |
+| 2035 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0040` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：number × plain 形态（4 成员） 的解析结果与性能。 |
+| 2036 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0041` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：number × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2037 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0042` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：number × optional 形态（4 成员） 的解析结果与性能。 |
+| 2038 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0043` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：number × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2039 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0044` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string × plain 形态（4 成员） 的解析结果与性能。 |
+| 2040 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0045` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2041 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0046` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string × optional 形态（4 成员） 的解析结果与性能。 |
+| 2042 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0047` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2043 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0048` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：boolean × plain 形态（4 成员） 的解析结果与性能。 |
+| 2044 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0049` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：boolean × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2045 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0050` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：boolean × optional 形态（4 成员） 的解析结果与性能。 |
+| 2046 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0051` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：boolean × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2047 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0052` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：any × plain 形态（4 成员） 的解析结果与性能。 |
+| 2048 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0053` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：any × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2049 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0054` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：any × optional 形态（4 成员） 的解析结果与性能。 |
+| 2050 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0055` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：any × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2051 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0056` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：unknown × plain 形态（4 成员） 的解析结果与性能。 |
+| 2052 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0057` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：unknown × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2053 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0058` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：unknown × optional 形态（4 成员） 的解析结果与性能。 |
+| 2054 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0059` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：unknown × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2055 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0060` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：null × plain 形态（4 成员） 的解析结果与性能。 |
+| 2056 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0061` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：null × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2057 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0062` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：null × optional 形态（4 成员） 的解析结果与性能。 |
+| 2058 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0063` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：null × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2059 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0064` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：undefined × plain 形态（4 成员） 的解析结果与性能。 |
+| 2060 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0065` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：undefined × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2061 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0066` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：undefined × optional 形态（4 成员） 的解析结果与性能。 |
+| 2062 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0067` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：undefined × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2063 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0068` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：symbol × plain 形态（4 成员） 的解析结果与性能。 |
+| 2064 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0069` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：symbol × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2065 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0070` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：symbol × optional 形态（4 成员） 的解析结果与性能。 |
+| 2066 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0071` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：symbol × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2067 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0072` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：bigint × plain 形态（4 成员） 的解析结果与性能。 |
+| 2068 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0073` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：bigint × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2069 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0074` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：bigint × optional 形态（4 成员） 的解析结果与性能。 |
+| 2070 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0075` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：bigint × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2071 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0076` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：object × plain 形态（4 成员） 的解析结果与性能。 |
+| 2072 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0077` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：object × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2073 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0078` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：object × optional 形态（4 成员） 的解析结果与性能。 |
+| 2074 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0079` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：object × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2075 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0080` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：number[] × plain 形态（4 成员） 的解析结果与性能。 |
+| 2076 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0081` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：number[] × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2077 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0082` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：number[] × optional 形态（4 成员） 的解析结果与性能。 |
+| 2078 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0083` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：number[] × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2079 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0084` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string[] × plain 形态（4 成员） 的解析结果与性能。 |
+| 2080 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0085` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string[] × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2081 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0086` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string[] × optional 形态（4 成员） 的解析结果与性能。 |
+| 2082 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0087` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string[] × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2083 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0088` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：boolean[] × plain 形态（4 成员） 的解析结果与性能。 |
+| 2084 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0089` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：boolean[] × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2085 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0090` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：boolean[] × optional 形态（4 成员） 的解析结果与性能。 |
+| 2086 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0091` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：boolean[] × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2087 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0092` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Array<number> × plain 形态（4 成员） 的解析结果与性能。 |
+| 2088 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0093` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Array<number> × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2089 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0094` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Array<number> × optional 形态（4 成员） 的解析结果与性能。 |
+| 2090 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0095` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Array<number> × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2091 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0096` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Map<string, number> × plain 形态（4 成员） 的解析结果与性能。 |
+| 2092 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0097` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Map<string, number> × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2093 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0098` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Map<string, number> × optional 形态（4 成员） 的解析结果与性能。 |
+| 2094 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0099` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Map<string, number> × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2095 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0100` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Set<number> × plain 形态（4 成员） 的解析结果与性能。 |
+| 2096 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0101` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Set<number> × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2097 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0102` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Set<number> × optional 形态（4 成员） 的解析结果与性能。 |
+| 2098 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0103` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Set<number> × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2099 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0104` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Record<string, string> × plain 形态（4 成员） 的解析结果与性能。 |
+| 2100 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0105` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Record<string, string> × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2101 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0106` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Record<string, string> × optional 形态（4 成员） 的解析结果与性能。 |
+| 2102 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0107` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Record<string, string> × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2103 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0108` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Promise<string> × plain 形态（4 成员） 的解析结果与性能。 |
+| 2104 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0109` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Promise<string> × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2105 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0110` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Promise<string> × optional 形态（4 成员） 的解析结果与性能。 |
+| 2106 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0111` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Promise<string> × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2107 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0112` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：[string, number] × plain 形态（4 成员） 的解析结果与性能。 |
+| 2108 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0113` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：[string, number] × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2109 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0114` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：[string, number] × optional 形态（4 成员） 的解析结果与性能。 |
+| 2110 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0115` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：[string, number] × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2111 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0116` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：(a: number) => void × plain 形态（4 成员） 的解析结果与性能。 |
+| 2112 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0117` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：(a: number) => void × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2113 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0118` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：(a: number) => void × optional 形态（4 成员） 的解析结果与性能。 |
+| 2114 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0119` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：(a: number) => void × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2115 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0120` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Date × plain 形态（4 成员） 的解析结果与性能。 |
+| 2116 | `conversion_tstype.part03.test.ts` | `dts2cpp_type_0121` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Date × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2117 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0122` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Date × optional 形态（4 成员） 的解析结果与性能。 |
+| 2118 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0123` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Date × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2119 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0124` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：RegExp × plain 形态（4 成员） 的解析结果与性能。 |
+| 2120 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0125` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：RegExp × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2121 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0126` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：RegExp × optional 形态（4 成员） 的解析结果与性能。 |
+| 2122 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0127` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：RegExp × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2123 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0128` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Error × plain 形态（4 成员） 的解析结果与性能。 |
+| 2124 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0129` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Error × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2125 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0130` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Error × optional 形态（4 成员） 的解析结果与性能。 |
+| 2126 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0131` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Error × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2127 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0132` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Uint8Array × plain 形态（4 成员） 的解析结果与性能。 |
+| 2128 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0133` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Uint8Array × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2129 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0134` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Uint8Array × optional 形态（4 成员） 的解析结果与性能。 |
+| 2130 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0135` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：Uint8Array × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2131 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0136` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵："lit" × plain 形态（4 成员） 的解析结果与性能。 |
+| 2132 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0137` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵："lit" × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2133 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0138` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵："lit" × optional 形态（4 成员） 的解析结果与性能。 |
+| 2134 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0139` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵："lit" × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2135 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0140` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：42 × plain 形态（4 成员） 的解析结果与性能。 |
+| 2136 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0141` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：42 × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2137 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0142` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：42 × optional 形态（4 成员） 的解析结果与性能。 |
+| 2138 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0143` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：42 × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2139 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0144` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：true × plain 形态（4 成员） 的解析结果与性能。 |
+| 2140 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0145` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：true × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2141 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0146` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：true × optional 形态（4 成员） 的解析结果与性能。 |
+| 2142 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0147` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：true × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2143 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0148` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string | number × plain 形态（4 成员） 的解析结果与性能。 |
+| 2144 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0149` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string | number × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2145 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0150` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string | number × optional 形态（4 成员） 的解析结果与性能。 |
+| 2146 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0151` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string | number × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2147 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0152` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string & {} × plain 形态（4 成员） 的解析结果与性能。 |
+| 2148 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0153` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string & {} × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2149 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0154` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string & {} × optional 形态（4 成员） 的解析结果与性能。 |
+| 2150 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0155` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：string & {} × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2151 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0156` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：{ id: number } × plain 形态（4 成员） 的解析结果与性能。 |
+| 2152 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0157` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：{ id: number } × readonly 形态（4 成员） 的解析结果与性能。 |
+| 2153 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0158` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：{ id: number } × optional 形态（4 成员） 的解析结果与性能。 |
+| 2154 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0159` | 性能测试 | 2 | dts2cpp type 扩充-成员矩阵：{ id: number } × arrow-prop 形态（4 成员） 的解析结果与性能。 |
+| 2155 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0160` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 number（无参 ×3） 的解析结果与性能。 |
+| 2156 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0161` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 number（带参 ×3） 的解析结果与性能。 |
+| 2157 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0162` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 string（无参 ×3） 的解析结果与性能。 |
+| 2158 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0163` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 string（带参 ×3） 的解析结果与性能。 |
+| 2159 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0164` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 boolean（无参 ×3） 的解析结果与性能。 |
+| 2160 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0165` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 boolean（带参 ×3） 的解析结果与性能。 |
+| 2161 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0166` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 any（无参 ×3） 的解析结果与性能。 |
+| 2162 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0167` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 any（带参 ×3） 的解析结果与性能。 |
+| 2163 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0168` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 unknown（无参 ×3） 的解析结果与性能。 |
+| 2164 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0169` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 unknown（带参 ×3） 的解析结果与性能。 |
+| 2165 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0170` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 null（无参 ×3） 的解析结果与性能。 |
+| 2166 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0171` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 null（带参 ×3） 的解析结果与性能。 |
+| 2167 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0172` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 undefined（无参 ×3） 的解析结果与性能。 |
+| 2168 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0173` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 undefined（带参 ×3） 的解析结果与性能。 |
+| 2169 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0174` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 symbol（无参 ×3） 的解析结果与性能。 |
+| 2170 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0175` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 symbol（带参 ×3） 的解析结果与性能。 |
+| 2171 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0176` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 bigint（无参 ×3） 的解析结果与性能。 |
+| 2172 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0177` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 bigint（带参 ×3） 的解析结果与性能。 |
+| 2173 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0178` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 object（无参 ×3） 的解析结果与性能。 |
+| 2174 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0179` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 object（带参 ×3） 的解析结果与性能。 |
+| 2175 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0180` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 number[]（无参 ×3） 的解析结果与性能。 |
+| 2176 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0181` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 number[]（带参 ×3） 的解析结果与性能。 |
+| 2177 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0182` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 string[]（无参 ×3） 的解析结果与性能。 |
+| 2178 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0183` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 string[]（带参 ×3） 的解析结果与性能。 |
+| 2179 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0184` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 boolean[][]（无参 ×3） 的解析结果与性能。 |
+| 2180 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0185` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 boolean[][]（带参 ×3） 的解析结果与性能。 |
+| 2181 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0186` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 [string, number]（无参 ×3） 的解析结果与性能。 |
+| 2182 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0187` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 [string, number]（带参 ×3） 的解析结果与性能。 |
+| 2183 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0188` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 (a: number) => void（无参 ×3） 的解析结果与性能。 |
+| 2184 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0189` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 (a: number) => void（带参 ×3） 的解析结果与性能。 |
+| 2185 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0190` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 string | number（无参 ×3） 的解析结果与性能。 |
+| 2186 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0191` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 string | number（带参 ×3） 的解析结果与性能。 |
+| 2187 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0192` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 boolean | null（无参 ×3） 的解析结果与性能。 |
+| 2188 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0193` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 boolean | null（带参 ×3） 的解析结果与性能。 |
+| 2189 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0194` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 "lit" | 1（无参 ×3） 的解析结果与性能。 |
+| 2190 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0195` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 "lit" | 1（带参 ×3） 的解析结果与性能。 |
+| 2191 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0196` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 42（无参 ×3） 的解析结果与性能。 |
+| 2192 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0197` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 42（带参 ×3） 的解析结果与性能。 |
+| 2193 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0198` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 { id: number }（无参 ×3） 的解析结果与性能。 |
+| 2194 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0199` | 性能测试 | 2 | dts2cpp type 扩充-返回矩阵：方法签名返回 { id: number }（带参 ×3） 的解析结果与性能。 |
+| 2195 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0200` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：单参（×3 属性） 的解析结果与性能。 |
+| 2196 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0201` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：双参（×3 属性） 的解析结果与性能。 |
+| 2197 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0202` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：三参（×3 属性） 的解析结果与性能。 |
+| 2198 | `conversion_tstype.part04.test.ts` | `dts2cpp_type_0203` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：可选参（×3 属性） 的解析结果与性能。 |
+| 2199 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0204` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：rest 参（×3 属性） 的解析结果与性能。 |
+| 2200 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0205` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：联合参（×3 属性） 的解析结果与性能。 |
+| 2201 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0206` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：泛型箭头（×3 属性） 的解析结果与性能。 |
+| 2202 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0207` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：返回数组（×3 属性） 的解析结果与性能。 |
+| 2203 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0208` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：返回联合（×3 属性） 的解析结果与性能。 |
+| 2204 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0209` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：返回 Promise（×3 属性） 的解析结果与性能。 |
+| 2205 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0210` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：返回函数（×3 属性） 的解析结果与性能。 |
+| 2206 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0211` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：对象参（×3 属性） 的解析结果与性能。 |
+| 2207 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0212` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：元组参（×3 属性） 的解析结果与性能。 |
+| 2208 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0213` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：容器参（×3 属性） 的解析结果与性能。 |
+| 2209 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0214` | 性能测试 | 2 | dts2cpp type 扩充-箭头属性：可空参（×3 属性） 的解析结果与性能。 |
+| 2210 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0215` | 性能测试 | 2 | dts2cpp type 扩充-规模：5 成员 type 的解析结果与性能。 |
+| 2211 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0216` | 性能测试 | 2 | dts2cpp type 扩充-规模：10 成员 type 的解析结果与性能。 |
+| 2212 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0217` | 性能测试 | 2 | dts2cpp type 扩充-规模：15 成员 type 的解析结果与性能。 |
+| 2213 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0218` | 性能测试 | 2 | dts2cpp type 扩充-规模：20 成员 type 的解析结果与性能。 |
+| 2214 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0219` | 性能测试 | 2 | dts2cpp type 扩充-规模：25 成员 type 的解析结果与性能。 |
+| 2215 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0220` | 性能测试 | 2 | dts2cpp type 扩充-规模：30 成员 type 的解析结果与性能。 |
+| 2216 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0221` | 性能测试 | 2 | dts2cpp type 扩充-规模：35 成员 type 的解析结果与性能。 |
+| 2217 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0222` | 性能测试 | 2 | dts2cpp type 扩充-规模：40 成员 type 的解析结果与性能。 |
+| 2218 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0223` | 性能测试 | 2 | dts2cpp type 扩充-规模：45 成员 type 的解析结果与性能。 |
+| 2219 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0224` | 性能测试 | 2 | dts2cpp type 扩充-规模：50 成员 type 的解析结果与性能。 |
+| 2220 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0225` | 性能测试 | 2 | dts2cpp type 扩充-规模：55 成员 type 的解析结果与性能。 |
+| 2221 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0226` | 性能测试 | 2 | dts2cpp type 扩充-规模：60 成员 type 的解析结果与性能。 |
+| 2222 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0227` | 性能测试 | 2 | dts2cpp type 扩充-规模：65 成员 type 的解析结果与性能。 |
+| 2223 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0228` | 性能测试 | 2 | dts2cpp type 扩充-规模：70 成员 type 的解析结果与性能。 |
+| 2224 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0229` | 性能测试 | 2 | dts2cpp type 扩充-规模：75 成员 type 的解析结果与性能。 |
+| 2225 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0230` | 性能测试 | 2 | dts2cpp type 扩充-规模：80 成员 type 的解析结果与性能。 |
+| 2226 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0231` | 性能测试 | 2 | dts2cpp type 扩充-多声明：同文件 2 个 type 的解析结果与性能。 |
+| 2227 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0232` | 性能测试 | 2 | dts2cpp type 扩充-多声明：同文件 3 个 type 的解析结果与性能。 |
+| 2228 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0233` | 性能测试 | 2 | dts2cpp type 扩充-多声明：同文件 4 个 type 的解析结果与性能。 |
+| 2229 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0234` | 性能测试 | 2 | dts2cpp type 扩充-多声明：同文件 5 个 type 的解析结果与性能。 |
+| 2230 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0235` | 性能测试 | 2 | dts2cpp type 扩充-多声明：同文件 6 个 type 的解析结果与性能。 |
+| 2231 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0236` | 性能测试 | 2 | dts2cpp type 扩充-多声明：同文件 7 个 type 的解析结果与性能。 |
+| 2232 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0237` | 性能测试 | 2 | dts2cpp type 扩充-多声明：同文件 8 个 type 的解析结果与性能。 |
+| 2233 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0238` | 性能测试 | 2 | dts2cpp type 扩充-命名：UpperCamel 的解析结果与性能。 |
+| 2234 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0239` | 性能测试 | 2 | dts2cpp type 扩充-命名：lowerCamel 的解析结果与性能。 |
+| 2235 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0240` | 性能测试 | 2 | dts2cpp type 扩充-命名：snake_case 的解析结果与性能。 |
+| 2236 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0241` | 性能测试 | 2 | dts2cpp type 扩充-命名：Trailing2 的解析结果与性能。 |
+| 2237 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0242` | 性能测试 | 2 | dts2cpp type 扩充-命名：_leading 的解析结果与性能。 |
+| 2238 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0243` | 性能测试 | 2 | dts2cpp type 扩充-命名：Double__Under 的解析结果与性能。 |
+| 2239 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0244` | 性能测试 | 2 | dts2cpp type 扩充-命名：T 的解析结果与性能。 |
+| 2240 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0245` | 性能测试 | 2 | dts2cpp type 扩充-命名：T1 的解析结果与性能。 |
+| 2241 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0246` | 性能测试 | 2 | dts2cpp type 扩充-命名：t1 的解析结果与性能。 |
+| 2242 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0247` | 性能测试 | 2 | dts2cpp type 扩充-命名：Tp 的解析结果与性能。 |
+| 2243 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0248` | 性能测试 | 2 | dts2cpp type 扩充-命名：type1 的解析结果与性能。 |
+| 2244 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0249` | 性能测试 | 2 | dts2cpp type 扩充-命名：中文类型 的解析结果与性能。 |
+| 2245 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0250` | 性能测试 | 2 | dts2cpp type 扩充-命名：VersionV2 的解析结果与性能。 |
+| 2246 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0251` | 性能测试 | 2 | dts2cpp type 扩充-命名：HTTPClient 的解析结果与性能。 |
+| 2247 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0252` | 性能测试 | 2 | dts2cpp type 扩充-命名：KLASS 的解析结果与性能。 |
+| 2248 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0253` | 性能测试 | 2 | dts2cpp type 扩充-交叉 RHS：交叉 Basic 的解析结果与性能。 |
+| 2249 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0254` | 性能测试 | 2 | dts2cpp type 扩充-交叉 RHS：交叉双对象 的解析结果与性能。 |
+| 2250 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0255` | 性能测试 | 2 | dts2cpp type 扩充-交叉 RHS：交叉三对象 的解析结果与性能。 |
+| 2251 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0256` | 性能测试 | 2 | dts2cpp type 扩充-交叉 RHS：交叉+字面量 的解析结果与性能。 |
+| 2252 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0257` | 性能测试 | 2 | dts2cpp type 扩充-交叉 RHS：交叉+函数类型 的解析结果与性能。 |
+| 2253 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0258` | 性能测试 | 2 | dts2cpp type 扩充-交叉 RHS：交叉引用别名 的解析结果与性能。 |
+| 2254 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0259` | 性能测试 | 2 | dts2cpp type 扩充-交叉 RHS：交叉自引用 的解析结果与性能。 |
+| 2255 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0260` | 性能测试 | 2 | dts2cpp type 扩充-交叉 RHS：交叉+泛型 的解析结果与性能。 |
+| 2256 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0261` | 性能测试 | 2 | dts2cpp type 扩充-交叉 RHS：交叉+模板 的解析结果与性能。 |
+| 2257 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0262` | 性能测试 | 2 | dts2cpp type 扩充-交叉 RHS：交叉+联合 的解析结果与性能。 |
+| 2258 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0263` | 性能测试 | 2 | dts2cpp type 扩充-泛型：单泛型 的解析结果与性能。 |
+| 2259 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0264` | 性能测试 | 2 | dts2cpp type 扩充-泛型：双泛型 的解析结果与性能。 |
+| 2260 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0265` | 性能测试 | 2 | dts2cpp type 扩充-泛型：三泛型 的解析结果与性能。 |
+| 2261 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0266` | 性能测试 | 2 | dts2cpp type 扩充-泛型：泛型数组 的解析结果与性能。 |
+| 2262 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0267` | 性能测试 | 2 | dts2cpp type 扩充-泛型：泛型容器 的解析结果与性能。 |
+| 2263 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0268` | 性能测试 | 2 | dts2cpp type 扩充-泛型：泛型方法 的解析结果与性能。 |
+| 2264 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0269` | 性能测试 | 2 | dts2cpp type 扩充-泛型：泛型约束 的解析结果与性能。 |
+| 2265 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0270` | 性能测试 | 2 | dts2cpp type 扩充-泛型：泛型箭头属性 的解析结果与性能。 |
+| 2266 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0271` | 性能测试 | 2 | dts2cpp type 扩充-泛型：泛型联合 的解析结果与性能。 |
+| 2267 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0272` | 性能测试 | 2 | dts2cpp type 扩充-泛型：泛型嵌套 的解析结果与性能。 |
+| 2268 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0273` | 性能测试 | 2 | dts2cpp type 扩充-边界：空 type 的解析结果与性能。 |
+| 2269 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0274` | 性能测试 | 2 | dts2cpp type 扩充-边界：单行 type 的解析结果与性能。 |
+| 2270 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0275` | 性能测试 | 2 | dts2cpp type 扩充-边界：注释 type 的解析结果与性能。 |
+| 2271 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0276` | 性能测试 | 2 | dts2cpp type 扩充-边界：函数 RHS 的解析结果与性能。 |
+| 2272 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0277` | 性能测试 | 2 | dts2cpp type 扩充-边界：联合 RHS 的解析结果与性能。 |
+| 2273 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0278` | 性能测试 | 2 | dts2cpp type 扩充-边界：元组 RHS 的解析结果与性能。 |
+| 2274 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0279` | 性能测试 | 2 | dts2cpp type 扩充-边界：中文 type 的解析结果与性能。 |
+| 2275 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0280` | 性能测试 | 2 | dts2cpp type 扩充-边界：装饰器成员 的解析结果与性能。 |
+| 2276 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0281` | 性能测试 | 2 | dts2cpp type 扩充-边界：方法重载 的解析结果与性能。 |
+| 2277 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0282` | 性能测试 | 2 | dts2cpp type 扩充-边界：getter/setter 的解析结果与性能。 |
+| 2278 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0283` | 性能测试 | 2 | dts2cpp type 扩充-边界：混合 的解析结果与性能。 |
+| 2279 | `conversion_tstype.part05.test.ts` | `dts2cpp_type_0284` | 性能测试 | 2 | dts2cpp type 扩充-边界：索引签名 的解析结果与性能。 |
+| 2280 | `conversion_tstype.part06.test.ts` | `dts2cpp_type_0285` | 性能测试 | 2 | dts2cpp type import-自定义文件：导入类型作 type 成员 的解析结果与性能。 |
+| 2281 | `conversion_tstype.part06.test.ts` | `dts2cpp_type_0286` | 性能测试 | 2 | dts2cpp type import-自定义文件：导入回调类型成员/参数 的解析结果与性能。 |
+| 2282 | `conversion_tstype.part06.test.ts` | `dts2cpp_type_0287` | 性能测试 | 2 | dts2cpp type import-自定义文件：导入类型作返回/参数 的解析结果与性能。 |
+| 2283 | `conversion_tstype.part06.test.ts` | `dts2cpp_type_0288` | 性能测试 | 2 | dts2cpp type namespace-变量+类型：namespace 内变量 + type 的解析结果与性能。 |
+| 2284 | `conversion_tstype.part06.test.ts` | `dts2cpp_type_0289` | 性能测试 | 2 | dts2cpp type namespace-变量+类型：export namespace 内变量 + type 的解析结果与性能。 |
+| 2285 | `conversion_tstype.part06.test.ts` | `dts2cpp_type_0290` | 性能测试 | 2 | dts2cpp type import-自定义文件：交叉导入基类型 的解析结果与性能。 |
+| 2286 | `conversion_tstype.part06.test.ts` | `dts2cpp_type_0291` | 性能测试 | 2 | dts2cpp type import + on/off 命名方法签名 type 的解析结果与性能。 |
+| 2287 | `conversion_tstype.part06.test.ts` | `dts2cpp_type_0292` | 性能测试 | 2 | dts2cpp type 函数类型-on/off：type Emitter on/off/emit 的解析结果与性能。 |
+| 2288 | `conversion_tstype.part06.test.ts` | `dts2cpp_type_0293` | 性能测试 | 2 | dts2cpp type 函数类型-threadsafe_func：type ThreadSafe 签名 的解析结果与性能。 |
+| 2289 | `conversion_tstype.part06.test.ts` | `dts2cpp_type_0294` | 性能测试 | 2 | dts2cpp type namespace-变量+函数+类型：三合一混合 的解析结果与性能。 |
+| 2290 | `conversion_cfunc.part01.test.ts` | `c_func_0001` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：int 入参×2 返回 int 的解析结果与性能。 |
+| 2291 | `conversion_cfunc.part01.test.ts` | `c_func_0002` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：std::string 返回 的解析结果与性能。 |
+| 2292 | `conversion_cfunc.part01.test.ts` | `c_func_0003` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：string 入参×2 返回 string 的解析结果与性能。 |
+| 2293 | `conversion_cfunc.part01.test.ts` | `c_func_0004` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：char 返回 的解析结果与性能。 |
+| 2294 | `conversion_cfunc.part01.test.ts` | `c_func_0005` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：long 入参/返回 的解析结果与性能。 |
+| 2295 | `conversion_cfunc.part01.test.ts` | `c_func_0006` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：long long 入参×2/返回 的解析结果与性能。 |
+| 2296 | `conversion_cfunc.part01.test.ts` | `c_func_0007` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：float 入参/返回 的解析结果与性能。 |
+| 2297 | `conversion_cfunc.part01.test.ts` | `c_func_0008` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：double 入参/返回 的解析结果与性能。 |
+| 2298 | `conversion_cfunc.part01.test.ts` | `c_func_0009` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：bool 入参/返回 的解析结果与性能。 |
+| 2299 | `conversion_cfunc.part01.test.ts` | `c_func_0010` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：unsigned int 入参/返回 的解析结果与性能。 |
+| 2300 | `conversion_cfunc.part01.test.ts` | `c_func_0011` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：short 入参/返回 的解析结果与性能。 |
+| 2301 | `conversion_cfunc.part01.test.ts` | `c_func_0012` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：wchar_t 入参/返回 的解析结果与性能。 |
+| 2302 | `conversion_cfunc.part01.test.ts` | `c_func_0013` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：signed char 入参/返回 的解析结果与性能。 |
+| 2303 | `conversion_cfunc.part01.test.ts` | `c_func_0014` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：unsigned long long 入参/返回 的解析结果与性能。 |
+| 2304 | `conversion_cfunc.part01.test.ts` | `c_func_0015` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：long double 入参/返回 的解析结果与性能。 |
+| 2305 | `conversion_cfunc.part01.test.ts` | `c_func_0016` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：void 无参返回 的解析结果与性能。 |
+| 2306 | `conversion_cfunc.part01.test.ts` | `c_func_0017` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：std::wstring 返回 的解析结果与性能。 |
+| 2307 | `conversion_cfunc.part01.test.ts` | `c_func_0018` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：char16_t 返回 的解析结果与性能。 |
+| 2308 | `conversion_cfunc.part01.test.ts` | `c_func_0019` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：char32_t 返回 的解析结果与性能。 |
+| 2309 | `conversion_cfunc.part01.test.ts` | `c_func_0020` | 性能测试 | 3/4 | h2dts parseFunction：基础类型：size_t 返回 的解析结果与性能。 |
+| 2310 | `conversion_cfunc.part01.test.ts` | `c_func_0021` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：int[10] 定长数组入参 的解析结果与性能。 |
+| 2311 | `conversion_cfunc.part01.test.ts` | `c_func_0022` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::string[20] 入参 的解析结果与性能。 |
+| 2312 | `conversion_cfunc.part01.test.ts` | `c_func_0023` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：char* 指针入参 的解析结果与性能。 |
+| 2313 | `conversion_cfunc.part01.test.ts` | `c_func_0024` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：int* 指针入参 的解析结果与性能。 |
+| 2314 | `conversion_cfunc.part01.test.ts` | `c_func_0025` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：double* 指针入参 的解析结果与性能。 |
+| 2315 | `conversion_cfunc.part01.test.ts` | `c_func_0026` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::vector<int> 入参 的解析结果与性能。 |
+| 2316 | `conversion_cfunc.part01.test.ts` | `c_func_0027` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::vector<std::string> 入参 的解析结果与性能。 |
+| 2317 | `conversion_cfunc.part01.test.ts` | `c_func_0028` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::map 入参 的解析结果与性能。 |
+| 2318 | `conversion_cfunc.part01.test.ts` | `c_func_0029` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::set<int> 入参 的解析结果与性能。 |
+| 2319 | `conversion_cfunc.part01.test.ts` | `c_func_0030` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::list<double> 入参 的解析结果与性能。 |
+| 2320 | `conversion_cfunc.part01.test.ts` | `c_func_0031` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::deque<bool> 入参 的解析结果与性能。 |
+| 2321 | `conversion_cfunc.part01.test.ts` | `c_func_0032` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::pair 入参 的解析结果与性能。 |
+| 2322 | `conversion_cfunc.part01.test.ts` | `c_func_0033` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::tuple 三元素入参 的解析结果与性能。 |
+| 2323 | `conversion_cfunc.part01.test.ts` | `c_func_0034` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：int[10][20] 二维数组入参 的解析结果与性能。 |
+| 2324 | `conversion_cfunc.part01.test.ts` | `c_func_0035` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：double[5][10][15] 三维数组入参 的解析结果与性能。 |
+| 2325 | `conversion_cfunc.part01.test.ts` | `c_func_0036` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：float[16] 入参 的解析结果与性能。 |
+| 2326 | `conversion_cfunc.part01.test.ts` | `c_func_0037` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：bool[8] 入参 的解析结果与性能。 |
+| 2327 | `conversion_cfunc.part01.test.ts` | `c_func_0038` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：long[64] 入参 的解析结果与性能。 |
+| 2328 | `conversion_cfunc.part01.test.ts` | `c_func_0039` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：iterator 迭代器入参 的解析结果与性能。 |
+| 2329 | `conversion_cfunc.part01.test.ts` | `c_func_0040` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::function 入参 的解析结果与性能。 |
+| 2330 | `conversion_cfunc.part01.test.ts` | `c_func_0041` | 性能测试 | 3/4 | h2dts parseFunction：static 函数：static int 返回 的解析结果与性能。 |
+| 2331 | `conversion_cfunc.part01.test.ts` | `c_func_0042` | 性能测试 | 3/4 | h2dts parseFunction：static 函数：static 返回 std::string 的解析结果与性能。 |
+| 2332 | `conversion_cfunc.part02.test.ts` | `c_func_0043` | 性能测试 | 3/4 | h2dts parseFunction：static 函数：static void 的解析结果与性能。 |
+| 2333 | `conversion_cfunc.part02.test.ts` | `c_func_0044` | 性能测试 | 3/4 | h2dts parseFunction：static 函数：static 带参 的解析结果与性能。 |
+| 2334 | `conversion_cfunc.part02.test.ts` | `c_func_0045` | 性能测试 | 3/4 | h2dts parseFunction：static 函数：static bool 返回 的解析结果与性能。 |
+| 2335 | `conversion_cfunc.part02.test.ts` | `c_func_0046` | 性能测试 | 3/4 | h2dts parseFunction：const 修饰：const int 返回（const 剥离） 的解析结果与性能。 |
+| 2336 | `conversion_cfunc.part02.test.ts` | `c_func_0047` | 性能测试 | 3/4 | h2dts parseFunction：const 修饰：static const 组合 的解析结果与性能。 |
+| 2337 | `conversion_cfunc.part02.test.ts` | `c_func_0048` | 性能测试 | 3/4 | h2dts parseFunction：const 修饰：const 参数（剥离） 的解析结果与性能。 |
+| 2338 | `conversion_cfunc.part02.test.ts` | `c_func_0049` | 性能测试 | 3/4 | h2dts parseFunction：const 修饰：const char* 参数 的解析结果与性能。 |
+| 2339 | `conversion_cfunc.part02.test.ts` | `c_func_0050` | 性能测试 | 3/4 | h2dts parseFunction：多函数：同文件 3 条函数声明 的解析结果与性能。 |
+| 2340 | `conversion_cfunc.part02.test.ts` | `c_func_0051` | 性能测试 | 3/4 | h2dts parseFunction：多参数：5 参 double 的解析结果与性能。 |
+| 2341 | `conversion_cfunc.part02.test.ts` | `c_func_0052` | 性能测试 | 3/4 | h2dts parseFunction：多参数：5 参混合类型 的解析结果与性能。 |
+| 2342 | `conversion_cfunc.part02.test.ts` | `c_func_0053` | 性能测试 | 3/4 | h2dts parseFunction：namespace：域内函数×2 的解析结果与性能。 |
+| 2343 | `conversion_cfunc.part02.test.ts` | `c_func_0054` | 性能测试 | 3/4 | h2dts parseFunction：namespace：嵌套域内函数 的解析结果与性能。 |
+| 2344 | `conversion_cfunc.part02.test.ts` | `c_func_0055` | 性能测试 | 3/4 | h2dts parseFunction：namespace：域内 static 函数 的解析结果与性能。 |
+| 2345 | `conversion_cfunc.part02.test.ts` | `c_func_0056` | 性能测试 | 3/4 | h2dts parseFunction：typedef 函数指针：int (*)(int,int) 的解析结果与性能。 |
+| 2346 | `conversion_cfunc.part02.test.ts` | `c_func_0057` | 性能测试 | 3/4 | h2dts parseFunction：typedef 函数指针：void (*)(string) 的解析结果与性能。 |
+| 2347 | `conversion_cfunc.part02.test.ts` | `c_func_0058` | 性能测试 | 3/4 | h2dts parseFunction：typedef 函数指针：double (*)(double) 的解析结果与性能。 |
+| 2348 | `conversion_cfunc.part02.test.ts` | `c_func_0059` | 性能测试 | 3/4 | h2dts parseFunction：typedef 函数指针：bool (*)(int,double) 的解析结果与性能。 |
+| 2349 | `conversion_cfunc.part02.test.ts` | `c_func_0060` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::queue<int> 入参 的解析结果与性能。 |
+| 2350 | `conversion_cfunc.part02.test.ts` | `c_func_0061` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::stack 入参 的解析结果与性能。 |
+| 2351 | `conversion_cfunc.part02.test.ts` | `c_func_0062` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::priority_queue 入参 的解析结果与性能。 |
+| 2352 | `conversion_cfunc.part02.test.ts` | `c_func_0063` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::multimap 入参 的解析结果与性能。 |
+| 2353 | `conversion_cfunc.part02.test.ts` | `c_func_0064` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::multiset 入参 的解析结果与性能。 |
+| 2354 | `conversion_cfunc.part02.test.ts` | `c_func_0065` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::unordered_map 入参 的解析结果与性能。 |
+| 2355 | `conversion_cfunc.part02.test.ts` | `c_func_0066` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::forward_list 入参 的解析结果与性能。 |
+| 2356 | `conversion_cfunc.part02.test.ts` | `c_func_0067` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::valarray 入参 的解析结果与性能。 |
+| 2357 | `conversion_cfunc.part02.test.ts` | `c_func_0068` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：std::complex 入参 的解析结果与性能。 |
+| 2358 | `conversion_cfunc.part02.test.ts` | `c_func_0069` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：wchar_t* 指针入参 的解析结果与性能。 |
+| 2359 | `conversion_cfunc.part02.test.ts` | `c_func_0070` | 性能测试 | 3/4 | h2dts parseFunction：数组类型：float[8][8] 二维入参 的解析结果与性能。 |
+| 2360 | `conversion_cfunc.part02.test.ts` | `c_func_0071` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：int8_t 的解析结果与性能。 |
+| 2361 | `conversion_cfunc.part02.test.ts` | `c_func_0072` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：int16_t 的解析结果与性能。 |
+| 2362 | `conversion_cfunc.part02.test.ts` | `c_func_0073` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：int32_t 的解析结果与性能。 |
+| 2363 | `conversion_cfunc.part02.test.ts` | `c_func_0074` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：int64_t 的解析结果与性能。 |
+| 2364 | `conversion_cfunc.part02.test.ts` | `c_func_0075` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：uint8_t 的解析结果与性能。 |
+| 2365 | `conversion_cfunc.part02.test.ts` | `c_func_0076` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：uint16_t 的解析结果与性能。 |
+| 2366 | `conversion_cfunc.part02.test.ts` | `c_func_0077` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：uint32_t 的解析结果与性能。 |
+| 2367 | `conversion_cfunc.part02.test.ts` | `c_func_0078` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：uint64_t 的解析结果与性能。 |
+| 2368 | `conversion_cfunc.part02.test.ts` | `c_func_0079` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：unsigned short 的解析结果与性能。 |
+| 2369 | `conversion_cfunc.part02.test.ts` | `c_func_0080` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：unsigned char 的解析结果与性能。 |
+| 2370 | `conversion_cfunc.part02.test.ts` | `c_func_0081` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：signed short 的解析结果与性能。 |
+| 2371 | `conversion_cfunc.part02.test.ts` | `c_func_0082` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：signed long 的解析结果与性能。 |
+| 2372 | `conversion_cfunc.part02.test.ts` | `c_func_0083` | 性能测试 | 3/4 | h2dts parseFunction：扩充-基础：unsigned long 的解析结果与性能。 |
+| 2373 | `conversion_cfunc.part02.test.ts` | `c_func_0084` | 性能测试 | 3/4 | h2dts parseFunction：扩充-引用：int& 左值引用 的解析结果与性能。 |
+| 2374 | `conversion_cfunc.part03.test.ts` | `c_func_0085` | 性能测试 | 3/4 | h2dts parseFunction：扩充-引用：std::string& 的解析结果与性能。 |
+| 2375 | `conversion_cfunc.part03.test.ts` | `c_func_0086` | 性能测试 | 3/4 | h2dts parseFunction：扩充-引用：const int& 的解析结果与性能。 |
+| 2376 | `conversion_cfunc.part03.test.ts` | `c_func_0087` | 性能测试 | 3/4 | h2dts parseFunction：扩充-引用：double& 的解析结果与性能。 |
+| 2377 | `conversion_cfunc.part03.test.ts` | `c_func_0088` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组：std::array<int,10> 的解析结果与性能。 |
+| 2378 | `conversion_cfunc.part03.test.ts` | `c_func_0089` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组：std::array<string,5> 的解析结果与性能。 |
+| 2379 | `conversion_cfunc.part03.test.ts` | `c_func_0090` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组：std::unordered_set 的解析结果与性能。 |
+| 2380 | `conversion_cfunc.part03.test.ts` | `c_func_0091` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组：std::unordered_multimap 的解析结果与性能。 |
+| 2381 | `conversion_cfunc.part03.test.ts` | `c_func_0092` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组：std::unordered_multiset 的解析结果与性能。 |
+| 2382 | `conversion_cfunc.part03.test.ts` | `c_func_0093` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回：char* 的解析结果与性能。 |
+| 2383 | `conversion_cfunc.part03.test.ts` | `c_func_0094` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回：int* 的解析结果与性能。 |
+| 2384 | `conversion_cfunc.part03.test.ts` | `c_func_0095` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回：std::string* 的解析结果与性能。 |
+| 2385 | `conversion_cfunc.part03.test.ts` | `c_func_0096` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组：char[256] 的解析结果与性能。 |
+| 2386 | `conversion_cfunc.part03.test.ts` | `c_func_0097` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组：unsigned char[16] 的解析结果与性能。 |
+| 2387 | `conversion_cfunc.part03.test.ts` | `c_func_0098` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组：int64_t[8] 的解析结果与性能。 |
+| 2388 | `conversion_cfunc.part03.test.ts` | `c_func_0099` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组：std::string[10][5] 的解析结果与性能。 |
+| 2389 | `conversion_cfunc.part03.test.ts` | `c_func_0100` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：6 参混合 的解析结果与性能。 |
+| 2390 | `conversion_cfunc.part03.test.ts` | `c_func_0101` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：8 参 int 的解析结果与性能。 |
+| 2391 | `conversion_cfunc.part03.test.ts` | `c_func_0102` | 性能测试 | 3/4 | h2dts parseFunction：扩充-重载：同名函数 3 组重载 的解析结果与性能。 |
+| 2392 | `conversion_cfunc.part03.test.ts` | `c_func_0103` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：4 容器参数 的解析结果与性能。 |
+| 2393 | `conversion_cfunc.part03.test.ts` | `c_func_0104` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：4 容器参数 B 的解析结果与性能。 |
+| 2394 | `conversion_cfunc.part03.test.ts` | `c_func_0105` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器：std::function<void(string)> 的解析结果与性能。 |
+| 2395 | `conversion_cfunc.part03.test.ts` | `c_func_0106` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回 int 的解析结果与性能。 |
+| 2396 | `conversion_cfunc.part03.test.ts` | `c_func_0107` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回 bool 的解析结果与性能。 |
+| 2397 | `conversion_cfunc.part03.test.ts` | `c_func_0108` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：带参 double 的解析结果与性能。 |
+| 2398 | `conversion_cfunc.part03.test.ts` | `c_func_0109` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回容器 的解析结果与性能。 |
+| 2399 | `conversion_cfunc.part03.test.ts` | `c_func_0110` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const：返回 const char* 的解析结果与性能。 |
+| 2400 | `conversion_cfunc.part03.test.ts` | `c_func_0111` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const：const char* const 参数 的解析结果与性能。 |
+| 2401 | `conversion_cfunc.part03.test.ts` | `c_func_0112` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const：const std::string& 参数 的解析结果与性能。 |
+| 2402 | `conversion_cfunc.part03.test.ts` | `c_func_0113` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 5 个 的解析结果与性能。 |
+| 2403 | `conversion_cfunc.part03.test.ts` | `c_func_0114` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 8 个 的解析结果与性能。 |
+| 2404 | `conversion_cfunc.part03.test.ts` | `c_func_0115` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 10 个 的解析结果与性能。 |
+| 2405 | `conversion_cfunc.part03.test.ts` | `c_func_0116` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef：返回 std::string 函数指针 的解析结果与性能。 |
+| 2406 | `conversion_cfunc.part03.test.ts` | `c_func_0117` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef：double 二元函数指针 的解析结果与性能。 |
+| 2407 | `conversion_cfunc.part03.test.ts` | `c_func_0118` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef：notify 函数指针 的解析结果与性能。 |
+| 2408 | `conversion_cfunc.part03.test.ts` | `c_func_0119` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内 4 函数 的解析结果与性能。 |
+| 2409 | `conversion_cfunc.part03.test.ts` | `c_func_0120` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：三层嵌套函数 的解析结果与性能。 |
+| 2410 | `conversion_cfunc.part03.test.ts` | `c_func_0121` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：int = 1024 的解析结果与性能。 |
+| 2411 | `conversion_cfunc.part03.test.ts` | `c_func_0122` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：string 默认值 的解析结果与性能。 |
+| 2412 | `conversion_cfunc.part03.test.ts` | `c_func_0123` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：双默认值 的解析结果与性能。 |
+| 2413 | `conversion_cfunc.part03.test.ts` | `c_func_0124` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：6 参全类型混合 的解析结果与性能。 |
+| 2414 | `conversion_cfunc.part03.test.ts` | `c_func_0125` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：容器+引用+基础混合 的解析结果与性能。 |
+| 2415 | `conversion_cfunc.part04.test.ts` | `c_func_0126` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 int 的解析结果与性能。 |
+| 2416 | `conversion_cfunc.part04.test.ts` | `c_func_0127` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 char 的解析结果与性能。 |
+| 2417 | `conversion_cfunc.part04.test.ts` | `c_func_0128` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 short 的解析结果与性能。 |
+| 2418 | `conversion_cfunc.part04.test.ts` | `c_func_0129` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 long 的解析结果与性能。 |
+| 2419 | `conversion_cfunc.part04.test.ts` | `c_func_0130` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 long long 的解析结果与性能。 |
+| 2420 | `conversion_cfunc.part04.test.ts` | `c_func_0131` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 float 的解析结果与性能。 |
+| 2421 | `conversion_cfunc.part04.test.ts` | `c_func_0132` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 double 的解析结果与性能。 |
+| 2422 | `conversion_cfunc.part04.test.ts` | `c_func_0133` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 bool 的解析结果与性能。 |
+| 2423 | `conversion_cfunc.part04.test.ts` | `c_func_0134` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 unsigned int 的解析结果与性能。 |
+| 2424 | `conversion_cfunc.part04.test.ts` | `c_func_0135` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 unsigned char 的解析结果与性能。 |
+| 2425 | `conversion_cfunc.part04.test.ts` | `c_func_0136` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 unsigned short 的解析结果与性能。 |
+| 2426 | `conversion_cfunc.part04.test.ts` | `c_func_0137` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 unsigned long 的解析结果与性能。 |
+| 2427 | `conversion_cfunc.part04.test.ts` | `c_func_0138` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 unsigned long long 的解析结果与性能。 |
+| 2428 | `conversion_cfunc.part04.test.ts` | `c_func_0139` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 signed char 的解析结果与性能。 |
+| 2429 | `conversion_cfunc.part04.test.ts` | `c_func_0140` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 signed short 的解析结果与性能。 |
+| 2430 | `conversion_cfunc.part04.test.ts` | `c_func_0141` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 signed long 的解析结果与性能。 |
+| 2431 | `conversion_cfunc.part04.test.ts` | `c_func_0142` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 wchar_t 的解析结果与性能。 |
+| 2432 | `conversion_cfunc.part04.test.ts` | `c_func_0143` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 char16_t 的解析结果与性能。 |
+| 2433 | `conversion_cfunc.part04.test.ts` | `c_func_0144` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 char32_t 的解析结果与性能。 |
+| 2434 | `conversion_cfunc.part04.test.ts` | `c_func_0145` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 size_t 的解析结果与性能。 |
+| 2435 | `conversion_cfunc.part04.test.ts` | `c_func_0146` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 int8_t 的解析结果与性能。 |
+| 2436 | `conversion_cfunc.part04.test.ts` | `c_func_0147` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 int16_t 的解析结果与性能。 |
+| 2437 | `conversion_cfunc.part04.test.ts` | `c_func_0148` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 int32_t 的解析结果与性能。 |
+| 2438 | `conversion_cfunc.part04.test.ts` | `c_func_0149` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 int64_t 的解析结果与性能。 |
+| 2439 | `conversion_cfunc.part04.test.ts` | `c_func_0150` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 uint8_t 的解析结果与性能。 |
+| 2440 | `conversion_cfunc.part04.test.ts` | `c_func_0151` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 uint16_t 的解析结果与性能。 |
+| 2441 | `conversion_cfunc.part04.test.ts` | `c_func_0152` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 uint32_t 的解析结果与性能。 |
+| 2442 | `conversion_cfunc.part04.test.ts` | `c_func_0153` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 uint64_t 的解析结果与性能。 |
+| 2443 | `conversion_cfunc.part04.test.ts` | `c_func_0154` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::string 的解析结果与性能。 |
+| 2444 | `conversion_cfunc.part04.test.ts` | `c_func_0155` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 string 的解析结果与性能。 |
+| 2445 | `conversion_cfunc.part04.test.ts` | `c_func_0156` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::wstring 的解析结果与性能。 |
+| 2446 | `conversion_cfunc.part04.test.ts` | `c_func_0157` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 long double 的解析结果与性能。 |
+| 2447 | `conversion_cfunc.part04.test.ts` | `c_func_0158` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 void 的解析结果与性能。 |
+| 2448 | `conversion_cfunc.part04.test.ts` | `c_func_0159` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::vector<int> 的解析结果与性能。 |
+| 2449 | `conversion_cfunc.part04.test.ts` | `c_func_0160` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::vector<std::string> 的解析结果与性能。 |
+| 2450 | `conversion_cfunc.part04.test.ts` | `c_func_0161` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::vector<double> 的解析结果与性能。 |
+| 2451 | `conversion_cfunc.part04.test.ts` | `c_func_0162` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::vector<bool> 的解析结果与性能。 |
+| 2452 | `conversion_cfunc.part04.test.ts` | `c_func_0163` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::map<std::string,int> 的解析结果与性能。 |
+| 2453 | `conversion_cfunc.part04.test.ts` | `c_func_0164` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::map<int,std::string> 的解析结果与性能。 |
+| 2454 | `conversion_cfunc.part04.test.ts` | `c_func_0165` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::set<int> 的解析结果与性能。 |
+| 2455 | `conversion_cfunc.part04.test.ts` | `c_func_0166` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::set<std::string> 的解析结果与性能。 |
+| 2456 | `conversion_cfunc.part04.test.ts` | `c_func_0167` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::list<int> 的解析结果与性能。 |
+| 2457 | `conversion_cfunc.part04.test.ts` | `c_func_0168` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::list<std::string> 的解析结果与性能。 |
+| 2458 | `conversion_cfunc.part04.test.ts` | `c_func_0169` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::deque<int> 的解析结果与性能。 |
+| 2459 | `conversion_cfunc.part04.test.ts` | `c_func_0170` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::deque<std::string> 的解析结果与性能。 |
+| 2460 | `conversion_cfunc.part04.test.ts` | `c_func_0171` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::pair<int,int> 的解析结果与性能。 |
+| 2461 | `conversion_cfunc.part04.test.ts` | `c_func_0172` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::pair<std::string,int> 的解析结果与性能。 |
+| 2462 | `conversion_cfunc.part04.test.ts` | `c_func_0173` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::tuple<int,int,int> 的解析结果与性能。 |
+| 2463 | `conversion_cfunc.part04.test.ts` | `c_func_0174` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::tuple<std::string,int,double> 的解析结果与性能。 |
+| 2464 | `conversion_cfunc.part04.test.ts` | `c_func_0175` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::queue<int> 的解析结果与性能。 |
+| 2465 | `conversion_cfunc.part04.test.ts` | `c_func_0176` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::stack<int> 的解析结果与性能。 |
+| 2466 | `conversion_cfunc.part04.test.ts` | `c_func_0177` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::priority_queue<int> 的解析结果与性能。 |
+| 2467 | `conversion_cfunc.part04.test.ts` | `c_func_0178` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::multimap<int,int> 的解析结果与性能。 |
+| 2468 | `conversion_cfunc.part04.test.ts` | `c_func_0179` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::multiset<int> 的解析结果与性能。 |
+| 2469 | `conversion_cfunc.part04.test.ts` | `c_func_0180` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::unordered_map<std::string,int> 的解析结果与性能。 |
+| 2470 | `conversion_cfunc.part04.test.ts` | `c_func_0181` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::unordered_set<int> 的解析结果与性能。 |
+| 2471 | `conversion_cfunc.part04.test.ts` | `c_func_0182` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::unordered_multimap<int,int> 的解析结果与性能。 |
+| 2472 | `conversion_cfunc.part04.test.ts` | `c_func_0183` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::unordered_multiset<int> 的解析结果与性能。 |
+| 2473 | `conversion_cfunc.part04.test.ts` | `c_func_0184` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::array<int,10> 的解析结果与性能。 |
+| 2474 | `conversion_cfunc.part04.test.ts` | `c_func_0185` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::array<std::string,5> 的解析结果与性能。 |
+| 2475 | `conversion_cfunc.part05.test.ts` | `c_func_0186` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::forward_list<int> 的解析结果与性能。 |
+| 2476 | `conversion_cfunc.part05.test.ts` | `c_func_0187` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::valarray<double> 的解析结果与性能。 |
+| 2477 | `conversion_cfunc.part05.test.ts` | `c_func_0188` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::complex<double> 的解析结果与性能。 |
+| 2478 | `conversion_cfunc.part05.test.ts` | `c_func_0189` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::function<int(int,int)> 的解析结果与性能。 |
+| 2479 | `conversion_cfunc.part05.test.ts` | `c_func_0190` | 性能测试 | 3/4 | h2dts parseFunction：扩充-返回矩阵：返回类型 std::function<void(std::string)> 的解析结果与性能。 |
+| 2480 | `conversion_cfunc.part05.test.ts` | `c_func_0191` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：int 的解析结果与性能。 |
+| 2481 | `conversion_cfunc.part05.test.ts` | `c_func_0192` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：char 的解析结果与性能。 |
+| 2482 | `conversion_cfunc.part05.test.ts` | `c_func_0193` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：short 的解析结果与性能。 |
+| 2483 | `conversion_cfunc.part05.test.ts` | `c_func_0194` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：long 的解析结果与性能。 |
+| 2484 | `conversion_cfunc.part05.test.ts` | `c_func_0195` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：long long 的解析结果与性能。 |
+| 2485 | `conversion_cfunc.part05.test.ts` | `c_func_0196` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：float 的解析结果与性能。 |
+| 2486 | `conversion_cfunc.part05.test.ts` | `c_func_0197` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：double 的解析结果与性能。 |
+| 2487 | `conversion_cfunc.part05.test.ts` | `c_func_0198` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：bool 的解析结果与性能。 |
+| 2488 | `conversion_cfunc.part05.test.ts` | `c_func_0199` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：unsigned int 的解析结果与性能。 |
+| 2489 | `conversion_cfunc.part05.test.ts` | `c_func_0200` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：unsigned char 的解析结果与性能。 |
+| 2490 | `conversion_cfunc.part05.test.ts` | `c_func_0201` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：unsigned short 的解析结果与性能。 |
+| 2491 | `conversion_cfunc.part05.test.ts` | `c_func_0202` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：unsigned long 的解析结果与性能。 |
+| 2492 | `conversion_cfunc.part05.test.ts` | `c_func_0203` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：unsigned long long 的解析结果与性能。 |
+| 2493 | `conversion_cfunc.part05.test.ts` | `c_func_0204` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：signed char 的解析结果与性能。 |
+| 2494 | `conversion_cfunc.part05.test.ts` | `c_func_0205` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：signed short 的解析结果与性能。 |
+| 2495 | `conversion_cfunc.part05.test.ts` | `c_func_0206` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：signed long 的解析结果与性能。 |
+| 2496 | `conversion_cfunc.part05.test.ts` | `c_func_0207` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：wchar_t 的解析结果与性能。 |
+| 2497 | `conversion_cfunc.part05.test.ts` | `c_func_0208` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：char16_t 的解析结果与性能。 |
+| 2498 | `conversion_cfunc.part05.test.ts` | `c_func_0209` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：char32_t 的解析结果与性能。 |
+| 2499 | `conversion_cfunc.part05.test.ts` | `c_func_0210` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：size_t 的解析结果与性能。 |
+| 2500 | `conversion_cfunc.part05.test.ts` | `c_func_0211` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：int8_t 的解析结果与性能。 |
+| 2501 | `conversion_cfunc.part05.test.ts` | `c_func_0212` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：int16_t 的解析结果与性能。 |
+| 2502 | `conversion_cfunc.part05.test.ts` | `c_func_0213` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：int32_t 的解析结果与性能。 |
+| 2503 | `conversion_cfunc.part05.test.ts` | `c_func_0214` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：int64_t 的解析结果与性能。 |
+| 2504 | `conversion_cfunc.part05.test.ts` | `c_func_0215` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：uint8_t 的解析结果与性能。 |
+| 2505 | `conversion_cfunc.part05.test.ts` | `c_func_0216` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：uint16_t 的解析结果与性能。 |
+| 2506 | `conversion_cfunc.part05.test.ts` | `c_func_0217` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：uint32_t 的解析结果与性能。 |
+| 2507 | `conversion_cfunc.part05.test.ts` | `c_func_0218` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：uint64_t 的解析结果与性能。 |
+| 2508 | `conversion_cfunc.part05.test.ts` | `c_func_0219` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::string 的解析结果与性能。 |
+| 2509 | `conversion_cfunc.part05.test.ts` | `c_func_0220` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：string 的解析结果与性能。 |
+| 2510 | `conversion_cfunc.part05.test.ts` | `c_func_0221` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::wstring 的解析结果与性能。 |
+| 2511 | `conversion_cfunc.part05.test.ts` | `c_func_0222` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：long double 的解析结果与性能。 |
+| 2512 | `conversion_cfunc.part05.test.ts` | `c_func_0223` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::vector<int> 的解析结果与性能。 |
+| 2513 | `conversion_cfunc.part05.test.ts` | `c_func_0224` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::vector<std::string> 的解析结果与性能。 |
+| 2514 | `conversion_cfunc.part05.test.ts` | `c_func_0225` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::vector<double> 的解析结果与性能。 |
+| 2515 | `conversion_cfunc.part05.test.ts` | `c_func_0226` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::vector<bool> 的解析结果与性能。 |
+| 2516 | `conversion_cfunc.part05.test.ts` | `c_func_0227` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::map<std::string,int> 的解析结果与性能。 |
+| 2517 | `conversion_cfunc.part05.test.ts` | `c_func_0228` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::map<int,std::string> 的解析结果与性能。 |
+| 2518 | `conversion_cfunc.part05.test.ts` | `c_func_0229` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::set<int> 的解析结果与性能。 |
+| 2519 | `conversion_cfunc.part05.test.ts` | `c_func_0230` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::set<std::string> 的解析结果与性能。 |
+| 2520 | `conversion_cfunc.part05.test.ts` | `c_func_0231` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::list<int> 的解析结果与性能。 |
+| 2521 | `conversion_cfunc.part05.test.ts` | `c_func_0232` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::list<std::string> 的解析结果与性能。 |
+| 2522 | `conversion_cfunc.part05.test.ts` | `c_func_0233` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::deque<int> 的解析结果与性能。 |
+| 2523 | `conversion_cfunc.part05.test.ts` | `c_func_0234` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::deque<std::string> 的解析结果与性能。 |
+| 2524 | `conversion_cfunc.part05.test.ts` | `c_func_0235` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::pair<int,int> 的解析结果与性能。 |
+| 2525 | `conversion_cfunc.part05.test.ts` | `c_func_0236` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::pair<std::string,int> 的解析结果与性能。 |
+| 2526 | `conversion_cfunc.part05.test.ts` | `c_func_0237` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::tuple<int,int,int> 的解析结果与性能。 |
+| 2527 | `conversion_cfunc.part05.test.ts` | `c_func_0238` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::tuple<std::string,int,double> 的解析结果与性能。 |
+| 2528 | `conversion_cfunc.part05.test.ts` | `c_func_0239` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::queue<int> 的解析结果与性能。 |
+| 2529 | `conversion_cfunc.part05.test.ts` | `c_func_0240` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::stack<int> 的解析结果与性能。 |
+| 2530 | `conversion_cfunc.part05.test.ts` | `c_func_0241` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::priority_queue<int> 的解析结果与性能。 |
+| 2531 | `conversion_cfunc.part05.test.ts` | `c_func_0242` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::multimap<int,int> 的解析结果与性能。 |
+| 2532 | `conversion_cfunc.part06.test.ts` | `c_func_0243` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::multiset<int> 的解析结果与性能。 |
+| 2533 | `conversion_cfunc.part06.test.ts` | `c_func_0244` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::unordered_map<std::string,int> 的解析结果与性能。 |
+| 2534 | `conversion_cfunc.part06.test.ts` | `c_func_0245` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::unordered_set<int> 的解析结果与性能。 |
+| 2535 | `conversion_cfunc.part06.test.ts` | `c_func_0246` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::unordered_multimap<int,int> 的解析结果与性能。 |
+| 2536 | `conversion_cfunc.part06.test.ts` | `c_func_0247` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::unordered_multiset<int> 的解析结果与性能。 |
+| 2537 | `conversion_cfunc.part06.test.ts` | `c_func_0248` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::array<int,10> 的解析结果与性能。 |
+| 2538 | `conversion_cfunc.part06.test.ts` | `c_func_0249` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::array<std::string,5> 的解析结果与性能。 |
+| 2539 | `conversion_cfunc.part06.test.ts` | `c_func_0250` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参+返回：std::forward_list<int> 的解析结果与性能。 |
+| 2540 | `conversion_cfunc.part06.test.ts` | `c_func_0251` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：int 的解析结果与性能。 |
+| 2541 | `conversion_cfunc.part06.test.ts` | `c_func_0252` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：char 的解析结果与性能。 |
+| 2542 | `conversion_cfunc.part06.test.ts` | `c_func_0253` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：short 的解析结果与性能。 |
+| 2543 | `conversion_cfunc.part06.test.ts` | `c_func_0254` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：long 的解析结果与性能。 |
+| 2544 | `conversion_cfunc.part06.test.ts` | `c_func_0255` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：long long 的解析结果与性能。 |
+| 2545 | `conversion_cfunc.part06.test.ts` | `c_func_0256` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：float 的解析结果与性能。 |
+| 2546 | `conversion_cfunc.part06.test.ts` | `c_func_0257` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：double 的解析结果与性能。 |
+| 2547 | `conversion_cfunc.part06.test.ts` | `c_func_0258` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：bool 的解析结果与性能。 |
+| 2548 | `conversion_cfunc.part06.test.ts` | `c_func_0259` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：unsigned int 的解析结果与性能。 |
+| 2549 | `conversion_cfunc.part06.test.ts` | `c_func_0260` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：unsigned char 的解析结果与性能。 |
+| 2550 | `conversion_cfunc.part06.test.ts` | `c_func_0261` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：unsigned short 的解析结果与性能。 |
+| 2551 | `conversion_cfunc.part06.test.ts` | `c_func_0262` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：unsigned long 的解析结果与性能。 |
+| 2552 | `conversion_cfunc.part06.test.ts` | `c_func_0263` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：unsigned long long 的解析结果与性能。 |
+| 2553 | `conversion_cfunc.part06.test.ts` | `c_func_0264` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：signed char 的解析结果与性能。 |
+| 2554 | `conversion_cfunc.part06.test.ts` | `c_func_0265` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：signed short 的解析结果与性能。 |
+| 2555 | `conversion_cfunc.part06.test.ts` | `c_func_0266` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：signed long 的解析结果与性能。 |
+| 2556 | `conversion_cfunc.part06.test.ts` | `c_func_0267` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：wchar_t 的解析结果与性能。 |
+| 2557 | `conversion_cfunc.part06.test.ts` | `c_func_0268` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：char16_t 的解析结果与性能。 |
+| 2558 | `conversion_cfunc.part06.test.ts` | `c_func_0269` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：char32_t 的解析结果与性能。 |
+| 2559 | `conversion_cfunc.part06.test.ts` | `c_func_0270` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：size_t 的解析结果与性能。 |
+| 2560 | `conversion_cfunc.part06.test.ts` | `c_func_0271` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：int8_t 的解析结果与性能。 |
+| 2561 | `conversion_cfunc.part06.test.ts` | `c_func_0272` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：int16_t 的解析结果与性能。 |
+| 2562 | `conversion_cfunc.part06.test.ts` | `c_func_0273` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：int32_t 的解析结果与性能。 |
+| 2563 | `conversion_cfunc.part06.test.ts` | `c_func_0274` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：int64_t 的解析结果与性能。 |
+| 2564 | `conversion_cfunc.part06.test.ts` | `c_func_0275` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：uint8_t 的解析结果与性能。 |
+| 2565 | `conversion_cfunc.part06.test.ts` | `c_func_0276` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：uint16_t 的解析结果与性能。 |
+| 2566 | `conversion_cfunc.part06.test.ts` | `c_func_0277` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：uint32_t 的解析结果与性能。 |
+| 2567 | `conversion_cfunc.part06.test.ts` | `c_func_0278` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：uint64_t 的解析结果与性能。 |
+| 2568 | `conversion_cfunc.part06.test.ts` | `c_func_0279` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::string 的解析结果与性能。 |
+| 2569 | `conversion_cfunc.part06.test.ts` | `c_func_0280` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：string 的解析结果与性能。 |
+| 2570 | `conversion_cfunc.part06.test.ts` | `c_func_0281` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::wstring 的解析结果与性能。 |
+| 2571 | `conversion_cfunc.part06.test.ts` | `c_func_0282` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：long double 的解析结果与性能。 |
+| 2572 | `conversion_cfunc.part06.test.ts` | `c_func_0283` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::vector<int> 的解析结果与性能。 |
+| 2573 | `conversion_cfunc.part06.test.ts` | `c_func_0284` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::vector<std::string> 的解析结果与性能。 |
+| 2574 | `conversion_cfunc.part06.test.ts` | `c_func_0285` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::vector<double> 的解析结果与性能。 |
+| 2575 | `conversion_cfunc.part06.test.ts` | `c_func_0286` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::vector<bool> 的解析结果与性能。 |
+| 2576 | `conversion_cfunc.part06.test.ts` | `c_func_0287` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::map<std::string,int> 的解析结果与性能。 |
+| 2577 | `conversion_cfunc.part06.test.ts` | `c_func_0288` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::map<int,std::string> 的解析结果与性能。 |
+| 2578 | `conversion_cfunc.part06.test.ts` | `c_func_0289` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::set<int> 的解析结果与性能。 |
+| 2579 | `conversion_cfunc.part06.test.ts` | `c_func_0290` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::set<std::string> 的解析结果与性能。 |
+| 2580 | `conversion_cfunc.part06.test.ts` | `c_func_0291` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::list<int> 的解析结果与性能。 |
+| 2581 | `conversion_cfunc.part06.test.ts` | `c_func_0292` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::list<std::string> 的解析结果与性能。 |
+| 2582 | `conversion_cfunc.part06.test.ts` | `c_func_0293` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::deque<int> 的解析结果与性能。 |
+| 2583 | `conversion_cfunc.part06.test.ts` | `c_func_0294` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::deque<std::string> 的解析结果与性能。 |
+| 2584 | `conversion_cfunc.part06.test.ts` | `c_func_0295` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::pair<int,int> 的解析结果与性能。 |
+| 2585 | `conversion_cfunc.part06.test.ts` | `c_func_0296` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::pair<std::string,int> 的解析结果与性能。 |
+| 2586 | `conversion_cfunc.part06.test.ts` | `c_func_0297` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::tuple<int,int,int> 的解析结果与性能。 |
+| 2587 | `conversion_cfunc.part06.test.ts` | `c_func_0298` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::tuple<std::string,int,double> 的解析结果与性能。 |
+| 2588 | `conversion_cfunc.part06.test.ts` | `c_func_0299` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::queue<int> 的解析结果与性能。 |
+| 2589 | `conversion_cfunc.part07.test.ts` | `c_func_0300` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::stack<int> 的解析结果与性能。 |
+| 2590 | `conversion_cfunc.part07.test.ts` | `c_func_0301` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::priority_queue<int> 的解析结果与性能。 |
+| 2591 | `conversion_cfunc.part07.test.ts` | `c_func_0302` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::multimap<int,int> 的解析结果与性能。 |
+| 2592 | `conversion_cfunc.part07.test.ts` | `c_func_0303` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::multiset<int> 的解析结果与性能。 |
+| 2593 | `conversion_cfunc.part07.test.ts` | `c_func_0304` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::unordered_map<std::string,int> 的解析结果与性能。 |
+| 2594 | `conversion_cfunc.part07.test.ts` | `c_func_0305` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::unordered_set<int> 的解析结果与性能。 |
+| 2595 | `conversion_cfunc.part07.test.ts` | `c_func_0306` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::unordered_multimap<int,int> 的解析结果与性能。 |
+| 2596 | `conversion_cfunc.part07.test.ts` | `c_func_0307` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::unordered_multiset<int> 的解析结果与性能。 |
+| 2597 | `conversion_cfunc.part07.test.ts` | `c_func_0308` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::array<int,10> 的解析结果与性能。 |
+| 2598 | `conversion_cfunc.part07.test.ts` | `c_func_0309` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::array<std::string,5> 的解析结果与性能。 |
+| 2599 | `conversion_cfunc.part07.test.ts` | `c_func_0310` | 性能测试 | 3/4 | h2dts parseFunction：扩充-入参矩阵：std::forward_list<int> 的解析结果与性能。 |
+| 2600 | `conversion_cfunc.part07.test.ts` | `c_func_0311` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int, char) 的解析结果与性能。 |
+| 2601 | `conversion_cfunc.part07.test.ts` | `c_func_0312` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int, short) 的解析结果与性能。 |
+| 2602 | `conversion_cfunc.part07.test.ts` | `c_func_0313` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int, long) 的解析结果与性能。 |
+| 2603 | `conversion_cfunc.part07.test.ts` | `c_func_0314` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int, long long) 的解析结果与性能。 |
+| 2604 | `conversion_cfunc.part07.test.ts` | `c_func_0315` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int, float) 的解析结果与性能。 |
+| 2605 | `conversion_cfunc.part07.test.ts` | `c_func_0316` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int, double) 的解析结果与性能。 |
+| 2606 | `conversion_cfunc.part07.test.ts` | `c_func_0317` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char, short) 的解析结果与性能。 |
+| 2607 | `conversion_cfunc.part07.test.ts` | `c_func_0318` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char, long) 的解析结果与性能。 |
+| 2608 | `conversion_cfunc.part07.test.ts` | `c_func_0319` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char, long long) 的解析结果与性能。 |
+| 2609 | `conversion_cfunc.part07.test.ts` | `c_func_0320` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char, float) 的解析结果与性能。 |
+| 2610 | `conversion_cfunc.part07.test.ts` | `c_func_0321` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char, double) 的解析结果与性能。 |
+| 2611 | `conversion_cfunc.part07.test.ts` | `c_func_0322` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char, bool) 的解析结果与性能。 |
+| 2612 | `conversion_cfunc.part07.test.ts` | `c_func_0323` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(short, long) 的解析结果与性能。 |
+| 2613 | `conversion_cfunc.part07.test.ts` | `c_func_0324` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(short, long long) 的解析结果与性能。 |
+| 2614 | `conversion_cfunc.part07.test.ts` | `c_func_0325` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(short, float) 的解析结果与性能。 |
+| 2615 | `conversion_cfunc.part07.test.ts` | `c_func_0326` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(short, double) 的解析结果与性能。 |
+| 2616 | `conversion_cfunc.part07.test.ts` | `c_func_0327` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(short, bool) 的解析结果与性能。 |
+| 2617 | `conversion_cfunc.part07.test.ts` | `c_func_0328` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(short, unsigned int) 的解析结果与性能。 |
+| 2618 | `conversion_cfunc.part07.test.ts` | `c_func_0329` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long, long long) 的解析结果与性能。 |
+| 2619 | `conversion_cfunc.part07.test.ts` | `c_func_0330` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long, float) 的解析结果与性能。 |
+| 2620 | `conversion_cfunc.part07.test.ts` | `c_func_0331` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long, double) 的解析结果与性能。 |
+| 2621 | `conversion_cfunc.part07.test.ts` | `c_func_0332` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long, bool) 的解析结果与性能。 |
+| 2622 | `conversion_cfunc.part07.test.ts` | `c_func_0333` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long, unsigned int) 的解析结果与性能。 |
+| 2623 | `conversion_cfunc.part07.test.ts` | `c_func_0334` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long, unsigned char) 的解析结果与性能。 |
+| 2624 | `conversion_cfunc.part07.test.ts` | `c_func_0335` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long long, float) 的解析结果与性能。 |
+| 2625 | `conversion_cfunc.part07.test.ts` | `c_func_0336` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long long, double) 的解析结果与性能。 |
+| 2626 | `conversion_cfunc.part07.test.ts` | `c_func_0337` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long long, bool) 的解析结果与性能。 |
+| 2627 | `conversion_cfunc.part07.test.ts` | `c_func_0338` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long long, unsigned int) 的解析结果与性能。 |
+| 2628 | `conversion_cfunc.part07.test.ts` | `c_func_0339` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long long, unsigned char) 的解析结果与性能。 |
+| 2629 | `conversion_cfunc.part07.test.ts` | `c_func_0340` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(long long, unsigned short) 的解析结果与性能。 |
+| 2630 | `conversion_cfunc.part07.test.ts` | `c_func_0341` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(float, double) 的解析结果与性能。 |
+| 2631 | `conversion_cfunc.part07.test.ts` | `c_func_0342` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(float, bool) 的解析结果与性能。 |
+| 2632 | `conversion_cfunc.part07.test.ts` | `c_func_0343` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(float, unsigned int) 的解析结果与性能。 |
+| 2633 | `conversion_cfunc.part07.test.ts` | `c_func_0344` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(float, unsigned char) 的解析结果与性能。 |
+| 2634 | `conversion_cfunc.part07.test.ts` | `c_func_0345` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(float, unsigned short) 的解析结果与性能。 |
+| 2635 | `conversion_cfunc.part07.test.ts` | `c_func_0346` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(float, unsigned long) 的解析结果与性能。 |
+| 2636 | `conversion_cfunc.part07.test.ts` | `c_func_0347` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(double, bool) 的解析结果与性能。 |
+| 2637 | `conversion_cfunc.part07.test.ts` | `c_func_0348` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(double, unsigned int) 的解析结果与性能。 |
+| 2638 | `conversion_cfunc.part07.test.ts` | `c_func_0349` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(double, unsigned char) 的解析结果与性能。 |
+| 2639 | `conversion_cfunc.part07.test.ts` | `c_func_0350` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(double, unsigned short) 的解析结果与性能。 |
+| 2640 | `conversion_cfunc.part07.test.ts` | `c_func_0351` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(double, unsigned long) 的解析结果与性能。 |
+| 2641 | `conversion_cfunc.part07.test.ts` | `c_func_0352` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(double, unsigned long long) 的解析结果与性能。 |
+| 2642 | `conversion_cfunc.part07.test.ts` | `c_func_0353` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(bool, unsigned int) 的解析结果与性能。 |
+| 2643 | `conversion_cfunc.part08.test.ts` | `c_func_0354` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(bool, unsigned char) 的解析结果与性能。 |
+| 2644 | `conversion_cfunc.part08.test.ts` | `c_func_0355` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(bool, unsigned short) 的解析结果与性能。 |
+| 2645 | `conversion_cfunc.part08.test.ts` | `c_func_0356` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(bool, unsigned long) 的解析结果与性能。 |
+| 2646 | `conversion_cfunc.part08.test.ts` | `c_func_0357` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(bool, unsigned long long) 的解析结果与性能。 |
+| 2647 | `conversion_cfunc.part08.test.ts` | `c_func_0358` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(bool, signed char) 的解析结果与性能。 |
+| 2648 | `conversion_cfunc.part08.test.ts` | `c_func_0359` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned int, unsigned char) 的解析结果与性能。 |
+| 2649 | `conversion_cfunc.part08.test.ts` | `c_func_0360` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned int, unsigned short) 的解析结果与性能。 |
+| 2650 | `conversion_cfunc.part08.test.ts` | `c_func_0361` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned int, unsigned long) 的解析结果与性能。 |
+| 2651 | `conversion_cfunc.part08.test.ts` | `c_func_0362` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned int, unsigned long long) 的解析结果与性能。 |
+| 2652 | `conversion_cfunc.part08.test.ts` | `c_func_0363` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned int, signed char) 的解析结果与性能。 |
+| 2653 | `conversion_cfunc.part08.test.ts` | `c_func_0364` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned int, signed short) 的解析结果与性能。 |
+| 2654 | `conversion_cfunc.part08.test.ts` | `c_func_0365` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned char, unsigned short) 的解析结果与性能。 |
+| 2655 | `conversion_cfunc.part08.test.ts` | `c_func_0366` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned char, unsigned long) 的解析结果与性能。 |
+| 2656 | `conversion_cfunc.part08.test.ts` | `c_func_0367` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned char, unsigned long long) 的解析结果与性能。 |
+| 2657 | `conversion_cfunc.part08.test.ts` | `c_func_0368` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned char, signed char) 的解析结果与性能。 |
+| 2658 | `conversion_cfunc.part08.test.ts` | `c_func_0369` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned char, signed short) 的解析结果与性能。 |
+| 2659 | `conversion_cfunc.part08.test.ts` | `c_func_0370` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned char, signed long) 的解析结果与性能。 |
+| 2660 | `conversion_cfunc.part08.test.ts` | `c_func_0371` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned short, unsigned long) 的解析结果与性能。 |
+| 2661 | `conversion_cfunc.part08.test.ts` | `c_func_0372` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned short, unsigned long long) 的解析结果与性能。 |
+| 2662 | `conversion_cfunc.part08.test.ts` | `c_func_0373` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned short, signed char) 的解析结果与性能。 |
+| 2663 | `conversion_cfunc.part08.test.ts` | `c_func_0374` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned short, signed short) 的解析结果与性能。 |
+| 2664 | `conversion_cfunc.part08.test.ts` | `c_func_0375` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned short, signed long) 的解析结果与性能。 |
+| 2665 | `conversion_cfunc.part08.test.ts` | `c_func_0376` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned short, wchar_t) 的解析结果与性能。 |
+| 2666 | `conversion_cfunc.part08.test.ts` | `c_func_0377` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long, unsigned long long) 的解析结果与性能。 |
+| 2667 | `conversion_cfunc.part08.test.ts` | `c_func_0378` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long, signed char) 的解析结果与性能。 |
+| 2668 | `conversion_cfunc.part08.test.ts` | `c_func_0379` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long, signed short) 的解析结果与性能。 |
+| 2669 | `conversion_cfunc.part08.test.ts` | `c_func_0380` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long, signed long) 的解析结果与性能。 |
+| 2670 | `conversion_cfunc.part08.test.ts` | `c_func_0381` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long, wchar_t) 的解析结果与性能。 |
+| 2671 | `conversion_cfunc.part08.test.ts` | `c_func_0382` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long, char16_t) 的解析结果与性能。 |
+| 2672 | `conversion_cfunc.part08.test.ts` | `c_func_0383` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long long, signed char) 的解析结果与性能。 |
+| 2673 | `conversion_cfunc.part08.test.ts` | `c_func_0384` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long long, signed short) 的解析结果与性能。 |
+| 2674 | `conversion_cfunc.part08.test.ts` | `c_func_0385` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long long, signed long) 的解析结果与性能。 |
+| 2675 | `conversion_cfunc.part08.test.ts` | `c_func_0386` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long long, wchar_t) 的解析结果与性能。 |
+| 2676 | `conversion_cfunc.part08.test.ts` | `c_func_0387` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long long, char16_t) 的解析结果与性能。 |
+| 2677 | `conversion_cfunc.part08.test.ts` | `c_func_0388` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(unsigned long long, char32_t) 的解析结果与性能。 |
+| 2678 | `conversion_cfunc.part08.test.ts` | `c_func_0389` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed char, signed short) 的解析结果与性能。 |
+| 2679 | `conversion_cfunc.part08.test.ts` | `c_func_0390` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed char, signed long) 的解析结果与性能。 |
+| 2680 | `conversion_cfunc.part08.test.ts` | `c_func_0391` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed char, wchar_t) 的解析结果与性能。 |
+| 2681 | `conversion_cfunc.part08.test.ts` | `c_func_0392` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed char, char16_t) 的解析结果与性能。 |
+| 2682 | `conversion_cfunc.part08.test.ts` | `c_func_0393` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed char, char32_t) 的解析结果与性能。 |
+| 2683 | `conversion_cfunc.part08.test.ts` | `c_func_0394` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed char, size_t) 的解析结果与性能。 |
+| 2684 | `conversion_cfunc.part08.test.ts` | `c_func_0395` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed short, signed long) 的解析结果与性能。 |
+| 2685 | `conversion_cfunc.part08.test.ts` | `c_func_0396` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed short, wchar_t) 的解析结果与性能。 |
+| 2686 | `conversion_cfunc.part08.test.ts` | `c_func_0397` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed short, char16_t) 的解析结果与性能。 |
+| 2687 | `conversion_cfunc.part08.test.ts` | `c_func_0398` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed short, char32_t) 的解析结果与性能。 |
+| 2688 | `conversion_cfunc.part08.test.ts` | `c_func_0399` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed short, size_t) 的解析结果与性能。 |
+| 2689 | `conversion_cfunc.part08.test.ts` | `c_func_0400` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed short, int8_t) 的解析结果与性能。 |
+| 2690 | `conversion_cfunc.part08.test.ts` | `c_func_0401` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed long, wchar_t) 的解析结果与性能。 |
+| 2691 | `conversion_cfunc.part08.test.ts` | `c_func_0402` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed long, char16_t) 的解析结果与性能。 |
+| 2692 | `conversion_cfunc.part08.test.ts` | `c_func_0403` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed long, char32_t) 的解析结果与性能。 |
+| 2693 | `conversion_cfunc.part08.test.ts` | `c_func_0404` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed long, size_t) 的解析结果与性能。 |
+| 2694 | `conversion_cfunc.part08.test.ts` | `c_func_0405` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed long, int8_t) 的解析结果与性能。 |
+| 2695 | `conversion_cfunc.part08.test.ts` | `c_func_0406` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(signed long, int16_t) 的解析结果与性能。 |
+| 2696 | `conversion_cfunc.part09.test.ts` | `c_func_0407` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(wchar_t, char16_t) 的解析结果与性能。 |
+| 2697 | `conversion_cfunc.part09.test.ts` | `c_func_0408` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(wchar_t, char32_t) 的解析结果与性能。 |
+| 2698 | `conversion_cfunc.part09.test.ts` | `c_func_0409` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(wchar_t, size_t) 的解析结果与性能。 |
+| 2699 | `conversion_cfunc.part09.test.ts` | `c_func_0410` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(wchar_t, int8_t) 的解析结果与性能。 |
+| 2700 | `conversion_cfunc.part09.test.ts` | `c_func_0411` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(wchar_t, int16_t) 的解析结果与性能。 |
+| 2701 | `conversion_cfunc.part09.test.ts` | `c_func_0412` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(wchar_t, int32_t) 的解析结果与性能。 |
+| 2702 | `conversion_cfunc.part09.test.ts` | `c_func_0413` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char16_t, char32_t) 的解析结果与性能。 |
+| 2703 | `conversion_cfunc.part09.test.ts` | `c_func_0414` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char16_t, size_t) 的解析结果与性能。 |
+| 2704 | `conversion_cfunc.part09.test.ts` | `c_func_0415` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char16_t, int8_t) 的解析结果与性能。 |
+| 2705 | `conversion_cfunc.part09.test.ts` | `c_func_0416` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char16_t, int16_t) 的解析结果与性能。 |
+| 2706 | `conversion_cfunc.part09.test.ts` | `c_func_0417` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char16_t, int32_t) 的解析结果与性能。 |
+| 2707 | `conversion_cfunc.part09.test.ts` | `c_func_0418` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char16_t, int64_t) 的解析结果与性能。 |
+| 2708 | `conversion_cfunc.part09.test.ts` | `c_func_0419` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char32_t, size_t) 的解析结果与性能。 |
+| 2709 | `conversion_cfunc.part09.test.ts` | `c_func_0420` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char32_t, int8_t) 的解析结果与性能。 |
+| 2710 | `conversion_cfunc.part09.test.ts` | `c_func_0421` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char32_t, int16_t) 的解析结果与性能。 |
+| 2711 | `conversion_cfunc.part09.test.ts` | `c_func_0422` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char32_t, int32_t) 的解析结果与性能。 |
+| 2712 | `conversion_cfunc.part09.test.ts` | `c_func_0423` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char32_t, int64_t) 的解析结果与性能。 |
+| 2713 | `conversion_cfunc.part09.test.ts` | `c_func_0424` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(char32_t, uint8_t) 的解析结果与性能。 |
+| 2714 | `conversion_cfunc.part09.test.ts` | `c_func_0425` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(size_t, int8_t) 的解析结果与性能。 |
+| 2715 | `conversion_cfunc.part09.test.ts` | `c_func_0426` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(size_t, int16_t) 的解析结果与性能。 |
+| 2716 | `conversion_cfunc.part09.test.ts` | `c_func_0427` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(size_t, int32_t) 的解析结果与性能。 |
+| 2717 | `conversion_cfunc.part09.test.ts` | `c_func_0428` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(size_t, int64_t) 的解析结果与性能。 |
+| 2718 | `conversion_cfunc.part09.test.ts` | `c_func_0429` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(size_t, uint8_t) 的解析结果与性能。 |
+| 2719 | `conversion_cfunc.part09.test.ts` | `c_func_0430` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(size_t, uint16_t) 的解析结果与性能。 |
+| 2720 | `conversion_cfunc.part09.test.ts` | `c_func_0431` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int8_t, int16_t) 的解析结果与性能。 |
+| 2721 | `conversion_cfunc.part09.test.ts` | `c_func_0432` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int8_t, int32_t) 的解析结果与性能。 |
+| 2722 | `conversion_cfunc.part09.test.ts` | `c_func_0433` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int8_t, int64_t) 的解析结果与性能。 |
+| 2723 | `conversion_cfunc.part09.test.ts` | `c_func_0434` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int8_t, uint8_t) 的解析结果与性能。 |
+| 2724 | `conversion_cfunc.part09.test.ts` | `c_func_0435` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int8_t, uint16_t) 的解析结果与性能。 |
+| 2725 | `conversion_cfunc.part09.test.ts` | `c_func_0436` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int8_t, uint32_t) 的解析结果与性能。 |
+| 2726 | `conversion_cfunc.part09.test.ts` | `c_func_0437` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int16_t, int32_t) 的解析结果与性能。 |
+| 2727 | `conversion_cfunc.part09.test.ts` | `c_func_0438` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int16_t, int64_t) 的解析结果与性能。 |
+| 2728 | `conversion_cfunc.part09.test.ts` | `c_func_0439` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int16_t, uint8_t) 的解析结果与性能。 |
+| 2729 | `conversion_cfunc.part09.test.ts` | `c_func_0440` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int16_t, uint16_t) 的解析结果与性能。 |
+| 2730 | `conversion_cfunc.part09.test.ts` | `c_func_0441` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int16_t, uint32_t) 的解析结果与性能。 |
+| 2731 | `conversion_cfunc.part09.test.ts` | `c_func_0442` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int16_t, uint64_t) 的解析结果与性能。 |
+| 2732 | `conversion_cfunc.part09.test.ts` | `c_func_0443` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int32_t, int64_t) 的解析结果与性能。 |
+| 2733 | `conversion_cfunc.part09.test.ts` | `c_func_0444` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int32_t, uint8_t) 的解析结果与性能。 |
+| 2734 | `conversion_cfunc.part09.test.ts` | `c_func_0445` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int32_t, uint16_t) 的解析结果与性能。 |
+| 2735 | `conversion_cfunc.part09.test.ts` | `c_func_0446` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int32_t, uint32_t) 的解析结果与性能。 |
+| 2736 | `conversion_cfunc.part09.test.ts` | `c_func_0447` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int32_t, uint64_t) 的解析结果与性能。 |
+| 2737 | `conversion_cfunc.part09.test.ts` | `c_func_0448` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int32_t, std::string) 的解析结果与性能。 |
+| 2738 | `conversion_cfunc.part09.test.ts` | `c_func_0449` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int64_t, uint8_t) 的解析结果与性能。 |
+| 2739 | `conversion_cfunc.part09.test.ts` | `c_func_0450` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int64_t, uint16_t) 的解析结果与性能。 |
+| 2740 | `conversion_cfunc.part09.test.ts` | `c_func_0451` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int64_t, uint32_t) 的解析结果与性能。 |
+| 2741 | `conversion_cfunc.part09.test.ts` | `c_func_0452` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int64_t, uint64_t) 的解析结果与性能。 |
+| 2742 | `conversion_cfunc.part09.test.ts` | `c_func_0453` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int64_t, std::string) 的解析结果与性能。 |
+| 2743 | `conversion_cfunc.part09.test.ts` | `c_func_0454` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(int64_t, string) 的解析结果与性能。 |
+| 2744 | `conversion_cfunc.part09.test.ts` | `c_func_0455` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint8_t, uint16_t) 的解析结果与性能。 |
+| 2745 | `conversion_cfunc.part09.test.ts` | `c_func_0456` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint8_t, uint32_t) 的解析结果与性能。 |
+| 2746 | `conversion_cfunc.part09.test.ts` | `c_func_0457` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint8_t, uint64_t) 的解析结果与性能。 |
+| 2747 | `conversion_cfunc.part09.test.ts` | `c_func_0458` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint8_t, std::string) 的解析结果与性能。 |
+| 2748 | `conversion_cfunc.part09.test.ts` | `c_func_0459` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint8_t, string) 的解析结果与性能。 |
+| 2749 | `conversion_cfunc.part10.test.ts` | `c_func_0460` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint8_t, int) 的解析结果与性能。 |
+| 2750 | `conversion_cfunc.part10.test.ts` | `c_func_0461` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint16_t, uint32_t) 的解析结果与性能。 |
+| 2751 | `conversion_cfunc.part10.test.ts` | `c_func_0462` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint16_t, uint64_t) 的解析结果与性能。 |
+| 2752 | `conversion_cfunc.part10.test.ts` | `c_func_0463` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint16_t, std::string) 的解析结果与性能。 |
+| 2753 | `conversion_cfunc.part10.test.ts` | `c_func_0464` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint16_t, string) 的解析结果与性能。 |
+| 2754 | `conversion_cfunc.part10.test.ts` | `c_func_0465` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint16_t, int) 的解析结果与性能。 |
+| 2755 | `conversion_cfunc.part10.test.ts` | `c_func_0466` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint16_t, char) 的解析结果与性能。 |
+| 2756 | `conversion_cfunc.part10.test.ts` | `c_func_0467` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint32_t, uint64_t) 的解析结果与性能。 |
+| 2757 | `conversion_cfunc.part10.test.ts` | `c_func_0468` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint32_t, std::string) 的解析结果与性能。 |
+| 2758 | `conversion_cfunc.part10.test.ts` | `c_func_0469` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint32_t, string) 的解析结果与性能。 |
+| 2759 | `conversion_cfunc.part10.test.ts` | `c_func_0470` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint32_t, int) 的解析结果与性能。 |
+| 2760 | `conversion_cfunc.part10.test.ts` | `c_func_0471` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint32_t, char) 的解析结果与性能。 |
+| 2761 | `conversion_cfunc.part10.test.ts` | `c_func_0472` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint32_t, short) 的解析结果与性能。 |
+| 2762 | `conversion_cfunc.part10.test.ts` | `c_func_0473` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint64_t, std::string) 的解析结果与性能。 |
+| 2763 | `conversion_cfunc.part10.test.ts` | `c_func_0474` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint64_t, string) 的解析结果与性能。 |
+| 2764 | `conversion_cfunc.part10.test.ts` | `c_func_0475` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint64_t, int) 的解析结果与性能。 |
+| 2765 | `conversion_cfunc.part10.test.ts` | `c_func_0476` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint64_t, char) 的解析结果与性能。 |
+| 2766 | `conversion_cfunc.part10.test.ts` | `c_func_0477` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint64_t, short) 的解析结果与性能。 |
+| 2767 | `conversion_cfunc.part10.test.ts` | `c_func_0478` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(uint64_t, long) 的解析结果与性能。 |
+| 2768 | `conversion_cfunc.part10.test.ts` | `c_func_0479` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(std::string, string) 的解析结果与性能。 |
+| 2769 | `conversion_cfunc.part10.test.ts` | `c_func_0480` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(std::string, int) 的解析结果与性能。 |
+| 2770 | `conversion_cfunc.part10.test.ts` | `c_func_0481` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(std::string, char) 的解析结果与性能。 |
+| 2771 | `conversion_cfunc.part10.test.ts` | `c_func_0482` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(std::string, short) 的解析结果与性能。 |
+| 2772 | `conversion_cfunc.part10.test.ts` | `c_func_0483` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(std::string, long) 的解析结果与性能。 |
+| 2773 | `conversion_cfunc.part10.test.ts` | `c_func_0484` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(std::string, long long) 的解析结果与性能。 |
+| 2774 | `conversion_cfunc.part10.test.ts` | `c_func_0485` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(string, int) 的解析结果与性能。 |
+| 2775 | `conversion_cfunc.part10.test.ts` | `c_func_0486` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(string, char) 的解析结果与性能。 |
+| 2776 | `conversion_cfunc.part10.test.ts` | `c_func_0487` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(string, short) 的解析结果与性能。 |
+| 2777 | `conversion_cfunc.part10.test.ts` | `c_func_0488` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(string, long) 的解析结果与性能。 |
+| 2778 | `conversion_cfunc.part10.test.ts` | `c_func_0489` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(string, long long) 的解析结果与性能。 |
+| 2779 | `conversion_cfunc.part10.test.ts` | `c_func_0490` | 性能测试 | 3/4 | h2dts parseFunction：扩充-双参组合：(string, float) 的解析结果与性能。 |
+| 2780 | `conversion_cfunc.part10.test.ts` | `c_func_0491` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(int, char, short) 的解析结果与性能。 |
+| 2781 | `conversion_cfunc.part10.test.ts` | `c_func_0492` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(int, long, long long) 的解析结果与性能。 |
+| 2782 | `conversion_cfunc.part10.test.ts` | `c_func_0493` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(char, short, long) 的解析结果与性能。 |
+| 2783 | `conversion_cfunc.part10.test.ts` | `c_func_0494` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(char, long long, float) 的解析结果与性能。 |
+| 2784 | `conversion_cfunc.part10.test.ts` | `c_func_0495` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(short, long, long long) 的解析结果与性能。 |
+| 2785 | `conversion_cfunc.part10.test.ts` | `c_func_0496` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(short, float, double) 的解析结果与性能。 |
+| 2786 | `conversion_cfunc.part10.test.ts` | `c_func_0497` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(long, long long, float) 的解析结果与性能。 |
+| 2787 | `conversion_cfunc.part10.test.ts` | `c_func_0498` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(long, double, bool) 的解析结果与性能。 |
+| 2788 | `conversion_cfunc.part10.test.ts` | `c_func_0499` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(long long, float, double) 的解析结果与性能。 |
+| 2789 | `conversion_cfunc.part10.test.ts` | `c_func_0500` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(long long, bool, unsigned int) 的解析结果与性能。 |
+| 2790 | `conversion_cfunc.part10.test.ts` | `c_func_0501` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(float, double, bool) 的解析结果与性能。 |
+| 2791 | `conversion_cfunc.part10.test.ts` | `c_func_0502` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(float, unsigned int, unsigned char) 的解析结果与性能。 |
+| 2792 | `conversion_cfunc.part10.test.ts` | `c_func_0503` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(double, bool, unsigned int) 的解析结果与性能。 |
+| 2793 | `conversion_cfunc.part10.test.ts` | `c_func_0504` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(double, unsigned char, unsigned short) 的解析结果与性能。 |
+| 2794 | `conversion_cfunc.part10.test.ts` | `c_func_0505` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(bool, unsigned int, unsigned char) 的解析结果与性能。 |
+| 2795 | `conversion_cfunc.part10.test.ts` | `c_func_0506` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(bool, unsigned short, unsigned long) 的解析结果与性能。 |
+| 2796 | `conversion_cfunc.part10.test.ts` | `c_func_0507` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(unsigned int, unsigned char, unsigned short) 的解析结果与性能。 |
+| 2797 | `conversion_cfunc.part10.test.ts` | `c_func_0508` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(unsigned int, unsigned long, unsigned long long) 的解析结果与性能。 |
+| 2798 | `conversion_cfunc.part10.test.ts` | `c_func_0509` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(unsigned char, unsigned short, unsigned long) 的解析结果与性能。 |
+| 2799 | `conversion_cfunc.part10.test.ts` | `c_func_0510` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(unsigned char, unsigned long long, signed char) 的解析结果与性能。 |
+| 2800 | `conversion_cfunc.part10.test.ts` | `c_func_0511` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(unsigned short, unsigned long, unsigned long long) 的解析结果与性能。 |
+| 2801 | `conversion_cfunc.part11.test.ts` | `c_func_0512` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(unsigned short, signed char, signed short) 的解析结果与性能。 |
+| 2802 | `conversion_cfunc.part11.test.ts` | `c_func_0513` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(unsigned long, unsigned long long, signed char) 的解析结果与性能。 |
+| 2803 | `conversion_cfunc.part11.test.ts` | `c_func_0514` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(unsigned long, signed short, signed long) 的解析结果与性能。 |
+| 2804 | `conversion_cfunc.part11.test.ts` | `c_func_0515` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(unsigned long long, signed char, signed short) 的解析结果与性能。 |
+| 2805 | `conversion_cfunc.part11.test.ts` | `c_func_0516` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(unsigned long long, signed long, wchar_t) 的解析结果与性能。 |
+| 2806 | `conversion_cfunc.part11.test.ts` | `c_func_0517` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(signed char, signed short, signed long) 的解析结果与性能。 |
+| 2807 | `conversion_cfunc.part11.test.ts` | `c_func_0518` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(signed char, wchar_t, char16_t) 的解析结果与性能。 |
+| 2808 | `conversion_cfunc.part11.test.ts` | `c_func_0519` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(signed short, signed long, wchar_t) 的解析结果与性能。 |
+| 2809 | `conversion_cfunc.part11.test.ts` | `c_func_0520` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(signed short, char16_t, char32_t) 的解析结果与性能。 |
+| 2810 | `conversion_cfunc.part11.test.ts` | `c_func_0521` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(signed long, wchar_t, char16_t) 的解析结果与性能。 |
+| 2811 | `conversion_cfunc.part11.test.ts` | `c_func_0522` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(signed long, char32_t, size_t) 的解析结果与性能。 |
+| 2812 | `conversion_cfunc.part11.test.ts` | `c_func_0523` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(wchar_t, char16_t, char32_t) 的解析结果与性能。 |
+| 2813 | `conversion_cfunc.part11.test.ts` | `c_func_0524` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(wchar_t, size_t, int) 的解析结果与性能。 |
+| 2814 | `conversion_cfunc.part11.test.ts` | `c_func_0525` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(char16_t, char32_t, size_t) 的解析结果与性能。 |
+| 2815 | `conversion_cfunc.part11.test.ts` | `c_func_0526` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(char16_t, int, char) 的解析结果与性能。 |
+| 2816 | `conversion_cfunc.part11.test.ts` | `c_func_0527` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(char32_t, size_t, int) 的解析结果与性能。 |
+| 2817 | `conversion_cfunc.part11.test.ts` | `c_func_0528` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(char32_t, char, short) 的解析结果与性能。 |
+| 2818 | `conversion_cfunc.part11.test.ts` | `c_func_0529` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(size_t, int, char) 的解析结果与性能。 |
+| 2819 | `conversion_cfunc.part11.test.ts` | `c_func_0530` | 性能测试 | 3/4 | h2dts parseFunction：扩充-三参组合：(size_t, short, long) 的解析结果与性能。 |
+| 2820 | `conversion_cfunc.part11.test.ts` | `c_func_0531` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(int, short, long long, double) 的解析结果与性能。 |
+| 2821 | `conversion_cfunc.part11.test.ts` | `c_func_0532` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(char, long, float, bool) 的解析结果与性能。 |
+| 2822 | `conversion_cfunc.part11.test.ts` | `c_func_0533` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(short, long long, double, unsigned int) 的解析结果与性能。 |
+| 2823 | `conversion_cfunc.part11.test.ts` | `c_func_0534` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(long, float, bool, unsigned char) 的解析结果与性能。 |
+| 2824 | `conversion_cfunc.part11.test.ts` | `c_func_0535` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(long long, double, unsigned int, unsigned short) 的解析结果与性能。 |
+| 2825 | `conversion_cfunc.part11.test.ts` | `c_func_0536` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(float, bool, unsigned char, unsigned long) 的解析结果与性能。 |
+| 2826 | `conversion_cfunc.part11.test.ts` | `c_func_0537` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(double, unsigned int, unsigned short, unsigned long long) 的解析结果与性能。 |
+| 2827 | `conversion_cfunc.part11.test.ts` | `c_func_0538` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(bool, unsigned char, unsigned long, signed char) 的解析结果与性能。 |
+| 2828 | `conversion_cfunc.part11.test.ts` | `c_func_0539` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(unsigned int, unsigned short, unsigned long long, signed short) 的解析结果与性能。 |
+| 2829 | `conversion_cfunc.part11.test.ts` | `c_func_0540` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(unsigned char, unsigned long, signed char, signed long) 的解析结果与性能。 |
+| 2830 | `conversion_cfunc.part11.test.ts` | `c_func_0541` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(unsigned short, unsigned long long, signed short, wchar_t) 的解析结果与性能。 |
+| 2831 | `conversion_cfunc.part11.test.ts` | `c_func_0542` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(unsigned long, signed char, signed long, char16_t) 的解析结果与性能。 |
+| 2832 | `conversion_cfunc.part11.test.ts` | `c_func_0543` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(unsigned long long, signed short, wchar_t, char32_t) 的解析结果与性能。 |
+| 2833 | `conversion_cfunc.part11.test.ts` | `c_func_0544` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(signed char, signed long, char16_t, size_t) 的解析结果与性能。 |
+| 2834 | `conversion_cfunc.part11.test.ts` | `c_func_0545` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(signed short, wchar_t, char32_t, int) 的解析结果与性能。 |
+| 2835 | `conversion_cfunc.part11.test.ts` | `c_func_0546` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(signed long, char16_t, size_t, char) 的解析结果与性能。 |
+| 2836 | `conversion_cfunc.part11.test.ts` | `c_func_0547` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(wchar_t, char32_t, int, short) 的解析结果与性能。 |
+| 2837 | `conversion_cfunc.part11.test.ts` | `c_func_0548` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(char16_t, size_t, char, long) 的解析结果与性能。 |
+| 2838 | `conversion_cfunc.part11.test.ts` | `c_func_0549` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(char32_t, int, short, long long) 的解析结果与性能。 |
+| 2839 | `conversion_cfunc.part11.test.ts` | `c_func_0550` | 性能测试 | 3/4 | h2dts parseFunction：扩充-四参组合：(size_t, char, long, float) 的解析结果与性能。 |
+| 2840 | `conversion_cfunc.part11.test.ts` | `c_func_0551` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：int + long + double + unsigned char + unsigned long long 的解析结果与性能。 |
+| 2841 | `conversion_cfunc.part11.test.ts` | `c_func_0552` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：char + long long + bool + unsigned short + signed char 的解析结果与性能。 |
+| 2842 | `conversion_cfunc.part11.test.ts` | `c_func_0553` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：short + float + unsigned int + unsigned long + signed short 的解析结果与性能。 |
+| 2843 | `conversion_cfunc.part11.test.ts` | `c_func_0554` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：long + double + unsigned char + unsigned long long + signed long 的解析结果与性能。 |
+| 2844 | `conversion_cfunc.part11.test.ts` | `c_func_0555` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：long long + bool + unsigned short + signed char + wchar_t 的解析结果与性能。 |
+| 2845 | `conversion_cfunc.part11.test.ts` | `c_func_0556` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：float + unsigned int + unsigned long + signed short + char16_t 的解析结果与性能。 |
+| 2846 | `conversion_cfunc.part11.test.ts` | `c_func_0557` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：double + unsigned char + unsigned long long + signed long + char32_t 的解析结果与性能。 |
+| 2847 | `conversion_cfunc.part11.test.ts` | `c_func_0558` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：bool + unsigned short + signed char + wchar_t + size_t 的解析结果与性能。 |
+| 2848 | `conversion_cfunc.part11.test.ts` | `c_func_0559` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：unsigned int + unsigned long + signed short + char16_t + int 的解析结果与性能。 |
+| 2849 | `conversion_cfunc.part12.test.ts` | `c_func_0560` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：unsigned char + unsigned long long + signed long + char32_t + char 的解析结果与性能。 |
+| 2850 | `conversion_cfunc.part12.test.ts` | `c_func_0561` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：unsigned short + signed char + wchar_t + size_t + short 的解析结果与性能。 |
+| 2851 | `conversion_cfunc.part12.test.ts` | `c_func_0562` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：unsigned long + signed short + char16_t + int + long 的解析结果与性能。 |
+| 2852 | `conversion_cfunc.part12.test.ts` | `c_func_0563` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：unsigned long long + signed long + char32_t + char + long long 的解析结果与性能。 |
+| 2853 | `conversion_cfunc.part12.test.ts` | `c_func_0564` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：signed char + wchar_t + size_t + short + float 的解析结果与性能。 |
+| 2854 | `conversion_cfunc.part12.test.ts` | `c_func_0565` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：signed short + char16_t + int + long + double 的解析结果与性能。 |
+| 2855 | `conversion_cfunc.part12.test.ts` | `c_func_0566` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：signed long + char32_t + char + long long + bool 的解析结果与性能。 |
+| 2856 | `conversion_cfunc.part12.test.ts` | `c_func_0567` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：wchar_t + size_t + short + float + unsigned int 的解析结果与性能。 |
+| 2857 | `conversion_cfunc.part12.test.ts` | `c_func_0568` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：char16_t + int + long + double + unsigned char 的解析结果与性能。 |
+| 2858 | `conversion_cfunc.part12.test.ts` | `c_func_0569` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：char32_t + char + long long + bool + unsigned short 的解析结果与性能。 |
+| 2859 | `conversion_cfunc.part12.test.ts` | `c_func_0570` | 性能测试 | 3/4 | h2dts parseFunction：扩充-五参组合：size_t + short + float + unsigned int + unsigned long 的解析结果与性能。 |
+| 2860 | `conversion_cfunc.part12.test.ts` | `c_func_0571` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：int[4] 的解析结果与性能。 |
+| 2861 | `conversion_cfunc.part12.test.ts` | `c_func_0572` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：char[8] 的解析结果与性能。 |
+| 2862 | `conversion_cfunc.part12.test.ts` | `c_func_0573` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：short[10] 的解析结果与性能。 |
+| 2863 | `conversion_cfunc.part12.test.ts` | `c_func_0574` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：long[16] 的解析结果与性能。 |
+| 2864 | `conversion_cfunc.part12.test.ts` | `c_func_0575` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：long long[20] 的解析结果与性能。 |
+| 2865 | `conversion_cfunc.part12.test.ts` | `c_func_0576` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：float[32] 的解析结果与性能。 |
+| 2866 | `conversion_cfunc.part12.test.ts` | `c_func_0577` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：double[64] 的解析结果与性能。 |
+| 2867 | `conversion_cfunc.part12.test.ts` | `c_func_0578` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：bool[100] 的解析结果与性能。 |
+| 2868 | `conversion_cfunc.part12.test.ts` | `c_func_0579` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：unsigned int[128] 的解析结果与性能。 |
+| 2869 | `conversion_cfunc.part12.test.ts` | `c_func_0580` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：unsigned char[256] 的解析结果与性能。 |
+| 2870 | `conversion_cfunc.part12.test.ts` | `c_func_0581` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：unsigned short[4] 的解析结果与性能。 |
+| 2871 | `conversion_cfunc.part12.test.ts` | `c_func_0582` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：unsigned long[8] 的解析结果与性能。 |
+| 2872 | `conversion_cfunc.part12.test.ts` | `c_func_0583` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：unsigned long long[10] 的解析结果与性能。 |
+| 2873 | `conversion_cfunc.part12.test.ts` | `c_func_0584` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：signed char[16] 的解析结果与性能。 |
+| 2874 | `conversion_cfunc.part12.test.ts` | `c_func_0585` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：signed short[20] 的解析结果与性能。 |
+| 2875 | `conversion_cfunc.part12.test.ts` | `c_func_0586` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：signed long[32] 的解析结果与性能。 |
+| 2876 | `conversion_cfunc.part12.test.ts` | `c_func_0587` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：wchar_t[64] 的解析结果与性能。 |
+| 2877 | `conversion_cfunc.part12.test.ts` | `c_func_0588` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：char16_t[100] 的解析结果与性能。 |
+| 2878 | `conversion_cfunc.part12.test.ts` | `c_func_0589` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：char32_t[128] 的解析结果与性能。 |
+| 2879 | `conversion_cfunc.part12.test.ts` | `c_func_0590` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：size_t[256] 的解析结果与性能。 |
+| 2880 | `conversion_cfunc.part12.test.ts` | `c_func_0591` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：int[4] 的解析结果与性能。 |
+| 2881 | `conversion_cfunc.part12.test.ts` | `c_func_0592` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：char[8] 的解析结果与性能。 |
+| 2882 | `conversion_cfunc.part12.test.ts` | `c_func_0593` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：short[10] 的解析结果与性能。 |
+| 2883 | `conversion_cfunc.part12.test.ts` | `c_func_0594` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：long[16] 的解析结果与性能。 |
+| 2884 | `conversion_cfunc.part12.test.ts` | `c_func_0595` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：long long[20] 的解析结果与性能。 |
+| 2885 | `conversion_cfunc.part12.test.ts` | `c_func_0596` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：float[32] 的解析结果与性能。 |
+| 2886 | `conversion_cfunc.part12.test.ts` | `c_func_0597` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：double[64] 的解析结果与性能。 |
+| 2887 | `conversion_cfunc.part12.test.ts` | `c_func_0598` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：bool[100] 的解析结果与性能。 |
+| 2888 | `conversion_cfunc.part12.test.ts` | `c_func_0599` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：unsigned int[128] 的解析结果与性能。 |
+| 2889 | `conversion_cfunc.part12.test.ts` | `c_func_0600` | 性能测试 | 3/4 | h2dts parseFunction：扩充-数组入参：unsigned char[256] 的解析结果与性能。 |
+| 2890 | `conversion_cfunc.part12.test.ts` | `c_func_0601` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：char* 的解析结果与性能。 |
+| 2891 | `conversion_cfunc.part12.test.ts` | `c_func_0602` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：int* 的解析结果与性能。 |
+| 2892 | `conversion_cfunc.part12.test.ts` | `c_func_0603` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：double* 的解析结果与性能。 |
+| 2893 | `conversion_cfunc.part12.test.ts` | `c_func_0604` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：float* 的解析结果与性能。 |
+| 2894 | `conversion_cfunc.part12.test.ts` | `c_func_0605` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：long* 的解析结果与性能。 |
+| 2895 | `conversion_cfunc.part12.test.ts` | `c_func_0606` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：short* 的解析结果与性能。 |
+| 2896 | `conversion_cfunc.part12.test.ts` | `c_func_0607` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：bool* 的解析结果与性能。 |
+| 2897 | `conversion_cfunc.part12.test.ts` | `c_func_0608` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：wchar_t* 的解析结果与性能。 |
+| 2898 | `conversion_cfunc.part12.test.ts` | `c_func_0609` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：std::string* 的解析结果与性能。 |
+| 2899 | `conversion_cfunc.part12.test.ts` | `c_func_0610` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：void* 的解析结果与性能。 |
+| 2900 | `conversion_cfunc.part12.test.ts` | `c_func_0611` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：unsigned int* 的解析结果与性能。 |
+| 2901 | `conversion_cfunc.part13.test.ts` | `c_func_0612` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：size_t* 的解析结果与性能。 |
+| 2902 | `conversion_cfunc.part13.test.ts` | `c_func_0613` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：int64_t* 的解析结果与性能。 |
+| 2903 | `conversion_cfunc.part13.test.ts` | `c_func_0614` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：uint8_t* 的解析结果与性能。 |
+| 2904 | `conversion_cfunc.part13.test.ts` | `c_func_0615` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：long long* 的解析结果与性能。 |
+| 2905 | `conversion_cfunc.part13.test.ts` | `c_func_0616` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：long double* 的解析结果与性能。 |
+| 2906 | `conversion_cfunc.part13.test.ts` | `c_func_0617` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：std::vector<int>* 的解析结果与性能。 |
+| 2907 | `conversion_cfunc.part13.test.ts` | `c_func_0618` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：std::map<std::string,int>* 的解析结果与性能。 |
+| 2908 | `conversion_cfunc.part13.test.ts` | `c_func_0619` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：char** 的解析结果与性能。 |
+| 2909 | `conversion_cfunc.part13.test.ts` | `c_func_0620` | 性能测试 | 3/4 | h2dts parseFunction：扩充-指针入参：int** 的解析结果与性能。 |
+| 2910 | `conversion_cfunc.part13.test.ts` | `c_func_0621` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::vector<int>, std::map<int,std::string>) 的解析结果与性能。 |
+| 2911 | `conversion_cfunc.part13.test.ts` | `c_func_0622` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::vector<std::string>, std::set<int>) 的解析结果与性能。 |
+| 2912 | `conversion_cfunc.part13.test.ts` | `c_func_0623` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::vector<double>, std::set<std::string>) 的解析结果与性能。 |
+| 2913 | `conversion_cfunc.part13.test.ts` | `c_func_0624` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::vector<bool>, std::list<int>) 的解析结果与性能。 |
+| 2914 | `conversion_cfunc.part13.test.ts` | `c_func_0625` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::map<std::string,int>, std::list<std::string>) 的解析结果与性能。 |
+| 2915 | `conversion_cfunc.part13.test.ts` | `c_func_0626` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::map<int,std::string>, std::deque<int>) 的解析结果与性能。 |
+| 2916 | `conversion_cfunc.part13.test.ts` | `c_func_0627` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::set<int>, std::deque<std::string>) 的解析结果与性能。 |
+| 2917 | `conversion_cfunc.part13.test.ts` | `c_func_0628` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::set<std::string>, std::pair<int,int>) 的解析结果与性能。 |
+| 2918 | `conversion_cfunc.part13.test.ts` | `c_func_0629` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::list<int>, std::pair<std::string,int>) 的解析结果与性能。 |
+| 2919 | `conversion_cfunc.part13.test.ts` | `c_func_0630` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::list<std::string>, std::tuple<int,int,int>) 的解析结果与性能。 |
+| 2920 | `conversion_cfunc.part13.test.ts` | `c_func_0631` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::deque<int>, std::tuple<std::string,int,double>) 的解析结果与性能。 |
+| 2921 | `conversion_cfunc.part13.test.ts` | `c_func_0632` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::deque<std::string>, std::queue<int>) 的解析结果与性能。 |
+| 2922 | `conversion_cfunc.part13.test.ts` | `c_func_0633` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::pair<int,int>, std::stack<int>) 的解析结果与性能。 |
+| 2923 | `conversion_cfunc.part13.test.ts` | `c_func_0634` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::pair<std::string,int>, std::priority_queue<int>) 的解析结果与性能。 |
+| 2924 | `conversion_cfunc.part13.test.ts` | `c_func_0635` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::tuple<int,int,int>, std::multimap<int,int>) 的解析结果与性能。 |
+| 2925 | `conversion_cfunc.part13.test.ts` | `c_func_0636` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::tuple<std::string,int,double>, std::multiset<int>) 的解析结果与性能。 |
+| 2926 | `conversion_cfunc.part13.test.ts` | `c_func_0637` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::queue<int>, std::unordered_map<std::string,int>) 的解析结果与性能。 |
+| 2927 | `conversion_cfunc.part13.test.ts` | `c_func_0638` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::stack<int>, std::unordered_set<int>) 的解析结果与性能。 |
+| 2928 | `conversion_cfunc.part13.test.ts` | `c_func_0639` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::priority_queue<int>, std::unordered_multimap<int,int>) 的解析结果与性能。 |
+| 2929 | `conversion_cfunc.part13.test.ts` | `c_func_0640` | 性能测试 | 3/4 | h2dts parseFunction：扩充-容器组合：(std::multimap<int,int>, std::unordered_multiset<int>) 的解析结果与性能。 |
+| 2930 | `conversion_cfunc.part13.test.ts` | `c_func_0641` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 int 的解析结果与性能。 |
+| 2931 | `conversion_cfunc.part13.test.ts` | `c_func_0642` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 char 的解析结果与性能。 |
+| 2932 | `conversion_cfunc.part13.test.ts` | `c_func_0643` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 short 的解析结果与性能。 |
+| 2933 | `conversion_cfunc.part13.test.ts` | `c_func_0644` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 long 的解析结果与性能。 |
+| 2934 | `conversion_cfunc.part13.test.ts` | `c_func_0645` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 long long 的解析结果与性能。 |
+| 2935 | `conversion_cfunc.part13.test.ts` | `c_func_0646` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 float 的解析结果与性能。 |
+| 2936 | `conversion_cfunc.part13.test.ts` | `c_func_0647` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 double 的解析结果与性能。 |
+| 2937 | `conversion_cfunc.part13.test.ts` | `c_func_0648` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 bool 的解析结果与性能。 |
+| 2938 | `conversion_cfunc.part13.test.ts` | `c_func_0649` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 unsigned int 的解析结果与性能。 |
+| 2939 | `conversion_cfunc.part13.test.ts` | `c_func_0650` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 unsigned char 的解析结果与性能。 |
+| 2940 | `conversion_cfunc.part13.test.ts` | `c_func_0651` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 unsigned short 的解析结果与性能。 |
+| 2941 | `conversion_cfunc.part13.test.ts` | `c_func_0652` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 unsigned long 的解析结果与性能。 |
+| 2942 | `conversion_cfunc.part13.test.ts` | `c_func_0653` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 unsigned long long 的解析结果与性能。 |
+| 2943 | `conversion_cfunc.part13.test.ts` | `c_func_0654` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 signed char 的解析结果与性能。 |
+| 2944 | `conversion_cfunc.part13.test.ts` | `c_func_0655` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 signed short 的解析结果与性能。 |
+| 2945 | `conversion_cfunc.part13.test.ts` | `c_func_0656` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 signed long 的解析结果与性能。 |
+| 2946 | `conversion_cfunc.part13.test.ts` | `c_func_0657` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 wchar_t 的解析结果与性能。 |
+| 2947 | `conversion_cfunc.part13.test.ts` | `c_func_0658` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 char16_t 的解析结果与性能。 |
+| 2948 | `conversion_cfunc.part13.test.ts` | `c_func_0659` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 char32_t 的解析结果与性能。 |
+| 2949 | `conversion_cfunc.part13.test.ts` | `c_func_0660` | 性能测试 | 3/4 | h2dts parseFunction：扩充-static：返回/入参 size_t 的解析结果与性能。 |
+| 2950 | `conversion_cfunc.part13.test.ts` | `c_func_0661` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const int 的解析结果与性能。 |
+| 2951 | `conversion_cfunc.part13.test.ts` | `c_func_0662` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const double 的解析结果与性能。 |
+| 2952 | `conversion_cfunc.part13.test.ts` | `c_func_0663` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const std::string& 的解析结果与性能。 |
+| 2953 | `conversion_cfunc.part13.test.ts` | `c_func_0664` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const char* 的解析结果与性能。 |
+| 2954 | `conversion_cfunc.part13.test.ts` | `c_func_0665` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const char* const 的解析结果与性能。 |
+| 2955 | `conversion_cfunc.part13.test.ts` | `c_func_0666` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const bool 的解析结果与性能。 |
+| 2956 | `conversion_cfunc.part14.test.ts` | `c_func_0667` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const float 的解析结果与性能。 |
+| 2957 | `conversion_cfunc.part14.test.ts` | `c_func_0668` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const long 的解析结果与性能。 |
+| 2958 | `conversion_cfunc.part14.test.ts` | `c_func_0669` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const short 的解析结果与性能。 |
+| 2959 | `conversion_cfunc.part14.test.ts` | `c_func_0670` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const unsigned int 的解析结果与性能。 |
+| 2960 | `conversion_cfunc.part14.test.ts` | `c_func_0671` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const size_t 的解析结果与性能。 |
+| 2961 | `conversion_cfunc.part14.test.ts` | `c_func_0672` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const wchar_t* 的解析结果与性能。 |
+| 2962 | `conversion_cfunc.part14.test.ts` | `c_func_0673` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const std::vector<int>& 的解析结果与性能。 |
+| 2963 | `conversion_cfunc.part14.test.ts` | `c_func_0674` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const long long 的解析结果与性能。 |
+| 2964 | `conversion_cfunc.part14.test.ts` | `c_func_0675` | 性能测试 | 3/4 | h2dts parseFunction：扩充-const 参数：const unsigned char 的解析结果与性能。 |
+| 2965 | `conversion_cfunc.part14.test.ts` | `c_func_0676` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内函数 int 的解析结果与性能。 |
+| 2966 | `conversion_cfunc.part14.test.ts` | `c_func_0677` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内函数 char 的解析结果与性能。 |
+| 2967 | `conversion_cfunc.part14.test.ts` | `c_func_0678` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内函数 short 的解析结果与性能。 |
+| 2968 | `conversion_cfunc.part14.test.ts` | `c_func_0679` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内函数 long 的解析结果与性能。 |
+| 2969 | `conversion_cfunc.part14.test.ts` | `c_func_0680` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内函数 long long 的解析结果与性能。 |
+| 2970 | `conversion_cfunc.part14.test.ts` | `c_func_0681` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内函数 float 的解析结果与性能。 |
+| 2971 | `conversion_cfunc.part14.test.ts` | `c_func_0682` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内函数 double 的解析结果与性能。 |
+| 2972 | `conversion_cfunc.part14.test.ts` | `c_func_0683` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内函数 bool 的解析结果与性能。 |
+| 2973 | `conversion_cfunc.part14.test.ts` | `c_func_0684` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内函数 unsigned int 的解析结果与性能。 |
+| 2974 | `conversion_cfunc.part14.test.ts` | `c_func_0685` | 性能测试 | 3/4 | h2dts parseFunction：扩充-namespace：域内函数 unsigned char 的解析结果与性能。 |
+| 2975 | `conversion_cfunc.part14.test.ts` | `c_func_0686` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 2 个 的解析结果与性能。 |
+| 2976 | `conversion_cfunc.part14.test.ts` | `c_func_0687` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 3 个 的解析结果与性能。 |
+| 2977 | `conversion_cfunc.part14.test.ts` | `c_func_0688` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 4 个 的解析结果与性能。 |
+| 2978 | `conversion_cfunc.part14.test.ts` | `c_func_0689` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 5 个 的解析结果与性能。 |
+| 2979 | `conversion_cfunc.part14.test.ts` | `c_func_0690` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 6 个 的解析结果与性能。 |
+| 2980 | `conversion_cfunc.part14.test.ts` | `c_func_0691` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 8 个 的解析结果与性能。 |
+| 2981 | `conversion_cfunc.part14.test.ts` | `c_func_0692` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 10 个 的解析结果与性能。 |
+| 2982 | `conversion_cfunc.part14.test.ts` | `c_func_0693` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 15 个 的解析结果与性能。 |
+| 2983 | `conversion_cfunc.part14.test.ts` | `c_func_0694` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多函数：同文件 20 个 的解析结果与性能。 |
+| 2984 | `conversion_cfunc.part14.test.ts` | `c_func_0695` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：int (*cb)(int) 的解析结果与性能。 |
+| 2985 | `conversion_cfunc.part14.test.ts` | `c_func_0696` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：void (*fn)(int, int) 的解析结果与性能。 |
+| 2986 | `conversion_cfunc.part14.test.ts` | `c_func_0697` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：double (*math)(double) 的解析结果与性能。 |
+| 2987 | `conversion_cfunc.part14.test.ts` | `c_func_0698` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：std::string (*strf)(int) 的解析结果与性能。 |
+| 2988 | `conversion_cfunc.part14.test.ts` | `c_func_0699` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：bool (*pred)(int, double) 的解析结果与性能。 |
+| 2989 | `conversion_cfunc.part14.test.ts` | `c_func_0700` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：char (*chf)(char) 的解析结果与性能。 |
+| 2990 | `conversion_cfunc.part14.test.ts` | `c_func_0701` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：long (*lf)(long) 的解析结果与性能。 |
+| 2991 | `conversion_cfunc.part14.test.ts` | `c_func_0702` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：float (*ff)(float) 的解析结果与性能。 |
+| 2992 | `conversion_cfunc.part14.test.ts` | `c_func_0703` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：unsigned int (*uf)(unsigned int) 的解析结果与性能。 |
+| 2993 | `conversion_cfunc.part14.test.ts` | `c_func_0704` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：short (*sf)(short) 的解析结果与性能。 |
+| 2994 | `conversion_cfunc.part14.test.ts` | `c_func_0705` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：wchar_t (*wf)(wchar_t) 的解析结果与性能。 |
+| 2995 | `conversion_cfunc.part14.test.ts` | `c_func_0706` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：size_t (*zf)(size_t) 的解析结果与性能。 |
+| 2996 | `conversion_cfunc.part14.test.ts` | `c_func_0707` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：int64_t (*i64f)(int64_t) 的解析结果与性能。 |
+| 2997 | `conversion_cfunc.part14.test.ts` | `c_func_0708` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：std::vector<int> (*vf)(int) 的解析结果与性能。 |
+| 2998 | `conversion_cfunc.part14.test.ts` | `c_func_0709` | 性能测试 | 3/4 | h2dts parseFunction：扩充-typedef 函数指针：void (*nf)(std::string) 的解析结果与性能。 |
+| 2999 | `conversion_cfunc.part14.test.ts` | `c_func_0710` | 性能测试 | 3/4 | h2dts parseFunction：扩充-重载：ov0 4 组重载 的解析结果与性能。 |
+| 3000 | `conversion_cfunc.part14.test.ts` | `c_func_0711` | 性能测试 | 3/4 | h2dts parseFunction：扩充-重载：ov1 4 组重载 的解析结果与性能。 |
+| 3001 | `conversion_cfunc.part15.test.ts` | `c_func_0712` | 性能测试 | 3/4 | h2dts parseFunction：扩充-重载：ov2 4 组重载 的解析结果与性能。 |
+| 3002 | `conversion_cfunc.part15.test.ts` | `c_func_0713` | 性能测试 | 3/4 | h2dts parseFunction：扩充-重载：ov3 4 组重载 的解析结果与性能。 |
+| 3003 | `conversion_cfunc.part15.test.ts` | `c_func_0714` | 性能测试 | 3/4 | h2dts parseFunction：扩充-重载：ov4 4 组重载 的解析结果与性能。 |
+| 3004 | `conversion_cfunc.part15.test.ts` | `c_func_0715` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：int = 0 的解析结果与性能。 |
+| 3005 | `conversion_cfunc.part15.test.ts` | `c_func_0716` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：double = 0.0 的解析结果与性能。 |
+| 3006 | `conversion_cfunc.part15.test.ts` | `c_func_0717` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：bool = false 的解析结果与性能。 |
+| 3007 | `conversion_cfunc.part15.test.ts` | `c_func_0718` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：std::string = "x" 的解析结果与性能。 |
+| 3008 | `conversion_cfunc.part15.test.ts` | `c_func_0719` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：char = 'a' 的解析结果与性能。 |
+| 3009 | `conversion_cfunc.part15.test.ts` | `c_func_0720` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：long = 1L 的解析结果与性能。 |
+| 3010 | `conversion_cfunc.part15.test.ts` | `c_func_0721` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：float = 1.5f 的解析结果与性能。 |
+| 3011 | `conversion_cfunc.part15.test.ts` | `c_func_0722` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：unsigned int = 1u 的解析结果与性能。 |
+| 3012 | `conversion_cfunc.part15.test.ts` | `c_func_0723` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：short = 2 的解析结果与性能。 |
+| 3013 | `conversion_cfunc.part15.test.ts` | `c_func_0724` | 性能测试 | 3/4 | h2dts parseFunction：扩充-默认参数：size_t = 1024 的解析结果与性能。 |
+| 3014 | `conversion_cfunc.part15.test.ts` | `c_func_0725` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：6 参 的解析结果与性能。 |
+| 3015 | `conversion_cfunc.part15.test.ts` | `c_func_0726` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：7 参 的解析结果与性能。 |
+| 3016 | `conversion_cfunc.part15.test.ts` | `c_func_0727` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：8 参 的解析结果与性能。 |
+| 3017 | `conversion_cfunc.part15.test.ts` | `c_func_0728` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：6 参 的解析结果与性能。 |
+| 3018 | `conversion_cfunc.part15.test.ts` | `c_func_0729` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：7 参 的解析结果与性能。 |
+| 3019 | `conversion_cfunc.part15.test.ts` | `c_func_0730` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：8 参 的解析结果与性能。 |
+| 3020 | `conversion_cfunc.part15.test.ts` | `c_func_0731` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：6 参 的解析结果与性能。 |
+| 3021 | `conversion_cfunc.part15.test.ts` | `c_func_0732` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：7 参 的解析结果与性能。 |
+| 3022 | `conversion_cfunc.part15.test.ts` | `c_func_0733` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：8 参 的解析结果与性能。 |
+| 3023 | `conversion_cfunc.part15.test.ts` | `c_func_0734` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：6 参 的解析结果与性能。 |
+| 3024 | `conversion_cfunc.part15.test.ts` | `c_func_0735` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：7 参 的解析结果与性能。 |
+| 3025 | `conversion_cfunc.part15.test.ts` | `c_func_0736` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：8 参 的解析结果与性能。 |
+| 3026 | `conversion_cfunc.part15.test.ts` | `c_func_0737` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：6 参 的解析结果与性能。 |
+| 3027 | `conversion_cfunc.part15.test.ts` | `c_func_0738` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：7 参 的解析结果与性能。 |
+| 3028 | `conversion_cfunc.part15.test.ts` | `c_func_0739` | 性能测试 | 3/4 | h2dts parseFunction：扩充-多参数：8 参 的解析结果与性能。 |
+| 3029 | `conversion_cfunc.part16.test.ts` | `c_func_0740` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::shared_ptr<int> 的解析结果与性能。 |
+| 3030 | `conversion_cfunc.part16.test.ts` | `c_func_0741` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::shared_ptr<int> 的解析结果与性能。 |
+| 3031 | `conversion_cfunc.part16.test.ts` | `c_func_0742` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::shared_ptr<std::string> 的解析结果与性能。 |
+| 3032 | `conversion_cfunc.part16.test.ts` | `c_func_0743` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::shared_ptr<std::string> 的解析结果与性能。 |
+| 3033 | `conversion_cfunc.part16.test.ts` | `c_func_0744` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::shared_ptr<double> 的解析结果与性能。 |
+| 3034 | `conversion_cfunc.part16.test.ts` | `c_func_0745` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::shared_ptr<double> 的解析结果与性能。 |
+| 3035 | `conversion_cfunc.part16.test.ts` | `c_func_0746` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::unique_ptr<int> 的解析结果与性能。 |
+| 3036 | `conversion_cfunc.part16.test.ts` | `c_func_0747` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::unique_ptr<int> 的解析结果与性能。 |
+| 3037 | `conversion_cfunc.part16.test.ts` | `c_func_0748` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::unique_ptr<std::string> 的解析结果与性能。 |
+| 3038 | `conversion_cfunc.part16.test.ts` | `c_func_0749` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::unique_ptr<std::string> 的解析结果与性能。 |
+| 3039 | `conversion_cfunc.part16.test.ts` | `c_func_0750` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::unique_ptr<char> 的解析结果与性能。 |
+| 3040 | `conversion_cfunc.part16.test.ts` | `c_func_0751` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::unique_ptr<char> 的解析结果与性能。 |
+| 3041 | `conversion_cfunc.part16.test.ts` | `c_func_0752` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::weak_ptr<int> 的解析结果与性能。 |
+| 3042 | `conversion_cfunc.part16.test.ts` | `c_func_0753` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::weak_ptr<int> 的解析结果与性能。 |
+| 3043 | `conversion_cfunc.part16.test.ts` | `c_func_0754` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::weak_ptr<std::string> 的解析结果与性能。 |
+| 3044 | `conversion_cfunc.part16.test.ts` | `c_func_0755` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::weak_ptr<std::string> 的解析结果与性能。 |
+| 3045 | `conversion_cfunc.part16.test.ts` | `c_func_0756` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::optional<int> 的解析结果与性能。 |
+| 3046 | `conversion_cfunc.part16.test.ts` | `c_func_0757` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::optional<int> 的解析结果与性能。 |
+| 3047 | `conversion_cfunc.part16.test.ts` | `c_func_0758` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::optional<std::string> 的解析结果与性能。 |
+| 3048 | `conversion_cfunc.part16.test.ts` | `c_func_0759` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::optional<std::string> 的解析结果与性能。 |
+| 3049 | `conversion_cfunc.part16.test.ts` | `c_func_0760` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::optional<double> 的解析结果与性能。 |
+| 3050 | `conversion_cfunc.part16.test.ts` | `c_func_0761` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::optional<double> 的解析结果与性能。 |
+| 3051 | `conversion_cfunc.part16.test.ts` | `c_func_0762` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::optional<bool> 的解析结果与性能。 |
+| 3052 | `conversion_cfunc.part16.test.ts` | `c_func_0763` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::optional<bool> 的解析结果与性能。 |
+| 3053 | `conversion_cfunc.part16.test.ts` | `c_func_0764` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::variant<int, std::string> 的解析结果与性能。 |
+| 3054 | `conversion_cfunc.part16.test.ts` | `c_func_0765` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::variant<int, std::string> 的解析结果与性能。 |
+| 3055 | `conversion_cfunc.part16.test.ts` | `c_func_0766` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::variant<double, bool> 的解析结果与性能。 |
+| 3056 | `conversion_cfunc.part16.test.ts` | `c_func_0767` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::variant<double, bool> 的解析结果与性能。 |
+| 3057 | `conversion_cfunc.part16.test.ts` | `c_func_0768` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::variant<int, float, double> 的解析结果与性能。 |
+| 3058 | `conversion_cfunc.part16.test.ts` | `c_func_0769` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::variant<int, float, double> 的解析结果与性能。 |
+| 3059 | `conversion_cfunc.part16.test.ts` | `c_func_0770` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::string_view 的解析结果与性能。 |
+| 3060 | `conversion_cfunc.part16.test.ts` | `c_func_0771` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::string_view 的解析结果与性能。 |
+| 3061 | `conversion_cfunc.part16.test.ts` | `c_func_0772` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::bitset<8> 的解析结果与性能。 |
+| 3062 | `conversion_cfunc.part16.test.ts` | `c_func_0773` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::bitset<8> 的解析结果与性能。 |
+| 3063 | `conversion_cfunc.part16.test.ts` | `c_func_0774` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::bitset<16> 的解析结果与性能。 |
+| 3064 | `conversion_cfunc.part16.test.ts` | `c_func_0775` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::bitset<16> 的解析结果与性能。 |
+| 3065 | `conversion_cfunc.part16.test.ts` | `c_func_0776` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::bitset<32> 的解析结果与性能。 |
+| 3066 | `conversion_cfunc.part16.test.ts` | `c_func_0777` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::bitset<32> 的解析结果与性能。 |
+| 3067 | `conversion_cfunc.part16.test.ts` | `c_func_0778` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::span<int> 的解析结果与性能。 |
+| 3068 | `conversion_cfunc.part16.test.ts` | `c_func_0779` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::span<int> 的解析结果与性能。 |
+| 3069 | `conversion_cfunc.part16.test.ts` | `c_func_0780` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::span<double> 的解析结果与性能。 |
+| 3070 | `conversion_cfunc.part16.test.ts` | `c_func_0781` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::span<double> 的解析结果与性能。 |
+| 3071 | `conversion_cfunc.part16.test.ts` | `c_func_0782` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::atomic<int> 的解析结果与性能。 |
+| 3072 | `conversion_cfunc.part16.test.ts` | `c_func_0783` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::atomic<int> 的解析结果与性能。 |
+| 3073 | `conversion_cfunc.part16.test.ts` | `c_func_0784` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::atomic<bool> 的解析结果与性能。 |
+| 3074 | `conversion_cfunc.part16.test.ts` | `c_func_0785` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::atomic<bool> 的解析结果与性能。 |
+| 3075 | `conversion_cfunc.part16.test.ts` | `c_func_0786` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::atomic<long> 的解析结果与性能。 |
+| 3076 | `conversion_cfunc.part16.test.ts` | `c_func_0787` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::atomic<long> 的解析结果与性能。 |
+| 3077 | `conversion_cfunc.part16.test.ts` | `c_func_0788` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::basic_string<char> 的解析结果与性能。 |
+| 3078 | `conversion_cfunc.part16.test.ts` | `c_func_0789` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::basic_string<char> 的解析结果与性能。 |
+| 3079 | `conversion_cfunc.part16.test.ts` | `c_func_0790` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::basic_string<wchar_t> 的解析结果与性能。 |
+| 3080 | `conversion_cfunc.part16.test.ts` | `c_func_0791` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::basic_string<wchar_t> 的解析结果与性能。 |
+| 3081 | `conversion_cfunc.part16.test.ts` | `c_func_0792` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::byte 的解析结果与性能。 |
+| 3082 | `conversion_cfunc.part16.test.ts` | `c_func_0793` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::byte 的解析结果与性能。 |
+| 3083 | `conversion_cfunc.part16.test.ts` | `c_func_0794` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::chrono::milliseconds 的解析结果与性能。 |
+| 3084 | `conversion_cfunc.part16.test.ts` | `c_func_0795` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::chrono::milliseconds 的解析结果与性能。 |
+| 3085 | `conversion_cfunc.part16.test.ts` | `c_func_0796` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::chrono::seconds 的解析结果与性能。 |
+| 3086 | `conversion_cfunc.part16.test.ts` | `c_func_0797` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::chrono::seconds 的解析结果与性能。 |
+| 3087 | `conversion_cfunc.part17.test.ts` | `c_func_0798` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::chrono::system_clock::time_point 的解析结果与性能。 |
+| 3088 | `conversion_cfunc.part17.test.ts` | `c_func_0799` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::chrono::system_clock::time_point 的解析结果与性能。 |
+| 3089 | `conversion_cfunc.part17.test.ts` | `c_func_0800` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::filesystem::path 的解析结果与性能。 |
+| 3090 | `conversion_cfunc.part17.test.ts` | `c_func_0801` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::filesystem::path 的解析结果与性能。 |
+| 3091 | `conversion_cfunc.part17.test.ts` | `c_func_0802` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::map<int, int> 的解析结果与性能。 |
+| 3092 | `conversion_cfunc.part17.test.ts` | `c_func_0803` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::map<int, int> 的解析结果与性能。 |
+| 3093 | `conversion_cfunc.part17.test.ts` | `c_func_0804` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::map<double, std::string> 的解析结果与性能。 |
+| 3094 | `conversion_cfunc.part17.test.ts` | `c_func_0805` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::map<double, std::string> 的解析结果与性能。 |
+| 3095 | `conversion_cfunc.part17.test.ts` | `c_func_0806` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::map<std::string, std::string> 的解析结果与性能。 |
+| 3096 | `conversion_cfunc.part17.test.ts` | `c_func_0807` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::map<std::string, std::string> 的解析结果与性能。 |
+| 3097 | `conversion_cfunc.part17.test.ts` | `c_func_0808` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::map<wchar_t, int> 的解析结果与性能。 |
+| 3098 | `conversion_cfunc.part17.test.ts` | `c_func_0809` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::map<wchar_t, int> 的解析结果与性能。 |
+| 3099 | `conversion_cfunc.part17.test.ts` | `c_func_0810` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::map<size_t, std::string> 的解析结果与性能。 |
+| 3100 | `conversion_cfunc.part17.test.ts` | `c_func_0811` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::map<size_t, std::string> 的解析结果与性能。 |
+| 3101 | `conversion_cfunc.part17.test.ts` | `c_func_0812` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::map<float, float> 的解析结果与性能。 |
+| 3102 | `conversion_cfunc.part17.test.ts` | `c_func_0813` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::map<float, float> 的解析结果与性能。 |
+| 3103 | `conversion_cfunc.part17.test.ts` | `c_func_0814` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<char> 的解析结果与性能。 |
+| 3104 | `conversion_cfunc.part17.test.ts` | `c_func_0815` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<char> 的解析结果与性能。 |
+| 3105 | `conversion_cfunc.part17.test.ts` | `c_func_0816` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<float> 的解析结果与性能。 |
+| 3106 | `conversion_cfunc.part17.test.ts` | `c_func_0817` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<float> 的解析结果与性能。 |
+| 3107 | `conversion_cfunc.part17.test.ts` | `c_func_0818` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<long> 的解析结果与性能。 |
+| 3108 | `conversion_cfunc.part17.test.ts` | `c_func_0819` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<long> 的解析结果与性能。 |
+| 3109 | `conversion_cfunc.part17.test.ts` | `c_func_0820` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<unsigned int> 的解析结果与性能。 |
+| 3110 | `conversion_cfunc.part17.test.ts` | `c_func_0821` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<unsigned int> 的解析结果与性能。 |
+| 3111 | `conversion_cfunc.part17.test.ts` | `c_func_0822` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<std::wstring> 的解析结果与性能。 |
+| 3112 | `conversion_cfunc.part17.test.ts` | `c_func_0823` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<std::wstring> 的解析结果与性能。 |
+| 3113 | `conversion_cfunc.part17.test.ts` | `c_func_0824` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<short> 的解析结果与性能。 |
+| 3114 | `conversion_cfunc.part17.test.ts` | `c_func_0825` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<short> 的解析结果与性能。 |
+| 3115 | `conversion_cfunc.part17.test.ts` | `c_func_0826` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<int64_t> 的解析结果与性能。 |
+| 3116 | `conversion_cfunc.part17.test.ts` | `c_func_0827` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<int64_t> 的解析结果与性能。 |
+| 3117 | `conversion_cfunc.part17.test.ts` | `c_func_0828` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<uint8_t> 的解析结果与性能。 |
+| 3118 | `conversion_cfunc.part17.test.ts` | `c_func_0829` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<uint8_t> 的解析结果与性能。 |
+| 3119 | `conversion_cfunc.part17.test.ts` | `c_func_0830` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<size_t> 的解析结果与性能。 |
+| 3120 | `conversion_cfunc.part17.test.ts` | `c_func_0831` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<size_t> 的解析结果与性能。 |
+| 3121 | `conversion_cfunc.part17.test.ts` | `c_func_0832` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<std::string_view> 的解析结果与性能。 |
+| 3122 | `conversion_cfunc.part17.test.ts` | `c_func_0833` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<std::string_view> 的解析结果与性能。 |
+| 3123 | `conversion_cfunc.part17.test.ts` | `c_func_0834` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::pair<double, double> 的解析结果与性能。 |
+| 3124 | `conversion_cfunc.part17.test.ts` | `c_func_0835` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::pair<double, double> 的解析结果与性能。 |
+| 3125 | `conversion_cfunc.part17.test.ts` | `c_func_0836` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::pair<float, float> 的解析结果与性能。 |
+| 3126 | `conversion_cfunc.part17.test.ts` | `c_func_0837` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::pair<float, float> 的解析结果与性能。 |
+| 3127 | `conversion_cfunc.part17.test.ts` | `c_func_0838` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::pair<int, long> 的解析结果与性能。 |
+| 3128 | `conversion_cfunc.part17.test.ts` | `c_func_0839` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::pair<int, long> 的解析结果与性能。 |
+| 3129 | `conversion_cfunc.part17.test.ts` | `c_func_0840` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::tuple<int, std::string, bool> 的解析结果与性能。 |
+| 3130 | `conversion_cfunc.part17.test.ts` | `c_func_0841` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::tuple<int, std::string, bool> 的解析结果与性能。 |
+| 3131 | `conversion_cfunc.part17.test.ts` | `c_func_0842` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::tuple<double, double, double> 的解析结果与性能。 |
+| 3132 | `conversion_cfunc.part17.test.ts` | `c_func_0843` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::tuple<double, double, double> 的解析结果与性能。 |
+| 3133 | `conversion_cfunc.part17.test.ts` | `c_func_0844` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::tuple<char, short, int> 的解析结果与性能。 |
+| 3134 | `conversion_cfunc.part17.test.ts` | `c_func_0845` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::tuple<char, short, int> 的解析结果与性能。 |
+| 3135 | `conversion_cfunc.part17.test.ts` | `c_func_0846` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::tuple<std::string, std::string, std::string> 的解析结果与性能。 |
+| 3136 | `conversion_cfunc.part17.test.ts` | `c_func_0847` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::tuple<std::string, std::string, std::string> 的解析结果与性能。 |
+| 3137 | `conversion_cfunc.part17.test.ts` | `c_func_0848` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::deque<float> 的解析结果与性能。 |
+| 3138 | `conversion_cfunc.part17.test.ts` | `c_func_0849` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::deque<float> 的解析结果与性能。 |
+| 3139 | `conversion_cfunc.part17.test.ts` | `c_func_0850` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::deque<long> 的解析结果与性能。 |
+| 3140 | `conversion_cfunc.part17.test.ts` | `c_func_0851` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::deque<long> 的解析结果与性能。 |
+| 3141 | `conversion_cfunc.part17.test.ts` | `c_func_0852` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::set<double> 的解析结果与性能。 |
+| 3142 | `conversion_cfunc.part17.test.ts` | `c_func_0853` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::set<double> 的解析结果与性能。 |
+| 3143 | `conversion_cfunc.part17.test.ts` | `c_func_0854` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::set<std::wstring> 的解析结果与性能。 |
+| 3144 | `conversion_cfunc.part17.test.ts` | `c_func_0855` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::set<std::wstring> 的解析结果与性能。 |
+| 3145 | `conversion_cfunc.part18.test.ts` | `c_func_0856` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::list<float> 的解析结果与性能。 |
+| 3146 | `conversion_cfunc.part18.test.ts` | `c_func_0857` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::list<float> 的解析结果与性能。 |
+| 3147 | `conversion_cfunc.part18.test.ts` | `c_func_0858` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::list<long long> 的解析结果与性能。 |
+| 3148 | `conversion_cfunc.part18.test.ts` | `c_func_0859` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::list<long long> 的解析结果与性能。 |
+| 3149 | `conversion_cfunc.part18.test.ts` | `c_func_0860` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::queue<std::string> 的解析结果与性能。 |
+| 3150 | `conversion_cfunc.part18.test.ts` | `c_func_0861` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::queue<std::string> 的解析结果与性能。 |
+| 3151 | `conversion_cfunc.part18.test.ts` | `c_func_0862` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::stack<double> 的解析结果与性能。 |
+| 3152 | `conversion_cfunc.part18.test.ts` | `c_func_0863` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::stack<double> 的解析结果与性能。 |
+| 3153 | `conversion_cfunc.part18.test.ts` | `c_func_0864` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::unordered_map<int, std::string> 的解析结果与性能。 |
+| 3154 | `conversion_cfunc.part18.test.ts` | `c_func_0865` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::unordered_map<int, std::string> 的解析结果与性能。 |
+| 3155 | `conversion_cfunc.part18.test.ts` | `c_func_0866` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::unordered_map<std::string, double> 的解析结果与性能。 |
+| 3156 | `conversion_cfunc.part18.test.ts` | `c_func_0867` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::unordered_map<std::string, double> 的解析结果与性能。 |
+| 3157 | `conversion_cfunc.part18.test.ts` | `c_func_0868` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::unordered_set<double> 的解析结果与性能。 |
+| 3158 | `conversion_cfunc.part18.test.ts` | `c_func_0869` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::unordered_set<double> 的解析结果与性能。 |
+| 3159 | `conversion_cfunc.part18.test.ts` | `c_func_0870` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::unordered_set<std::string> 的解析结果与性能。 |
+| 3160 | `conversion_cfunc.part18.test.ts` | `c_func_0871` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::unordered_set<std::string> 的解析结果与性能。 |
+| 3161 | `conversion_cfunc.part18.test.ts` | `c_func_0872` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::array<double, 8> 的解析结果与性能。 |
+| 3162 | `conversion_cfunc.part18.test.ts` | `c_func_0873` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::array<double, 8> 的解析结果与性能。 |
+| 3163 | `conversion_cfunc.part18.test.ts` | `c_func_0874` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::array<float, 16> 的解析结果与性能。 |
+| 3164 | `conversion_cfunc.part18.test.ts` | `c_func_0875` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::array<float, 16> 的解析结果与性能。 |
+| 3165 | `conversion_cfunc.part18.test.ts` | `c_func_0876` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::array<int64_t, 4> 的解析结果与性能。 |
+| 3166 | `conversion_cfunc.part18.test.ts` | `c_func_0877` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::array<int64_t, 4> 的解析结果与性能。 |
+| 3167 | `conversion_cfunc.part18.test.ts` | `c_func_0878` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::forward_list<double> 的解析结果与性能。 |
+| 3168 | `conversion_cfunc.part18.test.ts` | `c_func_0879` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::forward_list<double> 的解析结果与性能。 |
+| 3169 | `conversion_cfunc.part18.test.ts` | `c_func_0880` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::forward_list<std::string> 的解析结果与性能。 |
+| 3170 | `conversion_cfunc.part18.test.ts` | `c_func_0881` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::forward_list<std::string> 的解析结果与性能。 |
+| 3171 | `conversion_cfunc.part18.test.ts` | `c_func_0882` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::valarray<int> 的解析结果与性能。 |
+| 3172 | `conversion_cfunc.part18.test.ts` | `c_func_0883` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::valarray<int> 的解析结果与性能。 |
+| 3173 | `conversion_cfunc.part18.test.ts` | `c_func_0884` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::valarray<float> 的解析结果与性能。 |
+| 3174 | `conversion_cfunc.part18.test.ts` | `c_func_0885` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::valarray<float> 的解析结果与性能。 |
+| 3175 | `conversion_cfunc.part18.test.ts` | `c_func_0886` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::complex<float> 的解析结果与性能。 |
+| 3176 | `conversion_cfunc.part18.test.ts` | `c_func_0887` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::complex<float> 的解析结果与性能。 |
+| 3177 | `conversion_cfunc.part18.test.ts` | `c_func_0888` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::complex<long double> 的解析结果与性能。 |
+| 3178 | `conversion_cfunc.part18.test.ts` | `c_func_0889` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::complex<long double> 的解析结果与性能。 |
+| 3179 | `conversion_cfunc.part18.test.ts` | `c_func_0890` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::function<double(double)> 的解析结果与性能。 |
+| 3180 | `conversion_cfunc.part18.test.ts` | `c_func_0891` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::function<double(double)> 的解析结果与性能。 |
+| 3181 | `conversion_cfunc.part18.test.ts` | `c_func_0892` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::function<bool(int, std::string)> 的解析结果与性能。 |
+| 3182 | `conversion_cfunc.part18.test.ts` | `c_func_0893` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::function<bool(int, std::string)> 的解析结果与性能。 |
+| 3183 | `conversion_cfunc.part18.test.ts` | `c_func_0894` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::function<void()> 的解析结果与性能。 |
+| 3184 | `conversion_cfunc.part18.test.ts` | `c_func_0895` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::function<void()> 的解析结果与性能。 |
+| 3185 | `conversion_cfunc.part18.test.ts` | `c_func_0896` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::vector<int>::const_iterator 的解析结果与性能。 |
+| 3186 | `conversion_cfunc.part18.test.ts` | `c_func_0897` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::vector<int>::const_iterator 的解析结果与性能。 |
+| 3187 | `conversion_cfunc.part18.test.ts` | `c_func_0898` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::map<std::string, int>::iterator 的解析结果与性能。 |
+| 3188 | `conversion_cfunc.part18.test.ts` | `c_func_0899` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::map<std::string, int>::iterator 的解析结果与性能。 |
+| 3189 | `conversion_cfunc.part18.test.ts` | `c_func_0900` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：const char* 的解析结果与性能。 |
+| 3190 | `conversion_cfunc.part18.test.ts` | `c_func_0901` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：const char* 的解析结果与性能。 |
+| 3191 | `conversion_cfunc.part18.test.ts` | `c_func_0902` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：const wchar_t* 的解析结果与性能。 |
+| 3192 | `conversion_cfunc.part18.test.ts` | `c_func_0903` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：const wchar_t* 的解析结果与性能。 |
+| 3193 | `conversion_cfunc.part18.test.ts` | `c_func_0904` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：const unsigned char* 的解析结果与性能。 |
+| 3194 | `conversion_cfunc.part18.test.ts` | `c_func_0905` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：const unsigned char* 的解析结果与性能。 |
+| 3195 | `conversion_cfunc.part18.test.ts` | `c_func_0906` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：int const* 的解析结果与性能。 |
+| 3196 | `conversion_cfunc.part18.test.ts` | `c_func_0907` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：int const* 的解析结果与性能。 |
+| 3197 | `conversion_cfunc.part18.test.ts` | `c_func_0908` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：std::string const& 的解析结果与性能。 |
+| 3198 | `conversion_cfunc.part18.test.ts` | `c_func_0909` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：std::string const& 的解析结果与性能。 |
+| 3199 | `conversion_cfunc.part18.test.ts` | `c_func_0910` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：long long int 的解析结果与性能。 |
+| 3200 | `conversion_cfunc.part18.test.ts` | `c_func_0911` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：long long int 的解析结果与性能。 |
+| 3201 | `conversion_cfunc.part18.test.ts` | `c_func_0912` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：unsigned long long int 的解析结果与性能。 |
+| 3202 | `conversion_cfunc.part18.test.ts` | `c_func_0913` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：unsigned long long int 的解析结果与性能。 |
+| 3203 | `conversion_cfunc.part19.test.ts` | `c_func_0914` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：long int 的解析结果与性能。 |
+| 3204 | `conversion_cfunc.part19.test.ts` | `c_func_0915` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：long int 的解析结果与性能。 |
+| 3205 | `conversion_cfunc.part19.test.ts` | `c_func_0916` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：short int 的解析结果与性能。 |
+| 3206 | `conversion_cfunc.part19.test.ts` | `c_func_0917` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：short int 的解析结果与性能。 |
+| 3207 | `conversion_cfunc.part19.test.ts` | `c_func_0918` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-入参：unsigned short int 的解析结果与性能。 |
+| 3208 | `conversion_cfunc.part19.test.ts` | `c_func_0919` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-返回：unsigned short int 的解析结果与性能。 |
+| 3209 | `conversion_cfunc.part19.test.ts` | `c_func_0920` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::shared_ptr<int>, std::shared_ptr<std::string>) 的解析结果与性能。 |
+| 3210 | `conversion_cfunc.part19.test.ts` | `c_func_0921` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::shared_ptr<int>, std::shared_ptr<double>) 的解析结果与性能。 |
+| 3211 | `conversion_cfunc.part19.test.ts` | `c_func_0922` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::shared_ptr<int>, std::unique_ptr<int>) 的解析结果与性能。 |
+| 3212 | `conversion_cfunc.part19.test.ts` | `c_func_0923` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::shared_ptr<std::string>, std::shared_ptr<double>) 的解析结果与性能。 |
+| 3213 | `conversion_cfunc.part19.test.ts` | `c_func_0924` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::shared_ptr<std::string>, std::unique_ptr<int>) 的解析结果与性能。 |
+| 3214 | `conversion_cfunc.part19.test.ts` | `c_func_0925` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::shared_ptr<std::string>, std::unique_ptr<std::string>) 的解析结果与性能。 |
+| 3215 | `conversion_cfunc.part19.test.ts` | `c_func_0926` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::shared_ptr<double>, std::unique_ptr<int>) 的解析结果与性能。 |
+| 3216 | `conversion_cfunc.part19.test.ts` | `c_func_0927` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::shared_ptr<double>, std::unique_ptr<std::string>) 的解析结果与性能。 |
+| 3217 | `conversion_cfunc.part19.test.ts` | `c_func_0928` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::shared_ptr<double>, std::unique_ptr<char>) 的解析结果与性能。 |
+| 3218 | `conversion_cfunc.part19.test.ts` | `c_func_0929` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unique_ptr<int>, std::unique_ptr<std::string>) 的解析结果与性能。 |
+| 3219 | `conversion_cfunc.part19.test.ts` | `c_func_0930` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unique_ptr<int>, std::unique_ptr<char>) 的解析结果与性能。 |
+| 3220 | `conversion_cfunc.part19.test.ts` | `c_func_0931` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unique_ptr<int>, std::weak_ptr<int>) 的解析结果与性能。 |
+| 3221 | `conversion_cfunc.part19.test.ts` | `c_func_0932` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unique_ptr<std::string>, std::unique_ptr<char>) 的解析结果与性能。 |
+| 3222 | `conversion_cfunc.part19.test.ts` | `c_func_0933` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unique_ptr<std::string>, std::weak_ptr<int>) 的解析结果与性能。 |
+| 3223 | `conversion_cfunc.part19.test.ts` | `c_func_0934` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unique_ptr<std::string>, std::weak_ptr<std::string>) 的解析结果与性能。 |
+| 3224 | `conversion_cfunc.part19.test.ts` | `c_func_0935` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unique_ptr<char>, std::weak_ptr<int>) 的解析结果与性能。 |
+| 3225 | `conversion_cfunc.part19.test.ts` | `c_func_0936` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unique_ptr<char>, std::weak_ptr<std::string>) 的解析结果与性能。 |
+| 3226 | `conversion_cfunc.part19.test.ts` | `c_func_0937` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unique_ptr<char>, std::optional<int>) 的解析结果与性能。 |
+| 3227 | `conversion_cfunc.part19.test.ts` | `c_func_0938` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::weak_ptr<int>, std::weak_ptr<std::string>) 的解析结果与性能。 |
+| 3228 | `conversion_cfunc.part19.test.ts` | `c_func_0939` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::weak_ptr<int>, std::optional<int>) 的解析结果与性能。 |
+| 3229 | `conversion_cfunc.part19.test.ts` | `c_func_0940` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::weak_ptr<int>, std::optional<std::string>) 的解析结果与性能。 |
+| 3230 | `conversion_cfunc.part19.test.ts` | `c_func_0941` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::weak_ptr<std::string>, std::optional<int>) 的解析结果与性能。 |
+| 3231 | `conversion_cfunc.part19.test.ts` | `c_func_0942` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::weak_ptr<std::string>, std::optional<std::string>) 的解析结果与性能。 |
+| 3232 | `conversion_cfunc.part19.test.ts` | `c_func_0943` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::weak_ptr<std::string>, std::optional<double>) 的解析结果与性能。 |
+| 3233 | `conversion_cfunc.part19.test.ts` | `c_func_0944` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<int>, std::optional<std::string>) 的解析结果与性能。 |
+| 3234 | `conversion_cfunc.part19.test.ts` | `c_func_0945` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<int>, std::optional<double>) 的解析结果与性能。 |
+| 3235 | `conversion_cfunc.part19.test.ts` | `c_func_0946` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<int>, std::optional<bool>) 的解析结果与性能。 |
+| 3236 | `conversion_cfunc.part19.test.ts` | `c_func_0947` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<std::string>, std::optional<double>) 的解析结果与性能。 |
+| 3237 | `conversion_cfunc.part19.test.ts` | `c_func_0948` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<std::string>, std::optional<bool>) 的解析结果与性能。 |
+| 3238 | `conversion_cfunc.part19.test.ts` | `c_func_0949` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<std::string>, std::variant<int, std::string>) 的解析结果与性能。 |
+| 3239 | `conversion_cfunc.part19.test.ts` | `c_func_0950` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<double>, std::optional<bool>) 的解析结果与性能。 |
+| 3240 | `conversion_cfunc.part19.test.ts` | `c_func_0951` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<double>, std::variant<int, std::string>) 的解析结果与性能。 |
+| 3241 | `conversion_cfunc.part19.test.ts` | `c_func_0952` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<double>, std::variant<double, bool>) 的解析结果与性能。 |
+| 3242 | `conversion_cfunc.part19.test.ts` | `c_func_0953` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<bool>, std::variant<int, std::string>) 的解析结果与性能。 |
+| 3243 | `conversion_cfunc.part19.test.ts` | `c_func_0954` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<bool>, std::variant<double, bool>) 的解析结果与性能。 |
+| 3244 | `conversion_cfunc.part19.test.ts` | `c_func_0955` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::optional<bool>, std::variant<int, float, double>) 的解析结果与性能。 |
+| 3245 | `conversion_cfunc.part19.test.ts` | `c_func_0956` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::variant<int, std::string>, std::variant<double, bool>) 的解析结果与性能。 |
+| 3246 | `conversion_cfunc.part19.test.ts` | `c_func_0957` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::variant<int, std::string>, std::variant<int, float, double>) 的解析结果与性能。 |
+| 3247 | `conversion_cfunc.part19.test.ts` | `c_func_0958` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::variant<int, std::string>, std::bitset<8>) 的解析结果与性能。 |
+| 3248 | `conversion_cfunc.part19.test.ts` | `c_func_0959` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::variant<double, bool>, std::variant<int, float, double>) 的解析结果与性能。 |
+| 3249 | `conversion_cfunc.part19.test.ts` | `c_func_0960` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::variant<double, bool>, std::bitset<8>) 的解析结果与性能。 |
+| 3250 | `conversion_cfunc.part19.test.ts` | `c_func_0961` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::variant<double, bool>, std::bitset<16>) 的解析结果与性能。 |
+| 3251 | `conversion_cfunc.part19.test.ts` | `c_func_0962` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::variant<int, float, double>, std::bitset<8>) 的解析结果与性能。 |
+| 3252 | `conversion_cfunc.part19.test.ts` | `c_func_0963` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::variant<int, float, double>, std::bitset<16>) 的解析结果与性能。 |
+| 3253 | `conversion_cfunc.part19.test.ts` | `c_func_0964` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::variant<int, float, double>, std::bitset<32>) 的解析结果与性能。 |
+| 3254 | `conversion_cfunc.part19.test.ts` | `c_func_0965` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::bitset<8>, std::bitset<16>) 的解析结果与性能。 |
+| 3255 | `conversion_cfunc.part19.test.ts` | `c_func_0966` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::bitset<8>, std::bitset<32>) 的解析结果与性能。 |
+| 3256 | `conversion_cfunc.part19.test.ts` | `c_func_0967` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::bitset<8>, std::span<int>) 的解析结果与性能。 |
+| 3257 | `conversion_cfunc.part20.test.ts` | `c_func_0968` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::bitset<16>, std::bitset<32>) 的解析结果与性能。 |
+| 3258 | `conversion_cfunc.part20.test.ts` | `c_func_0969` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::bitset<16>, std::span<int>) 的解析结果与性能。 |
+| 3259 | `conversion_cfunc.part20.test.ts` | `c_func_0970` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::bitset<16>, std::span<double>) 的解析结果与性能。 |
+| 3260 | `conversion_cfunc.part20.test.ts` | `c_func_0971` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::bitset<32>, std::span<int>) 的解析结果与性能。 |
+| 3261 | `conversion_cfunc.part20.test.ts` | `c_func_0972` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::bitset<32>, std::span<double>) 的解析结果与性能。 |
+| 3262 | `conversion_cfunc.part20.test.ts` | `c_func_0973` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::bitset<32>, std::atomic<int>) 的解析结果与性能。 |
+| 3263 | `conversion_cfunc.part20.test.ts` | `c_func_0974` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::span<int>, std::span<double>) 的解析结果与性能。 |
+| 3264 | `conversion_cfunc.part20.test.ts` | `c_func_0975` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::span<int>, std::atomic<int>) 的解析结果与性能。 |
+| 3265 | `conversion_cfunc.part20.test.ts` | `c_func_0976` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::span<int>, std::atomic<bool>) 的解析结果与性能。 |
+| 3266 | `conversion_cfunc.part20.test.ts` | `c_func_0977` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::span<double>, std::atomic<int>) 的解析结果与性能。 |
+| 3267 | `conversion_cfunc.part20.test.ts` | `c_func_0978` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::span<double>, std::atomic<bool>) 的解析结果与性能。 |
+| 3268 | `conversion_cfunc.part20.test.ts` | `c_func_0979` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::span<double>, std::atomic<long>) 的解析结果与性能。 |
+| 3269 | `conversion_cfunc.part20.test.ts` | `c_func_0980` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::atomic<int>, std::atomic<bool>) 的解析结果与性能。 |
+| 3270 | `conversion_cfunc.part20.test.ts` | `c_func_0981` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::atomic<int>, std::atomic<long>) 的解析结果与性能。 |
+| 3271 | `conversion_cfunc.part20.test.ts` | `c_func_0982` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::atomic<int>, std::basic_string<char>) 的解析结果与性能。 |
+| 3272 | `conversion_cfunc.part20.test.ts` | `c_func_0983` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::atomic<bool>, std::atomic<long>) 的解析结果与性能。 |
+| 3273 | `conversion_cfunc.part20.test.ts` | `c_func_0984` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::atomic<bool>, std::basic_string<char>) 的解析结果与性能。 |
+| 3274 | `conversion_cfunc.part20.test.ts` | `c_func_0985` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::atomic<bool>, std::basic_string<wchar_t>) 的解析结果与性能。 |
+| 3275 | `conversion_cfunc.part20.test.ts` | `c_func_0986` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::atomic<long>, std::basic_string<char>) 的解析结果与性能。 |
+| 3276 | `conversion_cfunc.part20.test.ts` | `c_func_0987` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::atomic<long>, std::basic_string<wchar_t>) 的解析结果与性能。 |
+| 3277 | `conversion_cfunc.part20.test.ts` | `c_func_0988` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::atomic<long>, std::map<int, int>) 的解析结果与性能。 |
+| 3278 | `conversion_cfunc.part20.test.ts` | `c_func_0989` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::basic_string<char>, std::basic_string<wchar_t>) 的解析结果与性能。 |
+| 3279 | `conversion_cfunc.part20.test.ts` | `c_func_0990` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::basic_string<char>, std::map<int, int>) 的解析结果与性能。 |
+| 3280 | `conversion_cfunc.part20.test.ts` | `c_func_0991` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::basic_string<char>, std::map<double, std::string>) 的解析结果与性能。 |
+| 3281 | `conversion_cfunc.part20.test.ts` | `c_func_0992` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::basic_string<wchar_t>, std::map<int, int>) 的解析结果与性能。 |
+| 3282 | `conversion_cfunc.part20.test.ts` | `c_func_0993` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::basic_string<wchar_t>, std::map<double, std::string>) 的解析结果与性能。 |
+| 3283 | `conversion_cfunc.part20.test.ts` | `c_func_0994` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::basic_string<wchar_t>, std::map<std::string, std::string>) 的解析结果与性能。 |
+| 3284 | `conversion_cfunc.part20.test.ts` | `c_func_0995` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<int, int>, std::map<double, std::string>) 的解析结果与性能。 |
+| 3285 | `conversion_cfunc.part20.test.ts` | `c_func_0996` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<int, int>, std::map<std::string, std::string>) 的解析结果与性能。 |
+| 3286 | `conversion_cfunc.part20.test.ts` | `c_func_0997` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<int, int>, std::map<wchar_t, int>) 的解析结果与性能。 |
+| 3287 | `conversion_cfunc.part20.test.ts` | `c_func_0998` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<double, std::string>, std::map<std::string, std::string>) 的解析结果与性能。 |
+| 3288 | `conversion_cfunc.part20.test.ts` | `c_func_0999` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<double, std::string>, std::map<wchar_t, int>) 的解析结果与性能。 |
+| 3289 | `conversion_cfunc.part20.test.ts` | `c_func_1000` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<double, std::string>, std::map<size_t, std::string>) 的解析结果与性能。 |
+| 3290 | `conversion_cfunc.part20.test.ts` | `c_func_1001` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<std::string, std::string>, std::map<wchar_t, int>) 的解析结果与性能。 |
+| 3291 | `conversion_cfunc.part20.test.ts` | `c_func_1002` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<std::string, std::string>, std::map<size_t, std::string>) 的解析结果与性能。 |
+| 3292 | `conversion_cfunc.part20.test.ts` | `c_func_1003` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<std::string, std::string>, std::map<float, float>) 的解析结果与性能。 |
+| 3293 | `conversion_cfunc.part20.test.ts` | `c_func_1004` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<wchar_t, int>, std::map<size_t, std::string>) 的解析结果与性能。 |
+| 3294 | `conversion_cfunc.part20.test.ts` | `c_func_1005` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<wchar_t, int>, std::map<float, float>) 的解析结果与性能。 |
+| 3295 | `conversion_cfunc.part20.test.ts` | `c_func_1006` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<wchar_t, int>, std::vector<char>) 的解析结果与性能。 |
+| 3296 | `conversion_cfunc.part20.test.ts` | `c_func_1007` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<size_t, std::string>, std::map<float, float>) 的解析结果与性能。 |
+| 3297 | `conversion_cfunc.part20.test.ts` | `c_func_1008` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<size_t, std::string>, std::vector<char>) 的解析结果与性能。 |
+| 3298 | `conversion_cfunc.part20.test.ts` | `c_func_1009` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<size_t, std::string>, std::vector<float>) 的解析结果与性能。 |
+| 3299 | `conversion_cfunc.part20.test.ts` | `c_func_1010` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<float, float>, std::vector<char>) 的解析结果与性能。 |
+| 3300 | `conversion_cfunc.part20.test.ts` | `c_func_1011` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<float, float>, std::vector<float>) 的解析结果与性能。 |
+| 3301 | `conversion_cfunc.part20.test.ts` | `c_func_1012` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::map<float, float>, std::vector<long>) 的解析结果与性能。 |
+| 3302 | `conversion_cfunc.part20.test.ts` | `c_func_1013` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<char>, std::vector<float>) 的解析结果与性能。 |
+| 3303 | `conversion_cfunc.part20.test.ts` | `c_func_1014` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<char>, std::vector<long>) 的解析结果与性能。 |
+| 3304 | `conversion_cfunc.part20.test.ts` | `c_func_1015` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<char>, std::vector<unsigned int>) 的解析结果与性能。 |
+| 3305 | `conversion_cfunc.part20.test.ts` | `c_func_1016` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<float>, std::vector<long>) 的解析结果与性能。 |
+| 3306 | `conversion_cfunc.part20.test.ts` | `c_func_1017` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<float>, std::vector<unsigned int>) 的解析结果与性能。 |
+| 3307 | `conversion_cfunc.part20.test.ts` | `c_func_1018` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<float>, std::vector<std::wstring>) 的解析结果与性能。 |
+| 3308 | `conversion_cfunc.part20.test.ts` | `c_func_1019` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<long>, std::vector<unsigned int>) 的解析结果与性能。 |
+| 3309 | `conversion_cfunc.part20.test.ts` | `c_func_1020` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<long>, std::vector<std::wstring>) 的解析结果与性能。 |
+| 3310 | `conversion_cfunc.part21.test.ts` | `c_func_1021` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<long>, std::vector<short>) 的解析结果与性能。 |
+| 3311 | `conversion_cfunc.part21.test.ts` | `c_func_1022` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<unsigned int>, std::vector<std::wstring>) 的解析结果与性能。 |
+| 3312 | `conversion_cfunc.part21.test.ts` | `c_func_1023` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<unsigned int>, std::vector<short>) 的解析结果与性能。 |
+| 3313 | `conversion_cfunc.part21.test.ts` | `c_func_1024` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<unsigned int>, std::vector<int64_t>) 的解析结果与性能。 |
+| 3314 | `conversion_cfunc.part21.test.ts` | `c_func_1025` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<std::wstring>, std::vector<short>) 的解析结果与性能。 |
+| 3315 | `conversion_cfunc.part21.test.ts` | `c_func_1026` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<std::wstring>, std::vector<int64_t>) 的解析结果与性能。 |
+| 3316 | `conversion_cfunc.part21.test.ts` | `c_func_1027` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<std::wstring>, std::vector<uint8_t>) 的解析结果与性能。 |
+| 3317 | `conversion_cfunc.part21.test.ts` | `c_func_1028` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<short>, std::vector<int64_t>) 的解析结果与性能。 |
+| 3318 | `conversion_cfunc.part21.test.ts` | `c_func_1029` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<short>, std::vector<uint8_t>) 的解析结果与性能。 |
+| 3319 | `conversion_cfunc.part21.test.ts` | `c_func_1030` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<short>, std::vector<size_t>) 的解析结果与性能。 |
+| 3320 | `conversion_cfunc.part21.test.ts` | `c_func_1031` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<int64_t>, std::vector<uint8_t>) 的解析结果与性能。 |
+| 3321 | `conversion_cfunc.part21.test.ts` | `c_func_1032` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<int64_t>, std::vector<size_t>) 的解析结果与性能。 |
+| 3322 | `conversion_cfunc.part21.test.ts` | `c_func_1033` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<int64_t>, std::vector<std::string_view>) 的解析结果与性能。 |
+| 3323 | `conversion_cfunc.part21.test.ts` | `c_func_1034` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<uint8_t>, std::vector<size_t>) 的解析结果与性能。 |
+| 3324 | `conversion_cfunc.part21.test.ts` | `c_func_1035` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<uint8_t>, std::vector<std::string_view>) 的解析结果与性能。 |
+| 3325 | `conversion_cfunc.part21.test.ts` | `c_func_1036` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<uint8_t>, std::pair<double, double>) 的解析结果与性能。 |
+| 3326 | `conversion_cfunc.part21.test.ts` | `c_func_1037` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<size_t>, std::vector<std::string_view>) 的解析结果与性能。 |
+| 3327 | `conversion_cfunc.part21.test.ts` | `c_func_1038` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<size_t>, std::pair<double, double>) 的解析结果与性能。 |
+| 3328 | `conversion_cfunc.part21.test.ts` | `c_func_1039` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<size_t>, std::pair<float, float>) 的解析结果与性能。 |
+| 3329 | `conversion_cfunc.part21.test.ts` | `c_func_1040` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<std::string_view>, std::pair<double, double>) 的解析结果与性能。 |
+| 3330 | `conversion_cfunc.part21.test.ts` | `c_func_1041` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<std::string_view>, std::pair<float, float>) 的解析结果与性能。 |
+| 3331 | `conversion_cfunc.part21.test.ts` | `c_func_1042` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::vector<std::string_view>, std::pair<int, long>) 的解析结果与性能。 |
+| 3332 | `conversion_cfunc.part21.test.ts` | `c_func_1043` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::pair<double, double>, std::pair<float, float>) 的解析结果与性能。 |
+| 3333 | `conversion_cfunc.part21.test.ts` | `c_func_1044` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::pair<double, double>, std::pair<int, long>) 的解析结果与性能。 |
+| 3334 | `conversion_cfunc.part21.test.ts` | `c_func_1045` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::pair<double, double>, std::tuple<int, std::string, bool>) 的解析结果与性能。 |
+| 3335 | `conversion_cfunc.part21.test.ts` | `c_func_1046` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::pair<float, float>, std::pair<int, long>) 的解析结果与性能。 |
+| 3336 | `conversion_cfunc.part21.test.ts` | `c_func_1047` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::pair<float, float>, std::tuple<int, std::string, bool>) 的解析结果与性能。 |
+| 3337 | `conversion_cfunc.part21.test.ts` | `c_func_1048` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::pair<float, float>, std::tuple<double, double, double>) 的解析结果与性能。 |
+| 3338 | `conversion_cfunc.part21.test.ts` | `c_func_1049` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::pair<int, long>, std::tuple<int, std::string, bool>) 的解析结果与性能。 |
+| 3339 | `conversion_cfunc.part21.test.ts` | `c_func_1050` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::pair<int, long>, std::tuple<double, double, double>) 的解析结果与性能。 |
+| 3340 | `conversion_cfunc.part21.test.ts` | `c_func_1051` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::pair<int, long>, std::tuple<char, short, int>) 的解析结果与性能。 |
+| 3341 | `conversion_cfunc.part21.test.ts` | `c_func_1052` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<int, std::string, bool>, std::tuple<double, double, double>) 的解析结果与性能。 |
+| 3342 | `conversion_cfunc.part21.test.ts` | `c_func_1053` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<int, std::string, bool>, std::tuple<char, short, int>) 的解析结果与性能。 |
+| 3343 | `conversion_cfunc.part21.test.ts` | `c_func_1054` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<int, std::string, bool>, std::tuple<std::string, std::string, std::string>) 的解析结果与性能。 |
+| 3344 | `conversion_cfunc.part21.test.ts` | `c_func_1055` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<double, double, double>, std::tuple<char, short, int>) 的解析结果与性能。 |
+| 3345 | `conversion_cfunc.part21.test.ts` | `c_func_1056` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<double, double, double>, std::tuple<std::string, std::string, std::string>) 的解析结果与性能。 |
+| 3346 | `conversion_cfunc.part21.test.ts` | `c_func_1057` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<double, double, double>, std::deque<float>) 的解析结果与性能。 |
+| 3347 | `conversion_cfunc.part21.test.ts` | `c_func_1058` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<char, short, int>, std::tuple<std::string, std::string, std::string>) 的解析结果与性能。 |
+| 3348 | `conversion_cfunc.part21.test.ts` | `c_func_1059` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<char, short, int>, std::deque<float>) 的解析结果与性能。 |
+| 3349 | `conversion_cfunc.part21.test.ts` | `c_func_1060` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<char, short, int>, std::deque<long>) 的解析结果与性能。 |
+| 3350 | `conversion_cfunc.part21.test.ts` | `c_func_1061` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<std::string, std::string, std::string>, std::deque<float>) 的解析结果与性能。 |
+| 3351 | `conversion_cfunc.part21.test.ts` | `c_func_1062` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<std::string, std::string, std::string>, std::deque<long>) 的解析结果与性能。 |
+| 3352 | `conversion_cfunc.part21.test.ts` | `c_func_1063` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::tuple<std::string, std::string, std::string>, std::set<double>) 的解析结果与性能。 |
+| 3353 | `conversion_cfunc.part21.test.ts` | `c_func_1064` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::deque<float>, std::deque<long>) 的解析结果与性能。 |
+| 3354 | `conversion_cfunc.part21.test.ts` | `c_func_1065` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::deque<float>, std::set<double>) 的解析结果与性能。 |
+| 3355 | `conversion_cfunc.part21.test.ts` | `c_func_1066` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::deque<float>, std::set<std::wstring>) 的解析结果与性能。 |
+| 3356 | `conversion_cfunc.part21.test.ts` | `c_func_1067` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::deque<long>, std::set<double>) 的解析结果与性能。 |
+| 3357 | `conversion_cfunc.part21.test.ts` | `c_func_1068` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::deque<long>, std::set<std::wstring>) 的解析结果与性能。 |
+| 3358 | `conversion_cfunc.part21.test.ts` | `c_func_1069` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::deque<long>, std::list<float>) 的解析结果与性能。 |
+| 3359 | `conversion_cfunc.part21.test.ts` | `c_func_1070` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::set<double>, std::set<std::wstring>) 的解析结果与性能。 |
+| 3360 | `conversion_cfunc.part21.test.ts` | `c_func_1071` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::set<double>, std::list<float>) 的解析结果与性能。 |
+| 3361 | `conversion_cfunc.part21.test.ts` | `c_func_1072` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::set<double>, std::list<long long>) 的解析结果与性能。 |
+| 3362 | `conversion_cfunc.part21.test.ts` | `c_func_1073` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::set<std::wstring>, std::list<float>) 的解析结果与性能。 |
+| 3363 | `conversion_cfunc.part22.test.ts` | `c_func_1074` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::set<std::wstring>, std::list<long long>) 的解析结果与性能。 |
+| 3364 | `conversion_cfunc.part22.test.ts` | `c_func_1075` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::set<std::wstring>, std::queue<std::string>) 的解析结果与性能。 |
+| 3365 | `conversion_cfunc.part22.test.ts` | `c_func_1076` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::list<float>, std::list<long long>) 的解析结果与性能。 |
+| 3366 | `conversion_cfunc.part22.test.ts` | `c_func_1077` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::list<float>, std::queue<std::string>) 的解析结果与性能。 |
+| 3367 | `conversion_cfunc.part22.test.ts` | `c_func_1078` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::list<float>, std::stack<double>) 的解析结果与性能。 |
+| 3368 | `conversion_cfunc.part22.test.ts` | `c_func_1079` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::list<long long>, std::queue<std::string>) 的解析结果与性能。 |
+| 3369 | `conversion_cfunc.part22.test.ts` | `c_func_1080` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::list<long long>, std::stack<double>) 的解析结果与性能。 |
+| 3370 | `conversion_cfunc.part22.test.ts` | `c_func_1081` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::list<long long>, std::unordered_map<int, std::string>) 的解析结果与性能。 |
+| 3371 | `conversion_cfunc.part22.test.ts` | `c_func_1082` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::queue<std::string>, std::stack<double>) 的解析结果与性能。 |
+| 3372 | `conversion_cfunc.part22.test.ts` | `c_func_1083` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::queue<std::string>, std::unordered_map<int, std::string>) 的解析结果与性能。 |
+| 3373 | `conversion_cfunc.part22.test.ts` | `c_func_1084` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::queue<std::string>, std::unordered_map<std::string, double>) 的解析结果与性能。 |
+| 3374 | `conversion_cfunc.part22.test.ts` | `c_func_1085` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::stack<double>, std::unordered_map<int, std::string>) 的解析结果与性能。 |
+| 3375 | `conversion_cfunc.part22.test.ts` | `c_func_1086` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::stack<double>, std::unordered_map<std::string, double>) 的解析结果与性能。 |
+| 3376 | `conversion_cfunc.part22.test.ts` | `c_func_1087` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::stack<double>, std::unordered_set<double>) 的解析结果与性能。 |
+| 3377 | `conversion_cfunc.part22.test.ts` | `c_func_1088` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_map<int, std::string>, std::unordered_map<std::string, double>) 的解析结果与性能。 |
+| 3378 | `conversion_cfunc.part22.test.ts` | `c_func_1089` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_map<int, std::string>, std::unordered_set<double>) 的解析结果与性能。 |
+| 3379 | `conversion_cfunc.part22.test.ts` | `c_func_1090` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_map<int, std::string>, std::unordered_set<std::string>) 的解析结果与性能。 |
+| 3380 | `conversion_cfunc.part22.test.ts` | `c_func_1091` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_map<std::string, double>, std::unordered_set<double>) 的解析结果与性能。 |
+| 3381 | `conversion_cfunc.part22.test.ts` | `c_func_1092` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_map<std::string, double>, std::unordered_set<std::string>) 的解析结果与性能。 |
+| 3382 | `conversion_cfunc.part22.test.ts` | `c_func_1093` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_map<std::string, double>, std::array<double, 8>) 的解析结果与性能。 |
+| 3383 | `conversion_cfunc.part22.test.ts` | `c_func_1094` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_set<double>, std::unordered_set<std::string>) 的解析结果与性能。 |
+| 3384 | `conversion_cfunc.part22.test.ts` | `c_func_1095` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_set<double>, std::array<double, 8>) 的解析结果与性能。 |
+| 3385 | `conversion_cfunc.part22.test.ts` | `c_func_1096` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_set<double>, std::array<float, 16>) 的解析结果与性能。 |
+| 3386 | `conversion_cfunc.part22.test.ts` | `c_func_1097` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_set<std::string>, std::array<double, 8>) 的解析结果与性能。 |
+| 3387 | `conversion_cfunc.part22.test.ts` | `c_func_1098` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_set<std::string>, std::array<float, 16>) 的解析结果与性能。 |
+| 3388 | `conversion_cfunc.part22.test.ts` | `c_func_1099` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::unordered_set<std::string>, std::array<int64_t, 4>) 的解析结果与性能。 |
+| 3389 | `conversion_cfunc.part22.test.ts` | `c_func_1100` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::array<double, 8>, std::array<float, 16>) 的解析结果与性能。 |
+| 3390 | `conversion_cfunc.part22.test.ts` | `c_func_1101` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::array<double, 8>, std::array<int64_t, 4>) 的解析结果与性能。 |
+| 3391 | `conversion_cfunc.part22.test.ts` | `c_func_1102` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::array<double, 8>, std::forward_list<double>) 的解析结果与性能。 |
+| 3392 | `conversion_cfunc.part22.test.ts` | `c_func_1103` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::array<float, 16>, std::array<int64_t, 4>) 的解析结果与性能。 |
+| 3393 | `conversion_cfunc.part22.test.ts` | `c_func_1104` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::array<float, 16>, std::forward_list<double>) 的解析结果与性能。 |
+| 3394 | `conversion_cfunc.part22.test.ts` | `c_func_1105` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::array<float, 16>, std::forward_list<std::string>) 的解析结果与性能。 |
+| 3395 | `conversion_cfunc.part22.test.ts` | `c_func_1106` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::array<int64_t, 4>, std::forward_list<double>) 的解析结果与性能。 |
+| 3396 | `conversion_cfunc.part22.test.ts` | `c_func_1107` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::array<int64_t, 4>, std::forward_list<std::string>) 的解析结果与性能。 |
+| 3397 | `conversion_cfunc.part22.test.ts` | `c_func_1108` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::array<int64_t, 4>, std::valarray<int>) 的解析结果与性能。 |
+| 3398 | `conversion_cfunc.part22.test.ts` | `c_func_1109` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::forward_list<double>, std::forward_list<std::string>) 的解析结果与性能。 |
+| 3399 | `conversion_cfunc.part22.test.ts` | `c_func_1110` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::forward_list<double>, std::valarray<int>) 的解析结果与性能。 |
+| 3400 | `conversion_cfunc.part22.test.ts` | `c_func_1111` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::forward_list<double>, std::valarray<float>) 的解析结果与性能。 |
+| 3401 | `conversion_cfunc.part22.test.ts` | `c_func_1112` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::forward_list<std::string>, std::valarray<int>) 的解析结果与性能。 |
+| 3402 | `conversion_cfunc.part22.test.ts` | `c_func_1113` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::forward_list<std::string>, std::valarray<float>) 的解析结果与性能。 |
+| 3403 | `conversion_cfunc.part22.test.ts` | `c_func_1114` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::forward_list<std::string>, std::complex<float>) 的解析结果与性能。 |
+| 3404 | `conversion_cfunc.part22.test.ts` | `c_func_1115` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::valarray<int>, std::valarray<float>) 的解析结果与性能。 |
+| 3405 | `conversion_cfunc.part22.test.ts` | `c_func_1116` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::valarray<int>, std::complex<float>) 的解析结果与性能。 |
+| 3406 | `conversion_cfunc.part22.test.ts` | `c_func_1117` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::valarray<int>, std::complex<long double>) 的解析结果与性能。 |
+| 3407 | `conversion_cfunc.part22.test.ts` | `c_func_1118` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::valarray<float>, std::complex<float>) 的解析结果与性能。 |
+| 3408 | `conversion_cfunc.part22.test.ts` | `c_func_1119` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::valarray<float>, std::complex<long double>) 的解析结果与性能。 |
+| 3409 | `conversion_cfunc.part22.test.ts` | `c_func_1120` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::valarray<float>, std::shared_ptr<int>) 的解析结果与性能。 |
+| 3410 | `conversion_cfunc.part22.test.ts` | `c_func_1121` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::complex<float>, std::complex<long double>) 的解析结果与性能。 |
+| 3411 | `conversion_cfunc.part22.test.ts` | `c_func_1122` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::complex<float>, std::shared_ptr<int>) 的解析结果与性能。 |
+| 3412 | `conversion_cfunc.part22.test.ts` | `c_func_1123` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::complex<float>, std::shared_ptr<std::string>) 的解析结果与性能。 |
+| 3413 | `conversion_cfunc.part22.test.ts` | `c_func_1124` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::complex<long double>, std::shared_ptr<int>) 的解析结果与性能。 |
+| 3414 | `conversion_cfunc.part22.test.ts` | `c_func_1125` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::complex<long double>, std::shared_ptr<std::string>) 的解析结果与性能。 |
+| 3415 | `conversion_cfunc.part22.test.ts` | `c_func_1126` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器组合：(std::complex<long double>, std::shared_ptr<double>) 的解析结果与性能。 |
+| 3416 | `conversion_cfunc.part23.test.ts` | `c_func_1127` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：int[2][3] 的解析结果与性能。 |
+| 3417 | `conversion_cfunc.part23.test.ts` | `c_func_1128` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：int[4][5][6] 的解析结果与性能。 |
+| 3418 | `conversion_cfunc.part23.test.ts` | `c_func_1129` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：double[3][3] 的解析结果与性能。 |
+| 3419 | `conversion_cfunc.part23.test.ts` | `c_func_1130` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：double[2][4][8] 的解析结果与性能。 |
+| 3420 | `conversion_cfunc.part23.test.ts` | `c_func_1131` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：char[10][10] 的解析结果与性能。 |
+| 3421 | `conversion_cfunc.part23.test.ts` | `c_func_1132` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：char[5][5][5] 的解析结果与性能。 |
+| 3422 | `conversion_cfunc.part23.test.ts` | `c_func_1133` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：float[4][4] 的解析结果与性能。 |
+| 3423 | `conversion_cfunc.part23.test.ts` | `c_func_1134` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：float[2][6][3] 的解析结果与性能。 |
+| 3424 | `conversion_cfunc.part23.test.ts` | `c_func_1135` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：std::string[3][3] 的解析结果与性能。 |
+| 3425 | `conversion_cfunc.part23.test.ts` | `c_func_1136` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：std::string[2][2][2] 的解析结果与性能。 |
+| 3426 | `conversion_cfunc.part23.test.ts` | `c_func_1137` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：long[6][6] 的解析结果与性能。 |
+| 3427 | `conversion_cfunc.part23.test.ts` | `c_func_1138` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：long long[3][3][3] 的解析结果与性能。 |
+| 3428 | `conversion_cfunc.part23.test.ts` | `c_func_1139` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：short[8][4] 的解析结果与性能。 |
+| 3429 | `conversion_cfunc.part23.test.ts` | `c_func_1140` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：unsigned int[5][5] 的解析结果与性能。 |
+| 3430 | `conversion_cfunc.part23.test.ts` | `c_func_1141` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：bool[4][4] 的解析结果与性能。 |
+| 3431 | `conversion_cfunc.part23.test.ts` | `c_func_1142` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-多维数组：wchar_t[3][3] 的解析结果与性能。 |
+| 3432 | `conversion_cfunc.part23.test.ts` | `c_func_1143` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器数组：std::vector<int>[4] 的解析结果与性能。 |
+| 3433 | `conversion_cfunc.part23.test.ts` | `c_func_1144` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器数组：std::vector<std::string>[3] 的解析结果与性能。 |
+| 3434 | `conversion_cfunc.part23.test.ts` | `c_func_1145` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器数组：std::map<std::string, int>[2] 的解析结果与性能。 |
+| 3435 | `conversion_cfunc.part23.test.ts` | `c_func_1146` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器数组：std::set<int>[5] 的解析结果与性能。 |
+| 3436 | `conversion_cfunc.part23.test.ts` | `c_func_1147` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器数组：std::string[8] 的解析结果与性能。 |
+| 3437 | `conversion_cfunc.part23.test.ts` | `c_func_1148` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器数组：char[16] 的解析结果与性能。 |
+| 3438 | `conversion_cfunc.part23.test.ts` | `c_func_1149` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器数组：std::shared_ptr<int>[4] 的解析结果与性能。 |
+| 3439 | `conversion_cfunc.part23.test.ts` | `c_func_1150` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器数组：std::optional<int>[6] 的解析结果与性能。 |
+| 3440 | `conversion_cfunc.part23.test.ts` | `c_func_1151` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器数组：std::unique_ptr<std::string>[3] 的解析结果与性能。 |
+| 3441 | `conversion_cfunc.part23.test.ts` | `c_func_1152` | 性能测试 | 3/4 | h2dts parseFunction：类型覆盖-容器数组：std::deque<int>[2] 的解析结果与性能。 |
+| 3442 | `conversion_cclass.part01.test.ts` | `c_class_0001` | 性能测试 | 3/4 | h2dts parseClass：class-变量：4 基础类型成员 的解析结果与性能。 |
+| 3443 | `conversion_cclass.part01.test.ts` | `c_class_0002` | 性能测试 | 3/4 | h2dts parseClass：class-变量：char/long/long long/float 成员 的解析结果与性能。 |
+| 3444 | `conversion_cclass.part01.test.ts` | `c_class_0003` | 性能测试 | 3/4 | h2dts parseClass：class-变量：unsigned int/short/wchar_t/size_t 成员 的解析结果与性能。 |
+| 3445 | `conversion_cclass.part01.test.ts` | `c_class_0004` | 性能测试 | 3/4 | h2dts parseClass：class-变量：std::wstring/char16_t/char32_t/long double 成员 的解析结果与性能。 |
+| 3446 | `conversion_cclass.part01.test.ts` | `c_class_0005` | 性能测试 | 3/4 | h2dts parseClass：class-变量：多维数组/定长数组成员 的解析结果与性能。 |
+| 3447 | `conversion_cclass.part01.test.ts` | `c_class_0006` | 性能测试 | 3/4 | h2dts parseClass：class-变量：std 容器成员 的解析结果与性能。 |
+| 3448 | `conversion_cclass.part01.test.ts` | `c_class_0007` | 性能测试 | 3/4 | h2dts parseClass：class-变量：指针成员 的解析结果与性能。 |
+| 3449 | `conversion_cclass.part01.test.ts` | `c_class_0008` | 性能测试 | 3/4 | h2dts parseClass：class-变量：static 成员×3 的解析结果与性能。 |
+| 3450 | `conversion_cclass.part01.test.ts` | `c_class_0009` | 性能测试 | 3/4 | h2dts parseClass：class-函数：方法返回/入参组合 的解析结果与性能。 |
+| 3451 | `conversion_cclass.part01.test.ts` | `c_class_0010` | 性能测试 | 3/4 | h2dts parseClass：class-函数：基础类型方法矩阵 的解析结果与性能。 |
+| 3452 | `conversion_cclass.part01.test.ts` | `c_class_0011` | 性能测试 | 3/4 | h2dts parseClass：class-函数：数组/容器入参方法 的解析结果与性能。 |
+| 3453 | `conversion_cclass.part01.test.ts` | `c_class_0012` | 性能测试 | 3/4 | h2dts parseClass：namespace：域内 class（变量+函数） 的解析结果与性能。 |
+| 3454 | `conversion_cclass.part01.test.ts` | `c_class_0013` | 性能测试 | 3/4 | h2dts parseClass：typedef class：类名+别名 的解析结果与性能。 |
+| 3455 | `conversion_cclass.part01.test.ts` | `c_class_0014` | 性能测试 | 3/4 | h2dts parseClass：多 class：同文件 2 个 的解析结果与性能。 |
+| 3456 | `conversion_cclass.part01.test.ts` | `c_class_0015` | 性能测试 | 3/4 | h2dts parseClass：class-函数：含空格签名方法 的解析结果与性能。 |
+| 3457 | `conversion_cclass.part01.test.ts` | `c_class_0016` | 性能测试 | 3/4 | h2dts parseClass：扩充-class-变量：定宽整型 8 种 + float/double 的解析结果与性能。 |
+| 3458 | `conversion_cclass.part01.test.ts` | `c_class_0017` | 性能测试 | 3/4 | h2dts parseClass：扩充-class-变量：8 种 std 容器成员 的解析结果与性能。 |
+| 3459 | `conversion_cclass.part01.test.ts` | `c_class_0018` | 性能测试 | 3/4 | h2dts parseClass：扩充-class-函数：容器/指针入参方法 的解析结果与性能。 |
+| 3460 | `conversion_cclass.part01.test.ts` | `c_class_0019` | 性能测试 | 3/4 | h2dts parseClass：扩充-class-规模：20 变量 + 5 方法 的解析结果与性能。 |
+| 3461 | `conversion_cclass.part01.test.ts` | `c_class_0020` | 性能测试 | 3/4 | h2dts parseClass：扩充-class-多声明：同文件 5 个 的解析结果与性能。 |
+| 3462 | `conversion_cclass.part01.test.ts` | `c_class_0021` | 性能测试 | 3/4 | h2dts parseClass：扩充-class-namespace：两层嵌套 的解析结果与性能。 |
+| 3463 | `conversion_cclass.part01.test.ts` | `c_class_0022` | 性能测试 | 3/4 | h2dts parseClass：扩充-class：static 成员 + 静态工厂 + typedef 的解析结果与性能。 |
+| 3464 | `conversion_cclass.part01.test.ts` | `c_class_0023` | 性能测试 | 3/4 | h2dts parseClass：扩充-class-变量：5 种指针成员 的解析结果与性能。 |
+| 3465 | `conversion_cclass.part01.test.ts` | `c_class_0024` | 性能测试 | 3/4 | h2dts parseClass：扩充-class-变量：数组/容器/多维混合 的解析结果与性能。 |
+| 3466 | `conversion_cclass.part01.test.ts` | `c_class_0025` | 性能测试 | 3/4 | h2dts parseClass：扩充-class-函数：5 个同型方法 的解析结果与性能。 |
+| 3467 | `conversion_cclass.part01.test.ts` | `c_class_0026` | 性能测试 | 3/4 | h2dts parseClass：扩充-class-函数：引用/指针参数 的解析结果与性能。 |
+| 3468 | `conversion_cclass.part01.test.ts` | `c_class_0027` | 性能测试 | 3/4 | h2dts parseClass：扩充-class：全 static 成员与方法 的解析结果与性能。 |
+| 3469 | `conversion_cclass.part02.test.ts` | `c_class_0028` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（int/char/short/long/long/float 等） 的解析结果与性能。 |
+| 3470 | `conversion_cclass.part02.test.ts` | `c_class_0029` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（double/bool/unsigned/unsigned/unsigned/unsigned 等） 的解析结果与性能。 |
+| 3471 | `conversion_cclass.part02.test.ts` | `c_class_0030` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（unsigned/signed/signed/signed/wchar_t/char16_t 等） 的解析结果与性能。 |
+| 3472 | `conversion_cclass.part02.test.ts` | `c_class_0031` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（char32_t/size_t/int8_t/int16_t/int32_t/int64_t 等） 的解析结果与性能。 |
+| 3473 | `conversion_cclass.part02.test.ts` | `c_class_0032` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（uint8_t/uint16_t/uint32_t/uint64_t/std::string/string 等） 的解析结果与性能。 |
+| 3474 | `conversion_cclass.part02.test.ts` | `c_class_0033` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::wstring/long/void/std::vector<int>/std::vector<std::string>/std::vector<double> 等） 的解析结果与性能。 |
+| 3475 | `conversion_cclass.part02.test.ts` | `c_class_0034` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::vector<bool>/std::map<std::string,int>/std::map<int,std::string>/std::set<int>/std::set<std::string>/std::list<int> 等） 的解析结果与性能。 |
+| 3476 | `conversion_cclass.part02.test.ts` | `c_class_0035` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::list<std::string>/std::deque<int>/std::deque<std::string>/std::pair<int,int>/std::pair<std::string,int>/std::tuple<int,int,int> 等） 的解析结果与性能。 |
+| 3477 | `conversion_cclass.part02.test.ts` | `c_class_0036` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::tuple<std::string,int,double>/std::queue<int>/std::stack<int>/std::priority_queue<int>/std::multimap<int,int>/std::multiset<int> 等） 的解析结果与性能。 |
+| 3478 | `conversion_cclass.part02.test.ts` | `c_class_0037` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::unordered_map<std::string,int>/std::unordered_set<int>/std::unordered_multimap<int,int>/std::unordered_multiset<int>/std::array<int,10>/std::array<std::string,5> 等） 的解析结果与性能。 |
+| 3479 | `conversion_cclass.part02.test.ts` | `c_class_0038` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::forward_list<int>/std::valarray<double>/std::complex<double>/std::function<int(int,int)>/std::function<void(std::string)>/int 等） 的解析结果与性能。 |
+| 3480 | `conversion_cclass.part02.test.ts` | `c_class_0039` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（char/short/long/long/float/double 等） 的解析结果与性能。 |
+| 3481 | `conversion_cclass.part02.test.ts` | `c_class_0040` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（bool/unsigned/unsigned/unsigned/unsigned/unsigned 等） 的解析结果与性能。 |
+| 3482 | `conversion_cclass.part02.test.ts` | `c_class_0041` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（signed/signed/signed/wchar_t/char16_t/char32_t 等） 的解析结果与性能。 |
+| 3483 | `conversion_cclass.part02.test.ts` | `c_class_0042` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（size_t/int8_t/int16_t/int32_t/int64_t/uint8_t 等） 的解析结果与性能。 |
+| 3484 | `conversion_cclass.part02.test.ts` | `c_class_0043` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（uint16_t/uint32_t/uint64_t/std::string/string/std::wstring 等） 的解析结果与性能。 |
+| 3485 | `conversion_cclass.part02.test.ts` | `c_class_0044` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（long/void/std::vector<int>/std::vector<std::string>/std::vector<double>/std::vector<bool> 等） 的解析结果与性能。 |
+| 3486 | `conversion_cclass.part02.test.ts` | `c_class_0045` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::map<std::string,int>/std::map<int,std::string>/std::set<int>/std::set<std::string>/std::list<int>/std::list<std::string> 等） 的解析结果与性能。 |
+| 3487 | `conversion_cclass.part02.test.ts` | `c_class_0046` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::deque<int>/std::deque<std::string>/std::pair<int,int>/std::pair<std::string,int>/std::tuple<int,int,int>/std::tuple<std::string,int,double> 等） 的解析结果与性能。 |
+| 3488 | `conversion_cclass.part02.test.ts` | `c_class_0047` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::queue<int>/std::stack<int>/std::priority_queue<int>/std::multimap<int,int>/std::multiset<int>/std::unordered_map<std::string,int> 等） 的解析结果与性能。 |
+| 3489 | `conversion_cclass.part02.test.ts` | `c_class_0048` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::unordered_set<int>/std::unordered_multimap<int,int>/std::unordered_multiset<int>/std::array<int,10>/std::array<std::string,5>/std::forward_list<int> 等） 的解析结果与性能。 |
+| 3490 | `conversion_cclass.part02.test.ts` | `c_class_0049` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::valarray<double>/std::complex<double>/std::function<int(int,int)>/std::function<void(std::string)>/int/char 等） 的解析结果与性能。 |
+| 3491 | `conversion_cclass.part02.test.ts` | `c_class_0050` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（short/long/long/float/double/bool 等） 的解析结果与性能。 |
+| 3492 | `conversion_cclass.part02.test.ts` | `c_class_0051` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（unsigned/unsigned/unsigned/unsigned/unsigned/signed 等） 的解析结果与性能。 |
+| 3493 | `conversion_cclass.part02.test.ts` | `c_class_0052` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（signed/signed/wchar_t/char16_t/char32_t/size_t 等） 的解析结果与性能。 |
+| 3494 | `conversion_cclass.part02.test.ts` | `c_class_0053` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（int8_t/int16_t/int32_t/int64_t/uint8_t/uint16_t 等） 的解析结果与性能。 |
+| 3495 | `conversion_cclass.part02.test.ts` | `c_class_0054` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（uint32_t/uint64_t/std::string/string/std::wstring/long 等） 的解析结果与性能。 |
+| 3496 | `conversion_cclass.part02.test.ts` | `c_class_0055` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（void/std::vector<int>/std::vector<std::string>/std::vector<double>/std::vector<bool>/std::map<std::string,int> 等） 的解析结果与性能。 |
+| 3497 | `conversion_cclass.part02.test.ts` | `c_class_0056` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::map<int,std::string>/std::set<int>/std::set<std::string>/std::list<int>/std::list<std::string>/std::deque<int> 等） 的解析结果与性能。 |
+| 3498 | `conversion_cclass.part02.test.ts` | `c_class_0057` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::deque<std::string>/std::pair<int,int>/std::pair<std::string,int>/std::tuple<int,int,int>/std::tuple<std::string,int,double>/std::queue<int> 等） 的解析结果与性能。 |
+| 3499 | `conversion_cclass.part02.test.ts` | `c_class_0058` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::stack<int>/std::priority_queue<int>/std::multimap<int,int>/std::multiset<int>/std::unordered_map<std::string,int>/std::unordered_set<int> 等） 的解析结果与性能。 |
+| 3500 | `conversion_cclass.part02.test.ts` | `c_class_0059` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::unordered_multimap<int,int>/std::unordered_multiset<int>/std::array<int,10>/std::array<std::string,5>/std::forward_list<int>/std::valarray<double> 等） 的解析结果与性能。 |
+| 3501 | `conversion_cclass.part02.test.ts` | `c_class_0060` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::complex<double>/std::function<int(int,int)>/std::function<void(std::string)>/int/char/short 等） 的解析结果与性能。 |
+| 3502 | `conversion_cclass.part02.test.ts` | `c_class_0061` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（long/long/float/double/bool/unsigned 等） 的解析结果与性能。 |
+| 3503 | `conversion_cclass.part02.test.ts` | `c_class_0062` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（unsigned/unsigned/unsigned/unsigned/signed/signed 等） 的解析结果与性能。 |
+| 3504 | `conversion_cclass.part02.test.ts` | `c_class_0063` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（signed/wchar_t/char16_t/char32_t/size_t/int8_t 等） 的解析结果与性能。 |
+| 3505 | `conversion_cclass.part02.test.ts` | `c_class_0064` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（int16_t/int32_t/int64_t/uint8_t/uint16_t/uint32_t 等） 的解析结果与性能。 |
+| 3506 | `conversion_cclass.part03.test.ts` | `c_class_0065` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（uint64_t/std::string/string/std::wstring/long/void 等） 的解析结果与性能。 |
+| 3507 | `conversion_cclass.part03.test.ts` | `c_class_0066` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::vector<int>/std::vector<std::string>/std::vector<double>/std::vector<bool>/std::map<std::string,int>/std::map<int,std::string> 等） 的解析结果与性能。 |
+| 3508 | `conversion_cclass.part03.test.ts` | `c_class_0067` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::set<int>/std::set<std::string>/std::list<int>/std::list<std::string>/std::deque<int>/std::deque<std::string> 等） 的解析结果与性能。 |
+| 3509 | `conversion_cclass.part03.test.ts` | `c_class_0068` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::pair<int,int>/std::pair<std::string,int>/std::tuple<int,int,int>/std::tuple<std::string,int,double>/std::queue<int>/std::stack<int> 等） 的解析结果与性能。 |
+| 3510 | `conversion_cclass.part03.test.ts` | `c_class_0069` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::priority_queue<int>/std::multimap<int,int>/std::multiset<int>/std::unordered_map<std::string,int>/std::unordered_set<int>/std::unordered_multimap<int,int> 等） 的解析结果与性能。 |
+| 3511 | `conversion_cclass.part03.test.ts` | `c_class_0070` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::unordered_multiset<int>/std::array<int,10>/std::array<std::string,5>/std::forward_list<int>/std::valarray<double>/std::complex<double> 等） 的解析结果与性能。 |
+| 3512 | `conversion_cclass.part03.test.ts` | `c_class_0071` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::function<int(int,int)>/std::function<void(std::string)>/int/char/short/long 等） 的解析结果与性能。 |
+| 3513 | `conversion_cclass.part03.test.ts` | `c_class_0072` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（long/float/double/bool/unsigned/unsigned 等） 的解析结果与性能。 |
+| 3514 | `conversion_cclass.part03.test.ts` | `c_class_0073` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（unsigned/unsigned/unsigned/signed/signed/signed 等） 的解析结果与性能。 |
+| 3515 | `conversion_cclass.part03.test.ts` | `c_class_0074` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（wchar_t/char16_t/char32_t/size_t/int8_t/int16_t 等） 的解析结果与性能。 |
+| 3516 | `conversion_cclass.part03.test.ts` | `c_class_0075` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（int32_t/int64_t/uint8_t/uint16_t/uint32_t/uint64_t 等） 的解析结果与性能。 |
+| 3517 | `conversion_cclass.part03.test.ts` | `c_class_0076` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::string/string/std::wstring/long/void/std::vector<int> 等） 的解析结果与性能。 |
+| 3518 | `conversion_cclass.part03.test.ts` | `c_class_0077` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::vector<std::string>/std::vector<double>/std::vector<bool>/std::map<std::string,int>/std::map<int,std::string>/std::set<int> 等） 的解析结果与性能。 |
+| 3519 | `conversion_cclass.part03.test.ts` | `c_class_0078` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::set<std::string>/std::list<int>/std::list<std::string>/std::deque<int>/std::deque<std::string>/std::pair<int,int> 等） 的解析结果与性能。 |
+| 3520 | `conversion_cclass.part03.test.ts` | `c_class_0079` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::pair<std::string,int>/std::tuple<int,int,int>/std::tuple<std::string,int,double>/std::queue<int>/std::stack<int>/std::priority_queue<int> 等） 的解析结果与性能。 |
+| 3521 | `conversion_cclass.part03.test.ts` | `c_class_0080` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::multimap<int,int>/std::multiset<int>/std::unordered_map<std::string,int>/std::unordered_set<int>/std::unordered_multimap<int,int>/std::unordered_multiset<int> 等） 的解析结果与性能。 |
+| 3522 | `conversion_cclass.part03.test.ts` | `c_class_0081` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::array<int,10>/std::array<std::string,5>/std::forward_list<int>/std::valarray<double>/std::complex<double>/std::function<int(int,int)> 等） 的解析结果与性能。 |
+| 3523 | `conversion_cclass.part03.test.ts` | `c_class_0082` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（std::function<void(std::string)>/int/char/short/long/long 等） 的解析结果与性能。 |
+| 3524 | `conversion_cclass.part03.test.ts` | `c_class_0083` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（float/double/bool/unsigned/unsigned/unsigned 等） 的解析结果与性能。 |
+| 3525 | `conversion_cclass.part03.test.ts` | `c_class_0084` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（unsigned/unsigned/signed/signed/signed/wchar_t 等） 的解析结果与性能。 |
+| 3526 | `conversion_cclass.part03.test.ts` | `c_class_0085` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（char16_t/char32_t/size_t/int8_t/int16_t/int32_t 等） 的解析结果与性能。 |
+| 3527 | `conversion_cclass.part03.test.ts` | `c_class_0086` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（int64_t/uint8_t/uint16_t/uint32_t/uint64_t/std::string 等） 的解析结果与性能。 |
+| 3528 | `conversion_cclass.part03.test.ts` | `c_class_0087` | 性能测试 | 3/4 | h2dts parseClass：扩充-成员矩阵：6 成员（string/std::wstring/long/void/std::vector<int>/std::vector<std::string> 等） 的解析结果与性能。 |
+| 3529 | `conversion_cclass.part03.test.ts` | `c_class_0088` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3530 | `conversion_cclass.part03.test.ts` | `c_class_0089` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3531 | `conversion_cclass.part03.test.ts` | `c_class_0090` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3532 | `conversion_cclass.part03.test.ts` | `c_class_0091` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3533 | `conversion_cclass.part03.test.ts` | `c_class_0092` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3534 | `conversion_cclass.part03.test.ts` | `c_class_0093` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3535 | `conversion_cclass.part03.test.ts` | `c_class_0094` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3536 | `conversion_cclass.part03.test.ts` | `c_class_0095` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3537 | `conversion_cclass.part03.test.ts` | `c_class_0096` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3538 | `conversion_cclass.part03.test.ts` | `c_class_0097` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3539 | `conversion_cclass.part03.test.ts` | `c_class_0098` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3540 | `conversion_cclass.part03.test.ts` | `c_class_0099` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3541 | `conversion_cclass.part03.test.ts` | `c_class_0100` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3542 | `conversion_cclass.part03.test.ts` | `c_class_0101` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3543 | `conversion_cclass.part04.test.ts` | `c_class_0102` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3544 | `conversion_cclass.part04.test.ts` | `c_class_0103` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3545 | `conversion_cclass.part04.test.ts` | `c_class_0104` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3546 | `conversion_cclass.part04.test.ts` | `c_class_0105` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3547 | `conversion_cclass.part04.test.ts` | `c_class_0106` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3548 | `conversion_cclass.part04.test.ts` | `c_class_0107` | 性能测试 | 3/4 | h2dts parseClass：扩充-容器成员矩阵：6 容器成员 的解析结果与性能。 |
+| 3549 | `conversion_cclass.part04.test.ts` | `c_class_0108` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3550 | `conversion_cclass.part04.test.ts` | `c_class_0109` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3551 | `conversion_cclass.part04.test.ts` | `c_class_0110` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3552 | `conversion_cclass.part04.test.ts` | `c_class_0111` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3553 | `conversion_cclass.part04.test.ts` | `c_class_0112` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3554 | `conversion_cclass.part04.test.ts` | `c_class_0113` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3555 | `conversion_cclass.part04.test.ts` | `c_class_0114` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3556 | `conversion_cclass.part04.test.ts` | `c_class_0115` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3557 | `conversion_cclass.part04.test.ts` | `c_class_0116` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3558 | `conversion_cclass.part04.test.ts` | `c_class_0117` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3559 | `conversion_cclass.part04.test.ts` | `c_class_0118` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3560 | `conversion_cclass.part04.test.ts` | `c_class_0119` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3561 | `conversion_cclass.part04.test.ts` | `c_class_0120` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3562 | `conversion_cclass.part04.test.ts` | `c_class_0121` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3563 | `conversion_cclass.part04.test.ts` | `c_class_0122` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3564 | `conversion_cclass.part04.test.ts` | `c_class_0123` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3565 | `conversion_cclass.part04.test.ts` | `c_class_0124` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3566 | `conversion_cclass.part04.test.ts` | `c_class_0125` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3567 | `conversion_cclass.part04.test.ts` | `c_class_0126` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3568 | `conversion_cclass.part04.test.ts` | `c_class_0127` | 性能测试 | 3/4 | h2dts parseClass：扩充-数组/指针成员：6 种 的解析结果与性能。 |
+| 3569 | `conversion_cclass.part04.test.ts` | `c_class_0128` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3570 | `conversion_cclass.part04.test.ts` | `c_class_0129` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3571 | `conversion_cclass.part04.test.ts` | `c_class_0130` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3572 | `conversion_cclass.part04.test.ts` | `c_class_0131` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3573 | `conversion_cclass.part04.test.ts` | `c_class_0132` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3574 | `conversion_cclass.part04.test.ts` | `c_class_0133` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3575 | `conversion_cclass.part04.test.ts` | `c_class_0134` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3576 | `conversion_cclass.part04.test.ts` | `c_class_0135` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3577 | `conversion_cclass.part04.test.ts` | `c_class_0136` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3578 | `conversion_cclass.part04.test.ts` | `c_class_0137` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3579 | `conversion_cclass.part05.test.ts` | `c_class_0138` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3580 | `conversion_cclass.part05.test.ts` | `c_class_0139` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3581 | `conversion_cclass.part05.test.ts` | `c_class_0140` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3582 | `conversion_cclass.part05.test.ts` | `c_class_0141` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3583 | `conversion_cclass.part05.test.ts` | `c_class_0142` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3584 | `conversion_cclass.part05.test.ts` | `c_class_0143` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3585 | `conversion_cclass.part05.test.ts` | `c_class_0144` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3586 | `conversion_cclass.part05.test.ts` | `c_class_0145` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3587 | `conversion_cclass.part05.test.ts` | `c_class_0146` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3588 | `conversion_cclass.part05.test.ts` | `c_class_0147` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法返回矩阵：6 方法 的解析结果与性能。 |
+| 3589 | `conversion_cclass.part05.test.ts` | `c_class_0148` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3590 | `conversion_cclass.part05.test.ts` | `c_class_0149` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3591 | `conversion_cclass.part05.test.ts` | `c_class_0150` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3592 | `conversion_cclass.part05.test.ts` | `c_class_0151` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3593 | `conversion_cclass.part05.test.ts` | `c_class_0152` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3594 | `conversion_cclass.part05.test.ts` | `c_class_0153` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3595 | `conversion_cclass.part05.test.ts` | `c_class_0154` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3596 | `conversion_cclass.part05.test.ts` | `c_class_0155` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3597 | `conversion_cclass.part05.test.ts` | `c_class_0156` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3598 | `conversion_cclass.part05.test.ts` | `c_class_0157` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3599 | `conversion_cclass.part05.test.ts` | `c_class_0158` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3600 | `conversion_cclass.part05.test.ts` | `c_class_0159` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3601 | `conversion_cclass.part05.test.ts` | `c_class_0160` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3602 | `conversion_cclass.part05.test.ts` | `c_class_0161` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3603 | `conversion_cclass.part05.test.ts` | `c_class_0162` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3604 | `conversion_cclass.part05.test.ts` | `c_class_0163` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3605 | `conversion_cclass.part05.test.ts` | `c_class_0164` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3606 | `conversion_cclass.part05.test.ts` | `c_class_0165` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3607 | `conversion_cclass.part05.test.ts` | `c_class_0166` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3608 | `conversion_cclass.part05.test.ts` | `c_class_0167` | 性能测试 | 3/4 | h2dts parseClass：扩充-方法入参矩阵：6 方法 的解析结果与性能。 |
+| 3609 | `conversion_cclass.part05.test.ts` | `c_class_0168` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：5 成员 的解析结果与性能。 |
+| 3610 | `conversion_cclass.part06.test.ts` | `c_class_0169` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：10 成员 的解析结果与性能。 |
+| 3611 | `conversion_cclass.part06.test.ts` | `c_class_0170` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：15 成员 的解析结果与性能。 |
+| 3612 | `conversion_cclass.part06.test.ts` | `c_class_0171` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：20 成员 的解析结果与性能。 |
+| 3613 | `conversion_cclass.part06.test.ts` | `c_class_0172` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：25 成员 的解析结果与性能。 |
+| 3614 | `conversion_cclass.part06.test.ts` | `c_class_0173` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：30 成员 的解析结果与性能。 |
+| 3615 | `conversion_cclass.part06.test.ts` | `c_class_0174` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：35 成员 的解析结果与性能。 |
+| 3616 | `conversion_cclass.part06.test.ts` | `c_class_0175` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：40 成员 的解析结果与性能。 |
+| 3617 | `conversion_cclass.part06.test.ts` | `c_class_0176` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：45 成员 的解析结果与性能。 |
+| 3618 | `conversion_cclass.part06.test.ts` | `c_class_0177` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：50 成员 的解析结果与性能。 |
+| 3619 | `conversion_cclass.part06.test.ts` | `c_class_0178` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：55 成员 的解析结果与性能。 |
+| 3620 | `conversion_cclass.part06.test.ts` | `c_class_0179` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：60 成员 的解析结果与性能。 |
+| 3621 | `conversion_cclass.part06.test.ts` | `c_class_0180` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：65 成员 的解析结果与性能。 |
+| 3622 | `conversion_cclass.part07.test.ts` | `c_class_0181` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：70 成员 的解析结果与性能。 |
+| 3623 | `conversion_cclass.part07.test.ts` | `c_class_0182` | 性能测试 | 3/4 | h2dts parseClass：扩充-规模：75 成员 的解析结果与性能。 |
+| 3624 | `conversion_cclass.part07.test.ts` | `c_class_0183` | 性能测试 | 3/4 | h2dts parseClass：扩充-多类：同文件 2 个 的解析结果与性能。 |
+| 3625 | `conversion_cclass.part07.test.ts` | `c_class_0184` | 性能测试 | 3/4 | h2dts parseClass：扩充-多类：同文件 3 个 的解析结果与性能。 |
+| 3626 | `conversion_cclass.part07.test.ts` | `c_class_0185` | 性能测试 | 3/4 | h2dts parseClass：扩充-多类：同文件 4 个 的解析结果与性能。 |
+| 3627 | `conversion_cclass.part07.test.ts` | `c_class_0186` | 性能测试 | 3/4 | h2dts parseClass：扩充-多类：同文件 5 个 的解析结果与性能。 |
+| 3628 | `conversion_cclass.part07.test.ts` | `c_class_0187` | 性能测试 | 3/4 | h2dts parseClass：扩充-多类：同文件 6 个 的解析结果与性能。 |
+| 3629 | `conversion_cclass.part07.test.ts` | `c_class_0188` | 性能测试 | 3/4 | h2dts parseClass：扩充-多类：同文件 7 个 的解析结果与性能。 |
+| 3630 | `conversion_cclass.part07.test.ts` | `c_class_0189` | 性能测试 | 3/4 | h2dts parseClass：扩充-多类：同文件 8 个 的解析结果与性能。 |
+| 3631 | `conversion_cclass.part07.test.ts` | `c_class_0190` | 性能测试 | 3/4 | h2dts parseClass：扩充-多类：同文件 10 个 的解析结果与性能。 |
+| 3632 | `conversion_cclass.part07.test.ts` | `c_class_0191` | 性能测试 | 3/4 | h2dts parseClass：扩充-多类：同文件 12 个 的解析结果与性能。 |
+| 3633 | `conversion_cclass.part07.test.ts` | `c_class_0192` | 性能测试 | 3/4 | h2dts parseClass：扩充-多类：同文件 15 个 的解析结果与性能。 |
+| 3634 | `conversion_cclass.part07.test.ts` | `c_class_0193` | 性能测试 | 3/4 | h2dts parseClass：扩充-typedef class 别名 的解析结果与性能。 |
+| 3635 | `conversion_cclass.part07.test.ts` | `c_class_0194` | 性能测试 | 3/4 | h2dts parseClass：扩充-static 成员/方法 的解析结果与性能。 |
+| 3636 | `conversion_cclass.part07.test.ts` | `c_class_0195` | 性能测试 | 3/4 | h2dts parseClass：扩充-namespace 内 class 的解析结果与性能。 |
+| 3637 | `conversion_cclass.part07.test.ts` | `c_class_0196` | 性能测试 | 3/4 | h2dts parseClass：扩充-typedef class 别名 的解析结果与性能。 |
+| 3638 | `conversion_cclass.part07.test.ts` | `c_class_0197` | 性能测试 | 3/4 | h2dts parseClass：扩充-static 成员/方法 的解析结果与性能。 |
+| 3639 | `conversion_cclass.part07.test.ts` | `c_class_0198` | 性能测试 | 3/4 | h2dts parseClass：扩充-namespace 内 class 的解析结果与性能。 |
+| 3640 | `conversion_cclass.part07.test.ts` | `c_class_0199` | 性能测试 | 3/4 | h2dts parseClass：扩充-typedef class 别名 的解析结果与性能。 |
+| 3641 | `conversion_cclass.part07.test.ts` | `c_class_0200` | 性能测试 | 3/4 | h2dts parseClass：扩充-static 成员/方法 的解析结果与性能。 |
+| 3642 | `conversion_cclass.part07.test.ts` | `c_class_0201` | 性能测试 | 3/4 | h2dts parseClass：扩充-namespace 内 class 的解析结果与性能。 |
+| 3643 | `conversion_cclass.part07.test.ts` | `c_class_0202` | 性能测试 | 3/4 | h2dts parseClass：扩充-typedef class 别名 的解析结果与性能。 |
+| 3644 | `conversion_cclass.part07.test.ts` | `c_class_0203` | 性能测试 | 3/4 | h2dts parseClass：扩充-static 成员/方法 的解析结果与性能。 |
+| 3645 | `conversion_cclass.part07.test.ts` | `c_class_0204` | 性能测试 | 3/4 | h2dts parseClass：扩充-namespace 内 class 的解析结果与性能。 |
+| 3646 | `conversion_cclass.part07.test.ts` | `c_class_0205` | 性能测试 | 3/4 | h2dts parseClass：扩充-typedef class 别名 的解析结果与性能。 |
+| 3647 | `conversion_cclass.part07.test.ts` | `c_class_0206` | 性能测试 | 3/4 | h2dts parseClass：扩充-static 成员/方法 的解析结果与性能。 |
+| 3648 | `conversion_cclass.part07.test.ts` | `c_class_0207` | 性能测试 | 3/4 | h2dts parseClass：扩充-namespace 内 class 的解析结果与性能。 |
+| 3649 | `conversion_cclass.part08.test.ts` | `c_class_0208` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Alpha0 的解析结果与性能。 |
+| 3650 | `conversion_cclass.part08.test.ts` | `c_class_0209` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Beta1 的解析结果与性能。 |
+| 3651 | `conversion_cclass.part08.test.ts` | `c_class_0210` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Gamma2 的解析结果与性能。 |
+| 3652 | `conversion_cclass.part08.test.ts` | `c_class_0211` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Delta3 的解析结果与性能。 |
+| 3653 | `conversion_cclass.part08.test.ts` | `c_class_0212` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Epsilon4 的解析结果与性能。 |
+| 3654 | `conversion_cclass.part08.test.ts` | `c_class_0213` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Zeta5 的解析结果与性能。 |
+| 3655 | `conversion_cclass.part08.test.ts` | `c_class_0214` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Eta6 的解析结果与性能。 |
+| 3656 | `conversion_cclass.part08.test.ts` | `c_class_0215` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Theta7 的解析结果与性能。 |
+| 3657 | `conversion_cclass.part08.test.ts` | `c_class_0216` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Iota8 的解析结果与性能。 |
+| 3658 | `conversion_cclass.part08.test.ts` | `c_class_0217` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Kappa9 的解析结果与性能。 |
+| 3659 | `conversion_cclass.part08.test.ts` | `c_class_0218` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Lambda10 的解析结果与性能。 |
+| 3660 | `conversion_cclass.part08.test.ts` | `c_class_0219` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Mu11 的解析结果与性能。 |
+| 3661 | `conversion_cclass.part08.test.ts` | `c_class_0220` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Nu12 的解析结果与性能。 |
+| 3662 | `conversion_cclass.part08.test.ts` | `c_class_0221` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Xi13 的解析结果与性能。 |
+| 3663 | `conversion_cclass.part08.test.ts` | `c_class_0222` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Omicron14 的解析结果与性能。 |
+| 3664 | `conversion_cclass.part08.test.ts` | `c_class_0223` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Pi15 的解析结果与性能。 |
+| 3665 | `conversion_cclass.part08.test.ts` | `c_class_0224` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Rho16 的解析结果与性能。 |
+| 3666 | `conversion_cclass.part08.test.ts` | `c_class_0225` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Sigma17 的解析结果与性能。 |
+| 3667 | `conversion_cclass.part08.test.ts` | `c_class_0226` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Tau18 的解析结果与性能。 |
+| 3668 | `conversion_cclass.part08.test.ts` | `c_class_0227` | 性能测试 | 3/4 | h2dts parseClass：扩充-类名变体：Upsilon19 的解析结果与性能。 |
+| 3669 | `conversion_cclass.part08.test.ts` | `c_class_0228` | 性能测试 | 3/4 | h2dts parseClass：扩充-边界：空类 的解析结果与性能。 |
+| 3670 | `conversion_cclass.part08.test.ts` | `c_class_0229` | 性能测试 | 3/4 | h2dts parseClass：扩充-边界：单行类 的解析结果与性能。 |
+| 3671 | `conversion_cclass.part08.test.ts` | `c_class_0230` | 性能测试 | 3/4 | h2dts parseClass：扩充-边界：注释类 的解析结果与性能。 |
+| 3672 | `conversion_cclass.part08.test.ts` | `c_class_0231` | 性能测试 | 3/4 | h2dts parseClass：扩充-边界：索引成员 的解析结果与性能。 |
+| 3673 | `conversion_cclass.part08.test.ts` | `c_class_0232` | 性能测试 | 3/4 | h2dts parseClass：扩充-边界：私有公有 的解析结果与性能。 |
+| 3674 | `conversion_cclass.part08.test.ts` | `c_class_0233` | 性能测试 | 3/4 | h2dts parseClass：扩充-边界：嵌套方法参数 的解析结果与性能。 |
+| 3675 | `conversion_cclass.part08.test.ts` | `c_class_0234` | 性能测试 | 3/4 | h2dts parseClass：扩充-边界：三方法 的解析结果与性能。 |
+| 3676 | `conversion_cclass.part08.test.ts` | `c_class_0235` | 性能测试 | 3/4 | h2dts parseClass：扩充-边界：混合成员 的解析结果与性能。 |
+| 3677 | `conversion_cclass.part08.test.ts` | `c_class_0236` | 性能测试 | 3/4 | h2dts parseClass：扩充-边界：多数组 的解析结果与性能。 |
+| 3678 | `conversion_cclass.part08.test.ts` | `c_class_0237` | 性能测试 | 3/4 | h2dts parseClass：扩充-边界：引用成员方法 的解析结果与性能。 |
+| 3679 | `conversion_cclass.part09.test.ts` | `c_class_0238` | 性能测试 | 3/4 | h2dts parseClass：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3680 | `conversion_cclass.part09.test.ts` | `c_class_0239` | 性能测试 | 3/4 | h2dts parseClass：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3681 | `conversion_cclass.part09.test.ts` | `c_class_0240` | 性能测试 | 3/4 | h2dts parseClass：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3682 | `conversion_cclass.part09.test.ts` | `c_class_0241` | 性能测试 | 3/4 | h2dts parseClass：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3683 | `conversion_cclass.part09.test.ts` | `c_class_0242` | 性能测试 | 3/4 | h2dts parseClass：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3684 | `conversion_cclass.part09.test.ts` | `c_class_0243` | 性能测试 | 3/4 | h2dts parseClass：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3685 | `conversion_cclass.part09.test.ts` | `c_class_0244` | 性能测试 | 3/4 | h2dts parseClass：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3686 | `conversion_cclass.part09.test.ts` | `c_class_0245` | 性能测试 | 3/4 | h2dts parseClass：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3687 | `conversion_cclass.part09.test.ts` | `c_class_0246` | 性能测试 | 3/4 | h2dts parseClass：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3688 | `conversion_cclass.part09.test.ts` | `c_class_0247` | 性能测试 | 3/4 | h2dts parseClass：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3689 | `conversion_cstruct.part01.test.ts` | `c_struct_0001` | 性能测试 | 3/4 | h2dts parseStruct：struct：成员×3 + 方法×1 的解析结果与性能。 |
+| 3690 | `conversion_cstruct.part01.test.ts` | `c_struct_0002` | 性能测试 | 3/4 | h2dts parseStruct：struct：std::string 成员 + 方法 的解析结果与性能。 |
+| 3691 | `conversion_cstruct.part01.test.ts` | `c_struct_0003` | 性能测试 | 3/4 | h2dts parseStruct：struct：多维数组成员 的解析结果与性能。 |
+| 3692 | `conversion_cstruct.part01.test.ts` | `c_struct_0004` | 性能测试 | 3/4 | h2dts parseStruct：struct：容器/指针成员 的解析结果与性能。 |
+| 3693 | `conversion_cstruct.part01.test.ts` | `c_struct_0005` | 性能测试 | 3/4 | h2dts parseStruct：struct：匿名 + 别名 的解析结果与性能。 |
+| 3694 | `conversion_cstruct.part01.test.ts` | `c_struct_0006` | 性能测试 | 3/4 | h2dts parseStruct：struct：非 typedef 具名 的解析结果与性能。 |
+| 3695 | `conversion_cstruct.part01.test.ts` | `c_struct_0007` | 性能测试 | 3/4 | h2dts parseStruct：struct：成员 + 双方法 的解析结果与性能。 |
+| 3696 | `conversion_cstruct.part01.test.ts` | `c_struct_0008` | 性能测试 | 3/4 | h2dts parseStruct：namespace：域内 struct 的解析结果与性能。 |
+| 3697 | `conversion_cstruct.part01.test.ts` | `c_struct_0009` | 性能测试 | 3/4 | h2dts parseStruct：多 struct：同文件 2 个 的解析结果与性能。 |
+| 3698 | `conversion_cstruct.part01.test.ts` | `c_struct_0010` | 性能测试 | 3/4 | h2dts parseStruct：struct：10 基础类型成员 的解析结果与性能。 |
+| 3699 | `conversion_cstruct.part01.test.ts` | `c_struct_0011` | 性能测试 | 3/4 | h2dts parseStruct：扩充-struct：12 基础类型成员 的解析结果与性能。 |
+| 3700 | `conversion_cstruct.part01.test.ts` | `c_struct_0012` | 性能测试 | 3/4 | h2dts parseStruct：扩充-struct：6 种数组/多维成员 的解析结果与性能。 |
+| 3701 | `conversion_cstruct.part01.test.ts` | `c_struct_0013` | 性能测试 | 3/4 | h2dts parseStruct：扩充-struct：5 种容器成员 的解析结果与性能。 |
+| 3702 | `conversion_cstruct.part01.test.ts` | `c_struct_0014` | 性能测试 | 3/4 | h2dts parseStruct：扩充-struct-多声明：同文件 4 个 的解析结果与性能。 |
+| 3703 | `conversion_cstruct.part01.test.ts` | `c_struct_0015` | 性能测试 | 3/4 | h2dts parseStruct：扩充-struct：3 种函数指针成员 的解析结果与性能。 |
+| 3704 | `conversion_cstruct.part01.test.ts` | `c_struct_0016` | 性能测试 | 3/4 | h2dts parseStruct：扩充-struct-规模：20 成员 + 2 方法 的解析结果与性能。 |
+| 3705 | `conversion_cstruct.part01.test.ts` | `c_struct_0017` | 性能测试 | 3/4 | h2dts parseStruct：扩充-struct：几何体成员 + 3 方法 的解析结果与性能。 |
+| 3706 | `conversion_cstruct.part01.test.ts` | `c_struct_0018` | 性能测试 | 3/4 | h2dts parseStruct：扩充-struct-namespace：两层嵌套 的解析结果与性能。 |
+| 3707 | `conversion_cstruct.part01.test.ts` | `c_struct_0019` | 性能测试 | 3/4 | h2dts parseStruct：扩充-struct：8 种混合成员 的解析结果与性能。 |
+| 3708 | `conversion_cstruct.part01.test.ts` | `c_struct_0020` | 性能测试 | 3/4 | h2dts parseStruct：扩充-struct：成员 + 4 方法 的解析结果与性能。 |
+| 3709 | `conversion_cstruct.part02.test.ts` | `c_struct_0021` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3710 | `conversion_cstruct.part02.test.ts` | `c_struct_0022` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3711 | `conversion_cstruct.part02.test.ts` | `c_struct_0023` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3712 | `conversion_cstruct.part02.test.ts` | `c_struct_0024` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3713 | `conversion_cstruct.part02.test.ts` | `c_struct_0025` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3714 | `conversion_cstruct.part02.test.ts` | `c_struct_0026` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3715 | `conversion_cstruct.part02.test.ts` | `c_struct_0027` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3716 | `conversion_cstruct.part02.test.ts` | `c_struct_0028` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3717 | `conversion_cstruct.part02.test.ts` | `c_struct_0029` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3718 | `conversion_cstruct.part02.test.ts` | `c_struct_0030` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3719 | `conversion_cstruct.part02.test.ts` | `c_struct_0031` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3720 | `conversion_cstruct.part02.test.ts` | `c_struct_0032` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3721 | `conversion_cstruct.part02.test.ts` | `c_struct_0033` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3722 | `conversion_cstruct.part02.test.ts` | `c_struct_0034` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3723 | `conversion_cstruct.part02.test.ts` | `c_struct_0035` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3724 | `conversion_cstruct.part02.test.ts` | `c_struct_0036` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3725 | `conversion_cstruct.part02.test.ts` | `c_struct_0037` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3726 | `conversion_cstruct.part02.test.ts` | `c_struct_0038` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3727 | `conversion_cstruct.part02.test.ts` | `c_struct_0039` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3728 | `conversion_cstruct.part02.test.ts` | `c_struct_0040` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3729 | `conversion_cstruct.part02.test.ts` | `c_struct_0041` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3730 | `conversion_cstruct.part02.test.ts` | `c_struct_0042` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3731 | `conversion_cstruct.part02.test.ts` | `c_struct_0043` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3732 | `conversion_cstruct.part02.test.ts` | `c_struct_0044` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3733 | `conversion_cstruct.part02.test.ts` | `c_struct_0045` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3734 | `conversion_cstruct.part02.test.ts` | `c_struct_0046` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3735 | `conversion_cstruct.part02.test.ts` | `c_struct_0047` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3736 | `conversion_cstruct.part02.test.ts` | `c_struct_0048` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3737 | `conversion_cstruct.part02.test.ts` | `c_struct_0049` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3738 | `conversion_cstruct.part02.test.ts` | `c_struct_0050` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3739 | `conversion_cstruct.part02.test.ts` | `c_struct_0051` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3740 | `conversion_cstruct.part02.test.ts` | `c_struct_0052` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3741 | `conversion_cstruct.part02.test.ts` | `c_struct_0053` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3742 | `conversion_cstruct.part02.test.ts` | `c_struct_0054` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3743 | `conversion_cstruct.part02.test.ts` | `c_struct_0055` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3744 | `conversion_cstruct.part02.test.ts` | `c_struct_0056` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3745 | `conversion_cstruct.part02.test.ts` | `c_struct_0057` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3746 | `conversion_cstruct.part02.test.ts` | `c_struct_0058` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3747 | `conversion_cstruct.part02.test.ts` | `c_struct_0059` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3748 | `conversion_cstruct.part02.test.ts` | `c_struct_0060` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3749 | `conversion_cstruct.part02.test.ts` | `c_struct_0061` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3750 | `conversion_cstruct.part03.test.ts` | `c_struct_0062` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3751 | `conversion_cstruct.part03.test.ts` | `c_struct_0063` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3752 | `conversion_cstruct.part03.test.ts` | `c_struct_0064` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3753 | `conversion_cstruct.part03.test.ts` | `c_struct_0065` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3754 | `conversion_cstruct.part03.test.ts` | `c_struct_0066` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3755 | `conversion_cstruct.part03.test.ts` | `c_struct_0067` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3756 | `conversion_cstruct.part03.test.ts` | `c_struct_0068` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3757 | `conversion_cstruct.part03.test.ts` | `c_struct_0069` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3758 | `conversion_cstruct.part03.test.ts` | `c_struct_0070` | 性能测试 | 3/4 | h2dts parseStruct：扩充-成员矩阵：6 成员 的解析结果与性能。 |
+| 3759 | `conversion_cstruct.part03.test.ts` | `c_struct_0071` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3760 | `conversion_cstruct.part03.test.ts` | `c_struct_0072` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3761 | `conversion_cstruct.part03.test.ts` | `c_struct_0073` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3762 | `conversion_cstruct.part03.test.ts` | `c_struct_0074` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3763 | `conversion_cstruct.part03.test.ts` | `c_struct_0075` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3764 | `conversion_cstruct.part03.test.ts` | `c_struct_0076` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3765 | `conversion_cstruct.part03.test.ts` | `c_struct_0077` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3766 | `conversion_cstruct.part03.test.ts` | `c_struct_0078` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3767 | `conversion_cstruct.part03.test.ts` | `c_struct_0079` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3768 | `conversion_cstruct.part03.test.ts` | `c_struct_0080` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3769 | `conversion_cstruct.part03.test.ts` | `c_struct_0081` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3770 | `conversion_cstruct.part03.test.ts` | `c_struct_0082` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3771 | `conversion_cstruct.part03.test.ts` | `c_struct_0083` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3772 | `conversion_cstruct.part03.test.ts` | `c_struct_0084` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3773 | `conversion_cstruct.part03.test.ts` | `c_struct_0085` | 性能测试 | 3/4 | h2dts parseStruct：扩充-容器成员矩阵 的解析结果与性能。 |
+| 3774 | `conversion_cstruct.part03.test.ts` | `c_struct_0086` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3775 | `conversion_cstruct.part03.test.ts` | `c_struct_0087` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3776 | `conversion_cstruct.part03.test.ts` | `c_struct_0088` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3777 | `conversion_cstruct.part03.test.ts` | `c_struct_0089` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3778 | `conversion_cstruct.part03.test.ts` | `c_struct_0090` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3779 | `conversion_cstruct.part03.test.ts` | `c_struct_0091` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3780 | `conversion_cstruct.part03.test.ts` | `c_struct_0092` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3781 | `conversion_cstruct.part03.test.ts` | `c_struct_0093` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3782 | `conversion_cstruct.part03.test.ts` | `c_struct_0094` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3783 | `conversion_cstruct.part03.test.ts` | `c_struct_0095` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3784 | `conversion_cstruct.part03.test.ts` | `c_struct_0096` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3785 | `conversion_cstruct.part03.test.ts` | `c_struct_0097` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3786 | `conversion_cstruct.part03.test.ts` | `c_struct_0098` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3787 | `conversion_cstruct.part03.test.ts` | `c_struct_0099` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3788 | `conversion_cstruct.part03.test.ts` | `c_struct_0100` | 性能测试 | 3/4 | h2dts parseStruct：扩充-数组/指针成员 的解析结果与性能。 |
+| 3789 | `conversion_cstruct.part03.test.ts` | `c_struct_0101` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3790 | `conversion_cstruct.part03.test.ts` | `c_struct_0102` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3791 | `conversion_cstruct.part04.test.ts` | `c_struct_0103` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3792 | `conversion_cstruct.part04.test.ts` | `c_struct_0104` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3793 | `conversion_cstruct.part04.test.ts` | `c_struct_0105` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3794 | `conversion_cstruct.part04.test.ts` | `c_struct_0106` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3795 | `conversion_cstruct.part04.test.ts` | `c_struct_0107` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3796 | `conversion_cstruct.part04.test.ts` | `c_struct_0108` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3797 | `conversion_cstruct.part04.test.ts` | `c_struct_0109` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3798 | `conversion_cstruct.part04.test.ts` | `c_struct_0110` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3799 | `conversion_cstruct.part04.test.ts` | `c_struct_0111` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3800 | `conversion_cstruct.part04.test.ts` | `c_struct_0112` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3801 | `conversion_cstruct.part04.test.ts` | `c_struct_0113` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3802 | `conversion_cstruct.part04.test.ts` | `c_struct_0114` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3803 | `conversion_cstruct.part04.test.ts` | `c_struct_0115` | 性能测试 | 3/4 | h2dts parseStruct：扩充-方法返回矩阵 的解析结果与性能。 |
+| 3804 | `conversion_cstruct.part04.test.ts` | `c_struct_0116` | 性能测试 | 3/4 | h2dts parseStruct：扩充-规模：5 成员 的解析结果与性能。 |
+| 3805 | `conversion_cstruct.part04.test.ts` | `c_struct_0117` | 性能测试 | 3/4 | h2dts parseStruct：扩充-规模：10 成员 的解析结果与性能。 |
+| 3806 | `conversion_cstruct.part04.test.ts` | `c_struct_0118` | 性能测试 | 3/4 | h2dts parseStruct：扩充-规模：15 成员 的解析结果与性能。 |
+| 3807 | `conversion_cstruct.part04.test.ts` | `c_struct_0119` | 性能测试 | 3/4 | h2dts parseStruct：扩充-规模：20 成员 的解析结果与性能。 |
+| 3808 | `conversion_cstruct.part04.test.ts` | `c_struct_0120` | 性能测试 | 3/4 | h2dts parseStruct：扩充-规模：25 成员 的解析结果与性能。 |
+| 3809 | `conversion_cstruct.part04.test.ts` | `c_struct_0121` | 性能测试 | 3/4 | h2dts parseStruct：扩充-规模：30 成员 的解析结果与性能。 |
+| 3810 | `conversion_cstruct.part04.test.ts` | `c_struct_0122` | 性能测试 | 3/4 | h2dts parseStruct：扩充-规模：35 成员 的解析结果与性能。 |
+| 3811 | `conversion_cstruct.part04.test.ts` | `c_struct_0123` | 性能测试 | 3/4 | h2dts parseStruct：扩充-规模：40 成员 的解析结果与性能。 |
+| 3812 | `conversion_cstruct.part04.test.ts` | `c_struct_0124` | 性能测试 | 3/4 | h2dts parseStruct：扩充-规模：45 成员 的解析结果与性能。 |
+| 3813 | `conversion_cstruct.part04.test.ts` | `c_struct_0125` | 性能测试 | 3/4 | h2dts parseStruct：扩充-规模：50 成员 的解析结果与性能。 |
+| 3814 | `conversion_cstruct.part04.test.ts` | `c_struct_0126` | 性能测试 | 3/4 | h2dts parseStruct：扩充-多 struct：同文件 2 个 的解析结果与性能。 |
+| 3815 | `conversion_cstruct.part04.test.ts` | `c_struct_0127` | 性能测试 | 3/4 | h2dts parseStruct：扩充-多 struct：同文件 3 个 的解析结果与性能。 |
+| 3816 | `conversion_cstruct.part04.test.ts` | `c_struct_0128` | 性能测试 | 3/4 | h2dts parseStruct：扩充-多 struct：同文件 4 个 的解析结果与性能。 |
+| 3817 | `conversion_cstruct.part04.test.ts` | `c_struct_0129` | 性能测试 | 3/4 | h2dts parseStruct：扩充-多 struct：同文件 5 个 的解析结果与性能。 |
+| 3818 | `conversion_cstruct.part05.test.ts` | `c_struct_0130` | 性能测试 | 3/4 | h2dts parseStruct：扩充-多 struct：同文件 6 个 的解析结果与性能。 |
+| 3819 | `conversion_cstruct.part05.test.ts` | `c_struct_0131` | 性能测试 | 3/4 | h2dts parseStruct：扩充-多 struct：同文件 7 个 的解析结果与性能。 |
+| 3820 | `conversion_cstruct.part05.test.ts` | `c_struct_0132` | 性能测试 | 3/4 | h2dts parseStruct：扩充-多 struct：同文件 8 个 的解析结果与性能。 |
+| 3821 | `conversion_cstruct.part05.test.ts` | `c_struct_0133` | 性能测试 | 3/4 | h2dts parseStruct：扩充-多 struct：同文件 10 个 的解析结果与性能。 |
+| 3822 | `conversion_cstruct.part05.test.ts` | `c_struct_0134` | 性能测试 | 3/4 | h2dts parseStruct：扩充-多 struct：同文件 12 个 的解析结果与性能。 |
+| 3823 | `conversion_cstruct.part05.test.ts` | `c_struct_0135` | 性能测试 | 3/4 | h2dts parseStruct：扩充-多 struct：同文件 15 个 的解析结果与性能。 |
+| 3824 | `conversion_cstruct.part05.test.ts` | `c_struct_0136` | 性能测试 | 3/4 | h2dts parseStruct：扩充-namespace 内 struct 的解析结果与性能。 |
+| 3825 | `conversion_cstruct.part05.test.ts` | `c_struct_0137` | 性能测试 | 3/4 | h2dts parseStruct：扩充-匿名 struct 别名 的解析结果与性能。 |
+| 3826 | `conversion_cstruct.part05.test.ts` | `c_struct_0138` | 性能测试 | 3/4 | h2dts parseStruct：扩充-函数指针成员 的解析结果与性能。 |
+| 3827 | `conversion_cstruct.part05.test.ts` | `c_struct_0139` | 性能测试 | 3/4 | h2dts parseStruct：扩充-namespace 内 struct 的解析结果与性能。 |
+| 3828 | `conversion_cstruct.part05.test.ts` | `c_struct_0140` | 性能测试 | 3/4 | h2dts parseStruct：扩充-匿名 struct 别名 的解析结果与性能。 |
+| 3829 | `conversion_cstruct.part05.test.ts` | `c_struct_0141` | 性能测试 | 3/4 | h2dts parseStruct：扩充-函数指针成员 的解析结果与性能。 |
+| 3830 | `conversion_cstruct.part05.test.ts` | `c_struct_0142` | 性能测试 | 3/4 | h2dts parseStruct：扩充-namespace 内 struct 的解析结果与性能。 |
+| 3831 | `conversion_cstruct.part05.test.ts` | `c_struct_0143` | 性能测试 | 3/4 | h2dts parseStruct：扩充-匿名 struct 别名 的解析结果与性能。 |
+| 3832 | `conversion_cstruct.part05.test.ts` | `c_struct_0144` | 性能测试 | 3/4 | h2dts parseStruct：扩充-函数指针成员 的解析结果与性能。 |
+| 3833 | `conversion_cstruct.part05.test.ts` | `c_struct_0145` | 性能测试 | 3/4 | h2dts parseStruct：扩充-namespace 内 struct 的解析结果与性能。 |
+| 3834 | `conversion_cstruct.part05.test.ts` | `c_struct_0146` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：AlphaSt0 的解析结果与性能。 |
+| 3835 | `conversion_cstruct.part05.test.ts` | `c_struct_0147` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：BetaSt1 的解析结果与性能。 |
+| 3836 | `conversion_cstruct.part05.test.ts` | `c_struct_0148` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：GammaSt2 的解析结果与性能。 |
+| 3837 | `conversion_cstruct.part05.test.ts` | `c_struct_0149` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：DeltaSt3 的解析结果与性能。 |
+| 3838 | `conversion_cstruct.part05.test.ts` | `c_struct_0150` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：EpsilonSt4 的解析结果与性能。 |
+| 3839 | `conversion_cstruct.part05.test.ts` | `c_struct_0151` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：ZetaSt5 的解析结果与性能。 |
+| 3840 | `conversion_cstruct.part05.test.ts` | `c_struct_0152` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：EtaSt6 的解析结果与性能。 |
+| 3841 | `conversion_cstruct.part05.test.ts` | `c_struct_0153` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：ThetaSt7 的解析结果与性能。 |
+| 3842 | `conversion_cstruct.part05.test.ts` | `c_struct_0154` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：IotaSt8 的解析结果与性能。 |
+| 3843 | `conversion_cstruct.part05.test.ts` | `c_struct_0155` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：KappaSt9 的解析结果与性能。 |
+| 3844 | `conversion_cstruct.part05.test.ts` | `c_struct_0156` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：LambdaSt10 的解析结果与性能。 |
+| 3845 | `conversion_cstruct.part05.test.ts` | `c_struct_0157` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：MuSt11 的解析结果与性能。 |
+| 3846 | `conversion_cstruct.part05.test.ts` | `c_struct_0158` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：NuSt12 的解析结果与性能。 |
+| 3847 | `conversion_cstruct.part05.test.ts` | `c_struct_0159` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：XiSt13 的解析结果与性能。 |
+| 3848 | `conversion_cstruct.part05.test.ts` | `c_struct_0160` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：OmicronSt14 的解析结果与性能。 |
+| 3849 | `conversion_cstruct.part05.test.ts` | `c_struct_0161` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：PiSt15 的解析结果与性能。 |
+| 3850 | `conversion_cstruct.part05.test.ts` | `c_struct_0162` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：RhoSt16 的解析结果与性能。 |
+| 3851 | `conversion_cstruct.part05.test.ts` | `c_struct_0163` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：SigmaSt17 的解析结果与性能。 |
+| 3852 | `conversion_cstruct.part05.test.ts` | `c_struct_0164` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：TauSt18 的解析结果与性能。 |
+| 3853 | `conversion_cstruct.part05.test.ts` | `c_struct_0165` | 性能测试 | 3/4 | h2dts parseStruct：扩充-命名：UpsilonSt19 的解析结果与性能。 |
+| 3854 | `conversion_cstruct.part05.test.ts` | `c_struct_0166` | 性能测试 | 3/4 | h2dts parseStruct：扩充-边界：单成员 的解析结果与性能。 |
+| 3855 | `conversion_cstruct.part05.test.ts` | `c_struct_0167` | 性能测试 | 3/4 | h2dts parseStruct：扩充-边界：多数组 的解析结果与性能。 |
+| 3856 | `conversion_cstruct.part05.test.ts` | `c_struct_0168` | 性能测试 | 3/4 | h2dts parseStruct：扩充-边界：混合方法 的解析结果与性能。 |
+| 3857 | `conversion_cstruct.part05.test.ts` | `c_struct_0169` | 性能测试 | 3/4 | h2dts parseStruct：扩充-边界：长成员名 的解析结果与性能。 |
+| 3858 | `conversion_cstruct.part06.test.ts` | `c_struct_0170` | 性能测试 | 3/4 | h2dts parseStruct：扩充-边界：容器方法 的解析结果与性能。 |
+| 3859 | `conversion_cstruct.part06.test.ts` | `c_struct_0171` | 性能测试 | 3/4 | h2dts parseStruct：扩充-边界：三成员 的解析结果与性能。 |
+| 3860 | `conversion_cstruct.part06.test.ts` | `c_struct_0172` | 性能测试 | 3/4 | h2dts parseStruct：扩充-边界：注释 的解析结果与性能。 |
+| 3861 | `conversion_cstruct.part06.test.ts` | `c_struct_0173` | 性能测试 | 3/4 | h2dts parseStruct：扩充-边界：指针成员 的解析结果与性能。 |
+| 3862 | `conversion_cstruct.part06.test.ts` | `c_struct_0174` | 性能测试 | 3/4 | h2dts parseStruct：扩充-边界：多方法 的解析结果与性能。 |
+| 3863 | `conversion_cstruct.part06.test.ts` | `c_struct_0175` | 性能测试 | 3/4 | h2dts parseStruct：扩充-边界：超大成员 的解析结果与性能。 |
+| 3864 | `conversion_cstruct.part07.test.ts` | `c_struct_0176` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3865 | `conversion_cstruct.part07.test.ts` | `c_struct_0177` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3866 | `conversion_cstruct.part07.test.ts` | `c_struct_0178` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
