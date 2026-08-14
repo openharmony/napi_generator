@@ -794,7 +794,7 @@ type UnionType0193 = Box<string> | Box<number>;`
   /**
   * @tc.number dts2cpp_union_0171
   * @tc.name dts2cpp_union_0171
-  * @tc.desc dts2cpp union type alias 平台字面量联合 web/ios/android/harmony/windows 的解析结果与性能。
+  * @tc.desc dts2cpp union type alias 平台字面量联合 web/ios/other/harmony/windows 的解析结果与性能。
   * @tc.size MediumTest
   * @tc.type Function
   * @tc.level Level 1
