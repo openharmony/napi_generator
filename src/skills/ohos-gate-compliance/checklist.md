@@ -21,7 +21,9 @@
 - [ ] 无 `int`（`rg "\bint\b" <files>`）
 - [ ] 无 `String` 包装类型（`Record<String`、`undefined | String`）
 - [ ] **`'use static'` 文件**：颜色不用 `number` 传 `fontColor` → 用 `ResourceColor` 或 `string`
-- [ ] 无新增裸 `any` / 不当 `ESObject`（Inspector 用显式类型）
+- [ ] 无新增裸 `any` / **G.EXT.02 `ESObject`**（类型注解与 `as ESObject` 均禁止；Inspector 用显式类型）
+  - `windowStage.setUIContent(ctx, path, null)`：SDK26 无此签名，**不得**用 `ESObject` 强转保运行时
+  - 正确：`windowStage.loadContent('MainAbility/pages/XTSIndex')`（或带 `BusinessError` 回调）
 
 ## C. Key 命名（Quality / Reliability）
 

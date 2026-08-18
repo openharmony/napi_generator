@@ -70,6 +70,7 @@ version: "1.2.0"
 | **WordsTool.143** 本地开发套件缩写 | 文档/注释/用例号改 NATIVE 或「专用提供方」 | `gate_review.check_wordstool_143` |
 | **WordsTool.100** 厂商品牌域名 | `.ets` 勿写易歧义厂商 CDN/域名；属性桩页 `Web(src)` 用 `$rawfile('…')` | `gate_review.check_wordstool_100` |
 | **G.FMT.05** Options/`@tc.desc` 超宽 | checklist 增 before/after；dialog api26 批实锤 | 手工折行；见 **ohxtsstatic §13.11.5** |
+| **G.EXT.02** `ESObject` | `arkts_patterns` **仅检测**（勿自动改，语义须按 API 替换） | `setUIContent`→`loadContent`；禁 `as ESObject` |
 | **G.EXT.03** `Array<T>` | `arkts_patterns` 检测 + `Array<Ident>`→`Ident[]` | dialog api26 ContextMenu* 实锤 |
 | **CI.KIT.01** Dialog* 从 `@kit.ArkUI` | `gate_review.check_dialog_api_kit_import`（仅检测） | 有 API 时改 `@ohos.arkui.UIContext` / `@ohos.arkui.dialog` + 显式嵌套类型 |
 | **CI.SDK.DIALOG.01** CI 无 Dialog API | 手工：父 `BUILD.gn` 暂注释该 HAP deps | CI 报缺 `@ohos.arkui.dialog`/`getDialogPresenter` 时与导入无关；**本地 DevEco SDK ≠ CI prebuilts**，勿仅凭本地编过就恢复 deps；CI SDK 合入后再编入 |
@@ -183,6 +184,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | `int` | 报告（**仅动态**） | 改 `number`；**`'use static'` 文件跳过**（`int` 合法） |
 | `.key('foo')` 无下划线 | 报告 | `页面名_组件名` |
 | static 十六进制 fontColor | 报告 | `ResourceColor` 或字符串 |
+| **G.EXT.02** `ESObject` | ✅ 检测 | 禁类型注解/`as ESObject`；`WindowStage.setUIContent` 改 `loadContent(path)` |
 | Dialog 遮罩/`pressBack` → 下 Suite `Empty Text`/`null.click` | — | NORMAL 后关弹窗；空 Inspector 勿 `JSON.parse`；Suite **间**禁 `pressBack`；见上节**整测须一次连跑** |
 | Dialog `DocumentViewPicker` 模拟 UEC → 后续 Suite 全 `component not found` | — | **禁止**系统 FilePicker/UIExtension；改可自动化子窗正例；禁 `expect(true)`/`env skip` 假绿 |
 | 拆多次 deploy-test 重装后宣称全绿 | — | 工程整测改为**一次连跑**全部 Suite（见上节） |

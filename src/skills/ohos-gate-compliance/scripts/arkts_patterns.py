@@ -42,6 +42,12 @@ RULES: list[tuple[str, re.Pattern[str], str]] = [
         re.compile(r"\.key\(\s*['\"](?!.*_.+)[^'\"]+['\"]\s*\)"),
         "key 无下划线，可能未按「页面名_组件名」命名",
     ),
+    # G.EXT.02: ESObject 仅检测、不自动替换（setUIContent 等须按 API 改 loadContent）
+    (
+        "G.EXT.02",
+        re.compile(r"\bESObject\b"),
+        "使用 ESObject 作类型注解，应改为具体类型（G.EXT.02）",
+    ),
     (
         "G.EXT.03",
         re.compile(r"\bArray\s*<"),
