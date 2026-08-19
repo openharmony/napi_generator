@@ -7,7 +7,7 @@
 结果解析 → 报告留存(仅通过) → TSV 落盘 → 更新 Excel。
 
 固化经验（SKILL 7.1/7.2/7.4/7.5/7.7）：清理顺序、合包剥离、同 bundle 多 hap 同装、
-history PASS 不覆盖、60s liveness 判挂起、NDK 合包主 HAP 提供 libs。
+history PASS 不覆盖、60s liveness 判挂起、原生合包主 HAP 提供 libs。
 """
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import hdc_utils  # noqa: E402
 from common.build_utils import build_one, patch_sdk_versions, restore_sdk_versions  # noqa: E402
-from common.paths import (ACTIVITY_TXT, CLOSE_LOG, PROGRESS_DIR, REPORT_ROOT,  # noqa: E402
+from common.paths import (CURRENT_TXT, CLOSE_LOG, PROGRESS_DIR, REPORT_ROOT,  # noqa: E402
                           REPO, TSV)
 from common.proj_utils import extract_suites, fallback_suites, hap_meta, resolve_deps  # noqa: E402
 
@@ -55,13 +55,13 @@ def device_lock():
         fd.close()
 
 
-def log(msg: str, to_activity: bool = False) -> None:
+def log(msg: str, to_current: bool = False) -> None:
     line = f"[{datetime.now():%H:%M:%S}] {msg}"
     print(line)
     with open(CLOSE_LOG, "a") as f:
         f.write(line + "\n")
-    if to_activity:
-        with open(ACTIVITY_TXT, "a") as f:
+    if to_current:
+        with open(CURRENT_TXT, "a") as f:
             f.write(line + "\n")
 
 
@@ -105,7 +105,7 @@ def build_dep_hap(rel: str, profile_type: str = "release", system: bool = False,
     proj = REPO / rel
     signed = proj / "entry/build/default/outputs/default/entry-default-signed.hap"
     if not signed.exists():
-        log(f"[依赖] 构建: {rel}", to_activity=True)
+        log(f"[依赖] 构建: {rel}", to_current=True)
         bp = proj / "build-profile.json5"
         bak = None
         if bp.exists():
@@ -144,7 +144,7 @@ def build_dep_module(proj_rel: str, mod: str, profile_type: str = "release",
     hap = proj / mod / "build/default/outputs/default" / f"{mod}-default-signed.hap"
     if hap.exists():
         return True
-    log(f"[依赖] 构建模块: {mod}@{proj_rel}", to_activity=True)
+    log(f"[依赖] 构建模块: {mod}@{proj_rel}", to_current=True)
     bp = proj / "build-profile.json5"
     bak = None
     if bp.exists():
@@ -226,7 +226,7 @@ def run_suites(bundle: str, tmod: str, suites: list[str]) -> dict:
         s = s.strip()
         if not s:
             continue
-        log(f"  运行套件: {s}（60s 无输出判挂起）", to_activity=True)
+        log(f"  运行套件: {s}（60s 无输出判挂起）", to_current=True)
         out, hung = hdc_utils.run_aa_test(bundle, tmod, s)
         if hung:
             hung_suites.append(s)
@@ -397,6 +397,24 @@ def _install_deps(deps: list[str], dep_haps: dict) -> None:
                 log(f"  [依赖] {'已安装' if ok else '安装失败'} {dp} {err if not ok else ''}")
 
 
+def _gen_html_report(rel: str, hapname: str, res: dict) -> None:
+    """xdevice HTML 报告（固化自 ohxtsstatic，供截图门禁/报告留存）。"""
+    html_log = Path("/tmp") / f"aatest_{hapname}.log"
+    html_log.write_text(res["allout"], errors="replace")
+    try:
+        import subprocess as _sp
+        r = _sp.run(
+            [sys.executable,
+             str(Path(__file__).resolve().parents[1] / "report" / "gen_xdevice_report.py"),
+             str(html_log), "--project", rel, "--device", DEVICE],
+            capture_output=True, text=True, timeout=120)
+        for ln in (r.stdout or "").splitlines():
+            if ln.startswith("REPORT_HTML"):
+                log(f"REPORT_HTML={ln.split('=', 1)[1]}")
+    except Exception as e:
+        log(f"[html report skip] {e}")
+
+
 def _pass_result(ts: str, rel: str, hapname: str, sub: str, res: dict,
                  gen_html: bool) -> int:
     """通过分支：报告留存 + TSV PASS + 可选 xdevice HTML；返回 0。"""
@@ -407,23 +425,9 @@ def _pass_result(ts: str, rel: str, hapname: str, sub: str, res: dict,
         f.write(f"结果: PASS\n用例: {res['passed']}/{res['total']} 通过, Failure: 0\n---\n")
         f.write(res["allout"][-3000:])
     tsv_row(ts, rel, "PASS", str(res["passed"]), str(res["total"]), "-", str(report))
-    log(f"✅ PASS {res['passed']}/{res['total']}", to_activity=True)
+    log(f"✅ PASS {res['passed']}/{res['total']}", to_current=True)
     if gen_html:
-        # xdevice HTML 报告（固化自 ohxtsstatic，供截图门禁/报告留存）
-        html_log = Path("/tmp") / f"aatest_{hapname}.log"
-        html_log.write_text(res["allout"], errors="replace")
-        try:
-            import subprocess as _sp
-            r = _sp.run(
-                [sys.executable,
-                 str(Path(__file__).resolve().parents[1] / "report" / "gen_xdevice_report.py"),
-                 str(html_log), "--project", rel, "--device", DEVICE],
-                capture_output=True, text=True, timeout=120)
-            for ln in (r.stdout or "").splitlines():
-                if ln.startswith("REPORT_HTML"):
-                    log(f"REPORT_HTML={ln.split('=', 1)[1]}")
-        except Exception as e:
-            log(f"[html report skip] {e}")
+        _gen_html_report(rel, hapname, res)
     refresh_xlsx()
     return 0
 
@@ -451,7 +455,7 @@ def test_one(rel: str, profile: str = "release", system: bool = False,
     proj = REPO / rel
     hapname = rel.rsplit("/", 1)[-1]
     sub = rel.split("/")[0]
-    log(f"===== [{rel}] 测试开始 =====", to_activity=True)
+    log(f"===== [{rel}] 测试开始 =====", to_current=True)
     # 0. 设备就绪
     if not hdc_utils.ensure_device():
         return _fail(ts, rel, "DEVICE_OFFLINE", "-", 2, "DEVICE_OFFLINE")
@@ -462,7 +466,7 @@ def test_one(rel: str, profile: str = "release", system: bool = False,
     if not (proj / "entry/src/ohosTest/module.json5").is_file():
         return _fail(ts, rel, "SKIP", "辅助工程无测试代码", 3, "SKIP: 辅助工程无测试代码")
     # 1. 编译（双 HAP）
-    log(f"构建: {rel}", to_activity=True)
+    log(f"构建: {rel}", to_current=True)
     r = build_one(proj)
     if not r["ok"]:
         return _fail(ts, rel, "BUILD_FAIL", r["error"], 4, f"BUILD FAIL: {r['error']}")
@@ -485,7 +489,7 @@ def test_one(rel: str, profile: str = "release", system: bool = False,
     log(f"bundle={bundle} tmod={tmod} suites={','.join(suites)}")
     # 4. 清理设备（先清理，后装依赖，避免依赖被卸载）；互斥锁覆盖 清理→安装→套件→卸载
     with device_lock():
-        log("清理设备（卸载非系统应用 + 清 log）", to_activity=True)
+        log("清理设备（卸载非系统应用 + 清 log）", to_current=True)
         hdc_utils.cleanup_device(bundle)
         mem = hdc_utils.mem_free_kb()
         log(f"  设备空闲内存: {mem} kB")

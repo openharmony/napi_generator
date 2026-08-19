@@ -43,23 +43,32 @@ def latest_from_tsv() -> dict:
     return latest
 
 
+def _kit_hap_names(root: str) -> list[str]:
+    """单工程 Test.json 的 AppInstallKit hap 名列表（异常返回空）。"""
+    try:
+        d = json.load(open(os.path.join(root, "Test.json")))
+    except Exception:
+        return []
+    names = []
+    for kit in d.get("kits", []):
+        if kit.get("type") != "AppInstallKit":
+            continue
+        for hap in kit.get("test-file-name", []):
+            names.append(hap)
+    return names
+
+
 def build_hap_to_main_map() -> dict[str, list[str]]:
     """辅助包 hap 名 → 主工程相对路径（Test.json kits AppInstallKit）。"""
     hap_to_main: dict[str, list[str]] = {}
     for root, dirs, files in os.walk(str(REPO / "ability")):
         if "oh_modules" in root or "/build/" in root:
             continue
-        if "Test.json" in files:
-            try:
-                d = json.load(open(os.path.join(root, "Test.json")))
-            except Exception:
-                continue
-            for kit in d.get("kits", []):
-                if kit.get("type") != "AppInstallKit":
-                    continue
-                for hap in kit.get("test-file-name", []):
-                    hap_to_main.setdefault(os.path.splitext(hap)[0], []).append(
-                        os.path.relpath(root, str(REPO)))
+        if "Test.json" not in files:
+            continue
+        for hap in _kit_hap_names(root):
+            hap_to_main.setdefault(os.path.splitext(hap)[0], []).append(
+                os.path.relpath(root, str(REPO)))
     return hap_to_main
 
 

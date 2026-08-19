@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import argparse
+import posixpath
 import re
 from pathlib import Path
 
@@ -62,16 +63,14 @@ def update_refs(proj_root: Path, renamed: list[tuple[str, str]]) -> int:
     renamed: [(旧相对路径, 新相对路径)]。返回改动文件数。
     """
     changed = 0
-    # 旧文件名的相对路径（去 ./ 前缀）→ 新后缀
+    # 旧文件名的相对路径（posixpath 规范化，去 ./ 前缀）→ 新后缀
     mapping = {}
     for old, new in renamed:
-        rel_old = old.replace("\\", "/")
-        if rel_old.startswith("./"):
-            rel_old = rel_old[2:]
-        mapping[rel_old] = new.rsplit(".", 1)[0] + ".ets"
+        rel_old = posixpath.normpath(old.replace("\\", "/"))
+        mapping[rel_old] = posixpath.splitext(new)[0] + ".ets"
     base_names = {}
     for old, new in mapping.items():
-        base_names[old.rsplit("/", 1)[-1]] = new.rsplit("/", 1)[-1]
+        base_names[posixpath.basename(old)] = posixpath.basename(new)
 
     for cfg_name in ("module.json5", "module.json", "config.json"):
         for cfg in proj_root.rglob(cfg_name):

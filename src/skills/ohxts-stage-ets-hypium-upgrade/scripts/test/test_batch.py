@@ -91,7 +91,6 @@ def last_err(rel: str) -> str:
 
 def record_verdict(rel: str, err: str, hint: str, rule: str) -> None:
     """更新备注：追加 失败分析记录.md + 判定日志（跳过继续的落盘点）。"""
-    from datetime import datetime
     entry = (f"\n### [{rel}] {datetime.now():%Y-%m-%d %H:%M:%S}（批量闭环判定，跳过继续）\n"
              f"- 现象: {err[:200]}\n"
              f"- 方案: {rule}\n"

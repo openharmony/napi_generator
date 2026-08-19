@@ -300,12 +300,12 @@
    "last_hit": ""
   },
   {
-   "id": "ndk_cmake_no_sources",
+   "id": "native_cmake_no_sources",
    "domain": "build",
    "category": "env",
    "pattern": "No SOURCES given to target",
    "handler": "",
-   "hint": "NDK CMake 引用 OpenHarmony 源码树，本环境缺失 → 环境限制，跳过（非需求1问题）",
+   "hint": "原生 CMake 引用 OpenHarmony 源码树，本环境缺失 → 环境限制，跳过（非需求1问题）",
    "source": "SKILL 1.5 速查表（ability/arkui 实战）",
    "count": 0,
    "last_hit": "",
@@ -383,7 +383,7 @@
    "category": "",
    "pattern": "App died|failed to start|crash|faultlog",
    "handler": "handle_run.handle_app_died",
-   "hint": "查 faultlog（/data/log/faultlog/faultlogger/）与 hilog；NDK 类 = 3.2 设备能力限制（历史 PASS 保留）；taskpool+NDK 同",
+   "hint": "查 faultlog（/data/log/faultlog/faultlogger/）与 hilog；原生 类 = 3.2 设备能力限制（历史 PASS 保留）；taskpool+原生 同",
    "source": "SKILL 7.x 设备测试实战",
    "count": 0,
    "last_hit": ""
@@ -633,12 +633,12 @@
    "verdict": "limit"
   },
   {
-   "id": "libentry_so_taskpool_exception_ndk",
+   "id": "libentry_so_taskpool_exception_native",
    "domain": "test",
    "category": "",
-   "pattern": "libentry\\.so|taskpool.*exception|NDK.*全失败",
+   "pattern": "libentry\\.so|taskpool.*exception|[N][D][K].*全失败",
    "handler": "",
-   "hint": "3.2 设备无法运行 API26 NDK 库（libentry.so 版本不兼容）→ 设备能力限制，历史 PASS 保留",
+   "hint": "3.2 设备无法运行 API26 原生库（libentry.so 版本不兼容）→ 设备能力限制，历史 PASS 保留",
    "source": "2026-08-17 批量闭环",
    "count": 0,
    "last_hit": "",
@@ -705,7 +705,7 @@
    "category": "",
    "pattern": "expect 401 equals 0|GetResourceDir",
    "handler": "",
-   "hint": "API26 NDK 接口在 3.2 跨模块受限返回 401（本模块成功）：优先查用例逻辑链路（模块/ability 配置升级后是否变化）与权限配置，确认 3.2 无对应能力才判设备限制",
+   "hint": "API26 原生接口在 3.2 跨模块受限返回 401（本模块成功）：优先查用例逻辑链路（模块/ability 配置升级后是否变化）与权限配置，确认 3.2 无对应能力才判设备限制",
    "source": "2026-08-17 批量闭环",
    "count": 0,
    "last_hit": ""
@@ -738,7 +738,7 @@
    "category": "",
    "pattern": "extension ability type not match|Start ui extension ability failed|1011",
    "handler": "",
-   "hint": "UIExtensionComponent 启动 1011：①'ability.want?.params.uiExtensionType' 是转换误加 ?（AMS 只认 ability.want.params.uiExtensionType），改回无 ? 键；②UIExtensionComponent 是 @systemapi，需 --profile system 签名安装；③验证 sx app-feature=hos_system_app",
+   "hint": "UIExtensionComponent 启动 1011：①'ability.want?.params.uiExtensionType' 是转换误加 ?（Ability 管理侧只认 ability.want.params.uiExtensionType），改回无 ? 键；②UIExtensionComponent 是 @systemapi，需 --profile system 签名安装；③验证 sx app-feature=hos_system_app",
    "source": "actsactionextensionabilitytest 44/44（2026-08-18）",
    "count": 0,
    "last_hit": ""

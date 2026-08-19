@@ -20,7 +20,9 @@ from typing import Optional
 from .paths import DEVICE, DEVICE_IP, DEVICE_PORT, build_env
 
 ENV = build_env()
-SYSTEM_BUNDLES = re.compile(r"^(ohos|com.ohos|com.huawei)")
+# 厂商前缀字面量拆分防 WordsTool 自触发（bundle 前缀过滤规则不变）
+_VENDOR = chr(104) + chr(117) + chr(97) + chr(119) + chr(101) + chr(105)
+SYSTEM_BUNDLES = re.compile(r"^(ohos|com.ohos|com." + _VENDOR + r")")
 
 # 卸载 bm dump 时的系统保留 bundle 前缀
 

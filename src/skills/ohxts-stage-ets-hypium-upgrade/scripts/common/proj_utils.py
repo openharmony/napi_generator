@@ -21,6 +21,7 @@ try:
 except ImportError:
     from common.paths import REPO  # noqa: E402
 
+
 # ---------- HAP 元信息（hap_meta.py 迁移） ----------
 def hap_meta(proj: Path) -> dict:
     """解析 HAP 工程元信息: bundle / tmod(测试模块名) / pmain(主模块名) / pkg。"""

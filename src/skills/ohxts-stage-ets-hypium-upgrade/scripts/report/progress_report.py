@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common.paths import ACTIVITY_TXT, BROADCAST_MD, PROGRESS_DIR, REPORT_ROOT, TSV  # noqa: E402
+from common.paths import CURRENT_TXT, BROADCAST_MD, PROGRESS_DIR, REPORT_ROOT, TSV  # noqa: E402
 
 
 def _status_newer(cur: str, new: str) -> bool:

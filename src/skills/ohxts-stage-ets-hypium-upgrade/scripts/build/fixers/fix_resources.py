@@ -153,10 +153,19 @@ def fix_syscap_general(proj: Path, match: dict, err_file: str = "") -> list[str]
     return changed
 
 
+def _ensure_string_entry(p: Path, reason_key: str, value: str) -> bool:
+    """string.json 补条目（已存在不动）；返回是否新增。"""
+    entries = _load_json(p)
+    if any(e.get("name") == reason_key for e in entries):
+        return False
+    entries.append({"name": reason_key, "value": value[:60]})
+    _save_json(p, entries)
+    return True
+
+
 def fix_permission_reason(proj: Path, match: dict, err_file: str = "") -> list[str]:
     """requestPermissions[].reason pattern 不匹配 → "$string:reason_xxx" + string.json 补条目。"""
     changed = []
-    loc = _err_file(proj, err_file)
     for f in sorted(proj.rglob("module.json5")):
         if "build" in f.parts:
             continue
@@ -166,18 +175,15 @@ def fix_permission_reason(proj: Path, match: dict, err_file: str = "") -> list[s
             continue
         # 找 reason 是纯文本的 permission 段
         m = re.search(r'"reason"\s*:\s*"([^$][^"]{3,})"', t)
-        if m:
-            reason_key = "reason_" + Path(f).parent.name[:20]
-            t2 = t.replace(m.group(0), f'"reason": "$string:{reason_key}"')
-            f.write_text(t2)
-            changed.append(str(f))
-            p = _find_json(proj, "string")
-            if p:
-                entries = _load_json(p)
-                if not any(e.get("name") == reason_key for e in entries):
-                    entries.append({"name": reason_key, "value": m.group(1)[:60]})
-                    _save_json(p, entries)
-                    changed.append(str(p))
+        if not m:
+            continue
+        reason_key = "reason_" + Path(f).parent.name[:20]
+        t2 = t.replace(m.group(0), f'"reason": "$string:{reason_key}"')
+        f.write_text(t2)
+        changed.append(str(f))
+        p = _find_json(proj, "string")
+        if p and _ensure_string_entry(p, reason_key, m.group(1)):
+            changed.append(str(p))
     return changed
 
 

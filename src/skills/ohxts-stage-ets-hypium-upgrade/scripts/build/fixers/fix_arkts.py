@@ -154,11 +154,11 @@ def fix_loadcontent_callback(proj: Path, match: dict, err_file: str = "") -> lis
     SDK26 loadContent 回调是 AsyncCallback<void> → (err: BusinessError, data: void) =>。
     """
     changed = []
-    _PAT = re.compile(
+    _pat = re.compile(
         r"loadContent\(\s*(['\"][^'\"]+['\"])\s*,\s*\(\s*err\s*,\s*data\s*\)\s*=>")
 
     def fn(t: str) -> str:
-        return _PAT.sub(r"loadContent(\1, (err: BusinessError, data: void) =>", t)
+        return _pat.sub(r"loadContent(\1, (err: BusinessError, data: void) =>", t)
 
     _rewrite(_err_files(proj, err_file), fn, changed)
     return changed
@@ -170,11 +170,11 @@ def fix_builder_const(proj: Path, match: dict, err_file: str = "") -> list[str]:
     @Builder 只能装饰 function 声明（const 箭头报 wrapBuilder's parameter should be '@Builder' function）。
     """
     changed = []
-    _PAT = re.compile(
+    _pat = re.compile(
         r"@Builder\s+const\s+(\w+)\s*=\s*(\([^)]*\)|\w+)\s*=>\s*\{")
 
     def fn(t: str) -> str:
-        return _PAT.sub(r"@Builder function \1\2 {", t)
+        return _pat.sub(r"@Builder function \1\2 {", t)
 
     _rewrite(_err_files(proj, err_file), fn, changed)
     return changed
@@ -194,13 +194,13 @@ def fix_err_code_guard(proj: Path, match: dict, err_file: str = "") -> list[str]
 def fix_missing_void_return(proj: Path, match: dict, err_file: str = "") -> list[str]:
     """生命周期无参方法缺返回类型：onDestroy() { → onDestroy(): void { 等。"""
     changed = []
-    _PAT = re.compile(
+    _pat = re.compile(
         r"^(\s*)(onCreate|onDestroy|onWindowStageCreate|onWindowStageDestroy|"
         r"onForeground|onBackground|onNewWant)\s*\(\s*\)\s*(?!:)\{",
         re.M)
 
     def fn(t: str) -> str:
-        return _PAT.sub(r"\1\2(): void {", t)
+        return _pat.sub(r"\1\2(): void {", t)
 
     _rewrite(_err_files(proj, err_file), fn, changed)
     return changed
@@ -228,11 +228,11 @@ def fix_startability_callback(proj: Path, match: dict, err_file: str = "") -> li
     startAbilityForResult 要 AbilityResult 必须传 options 第 3 重载（hint 级，人工处理）。
     """
     changed = []
-    _PAT = re.compile(
+    _pat = re.compile(
         r"startAbility\(\s*([^,]+)\s*,\s*\(\s*err\s*,\s*\w+\s*\)\s*=>")
 
     def fn(t: str) -> str:
-        return _PAT.sub(r"startAbility(\1, (err: BusinessError) =>", t)
+        return _pat.sub(r"startAbility(\1, (err: BusinessError) =>", t)
 
     _rewrite(_err_files(proj, err_file), fn, changed)
     return changed
@@ -259,9 +259,11 @@ _PARAM_PLAIN_RE = re.compile(r"(commonEventData\.parameters)\.(?!\?)")
 
 
 def fix_parameters_nullcheck(proj: Path, match: dict, err_file: str = "") -> list[str]:
-    """'xxx.parameters' is possibly 'undefined'（ArkTS 严格空值检查 10605999）：
+    """'xxx.parameters' is possibly 'undefined'（ArkTS 严格空值检查 10605999）。
+
     可选链补到 parameters 上——`want?.parameters.case`→`want?.parameters?.case`、
-    `commonEventData.parameters.result`→`commonEventData.parameters?.result`（已带 ?. 的不动）。"""
+    `commonEventData.parameters.result`→`commonEventData.parameters?.result`（已带 ?. 的不动）。
+    """
     changed = []
 
     def fn(t: str) -> str:
