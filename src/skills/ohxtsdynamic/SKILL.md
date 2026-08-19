@@ -129,6 +129,12 @@ python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py env
 hdc list targets
 ```
 
+**设备测试前准备（每次必做，见 compile_error_hints.md §3.1）**：
+- `power-shell wakeup` + `setmode 602` + `timeout -o 999999`——重启/冷启后**灭屏锁屏会让 UiTest 找不到组件、全部用例 timeout**（`buttonConmponent is null`）；
+- 清理残留测试应用 + `a​a force-stop` 被测包——残留应用污染 log、AAMS 连接冲突（17000001/17000002）。
+
+**用例超时快判（compile_error_hints.md §3.2）**：单条用例 **>60s 未完成即中止查因**（hilog grep 用例名找卡点），**禁止**等 240s 超时；全用例同步卡死先查屏幕态，再查权限（§2.1），最后才查代码。
+
 ### 阶段 1：编码
 
 按 **arkui-dynamic-xts-generator** 流程：**先对齐工程内已稳套件** → 写页面 → 写 `.test.ets` → 更新 `main_pages.json` 与 `List.test.ets`。细则见 **§九**。

@@ -220,7 +220,66 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 **禁止**：Agent 外层循环多次调用本命令（每次重装）再拼绿。详见 **ohos-gate-compliance**「设备整测硬门禁」与「改码后强制重编」。
 
 **装包**：`hdc install` / `-r`（**勿**对 release 包加 `-g`，否则 9568450）。受限权限靠签名 profile ACL。
-deploy 前自动：wakeup / setmode 602 / 上滑解锁 / killall uitest。
+deploy 前自动：wakeup / setmode 602 / **timeout -o 999999** / 上滑解锁 / killall uitest。
+
+### 装包错误码速查
+
+| 错误码 / 现象 | 根因 | 处理 |
+|---------------|------|------|
+| **9568450** / must be debug | release 包用了 `install -g` | **勿** `-g`；受限权限靠 profile ACL |
+| **9568289** | 受限权限未进签名 profile | `apl=system_core` + `restricted-permissions` / `allowed-acls` 后重签再装 |
+| **9568344** + hilog `not allow use privilege extension`（内因常 **8519888**） | 使用了特权 Extension（如 `extensionAbilities.type: "service"` / `dataShare`），未进设备白名单或 **app_signature 指纹错误** | 见下节 **特权 Extension 白名单** |
+
+### 特权 Extension 白名单（9568344 / allowAppUsePrivilegeExtension）
+
+BMS 对 ServiceExtension / DataExtension 等特权能力，**不能**只靠签名证书特权字段；须在设备 **`/system/etc/app/install_list_capability.json`**（部分机型也可能在 `/system/variant/phone/base/etc/app/`）为该 `bundleName` 配置：
+
+```json
+{
+  "bundleName": "com.acts.accountauthenticator",
+  "app_signature": ["D729F438E1EF2E154994E2B077F6C0CD592BA9F9C938BB428FCDA564FF805EE4"],
+  "allowAppUsePrivilegeExtension": true,
+  "keepAlive": true
+}
+```
+
+**指纹必须用对**（高频踩坑）：
+
+- `app_signature` 比对的是签名 **profile 内 `bundle-info.distribution-certificate`** 的 SHA256（去冒号、大写），与 `bm dump -n <bundle>` 里已装应用的 **`fingerprint`** 一致。
+- **不要**用每次 `generate-app-cert` 产生的 **叶子 app 证书**指纹，也不要误以为只有 Root CA（`9AED2A79…`）即可；指纹不对时 hilog 常见：`appSignature of signature is empty` / `signature verify failed in capability list`，仍报 9568344。
+- 取指纹示例：从工程 `autosign/UnsgnedReleasedProfileTemplate.json`（或等价 profile 模板）抽出 `distribution-certificate` → PEM →  
+  `openssl x509 -in dist.pem -noout -fingerprint -sha256` → 去掉 `:`。
+
+**改白名单步骤（服务器网联 hdc）**：
+
+```bash
+hdc shell "mount -o rw,remount /"
+# 拉改推（路径以设备实际为准）
+hdc file recv /system/etc/app/install_list_capability.json ./
+# 编辑后：
+hdc file send ./install_list_capability.json /system/etc/app/install_list_capability.json
+hdc shell "chmod 644 /system/etc/app/install_list_capability.json; sync"
+hdc shell reboot
+# 重启后必须亮屏保活（见下节），再 hdc install
+```
+
+**备选（无法改板端白名单时）**：XTS 可将 `bundleName` 改为以 **`com.acts.`** 开头，并在签名 profile 中申请对应特权；仍失败则回到白名单方案。
+
+### 重启后亮屏保活（Agent 必遵）
+
+凡 **`hdc shell reboot`**（或等价重启）之后、装包 / 设备 unittest / 截屏之前，设备重新 `tconn` 可达后立刻执行：
+
+```bash
+hdc shell "power-shell wakeup"
+hdc shell "power-shell setmode 602"
+hdc shell "power-shell timeout -o 999999"
+```
+
+**仅 `setmode 602` 不够**：部分镜像（已在 API26 / OH 7.0 上复现）`power_mode_config.xml` 里 602 的息屏虽为 `-1`，但 `hidumper` 仍显示 `ScreenOffTime: Timeout=30000ms`，屏幕约 30s 仍灭。必须再 **`power-shell timeout -o 999999`**，使 `OverrideTimeout=999999ms`。`timeout -o -1` 在部分机上会失败，优先用 `999999`。
+
+校验：`hdc shell "hidumper -s PowerManagerService -a '-a'"` 中应见 `OverrideTimeout=999999ms`。
+
+`deploy-test` / `static-deploy-test` 已含上述三连；**手工 reboot 后不会自动执行**，Agent 必须补跑。恢复默认息屏：`power-shell timeout -r`。
 
 ---
 

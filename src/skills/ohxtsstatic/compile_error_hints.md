@@ -49,6 +49,11 @@
 | 套件静默无输出 + **`Class verification failed`** | `async (done)+done()` 与本工程静态 hypium 不兼容 | 改为 **`async () => {}`**（**§13.11.2**） |
 | 进页即 **`LinkerVerificationError`** | 板端镜像缺 API 符号 | 页面 stub + 注释；可测部分改用同域已绿 API（**§13.11.3**） |
 | 长时间空等无 `OHOS_REPORT_RESULT` | 设备被其余设备 unittest 占用 | 确认设备空闲后再跑；禁并发抢占 |
+| **重启/冷启后全部用例 timeout、组件全找不到** | **灭屏 / 锁屏**：UiTest 只能找焦点窗口组件 | 测试前 `hdc shell "power-shell wakeup; power-shell setmode 602; power-shell timeout -o 999999"`；**禁止**在灭屏状态跑测 |
+| **单条用例 >60s 未完成**（无 `consuming` 输出） | 流程卡死（弹窗未点、事件未回、页面未加载） | **立即中止**查因（hilog grep 用例名找卡点），**禁止**等 240s 超时耗整轮 |
+| `requestPermissionsFromUser` 返回 `authResults:[2]` + `dialogShownResults:[false]` | **受限权限不弹窗**（READ_PASTEBOARD 等），直接拒绝 | 见 **ohxtsdynamic/compile_error_hints.md §2.1**（签名 profile ACL + 设备 install_list 三件套）；**先查权限，勿改代码** |
+| 装包 `9568289` `grant request permissions failed` | profile ACL 未授权 **或** 设备 install_list 未注册 | 同上 §2.1；主/测包须同一 profile 签名（否则 `module name is not found`） |
+| 本地能跑、`git diff` 全是编译适配（`compatibleSdkVersion` 数字、`: void` 注解） | 本地编译器差异（ESE71336 等） | **提交前 `git checkout -- .` 还原**；仅逻辑修复才提交 |
 
 ---
 

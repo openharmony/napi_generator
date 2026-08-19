@@ -534,11 +534,16 @@ def _warn_if_main_hap_stale(project_dir: str, main_hap: str) -> None:
 
 
 def _prepare_device_for_uitest() -> None:
-    """跑测前唤醒/熄屏模式/上滑解锁/清 uitest，降低锁屏假失败。"""
+    """跑测前唤醒/保活亮屏/上滑解锁/清 uitest，降低锁屏假失败。
+
+    注意：仅 setmode 602 在部分镜像（如 API26）上仍可能按 30s 灭屏；
+    必须再执行 timeout -o 999999（OverrideTimeout）。timeout -o -1 可能失败。
+    """
     cmds = [
         "killall uitest",
         "power-shell wakeup",
         "power-shell setmode 602",
+        "power-shell timeout -o 999999",
         "uinput -T -m 360 1100 360 400",
     ]
     for c in cmds:
@@ -558,6 +563,19 @@ def _install_fail_hint(output: str) -> str:
         return (
             "；受限权限授予失败：重签时将权限写入 profile restricted-permissions/"
             "allowed-acls（apl=system_core），勿只改 module.json5"
+        )
+    if (
+        "9568344" in text
+        or "8519888" in text
+        or "privilege extension" in text.lower()
+        or "parse profile prop check" in text.lower()
+    ):
+        return (
+            "；特权 Extension 未放行：改设备 /system/etc/app/install_list_capability.json，"
+            "为 bundleName 设 allowAppUsePrivilegeExtension=true；"
+            "app_signature 须为 profile distribution-certificate 的 SHA256（去冒号），"
+            "勿用叶子 app 证书指纹；改完 remount 推送后 reboot，"
+            "再 wakeup+setmode 602+timeout -o 999999 后重装（见 ohhdc SKILL）"
         )
     return ""
 

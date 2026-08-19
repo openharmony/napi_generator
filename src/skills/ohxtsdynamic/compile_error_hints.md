@@ -38,6 +38,28 @@ source /root/aiSkill/use-ohos-sdk.sh normal
 python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py env
 ```
 
+### 3.1 设备测试前准备（每次必做，防"全超时"假象）
+
+```bash
+# ① 唤醒 + 防锁屏（重启/冷启后必做，否则 UiTest 找不到组件、全部用例 timeout）
+hdc shell "power-shell wakeup; power-shell setmode 602; power-shell timeout -o 999999"
+# ② 清理残留测试应用（后台残留会污染 log / AAMS 连接冲突 17000001/17000002）
+hdc shell "bm dump -a 2>&1 | grep -E 'com\.(open\.harmony|page|acts)'"   # 列出残留
+hdc shell "bm uninstall -n <残留bundle>"                                   # 逐个卸载
+hdc shell a​a force-stop <被测bundle>
+# ③ 校验屏幕态（须 AWAKE）
+hdc shell "hidumper -s PowerManagerService -a '-s' | grep 'Current State'"
+```
+
+### 3.2 用例超时快判（禁止硬等 240s）
+
+| 规则 | 说明 |
+|------|------|
+| 单条用例 **>60s** 无 `consuming` 输出 | 流程已卡死，**立即中止**整轮，查因后再跑 |
+| 定位卡点 | `hdc shell "hilog -x \| grep <用例名>"` —— 看最后一条日志停在哪（权限弹窗未点 / 事件未回 / 页面未加载） |
+| 全用例同步卡死 | 先查**屏幕态**（§3.1），再查权限（§2.1），最后才查代码 |
+| 设备 unittest 参数 | `-s timeout 120000`（120s 上限足够，超时即视为失败） |
+
 ---
 
 ## 4. 异常参数 XTS（undefined / null）
@@ -55,7 +77,53 @@ python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py env
 | 起测即 `App died` / Ability 起不来 | **双 HAP 只编了 ohosTest**（`build-test`）或未装主包 | `ohxtsflow build-all`（build+build-test+sign）→ `deploy-test` 装主+测；校验两份 `*-signed.hap` |
 | 改了页面仍跑旧 UI / 假绿 | **主包过期**（只重编测包）或**改码未重编** | 过期 HAP **被删除**；须 `build-all`；`ohxtsflow deploy-test` 缺包时自动重编，**禁止用旧包** |
 | `NO_RESULT` / 无 `OHOS_REPORT_RESULT` | 装包失败、锁屏、只装测包 | 解锁设备；双包重装；**禁止**当环境偶发略过 |
+| **重启/冷启后全部用例 timeout、按钮全找不到**（`buttonConmponent is null`） | **灭屏 / 锁屏**：UiTest 只能找焦点窗口组件 | 测试前 `power-shell wakeup` + `power-shell setmode 602` + `power-shell timeout -o 999999`；**禁止**在灭屏状态跑测 |
+| **单条用例 >60s 未完成**（Hypium 无 `consuming` 输出） | 流程卡死（权限弹窗未点、事件未回、页面未加载） | **立即中止**查因（hilog grep 用例名找卡点），**禁止**等 240s 超时耗整轮 |
+| `requestPermissionsFromUser` 返回 `authResults:[2]`、`dialogShownResults:[false]` | **受限权限不弹窗**（READ_PASTEBOARD 等），直接拒绝 | 见 **§2.1 受限权限授权三件套**——**先查权限，勿改代码** |
+| PBS 日志 `IsPermissionGranted# permission denied` / `GetPasteDataInner# check permission failed` | 剪贴板权限未授予 → copy/paste 静默失效 | **§2.1**：copy 后剪贴板 `records:0`、paste 后 input 仍空均为此症 |
+| ATM 日志 `Perm(...) need acl` / `Acl of ... is invalid` | **profile 的 `acls.allowed-acls` 缺该权限** | profile 加 `allowed-acls` 后**重签双包**（主+测同一 profile，否则 `module name not found`） |
+| 装包 `9568289` `grant request permissions failed` | 安装时授权受限权限失败：profile ACL 未授权 **或** 设备 install_list 未注册 | **§2.1** 三步逐查 |
+| `module name is not found`（设备 unittest） | 主/测 HAP 用了**不同 profile** 签名 | 统一 profile 重签双包后 `bm uninstall` + 重装 |
 | 装包 `9568450` / `9568289` | release 包用了 `-g`，或 PASTEBOARD 未进 profile ACL | `hdc install` 无 `-g`；profile 加 restricted-permissions |
+
+### 2.1 受限权限授权三件套（READ_PASTEBOARD 等）
+
+**背景**：受限权限（如 `ohos.permission.READ_PASTEBOARD`）在设备上**不弹授权框**（`requestPermissionsFromUser` 直接返回 `authResults:[2]`、`dialogShownResults:[false]`）。代码侧动态请求 + module.json5 静态声明（原仓库写法）**都是对的**；本地拿不到权限几乎都是**签名 profile 与设备白名单**问题。**判定链**（hilog）：
+
+```bash
+# ① 动态请求结果：authResults:[2] + dialogShownResults:[false] → 受限权限不弹窗
+hilog | grep "authResults"
+# ② PBS 剪贴板拒绝（copy/paste 静默失效的实锤）
+hilog | grep -E "IsPermissionGranted|GetPasteDataInner"
+# ③ ATM ACL 拒绝（profile 缺授权的实锤）
+hilog | grep -E "need acl|Acl of .* is invalid"
+# ④ 安装期授权失败
+hdc install xxx.hap   # 报 9568289 grant request permissions failed
+```
+
+**三步修复**（前两步为签名侧，第三步为设备侧；CI 设备已配置，仅本地需做）：
+
+1. **签名 profile 授权**：`UnsgnedReleasedProfileTemplate.json` 同时加两处，重新 `sign-profile` 并**重签主+测双包**（同一 profile）：
+   ```json
+   "acls": { "allowed-acls": ["ohos.permission.READ_PASTEBOARD"] },
+   "permissions": { "restricted-permissions": ["ohos.permission.READ_PASTEBOARD"] }
+   ```
+   只加 restricted-permissions 不够——ATM 报 `need acl` 即 allowed-acls 缺失。
+2. **bundle-name 与签名指纹**：模板 bundle-name = 工程 `AppScope/app.json5` 的 bundleName；指纹从已装主包取：`bm dump -n <bundle> | grep appId`（`_` 后部分）。
+3. **设备 install_list 注册**：`/system/etc/app/install_list_permissions.json`（ext4 rw 可改）追加：
+   ```json
+   { "bundleName": "<bundle>",
+     "app_signature": ["<appId 下划线后指纹>"],
+     "permissions": [{ "name": "ohos.permission.READ_PASTEBOARD", "userCancellable": true }] }
+   ```
+   **改完必须重启设备**（BMS 启动时读一次）；验证：`grep -c '<bundle>' /system/etc/app/install_list_permissions.json`。
+
+**验证权限已生效**（避免误判）：授权后 `requestPermissionsFromUser` 返回 `authResults:[0]`；copy 后剪贴板 `records:1`；paste 后 input 有值。
+
+**经验铁律**：
+- 测试失败**先查权限/环境，再动代码**——本次 Copy/Cut 2 用例"本地失败"实为本地签名配置缺失，代码与原仓库**零差异**；
+- 本地 workaround（`compatibleSdkVersion` 数字、`: void` 注解等）**提交前必须 `git checkout -- .` 还原**；判断标准：改动仅编译适配、无逻辑变更；
+- `compileSdkVersion` 字符串/数字之争、ESE71336 注解等均为**本地编译器差异**，CI 工具链不同，勿提交。
 | `queue.shift()` 编译错误 | ArkTS 不支持 | Inspector BFS 改索引遍历 |
 | 整段 `$attrs` 断言不稳定 | 含 `id` 等噪声 | 改 `assertPropSame` 单属性（§2.1） |
 | `Type 'null' is not assignable` | 预期行为 | 记 `abnormal_compile_failures.md`，**不提交** null 用例 |
