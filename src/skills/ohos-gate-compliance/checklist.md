@@ -68,6 +68,10 @@
 - [ ] `@tc.number` 与 `it()` 一致（`@tc.name` 可为英文标题，不强制等于用例号）
 - [ ] 无裸 `it()`：每条 `it` 前紧邻完整 `@tc` 块（`/*` 或 `/**`，含 `@tc.number` / `@tc.name`；一体工程 `entry/.../*.test.ets`）
 - [ ] `@tc` 字段保留冒号格式：`@tc.number : ID`（`fix_ets_xtscheck` 勿剥冒号）
+- [ ] **XTS.CHECK.ASYNC_TESTCASE.02**：`it`/`beforeAll` 内 `await` 须在 `try...catch` 中（推荐整段用例体包一层；`catch` 里 `expect(false).assertTrue()` + 日志）
+- [ ] **XTS.CHECK.ALL_TIME_TRUE_ASSERTION.01**：禁止 `expect(true).assertTrue()`；改为业务条件（如 `commonEventValues.length > 0`）
+- [ ] **WordsTool.22**：勿裸写 `AudioState`（含 `audio.AudioState.*`、UI id `AudioStateText`）；改用数值常量（如 running=`2`）与中性 id（如 `LongTaskMediaStateText`）
+- [ ] **G.EXT.03**：`Array<T>` → `T[]`（含 `Map<string, Array<X>>` → `Map<string, X[]>`；`fix_arkts_quality` 可自动改单层泛参）
 - [ ] 合并冲突未保留「仅 id 无 key」或旧 key 版本
 - [ ] Dialog/Present 类：`NORMAL`/`UEC` 后只点 OK/取消关遮罩；Inspector 防空 JSON；**禁止**「找不到取消就 pressBack」（会把 Ability 切后台）
 - [ ] **CI.KIT.01 / CI.SDK.DIALOG.01**（7.0 门禁）：

@@ -72,6 +72,9 @@ version: "1.2.0"
 | **G.FMT.05** Options/`@tc.desc` 超宽 | checklist 增 before/after；dialog api26 批实锤 | 手工折行；见 **ohxtsstatic §13.11.5** |
 | **G.EXT.02** `ESObject` | `arkts_patterns` **仅检测**（勿自动改，语义须按 API 替换） | `setUIContent`→`loadContent`；禁 `as ESObject` |
 | **G.EXT.03** `Array<T>` | `arkts_patterns` 检测 + `Array<Ident>`→`Ident[]` | dialog api26 ContextMenu* 实锤 |
+| **XTS.CHECK.ASYNC_TESTCASE.02** await 缺 try/catch | checklist 手工：`it`/`beforeAll` 体整体包 `try/catch` | pcs Software 实锤 |
+| **XTS.CHECK.ALL_TIME_TRUE_ASSERTION.01** | `arkts_patterns` **仅检测** `expect(true).assertTrue` | 改真实断言（如 `length > 0`） |
+| **WordsTool.22** `AudioState` | `arkts_patterns` **仅检测**；改数值常量/`LongTaskMediaStateText` | pcs Performance 实锤 |
 | **CI.KIT.01** Dialog* 从 `@kit.ArkUI` | `gate_review.check_dialog_api_kit_import`（仅检测） | 有 API 时改 `@ohos.arkui.UIContext` / `@ohos.arkui.dialog` + 显式嵌套类型 |
 | **CI.SDK.DIALOG.01** CI 无 Dialog API | 手工：父 `BUILD.gn` 暂注释该 HAP deps | CI 报缺 `@ohos.arkui.dialog`/`getDialogPresenter` 时与导入无关；**本地 DevEco SDK ≠ CI prebuilts**，勿仅凭本地编过就恢复 deps；CI SDK 合入后再编入 |
 

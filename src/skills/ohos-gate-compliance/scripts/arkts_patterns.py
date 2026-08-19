@@ -53,6 +53,16 @@ RULES: list[tuple[str, re.Pattern[str], str]] = [
         re.compile(r"\bArray\s*<"),
         "使用 Array<T>，应改为 T[]（G.EXT.03）",
     ),
+    (
+        "XTS.CHECK.ALL_TIME_TRUE_ASSERTION.01",
+        re.compile(r"expect\s*\(\s*true\s*\)\s*\.assertTrue\s*\("),
+        "禁止 expect(true).assertTrue 恒真断言（XTS.CHECK.ALL_TIME_TRUE_ASSERTION.01）",
+    ),
+    (
+        "WordsTool.22",
+        re.compile(r"\bAudioState\b"),
+        "勿裸写 AudioState；用数值常量或改 UI id（WordsTool.22）",
+    ),
 ]
 
 
