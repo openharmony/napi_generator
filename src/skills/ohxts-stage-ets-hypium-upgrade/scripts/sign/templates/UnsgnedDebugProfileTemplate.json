@@ -1,0 +1,98 @@
+{
+  "version-name": "2.0.0",
+  "version-code": 2,
+  "uuid": "fe686e1b-3770-4824-a938-961b140a7c98",
+  "validity": {
+    "not-before": 1610519532,
+    "not-after": 1705127532
+  },
+  "type": "debug",
+  "bundle-info": {
+    "developer-id": "OpenHarmony",
+    "development-certificate": "-----BEGIN CERTIFICATE-----\nMIICMzCCAbegAwIBAgIEaOC/zDAMBggqhkjOPQQDAwUAMGMxCzAJBgNVBAYTAkNO\nMRQwEgYDVQQKEwtPcGVuSGFybW9ueTEZMBcGA1UECxMQT3Blbkhhcm1vbnkgVGVh\nbTEjMCEGA1UEAxMaT3Blbkhhcm1vbnkgQXBwbGljYXRpb24gQ0EwHhcNMjEwMjAy\nMTIxOTMxWhcNNDkxMjMxMTIxOTMxWjBoMQswCQYDVQQGEwJDTjEUMBIGA1UEChML\nT3Blbkhhcm1vbnkxGTAXBgNVBAsTEE9wZW5IYXJtb255IFRlYW0xKDAmBgNVBAMT\nH09wZW5IYXJtb255IEFwcGxpY2F0aW9uIFJlbGVhc2UwWTATBgcqhkjOPQIBBggq\nhkjOPQMBBwNCAATbYOCQQpW5fdkYHN45v0X3AHax12jPBdEDosFRIZ1eXmxOYzSG\nJwMfsHhUU90E8lI0TXYZnNmgM1sovubeQqATo1IwUDAfBgNVHSMEGDAWgBTbhrci\nFtULoUu33SV7ufEFfaItRzAOBgNVHQ8BAf8EBAMCB4AwHQYDVR0OBBYEFPtxruhl\ncRBQsJdwcZqLu9oNUVgaMAwGCCqGSM49BAMDBQADaAAwZQIxAJta0PQ2p4DIu/ps\nLMdLCDgQ5UH1l0B4PGhBlMgdi2zf8nk9spazEQI/0XNwpft8QAIwHSuA2WelVi/o\nzAlF08DnbJrOOtOnQq5wHOPlDYB4OtUzOYJk9scotrEnJxJzGsh/\n-----END CERTIFICATE-----\n",
+    "bundle-name": "{{bundle_name}}",
+    "apl": "normal",
+    "app-feature": "{{app_feature}}",
+    "app-privilege-capabilities": "{{privilege_capabilities}}"
+  },
+  "acls": {
+    "allowed-acls": [
+      "ohos.permission.ABILITY_BACKGROUND_COMMUNICATION",
+      "ohos.permission.CLEAN_BACKGROUND_PROCESSES",
+      "ohos.permission.DISTRIBUTED_DATASYNC",
+      "ohos.permission.GET_BUNDLE_INFO",
+      "ohos.permission.GET_BUNDLE_INFO_PRIVILEGED",
+      "ohos.permission.GET_RUNNING_INFO",
+      "ohos.permission.INSTALL_BUNDLE",
+      "ohos.permission.INSTALL_CLONE_BUNDLE",
+      "ohos.permission.INTERACT_ACROSS_LOCAL_ACCOUNTS",
+      "ohos.permission.INTERACT_ACROSS_LOCAL_ACCOUNTS_EXTENSION",
+      "ohos.permission.INTERNET",
+      "ohos.permission.KEEP_BACKGROUND_RUNNING",
+      "ohos.permission.KILL_APP_PROCESSES",
+      "ohos.permission.MANAGE_LOCAL_ACCOUNTS",
+      "ohos.permission.MANAGE_WIFI_CONNECTION",
+      "ohos.permission.NDK_START_SELF_UI_ABILITY",
+      "ohos.permission.PREPARE_APP_TERMINATE",
+      "ohos.permission.PRIVACY_WINDOW",
+      "ohos.permission.PROXY_AUTHORIZATION_URI",
+      "ohos.permission.REMOVE_CACHE_FILES",
+      "ohos.permission.REQUIRE_FORM",
+      "ohos.permission.RUNNING_STATE_OBSERVER",
+      "ohos.permission.SET_ABILITY_INSTANCE_INFO",
+      "ohos.permission.SET_WIFI_INFO",
+      "ohos.permission.START_ABILIIES_FROM_BACKGROUND",
+      "ohos.permission.START_ABILITIES_FROM_BACKGROUND",
+      "ohos.permission.START_INVISIBLE_ABILITY",
+      "ohos.permission.SUPPORT_APP_SERVICE_EXTENSION",
+      "ohos.permission.UNINSTALL_CLONE_BUNDLE",
+      "ohos.permission.UPDATE_CONFIGURATION",
+      "ohos.permission.USE_BLUETOOTH"
+    ]
+  },
+  "permissions": {
+    "restricted-permissions": [
+      "ohos.permission.ABILITY_BACKGROUND_COMMUNICATION",
+      "ohos.permission.CLEAN_BACKGROUND_PROCESSES",
+      "ohos.permission.DISTRIBUTED_DATASYNC",
+      "ohos.permission.GET_BUNDLE_INFO",
+      "ohos.permission.GET_BUNDLE_INFO_PRIVILEGED",
+      "ohos.permission.GET_RUNNING_INFO",
+      "ohos.permission.INSTALL_BUNDLE",
+      "ohos.permission.INSTALL_CLONE_BUNDLE",
+      "ohos.permission.INTERACT_ACROSS_LOCAL_ACCOUNTS",
+      "ohos.permission.INTERACT_ACROSS_LOCAL_ACCOUNTS_EXTENSION",
+      "ohos.permission.INTERNET",
+      "ohos.permission.KEEP_BACKGROUND_RUNNING",
+      "ohos.permission.KILL_APP_PROCESSES",
+      "ohos.permission.MANAGE_LOCAL_ACCOUNTS",
+      "ohos.permission.MANAGE_WIFI_CONNECTION",
+      "ohos.permission.NDK_START_SELF_UI_ABILITY",
+      "ohos.permission.PREPARE_APP_TERMINATE",
+      "ohos.permission.PRIVACY_WINDOW",
+      "ohos.permission.PROXY_AUTHORIZATION_URI",
+      "ohos.permission.REMOVE_CACHE_FILES",
+      "ohos.permission.REQUIRE_FORM",
+      "ohos.permission.RUNNING_STATE_OBSERVER",
+      "ohos.permission.SET_ABILITY_INSTANCE_INFO",
+      "ohos.permission.SET_WIFI_INFO",
+      "ohos.permission.START_ABILIIES_FROM_BACKGROUND",
+      "ohos.permission.START_ABILITIES_FROM_BACKGROUND",
+      "ohos.permission.START_INVISIBLE_ABILITY",
+      "ohos.permission.SUPPORT_APP_SERVICE_EXTENSION",
+      "ohos.permission.UNINSTALL_CLONE_BUNDLE",
+      "ohos.permission.UPDATE_CONFIGURATION",
+      "ohos.permission.USE_BLUETOOTH"
+    ]
+  },
+  "debug-info": {
+    "device-ids": [
+      "1489FE63DCB219D79B97202B5FF8B46F443667A3BA87B43367045A1B47EB1B9D"
+    ],
+    "device-id-type": "udid"
+  },
+  "issuer": "pki_internal",
+  "device-ids": [
+    "1489FE63DCB219D79B97202B5FF8B46F443667A3BA87B43367045A1B47EB1B9D"
+  ]
+}
