@@ -22,7 +22,7 @@ from common.git_utils import cleanup_leftover_ts, git_mv, preserve_eol  # noqa: 
 # 版权头模板：厂商名拆字面量防 WordsTool 自触发（生成文件内容与原样一致）
 _VENDOR = chr(72) + chr(117) + chr(97) + chr(119) + chr(101) + chr(105)
 KAIHONG_HEADER = (
-    "/*\n * Copyright (C) 2024 " + _VENDOR + " Device Co., Ltd.\n"
+    f"/*\n * Copyright (C) 2024 {_VENDOR} Device Co., Ltd.\n"
     " * Licensed under the Apache License, Version 2.0 (the \"License\");\n"
     " * you may not use this file except in compliance with the License.\n"
     " * You may obtain a copy of the License at\n"

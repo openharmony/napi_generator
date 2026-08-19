@@ -21,6 +21,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+
 # WordsTool 自触发规避：敏感词仅用 chr() 拼接（规则 ID 用数字后缀，勿裸写词面量）
 def _from_codes(*codes: int) -> str:
     return "".join(chr(c) for c in codes)
@@ -67,8 +68,8 @@ RULES: list[tuple[str, re.Pattern[str], str]] = [
     ),
     (
         "WordsTool.22",
-        re.compile(r"\b" + _AUDIO_STATE + r"\b"),
-        "勿裸写 " + _AUDIO_STATE + "；用数值常量或改 UI id（WordsTool.22）",
+        re.compile(rf"\b{_AUDIO_STATE}\b"),
+        f"勿裸写 {_AUDIO_STATE}；用数值常量或改 UI id（WordsTool.22）",
     ),
 ]
 
