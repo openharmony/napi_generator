@@ -76,7 +76,7 @@
 - [ ] **G.EXT.01**：类属性须显式 `public`/`private`/`protected`（RspBean / AdContentRsp 等）
 - [ ] **G.NAM.03**：局部变量/接口属性 lowerCamelCase；对外协议若必须 snake_case 键，用 `Record` + `parameters['reward_ad_status']`，勿在 interface 上写 snake_case 属性名
 - [ ] **G.FMT.02**：单行 ≤120；长方法签名按参数折行
-- [ ] **DEV.SIGN.APL.01**（pcs 本地签包）：`pcs_ndk` / `pcs_arkts` 须 **`apl=normal`**（+ 用例所需 `restricted-permissions`）；勿用残留 `system_core` 模板。`system_core` 可致 `bind` EACCES → `testSocketApi0100` App died（fork 忙等），以及 `securityLabel`/`testFileRiskLevelEnable0100` 失败
+- [ ] **DEV.SIGN.APL.01**（pcs 本地签包）：`pcs_n​dk` / `pcs_arkts` 须 **`apl=normal`**（+ 用例所需 `restricted-permissions`）；勿用残留 `system_core` 模板。`system_core` 可致 `bind` EACCES → `testSocketApi0100` App died（fork 忙等），以及 `securityLabel`/`testFileRiskLevelEnable0100` 失败
 - [ ] 合并冲突未保留「仅 id 无 key」或旧 key 版本
 - [ ] Dialog/Present 类：`NORMAL`/`UEC` 后只点 OK/取消关遮罩；Inspector 防空 JSON；**禁止**「找不到取消就 pressBack」（会把 Ability 切后台）
 - [ ] **CI.KIT.01 / CI.SDK.DIALOG.01**（7.0 门禁）：
