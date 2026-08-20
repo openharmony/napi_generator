@@ -1,0 +1,65 @@
+{
+  "_defaults": {
+    "developRoot": "/root/aiSkill/develop/xts_acts_0622",
+    "masterActs": "/root/master/test/xts/acts",
+    "masterOut": "/root/master/out/rk3568",
+    "product": "rk3568",
+    "deviceSn": "192.168.12.220:8710"
+  },
+  "_batches": {
+    "recent_chip_counter_state": [
+      "ActsAceEtsModuleChipNoWearTest",
+      "ActsAceEtsModuleAdvanceChipStaticTest",
+      "ActsAceEtsModuleCounterTest",
+      "ActsAceEtsModuleAdvanceCounterStaticTest",
+      "ActsAceEtsModuleStateMangagementApi18StaticTest",
+      "ActsAceEtsModuleCustomComponentStaticTest"
+    ]
+  },
+  "ActsAceEtsModuleChipNoWearTest": {
+    "remoteRel": "arkui/ace_ets_module_ui/ace_ets_module_advancedComponents/ace_ets_module_chip_nowear",
+    "type": "dynamic"
+  },
+  "ActsAceEtsModuleAdvanceChipStaticTest": {
+    "remoteRel": "arkui/ace_ets_module_ui/ace_ets_module_advancedComponents/ace_ets_module_advance_chip_static",
+    "type": "static"
+  },
+  "ActsAceEtsModuleCounterTest": {
+    "remoteRel": "arkui/ace_ets_module_ui/ace_ets_module_advancedComponents/ace_ets_module_counter",
+    "type": "dynamic"
+  },
+  "ActsAceEtsModuleAdvanceCounterStaticTest": {
+    "remoteRel": "arkui/ace_ets_module_ui/ace_ets_module_advancedComponents/ace_ets_module_advance_counter_static",
+    "type": "static"
+  },
+  "ActsAceEtsModuleStateMangagementApi18StaticTest": {
+    "remoteRel": "arkui/ace_ets_module_noui/ace_ets_module_StateMangagement/ace_ets_module_StateMangagement_api18_static",
+    "type": "static"
+  },
+  "ActsAceEtsModuleCustomComponentStaticTest": {
+    "remoteRel": "arkui/ace_ets_module_ui/ace_ets_module_customComponent_static",
+    "type": "static"
+  },
+  "ActsAceEtsModuleAlertDialogStaticTest": {
+    "remoteRel": "arkui/ace_ets_module_ui/ace_ets_module_dialog/ace_ets_module_dialog_AlertDalog_static",
+    "type": "static"
+  },
+  "ActsAceEtsModuleDialogApi26Test": {
+    "remoteRel": "arkui/ace_ets_module_ui/ace_ets_module_dialog/ace_ets_module_dialog_api26",
+    "type": "dynamic"
+  },
+  "ActsAceEtsModuleSegmentButtonNoWearTest": {
+    "remoteRel": "arkui/ace_ets_module_ui/ace_ets_module_advancedComponents/ace_ets_module_segmentButton_nowear",
+    "type": "dynamic"
+  },
+  "ActsAceCArkUI26SystemMaterialTest": {
+    "remoteRel": "arkui/ace_c_arkui_test_api26_systemmaterial",
+    "type": "dynamic",
+    "assistHap": "ActsAceCArkUI26SystemMaterial"
+  },
+  "ActsWebPageBaseRenderingTest": {
+    "remoteRel": "web/page_interaction/base_rendering",
+    "type": "dynamic",
+    "subsystem": "web"
+  }
+}

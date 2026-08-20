@@ -1,0 +1,5 @@
+# 签名工具体积大，不进仓；同事按 SIGNATURE-P7B.md 自备 hap-sign-tool.jar
+*.jar
+*.zip
+gen-signature-pack.zip
+gen-signature-pack/*.jar

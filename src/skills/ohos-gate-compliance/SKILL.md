@@ -18,7 +18,7 @@ version: "1.2.0"
 | profile | 典型工程 | 自动检查 | 自动修复 |
 |---------|----------|----------|----------|
 | **ets** | ohxtsstatic / ohxtsdynamic HAP | xtscheck、ArkTS Quality、G.FMT.05、**CI.SDK.01** | @tc 冒号、空行、String→string、TestType.FUNCTION、**compileSdkVersion→"M.S.F"** |
-| **capi** | ohxtscapi HAP | 上述 + **G.FMT.06-CPP**（仅 `.cpp/.h`） | 上述 + 实参续行 **起始行+4** |
+| **capi** | ohxtscapi HAP | 上述 + **G.FMT.06-CPP** + **G.FUD.05**（仅 `.cpp/.h`） | 上述 + 实参续行 **起始行+4**；FUD.05 仅检测 |
 
 **ETS 工程不跑 C++ 规则**；CAPI 工程对 `.ets` 仍跑 ArkTS 规则。
 
@@ -48,17 +48,40 @@ version: "1.2.0"
 
 | 规则 | 加固方式 |
 |------|----------|
-| G.FMT.06-CPP 实参续行 | 起始行缩进 + 4（8→12，4→8） | `gate_review.fix_cpp_fmt06` |
+| G.FMT.06-CPP 实参续行 | 起始行缩进 + 4（8→12，4→8）；**声明续行勿仅 1 空格** | `gate_review.fix_cpp_fmt06` |
 | **G.FMT.04** `:` 前空格 | `brace + 1 : i` → `brace + 1:i` | `gate_review.fix_py_fmt04_space_before_colon` |
-| G.CNS.02 Inspector 魔法数 | `constexpr` 命名边界值 | 见 `examples-cpp-inspector.md` 案例 8 |
+| **DEV.REBUILD.01** 改码后旧 HAP 复测 | ohhdc **作废过期 HAP**（`purge_stale_project_haps`）+ 装包入口拒装；ohxtsflow **不查找旧包**，缺失则自动 `build-all` | `deploy-test`/`static-deploy-test` |
+| **DEV.REPORT.01** 无 OHOS_REPORT_RESULT | ohhdc `_unittest_report_ok` **硬失败** | 禁 NO_RESULT 当偶发 |
+| **DEV.SCOPE.01** PR 范围收窄假绿 | checklist + 三 skill SKILL | 以 `git diff` 路径列工程，禁按 commit 文案裁剪 |
+| G.CNS.02 Inspector 魔法数 | `constexpr` 命名边界值（`MAX_TWO_DIGIT_ORDINAL_INDEX` / `ORDINAL_FOUR_CHAR_LEN` / `INDEX_PLUS_*`） | 见 `examples-cpp-inspector.md` 案例 8 / 11 |
 | `TestType.Function` | `arkts_patterns` 检测 + 自动替换 |
 | 大写 `String` | `arkts_patterns.fix_arkts_quality` |
 | `'use static'` 下 `int` 误报 ARKTS_NO_INT | `arkts_patterns`：static 文件跳过该规则 |
-| `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck` |
-| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词；扫描器源码仅用 `chr()` 拼词；含 **.297**（勿裸写设备命令缩写，叙事用「设备 unittest」）、**.241**（勿强调词）、**doc1**（勿易歧义代词结构，改用「其余」） |
-| Python 嵌套深度 ≤4 / nbnc ≤50 | 拆 helper（`ohhdc._warn_if_main_hap_stale`、`gate_review._check_one_it_jsdoc` 等） | 提交 skill 前 `py_compile` |
-| G.FUD.05 / 超大函数 `GetXxxProps` | 按域拆多表 + 多次 `napi_define_properties` | 见 `reference.md` NAPI 表注册 |
+| `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck`（**保留** `@tc.xxx : ` 冒号格式，勿剥冒号） |
+| Hypium `/*` JSDoc / 仅核对 `@tc.number`↔`it()` | `gate_review._nearest_jsdoc` 接受 `/*`/`/**`；**不**强制 `@tc.name` 等于 `it()`（英文标题场景） |
+| G.FMT.05 长 `import` | `check_line_width` **跳过** `import ` 行（后置批量折行） |
+| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `precheck_skill_commit.sh` | 禁用易歧义产品名与口语化极限词；扫描器源码仅用 `chr()` 拼词；含 **.297**（勿裸写设备命令缩写，叙事用「设备 unittest」）、**.241**（勿强调词）、**doc1**（勿易歧义代词结构，改用「其余」）、**.249/.296/.166/.93/.204/.5/.100** 等 |
+| Python 嵌套深度 ≤4 / nbnc ≤50 / 文件 ≤2000 | 拆 helper；`scan_skill_repo_gate.py` 提交前硬拦 | 提交 skill 前跑 `precheck_skill_commit.sh` |
+| G.EDV.04 `shell=True` / bash argv0 | `scan_skill_repo_gate`（gate / develop-master-cycle / xts_shared） | 列表 argv；脚本直跑勿包 bash |
+| G.FUD.05 / 超大函数 `GetXxxProps` | 检测 nbnc>50；修法：按域拆多表 + 多次 `napi_define_properties` | `gate_review.check_cpp_fud05` + `reference.md` |
 | **CI.SDK.01** `compileSdkVersion` 数字/"26" | `gate_review` 检测+自动改 `"26.0.0"`；**`git-commit-agent.sh` 暂存预检拦截** | 以 CI 为准，本地 00306042 勿入仓 |
+| **WordsTool.97** 产品名/字体族 | `string.json` / `.ets` 勿写易歧义产品字体名；自动 `… Sans` → `sans-serif` | `gate_review.check_wordstool_97` / `fix_wordstool_97` |
+| **WordsTool.66** 易歧义双字符片段 | 用例号/路径/json 勿含；uuid 改 `SUB_*` 语义号 | `gate_review.check_wordstool_66` |
+| **WordsTool.143** 本地开发套件缩写 | 文档/注释/用例号改 NATIVE 或「专用提供方」 | `gate_review.check_wordstool_143` |
+| **WordsTool.100** 厂商品牌域名 | `.ets` 勿写易歧义厂商 CDN/域名；属性桩页 `Web(src)` 用 `$rawfile('…')` | `gate_review.check_wordstool_100` |
+| **G.FMT.05** Options/`@tc.desc` 超宽 | checklist 增 before/after；dialog api26 批实锤 | 手工折行；见 **ohxtsstatic §13.11.5** |
+| **G.EXT.02** `ESObject` | `arkts_patterns` **仅检测**（勿自动改，语义须按 API 替换） | `setUIContent`→`loadContent`；禁 `as ESObject` |
+| **G.EXT.03** `Array<T>` | `arkts_patterns` 检测 + `Array<Ident>`→`Ident[]` | dialog api26 ContextMenu* 实锤 |
+| **XTS.CHECK.ASYNC_TESTCASE.02** await 缺 try/catch | checklist 手工：`it`/`beforeAll` 体整体包 `try/catch` | pcs Software 实锤 |
+| **XTS.CHECK.ALL_TIME_TRUE_ASSERTION.01** | `arkts_patterns` **仅检测** `expect(true).assertTrue` | 改真实断言（如 `length > 0`） |
+| **WordsTool.22** `AudioS​tate` | `arkts_patterns` **仅检测**；改数值常量/`LongTaskMediaStateText` | pcs Performance 实锤 |
+| **XTS.CHECK.ERROR_CODE.01** | 禁 `as BusinessError`；`catch` 用 `JSON.stringify(error)` | pcs Software 实锤 |
+| **G.EXT.01** 类属性缺修饰符 | 补 `public`/`private`；见 checklist | abilitydemo RspBean/AdContentRsp |
+| **G.NAM.03** | 局部变量 camelCase；协议 snake_case 键用 `Record`+下标 | FullScreenAd* |
+| **G.FMT.02** 行宽≤120 | 函数签名参数折行 | AdsApiServiceRpcObj / AdsCoreService |
+| **DEV.SIGN.APL.01** pcs 本地 `system_core` | checklist 手工：签包用 **`apl=normal`** | 原生 socket App died / FileRiskLevel 实锤 |
+| **CI.KIT.01** Dialog* 从 `@kit.ArkUI` | `gate_review.check_dialog_api_kit_import`（仅检测） | 有 API 时改 `@ohos.arkui.UIContext` / `@ohos.arkui.dialog` + 显式嵌套类型 |
+| **CI.SDK.DIALOG.01** CI 无 Dialog API | 手工：父 `BUILD.gn` 暂注释该 HAP deps | CI 报缺 `@ohos.arkui.dialog`/`getDialogPresenter` 时与导入无关；**本地 DevEco SDK ≠ CI prebuilts**，勿仅凭本地编过就恢复 deps；CI SDK 合入后再编入 |
 
 Agent **禁止**只修工程、不更新 skill（除非用户明确「仅 hotfix」）。
 
@@ -103,7 +126,9 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | **`gate_review.py`** | pipeline 主入口：review + 修复 + commit |
 | **`arkts_patterns.py`** | ArkTS Quality 规则库（被 gate_review 引用） |
 | **`scan_gate_patterns.py`** | 独立 CLI，扫仓库路径下 `.ets`（调试/PR 前粗查） |
-| **`scan_wordstool_docs.py`** | WordsTool 文档用词扫描（skill `.md` / 脚本，提交前必跑） |
+| **`scan_wordstool_docs.py`** | WordsTool 文档/脚本用词扫描（`.md`/`.sh`/部分 `.py`） |
+| **`scan_skill_repo_gate.py`** | skill 仓 Python：文件 nbnc≤2000、函数 nbnc≤50/CC≤20/深度≤4、snake_case 模块名、硬目录禁 `shell=True`/`bash` argv0 |
+| **`precheck_skill_commit.sh`** | **skill 仓提交前一键**：WordsTool + Python gate + `py_compile` |
 
 ---
 
@@ -138,21 +163,42 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 
 **宣称工程全绿前自检**：同一次 `deploy-test` 日志中无 `Cannot execute ark file`、`enableWildcard of null`、`[PagePushHelper] push ... error`；HTML 对应该次装包。
 
+### 改码后强制重编（禁旧包复测 · PR#42066 实锤）
+
+> **现象**：接口人复测一堆失败，本地却「全绿」——根因是**改码后未重编/未双包重装**、范围收窄、锁屏假失败、NO_RESULT 当偶发。
+
+| 铁律 | 必须 | 禁止 |
+|------|------|------|
+| **有代码改动 → 必须重编再测** | 改 `.ets`/`.html`/`.json5`/resources 后，对该工程再跑 **`build-all`（双 HAP）或 `hapbuild build`（静态一体）+ sign**，再用**新 signed.hap** 装包 | 改完直接跑设备 unittest / 沿用磁盘上旧 HAP / 只重装测包 |
+| **双 HAP 双编双装** | `entry/src/ohosTest/` 存在 → `build` + `build-test` + `sign`，`deploy-test` **先主后测** | 只 `build-test`；`bm install -g` 对 release 包（9568450） |
+| **PR/批次范围** | 以 **PR 全部改动路径**（`git diff upstream/master...HEAD --name-only`）反推工程列表；**含** basic_rendering / permissions 等 | 按**单 commit 文案**「12 个 HAP」收窄而跳过同 PR 其它工程 |
+| **装包真实性** | `hdc install`（无 `-g`）；卸装 → 装主 → 装测；受限权限靠 **profile ACL/restricted-permissions**（apl=system_core） | 把 `NO_RESULT`/`App died`/`9568289` 当环境偶发略过 |
+| **设备卫生** | 跑测前唤醒 + `setmode 602` + 上滑解锁 + `killall uitest` | 锁屏态硬跑 UiTest |
+| **结果门禁** | 必须有 `OHOS_REPORT_RESULT` 且 Fail=0 Error=0 | 无 RESULT 仍写「测试通过」 |
+
+**脚本根源门禁（ohhdc / ohxtsflow）**：源码新于 HAP 时 **删除** signed/unsigned（不作废则无法再「找到旧包」）；`install`/`replace-install`/`deploy-test`/`install-project`/`static-deploy-test` **拒装**已作废包；`ohxtsflow deploy-test` / `static-device-test` 在缺包时 **自动重编** 再测。装包失败附 9568450/9568289 提示；跑测结束校验 `OHOS_REPORT_RESULT`。
+
 ## ArkTS 高频
 
 | 问题 | 自动？ | 修复 |
 |------|--------|------|
 | `TestType.Function` | ✅ | `TestType.FUNCTION` |
 | 大写 `String` | ✅ | `string` |
-| `@tc.name:` 冒号 | ✅ | 空格分隔 |
+| `@tc.name:` 冒号 | ✅ | 规范为 `@tc.xxx : `（**保留冒号**，勿剥成空格） |
+| `/*` / `/**` @tc 块 | ✅ 检测 | `_nearest_jsdoc` 兼容两种；仅 `@tc.number` 与 `it()` 一致 |
+| 长 `import` 超宽 | ⏭️ 跳过 | 后置批量折行；业务行仍 ≤120 |
 | `*/` 与 `it()` 空行 | ✅ | 删空行 |
+| G.FMT.05 行宽 | 报告 | 单行 ≤120；**Options 字面量 / 长 `@tc.desc`** 拆多行（dialog api26 批实锤） |
 | `int` | 报告（**仅动态**） | 改 `number`；**`'use static'` 文件跳过**（`int` 合法） |
 | `.key('foo')` 无下划线 | 报告 | `页面名_组件名` |
 | static 十六进制 fontColor | 报告 | `ResourceColor` 或字符串 |
+| **G.EXT.02** `ESObject` | ✅ 检测 | 禁类型注解/`as ESObject`；`WindowStage.setUIContent` 改 `loadContent(path)` |
 | Dialog 遮罩/`pressBack` → 下 Suite `Empty Text`/`null.click` | — | NORMAL 后关弹窗；空 Inspector 勿 `JSON.parse`；Suite **间**禁 `pressBack`；见上节**整测须一次连跑** |
 | Dialog `DocumentViewPicker` 模拟 UEC → 后续 Suite 全 `component not found` | — | **禁止**系统 FilePicker/UIExtension；改可自动化子窗正例；禁 `expect(true)`/`env skip` 假绿 |
 | 拆多次 deploy-test 重装后宣称全绿 | — | 工程整测改为**一次连跑**全部 Suite（见上节） |
 | 双 HAP 只编测包 / 主包过期 → 本地假绿、门禁页崩溃 | — | 改 `MainAbility/pages` 后必须重编**主+测**并双包安装；见上节「主包页面 vs 测包」 |
+| 改码后用旧 HAP 复测 / 按 commit 文案收窄 PR 范围 | ✅ ohhdc 新鲜度硬失败 | 见上节「改码后强制重编」；PR 范围以 diff 路径为准 |
+| `NO_RESULT`/`App died` 当偶发 | ✅ ohhdc 结果校验 | 须重编双包重装；禁写「测试通过」 |
 | `PagePushHelper` 吞 `pushUrl` 错误 | — | catch 后必须 `throw`；页面装饰器崩溃应直接 Fail |
 | 裸 `it()` 无 `@tc.*` JSDoc | 报告 | 每条 `it` 同批写全六字段；`gate_review` 扫 `*.test.ets`（含一体工程 `entry/.../test/`） |
 
@@ -160,7 +206,8 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 
 | 规则 | 自动？ | 修复 |
 |------|--------|------|
-| G.FMT.06-CPP | ✅ | 实参续行 = **起始行缩进 + 4**（非固定 8） |
+| G.FMT.06-CPP | ✅ 自动修 | 实参续行 = **起始行缩进 + 4**（非固定 8） |
+| G.FUD.05 | ✅ 检测 | nbnc>50；须按域拆 `GetXxxProps`（见 reference） |
 | G.FMT.05 行宽 | 报告 | 手工折行 |
 | nbnc / 圈复杂度 | — | 见 [reference.md](reference.md) |
 | CAPI 工程整测拆多次 `deploy-test` 重装拼绿 | — | **一次** `ohxtscflow deploy-test -s SuiteA,SuiteB,...`（ohhdc 内部分次设备 unittest、**不重装**）；见上节 |
@@ -182,5 +229,5 @@ G.FMT.06 示例见 [reference.md](reference.md)。
 1. **禁止**让用户手动跑 `scan_gate_patterns.py`，除非调试；正常走 `run-*-pipeline`
 2. 设备测试未全 Pass 不做 gate commit
 3. gate exit 2 → 修代码 → **加固本 skill** → `--skip-test-check` 重跑
-4. 只 `git add` 本工程路径；单笔 diff +与-之和 <2000
+4. 只 `git add` 本工程路径；单笔 diff +与-之和 <1900（本地；硬上限 2000）
 5. **门禁手工修复后必须加固本 skill**（见上文「门禁修复 → Skill 加固」）

@@ -6,10 +6,11 @@ OpenHarmony HDC 工具
 
 截图相关：
 - screenshot/snapshot：设备 snapshot_display 整屏截图。
-- screenshot-app/snap-app：先 aa start（预设别名见 SCREENSHOT_APP_ALIASES），再整屏截图。
+- screenshot-app/snap-app：先 Ability Manager start（预设别名见 SCREENSHOT_APP_ALIASES），再整屏截图。
 
 Wi‑Fi（wificlitools）：
-- wifi-kaihong：hdc shell 执行 wificommand wifienable + wificonnect（默认 SSID KaiHong、密码 KaiHong@888）。
+- wifi-kaihong：hdc shell 执行 wificommand wifienable + wificonnect
+  （默认 SSID KaiHong；口令见环境变量 OHHDC_WIFI_PSK）。
 """
 
 import argparse
@@ -24,6 +25,24 @@ import subprocess
 import sys
 import threading
 import time
+
+import ohhdc_wifi as _ohhdc_wifi
+from ohhdc_ability import format_abilities_as_markdown, parse_ability_dump
+from ohhdc_wifi import (
+    DEFAULT_WIFI_KAIHONG_PSK,
+    DEFAULT_WIFI_KAIHONG_SSID,
+    DEFAULT_WIFI_PRODUCT,
+    DEFAULT_WIFICOMMAND_REMOTE_PATH,
+    WIFICOMMAND_BIN_DEFAULT,
+    _ohhdc_fill_parser_wifi,
+    _try_dispatch_wifi_family,
+    find_wificommand_host_binary,
+    hdc_file_send,
+    infer_ohos_src_root,
+    run_hdc_shell_remote,
+    run_wifi_push_wificommand,
+    wifi_wificommand_enable_and_connect,
+)
 
 # 技能脚本所在目录：截图、layout 等产物默认写入其下子目录
 OH_HDC_SKILL_DIR = Path(__file__).resolve().parent
@@ -86,151 +105,8 @@ def run_hdc_command(command, timeout_sec=120):
         return False, "", str(e)
 
 
-# wificlitools 产物：见 foundation/communication/wifi/wifi/test/wificlitools/BUILD.gn（ohos_executable wificommand）
-# 默认未 install 进 system 分区；可 push 到可写目录后用绝对路径调用（与 ohclitools 约定一致）。
-WIFICOMMAND_BIN_DEFAULT = "wificommand"
-DEFAULT_WIFI_KAIHONG_SSID = "xxx"
-DEFAULT_WIFI_KAIHONG_PASSWORD = "xxxxxx"
-DEFAULT_WIFICOMMAND_REMOTE_PATH = "/data/local/tmp/wificommand"
-DEFAULT_WIFI_PRODUCT = "rk3568"
-
-
-def infer_ohos_src_root(explicit: str | None) -> Path | None:
-    """从 --ohos-src、环境变量 OHOS_SRC 或本脚本向上查找含 build.sh 的源码根。"""
-    if explicit:
-        p = Path(explicit).expanduser().resolve()
-        return p if p.is_dir() else None
-    env = os.environ.get("OHOS_SRC", "").strip()
-    if env:
-        p = Path(env).expanduser().resolve()
-        return p if p.is_dir() else None
-    c = Path(__file__).resolve().parent
-    for _ in range(10):
-        if (c / "build.sh").is_file():
-            return c
-        if c.parent == c:
-            break
-        c = c.parent
-    return None
-
-
-def find_wificommand_host_binary(ohos_src: Path, product: str) -> Path | None:
-    """在 out/<product> 下查找 wificommand 可执行文件（strip 或 unstripped）。"""
-    out = ohos_src / "out" / product
-    candidates = [
-        out / "communication" / "wifi" / "wificommand",
-        out / "exe.unstripped" / "communication" / "wifi" / "wificommand",
-    ]
-    for p in candidates:
-        if p.is_file() and os.access(p, os.X_OK):
-            return p
-        if p.is_file():
-            return p
-    return None
-
-
-def hdc_file_send(local_path: str, remote_path: str, timeout_sec: int = 120):
-    """hdc file send local remote（经 bash -c + source bashrc 以找到 hdc）。"""
-    inner = (
-        "source ~/.bashrc 2>/dev/null; "
-        f"hdc file send {shlex.quote(local_path)} {shlex.quote(remote_path)}"
-    )
-    cmd = "bash -c " + shlex.quote(inner)
-    return run_hdc_command(cmd, timeout_sec=timeout_sec)
-
-
-def run_wifi_push_wificommand(
-    *,
-    local_bin: str | None,
-    ohos_src: Path | None,
-    product: str,
-    remote_path: str,
-) -> tuple[bool, str]:
-    """
-    将本机 wificommand 推到设备 remote_path 并 chmod +x。
-
-    Returns:
-        (success, message)
-    """
-    host_path: Path | None = None
-    if local_bin:
-        host_path = Path(local_bin).expanduser().resolve()
-        if not host_path.is_file():
-            return False, f"本机文件不存在: {host_path}"
-    elif ohos_src is not None:
-        host_path = find_wificommand_host_binary(ohos_src, product)
-        if host_path is None:
-            return (
-                False,
-                f"未在 {ohos_src / 'out' / product} 下找到 wificommand；"
-                f"请先编译: ./build.sh --product-name {product} --build-target wificommand",
-            )
-    else:
-        return False, "请指定本机 wificommand 路径（target 参数）或 --ohos-src 以自动查找 out 目录"
-
-    ok, out, err = hdc_file_send(str(host_path), remote_path, timeout_sec=180)
-    detail = (out or "") + (err or "")
-    if not ok:
-        return False, f"hdc file send 失败: {detail.strip() or err}"
-
-    ok2, out2, err2 = run_hdc_shell_remote(f"chmod 755 {shlex.quote(remote_path)}", timeout_sec=30)
-    if not ok2:
-        return False, f"chmod 失败: {(out2 or '') + (err2 or '')}"
-
-    return True, f"已推送 {host_path} -> {remote_path}"
-
-
-def run_hdc_shell_remote(remote_cmd: str, timeout_sec: int = 120):
-    """
-    执行 hdc shell，remote_cmd 为设备侧完整命令行（经 shlex.quote，避免主机 shell 注入）。
-
-    Returns:
-        tuple: (success: bool, output: str, error: str)
-    """
-    full = "hdc shell " + shlex.quote(remote_cmd)
-    return run_hdc_command(full, timeout_sec=timeout_sec)
-
-
-def wifi_wificommand_enable_and_connect(
-    ssid: str,
-    password: str,
-    *,
-    wificommand_bin: str = WIFICOMMAND_BIN_DEFAULT,
-    fetch_status: bool = True,
-    timeout_enable_sec: int = 60,
-    timeout_connect_sec: int = 120,
-    timeout_status_sec: int = 30,
-):
-    """
-    使用 wificommand（wificlitools）打开 Wi‑Fi 并按 SSID/密码连接；可选再查状态。
-
-    Args:
-        wificommand_bin: 设备侧可执行文件名或绝对路径（如 /data/local/tmp/wificommand）。
-
-    Returns:
-        tuple: (all_ok: bool, log: list of (step_name, success, stdout, stderr))
-    """
-    log = []
-    bin_name = wificommand_bin
-
-    def _step(name: str, remote: str, tmo: int) -> bool:
-        ok, out, err = run_hdc_shell_remote(remote, timeout_sec=tmo)
-        log.append((name, ok, out or "", err or ""))
-        return ok
-
-    ok_enable = _step("wifienable", f"{bin_name} wifienable", timeout_enable_sec)
-    if not ok_enable:
-        return False, log
-
-    connect_remote = f"{bin_name} wificonnect ssid={ssid} password={password}"
-    ok_connect = _step("wificonnect", connect_remote, timeout_connect_sec)
-    if not ok_connect:
-        return False, log
-
-    if fetch_status:
-        _step("wifigetstatus", f"{bin_name} wifigetstatus", timeout_status_sec)
-
-    return True, log
+# Wi‑Fi / Ability 解析拆到子模块；注入 hdc 执行器供 wifi 子模块调用。
+_ohhdc_wifi.bind_wifi_hdc(run_hdc_command)
 
 
 def list_installed_apps():
@@ -294,6 +170,9 @@ def install_hap(hap_path):
     Returns:
         tuple: (success: bool, output: str, error: str)
     """
+    refuse = _refuse_if_project_hap_stale(hap_path)
+    if refuse:
+        return False, "", refuse
     path_quoted = shlex.quote(hap_path)
     command = f'bash -c "source ~/.bashrc && hdc install {path_quoted}"'
     return run_hdc_command(command)
@@ -488,48 +367,236 @@ def replace_install_hap(hap_path):
     Returns:
         tuple: (success: bool, output: str, error: str)
     """
+    refuse = _refuse_if_project_hap_stale(hap_path)
+    if refuse:
+        return False, "", refuse
     path_quoted = shlex.quote(hap_path)
     command = f'bash -c "source ~/.bashrc && hdc -r install {path_quoted}"'
     return run_hdc_command(command)
 
 
-def _newest_ets_mtime(pages_root: str) -> float:
-    """目录下最新 .ets/.ts mtime；目录不存在返回 0。"""
+def _newest_src_mtime(pages_root: str) -> float:
+    """目录下最新源码 mtime（.ets/.ts/.html/.json5）；目录不存在返回 0。"""
     newest = 0.0
     if not os.path.isdir(pages_root):
         return newest
+    suffixes = (".ets", ".ts", ".html", ".json5", ".css", ".json")
     for root, _dirs, files in os.walk(pages_root):
         for fn in files:
-            if fn.endswith((".ets", ".ts")):
+            if fn.endswith(suffixes):
                 newest = max(newest, os.path.getmtime(os.path.join(root, fn)))
     return newest
 
 
-def _warn_if_main_hap_stale(project_dir: str, main_hap: str) -> None:
-    """主包早于 entry/src/main 源码时告警（页面在 main，只编测包会假绿）。"""
-    try:
-        main_mtime = os.path.getmtime(main_hap)
-        pages_root = os.path.join(project_dir, "entry", "src", "main", "ets")
-        newest_src = _newest_ets_mtime(pages_root)
-        if newest_src and main_mtime + 1.0 < newest_src:
-            print(
-                f"⚠ 主 HAP 早于 entry/src/main 源码（主包可能过期）。"
-                f"请先 hapbuild build+build-test+sign 再 deploy-test。"
-                f" main_hap_mtime={main_mtime:.0f} newest_main_ets={newest_src:.0f}",
-                flush=True,
-            )
-    except OSError:
-        pass
+def _newest_ets_mtime(pages_root: str) -> float:
+    """兼容旧名：同 _newest_src_mtime。"""
+    return _newest_src_mtime(pages_root)
 
 
 def _project_signed_haps(project_dir: str) -> tuple[str, str]:
     main_hap = os.path.join(
-        project_dir, "entry", "build", "default", "outputs", "default", "entry-default-signed.hap"
+        project_dir, "entry", "build", "default", "outputs", "default",
+        "entry-default-signed.hap",
     )
     test_hap = os.path.join(
-        project_dir, "entry", "build", "default", "outputs", "ohosTest", "entry-ohosTest-signed.hap"
+        project_dir, "entry", "build", "default", "outputs", "ohosTest",
+        "entry-ohosTest-signed.hap",
     )
     return main_hap, test_hap
+
+
+def _hap_older_than_src(hap_path: str, src_root: str) -> bool:
+    """HAP 存在且 mtime 严格早于源码树 → True。"""
+    if not os.path.isfile(hap_path) or not os.path.isdir(src_root):
+        return False
+    try:
+        newest = _newest_src_mtime(src_root)
+        return bool(newest) and newest > os.path.getmtime(hap_path)
+    except OSError:
+        return False
+
+
+def _unlink_quiet(path: str) -> bool:
+    try:
+        if os.path.isfile(path):
+            os.unlink(path)
+            return True
+    except OSError:
+        pass
+    return False
+
+
+def _purge_one_stale_hap(hap_path: str, src_root: str, label: str) -> list[str]:
+    """源码新于 HAP 时删除 signed（及同目录 unsigned），返回已删路径。"""
+    deleted: list[str] = []
+    if not _hap_older_than_src(hap_path, src_root):
+        return deleted
+    for p in (hap_path, hap_path.replace("-signed.hap", "-unsigned.hap")):
+        if _unlink_quiet(p):
+            deleted.append(p)
+            print(f"🗑 已作废过期{label}: {p}", flush=True)
+    return deleted
+
+
+def purge_stale_project_haps(project_dir: str) -> list[str]:
+    """
+    根源门禁：源码已改则删除磁盘上的过期 signed/unsigned HAP，
+    使后续链路无法再「找到旧包去装」。
+    """
+    project_dir = os.path.abspath(project_dir)
+    main_hap, test_hap = _project_signed_haps(project_dir)
+    deleted: list[str] = []
+    main_src = os.path.join(project_dir, "entry", "src", "main")
+    deleted.extend(_purge_one_stale_hap(main_hap, main_src, "主 HAP"))
+    test_src = os.path.join(project_dir, "entry", "src", "ohosTest")
+    if os.path.isdir(test_src):
+        deleted.extend(_purge_one_stale_hap(test_hap, test_src, "测试 HAP"))
+    return deleted
+
+
+def resolve_installable_haps(
+    project_dir: str, need_test_hap: bool = True
+) -> tuple[str, str, str]:
+    """
+    装包前唯一入口：先作废过期包，再解析路径。
+    返回 (main_hap, test_hap_or_empty, error)。error 非空则禁止安装。
+    """
+    project_dir = os.path.abspath(project_dir)
+    purged = purge_stale_project_haps(project_dir)
+    main_hap, test_hap = _project_signed_haps(project_dir)
+    if not os.path.isfile(main_hap):
+        extra = f"；已作废过期包 {len(purged)} 个" if purged else ""
+        return (
+            main_hap,
+            test_hap if need_test_hap else "",
+            f"主 HAP 不可用（不存在或已因源码变更作废）: {main_hap}{extra}。"
+            f"须先 ohxtsflow build-all / hapbuild build+sign，禁止用旧包测试",
+        )
+    if need_test_hap and os.path.isdir(
+        os.path.join(project_dir, "entry", "src", "ohosTest")
+    ):
+        if not os.path.isfile(test_hap):
+            extra = f"；已作废过期包 {len(purged)} 个" if purged else ""
+            return (
+                main_hap,
+                test_hap,
+                f"测试 HAP 不可用（不存在或已因源码变更作废）: {test_hap}{extra}。"
+                f"须先 ohxtsflow build-all（禁只 build-test）",
+            )
+        return main_hap, test_hap, ""
+    return main_hap, "", ""
+
+
+def _project_root_from_hap(hap_path: str) -> str:
+    """从 .../entry/build/.../*.hap 上溯到含 build-profile.json5 的工程根。"""
+    cur = os.path.abspath(hap_path)
+    for _ in range(10):
+        cur = os.path.dirname(cur)
+        if not cur or cur == os.path.dirname(cur):
+            break
+        if os.path.isfile(os.path.join(cur, "build-profile.json5")):
+            return cur
+    return ""
+
+
+def _refuse_if_project_hap_stale(hap_path: str) -> str:
+    """
+    单文件 install/replace-install 入口：若属某工程产物且源码已改，
+    先作废过期包并拒绝安装（杜绝绕过 deploy 直接装旧包）。
+    """
+    root = _project_root_from_hap(hap_path)
+    if not root:
+        return ""
+    purged = purge_stale_project_haps(root)
+    abs_hap = os.path.abspath(hap_path)
+    if purged and (abs_hap in purged or not os.path.isfile(abs_hap)):
+        return (
+            f"拒绝安装过期 HAP（源码已变更，已作废 {len(purged)} 个包）。"
+            f"请先 build-all / hapbuild build+sign: {root}"
+        )
+    if not os.path.isfile(abs_hap):
+        return f"HAP 不存在（可能已被作废）: {abs_hap}"
+    return ""
+
+
+def _require_haps_fresh(project_dir: str, main_hap: str, test_hap: str = "") -> str:
+    """兼容旧名：作废过期包后若仍不可用则返回错误。"""
+    need_test = bool(test_hap)
+    _m, _t, err = resolve_installable_haps(project_dir, need_test_hap=need_test)
+    return err
+
+
+def _warn_if_main_hap_stale(project_dir: str, main_hap: str) -> None:
+    """兼容旧调用。"""
+    msg = _require_haps_fresh(project_dir, main_hap, "")
+    if msg:
+        print(f"❌ {msg}", flush=True)
+
+
+def _prepare_device_for_uitest() -> None:
+    """跑测前唤醒/保活亮屏/上滑解锁/清 uitest，降低锁屏假失败。
+
+    注意：仅 setmode 602 在部分镜像（如 API26）上仍可能按 30s 灭屏；
+    必须再执行 timeout -o 999999（OverrideTimeout）。timeout -o -1 可能失败。
+    """
+    cmds = [
+        "killall uitest",
+        "power-shell wakeup",
+        "power-shell setmode 602",
+        "power-shell timeout -o 999999",
+        "uinput -T -m 360 1100 360 400",
+    ]
+    for c in cmds:
+        run_hdc_command(f'bash -c "source ~/.bashrc && hdc shell \\"{c}\\""')
+
+
+def _install_fail_hint(output: str) -> str:
+    """装包失败时补充常见错误码说明。"""
+    text = output or ""
+    if "9568450" in text or "must be debug type" in text:
+        return (
+            "；勿对 release 包用 bm/hdc install -g（9568450）。"
+            "受限权限（如 READ_PASTEBOARD）须在签名 profile 中 "
+            "apl=system_core + restricted-permissions/acls 后 hdc install（无 -g）"
+        )
+    if "9568289" in text or "READ_PASTEBOARD" in text:
+        return (
+            "；受限权限授予失败：重签时将权限写入 profile restricted-permissions/"
+            "allowed-acls（apl=system_core），勿只改 module.json5"
+        )
+    if (
+        "9568344" in text
+        or "8519888" in text
+        or "privilege extension" in text.lower()
+        or "parse profile prop check" in text.lower()
+    ):
+        return (
+            "；特权 Extension 未放行：改设备 /system/etc/app/install_list_capability.json，"
+            "为 bundleName 设 allowAppUsePrivilegeExtension=true；"
+            "app_signature 须为 profile distribution-certificate 的 SHA256（去冒号），"
+            "勿用叶子 app 证书指纹；改完 remount 推送后 reboot，"
+            "再 wakeup+setmode 602+timeout -o 999999 后重装（见 ohhdc SKILL）"
+        )
+    return ""
+
+
+def _unittest_report_ok(output: str) -> tuple[bool, str]:
+    """解析 OHOS_REPORT_RESULT；无结果或 Fail/Error>0 → 失败（禁把 NO_RESULT 当偶发）。"""
+    lines = [ln for ln in (output or "").splitlines() if "OHOS_REPORT_RESULT" in ln]
+    if not lines:
+        if "App died" in (output or ""):
+            return False, "NO_RESULT/App died（常因只装测包或主包过期；须 build-all 双包重装）"
+        return False, "NO_RESULT：无 OHOS_REPORT_RESULT（禁当环境偶发略过）"
+    last = lines[-1]
+    m_fail = re.search(r"Failure:\s*(\d+)", last)
+    m_err = re.search(r"Error:\s*(\d+)", last)
+    fail_n = int(m_fail.group(1)) if m_fail else -1
+    err_n = int(m_err.group(1)) if m_err else -1
+    if fail_n < 0 or err_n < 0:
+        return False, f"无法解析结果行: {last}"
+    if fail_n > 0 or err_n > 0:
+        return False, last.strip()
+    return True, last.strip()
 
 
 def install_project_haps(project_dir):
@@ -546,22 +613,21 @@ def install_project_haps(project_dir):
         tuple: (success: bool, output: str, error: str)
     """
     project_dir = os.path.abspath(project_dir)
-    main_hap, test_hap = _project_signed_haps(project_dir)
-    if not os.path.isfile(main_hap):
-        return False, "", f"主 HAP 不存在: {main_hap}"
-    if not os.path.isfile(test_hap):
-        return False, "", f"测试 HAP 不存在: {test_hap}"
-    _warn_if_main_hap_stale(project_dir, main_hap)
+    main_hap, test_hap, err = resolve_installable_haps(project_dir, need_test_hap=True)
+    if err:
+        return False, "", err
     out_parts = []
     success1, out1, err1 = install_hap(main_hap)
     out_parts.append(f"主 HAP: {out1.strip() or (err1 or '')}")
     if not success1:
-        return False, "\n".join(out_parts), err1 or out1
+        hint = _install_fail_hint(f"{out1}\n{err1}")
+        return False, "\n".join(out_parts), (err1 or out1 or "") + hint
     time.sleep(1)
     success2, out2, err2 = install_hap(test_hap)
     out_parts.append(f"测试 HAP: {out2.strip() or (err2 or '')}")
     if not success2:
-        return False, "\n".join(out_parts), err2 or out2
+        hint = _install_fail_hint(f"{out2}\n{err2}")
+        return False, "\n".join(out_parts), (err2 or out2 or "") + hint
     return True, "\n".join(out_parts), ""
 
 
@@ -707,31 +773,38 @@ def deploy_and_run_test(
     """
     project_dir = os.path.abspath(project_dir)
     test_class = _resolve_deploy_test_class(project_dir, test_class)
-    main_hap, test_hap = _project_signed_haps(project_dir)
-    if not os.path.isfile(main_hap):
-        return False, "", f"主 HAP 不存在: {main_hap}"
-    if not os.path.isfile(test_hap):
-        return False, "", f"测试 HAP 不存在: {test_hap}"
-    _warn_if_main_hap_stale(project_dir, main_hap)
+    # 装包唯一入口：先作废过期包，再解析；无可用包则拒绝（不装旧包）
+    main_hap, test_hap, err = resolve_installable_haps(
+        project_dir, need_test_hap=True
+    )
+    if err:
+        return False, "", err
     bn = bundle_name or _parse_bundle_name(project_dir)
     if not bn:
         return False, "", "无法解析 bundleName，请指定 bundle_name 或确保项目 AppScope/app.json5 存在且含 app.bundleName"
 
+    _prepare_device_for_uitest()
     out_parts = []
     ok1, out1, err1 = uninstall_hap(bn)
     out_parts.append(f"卸载: {out1.strip() or err1 or 'ok'}")
     ok2, out2, err2 = replace_install_hap(main_hap)
     out_parts.append(f"主 HAP: {out2.strip() or err2 or ''}")
     if not ok2:
-        return False, "\n".join(out_parts), err2 or out2
+        hint = _install_fail_hint(f"{out2}\n{err2}")
+        return False, "\n".join(out_parts), (err2 or out2 or "") + hint
     ok3, out3, err3 = replace_install_hap(test_hap)
     out_parts.append(f"测试 HAP: {out3.strip() or err3 or ''}")
     if not ok3:
-        return False, "\n".join(out_parts), err3 or out3
+        hint = _install_fail_hint(f"{out3}\n{err3}")
+        return False, "\n".join(out_parts), (err3 or out3 or "") + hint
     ok4, out4, err4 = _run_test_suites(bn, module_name, test_class, timeout)
     out_parts.append(f"测试: {out4.strip() or err4 or ''}")
     if not ok4:
         return False, "\n".join(out_parts), err4 or out4
+    report_ok, report_msg = _unittest_report_ok(out4)
+    out_parts.append(f"结果校验: {report_msg}")
+    if not report_ok:
+        return False, "\n".join(out_parts), report_msg
     return True, "\n".join(out_parts), ""
 
 
@@ -1415,17 +1488,12 @@ def deploy_static_xts_test(
         tuple: (success: bool, log: str, error: str)
     """
     project_dir = os.path.abspath(project_dir)
-    main_hap = os.path.join(
-        project_dir,
-        "entry",
-        "build",
-        "default",
-        "outputs",
-        "default",
-        "entry-default-signed.hap",
+    # 装包唯一入口：先作废过期主包；静态一体不要求 ohosTest HAP
+    main_hap, _test_hap, err = resolve_installable_haps(
+        project_dir, need_test_hap=False
     )
-    if not os.path.isfile(main_hap):
-        return False, "", f"主 signed HAP 不存在: {main_hap}"
+    if err:
+        return False, "", err
     bn = _parse_bundle_name(project_dir)
     if not bn:
         return (
@@ -1433,19 +1501,25 @@ def deploy_static_xts_test(
             "",
             "无法解析 bundleName，请确保 AppScope/app.json5 含 app.bundleName",
         )
+    _prepare_device_for_uitest()
     lines = []
     ok_u, out_u, err_u = uninstall_hap(bn)
     lines.append(f"卸载: {(out_u or err_u or '').strip() or 'ok'}")
     ok_i, out_i, err_i = replace_install_hap(main_hap)
     lines.append(f"安装主 HAP: {(out_i or err_i or '').strip()}")
     if not ok_i:
-        return False, "\n".join(lines), err_i or out_i or "replace-install 失败"
+        hint = _install_fail_hint(f"{out_i}\n{err_i}")
+        return False, "\n".join(lines), (err_i or out_i or "replace-install 失败") + hint
     ok_t, out_t, err_t = _run_static_aa_suites(
         bn, module_name, runner_path, timeout_ms, test_class
     )
     lines.append(out_t.strip())
     if not ok_t:
         return False, "\n".join(lines), err_t or "aa test 失败"
+    report_ok, report_msg = _unittest_report_ok(out_t)
+    lines.append(f"结果校验: {report_msg}")
+    if not report_ok:
+        return False, "\n".join(lines), report_msg
     return True, "\n".join(lines), ""
 
 
@@ -1509,226 +1583,6 @@ def dump_running_abilities():
     """
     command = 'bash -c "source ~/.bashrc && hdc shell \\"aa dump -r\\""'
     return run_hdc_command(command)
-
-
-def parse_ability_dump(output):
-    """
-    解析 aa dump -a 或 aa dump -r 的输出，提取关键信息
-    
-    Args:
-        output: aa dump 命令的原始输出
-        
-    Returns:
-        dict: 包含解析后的信息
-    """
-    result = {
-        'abilities': [],
-        'running_apps': [],
-        'foreground_apps': []
-    }
-    
-    current_ability = None
-    in_ability_record = False
-    in_app_running_record = False
-    current_app = None
-    in_mission = False
-    
-    for line in output.split('\n'):
-        original_line = line
-        line = line.strip()
-        
-        # 跳过空行和注释
-        if not line or line.startswith('#'):
-            continue
-        
-        # 检测是否进入新的 Mission 或 AbilityRecord
-        if 'AbilityRecord ID #' in line:
-            if current_ability:
-                result['abilities'].append(current_ability)
-            current_ability = {}
-            in_ability_record = True
-            try:
-                current_ability['ability_record_id'] = line.split('AbilityRecord ID #')[1].split()[0]
-            except:
-                pass
-        
-        # 解析 AbilityRecord 的字段（可能在缩进的行中）
-        if in_ability_record and current_ability:
-            if 'bundle name [' in line:
-                try:
-                    current_ability['bundle_name'] = line.split('bundle name [')[1].split(']')[0]
-                except:
-                    pass
-            elif 'main name [' in line:
-                try:
-                    current_ability['main_name'] = line.split('main name [')[1].split(']')[0]
-                except:
-                    pass
-            elif 'ability type [' in line:
-                try:
-                    current_ability['ability_type'] = line.split('ability type [')[1].split(']')[0]
-                except:
-                    pass
-            elif 'app state #' in line:
-                try:
-                    app_state = line.split('app state #')[1].split()[0]
-                    current_ability['app_state'] = app_state
-                    if app_state == 'FOREGROUND':
-                        result['foreground_apps'].append(current_ability.copy())
-                except:
-                    pass
-            elif 'state #' in line and 'app state' not in line and 'AbilityRecord' not in line:
-                try:
-                    state = line.split('state #')[1].split()[0]
-                    current_ability['state'] = state
-                    # start time 可能在同一行
-                    if 'start time [' in line:
-                        try:
-                            current_ability['start_time'] = line.split('start time [')[1].split(']')[0]
-                        except:
-                            pass
-                except:
-                    pass
-            elif 'start time [' in line:
-                try:
-                    current_ability['start_time'] = line.split('start time [')[1].split(']')[0]
-                except:
-                    pass
-            elif 'app name [' in line:
-                try:
-                    current_ability['app_name'] = line.split('app name [')[1].split(']')[0]
-                except:
-                    pass
-            
-            # 检测是否离开 AbilityRecord（遇到新的 Mission 或其他主要部分）
-            if line.startswith('MissionList') or line.startswith('ExtensionRecords') or line.startswith('AppRunningRecords'):
-                if current_ability:
-                    result['abilities'].append(current_ability)
-                current_ability = None
-                in_ability_record = False
-        
-        # 解析 AppRunningRecords
-        if 'AppRunningRecord ID #' in line:
-            if current_app:
-                result['running_apps'].append(current_app)
-            current_app = {}
-            in_app_running_record = True
-            try:
-                current_app['record_id'] = line.split('AppRunningRecord ID #')[1].split()[0]
-            except:
-                pass
-        
-        if in_app_running_record and current_app:
-            if 'process name [' in line:
-                try:
-                    current_app['process_name'] = line.split('process name [')[1].split(']')[0]
-                except:
-                    pass
-            if 'pid #' in line:
-                try:
-                    current_app['pid'] = line.split('pid #')[1].split()[0]
-                except:
-                    pass
-            if 'uid #' in line:
-                try:
-                    current_app['uid'] = line.split('uid #')[1].split()[0]
-                except:
-                    pass
-            if 'state #' in line and 'AppRunningRecord' not in line:
-                try:
-                    current_app['state'] = line.split('state #')[1].split()[0]
-                except:
-                    pass
-            
-            # 检测是否离开 AppRunningRecord（遇到新的主要部分）
-            if line.startswith('ExtensionRecords') or line.startswith('PendingWantRecords') or (line.startswith('AppRunningRecord ID #') and current_app.get('record_id')):
-                if current_app and current_app.get('process_name'):
-                    result['running_apps'].append(current_app)
-                current_app = {}
-                in_app_running_record = False
-                if 'AppRunningRecord ID #' in line:
-                    in_app_running_record = True
-                    try:
-                        current_app = {'record_id': line.split('AppRunningRecord ID #')[1].split()[0]}
-                    except:
-                        current_app = {}
-    
-    # 添加最后一个
-    if current_ability:
-        result['abilities'].append(current_ability)
-    if current_app:
-        result['running_apps'].append(current_app)
-    
-    return result
-
-
-def format_abilities_as_markdown(parsed_data, show_all=False):
-    """
-    将解析后的 ability 信息格式化为 Markdown
-    
-    Args:
-        parsed_data: parse_ability_dump 返回的字典
-        show_all: 是否显示所有 ability（包括后台），默认只显示前台
-        
-    Returns:
-        str: Markdown 格式的字符串
-    """
-    markdown = "## 设备应用状态\n\n"
-    
-    # 前台应用
-    if parsed_data['foreground_apps']:
-        markdown += "### 前台应用\n\n"
-        markdown += f"共找到 **{len(parsed_data['foreground_apps'])}** 个前台应用：\n\n"
-        markdown += "| 序号 | Bundle Name | Ability Name | Type | State | AbilityRecord ID | Start Time |\n"
-        markdown += "|------|-------------|--------------|------|-------|------------------|------------|\n"
-        
-        for index, app in enumerate(parsed_data['foreground_apps'], 1):
-            bundle_name = app.get('bundle_name', 'N/A')
-            main_name = app.get('main_name', 'N/A')
-            ability_type = app.get('ability_type', 'N/A')
-            app_state = app.get('app_state', 'N/A')
-            ability_id = app.get('ability_record_id', 'N/A')
-            start_time = app.get('start_time', 'N/A')
-            markdown += f"| {index} | `{bundle_name}` | `{main_name}` | {ability_type} | {app_state} | {ability_id} | {start_time} |\n"
-        markdown += "\n"
-    else:
-        markdown += "### 前台应用\n\n未找到前台应用。\n\n"
-    
-    # 运行中的应用进程
-    if parsed_data['running_apps']:
-        markdown += "### 运行中的应用进程\n\n"
-        markdown += f"共找到 **{len(parsed_data['running_apps'])}** 个运行中的应用进程：\n\n"
-        markdown += "| 序号 | Process Name | PID | UID | State |\n"
-        markdown += "|------|--------------|-----|-----|-------|\n"
-        
-        for index, app in enumerate(parsed_data['running_apps'], 1):
-            process_name = app.get('process_name', 'N/A')
-            pid = app.get('pid', 'N/A')
-            uid = app.get('uid', 'N/A')
-            state = app.get('state', 'N/A')
-            markdown += f"| {index} | `{process_name}` | {pid} | {uid} | {state} |\n"
-        markdown += "\n"
-    else:
-        markdown += "### 运行中的应用进程\n\n未找到运行中的应用进程。\n\n"
-    
-    # 所有 ability（如果 show_all=True）
-    if show_all and parsed_data['abilities']:
-        markdown += "### 所有 Ability（包括后台）\n\n"
-        markdown += f"共找到 **{len(parsed_data['abilities'])}** 个 ability：\n\n"
-        markdown += "| 序号 | Bundle Name | Ability Name | Type | App State | State | AbilityRecord ID |\n"
-        markdown += "|------|-------------|--------------|------|-----------|-------|------------------|\n"
-        
-        for index, app in enumerate(parsed_data['abilities'], 1):
-            bundle_name = app.get('bundle_name', 'N/A')
-            main_name = app.get('main_name', 'N/A')
-            ability_type = app.get('ability_type', 'N/A')
-            app_state = app.get('app_state', 'N/A')
-            state = app.get('state', 'N/A')
-            ability_id = app.get('ability_record_id', 'N/A')
-            markdown += f"| {index} | `{bundle_name}` | `{main_name}` | {ability_type} | {app_state} | {state} | {ability_id} |\n"
-        markdown += "\n"
-    
-    return markdown
 
 
 def format_apps_as_markdown(apps):
@@ -1970,52 +1824,6 @@ def _ohhdc_fill_parser_media_layout(parser: argparse.ArgumentParser) -> None:
     _ohhdc_fill_parser_layout_uitest(parser)
 
 
-def _ohhdc_fill_parser_wifi(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument(
-        '--wifi-ssid',
-        default=DEFAULT_WIFI_KAIHONG_SSID,
-        help=f'wifi-kaihong：SSID，默认 {DEFAULT_WIFI_KAIHONG_SSID}',
-    )
-    parser.add_argument(
-        '--wifi-password',
-        default=DEFAULT_WIFI_KAIHONG_PASSWORD,
-        help='wifi-kaihong：密码，默认 KaiHong@888',
-    )
-    parser.add_argument(
-        '--no-wifi-status',
-        action='store_true',
-        dest='wifi_no_status',
-        help='wifi-kaihong：连接成功后不执行 wifigetstatus',
-    )
-    parser.add_argument(
-        '--ohos-src',
-        default=None,
-        help='wifi-push / wifi-check / --push-wificommand：OpenHarmony 源码根（含 build.sh），或设环境变量 OHOS_SRC',
-    )
-    parser.add_argument(
-        '--wifi-product',
-        default=DEFAULT_WIFI_PRODUCT,
-        help=f'在 out/<product> 下查找 wificommand，默认 {DEFAULT_WIFI_PRODUCT}',
-    )
-    parser.add_argument(
-        '--wificommand-remote',
-        default=DEFAULT_WIFICOMMAND_REMOTE_PATH,
-        help=f'推送到设备上的路径，默认 {DEFAULT_WIFICOMMAND_REMOTE_PATH}',
-    )
-    parser.add_argument(
-        '--push-wificommand',
-        action='store_true',
-        dest='push_wificommand',
-        help='wifi-kaihong：执行前先推送本机编译的 wificommand 到 --wificommand-remote（需 --ohos-src 或 OHOS_SRC）',
-    )
-    parser.add_argument(
-        '--wifi-device-bin',
-        default=None,
-        metavar='PATH_OR_NAME',
-        help='设备侧 wificommand：命令名或绝对路径；默认 wificommand（依赖 PATH）。与 --push-wificommand 连用时以推送路径为准',
-    )
-
-
 def _build_ohhdc_arg_parser():
     """构建 ohhdc 命令行解析器。"""
     parser = argparse.ArgumentParser(
@@ -2046,131 +1854,6 @@ def _ohhdc_dispatch_cli(args, parser):
             return
     parser.print_help()
     sys.exit(1)
-
-
-def _wifi_cli_check_wificommand(args) -> None:
-    print("=== 设备侧（wificommand 是否存在）===\n")
-    checks = [
-        ("PATH", "command -v wificommand 2>/dev/null || echo NOT_IN_PATH"),
-        ("/system/bin", "ls -la /system/bin/wificommand 2>&1"),
-        ("常用临时路径", f"ls -la {DEFAULT_WIFICOMMAND_REMOTE_PATH} 2>&1"),
-    ]
-    for title, rcmd in checks:
-        ok, o, e = run_hdc_shell_remote(rcmd, timeout_sec=20)
-        text = (o or e or "").strip() or "(无输出)"
-        print(f"[{title}]\n{text}\n")
-    src = infer_ohos_src_root(args.ohos_src)
-    print("=== 本机编译产物（out 目录）===\n")
-    if src:
-        found = find_wificommand_host_binary(src, args.wifi_product)
-        print(f"OHOS_SRC={src}")
-        print(f"product={args.wifi_product}")
-        print(f"查找结果: {found or '未找到可执行文件'}")
-        if not found:
-            print(
-                f"\n可执行: cd {src} && ./build.sh --product-name {args.wifi_product} "
-                f"--build-target wificommand"
-            )
-    else:
-        print("未推断源码根：请传 --ohos-src 或设置 OHOS_SRC")
-    print(
-        "\n说明：wificlitools 的 GN **未** 设置 install_enable，默认 **不会** 进 system 镜像；"
-        "需单独编 wificommand 后使用 **wifi-push-wificommand** 或 **wifi-kaihong --push-wificommand**。"
-    )
-
-
-def _wifi_print_connect_steps(steps_log) -> None:
-    for step_name, step_ok, out, err in steps_log:
-        mark = "✓" if step_ok else "❌"
-        print(f"{mark} {step_name}")
-        if out.strip():
-            print(out.rstrip())
-        if err.strip():
-            print(err.rstrip(), file=sys.stderr)
-
-
-def _wifi_cli_push_wificommand(args) -> None:
-    src = infer_ohos_src_root(args.ohos_src)
-    ok_push, msg = run_wifi_push_wificommand(
-        local_bin=args.target,
-        ohos_src=src,
-        product=args.wifi_product,
-        remote_path=args.wificommand_remote,
-    )
-    print(msg)
-    if ok_push:
-        r = args.wificommand_remote
-        print(f"\n✓ 设备上可执行: {r}")
-        print(f"  示例: hdc shell \"{r} wifienable\"")
-    else:
-        print("\n❌ 推送失败。", file=sys.stderr)
-        sys.exit(1)
-
-
-def _wifi_cli_kaihong(args) -> None:
-    ssid = args.wifi_ssid
-    password = args.wifi_password
-    pwd_hint = "(空，开放热点)" if not password else "********"
-
-    device_bin = args.wifi_device_bin or WIFICOMMAND_BIN_DEFAULT
-    if args.push_wificommand:
-        src = infer_ohos_src_root(args.ohos_src)
-        if src is None:
-            print(
-                "❌ --push-wificommand 需要源码根：请传 --ohos-src 或设置环境变量 OHOS_SRC",
-                file=sys.stderr,
-            )
-            sys.exit(1)
-        ok_push, msg = run_wifi_push_wificommand(
-            local_bin=None,
-            ohos_src=src,
-            product=args.wifi_product,
-            remote_path=args.wificommand_remote,
-        )
-        print(msg)
-        if not ok_push:
-            sys.exit(1)
-        device_bin = args.wificommand_remote
-
-    print(
-        f"→ 使用设备侧 `{device_bin}`：wifienable，然后 "
-        f"wificonnect ssid={ssid!r} password={pwd_hint}"
-    )
-    ok, steps_log = wifi_wificommand_enable_and_connect(
-        ssid,
-        password,
-        wificommand_bin=device_bin,
-        fetch_status=not args.wifi_no_status,
-    )
-    _wifi_print_connect_steps(steps_log)
-    if ok:
-        print(
-            "\n✓ wifi-kaihong：已执行 wifienable 与 wificonnect；"
-            "若未连上请检查设备是否包含 wificommand、热点是否可达、密码与加密方式（开放网可省略密码参数见 wificlitools 说明）。"
-        )
-    else:
-        print(
-            "\n❌ wifi-kaihong：wifienable 或 wificonnect 失败；"
-            "请确认镜像已安装 wificommand（wificlitools），且 hdc 已连接设备。",
-            file=sys.stderr,
-        )
-        sys.exit(1)
-
-
-def _try_dispatch_wifi_family(args, parser) -> bool:
-    if args.action == 'wifi-check-wificommand':
-        _wifi_cli_check_wificommand(args)
-        return True
-
-    if args.action == 'wifi-push-wificommand':
-        _wifi_cli_push_wificommand(args)
-        return True
-
-    if args.action == 'wifi-kaihong':
-        _wifi_cli_kaihong(args)
-        return True
-
-    return False
 
 
 def _try_dispatch_led(args, parser) -> bool:

@@ -8,7 +8,7 @@ version: "1.0.2"
 
 # OpenHarmony HDC Skill
 
-This skill provides capabilities for OpenHarmony ecosystem devices via **HDC** (the **hdc** host tool: the standard device bridge for OHOS in the OpenHarmony / DevEco SDK): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例：卸载后以 `hdc install -r` 安装主包与测试包，再在设备 shell 执行应用测试流水线), **replace-install HAP**, **display screenshot** (`snapshot_display` + `hdc file recv`，默认保存到技能目录 `screenshot/`), **app-scoped screenshot** (`screenshot-app` / `snap-app`: 设备侧拉起应用别名后执行 `snapshot_display`; 预设别名见 `ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`), **UI layout JSON** (`uitest dumpLayout` + `hdc file recv`，默认保存到 `layout/`), **Wi‑Fi via wificommand** (`wifi-kaihong`: enable Wi‑Fi and connect default **KaiHong** / **KaiHong@888** or custom `--wifi-ssid` / `--wifi-password`), **control LEDs** (`/sys/class/leds/{red,green,blue}/brightness`), **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
+This skill provides capabilities for OpenHarmony ecosystem devices via **HDC** (the **hdc** host tool: the standard device bridge for OHOS in the OpenHarmony / DevEco SDK): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例：卸载后以 `hdc install -r` 安装主包与测试包，再在设备 shell 执行应用测试流水线), **replace-install HAP**, **display screenshot** (`snapshot_display` + `hdc file recv`，默认保存到技能目录 `screenshot/`), **app-scoped screenshot** (`screenshot-app` / `snap-app`: 设备侧拉起应用别名后执行 `snapshot_display`; 预设别名见 `ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`), **UI layout JSON** (`uitest dumpLayout` + `hdc file recv`，默认保存到 `layout/`), **Wi‑Fi via wificommand** (`wifi-kaihong`: enable Wi‑Fi and connect default **KaiHong** / env `OHHDC_WIFI_PSK` or custom `--wifi-ssid` / `--wifi-password`), **control LEDs** (`/sys/class/leds/{red,green,blue}/brightness`), **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
 
 ## 应用示例与提示词（中文）
 
@@ -213,9 +213,73 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 |------|------|
 | **工程整测**（交付、推仓前、复现/对标门禁·xDevice） | **单次** `deploy-test` / `static-deploy-test`：`-s` 带齐全部 Suite，或省略 `-s`；**只卸装+安装一次** |
 | **单批调试** | 允许 `-s OneSuite`；**禁止**据此写「工程全绿」 |
+| **改码后复测** | 源码新于 HAP → **删除过期包**（无法再找到旧包）；装包入口拒装；`ohxtsflow` 缺包则自动 `build-all` |
+| **结果** | 须有 `OHOS_REPORT_RESULT` 且 Fail=0 Error=0；无 RESULT / App died **不得**宣称通过 |
 
 **允许**：`-s A,B,C` 时本脚本**内部分次** 设备 unittest（避免多 class 拼参挂起）——仍属**一次装包连跑**。  
-**禁止**：Agent 外层循环多次调用本命令（每次重装）再拼绿。详见 **ohos-gate-compliance**「设备整测硬门禁」。
+**禁止**：Agent 外层循环多次调用本命令（每次重装）再拼绿。详见 **ohos-gate-compliance**「设备整测硬门禁」与「改码后强制重编」。
+
+**装包**：`hdc install` / `-r`（**勿**对 release 包加 `-g`，否则 9568450）。受限权限靠签名 profile ACL。
+deploy 前自动：wakeup / setmode 602 / **timeout -o 999999** / 上滑解锁 / killall uitest。
+
+### 装包错误码速查
+
+| 错误码 / 现象 | 根因 | 处理 |
+|---------------|------|------|
+| **9568450** / must be debug | release 包用了 `install -g` | **勿** `-g`；受限权限靠 profile ACL |
+| **9568289** | 受限权限未进签名 profile | `apl=system_core` + `restricted-permissions` / `allowed-acls` 后重签再装 |
+| **9568344** + hilog `not allow use privilege extension`（内因常 **8519888**） | 使用了特权 Extension（如 `extensionAbilities.type: "service"` / `dataShare`），未进设备白名单或 **app_signature 指纹错误** | 见下节 **特权 Extension 白名单** |
+
+### 特权 Extension 白名单（9568344 / allowAppUsePrivilegeExtension）
+
+BMS 对 ServiceExtension / DataExtension 等特权能力，**不能**只靠签名证书特权字段；须在设备 **`/system/etc/app/install_list_capability.json`**（部分机型也可能在 `/system/variant/phone/base/etc/app/`）为该 `bundleName` 配置：
+
+```json
+{
+  "bundleName": "com.acts.accountauthenticator",
+  "app_signature": ["D729F438E1EF2E154994E2B077F6C0CD592BA9F9C938BB428FCDA564FF805EE4"],
+  "allowAppUsePrivilegeExtension": true,
+  "keepAlive": true
+}
+```
+
+**指纹必须用对**（高频踩坑）：
+
+- `app_signature` 比对的是签名 **profile 内 `bundle-info.distribution-certificate`** 的 SHA256（去冒号、大写），与 `bm dump -n <bundle>` 里已装应用的 **`fingerprint`** 一致。
+- **不要**用每次 `generate-app-cert` 产生的 **叶子 app 证书**指纹，也不要误以为只有 Root CA（`9AED2A79…`）即可；指纹不对时 hilog 常见：`appSignature of signature is empty` / `signature verify failed in capability list`，仍报 9568344。
+- 取指纹示例：从工程 `autosign/UnsgnedReleasedProfileTemplate.json`（或等价 profile 模板）抽出 `distribution-certificate` → PEM →  
+  `openssl x509 -in dist.pem -noout -fingerprint -sha256` → 去掉 `:`。
+
+**改白名单步骤（服务器网联 hdc）**：
+
+```bash
+hdc shell "mount -o rw,remount /"
+# 拉改推（路径以设备实际为准）
+hdc file recv /system/etc/app/install_list_capability.json ./
+# 编辑后：
+hdc file send ./install_list_capability.json /system/etc/app/install_list_capability.json
+hdc shell "chmod 644 /system/etc/app/install_list_capability.json; sync"
+hdc shell reboot
+# 重启后必须亮屏保活（见下节），再 hdc install
+```
+
+**备选（无法改板端白名单时）**：XTS 可将 `bundleName` 改为以 **`com.acts.`** 开头，并在签名 profile 中申请对应特权；仍失败则回到白名单方案。
+
+### 重启后亮屏保活（Agent 必遵）
+
+凡 **`hdc shell reboot`**（或等价重启）之后、装包 / 设备 unittest / 截屏之前，设备重新 `tconn` 可达后立刻执行：
+
+```bash
+hdc shell "power-shell wakeup"
+hdc shell "power-shell setmode 602"
+hdc shell "power-shell timeout -o 999999"
+```
+
+**仅 `setmode 602` 不够**：部分镜像（已在 API26 / OH 7.0 上复现）`power_mode_config.xml` 里 602 的息屏虽为 `-1`，但 `hidumper` 仍显示 `ScreenOffTime: Timeout=30000ms`，屏幕约 30s 仍灭。必须再 **`power-shell timeout -o 999999`**，使 `OverrideTimeout=999999ms`。`timeout -o -1` 在部分机上会失败，优先用 `999999`。
+
+校验：`hdc shell "hidumper -s PowerManagerService -a '-a'"` 中应见 `OverrideTimeout=999999ms`。
+
+`deploy-test` / `static-deploy-test` 已含上述三连；**手工 reboot 后不会自动执行**，Agent 必须补跑。恢复默认息屏：`power-shell timeout -r`。
 
 ---
 
@@ -781,7 +845,7 @@ python3 src/skills/ohhdc/ohhdc.py layout --bundle com.example.app --display-id 0
 使用 **wificlitools** 可执行文件 **`wificommand`**（源码 `foundation/communication/wifi/wifi/test/wificlitools`，GN 目标 `wificommand`）。通过 HDC 依次执行：
 
 1. **`wifienable`** — 打开 Wi‑Fi  
-2. **`wificonnect ssid=<SSID> password=<密码>`** — 连接热点（默认 **SSID `KaiHong`**、密码 **`KaiHong@888`**）  
+2. **`wificonnect ssid=<SSID> password=<口令>`** — 连接热点（默认 **SSID `KaiHong`**；口令默认读环境变量 **`OHHDC_WIFI_PSK`**，可用 `--wifi-password` 覆盖）  
 3. **`wifigetstatus`** — 打印状态（可用 `--no-wifi-status` 跳过）
 
 设备侧整条命令经 **`shlex.quote`** 传给 `hdc shell`，避免主机对 `@` 等字符误解析。
@@ -810,8 +874,9 @@ python3 src/skills/ohhdc/ohhdc.py wifi-push-wificommand --ohos-src /path/to/src 
 # 指定本机二进制路径推送（第二个参数为可选 positional target）
 python3 src/skills/ohhdc/ohhdc.py wifi-push-wificommand /path/to/out/rk3568/communication/wifi/wificommand
 
-# 镜像无 wificommand 时：先推送再连 KaiHong / KaiHong@888
+# 镜像无 wificommand 时：先推送再连 KaiHong（口令见 OHHDC_WIFI_PSK）
 export OHOS_SRC=/path/to/src
+export OHHDC_WIFI_PSK=your_psk_here
 python3 src/skills/ohhdc/ohhdc.py wifi-kaihong --push-wificommand
 
 # 已推到默认路径时，也可显式指定设备侧二进制

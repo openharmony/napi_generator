@@ -40,7 +40,7 @@ bash /root/aiSkill/.claude/skills/xts_shared/gen-xts-signature-p7b.sh <工程根
 |--------|------|
 | 新增文件版权 | `Copyright (c) 2026 Shenzhen Kaihong Digital Industry Development Co., Ltd.` |
 | `.gitignore` | 含 `local.properties`、`autosign/`、`**/build`、`oh_modules`、`.cxx` |
-| 提交规范 | **`xts-git-commit`**：`-sm`、`Co-authored-by: Agent`、单笔 <2000 行 |
+| 提交规范 | **`xts-git-commit`**：`-sm`、`Co-authored-by: Agent`、单笔 <1900 行（本地；硬上限 2000） |
 
 ---
 

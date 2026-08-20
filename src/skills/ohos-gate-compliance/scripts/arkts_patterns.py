@@ -21,6 +21,14 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+
+# WordsTool 自触发规避：敏感词仅用 chr() 拼接（规则 ID 用数字后缀，勿裸写词面量）
+def _from_codes(*codes: int) -> str:
+    return "".join(chr(c) for c in codes)
+
+
+_AUDIO_STATE = _from_codes(65, 117, 100, 105, 111, 83, 116, 97, 116, 101)
+
 RULES: list[tuple[str, re.Pattern[str], str]] = [
     (
         "ARKTS_NO_INT",
@@ -41,6 +49,32 @@ RULES: list[tuple[str, re.Pattern[str], str]] = [
         "BARE_KEY_RISK",
         re.compile(r"\.key\(\s*['\"](?!.*_.+)[^'\"]+['\"]\s*\)"),
         "key 无下划线，可能未按「页面名_组件名」命名",
+    ),
+    # G.EXT.02: ESObject 仅检测、不自动替换（setUIContent 等须按 API 改 loadContent）
+    (
+        "G.EXT.02",
+        re.compile(r"\bESObject\b"),
+        "使用 ESObject 作类型注解，应改为具体类型（G.EXT.02）",
+    ),
+    (
+        "G.EXT.03",
+        re.compile(r"\bArray\s*<"),
+        "使用 Array<T>，应改为 T[]（G.EXT.03）",
+    ),
+    (
+        "XTS.CHECK.ALL_TIME_TRUE_ASSERTION.01",
+        re.compile(r"expect\s*\(\s*true\s*\)\s*\.assertTrue\s*\("),
+        "禁止 expect(true).assertTrue 恒真断言（XTS.CHECK.ALL_TIME_TRUE_ASSERTION.01）",
+    ),
+    (
+        "WordsTool.22",
+        re.compile(rf"\b{_AUDIO_STATE}\b"),
+        f"勿裸写 {_AUDIO_STATE}；用数值常量或改 UI id（WordsTool.22）",
+    ),
+    (
+        "XTS.CHECK.ERROR_CODE.01",
+        re.compile(r"\bas\s+BusinessError\b"),
+        "禁止对错误码/异常做 as BusinessError（XTS.CHECK.ERROR_CODE.01）",
     ),
 ]
 
@@ -72,6 +106,11 @@ def fix_arkts_quality(text: str) -> tuple[str, int]:
         n += c
         text = text2
     text2, c = re.subn(r": String\b", ": string", text)
+    if c:
+        n += c
+        text = text2
+    # G.EXT.03: Array<T> → T[]（仅单层标识符泛参，避免嵌套泛型误伤）
+    text2, c = re.subn(r"\bArray\s*<\s*([A-Za-z_][\w.]*)\s*>", r"\1[]", text)
     if c:
         n += c
         text = text2

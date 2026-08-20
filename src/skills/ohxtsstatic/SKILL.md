@@ -1,6 +1,6 @@
 ---
 name: ohxtsstatic
-description: "OpenHarmony ArkTS use static + Hypium XTS 一体化技能：三要素 + 工程根；**会话正式测试报告**须含**三列表格**；§十四/REPORTING.md 汇总与未覆盖报告。含 §十三/§13.10 多批次开发经验（含 BCM 动+静 CI 踩坑）。ohxtsflow/ohhdc、arkui-static-xts-generator。默认轻量化调试；显式申明才走源码级调试。"
+description: "OpenHarmony ArkTS use static + Hypium XTS 一体化技能：三要素 + 工程根；**会话正式测试报告**须含**三列表格**；§十四/REPORTING.md 汇总与未覆盖报告。含 §十三/§13.10～§13.11 多批次开发经验（BCM CI、dialog api26 Hypium/板端）。ohxtsflow/ohhdc、arkui-static-xts-generator。默认轻量化调试；显式申明才走源码级调试。"
 author: "napi_generator"
 version: "1.5.0"
 ---
@@ -237,6 +237,8 @@ version: "1.5.0"
 | `expect(obj?.a).assertEqual(v)` | `if (obj) { expect(obj.a).assertEqual(v) }` |
 | 无统一前缀的散乱 `console.info`（排障困难） | 日志含 **`[ARKUI_NEW]`** 或套件内统一 **`LOG_TAG`** |
 | 用例间残留 **AppStorage** / 未关 **Dialog** | `afterEach` 删除本套件键；`dialogController.close()` |
+| **`describe`/`export default function` 名过长**（堆叠完整 Options 类名） | **短套件名**（如 `PopupCommonBlurOptsTest`）；过长易导致 Hypium **`Tests run: 0`**（§13.11.1） |
+| 本工程 hypium 下 **`async (done) + done()` 已复现 ClassCast / `Tests run: 0`** | 对齐已绿套件写 **`async () => {}`**（§13.11.2）；**禁止见 done 就删**；动态/CAPI 工程不适用本行 |
 
 ### 1.4 `@tc.*` 文档注释（开发期硬门禁，非提交前才补）
 
@@ -439,6 +441,8 @@ python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程完整路径> \
 
 **工程整测硬门禁（交付 / commit 前 / 对标 CI·xDevice）**：**一次** `static-deploy-test`（或 `static-device-test`）连跑 `List.test` **全部** Suite；**禁止**拆成多次部署且每次重装后再拼「全绿」（会漏 Suite 间串扰，见 **ohos-gate-compliance**「设备整测硬门禁」）。单批 `-s OneSuite` 仅调试用。
 
+**改码必重编**：任意 `.ets`/resources 变更后过期 HAP **作废删除**；须 `hapbuild build`（一体）或 `build-all`（双包）+ sign；`ohxtsflow` **不查找旧包**，缺则自动重编。PR 工程范围以 `git diff` 路径为准，禁按 commit 文案裁剪。
+
 ```bash
 python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程完整路径> [--timeout 15000] [-m entry] [--unittest-runner /ets/testrunner/OpenHarmonyTestRunner]
 ```
@@ -534,7 +538,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <本机日志文件
 - [ ] `git diff --cached --ignore-cr-at-eol` 无假 diff（禁止 `Write` 整文件覆盖 CRLF 文件）
 - [ ] 仅 `git add` 明确路径；禁止 `git add -A`；无 `hypium/`、工程内 `autosign/`、`build/`、`tools/vendor/`
 - [ ] `git commit -sm` + `Co-authored-by: Agent`；`git log -1` 含 `Signed-off-by`
-- [ ] 单笔 commit ≤ 2000 行；用例与 fix 分 commit
+- [ ] 单笔 commit ≤ 1900 行（本地；硬上限 2000）；用例与 fix 分 commit
 
 **工具链**
 
@@ -680,7 +684,8 @@ cases:
 
 ```typescript
 beforeAll → UtilsTest.startAbility(bundleName, 'EntryAbility')
-beforeEach → routerInstance.clear() + pushUrl 到本页 + sleep(2000)
+beforeEach → 不在目标页才 pushUrl；初次进页 sleep(800～1000)（禁每条 2000）
+afterEach → Suite 内禁 pressBack 离页；详见 ohxtsdynamic §9.10.5 耗时约定
 afterEach  → sleep(500)；清理本套件 AppStorage 键
 ```
 
@@ -729,7 +734,7 @@ bash /root/aiSkill/develop/xts_acts_local_tools/init_local_tools_dir.sh <路径>
 3. `main_pages.json` 增加 path
 4. `List.test.ets`：`import` + `YourSuiteTest();`
 
-**提交拆分**：`test(...)` 用例与 `fix(...)` 类型注解/CodeCheck **分 commit**；单笔 **insertions+deletions ≤ 2000**。
+**提交拆分**：`test(...)` 用例与 `fix(...)` 类型注解/CodeCheck **分 commit**；单笔 **insertions+deletions < 1900**（本地软上限；门禁硬上限 2000）。
 
 **禁止提交（默认不进仓，存疑须先问用户）**：
 
@@ -772,7 +777,7 @@ python3 src/skills/ohhap/hapbuild.py build <静态一体工程>
 **Git 提交前强制自检**：
 
 ```
-[ ] git diff --cached --shortstat 合计行数 ≤ 2000（+ 与 - 之和）
+[ ] git diff --cached --shortstat 合计行数 < 1900（+ 与 - 之和；硬上限 2000）
 [ ] 未纳入 tools/xts_reports、gen_*.py、patch/fix 脚本（见 §13.5 禁止表）
 [ ] 不确定是否进仓的文件 → 已询问用户，未擅自 git add
 [ ] git commit -sm；禁止 git add -A
@@ -870,6 +875,135 @@ import { Entry, Column, ContextMenuOptions, ... } from '@ohos.arkui.component';
 [ ] 动/静 main_pages.json + List.test.ets 均已注册
 [ ] CodeCheck：setter 无超长 if-else 链（G.FMT.06）
 [ ] git commit -sm；未纳入 autosign/、hypium/、tools/
+```
+
+### 13.11 dialog api26_static 批次：Hypium / 板端 / 流程（2026-07）
+
+来源：`ace_ets_module_dialog_api26_static`（65 Pass）+ 同批 CAPI 见 **ohxtscapi §OpenDialogWithCallback**。
+
+#### 症状 → 动作（先查这张表）
+
+| 症状 | 先查 | 动作 |
+|------|------|------|
+| 某套件 **`Tests run: 0`** / 日志无该 `describe` | `describe` 名是否超长、与 `-s class` 是否一致 | **缩短套件名**；`List.test` / 设备 unittest `-s` 与 `describe` **逐字一致** |
+| 套件无输出 + 日志 **`Class verification failed`** | `it` 是否 `async (done)…done()` | 改为 **`async () => {}`**；以同工程已绿 CustomDialog 套件为模板 |
+| 打开页即 **`LinkerVerificationError`** | 板端镜像是否缺该 API 符号 | **页面 stub + 注释**；可测部分改用同域已绿 API（如 ImmersiveStyle）；**禁止**假绿伪装全量行为测 |
+| 本地编过、CI/`hapbuild` 失败 | `compileSdkVersion` 是否数字/`"26"`；SDK 路径 | 仓内恢复 **`"26.0.0"`**；静态用 **`OHOS_SDK_PATH=.../static` + `OHOS_USE_HVIGOR_STATIC=1`**（勿 `source use-ohos-sdk.sh static` 顶替） |
+| 设备 unittest 长时间空等 / 偶发无结果 | 设备是否被其余 unittest 占用 | 跑前确认无并发设备 unittest；本批用 `-s` 单套件调试，整测再一次连跑 |
+| 改码后复测全绿但行为不对 | 是否装了旧 HAP | **清缓存重编**后再测（**DEV.REBUILD.01**）；禁止沿用旧包 |
+
+#### 13.11.1 套件命名（P0）
+
+- Hypium 按 **`describe` 字符串**匹配；过长或与 `-s` 不一致 → **整套 0 跑**。
+- **正确**：`describe('PopupCommonBlurOptsTest', …)` / `export default function PopupCommonBlurOptsTest`
+- **错误**：`PopupCommonOptionsBackgroundBlurStyleOptionsTest` 一类把完整 API/Options 名堆进套件名。
+- 文件名、页面 struct 可保留长名；**仅套件入口名必须短且稳定**。
+
+#### 13.11.2 `done` 回调与静态 hypium（P0）
+
+- **适用范围仅静态工程**（`'use static'` / 本工程 static hypium）。**动态（ohxtsdynamic）与 CAPI 工程禁止按本条去 `done`。**
+- 部分静态工程 hypium（`getFunctionArgumentsCount` 异常）对 **`async (done: Function)` + `done()`** 会在 ArkEtsVm 校验失败 → **该 `describe` 静默无用例输出**。
+- **触发条件（须同时满足才改）**：① 当前工程为静态；② **本工程已复现** `Class verification failed` / 套件 `Tests run: 0` / ClassCast；③ 同工程已绿套件已是无 `done` 写法。
+- **默认写法（静态）**：`it('…', Level.LEVELx, async () => { … });`（无 `done`）。
+- **禁止**：见仓内其它项目有 `done` 就批量删除；**禁止**把本条规则套到 dialog_api26 等动态 HAP。
+- **写前必看**：同工程最近 Pass 的 `*.test.ets` 回调签名，**禁止**从动态工程或其它 hypium 版本照搬 `done`。
+
+#### 13.11.3 板端缺符号时的覆盖策略
+
+- `CacheMaxCountForHSP*` / `menuSystemMaterial` 等在旧镜像上可能 **LinkerVerificationError**。
+- **允许**：页面 stub + 文件头注释说明固件补齐后恢复；用例侧用 **已绿同域 API**（如 `ImmersiveStyle` / `ImmersiveMaterial`）覆盖枚举/构造。
+- **禁止**：页面空转却宣称「接口行为已测」；禁止为此去 **`sync_hypium_from_gitcode.py`**（见工作区 hypium 规则）。
+
+#### 13.11.4 静态编签环境与提交前恢复
+
+```bash
+export HOS_CLT_PATH=/root/aiSkill/command-line-tools
+export OHOS_SDK_PATH=/root/aiSkill/command-line-tools/sdk/default/openharmony/static
+export OHOS_USE_HVIGOR_STATIC=1
+source …/signing-materials/env.sh   # 禁止 OHOS_HAPSIGNER_RESULT 指工程 autosign/
+```
+
+- 本地 00306042 等限制可**临时**改数字 `compileSdkVersion`，**commit 前必须恢复** `"26.0.0"` / compatible 字符串（`git-commit-agent` / gate **CI.SDK.01** 会拦）。
+- 一体工程用 **`hapbuild build`**，勿误用无 ohosTest 的 `build-all`。
+
+#### 13.11.5 本批提交前检查清单
+
+```
+[ ] describe / List.test / -s class 短名一致
+[ ] it 回调为 async () => {}（无 done），对齐已绿套件
+[ ] 板端 Linker 缺符号：stub+注释，或降级为同域已绿 API 断言
+[ ] Options 字面量 / @tc.desc 单行 ≤120（G.FMT.05）；过长拆多行
+[ ] build-profile 为 "26.0.0" 字符串；未纳入 hypium/autosign/tools
+[ ] 整测：一次装包连跑；交付前清缓存重编（禁旧包）
+```
+
+#### 13.12 uicontext_static 批次：SDK26 编译链适配 + onBackPress/NodeIdentity 固件限制（2026-08）
+
+来源：`ace_ets_module_uicontext_static`（45 Pass）：OverlayManagerOptions.onBackPress（1.1/1.2）+ NodeIdentity(nodeRenderState)。
+
+#### 13.12.1 SDK 26 升级后的构建链适配（P0，先查这张表）
+
+| 症状 | 根因 | 动作 |
+|------|------|------|
+| hvigor-static 报 `Unable to find the following components: toolchains:26, ArkTS:26…` | 新 SDK 各包 `oh-uni-package.json` metaVersion=**3.0.2**，hvigor-static 只支持 ≤3.0.1 | 本地临时把 `static/26/{ets,js,native,previewer,toolchains}/oh-uni-package.json` 的 `meta.metaVersion` 改 **3.0.1**（**勿提交 SDK**；skill 自身 `res/` 校验脚本已覆盖） |
+| 同上但 meta 已降级仍找不到 | `sdk.dir` 指错层级 | SDK26 布局为 `<sdkRoot>/<apiVersion>/<component>` → `local.properties` 的 `sdk.dir` 指向 **`.../openharmony/static`**（不带 26）；hvigor 6.22.4（动态）不支持 arkTSVersion 1.2，**静态必须 hvigor-static** |
+| 编译器报 SDK 自己的 d.ets `'CommonMethod' has already imported` | 新 SDK 声明文件在旧编译器下报错 | 属 warning（W0440）**非致命**；以 `BUILD SUCCESSFUL` 为准，勿被 warning 数量误导 |
+| 编不过报 `Failed to proceed to ES2PANDA_STATE_CHECKED` | 导出成员缺类型注解（见 13.12.2） | 批量补注解后重编 |
+| hapbuild 内部 `--daemon` 模式 chokidar 崩 | 文件多 + daemon 监听 | 用 `hvigorw assembleHap --no-daemon` 构建 + `hapbuild.py sign` 单独签名 |
+
+#### 13.12.2 SDK26 编译器规则：导出成员必须显式类型注解（P0）
+
+**规则**：SDK26 静态编译器（ArkTS 1.2）要求**导出**的顶层函数/类成员有显式类型注解，否则 `ESE71336 requires type annotation`。
+
+- 测试入口：`export default function XxxTest(): void`（原无返回类型直接报错）
+- 类静态属性：`static isStartedAbility: boolean = false`
+- 页面公共方法：`showInfo(...): void`；**有返回值的方法必须标真实返回类型**（如 `getComponentRect(...): RectValue`，勿标 void）
+- 批量处理注意 **CRLF 行尾**：`sed -E` 会漏匹配，用 `perl -i -pe 's/...\r?$.../'` 或 python 处理
+- 覆盖范围：**整个工程**（页面 common、models、全部 test 文件），不只新改文件
+
+**hypium 替换**：旧工程 `entry/src/hypium`（gitcode 同步版）在新编译器下大量 `requires type annotation` → **用 SDK 自带 `@ohos/hypium/src_static` 替换**：
+
+```bash
+SDK_H=<SDK>/26/js/build-tools/ace-loader/node_modules/@ohos/hypium/src_static
+cp -rf $SDK_H/* entry/src/hypium/ && rm -rf entry/src/hypium/testAbility entry/src/hypium/testrunner
+```
+
+**禁止提交** `entry/src/hypium/`（gitignore 已含）。
+
+#### 13.12.3 新 API 开发要点（setOverlayManagerOptions / onNodeRenderState）
+
+- `setOverlayManagerOptions(options): boolean` 是 **UIContext 的方法**（不是 OverlayManager）；仅**在获取 OverlayManager 实例前**调用返回 true，之后返回 false。**注册一次即可**，切换行为用回调读 AppStorage/全局状态（`@StorageLink` 双向绑定）。
+- **回调禁止捕获页面 `this`**（页面销毁后悬空 → SIGSEGV `liboverlayManager_ani.so` 崩溃）：回调体只读写 **AppStorage**；页面状态用 `@StorageLink('key')` 同步显示。
+- `onNodeRenderState(nodeIdentity, cb)` / `offNodeRenderState` 在 **`UIContext.getUIObserver()`** 上（不在 UIContext 本体）。`NodeRenderState` 为 `const enum`（ABOUT_TO_RENDER_IN=0/OUT=1）。
+- 回调触发时机：**注册时立即回调一次**（当前节点状态）；渲染状态变化在**节点挂载/卸载**时（改文本内容不触发，需 `if` 条件渲染切换）。
+- 接口覆盖建议：入参（options 字面量）、返回值（注册返回 boolean 显示到页面断言）、调用（按钮触发）、异常（try-catch 置 fail 状态）。
+
+#### 13.12.4 设备固件限制（onBackPress / nodeRenderState 真机踩坑）
+
+| 现象 | 根因（固件/环境） | 规避 |
+|------|------|------|
+| 注册 onBackPress 后**页面跳转**（replaceUrl/pushUrl）→ `StackOverflowError` 崩溃 | CleanPageOverlay 清 overlay 时调 onBackPress 回调重入 | ① onBackPress describe 放 **List.test 最后**；② 用例间**不跳转**（beforeEach 仅 waitPageReady）；③ 用例结束**关闭 overlay**（新增 close 按钮 removeComponentContent），保证后续跳转无 overlay 可清理 |
+| 同一页面实例**第二次 pressBack 不触发** onBackPress（走 `UIAbility.onBackPressed`） | 长运行进程下 back 事件分发到页面而非 overlay（仅**初次进入的页面实例**可靠） | pressBack 交互**尽力验证**（try-catch 不阻断），核心断言用注册返回值 + overlay 显示 |
+| 点击 overlay 内容后 back 仍到页面 | overlay 内容 **Text 不可聚焦** | overlay 内容用 **Button**（可聚焦） |
+| 节点**销毁**（FrameNode 析构）触发 RenderMonitor 回调 → SIGSEGV 栈溢出 | 固件在 CleanupPipelineResources 中调回调 + HiLog 栈溢出 | 不销毁节点：利用**注册时立即回调**验证 NodeIdentity 注册生效，断言 `callback_` 状态 |
+| 断言失败被 try-catch 捕获后用例仍判 fail | 静态 hypium：断言失败即使被 catch 也计入失败 | 容错步骤用**非断言 helper**（`clickIfExists`：findComponent 判空再 click），禁止 `expect` 包住可跳过步骤 |
+| `it` 用 `async (done)` + done() 断言被吞 | hypium 静态模式（见 §13.11.2） | 统一 `async (): Promise<void> => {}` |
+
+#### 13.12.5 调试效率（重要）
+
+- **单套件调试**：`a​a test -b <bundle> -m entry -s unittest OpenHarmonyTestRunner -s timeout 90000 -s class <Suite>`，改码后**只跑新套件**，全量留到最后一次验证（全量 List 第 N 条失败 ≠ 新用例失败）。
+- 页面跳转/交互类用例：beforeAll 用 `ensurePage()`（**已在目标页则不再 replaceUrl**——重复进入会破坏 onBackPress 拦截状态；页面退出后自动重进）。
+- **先清设备残留应用再测试**：`bm dump -a` 找出旧测试包批量卸载，避免跑错 HAP / hilog 串台（残留进程输出会混入 `OHOS_REPORT_RESULT`，校验取到最后一条旧结果导致误判）。
+
+#### 13.12.6 本批提交前检查清单
+
+```
+[ ] build-profile compileSdkVersion="26.0.0" 字符串（本地数字仅临时，提交前恢复）
+[ ] 未纳入 entry/src/hypium/、autosign/、local.properties
+[ ] 全部导出成员显式类型注解；新用例无 done 模式
+[ ] 容错步骤用 clickIfExists 非断言 helper
+[ ] onBackPress describe 在 List 最后；用例结束关闭 overlay
+[ ] 单套件调试全绿 + 整测一次连跑全绿（45/45）
 ```
 
 ---

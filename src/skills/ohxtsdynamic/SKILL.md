@@ -4,9 +4,9 @@ description: >-
   OpenHarmony 动态 ArkUI（@ComponentV2）Hypium XTS 一体化技能：常规 API 用例 +
   异常参数（undefined/null）编译探测与成对 Inspector 断言。配合 arkui-dynamic-xts-generator；
   SDK 用 normal（Dyn）。触发词：动态 XTS、ChipV2、ChipGroupV2、异常参数、undefined、null、
-  异常参数、undefined、null、AbnormalAssert、compile_probe、ohxtsdynamic。含 §九/§9.10 多批次开发经验（含 BCM 动+静 CI 踩坑）、§9.11 新建工程 p7b 硬门禁、§十/REPORTING.md 报告整合。默认轻量化调试；显式申明才走源码级调试。
+  异常参数、undefined、null、AbnormalAssert、compile_probe、ohxtsdynamic。含 §九/§9.10 多批次开发经验（含 BCM 动+静 CI 踩坑）、§9.11 新建工程 p7b 硬门禁、阶段2～4 **双 HAP 编测硬门禁**（主+ohosTest 须 build-all）、§十/REPORTING.md 报告整合。默认轻量化调试；显式申明才走源码级调试。
 author: "napi_generator"
-version: "1.5.1"
+version: "1.5.3"
 ---
 
 # ohxtsdynamic：动态 ArkUI XTS 一体化 Skill
@@ -129,11 +129,45 @@ python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py env
 hdc list targets
 ```
 
+**设备测试前准备（每次必做，见 compile_error_hints.md §3.1）**：
+- `power-shell wakeup` + `setmode 602` + `timeout -o 999999`——重启/冷启后**灭屏锁屏会让 UiTest 找不到组件、全部用例 timeout**（`buttonConmponent is null`）；
+- 清理残留测试应用 + `a​a force-stop` 被测包——残留应用污染 log、AAMS 连接冲突（17000001/17000002）。
+
+**用例超时快判（compile_error_hints.md §3.2）**：单条用例 **>60s 未完成即中止查因**（hilog grep 用例名找卡点），**禁止**等 240s 超时；全用例同步卡死先查屏幕态，再查权限（§2.1），最后才查代码。
+
 ### 阶段 1：编码
 
 按 **arkui-dynamic-xts-generator** 流程：**先对齐工程内已稳套件** → 写页面 → 写 `.test.ets` → 更新 `main_pages.json` 与 `List.test.ets`。细则见 **§九**。
 
 ### 阶段 2～4：编签与设备
+
+#### 双 HAP 编测硬门禁（主入口 HAP + ohosTest HAP）
+
+多数动态 / Web ACTS 工程同时产出 **主包**与 **测试包**。Agent 在编签与跑测前**必须先判定工程形态**，再选命令；**禁止**对双 HAP 工程只跑 `hapbuild build-test`。
+
+| 判定 | 依据 | 编签 | 安装 / 跑测 |
+|------|------|------|-------------|
+| **双 HAP** | 存在 `entry/src/ohosTest/`（或 `module.json5` 含 ohosTest 产物路径） | **`ohxtsflow build-all`** = `hapbuild build` + `build-test` + `sign` | **`ohhdc deploy-test`** / `install-project`：**先主后测**，两包都装 |
+| **单 HAP（静态一体等）** | 无独立 ohosTest 模块；测码在 `entry/src/main` | 见 **ohxtsstatic**（常 `hapbuild build` + sign） | **`static-deploy-test`**（只装主包） |
+
+**双 HAP 禁止 / 后果**：
+
+| 禁止 | 典型症状 |
+|------|----------|
+| 只 `hapbuild build-test`（或只签测包） | 设备 `App died` / Ability 起不来；主包过期 → **本地假绿、页崩溃** |
+| 只 `hdc install` 测包、不装主包 | unittest 找不到 Ability / `Cannot execute ark file` |
+| 改了 `MainAbility`/`pages`/`rawfile` 后只重编测包 | 主 HAP 被 **作废删除**；`deploy-test`/`ohxtsflow` **不装旧包**，缺包则自动 **`build-all`** |
+| 把 `build-test` 成功当成「可交付」 | 门禁 / xDevice 装双包后大面积失败 |
+| **改码后不重编、直接用旧 signed.hap 复测** | **根源禁止**：`purge_stale_project_haps` 删过期包；装包入口拒装；`ohxtsflow deploy-test` 不查找旧包、缺则自动 `build-all` |
+| 按单 commit 文案收窄 HAP 列表 | 同 PR 其它工程漏测；范围以 **`git diff` 路径** 为准 |
+
+**编签后硬校验（缺任一文件 → 不得 deploy）**：
+
+```bash
+# 相对工程根
+test -f entry/build/default/outputs/default/entry-default-signed.hap
+test -f entry/build/default/outputs/ohosTest/entry-ohosTest-signed.hap
+```
 
 **签名（必须先做）**：
 
@@ -151,13 +185,13 @@ unset OHOS_USE_HVIGOR_STATIC
 ```bash
 CHIP=/root/aiSkill/develop/xts_acts_0622/arkui/ace_ets_module_ui/ace_ets_module_advancedComponents/ace_ets_module_chip_nowear
 
-# 编签（主包 + ohosTest + 签名）
+# 编签（主包 + ohosTest + 签名）— 双 HAP 唯一推荐入口
 python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py build-all "$CHIP"
+# build-all 结束须同时存在：
 ls entry/build/default/outputs/default/entry-default-signed.hap
-ls entry/build/default/outputs/default/entry-default-unsigned.hap   # 主包
-# ohosTest 测试包路径以 hvigor 产出为准
+ls entry/build/default/outputs/ohosTest/entry-ohosTest-signed.hap
 
-# 一键：构建 → 装包 → unittest 设备命令
+# 一键：构建 → 装包（主+测）→ unittest
 python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py run-dynamic-pipeline "$CHIP" --timeout 60000
 ```
 
@@ -184,7 +218,7 @@ python3 /root/aiSkill/.claude/skills/ohhdc/ohhdc.py deploy-test "$CHIP" \
 
 与 ohxtsstatic 相同：**三列表格**（用例名称｜Pass/Fail｜设计思路 ≤5 句），附环境、命令、`OHOS_REPORT_RESULT` 汇总。
 
-**HTML 可视化（推荐）**：`deploy-test` / `run-dynamic-pipeline` 结束后自动输出 `REPORT_HTML=...`（**仅 xDevice 格式**），浏览器打开 `summary_report.html`。**禁止**自写汇总页；`--batch` 产生的 `batch_index.html` **仅本地导航**，不作接口人交付。
+**HTML 可视化（推荐）**：`deploy-test` / `run-dynamic-pipeline` 结束后自动输出 `REPORT_HTML=...` 与 `SCREENSHOT_PNG=...`（**仅 xDevice 格式**）。**禁止**自写汇总页；`--batch` 产生的 `batch_index.html` **仅本地导航**，不作接口人交付。**禁止**只贴 HTML 路径收工——须 **Read** `summary_top.png` 出图。
 
 ```bash
 python3 ohxtsdynamic/ohxtsflow.py deploy-test "$CHIP" \
@@ -199,7 +233,7 @@ python3 ohxtsdynamic/ohxtsflow.py gen-xdevice-report /tmp/unittest_device.log \
 
 `/root/aiSkill/develop/xts_acts_local_tools/xts_acts_0622/xts_reports/hypium/<工程>_<套件>_<时间>/summary_report.html`
 
-**commit 后截图**：交 **一张** `summary_top.png`（Summary→最多 10 行 Module）；**多 HAP 只截合并汇总页**。见 **[REPORTING.md](REPORTING.md)**。
+**commit 后截图**：流水线应已打印 `SCREENSHOT_PNG=`；会话须 **Read** 出图（多 HAP 只截合并汇总页）。见 **[REPORTING.md](REPORTING.md)**。
 
 ### 3.1 调试模式：轻量化（默认）与源码级（显式触发）
 
@@ -211,6 +245,8 @@ python3 ohxtsdynamic/ohxtsflow.py gen-xdevice-report /tmp/unittest_device.log \
 | **源码级调试** | 用户**显式**要求 | develop → rsync **`/root/master/test/xts/acts`** → **`./build.sh suite=acts ... suite=<Acts*Test>`** → HAP 入 `testcases` → **`python3 -m xdevice run acts`** → `summary_report.html` |
 
 **编排 skill**：**`xts-develop-master-cycle`**。动态双 HAP 工程（如 chip_nowear）在 master 侧同样须 **Main + Test** 两个 HAP 与 `Test.json` 一致。
+
+> **P0（源码级调试）**：`run-develop-cycle.sh` **编前必作废** `${Suite}.hap`+`${Suite}Main.hap` 与 obj/hvigor；**编后**校验 HAP 内 `ets/modules.abc` zip 时间 ≥ `entry/src` 最新源；假包自动 full-clean 重编。**禁止**只靠增量 stamp 导致 Main `modules.abc` 停在旧时间戳。
 
 **PR 注意**：为 master 旧 SDK 本地编过而改的 `build-profile.json5`（如 `compileSdkVersion` 整数化）、`entry/` 临时补丁，**勿与功能 PR 混提**；流水线 SDK 与 master prebuilts 不一致时，以 **轻量化调试 + CI** 为准。
 
@@ -386,10 +422,19 @@ cases: []
 **页面 id/key 命名（ACTS / 常规工程）**：`{页面名}_{组件语义名}`；同页同类型多个时 `{页面名}_{组件语义名}_01`、`_02`…（页面名 = 预览页文件名去掉 `.ets`，如 `BindContextMenuByIsShowOptions`）。
 
 ```typescript
-beforeEach → router.clear() + pushUrl + CommonFunc.sleep(2000)
-afterEach  → hilog / 清理 AppStorage
-it         → driver.findComponent(ON.id(...)).click() 或 Inspector 链式读属性
+beforeEach → 不在目标页才 pushUrl；初次进页 sleep(800～1000) 即可（禁每条 2000）
+afterEach  → 同 Suite 内禁止 pressBack 离页；仅 afterAll/Suite 末按需退回
+it         → waitForComponent + 短 settle(200～400)；禁成对固定 sleep(800+1200+800)
 ```
+
+**耗时硬约束（避免无效墙钟，dialog_api26 实锤：固定 sleep≈墙钟）**：
+
+| 禁止 | 应改为 |
+|------|--------|
+| 每条 `afterEach pressBack` 再 `beforeEach push+2s` | Suite 内留页；`openPageIfNeeded` |
+| `it` 内堆固定 `sleep(800/1200)` | `waitForComponent` + 短 settle |
+| 一点属性一条 `it` 放大矩阵 | 同页矩阵轻合并为少量 `it`（断言逐步保留） |
+| 靠砍覆盖面「假加速」 | 禁止删枚举值/异常探针只为赶时 |
 
 **每条 `it` 前必填 JSDoc（硬门禁；与 `it` 同批写完，禁止提交前再补）**；**`@tc.number` = `@tc.name` = `it('…')` 首参字符串必须完全相同**（三者一字不差）。**缺六字段中任一条 → 该条用例视为未完成**，不得联调编签。
 
@@ -466,13 +511,20 @@ PY
 ```bash
 source arkui/.../signing-materials/env.sh
 source /root/aiSkill/use-ohos-sdk.sh normal && unset OHOS_USE_HVIGOR_STATIC
-python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
+# 双 HAP：必须 build-all（build + build-test + sign），禁止只 build-test
+python3 ohxtsdynamic/ohxtsflow.py build-all <工程根>
+test -f <工程根>/entry/build/default/outputs/default/entry-default-signed.hap
+test -f <工程根>/entry/build/default/outputs/ohosTest/entry-ohosTest-signed.hap
+python3 ohhdc/ohhdc.py deploy-test <工程根> -m entry_test ...
 ```
 
 | 踩坑 | 预防 |
 |------|------|
 | 动态工程残留 `OHOS_USE_HVIGOR_STATIC=1` | 编签前 `unset` |
 | 签名源指工程 `autosign/` | 必须 `signing-materials/` |
+| **只 `build-test` / 只装测包**（Web/DFX 等双 HAP 高频） | 判定 `entry/src/ohosTest/` → **`build-all`**；装包用 **`deploy-test`**（主+测）；缺主包 → `App died` |
+| 改 main/pages 后只重编测包 | 主 HAP **作废**；须 **`build-all`**（或走 `ohxtsflow deploy-test` 自动重编） |
+| `local.properties` 指错 SDK（如 `sdk/openharmony`） | 动态：**`…/openharmony/normal`**；编签中可 `chmod a-w local.properties` 防被改写 |
 | 异常批次假失败 | `run_abnormal_device_test.sh` clean 卸载 |
 | 全量 List 失败误判新用例 | `deploy-test --class SuiteName` |
 | **CI/GN 验签失败** | 模板拷贝 p7b，bundle 与 app.json5 不一致 | **§9.11** `gen-xts-signature-p7b.sh` |
@@ -517,7 +569,7 @@ grep bundleName <工程根>/AppScope/app.json5
 **提交前自检**：
 
 ```
-[ ] 单笔 commit 变更行数（+/- 合计）≤ 2000
+[ ] 单笔 commit 变更行数（+/- 合计）< 1900（本地；硬上限 2000）
 [ ] 未 git add tools/xts_reports、*.xlsx 等本地报告
 [ ] 存疑路径已获用户确认
 [ ] git commit -sm；禁止 git add -A
@@ -528,8 +580,12 @@ grep bundleName <工程根>/AppScope/app.json5
 
 ```
 [ ] source signing-materials/env.sh；normal SDK；unset OHOS_USE_HVIGOR_STATIC
-[ ] build-all：主包 + 测试包 signed HAP（**改 MainAbility/pages 后禁止只 build-test**；主包过期 → 本地假绿、门禁页崩溃）
-[ ] deploy-test 一次装主+测；日志无 `Cannot execute ark file` / `PagePushHelper] push ... error`
+[ ] **双 HAP 判定**：有 `entry/src/ohosTest/` → 只用 `build-all`（禁单独 `build-test`）
+[ ] build-all 后两包均存在：`…/default/entry-default-signed.hap` + `…/ohosTest/entry-ohosTest-signed.hap`
+[ ] **改码后已重编**：过期包已作废；两包 signed.hap 为重编产物（否则装包被拒 / ohxtsflow 自动 build-all）
+[ ] **PR 工程列表**来自 diff 路径，未按 commit 文案裁剪
+[ ] 设备已解锁；每 HAP 有 `OHOS_REPORT_RESULT` 且 Fail=0 Error=0（无 RESULT 不得宣称通过）
+[ ] deploy-test 一次装主+测；日志无 `App died` / `Cannot execute ark file` / `PagePushHelper] push ... error`
 [ ] PagePushHelper：`pushUrl` 失败必须 throw（禁吞错）
 [ ] 本批 deploy-test Pass（OHOS_REPORT_RESULT）；**工程交付/推仓前**另做**一次连跑**全部 Suite（禁止多段重装拼绿）
 [ ] 异常：compile_probe 结论与跑测一致
@@ -583,6 +639,18 @@ grep bundleName <工程根>/AppScope/app.json5
 |----------|------|
 | bindContextMenu **null + undefined 全矩阵** | 动态 **`ace_ets_module_dialog_Popup`**（`bindContextResponseNull.ets`） |
 | api23 静态 dialog + colorMode/gridStyle | **`ace_ets_module_dialog_api23_static`**：仅 TOP/BOTTOM + **省略可选字段** |
+
+#### 9.10.5 用例耗时（留页 + 缩 sleep + 轻合并）
+
+写/改 Hypium 前估算：`CommonFunc.sleep` 合计若接近墙钟 → **瓶颈在固定等待**，不是断言本身。
+
+1. **留页**：`afterEach` 去掉无条件 `pressBack`；`afterAll` 再退页，避免污染下一 Suite。
+2. **短等待**：优先 `waitForComponent`；click 后 settle **200～400ms**。
+3. **轻合并**：同页矩阵/枚举/异常探针可并入少量 `it` 顺序点按并逐项 assert；`@tc.number` 语义用 desc/子步保留。
+4. **超时回调**：整包稳定后按实测墙钟回调 `Test.json` 的 `test-timeout`/`shell-timeout`（略高于墙钟，忌长期 1200000 过松）。
+5. **浮层清理**：关 Dialog/菜单用 OK 文案或「有遮罩才 pressBack」；盲目 `pressBack` 会离页导致后续 `clickId` 失败。
+
+参考：`ace_ets_module_dialog_api26`（约 16min→7min，Helper：`DialogApi26TestHelper`）。
 
 ---
 
