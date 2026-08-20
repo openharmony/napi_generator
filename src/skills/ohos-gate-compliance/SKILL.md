@@ -72,7 +72,7 @@ version: "1.2.0"
 | **G.FMT.05** Options/`@tc.desc` 超宽 | checklist 增 before/after；dialog api26 批实锤 | 手工折行；见 **ohxtsstatic §13.11.5** |
 | **G.EXT.02** `ESObject` | `arkts_patterns` **仅检测**（勿自动改，语义须按 API 替换） | `setUIContent`→`loadContent`；禁 `as ESObject` |
 | **G.EXT.03** `Array<T>` | `arkts_patterns` 检测 + `Array<Ident>`→`Ident[]` | dialog api26 ContextMenu* 实锤 |
-| **XTS.CHECK.ASYNC_TESTCASE.02** await 缺 try/catch | checklist 手工：`it`/`beforeAll` 体整体包 `try/catch` | pcs Software 实锤 |
+| **XTS.CHECK.ASYNC_TESTCASE.02** await 缺 try/catch | `gate_review.check_async_testcase_02` **仅检测**；整段 `it`/`beforeAll` 包 `try/catch`，`catch` 用 `JSON.stringify(error)` + `expect(false).assertTrue()` | ActsMindSporeArkTsTest / pcs Software 实锤 |
 | **XTS.CHECK.ALL_TIME_TRUE_ASSERTION.01** | `arkts_patterns` **仅检测** `expect(true).assertTrue` | 改真实断言（如 `length > 0`） |
 | **WordsTool.22** `AudioS​tate` | `arkts_patterns` **仅检测**；改数值常量/`LongTaskMediaStateText` | pcs Performance 实锤 |
 | **XTS.CHECK.ERROR_CODE.01** | 禁 `as BusinessError`；`catch` 用 `JSON.stringify(error)` | pcs Software 实锤 |

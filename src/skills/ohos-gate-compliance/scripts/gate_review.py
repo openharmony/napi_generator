@@ -189,6 +189,70 @@ def check_ets_xtscheck(path: Path, text: str) -> list[GateIssue]:
     return issues
 
 
+def _strip_line_for_braces(line: str) -> str:
+    out: list[str] = []
+    i = 0
+    n = len(line)
+    while i < n:
+        if line[i:i + 2] == "//":
+            break
+        ch = line[i]
+        if ch in ("\"", "'", "`"):
+            q = ch
+            i += 1
+            while i < n:
+                if line[i] == "\\":
+                    i += 2
+                    continue
+                if line[i] == q:
+                    i += 1
+                    break
+                i += 1
+            continue
+        out.append(ch)
+        i += 1
+    return "".join(out)
+
+
+def check_async_testcase_02(path: Path, text: str) -> list[GateIssue]:
+    """XTS.CHECK.ASYNC_TESTCASE.02：async it/beforeAll/beforeEach 含 await 须整体 try/catch。"""
+    issues: list[GateIssue] = []
+    if path.suffix != ".ets" or not _is_hypium_test_ets(path):
+        return issues
+    start_re = re.compile(
+        r"^(\s*)(?:it\(\s*['\"][^'\"]+['\"]\s*,\s*Level\.LEVEL\d+\s*,\s*|"
+        r"(?:beforeAll|beforeEach|afterAll|afterEach)\()\s*async\s*\(\)\s*=>\s*\{\s*$"
+    )
+    lines = text.splitlines()
+    i = 0
+    while i < len(lines):
+        if not start_re.match(lines[i]):
+            i += 1
+            continue
+        depth = 0
+        end = i
+        for j in range(i, len(lines)):
+            s = _strip_line_for_braces(lines[j])
+            depth += s.count("{") - s.count("}")
+            if j > i and depth == 0:
+                end = j
+                break
+        body = "\n".join(lines[i + 1:end])
+        if "await " in body:
+            stripped = body.lstrip()
+            if not stripped.startswith("try"):
+                issues.append(
+                    GateIssue(
+                        path,
+                        i + 1,
+                        "XTS.CHECK.ASYNC_TESTCASE.02",
+                        "await 异步调用须在 try...catch 中（推荐整段用例体包一层）",
+                    )
+                )
+        i = end + 1
+    return issues
+
+
 def _fmt06_expected_indent(call_base: int) -> int:
     return call_base + _INDENT_STEP
 
@@ -687,6 +751,7 @@ def scan_file(path: Path, text: str, profile: ProjectProfile) -> list[GateIssue]
     if _is_resource_string_json(path):
         return check_wordstool_97(path, text)
     issues.extend(check_ets_xtscheck(path, text))
+    issues.extend(check_async_testcase_02(path, text))
     issues.extend(check_arkts_patterns(path, text))
     issues.extend(check_dialog_api_kit_import(path, text))
     issues.extend(check_line_width(path, text))
