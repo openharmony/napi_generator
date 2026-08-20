@@ -214,42 +214,60 @@ def _strip_line_for_braces(line: str) -> str:
     return "".join(out)
 
 
+def _update_brace_stack(s: str, stack: list[str]) -> None:
+    """按行更新 try/普通块栈（剥字符串/注释后调用）。"""
+    if s.startswith("try") and "{" in s:
+        stack.append("try")
+    elif s.startswith("}") and ("catch" in s or "else" in s or "finally" in s):
+        if stack:
+            stack.pop()
+        stack.append("other")
+    else:
+        opens = s.count("{") - s.count("}")
+        if opens > 0:
+            stack.extend(["other"] * opens)
+        elif opens < 0:
+            del stack[opens:]
+
+
+def _check_await_outside_try(lines: list[str]) -> list[tuple[int, str]]:
+    """子规则 1：await 未在 try/catch 内（逐行栈跟踪，beforeAll 已有 try 的不算）。"""
+    hits: list[tuple[int, str]] = []
+    stack: list[str] = []
+    for i, ln in enumerate(lines):
+        if re.search(r"\bawait\s+", ln) and "try" not in stack:
+            hits.append((i + 1, "await 异步调用须在 try...catch 内（waitForExist/sleep/driver.* 均含）"))
+        _update_brace_stack(_strip_line_for_braces(ln).strip(), stack)
+    return hits
+
+
+def _check_async_callback_err(lines: list[str]) -> list[tuple[int, str]]:
+    """子规则 2/3：Utils.registerEvent / Utils.waitForExist 回调 err 参数问题。"""
+    hits: list[tuple[int, str]] = []
+    zero_param_re = re.compile(r"(?:Utils\.registerEvent|Utils\.waitForExist)\([^;\n]*\(\s*\)\s*=>")
+    unused_err_re = re.compile(r"\(err\?:\s*Error\)\s*=>\s*[^\s{]")
+    for i, ln in enumerate(lines):
+        if zero_param_re.search(ln):
+            hits.append((i + 1, "异步 API 回调未声明 error 参数：() => 须改 (err: Error)/(err?: Error) 并补错误分支"))
+        elif unused_err_re.search(ln):
+            hits.append((i + 1, "回调声明 err 但未检查/使用：须 if (err) 错误分支后再返回"))
+    return hits
+
+
 def check_async_testcase_02(path: Path, text: str) -> list[GateIssue]:
-    """XTS.CHECK.ASYNC_TESTCASE.02：async it/beforeAll/beforeEach 含 await 须整体 try/catch。"""
+    """XTS.CHECK.ASYNC_TESTCASE.02 三子规则（xts_acts web 工程 2026-08 两轮实锤）：
+    1) await 异步调用未在 try/catch 内（Utils.sleep 等测试工具门禁同样报）
+    2) 异步 API 回调未声明 error 参数（零参数 () => 回调）
+    3) 回调声明 err 但未检查/使用（(err?: Error) => expr 表达式体）
+    """
     issues: list[GateIssue] = []
     if path.suffix != ".ets" or not _is_hypium_test_ets(path):
         return issues
-    start_re = re.compile(
-        r"^(\s*)(?:it\(\s*['\"][^'\"]+['\"]\s*,\s*Level\.LEVEL\d+\s*,\s*|"
-        r"(?:beforeAll|beforeEach|afterAll|afterEach)\()\s*async\s*\(\)\s*=>\s*\{\s*$"
-    )
     lines = text.splitlines()
-    i = 0
-    while i < len(lines):
-        if not start_re.match(lines[i]):
-            i += 1
-            continue
-        depth = 0
-        end = i
-        for j in range(i, len(lines)):
-            s = _strip_line_for_braces(lines[j])
-            depth += s.count("{") - s.count("}")
-            if j > i and depth == 0:
-                end = j
-                break
-        body = "\n".join(lines[i + 1:end])
-        if "await " in body:
-            stripped = body.lstrip()
-            if not stripped.startswith("try"):
-                issues.append(
-                    GateIssue(
-                        path,
-                        i + 1,
-                        "XTS.CHECK.ASYNC_TESTCASE.02",
-                        "await 异步调用须在 try...catch 中（推荐整段用例体包一层）",
-                    )
-                )
-        i = end + 1
+    for line, msg in _check_await_outside_try(lines):
+        issues.append(GateIssue(path, line, "XTS.CHECK.ASYNC_TESTCASE.02", msg))
+    for line, msg in _check_async_callback_err(lines):
+        issues.append(GateIssue(path, line, "XTS.CHECK.ASYNC_TESTCASE.02", msg))
     return issues
 
 

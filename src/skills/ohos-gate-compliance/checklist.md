@@ -68,10 +68,36 @@
 - [ ] `@tc.number` 与 `it()` 一致（`@tc.name` 可为英文标题，不强制等于用例号）
 - [ ] 无裸 `it()`：每条 `it` 前紧邻完整 `@tc` 块（`/*` 或 `/**`，含 `@tc.number` / `@tc.name`；一体工程 `entry/.../*.test.ets`）
 - [ ] `@tc` 字段保留冒号格式：`@tc.number : ID`（`fix_ets_xtscheck` 勿剥冒号）
-- [ ] **XTS.CHECK.ASYNC_TESTCASE.02**：`it`/`beforeAll`/`beforeEach` 内 `await` 须在 `try...catch` 中（推荐整段用例体包一层）
-  - before：`async () => { let x = await foo(); expect(...); }`
-  - after：`async () => { try { let x = await foo(); expect(...); } catch (error) { console.error(... + JSON.stringify(error)); expect(false).assertTrue(); } }`
-  - 勿用 `error as BusinessError`（见 ERROR_CODE.01）；`gate_review.check_async_testcase_02` 可检出
+- [ ] **XTS.CHECK.ASYNC_TESTCASE.02**（三子规则，xts_acts web 2026-08 两轮实锤）：
+  - ① `await` 异步调用须在 `try...catch` 内（**含 `Utils.sleep`/`waitForExist` 等测试工具**，门禁不放行；`beforeAll/beforeEach` 已有 try 的不算）
+  - ② 异步 API 回调须**声明 error 参数**：`() =>` 零参数回调违规（`Utils.registerEvent`/`Utils.waitForExist` 实锤）
+  - ③ 回调声明 err 后须**检查/使用**：`(err?: Error) => x` 表达式体直接返回违规，须 `if (err)` 错误分支后再返回
+  - before / after 示例：
+  ```ets
+  // 违规②：零参数回调
+  Utils.registerEvent("testXxx", true, 123, () => { isReturn = true });
+  // 违规①③：await 裸调用 + 声明 err 未检查/使用
+  await Utils.waitForExist((err?: Error) => isReturn, "xxx" + '_returnCheck', true, 1000);
+
+  // 修复后：回调 if (err) 检查 + 返回；await 包 try/catch
+  try {
+    await Utils.waitForExist((err?: Error) => {
+      if (err) {
+        console.error('isReturn waitForExist callback error: ' + JSON.stringify(err));
+      }
+      return isReturn;
+    }, "xxx" + '_returnCheck', true, 1000);
+  } catch (err) {
+    console.error('Utils.waitForExist async call error: ' + JSON.stringify(err));
+  }
+  // ②修复：registerEvent 回调 (err: Error) => { if (err) {...} else { isReturn = true } }
+  ```
+  - **关键陷阱**：
+    - `Utils.waitForExist` 签名须同步改 `stateGetter: () => T` → `(err?: Error) => T`（旧零参调用 `() => x` 仍兼容；但**必选** `(err: Error) => x` 赋给 `(err?: Error) => T` 会 TS2345）；`registerEvent` 的 done 形参是 `Function`，回调加 err 参数安全
+    - `let x = await ...` 声明在 try 块内则块外不可见 → **有依赖的连续 await 合并进同一 try 块**（如 findComponent → longClick/click 链）
+    - `if (!(await ...))` 须重构：先 `const v = await ...` 再判断
+    - 无分号的 await 语句（`await driver.waitForComponent(...)` 行尾无 `;`）同样要包
+    - 勿用 `error as BusinessError`（见 ERROR_CODE.01）；`gate_review.check_async_testcase_02` 三子规则均可检出（修复后复扫应 0 违规）
 - [ ] **XTS.CHECK.ALL_TIME_TRUE_ASSERTION.01**：禁止 `expect(true).assertTrue()`；改为业务条件（如 `commonEventValues.length > 0`）
 - [ ] **WordsTool.22**：勿裸写 `AudioS​tate`（含 `audio.AudioS​tate.*`、UI id `AudioS​tateText`）；改用数值常量（如 running=`2`）与中性 id（如 `LongTaskMediaStateText`）
 - [ ] **G.EXT.03**：`Array<T>` → `T[]`（含 `Map<string, Array<X>>` → `Map<string, X[]>`；`fix_arkts_quality` 可自动改单层泛参）
