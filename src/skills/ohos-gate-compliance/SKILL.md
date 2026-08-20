@@ -75,6 +75,11 @@ version: "1.2.0"
 | **XTS.CHECK.ASYNC_TESTCASE.02** await 缺 try/catch | checklist 手工：`it`/`beforeAll` 体整体包 `try/catch` | pcs Software 实锤 |
 | **XTS.CHECK.ALL_TIME_TRUE_ASSERTION.01** | `arkts_patterns` **仅检测** `expect(true).assertTrue` | 改真实断言（如 `length > 0`） |
 | **WordsTool.22** `AudioS​tate` | `arkts_patterns` **仅检测**；改数值常量/`LongTaskMediaStateText` | pcs Performance 实锤 |
+| **XTS.CHECK.ERROR_CODE.01** | 禁 `as BusinessError`；`catch` 用 `JSON.stringify(error)` | pcs Software 实锤 |
+| **G.EXT.01** 类属性缺修饰符 | 补 `public`/`private`；见 checklist | abilitydemo RspBean/AdContentRsp |
+| **G.NAM.03** | 局部变量 camelCase；协议 snake_case 键用 `Record`+下标 | FullScreenAd* |
+| **G.FMT.02** 行宽≤120 | 函数签名参数折行 | AdsApiServiceRpcObj / AdsCoreService |
+| **DEV.SIGN.APL.01** pcs 本地 `system_core` | checklist 手工：签包用 **`apl=normal`** | ndk socket App died / FileRiskLevel 实锤 |
 | **CI.KIT.01** Dialog* 从 `@kit.ArkUI` | `gate_review.check_dialog_api_kit_import`（仅检测） | 有 API 时改 `@ohos.arkui.UIContext` / `@ohos.arkui.dialog` + 显式嵌套类型 |
 | **CI.SDK.DIALOG.01** CI 无 Dialog API | 手工：父 `BUILD.gn` 暂注释该 HAP deps | CI 报缺 `@ohos.arkui.dialog`/`getDialogPresenter` 时与导入无关；**本地 DevEco SDK ≠ CI prebuilts**，勿仅凭本地编过就恢复 deps；CI SDK 合入后再编入 |
 

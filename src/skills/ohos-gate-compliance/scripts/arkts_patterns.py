@@ -71,6 +71,11 @@ RULES: list[tuple[str, re.Pattern[str], str]] = [
         re.compile(rf"\b{_AUDIO_STATE}\b"),
         f"勿裸写 {_AUDIO_STATE}；用数值常量或改 UI id（WordsTool.22）",
     ),
+    (
+        "XTS.CHECK.ERROR_CODE.01",
+        re.compile(r"\bas\s+BusinessError\b"),
+        "禁止对错误码/异常做 as BusinessError（XTS.CHECK.ERROR_CODE.01）",
+    ),
 ]
 
 
