@@ -195,7 +195,7 @@ python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline \
 - 工程脚手架清单：**[PROJECT_CHECKLIST.md](PROJECT_CHECKLIST.md)**
 - 新增文件版权：**Kaihong**（勿沿用平行仓默认版权头）
 - **libnativefunc.so 在 Main HAP**：须 **双 HAP**（`ohos_app_assist_suite` + Test `deps` + `Test.json` 双包安装），见 **§SystemMaterial 实战**
-- **C++ CodeCheck**：多行函数调用续行须 **G.FMT.06-CPP**（实参续行 8 空格），见 **ohos-gate-compliance-pr-check**
+- **C++ CodeCheck**：多行函数调用续行须 **G.FMT.06-CPP**（实参续行 8 空格），规则见统一门禁 `ohos-gate-compliance/rules/rules_cpp.json`（`gate_check.py code --profile capi` 自动检查+修复）
 - 生成器目录 **仅 README 入库**；`fetch-capi-generator.sh` 拉取的内容 **不提交**
 - 单笔 commit **<2000 行**；用例与 CodeCheck fix **分 commit**
 
