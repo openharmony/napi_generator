@@ -42,7 +42,7 @@ Cursor IDE / Agent 运行时**可能自动追加** `Co-authored-by: Cursor <curs
 
 ### 默认提交作者（P0）
 
-**除非用户明确要求**指定其他作者、日期或多作者拆分，否则**所有 commit** 均为：
+**除非用户明确要求**指定其余作者、日期或多作者拆分，否则**一切 commit** 均为：
 
 | 字段 | 默认值 |
 |------|--------|
@@ -60,17 +60,17 @@ Cursor IDE / Agent 运行时**可能自动追加** `Co-authored-by: Cursor <curs
 
 ```bash
 # ① 只 add 指定文件后提交（禁 add 目录；门禁→行数→-sm 提交→提交后验证）
-python3 scripts/do-commit.py --stage <文件1> <文件2> -m "test(ability): xxx"
+python3 scripts/do_commit.py --stage <文件1> <文件2> -m "test(ability): xxx"
 # ② 已 add 完成，直接提交
-python3 scripts/do-commit.py -m "test(ability): xxx"
+python3 scripts/do_commit.py -m "test(ability): xxx"
 # ③ 只审计不提交（检查 5 类门禁 + 行数）
-python3 scripts/check-precommit.py --base origin/master
+python3 scripts/check_precommit.py --base origin/master
 ```
 
 脚本固化的门禁（对应下方各章节规则）：
-- `check-precommit.py`：①版权头（基线有头/变更无头）②违禁文件（autosign/oh_modules/build/*.hap）
+- `check_precommit.py`：①版权头（基线有头/变更无头）②违禁文件（autosign/oh_modules/build/*.hap）
   ③compileSdkVersion 数字残留（staged blob 级）④bundleName/module 改动清单 ⑤numstat 可疑整文件重写
-- `do-commit.py`：staged 行数审计（软上限 1900/硬上限 2000）→ 超限拆分建议 → `-sm` 提交
+- `do_commit.py`：staged 行数审计（软上限 1900/硬上限 2000）→ 超限拆分建议 → `-sm` 提交
   （消息自动补 Co-authored-by: Agent，禁 Cursor）→ 提交后 `git log -1 --format=full` 验证 → 工作区归零验证
 
 脚本执行失败/特殊场景（多作者拆分、历史重写）才走下方人工步骤。
@@ -278,7 +278,7 @@ git log -5 --oneline
 
 ### 2. 审计（含三条铁律）
 
-**优先一键审计**：`python3 scripts/check-precommit.py --base origin/master`（版权头/违禁文件/compileSdk 残留/bundleName 改动/整文件重写 5 类门禁，退出码 1 禁止提交）。
+**优先一键审计**：`python3 scripts/check_precommit.py --base origin/master`（版权头/违禁文件/compileSdk 残留/bundleName 改动/整文件重写 5 类门禁，退出码 1 禁止提交）。
 
 人工核对清单（脚本输出后仍须过目）：
 
@@ -508,4 +508,4 @@ git show --stat HEAD~3 HEAD~2 HEAD~1 HEAD | grep -E '^(commit| .*\|)'
 - **ohxtsstatic / ohxtsdynamic / ohxtscapi**：开发、编签、设备跑测、**门禁 review**（`gate-review` / pipeline 自动）；**新建工程 p7b** 见 **`xts_shared/SIGNATURE-P7B.md`**
 - **本 skill**：**提交阶段** — `-sm`、Agent 合著、2000 行、diff 质量、排除项；**不替代** `xts_gate_review.py`，提交前须确认 gate 已跑
 
-**存放路径（唯一权威）**：`/root/aiSkill/.claude/skills/` — 见该目录 `README.md`。
+**存放路径（唯一正式约定）**：`/root/aiSkill/.claude/skills/` — 见该目录 `README.md`。

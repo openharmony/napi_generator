@@ -37,7 +37,7 @@ def staged_churn(cwd: Path) -> int:
 def audit(cwd: Path, base: str = "origin/master") -> tuple[int, list[str]]:
     """门禁审计。返回 (rc, 问题列表)；rc=0 通过 / 1 硬门禁 / 2 需确认。"""
     problems: list[str] = []
-    rc, out, _ = sh(f"python3 {Path(__file__).parent / 'check-precommit.py'} --base {base} --cwd {cwd}", cwd)
+    rc, out, _ = sh(f"python3 {Path(__file__).parent / 'check_precommit.py'} --base {base} --cwd {cwd}", cwd)
     problems.append(out.strip())
     return rc, problems
 
