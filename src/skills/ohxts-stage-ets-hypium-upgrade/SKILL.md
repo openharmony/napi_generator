@@ -28,9 +28,10 @@ version: "2.1.0"
 | 4️⃣ 测试+失败处置 | `scripts/test/test_one.py` / `test_batch.py` / `triage.py` | **统一方案库 domain=test** |
 | 5️⃣ 进度表更新+报告 | `scripts/report/update_xlsx.py` / `progress_report.py` / `gen_xdevice_report.py` / **`gen_xdevice_summary.py`** | TSV/XLSX 数据在 dongwei/进度/；单工程 xdevice HTML 自包含；**多模块合并用官方 xdevice 模板渲染（--shot 自动截图 summary_top.png）** |
 | 6️⃣ **问题方案库** | `scripts/solutions/search_solution.py` / `add_solution.py` | **solutions/solutions.json（55 条方案）** |
-| 7️⃣ **门禁/编译规则自检** | `scripts/check/code_selfcheck.py` / `rules_gate.json` | **门禁/编译规则方案库（16 条，持续完善）**：提交前扫描 ESObject/多余分号/大括号/行宽/命名/用例编号/await 捕获/done()/错误码转换/private 越权等，命中即报规则号+位置+修复建议 |
+| 7️⃣ **门禁/编译规则自检** | **统一门禁 skill**：`ohos-gate-compliance/scripts/gate_check.py code <工程> --fix --strict` | 提交前扫描 ESObject/多余分号/大括号/行宽/命名/用例编号/await 捕获/done()/错误码转换/private 越权等（规则注册表 `rules/rules_ets.json` 38 条），命中报规则号+位置+修复建议，`--fix` 自动修复 |
 
 公共库：`scripts/common/`（paths/git_utils/hdc_utils/build_utils/proj_utils/arkts_fixes）。
+引号转换与机械格式修复已并入统一门禁 skill（`ohos-gate-compliance/scripts/checkers/ets_checker.py` 的 `dq_to_sq`/`fix_code_quality`）。
 所有脚本 `--help` 可查用法。
 
 **报告硬门禁（xdevice 格式）**：对外 HTML 只认官方 xdevice `summary_report.html`（禁止自写汇总页）；
@@ -110,7 +111,7 @@ python3 report/update_xlsx.py && python3 report/progress_report.py --snapshot
 
 ## 不可脚本化的铁律（硬门禁，Agent 必须遵守）
 
-1. **版权头**：禁止删除已有 Apache/Huawei 块注释版权头；只做局部替换；提交前跑
+1. **版权头**：禁止删除已有 Apache 2.0 / 既有厂商版权头；只做局部替换；提交前跑
    `common/git_utils.py --check-copyright`（基线 `origin/master`）。
 2. **合入全测**：禁止抽样代替全测；批内每个改动 HAP 设备测试全绿才可 commit；失败即停。
 3. **数据安全**：批量转换后必须 `--check-safety`（D *.ts 需有对应 .ets，无 LOST/DUP）。
@@ -144,5 +145,5 @@ python3 report/update_xlsx.py && python3 report/progress_report.py --snapshot
 
 - 需求说明：https://gitcode.com/fengqiang/mydoc/blob/main/suffix_update.md
 - 编测：自包含（见「编测能力自包含说明」）；历史参考：ohxtsdynamic/ohhdc/ohhap
-- 提交：`xts-git-commit`（scripts/do-commit.py + check-precommit.py）
+- 提交：`xts-git-commit`（scripts/do_commit.py + check_precommit.py）
 - 进度数据：`/root/aiSkill/develop/dongwei/进度/`（需求1进度表.xlsx、test_summary.tsv、报告）

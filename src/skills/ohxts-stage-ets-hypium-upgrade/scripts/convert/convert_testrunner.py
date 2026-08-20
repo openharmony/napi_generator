@@ -17,9 +17,14 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+_GATE_CHECKERS = Path(__file__).resolve().parents[3] / "ohos-gate-compliance" / "scripts" / "checkers"
+if not _GATE_CHECKERS.is_dir():
+    _GATE_CHECKERS = Path("/root/aiSkill/.claude/skills/ohos-gate-compliance/scripts/checkers")
+sys.path.insert(0, str(_GATE_CHECKERS))
+
 from common.git_utils import cleanup_leftover_ts, git_mv, preserve_eol  # noqa: E402
-from common.code_quality import fix_code_quality  # noqa: E402
-from common.quotes import dq_to_sq  # noqa: E402
+from ets_checker import fix_code_quality  # noqa: E402
+from ets_checker import dq_to_sq  # noqa: E402
 
 KAIHONG_HEADER = (
     "/*\n * Copyright (C) 2024 Huawei Device Co., Ltd.\n"

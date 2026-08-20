@@ -18,10 +18,16 @@ import argparse
 import re
 from pathlib import Path
 
+import sys
+from pathlib import Path
+_GATE_CHECKERS = Path(__file__).resolve().parents[3] / "ohos-gate-compliance" / "scripts" / "checkers"
+if not _GATE_CHECKERS.is_dir():
+    _GATE_CHECKERS = Path("/root/aiSkill/.claude/skills/ohos-gate-compliance/scripts/checkers")
+sys.path.insert(0, str(_GATE_CHECKERS))
 from ..common.paths import REPO
 from ..common.git_utils import cleanup_leftover_ts, data_safety_check, git_mv, write_preserve_eol
-from ..common.code_quality import fix_code_quality
-from ..common.quotes import dq_to_sq
+from ets_checker import fix_code_quality  # noqa: E402
+from ets_checker import dq_to_sq  # noqa: E402
 
 EXCLUDE_SEGMENTS = ("oh_modules", "node_modules", "build", ".hvigor", "autosign",
                     ".preview", ".idea")
