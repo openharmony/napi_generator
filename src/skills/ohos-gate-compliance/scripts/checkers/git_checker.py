@@ -93,6 +93,15 @@ def check_forbidden(cwd: Path) -> list[Hit]:
     return hits
 
 
+def _sdk_line_hits(f: str, i: int, line: str) -> list[Hit]:
+    """单行 compileSdkVersion/targetSdkVersion 数字判定。"""
+    hits: list[Hit] = []
+    for key in ("compileSdkVersion", "targetSdkVersion"):
+        if re.search(rf'"{key}"\s*:\s*(\d+\b|"\d+"\s*,?)', line):
+            hits.append(Hit("CI.SDK.01", f, i, f"{key} 须为 \"M.S.F\" 完整字符串"))
+    return hits
+
+
 def check_compile_sdk_staged(cwd: Path) -> list[Hit]:
     """staged build-profile.json5 中 compileSdkVersion 非 "M.S.F" 完整字符串。"""
     hits: list[Hit] = []
@@ -102,9 +111,7 @@ def check_compile_sdk_staged(cwd: Path) -> list[Hit]:
         staged = subprocess.run(["git", "show", f":{f}"], cwd=str(cwd),
                                 capture_output=True, text=True).stdout
         for i, line in enumerate(staged.splitlines(), 1):
-            for key in ("compileSdkVersion", "targetSdkVersion"):
-                if re.search(rf'"{key}"\s*:\s*(\d+\b|"\d+"\s*,?)', line):
-                    hits.append(Hit("CI.SDK.01", f, i, f"{key} 须为 \"M.S.F\" 完整字符串"))
+            hits.extend(_sdk_line_hits(f, i, line))
     return hits
 
 

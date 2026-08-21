@@ -69,6 +69,15 @@ def _changed_target(rel: str, repo: Path, profile: str) -> Path | None:
     return None
 
 
+def _append_dir_targets(out: list[Path], p: Path, profile: str) -> None:
+    """收集目录下 ETS/build-profile，capi 时追加 C++ 源码。"""
+    out.extend(ets_checker.collect_files([str(p)]))
+    out.extend(p.rglob("build-profile.json5"))
+    if profile == "capi":
+        out.extend(p.rglob("*.cpp"))
+        out.extend(p.rglob("*.h"))
+
+
 def _full_targets(paths: list[Path], profile: str) -> list[Path]:
     out: list[Path] = []
     for p in paths:
@@ -76,11 +85,7 @@ def _full_targets(paths: list[Path], profile: str) -> list[Path]:
         if p.is_file():
             out.append(p)
         elif p.is_dir():
-            out.extend(ets_checker.collect_files([str(p)]))
-            out.extend(p.rglob("build-profile.json5"))
-            if profile == "capi":
-                out.extend(p.rglob("*.cpp"))
-                out.extend(p.rglob("*.h"))
+            _append_dir_targets(out, p, profile)
     return out
 
 

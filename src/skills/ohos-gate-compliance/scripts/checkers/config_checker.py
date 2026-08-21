@@ -36,6 +36,18 @@ def fix_build_profile_compile_sdk(text: str) -> tuple[str, int]:
     return text, n
 
 
+def _sdk_value_hits(path: Path, i: int, key: str, line: str) -> list[Hit]:
+    """单行 SDK 版本写法判定（数字 / 短字符串）。"""
+    hits: list[Hit] = []
+    if re.search(rf'"{key}"\s*:\s*\d+\b', line):
+        hits.append(Hit("CI.SDK.01", str(path), i,
+                        f'{key} 须为 "M.S.F" 字符串（如 "26.0.0"），禁止提交数字'))
+    elif re.search(rf'"{key}"\s*:\s*"\d+"\s*,?', line):
+        hits.append(Hit("CI.SDK.01", str(path), i,
+                        f'{key} 须为完整 "M.S.F"（如 "26.0.0"），勿写 "26"'))
+    return hits
+
+
 def scan_config_file(path: Path, text: str) -> list[Hit]:
     """CI.SDK.01：compileSdkVersion/targetSdkVersion 须为 "M.S.F" 字符串。"""
     hits: list[Hit] = []
@@ -45,12 +57,7 @@ def scan_config_file(path: Path, text: str) -> list[Hit]:
         for key in _SDK_VER_KEYS:
             if key not in line:
                 continue
-            if re.search(rf'"{key}"\s*:\s*\d+\b', line):
-                hits.append(Hit("CI.SDK.01", str(path), i,
-                                f'{key} 须为 "M.S.F" 字符串（如 "26.0.0"），禁止提交数字'))
-            elif re.search(rf'"{key}"\s*:\s*"\d+"\s*,?', line):
-                hits.append(Hit("CI.SDK.01", str(path), i,
-                                f'{key} 须为完整 "M.S.F"（如 "26.0.0"），勿写 "26"'))
+            hits.extend(_sdk_value_hits(path, i, key, line))
     return hits
 
 

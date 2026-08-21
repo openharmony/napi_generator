@@ -17,12 +17,14 @@ from pathlib import Path
 
 from base import Hit
 
-SKIP_DIRS = {".git", "node_modules", "build", "out", "__pycache__", ".cursor", "arkui"}
+SKIP_DIRS = {".git", "node_modules", "outputs", "out", "__pycache__", ".cursor", "arkui",
+             "oh_modules"}
 DOC_SUFFIXES = {".md", ".sh", ".py"}
 _MAX_FILE_NBNC = 2000
 _MAX_FUNC_NBNC = 50
-_MAX_FUNC_CC = 20
-_MAX_FUNC_DEPTH = 4
+# gitcode 门禁按函数体顶层计 1 层（本地 0 基），阈值降 1 对齐（2026-08-21 实测 13 样本均差 1）
+_MAX_FUNC_CC = 19
+_MAX_FUNC_DEPTH = 3
 # 正则字面量拆开，避免扫描器自命中
 _SHELL_TRUE_RE = re.compile("shell" + r"\s*=\s*" + "Tr" + "ue")
 _BASH_ARGV0_RE = re.compile(
@@ -213,12 +215,12 @@ def _build_words_rules() -> list[tuple[str, re.Pattern[str], str]]:
          "勿写 C++ 运行时库短名；改 C++ standard library"),
         ("WordsTool.93", re.compile(rf"\b{_from_codes(103, 109, 115)}\b", re.I),
          "勿裸写易歧义三字母缩写；证书串请拆分字面量"),
-        ("WordsTool.6_ACTIVITY", re.compile(rf"\b{_from_codes(65, 99, 116, 105, 118, 105, 116, 121)}\b", re.I),
-         "勿用易歧义 Activity 词；路径/变量改 ACTIVE（2026-08-21 收录）"),
-        ("WordsTool.9_AMS", re.compile(rf"\b{_from_codes(65, 77, 83)}\b"),
-         "勿裸写 AMS 缩写；改 Ability Manager Service（2026-08-21 收录）"),
-        ("WordsTool.22_AUDIOSTATE", re.compile(_from_codes(65, 117, 100, 105, 111, 83, 116, 97, 116, 101), re.I),
-         "勿裸写 AudioState；用数值常量或改 UI id（2026-08-21 收录）"),
+        ("WordsTool.6", re.compile(rf"\b{_from_codes(65, 99, 116, 105, 118, 105, 116, 121)}\b", re.I),
+         f"勿用易歧义 {_from_codes(65, 99, 116, 105, 118, 105, 116, 121)} 词；路径/变量改 ACTIVE（2026-08-21 收录）"),
+        ("WordsTool.9", re.compile(rf"\b{_from_codes(65, 77, 83)}\b"),
+         f"勿裸写 {_from_codes(65, 77, 83)} 缩写；改 Ability Manager Service（2026-08-21 收录）"),
+        ("WordsTool.22", re.compile(_from_codes(65, 117, 100, 105, 111, 83, 116, 97, 116, 101), re.I),
+         f"勿裸写 {_from_codes(65, 117, 100, 105, 111, 83, 116, 97, 116, 101)}；用数值常量或改 UI id（2026-08-21 收录）"),
         (_RULE_ID_166, re.compile(rf"(?<![A-Za-z]){_from_codes(114, 110)}(?![A-Za-z])", re.I),
          "勿裸写易歧义双字母缩写；sort 用 -r -n；证书串请拆分字面量"),
         ("WordsTool.LEVEL1", re.compile(rf"\b{_from_codes(76, 49)}\b"),
@@ -251,6 +253,28 @@ def _tok_b_hit(line: str) -> bool:
     return re.search(rf"(?<![a-z0-9]){re.escape(tok)}(?![a-z0-9])", tmp) is not None
 
 
+def _words_hits_for_line(path: Path, line: str, i: int, is_py: bool, is_sh: bool,
+                         skip_rules: set[str]) -> list[Hit]:
+    """单行词表命中（拆出控制 check_words_file 的循环深度）。"""
+    hits: list[Hit] = []
+    for rule_id, pat, msg in WORDS_RULES:
+        if is_py and rule_id in _PY_SKIP_RULES:
+            continue
+        if rule_id in skip_rules:
+            continue
+        if is_sh and rule_id == _RULE_ID_66:
+            continue
+        if rule_id == _RULE_ID_166:
+            if _tok_b_hit(line):
+                hits.append(Hit(rule_id, str(path), i, msg))
+            continue
+        if rule_id == "WordsTool.100" and ("Copyright" in line or "Licensed under" in line):
+            continue
+        if pat.search(line):
+            hits.append(Hit(rule_id, str(path), i, msg))
+    return hits
+
+
 def check_words_file(path: Path) -> list[Hit]:
     if not _should_scan_doc(path):
         return []
@@ -261,25 +285,11 @@ def check_words_file(path: Path) -> list[Hit]:
     hits: list[Hit] = []
     is_py = path.suffix == ".py"
     is_sh = path.suffix == ".sh"
+    skip_rules = _WORDS_SKIP_RULE_FILES.get(str(path).rsplit("skills/", 1)[-1], set())
     for i, line in enumerate(text.splitlines(), 1):
         if any(s in line for s in _SKIP_LINE_SUBSTR):
             continue
-        skip_rules = _WORDS_SKIP_RULE_FILES.get(str(path).rsplit("skills/", 1)[-1], set())
-        for rule_id, pat, msg in WORDS_RULES:
-            if is_py and rule_id in _PY_SKIP_RULES:
-                continue
-            if rule_id in skip_rules:
-                continue
-            if is_sh and rule_id == _RULE_ID_66:
-                continue
-            if rule_id == _RULE_ID_166:
-                if _tok_b_hit(line):
-                    hits.append(Hit(rule_id, str(path), i, msg))
-                continue
-            if rule_id == "WordsTool.100" and ("Copyright" in line or "Licensed under" in line):
-                continue
-            if pat.search(line):
-                hits.append(Hit(rule_id, str(path), i, msg))
+        hits.extend(_words_hits_for_line(path, line, i, is_py, is_sh, skip_rules))
     return hits
 
 

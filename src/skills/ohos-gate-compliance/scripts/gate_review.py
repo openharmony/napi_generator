@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""兼容包装：gate_review.py v1 入口（ohxtscapi/ohxtsdynamic/ohxtsstatic 的 ohxtsflow.py
-通过 `from gate_review import run_post_test_gate_pipeline` 引用）。逻辑已迁 pipeline.py。"""
+"""兼容包装：gate_review.py v1 入口，逻辑已迁 pipeline.py（ohxtscapi/ohxtsdynamic/ohxtsstatic 的 ohxtsflow.py 经 from gate_review import run_post_test_gate_pipeline 引用）。"""
 from __future__ import annotations
 
 import sys

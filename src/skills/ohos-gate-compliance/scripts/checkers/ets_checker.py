@@ -71,6 +71,16 @@ def _is_resource_string_json(path: Path) -> bool:
 
 
 # ---------------- ETS 规则实现（迁移自 code_selfcheck.scan_file） ----------------
+def _push_or_pop(pre: str, stack: list[str]) -> None:
+    """按 { 前缀识别 try/catch 栈帧。"""
+    if re.search(r"(^|[\s;})])try\s*$", pre):
+        stack.append("try")
+    elif re.search(r"catch\s*\([^)]*\)\s*$", pre):
+        stack.append("catch")
+    else:
+        stack.append("other")
+
+
 def _update_stack(line: str, stack: list[str]) -> None:
     pos = 0
     while True:
@@ -79,13 +89,7 @@ def _update_stack(line: str, stack: list[str]) -> None:
         if o == -1 and c == -1:
             break
         if o != -1 and (c == -1 or o < c):
-            pre = line[:o].rstrip()
-            if re.search(r"(^|[\s;})])try\s*$", pre):
-                stack.append("try")
-            elif re.search(r"catch\s*\([^)]*\)\s*$", pre):
-                stack.append("catch")
-            else:
-                stack.append("other")
+            _push_or_pop(line[:o].rstrip(), stack)
             pos = o + 1
         else:
             if stack:
@@ -184,19 +188,43 @@ def _check_async_callback_err(lines: list[str]) -> list[tuple[int, str]]:
     return hits
 
 
-def _block_until_brace(text: str, start: int) -> str:
-    """括号配对：从 start（'{' 位置）取到配对 '}' 的块。"""
+def _step_pair(ch: str, depth: int) -> int:
+    """括号步进：{ +1，} -1，其余不变。"""
+    if ch == "{":
+        return depth + 1
+    if ch == "}":
+        return depth - 1
+    return depth
+
+
+def _pair_close(text: str, start: int) -> int:
+    """返回从 start（'{' 位置）配对 '}' 的下标。"""
     depth = 0
     j = start
     while j < len(text):
-        if text[j] == "{":
-            depth += 1
-        elif text[j] == "}":
-            depth -= 1
-            if depth == 0:
-                break
+        depth = _step_pair(text[j], depth)
+        if depth == 0 and text[j] == "}":
+            break
         j += 1
-    return text[start:j + 1]
+    return j
+
+
+def _block_until_brace(text: str, start: int) -> str:
+    """括号配对：从 start（'{' 位置）取到配对 '}' 的块。"""
+    return text[start:_pair_close(text, start) + 1]
+
+
+def _skip_string(line: str, i: int, q: str) -> int:
+    """跳过引号串（含转义），返回串后位置。"""
+    n = len(line)
+    while i < n:
+        if line[i] == "\\":
+            i += 2
+            continue
+        if line[i] == q:
+            return i + 1
+        i += 1
+    return i
 
 
 def _strip_line_for_braces(line: str) -> str:
@@ -208,35 +236,34 @@ def _strip_line_for_braces(line: str) -> str:
             break
         ch = line[i]
         if ch in ("\"", "'", "`"):
-            q = ch
-            i += 1
-            while i < n:
-                if line[i] == "\\":
-                    i += 2
-                    continue
-                if line[i] == q:
-                    i += 1
-                    break
-                i += 1
+            i = _skip_string(line, i + 1, ch)
             continue
         out.append(ch)
         i += 1
     return "".join(out)
 
 
+def _pop_one(stack: list[str]) -> None:
+    """闭合块：弹一帧再压 other（catch/else/finally 语义）。"""
+    if stack:
+        stack.pop()
+    stack.append("other")
+
+
+def _apply_brace_delta(stack: list[str], opens: int) -> None:
+    if opens > 0:
+        stack.extend(["other"] * opens)
+    elif opens < 0:
+        del stack[opens:]
+
+
 def _update_brace_stack(s: str, stack: list[str]) -> None:
     if s.startswith("try") and "{" in s:
         stack.append("try")
     elif s.startswith("}") and ("catch" in s or "else" in s or "finally" in s):
-        if stack:
-            stack.pop()
-        stack.append("other")
+        _pop_one(stack)
     else:
-        opens = s.count("{") - s.count("}")
-        if opens > 0:
-            stack.extend(["other"] * opens)
-        elif opens < 0:
-            del stack[opens:]
+        _apply_brace_delta(stack, s.count("{") - s.count("}"))
 
 
 # ---------------- 主扫描入口 ----------------
@@ -264,8 +291,8 @@ def _scan_regex_quality(lines: list[str], add) -> None:
             add("G.FMT.10", i, "大括号未与语句同行")
 
 
-def _scan_import_any(lines: list[str], add) -> None:
-    """COMPILE.IMPORT.01 import 错位 / COMPILE.ANY.01 显式 any（多行 import 续行豁免）。"""
+def _scan_import_lines(lines: list[str], add) -> None:
+    """COMPILE.IMPORT.01：import 出现在代码之后（多行 import 块内豁免）。"""
     seen_code = False
     in_import = False  # 多行 import { ... } 块内
     for i, ln in enumerate(lines, 1):
@@ -285,9 +312,19 @@ def _scan_import_any(lines: list[str], add) -> None:
                 add("COMPILE.IMPORT.01", i, "import 在代码之后")
             continue
         seen_code = True
+
+
+def _scan_any_lines(lines: list[str], add) -> None:
+    """COMPILE.ANY.01：显式 any/unknown 注解。"""
     for i, ln in enumerate(lines, 1):
         if re.search(r":\s*(any|unknown)\b", ln) and not ln.strip().startswith("//"):
             add("COMPILE.ANY.01", i, ln.strip()[:60])
+
+
+def _scan_import_any(lines: list[str], add) -> None:
+    """COMPILE.IMPORT.01 import 错位 / COMPILE.ANY.01 显式 any（多行 import 续行豁免）。"""
+    _scan_import_lines(lines, add)
+    _scan_any_lines(lines, add)
 
 
 def _scan_heuristic(path: Path, text: str, lines: list[str], add) -> None:
@@ -310,18 +347,19 @@ def _scan_heuristic(path: Path, text: str, lines: list[str], add) -> None:
 def _callback_block_has_done(text: str, m: re.Match[str]) -> tuple[int, bool]:
     """回调块内是否含 done()（简易括号配对）。返回 (起始行号, 是否含 done)。"""
     start = text.find("{", m.start())
-    depth = 0
-    j = start
-    while j < len(text):
-        if text[j] == "{":
-            depth += 1
-        elif text[j] == "}":
-            depth -= 1
-            if depth == 0:
-                break
-        j += 1
-    block = text[start:j + 1]
+    block = text[start:_pair_close(text, start) + 1]
     return text.count("\n", 0, m.start()) + 1, "done(" in block
+
+
+def _check_case_indents(lines: list[str], i: int, sw_ind: int, add) -> None:
+    """检查 switch 后续 20 行内 case/default 缩进。"""
+    for j in range(i + 1, min(i + 20, len(lines) + 1)):
+        cm = re.match(r"^(\s*)(case|default)\b", lines[j - 1])
+        if cm:
+            if len(cm.group(1)) != sw_ind + 2:
+                add("G.FMT.12", j, f"case 缩进 {len(cm.group(1))}（期望 {sw_ind + 2}）")
+        elif lines[j - 1].strip() == "}":
+            break
 
 
 def _scan_switch_indent(lines: list[str], add) -> None:
@@ -330,14 +368,7 @@ def _scan_switch_indent(lines: list[str], add) -> None:
         m = re.match(r"^(\s*)switch\s*\(", ln)
         if not m:
             continue
-        sw_ind = len(m.group(1))
-        for j in range(i + 1, min(i + 20, len(lines) + 1)):
-            cm = re.match(r"^(\s*)(case|default)\b", lines[j - 1])
-            if cm:
-                if len(cm.group(1)) != sw_ind + 2:
-                    add("G.FMT.12", j, f"case 缩进 {len(cm.group(1))}（期望 {sw_ind + 2}）")
-            elif lines[j - 1].strip() == "}":
-                break
+        _check_case_indents(lines, i, len(m.group(1)), add)
 
 
 def _scan_arkts_xtscheck(path: Path, text: str, lines: list[str], add) -> None:
