@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+# commit-msg：Signed-off-by 后空一行放置 Co-authored-by: Agent。
+set -eu
+
+MSG_FILE="$1"
+SANITIZE="/root/aiSkill/.claude/skills/xts-git-commit/scripts/sanitize-coauthor.sh"
+
+if [ -x "$SANITIZE" ]; then
+  "$SANITIZE" "$MSG_FILE"
+fi
