@@ -23,6 +23,8 @@ from pathlib import Path
 
 
 # WordsTool 自触发规避：敏感词仅用 chr() 拼接（规则 ID 用数字后缀，勿裸写词面量）
+
+
 def _from_codes(*codes: int) -> str:
     return "".join(chr(c) for c in codes)
 

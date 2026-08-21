@@ -52,6 +52,8 @@ def collect_files(paths: list[str]) -> list[Path]:
 
 
 # ---------------- WordsTool 敏感词（chr 拼接，源码勿裸写；迁移自 gate_review） ----------------
+
+
 def _from_codes(*codes: int) -> str:
     return "".join(chr(c) for c in codes)
 
@@ -71,6 +73,8 @@ def _is_resource_string_json(path: Path) -> bool:
 
 
 # ---------------- ETS 规则实现（迁移自 code_selfcheck.scan_file） ----------------
+
+
 def _push_or_pop(pre: str, stack: list[str]) -> None:
     """按 { 前缀识别 try/catch 栈帧。"""
     if re.search(r"(^|[\s;})])try\s*$", pre):
@@ -121,6 +125,8 @@ def _check_await_outside_try(lines: list[str]) -> list[tuple[int, str]]:
 
 
 # ---------------- 迁移自 gate_review：xtscheck @tc ----------------
+
+
 def _is_hypium_test_ets(path: Path) -> bool:
     """测试用例文件：ohosTest/ets/test/ 下（含 main/ets/test 一体工程）。"""
     s = str(path).replace("\\", "/")
@@ -267,6 +273,8 @@ def _update_brace_stack(s: str, stack: list[str]) -> None:
 
 
 # ---------------- 主扫描入口 ----------------
+
+
 def _scan_regex_quality(lines: list[str], add) -> None:
     """正则类规则：ESObject/;;/命名/行宽/错误码/空循环体/用例编号/大括号。"""
     for i, ln in enumerate(lines, 1):
@@ -449,6 +457,8 @@ def scan_ets_file(path: Path, text: str) -> list[Hit]:
 
 
 # ---------------- 自动修复 ----------------
+
+
 def fix_ets_xtscheck(text: str) -> tuple[str, int]:
     """规范化 @tc 字段为「@tc.xxx : 」冒号格式；去掉 */ 与 it() 之间空行。"""
     n = 0
@@ -638,6 +648,8 @@ def fix_ets_file(path: Path, text: str) -> tuple[str, int]:
 
 
 # ---------------- 引号规范（提交时转换，迁移自 quotes.py 原始实现） ----------------
+
+
 def _scan_line_comment(text: str, i: int) -> tuple[str, int]:
     """// 行注释：原样复制到行尾。"""
     j = text.find("\n", i)

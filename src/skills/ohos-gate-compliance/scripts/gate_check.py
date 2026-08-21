@@ -46,6 +46,8 @@ SKILLS_ROOT = Path("/root/aiSkill/napi_generator/src/skills")
 
 
 # ---------------------------------------------------------------- code 子命令
+
+
 def _detect_profile(project: Path) -> str:
     cpp_dir = project / "entry" / "src" / "main" / "cpp"
     if cpp_dir.is_dir() and any(cpp_dir.rglob("*.cpp")):
@@ -130,8 +132,6 @@ def fix_code_file(fp: Path, text: str, profile: str) -> tuple[str, int]:
     return text, fixed
 
 
-
-
 def _read_file_preserve_eol(fp: Path) -> tuple[str, bool]:
     """读文本并探测 CRLF（修复器在 \n 上工作，写回时还原）。"""
     try:
@@ -202,6 +202,8 @@ def cmd_code(args) -> int:
 
 
 # ---------------------------------------------------------------- skill 子命令
+
+
 def cmd_skill(args) -> int:
     roots: list[Path] = []
     if args.paths:
@@ -235,6 +237,8 @@ def cmd_skill(args) -> int:
 
 
 # ---------------------------------------------------------------- main
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="统一门禁检查（代码/skill）")
     sub = ap.add_subparsers(dest="cmd", required=True)
