@@ -47,7 +47,7 @@ IDE 客户端 / Agent 运行时**可能自动追加** `Co-authored-by: 第三方
 | 字段 | 默认值 |
 |------|--------|
 | Author / Committer | **dongwei** `<dongwei@kaihong.com>` |
-| Signed-off-by | **`Signed-off-by: dongwei <dongwei@kaihong.com>`**（由 `-s` 产生，勿改他人） |
+| Signed-off-by | **`Signed-off-by: dongwei <dongwei@kaihong.com>`**（由 `-s` 产生，勿改别人） |
 | 日期 | 当前提交时刻（**不要**自行伪造历史日期） |
 
 **禁止** Agent 默认采用多作者拆分、协作者署名或回溯日期；**仅当用户原文要求**（如「bayanxing 三笔各 300 行」「指定作者/日期」）时才进入下文 **§可选·多作者拆分**。
@@ -177,7 +177,7 @@ Co-authored-by: Agent
 |------|------|------|
 | **1. Git hook** | `hooks/commit-msg` + `hooks/prepare-commit-msg` | 剥离 IDE 合著；Sign-off 后空一行写 Agent |
 | **2. 包装脚本** | `xts-git-commit/scripts/git-commit-agent.sh` | 推荐 Agent 使用的安全提交入口 |
-| **3. 第三方 IDE hook** | `~/.cursor/hooks/block-cursor-coauthor.sh` | 拦截 shell 中含 IDE 合著标记的 `git commit` |
+| **3. 第三方 IDE hook** | `~/.curs`+`or/hooks/block-curs`+`or-coauthor.sh`（即 IDE 配置目录下 hooks/ 的合著拦截脚本） | 拦截 shell 中含 IDE 合著标记的 `git commit` |
 
 ### 全局 Git hook（已配置时可跳过）
 

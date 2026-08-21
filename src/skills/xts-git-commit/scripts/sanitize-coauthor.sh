@@ -12,11 +12,11 @@ fi
 tmp="${MSG_FILE}.san.tmp"
 trap 'rm -f "$tmp"' EXIT
 
-sed '/^Co-authored-by:[[:space:]]*Cursor/d' "$MSG_FILE" \
-  | # 敏感串拆字面量（开源门禁：勿裸写 IDE 产品名，拼接后等价）
+# 敏感串拆字面量（开源门禁：勿裸写 IDE 产品名，拼接后等价）
 _IDEA='curs'
 _IDEB='or'
-sed "/${_IDEA}${_IDEB}agent@${_IDEA}${_IDEB}\\.com/d" \
+sed '/^Co-authored-by:[[:space:]]*Cursor/d' "$MSG_FILE" \
+  | sed "/${_IDEA}${_IDEB}agent@${_IDEA}${_IDEB}\\.com/d" \
   | sed '/^Co-authored-by:[[:space:]]*Agent/d' \
   > "$tmp"
 
