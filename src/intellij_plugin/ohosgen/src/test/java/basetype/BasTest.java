@@ -1,0 +1,68 @@
+/*
+ * Copyright (c) 2026 Kaihong Digital.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package basetype;
+
+/**
+ * 断言辅助基类：把 ETS hypium expect(...).assertXxx(...) 桥接到 JUnit5 断言，
+ * 提供 (int, Integer) 等重载，避免装箱/拆箱导致的 assertEquals 重载歧义。
+ * 测试类继承本类以直接使用 assertEqual/assertTrue 等断言方法。
+ */
+public class BasTest {
+
+    protected BasTest() {
+    }
+
+    public static void assertEqual(int expected, int actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+    }
+
+    public static void assertEqual(long expected, long actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+    }
+
+    public static void assertEqual(long expected, int actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+    }
+
+    public static void assertEqual(int expected, Integer actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(expected, (int) actual);
+    }
+
+    public static void assertEqual(Object expected, Object actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+    }
+
+    public static void assertTrue(boolean condition) {
+        org.junit.jupiter.api.Assertions.assertTrue(condition);
+    }
+
+    public static void assertFalse(boolean condition) {
+        org.junit.jupiter.api.Assertions.assertFalse(condition);
+    }
+
+    public static void assertNull(Object actual) {
+        org.junit.jupiter.api.Assertions.assertNull(actual);
+    }
+
+    /** JS isFinite 语义：int/long 恒为有限数。 */
+    public static boolean isFinite(long value) {
+        return true;
+    }
+
+    public static void fail() {
+        org.junit.jupiter.api.Assertions.fail("Expected an exception");
+    }
+}
