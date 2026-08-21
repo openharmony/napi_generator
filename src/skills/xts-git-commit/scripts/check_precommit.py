@@ -21,7 +21,8 @@ FORBIDDEN = ("autosign/", "oh_modules", "/build/", ".hap")
 
 
 def sh(cmd: str, cwd: Path) -> str:
-    r = subprocess.run(cmd, shell=True, cwd=str(cwd), capture_output=True, text=True)
+    import shlex
+    r = subprocess.run(shlex.split(cmd), cwd=str(cwd), capture_output=True, text=True)
     return r.stdout
 
 

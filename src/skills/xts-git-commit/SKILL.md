@@ -2,8 +2,8 @@
 name: xts-git-commit
 description: >-
   全仓库 Git 提交规范（不限 XTS）。用户要求提交、push、commit 时必读。
-  强制：git commit -sm（Signed-off-by）、**仅** Co-authored-by: Agent（绝对禁止 Cursor）、
-  单笔 ≤2000 行（+与-之和）。含 hook/脚本自动剥离 Cursor 合著行。
+  强制：git commit -sm（Signed-off-by）、**仅** Co-authored-by: Agent（一律禁止 第三方 IDE）、
+  单笔 ≤2000 行（+与-之和）。含 hook/脚本自动剥离 IDE 合著行。
 version: "1.4.0"
 ---
 
@@ -12,23 +12,23 @@ version: "1.4.0"
 > **适用范围**：OpenHarmony XTS、napi_generator、ace_engine、inspector 等**任意仓库**。  
 > Agent 参与开发的 commit **一律**遵守本规范。
 
-## 第零条：禁止 Cursor 合著（最高优先级，零例外）
+## 第零条：禁止 IDE 合著（最高优先级，零例外）
 
 | 禁止写入 message | 必须写入 |
 |------------------|----------|
-| `Co-authored-by: Cursor` | **`Co-authored-by: Agent`** |
-| `Co-authored-by: Cursor <cursoragent@cursor.com>` | （仅此一行，**不带邮箱**） |
-| 任何含 `cursoragent@cursor.com` 的行 | |
+| `Co-authored-by: 第三方 IDE` | **`Co-authored-by: Agent`** |
+| `Co-authored-by: 第三方 IDE <ideagent@example.com>` | （仅此一行，**不带邮箱**） |
+| 任何含 `ideagent@example.com` 的行 | |
 
 **Agent 行为禁令**（违反即视为提交失败，须修正后重做）：
 
-1. **禁止**在 HEREDOC / `-m` 字符串里写 `Cursor`、`cursoragent@cursor.com`
-2. **禁止**复制 IDE 自动生成的 Cursor 合著行
-3. **禁止**同时出现 `Co-authored-by: Agent` 与 `Co-authored-by: Cursor`（重复合著）
-4. commit 后**必须** `git log -1 --format=full`；若仍见 Cursor 行 → 未 push 则 `commit --amend` 修正
+1. **禁止**在 HEREDOC / `-m` 字符串里写 `第三方 IDE`、`ideagent@example.com`
+2. **禁止**复制 IDE 自动生成的 IDE 合著行
+3. **禁止**同时出现 `Co-authored-by: Agent` 与 `Co-authored-by: 第三方 IDE`（重复合著）
+4. commit 后**必须** `git log -1 --format=full`；若仍见 IDE 合著行 → 未 push 则 `commit --amend` 修正
 
-Cursor IDE / Agent 运行时**可能自动追加** `Co-authored-by: Cursor <cursoragent@cursor.com>`。  
-本 skill 已提供 **Git hook + 包装脚本 + Cursor shell hook** 三层防护；Agent 仍须在 message 中**只手写 Agent**。
+IDE 客户端 / Agent 运行时**可能自动追加** `Co-authored-by: 第三方 IDE <ideagent@example.com>`。  
+本 skill 已提供 **Git hook + 包装脚本 + IDE shell hook** 三层防护；Agent 仍须在 message 中**只手写 Agent**。
 
 ---
 
@@ -37,12 +37,12 @@ Cursor IDE / Agent 运行时**可能自动追加** `Co-authored-by: Cursor <curs
 | # | 规则 | 执行方式 |
 |---|------|----------|
 | **1** | **Signed-off-by** | **必须** `git commit -sm`（`-s` 签名 + `-m` 消息）。禁止仅用 `git commit -m` |
-| **2** | **Co-authored-by: Agent** | **Signed-off-by 后空一行**再写 Agent（hook 自动排版）。**绝对禁止** Cursor / cursoragent |
+| **2** | **Co-authored-by: Agent** | **Signed-off-by 后空一行**再写 Agent（hook 自动排版）。**一律禁止** 第三方 IDE / ideagent |
 | **3** | **单笔 ≤ 2000 行** | `git diff --cached --shortstat` 的 **insertions + deletions 之和 < 2000**；超出必须拆 commit |
 
 ### 默认提交作者（P0）
 
-**除非用户明确要求**指定其余作者、日期或多作者拆分，否则**一切 commit** 均为：
+**除非用户明确要求**指定别的作者、日期或多作者拆分，否则**一切 commit** 均为：
 
 | 字段 | 默认值 |
 |------|--------|
@@ -71,7 +71,7 @@ python3 scripts/check_precommit.py --base origin/master
 - `check_precommit.py`：①版权头（基线有头/变更无头）②违禁文件（autosign/oh_modules/build/*.hap）
   ③compileSdkVersion 数字残留（staged blob 级）④bundleName/module 改动清单 ⑤numstat 可疑整文件重写
 - `do_commit.py`：staged 行数审计（软上限 1900/硬上限 2000）→ 超限拆分建议 → `-sm` 提交
-  （消息自动补 Co-authored-by: Agent，禁 Cursor）→ 提交后 `git log -1 --format=full` 验证 → 工作区归零验证
+  （消息自动补 Co-authored-by: Agent，禁 第三方 IDE）→ 提交后 `git log -1 --format=full` 验证 → 工作区归零验证
 
 脚本执行失败/特殊场景（多作者拆分、历史重写）才走下方人工步骤。
 
@@ -109,8 +109,8 @@ Co-authored-by: Agent
 
 **不合格须修正后重做**（未 push 可用 `commit --amend -sm`，已 push 须用户同意后再改历史）：
 
-- 出现 `Co-authored-by: Cursor` 或 `Co-authored-by: Cursor <cursoragent@cursor.com>`
-- 同时存在 Agent 与 Cursor 两行 Co-authored-by
+- 出现 `Co-authored-by: 第三方 IDE` 或 `Co-authored-by: 第三方 IDE <ideagent@example.com>`
+- 同时存在 Agent 与 第三方 IDE 两行 Co-authored-by
 - 无 `Signed-off-by`
 - 使用了 `git commit -m` 未加 `-s`
 
@@ -133,11 +133,11 @@ Co-authored-by: Agent
 # ❌ 错误（IDE 常自动插入，禁止提交）
 test(chip): 新增用例
 
-Co-authored-by: Cursor <cursoragent@cursor.com>
+Co-authored-by: 第三方 IDE <ideagent@example.com>
 
 # ❌ 错误（重复合著）
 Co-authored-by: Agent
-Co-authored-by: Cursor <cursoragent@cursor.com>
+Co-authored-by: 第三方 IDE <ideagent@example.com>
 
 # ❌ 错误（Agent 在 Sign-off 之前）
 test(chip): 新增用例
@@ -162,22 +162,22 @@ Co-authored-by: Agent
 |------|----------|
 | `Co-authored-by: Agent` | **必须用这个（推荐，无邮箱）** |
 | `Co-authored-by: Agent <任意邮箱>` | 可接受，但优先无邮箱写法 |
-| `Co-authored-by: Cursor` | **绝对禁止** |
-| `Co-authored-by: Cursor <cursoragent@cursor.com>` | **绝对禁止** |
+| `Co-authored-by: 第三方 IDE` | **一律禁止** |
+| `Co-authored-by: 第三方 IDE <ideagent@example.com>` | **一律禁止** |
 | 不写 Co-authored-by | **禁止**（Agent 参与开发时必须写 Agent） |
 
 > **说明**：`-sm` 产生 `Signed-off-by`；`commit-msg` hook 在其后**空一行**补 `Co-authored-by: Agent`（HEREDOC **可不写**合著行）。  
-> IDE 自动追加的 Cursor 行由 hook 剥离；Agent **不得**写入 Cursor 行。
+> IDE 自动追加的 IDE 合著行由 hook 剥离；Agent **不得**写入 IDE 合著行。
 
 ---
 
-## 三层防护（自动剥离 Cursor 合著）
+## 三层防护（自动剥离 IDE 合著）
 
 | 层级 | 路径 | 作用 |
 |------|------|------|
-| **1. Git hook** | `hooks/commit-msg` + `hooks/prepare-commit-msg` | 剥离 Cursor；Sign-off 后空一行写 Agent |
+| **1. Git hook** | `hooks/commit-msg` + `hooks/prepare-commit-msg` | 剥离 IDE 合著；Sign-off 后空一行写 Agent |
 | **2. 包装脚本** | `xts-git-commit/scripts/git-commit-agent.sh` | 推荐 Agent 使用的安全提交入口 |
-| **3. Cursor hook** | `~/.cursor/hooks/block-cursor-coauthor.sh` | 拦截 shell 中含 Cursor 的 `git commit` |
+| **3. 第三方 IDE hook** | `~/.cursor/hooks/block-cursor-coauthor.sh` | 拦截 shell 中含 IDE 合著标记的 `git commit` |
 
 ### 全局 Git hook（已配置时可跳过）
 
@@ -313,7 +313,7 @@ EOF
 | 范围 | 工程简称，如 `chip-static`、`api18-static` |
 | 正文 | 1～2 句 **why** |
 | Sign-off | `-s` → `Signed-off-by:`（GitCode Hook 常强制） |
-| 合著 | **`Co-authored-by: Agent`** 在 **Signed-off-by 后空一行**（禁止 Cursor） |
+| 合著 | **`Co-authored-by: Agent`** 在 **Signed-off-by 后空一行**（禁止 第三方 IDE） |
 
 ### 5. 提交后确认
 
@@ -331,10 +331,10 @@ git show --stat HEAD
 ## 自动 Sign-off 辅助（不替代 `-sm`）
 
 ```bash
-git config core.hooksPath .githooks   # 本仓，追加 Signed-off-by + 剥离 Cursor
+git config core.hooksPath .githooks   # 本仓，追加 Signed-off-by + 剥离 IDE 合著
 ```
 
-Hook **补 Sign-off**、**剥离 Cursor**、**Sign-off 后空一行写 Agent**；Agent 仍须 `-sm`。
+Hook **补 Sign-off**、**剥离 IDE 合著**、**Sign-off 后空一行写 Agent**；Agent 仍须 `-sm`。
 
 ---
 
@@ -476,8 +476,8 @@ git show --stat HEAD~3 HEAD~2 HEAD~1 HEAD | grep -E '^(commit| .*\|)'
 [ ] xts_acts 工程：ohxtsflow gate-review "$PROJ" 已通过（G.FMT.05/@tc/用例间空行）
 [ ] git diff --cached --shortstat 合计 < 2000
 [ ] git commit -sm（不是 -m）
-[ ] message **仅**含 Co-authored-by: Agent（无 Cursor、无 cursoragent@cursor.com）
-[ ] git log -1：Signed-off-by: dongwei <dongwei@kaihong.com> → 空行 → Co-authored-by: Agent，**无** Cursor 行
+[ ] message **仅**含 Co-authored-by: Agent（无 第三方 IDE、无 ideagent@example.com）
+[ ] git log -1：Signed-off-by: dongwei <dongwei@kaihong.com> → 空行 → Co-authored-by: Agent，**无** IDE 合著行
 [ ] 未 git add -A；**未** git add 工程根目录变量（防 autosign/hypium 误入）
 [ ] 未用 Write 整文件覆盖已有大文件
 [ ] （**仅用户要求多作者时**）unset GIT_AUTHOR_*；拆分后 git diff BASE..HEAD --shortstat 与预期一致

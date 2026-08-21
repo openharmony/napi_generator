@@ -100,7 +100,7 @@ if ! grep -q '^Co-authored-by:[[:space:]]*Agent' "$tmp"; then
   exit 1
 fi
 if grep -qi 'cursoragent@cursor\.com\|^Co-authored-by:[[:space:]]*Cursor' "$tmp"; then
-  echo "error: Cursor co-author still present after sanitize" >&2
+  echo "error: IDE co-author still present after sanitize" >&2
   exit 1
 fi
 
@@ -109,7 +109,7 @@ trap - EXIT
 rm -f "$tmp"
 
 if git log -1 --format='%B' | grep -qiE 'cursoragent@cursor\.com|^Co-authored-by:[[:space:]]*Cursor'; then
-  echo "error: latest commit still contains Cursor co-author; fix before push" >&2
+  echo "error: latest commit still contains IDE co-author; fix before push" >&2
   git log -1 --format=full
   exit 1
 fi

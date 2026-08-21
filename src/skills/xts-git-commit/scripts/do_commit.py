@@ -24,7 +24,8 @@ SOFT_LIMIT = 1900
 
 
 def sh(cmd: str, cwd: Path) -> tuple[int, str, str]:
-    r = subprocess.run(cmd, shell=True, cwd=str(cwd), capture_output=True, text=True)
+    import shlex
+    r = subprocess.run(shlex.split(cmd), cwd=str(cwd), capture_output=True, text=True)
     return r.returncode, r.stdout, r.stderr
 
 
@@ -93,7 +94,7 @@ def main() -> None:
             if "/" in f and not (cwd / f).is_file():
                 print(f"FAIL: {f} 不是文件（禁止 add 目录）")
                 sys.exit(1)
-        sh("git add " + " ".join(args.stage), cwd)
+        subprocess.run(["git", "add", "--"] + args.stage, cwd=str(cwd), capture_output=True, text=True)
 
     rc, problems = audit(cwd, args.base)
     churn = staged_churn(cwd)
