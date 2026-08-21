@@ -91,6 +91,7 @@ def last_err(rel: str) -> str:
 
 def record_verdict(rel: str, err: str, hint: str, rule: str) -> None:
     """更新备注：追加 失败分析记录.md + 判定日志（跳过继续的落盘点）。"""
+    from datetime import datetime
     entry = (f"\n### [{rel}] {datetime.now():%Y-%m-%d %H:%M:%S}（批量闭环判定，跳过继续）\n"
              f"- 现象: {err[:200]}\n"
              f"- 方案: {rule}\n"
@@ -108,66 +109,9 @@ def record_verdict(rel: str, err: str, hint: str, rule: str) -> None:
         pass
 
 
-def _log(msg: str) -> None:
-    """追加 batch_test.log。"""
-    with open(PROGRESS_DIR / "batch_test.log", "a") as f:
-        f.write(msg)
-
-
-def _tag(seq_map: dict, total: int, rel: str, i: int) -> str:
-    """表格序号标签（无表格映射时用 i/total）。"""
-    return f"表格#{seq_map.get(rel, '?')}" if seq_map else f"[{i}/{total}]"
-
-
-def _handle_skip_checks(rel: str, i: int, total: int, seq_map: dict,
-                        skip_passed: bool) -> str:
-    """history PASS / 已判定限制清单检查；命中返回 'history'/'verdict'，否则 ''。"""
-    if skip_passed and history_passed(rel):
-        _log(f"[{i}/{total}] SKIP(history PASS) {rel}\n")
-        print(f"{_tag(seq_map, total, rel, i)} SKIP(history PASS) {rel}")
-        return "history"
-    reasons = load_verdict_list()
-    if rel in reasons:
-        record_verdict(rel, f"已判定限制: {reasons[rel]}", reasons[rel], "skip-list")
-        _log(f"[{i}/{total}] VERDICT_SKIP {rel} ({reasons[rel]})\n")
-        print(f"⏭️ {_tag(seq_map, total, rel, i)} {rel} 已判定限制（{reasons[rel]}），跳过")
-        return "verdict"
-    return ""
-
-
-def _test_outcome(rel: str, i: int, total: int, seq_map: dict, profile: str,
-                  verdict_skip: bool) -> str:
-    """执行单工程测试并处置结果；返回 'pass'/'skip'/'verdict'/'fail'。"""
-    print(f"\n{_tag(seq_map, total, rel, i)} ▶ {rel}")
-    _log(f"[{i}/{total}] TEST {rel}\n")
-    rc = test_one(rel, profile)
-    if rc == 0:
-        _log(f"DONE {rel}\n")
-        return "pass"
-    if rc in (2, 3):
-        # 设备离线(2)/辅助工程无测试(3)：记录后继续（非真实失败）
-        _log(f"SKIP_ITEM {rel} rc={rc}\n")
-        print(f"{_tag(seq_map, total, rel, i)} {rel} 跳过（rc={rc}：设备离线/辅助工程）")
-        return "skip"
-    # 失败：--verdict-skip 模式下先判定（方案库 verdict=limit → 更新备注跳过继续）
-    if verdict_skip:
-        err = last_err(rel)
-        from triage import dispatch
-        v = dispatch(rel, err)
-        if v.get("verdict") == "limit":
-            record_verdict(rel, err, v.get("hint", ""), v.get("rule", ""))
-            _log(f"VERDICT_SKIP {rel} ({v.get('rule')})\n")
-            print(f"⏭️ [{i}/{total}] {rel} 设备/环境限制（{v.get('rule')}），"
-                  f"已更新备注，跳过继续")
-            return "verdict"
-    _log(f"FAIL_STOP {rel} rc={rc}\n")
-    print(f"⏸️ {_tag(seq_map, total, rel, i)} {rel} 失败（rc={rc}），按 7.6 逐个闭环：triage → 修复 → 重测")
-    print(f"   → python3 scripts/test/triage.py {rel}")
-    return "fail"
-
-
 def run_batch(rel_list: Path | None, profile: str, skip_passed: bool = True,
               verdict_skip: bool = False) -> None:
+    log = PROGRESS_DIR / "batch_test.log"
     items = [ln.strip() for ln in rel_list.read_text().splitlines() if ln.strip()] if rel_list else []
     # 批量开始前全局清理设备（残留应用多会造成包名冲突/脏 log，2026-08-18 强化）
     from common import hdc_utils as _hdc
@@ -176,21 +120,66 @@ def run_batch(rel_list: Path | None, profile: str, skip_passed: bool = True,
         print("[batch] 全局清理完成（卸载全部非系统应用）")
     total = len(items)
     seq_map = table_seq_map()
+    def tag(rel: str) -> str:
+        return f"表格#{seq_map.get(rel, '?')}" if seq_map else f"[{i}/{total}]"
     done = passed = skipped = 0
-    _log(f"\n===== BATCH {datetime.now():%Y-%m-%d %H:%M:%S} ({total} 工程) =====\n")
+    with open(log, "a") as f:
+        f.write(f"\n===== BATCH {datetime.now():%Y-%m-%d %H:%M:%S} ({total} 工程) =====\n")
     for i, rel in enumerate(items, 1):
-        outcome = _handle_skip_checks(rel, i, total, seq_map, skip_passed)
-        if outcome:
+        if skip_passed and history_passed(rel):
+            with open(log, "a") as f:
+                f.write(f"[{i}/{total}] SKIP(history PASS) {rel}\n")
+            print(f"{tag(rel)} SKIP(history PASS) {rel}")
             done += 1
             skipped += 1
             continue
-        outcome = _test_outcome(rel, i, total, seq_map, profile, verdict_skip)
-        done += 1
-        if outcome == "pass":
-            passed += 1
-        elif outcome in ("skip", "verdict"):
+        # 已判定限制清单：直接跳过（更新备注一次）
+        verdict_reasons = load_verdict_list()
+        if rel in verdict_reasons:
+            record_verdict(rel, f"已判定限制: {verdict_reasons[rel]}",
+                           verdict_reasons[rel], "skip-list")
+            with open(log, "a") as f:
+                f.write(f"[{i}/{total}] VERDICT_SKIP {rel} ({verdict_reasons[rel]})\n")
+            print(f"⏭️ {tag(rel)} {rel} 已判定限制（{verdict_reasons[rel]}），跳过")
+            done += 1
             skipped += 1
-        elif outcome == "fail":
+            continue
+        print(f"\n{tag(rel)} ▶ {rel}")
+        with open(log, "a") as f:
+            f.write(f"[{i}/{total}] TEST {rel}\n")
+        rc = test_one(rel, profile)
+        done += 1
+        if rc == 0:
+            passed += 1
+            with open(log, "a") as f:
+                f.write(f"DONE {rel}\n")
+        elif rc in (2, 3):
+            # 设备离线(2)/辅助工程无测试(3)：记录后继续（非真实失败）
+            skipped += 1
+            with open(log, "a") as f:
+                f.write(f"SKIP_ITEM {rel} rc={rc}\n")
+            print(f"{tag(rel)} {rel} 跳过（rc={rc}：设备离线/辅助工程）")
+        else:
+            # 失败：--verdict-skip 模式下先判定（方案库 verdict=limit → 更新备注跳过继续）
+            if verdict_skip:
+                err = last_err(rel)
+                from triage import dispatch
+                v = dispatch(rel, err)
+                if v.get("verdict") == "limit":
+                    record_verdict(rel, err, v.get("hint", ""), v.get("rule", ""))
+                    skipped += 1
+                    with open(log, "a") as f:
+                        f.write(f"VERDICT_SKIP {rel} ({v.get('rule')})\n")
+                    print(f"⏭️ [{i}/{total}] {rel} 设备/环境限制（{v.get('rule')}），"
+                          f"已更新备注，跳过继续")
+                    if i % 3 == 0:
+                        refresh_snapshot()
+                    time.sleep(1)
+                    continue
+            with open(log, "a") as f:
+                f.write(f"FAIL_STOP {rel} rc={rc}\n")
+            print(f"⏸️ {tag(rel)} {rel} 失败（rc={rc}），按 7.6 逐个闭环：triage → 修复 → 重测")
+            print(f"   → python3 scripts/test/triage.py {rel}")
             break
         if i % 3 == 0:
             refresh_snapshot()

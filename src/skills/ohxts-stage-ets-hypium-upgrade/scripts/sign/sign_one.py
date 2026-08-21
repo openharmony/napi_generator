@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import re
 import shutil
 import subprocess
@@ -28,8 +27,7 @@ from common.paths import HAP_SIGN_TOOL, SIGN_MATERIALS, build_env  # noqa: E402
 
 ENV = build_env()
 WORKDIR = Path("/tmp/xts_sign")
-# hap-sign-tool 密钥库口令：官方测试材料默认值；可用环境变量 OH_XTS_KEYSTORE_PWD 覆盖
-PWD = os.environ.get("OH_XTS_KEYSTORE_PWD", "123" + "456")
+PWD = "123456"
 KEY_ALIAS = "oh-app1-key-v1"
 PROFILE_KEY_ALIAS = {"release": "openharmony application profile release",
                      "debug": "openharmony application profile debug"}
@@ -38,8 +36,18 @@ PROFILE_PEM = {"release": "OpenHarmonyProfileRelease.pem",
 TEMPLATE_FILE = {"release": "UnsgnedReleasedProfileTemplate.json",
                  "debug": "UnsgnedDebugProfileTemplate.json"}
 SYSTEM_CAPS = ["AllowAppUsePrivilegeExtension"]
-# 原生开发套件缩写（权限名固定，字面量拆分防 WordsTool 自触发）
-_NATIVE_ABBR = chr(78) + chr(68) + chr(75)
+
+
+def _has_privilege_extension(proj: Path) -> bool:
+    """工程是否含特权扩展（service/datashare/ui_service）→ profile 需 AllowAppUsePrivilegeExtension。"""
+    for f in proj.rglob("module.json5"):
+        if any(seg in f.parts for seg in ("build", "oh_modules")):
+            continue
+        t = f.read_text(errors="replace")
+        for typ in ("service", "datashare", "ui_service"):
+            if f'"type": "{typ}"' in t or f"'type': '{typ}'" in t:
+                return True
+    return False
 
 
 def load_sx_profile(proj: Path) -> dict | None:
@@ -85,7 +93,7 @@ DEBUG_ACLS = [
     "ohos.permission.KILL_APP_PROCESSES",
     "ohos.permission.MANAGE_LOCAL_ACCOUNTS",
     "ohos.permission.MANAGE_WIFI_CONNECTION",
-    "ohos.permission." + _NATIVE_ABBR + "_START_SELF_UI_ABILITY",
+    "ohos.permission.NDK_START_SELF_UI_ABILITY",
     "ohos.permission.PREPARE_APP_TERMINATE",
     "ohos.permission.PRIVACY_WINDOW",
     "ohos.permission.PROXY_AUTHORIZATION_URI",
@@ -101,6 +109,8 @@ DEBUG_ACLS = [
     "ohos.permission.UNINSTALL_CLONE_BUNDLE",
     "ohos.permission.UPDATE_CONFIGURATION",
     "ohos.permission.USE_BLUETOOTH",
+    # 2026-08-20 实战补充：浮窗类测试（ace_c_arkui_test SYSTEM_FLOAT_WINDOW 9568289）
+    "ohos.permission.SYSTEM_FLOAT_WINDOW",
     # 2026-08-18 实战补充：数据清理类测试需要
     "ohos.permission.CLEAN_APPLICATION_DATA",
 ]
@@ -156,7 +166,6 @@ def reorder_chain_leaf_first(cer: bytes) -> bytes:
     certs = _CER_RE.findall(cer)
     if len(certs) < 3:
         return cer  # 单证书原样
-
     def kind(c: bytes) -> int:
         cn = _CN_RE.search(c)
         name = cn.group(1).decode() if cn else ""
@@ -186,7 +195,11 @@ def build_profile(work: Path, bundle: str, profile_type: str,
     data = json.loads(tpl_path.read_text())
     data["bundle-info"]["bundle-name"] = bundle
     data["bundle-info"]["app-feature"] = app_feature
-    data["bundle-info"]["app-privilege-capabilities"] = privileges or []
+    # app-privilege-capabilities 必须放 profile 顶层（设备端 provision_verify 从顶层解析，
+    # 放 bundle-info 内解析为空 → service 等特权扩展安装 9568344，2026-08-20 实测）
+    data["bundle-info"].pop("app-privilege-capabilities", None)
+    if privileges:
+        data["app-privilege-capabilities"] = privileges
     if acls:
         data["acls"]["allowed-acls"] = acls
     tpl = work / f"tpl_{cache_key}.json"
@@ -258,7 +271,7 @@ def sign_project(proj: Path, profile_type: str = "release", bundle: str = "",
         import re as _re
         try:
             c = (proj / "AppScope" / "app.json5").read_text(errors="replace")
-            m = _re.search(r'"bundleName"\s*:\s*"([^"]+)"', c)
+            m = _re.search(r'["\']?bundleName["\']?\s*:\s*"([^"]+)"', c)
             bundle = m.group(1) if m else proj.name
         except OSError:
             bundle = proj.name
@@ -269,6 +282,10 @@ def sign_project(proj: Path, profile_type: str = "release", bundle: str = "",
         return []
     app_feature = "hos_system_app" if system else "hos_normal_app"
     privileges = SYSTEM_CAPS if system else None
+    # 特权扩展（service/datashare/ui_service）：即使 hos_normal_app 也需
+    # AllowAppUsePrivilegeExtension，否则安装 9568344（2026-08-20 实测，官方 sx 同款）
+    if privileges is None and _has_privilege_extension(proj):
+        privileges = SYSTEM_CAPS
     work = ensure_materials()
     signed = []
     for h in haps:

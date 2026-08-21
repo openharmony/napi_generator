@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import re
-import shlex
 import subprocess
 from pathlib import Path
 from typing import Optional
@@ -17,17 +16,10 @@ COPYRIGHT_RE = re.compile(rb"Copyright\s*\(", re.I)
 
 
 def sh(cmd: str, cwd: Optional[Path] = None, check: bool = False) -> tuple[int, str, str]:
-    """执行命令（shell=False，命令按 shlex 拆参数；仅支持无管道/重定向的简单命令）。"""
-    args = shlex.split(cmd)
-    r = subprocess.run(args, cwd=str(cwd or REPO), capture_output=True, text=True)
+    r = subprocess.run(cmd, shell=True, cwd=str(cwd or REPO),
+                       capture_output=True, text=True)
     if check and r.returncode != 0:
         raise RuntimeError(f"cmd failed({r.returncode}): {cmd}\n{r.stderr}")
-    return r.returncode, r.stdout, r.stderr
-
-
-def shl(args: list[str], cwd: Optional[Path] = None) -> tuple[int, str, str]:
-    """执行命令（参数列表直传，路径含空格时用）。"""
-    r = subprocess.run(args, cwd=str(cwd or REPO), capture_output=True, text=True)
     return r.returncode, r.stdout, r.stderr
 
 
@@ -37,10 +29,8 @@ def git_status_short(cwd: Path = REPO) -> str:
 
 
 def git_mv(src: str, dst: str, cwd: Path = REPO) -> bool:
-    """git mv（.ts→.ets）；目标已存在时拒绝覆盖，防破坏已迁移/上游已修复的 .ets。
-
-    如 PR 43051 的 parameters 可选链回归。返回是否成功。
-    """
+    """git mv（.ts→.ets）。目标已存在时拒绝覆盖（防破坏已迁移/上游已修复的 .ets，
+    如 PR 43051 的 parameters 可选链回归）。返回是否成功。"""
     dst_p = Path(cwd, dst)
     if dst_p.exists():
         print(f"[跳过-目标已存在] {dst} 已存在，拒绝覆盖（可能已迁移或上游已修复）")
@@ -91,24 +81,22 @@ def copyright_check(base: str = "origin/master", head: str = "HEAD",
     返回违规文件列表（空 = 通过）。
     """
     problems: list[str] = []
-    # ① diff 中出现删除 Copyright 行（Python 过滤，替代 shell 管道）
-    rc, out, _ = sh(f"git diff {base}..{head}", cwd=cwd)
-    deleted_copyright = [ln for ln in out.splitlines()
-                         if re.match(r"^-.*Copyright|^- \* Copyright", ln)]
-    if deleted_copyright:
-        problems.append(f"diff 删除版权头: {base}..{head}\n" + "\n".join(deleted_copyright[:20]))
+    # ① diff 中出现删除 Copyright 行
+    rc, out, _ = sh(f"git diff {base}..{head} | grep -E '^-.*Copyright|^- \\* Copyright' || true", cwd=cwd)
+    if out.strip():
+        problems.append(f"diff 删除版权头: {base}..{head}\n{out[:2000]}")
     # ② 基线有头、HEAD 无头
     rc, out, _ = sh(f"git merge-base {base} {head}", cwd=cwd)
     mb = out.strip() or base
     rc, out, _ = sh(f"git diff --name-only {mb}..{head}", cwd=cwd)
     for f in out.splitlines():
-        rc, b, _ = shl(["git", "show", f"{mb}:{f}"], cwd=cwd)
+        rc, b, _ = sh(f"git show {mb}:{f}", cwd=cwd)
         if rc != 0:
             continue
         try:
             h = Path(cwd, f).read_bytes()
         except OSError:
-            rc, h2, _ = shl(["git", "show", f"{head}:{f}"], cwd=cwd)
+            rc, h2, _ = sh(f"git show {head}:{f}", cwd=cwd)
             if rc != 0:
                 continue
             h = h2.encode()
@@ -129,37 +117,32 @@ def forbidden_staged(cwd: Path = REPO) -> list[str]:
             continue  # 未跟踪（autosign 未跟踪可忽略，提交时只 add 具体文件即可）
         if any(seg in path for seg in ("autosign/", "oh_modules", "/build/")) or path.endswith(".hap"):
             bad.append(path)
-    rc, out, _ = sh("git ls-files", cwd=cwd)
-    tracked_autosign = [ln for ln in out.splitlines() if "autosign/" in ln]
-    if tracked_autosign:
-        bad.append("autosign 已被 git 跟踪: " + tracked_autosign[0])
+    rc, out, _ = sh("git ls-files | grep -E 'autosign/' || true", cwd=cwd)
+    if out.strip():
+        bad.append("autosign 已被 git 跟踪: " + out.splitlines()[0])
     return bad
 
 
 def check_config_residue(cwd: Path = REPO) -> list[str]:
     """1.4.2 ③ 编译期配置残留：工作区已跟踪 build-profile.json5 中 numeric compileSdkVersion。"""
     rc, out, _ = sh(
-        r"git grep -l '\"compileSdkVersion\": 26,' -- '*/build-profile.json5'", cwd=cwd)
+        r"git grep -l '\"compileSdkVersion\": 26,' -- '*/build-profile.json5' || true", cwd=cwd)
     return out.splitlines()
 
 
 def suspicious_rewrites(cwd: Path = REPO, threshold: int = 20) -> list[str]:
     """xts-git-commit：整文件重写检测 numstat 增删相等且超过阈值。"""
-    rc, out, _ = sh("git diff --cached --numstat", cwd=cwd)
-    lines = []
-    for ln in out.splitlines():
-        parts = ln.split("\t")
-        if len(parts) >= 3 and parts[0].isdigit() and parts[0] == parts[1] \
-                and int(parts[0]) > threshold:
-            lines.append(ln)
-    return lines
+    rc, out, _ = sh(
+        f"git diff --cached --numstat | awk '$1==$2 && $1>{threshold}'", cwd=cwd)
+    return out.splitlines()
 
 
 def list_changed_config(cwd: Path = REPO) -> list[str]:
     """1.4.2 ④ bundleName/模块名改动审查清单。"""
-    rc, out, _ = sh("git diff --cached --name-only", cwd=cwd)
-    return [ln for ln in out.splitlines()
-            if re.search(r"AppScope/app\.json5|config\.json|module\.json5$", ln)]
+    rc, out, _ = sh(
+        "git diff --cached --name-only | grep -E 'AppScope/app.json5|config.json|module.json5' || true",
+        cwd=cwd)
+    return out.splitlines()
 
 
 if __name__ == "__main__":

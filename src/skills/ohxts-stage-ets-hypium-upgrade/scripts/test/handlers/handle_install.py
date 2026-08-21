@@ -35,7 +35,7 @@ def handle_install_conflict(proj: Path, match: dict, err_file: str = "") -> str:
 
 
 def handle_strip_hint(proj: Path, match: dict, err_file: str = "") -> str:
-    """原生测试 HAP 合包冲突：剥离 entry 模块后与主 HAP 同装（主 HAP 提供 native）。"""
+    """NDK 测试 HAP 合包冲突：剥离 entry 模块后与主 HAP 同装（主 HAP 提供 native）。"""
     return ("测试 HAP 是合包（pack.info 含 entry）→ 与主 HAP 冲突无法同装：剥离 pack.info 的 "
             "entry 模块后主 HAP+测试 HAP 同装；3.2 只解压 libs/arm/（非 arm64-v8a），主 HAP 提供 libs")
 

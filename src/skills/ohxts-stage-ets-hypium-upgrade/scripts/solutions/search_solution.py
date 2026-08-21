@@ -70,30 +70,8 @@ def _err_file_from(msg: str) -> str:
     return m.group(1).strip() if m else ""
 
 
-def _bump_count(solutions: list[dict], hit_id: str, today: str) -> bool:
-    """命中计数写回（自动维护）；返回是否改动。"""
-    for s in solutions:
-        if s["id"] == hit_id:
-            s["count"] = s.get("count", 0) + 1
-            s["last_hit"] = today
-            return True
-    return False
-
-
-def _apply_one(h: dict, e: str, proj: Path | None, dry_run: bool) -> str:
-    """单条命中应用处置；返回记录文本（无 proj 时仅指引）。"""
-    if not proj:
-        return f"[{h['id']}] {h['hint']}"
-    if dry_run:
-        return f"[dry-run] {h['id']}: {h['handler']} @ {proj}"
-    changed_files = _call_handler(h["handler"], proj, h["match"], _err_file_from(e))
-    return (f"{h['id']}: 改动 {len(changed_files)} 文件 "
-            f"{[Path(c).name for c in changed_files][:5]}")
-
-
-def search_and_apply(err: str, proj: Path | None = None,
-        domain: str = "all", dry_run: bool = False,
-        log_file: Path | None = None) -> dict:
+def search_and_apply(err: str, proj: Path | None = None, domain: str = "all",
+                     dry_run: bool = False, log_file: Path | None = None) -> dict:
     """检索并（可选）应用处置。返回 {'hits': [...], 'applied': [...], 'unmatched': [...]}。"""
     errors = [err]
     if log_file and log_file.is_file():
@@ -111,11 +89,22 @@ def search_and_apply(err: str, proj: Path | None = None,
             continue
         for h in hits:
             # 命中统计（自动维护：count+1）
-            changed |= _bump_count(solutions, h["id"], today)
-            if h.get("handler") and proj:
-                applied.append(_apply_one(h, e, proj, dry_run))
+            for s in solutions:
+                if s["id"] == h["id"]:
+                    s["count"] = s.get("count", 0) + 1
+                    s["last_hit"] = today
+                    changed = True
+                    break
+            if proj and h.get("handler"):
+                if dry_run:
+                    applied.append(f"[dry-run] {h['id']}: {h['handler']} @ {proj}")
+                    continue
+                changed_files = _call_handler(h["handler"], proj, h["match"],
+                                              _err_file_from(e))
+                applied.append(f"{h['id']}: 改动 {len(changed_files)} 文件 "
+                               f"{[Path(c).name for c in changed_files][:5]}")
             elif not proj:
-                applied.append(_apply_one(h, e, None, dry_run))
+                applied.append(f"[{h['id']}] {h['hint']}")
     if changed:
         save_solutions(solutions)
     return {"hits": applied, "unmatched": unmatched}

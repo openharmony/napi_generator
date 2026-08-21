@@ -18,6 +18,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common.arkts_fixes import apply_arkts_fixes  # noqa: E402
+from common.code_quality import fix_code_quality  # noqa: E402
+from common.quotes import dq_to_sq  # noqa: E402
 from common.git_utils import cleanup_leftover_ts, git_mv, write_preserve_eol  # noqa: E402
 from common.paths import REPO  # noqa: E402
 
@@ -46,7 +48,7 @@ def update_srcentry(proj: Path, renamed: list[tuple[Path, Path]]) -> int:
             if any(seg in cfg.parts for seg in ("build", "oh_modules")):
                 continue
             try:
-                text = cfg.read_text(errors="replace")
+                text = open(cfg, encoding="utf-8", errors="replace", newline="").read()
             except OSError:
                 continue
             new_text = text
@@ -74,9 +76,11 @@ def convert_project(proj: Path, dry_run: bool = False) -> dict:
         if not git_mv(rel_old, rel_new):
             continue
         new_p = f.with_suffix(".ets")
-        text = new_p.read_text(errors="replace")
+        text = open(new_p, encoding="utf-8", errors="replace", newline="").read()
         # 保持原 .ts 行尾（git mv 保留原字节，write_text 默认 LF 会破坏 CRLF）
-        write_preserve_eol(new_p, text, apply_arkts_fixes(text))
+        # 代码规范：双引号→单引号（版权头除外）+ 机械格式修复（大括号同行等）
+        write_preserve_eol(new_p, text,
+                           fix_code_quality(dq_to_sq(apply_arkts_fixes(text))))
         converted.append((f, new_p))
     ref_changed = 0
     if not dry_run:

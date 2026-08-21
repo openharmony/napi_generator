@@ -20,9 +20,7 @@ from typing import Optional
 from .paths import DEVICE, DEVICE_IP, DEVICE_PORT, build_env
 
 ENV = build_env()
-# 厂商前缀字面量拆分防 WordsTool 自触发（bundle 前缀过滤规则不变）
-_VENDOR = chr(104) + chr(117) + chr(97) + chr(119) + chr(101) + chr(105)
-SYSTEM_BUNDLES = re.compile(r"^(ohos|com.ohos|com." + _VENDOR + r")")
+SYSTEM_BUNDLES = re.compile(r"^(ohos|com.ohos|com.huawei)")
 
 # 卸载 bm dump 时的系统保留 bundle 前缀
 
@@ -124,60 +122,6 @@ def install_hap(hap_path: str, timeout: int = 90) -> tuple[bool, str]:
     return ok, err
 
 
-_PROGRESS_RE = re.compile(r"OHOS_REPORT_STATUS|\[Hypium\]|case begin|Tests run:")
-
-
-def _pump(proc, idle_limit: int, progress_limit: int, deadline: float
-          ) -> tuple[str, bool]:
-    """轮询 hdc 输出直到进程退出/挂起；返回 (输出, 是否挂起)。
-
-    select 轮询 + 二进制 os.read：文本模式 read(n) 会阻塞等满 n 字符
-    导致超时检查卡死（2026-08-18 实战）。
-    """
-    import select
-    out = ""
-    last_active = time.time()      # 任何输出
-    last_progress = time.time()    # 用例进展标记
-    hung = False
-    while proc.poll() is None:
-        r, _, _ = select.select([proc.stdout], [], [], 2)
-        chunk = ""
-        if r:
-            try:
-                chunk = os.read(proc.stdout.fileno(), 4096).decode(errors="replace")
-            except Exception:
-                chunk = ""
-        if chunk:
-            out += chunk
-            last_active = time.time()
-            if _PROGRESS_RE.search(chunk):
-                last_progress = time.time()
-        if (time.time() - last_active > idle_limit
-                or time.time() - last_progress > progress_limit
-                or time.time() > deadline):
-            hung = True
-            proc.kill()
-            break
-    return out, hung
-
-
-def _drain_stdout(proc) -> str:
-    """进程退出后排空剩余 stdout（防管道残留阻塞）。"""
-    out = ""
-    try:
-        while True:
-            try:
-                b = os.read(proc.stdout.fileno(), 4096)
-            except Exception:
-                break
-            if not b:
-                break
-            out += b.decode(errors="replace")
-    except Exception:
-        pass
-    return out
-
-
 def run_aa_test(bundle: str, module: str, suite: str, timeout: int = 300,
                 idle_limit: int = 30, progress_limit: int = 60) -> tuple[str, bool]:
     """逐套件 aa test（liveness + 进展检测）。
@@ -200,8 +144,51 @@ def run_aa_test(bundle: str, module: str, suite: str, timeout: int = 300,
     proc = subprocess.Popen(
         ["hdc", "-t", DEVICE, "shell", cmd], stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT, env=ENV)
-    out, hung = _pump(proc, idle_limit, progress_limit, time.time() + timeout)
-    out += _drain_stdout(proc)
+    out = ""
+    last_active = time.time()      # 任何输出
+    last_progress = time.time()    # 用例进展标记
+    hung = False
+    deadline = time.time() + timeout
+    _PROGRESS_RE = re.compile(r"OHOS_REPORT_STATUS|\[Hypium\]|case begin|Tests run:")
+    import select
+    while proc.poll() is None:
+        # select 轮询 + 二进制 os.read：文本模式 read(n) 会阻塞等满 n 字符导致超时检查卡死（2026-08-18 实战）
+        r, _, _ = select.select([proc.stdout], [], [], 2)
+        if r:
+            try:
+                chunk = os.read(proc.stdout.fileno(), 4096).decode(errors="replace")
+            except Exception:
+                chunk = ""
+        else:
+            chunk = ""
+        if chunk:
+            out += chunk
+            last_active = time.time()
+            if _PROGRESS_RE.search(chunk):
+                last_progress = time.time()
+        if time.time() - last_active > idle_limit:
+            hung = True
+            proc.kill()
+            break
+        if time.time() - last_progress > progress_limit:
+            hung = True
+            proc.kill()
+            break
+        if time.time() > deadline:
+            hung = True
+            proc.kill()
+            break
+    try:
+        while True:
+            try:
+                b = os.read(proc.stdout.fileno(), 4096)
+            except Exception:
+                break
+            if not b:
+                break
+            out += b.decode(errors="replace")
+    except Exception:
+        pass
     proc.wait(timeout=10)
     if hung:
         out += "\n[__HUNG__] 无进展/无输出超时终止"

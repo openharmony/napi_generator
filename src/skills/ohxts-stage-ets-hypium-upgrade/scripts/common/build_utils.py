@@ -92,73 +92,9 @@ def restore_sdk_versions(bak: Optional[Path]) -> None:
 
 
 # ---------- 单工程编译 ----------
-def _run_hvigor(proj: Path, args: list[str], timeout: int, log: Path,
-                task: str = "assembleHap") -> int:
-    """调 hvigorw 编译指定任务，日志追加写；超时返回 255。"""
-    cmd = [str(NODE), str(HVIGORW_JS), "--mode", "module",
-           "-p", "product=default", *args, task,
-           "--analyze=normal", "--parallel", "--incremental", "--no-daemon"]
-    try:
-        with open(log, "a") as f:
-            r = subprocess.run(cmd, cwd=str(proj), env=ENV, timeout=timeout,
-                               stdout=f, stderr=subprocess.STDOUT)
-        return r.returncode
-    except subprocess.TimeoutExpired:
-        return 255
-
-
-def _build_test_hap(proj: Path, bp: Path, log: Path, timeout: int) -> int:
-    """有 ohosTest 目录时编译测试 HAP；无则返回 0。"""
-    if not (proj / "entry/src/ohosTest").is_dir():
-        return 0
-    module = extract_module_name(bp) if bp.exists() else "entry"
-    return _run_hvigor(proj, ["-p", f"module={module}@ohosTest",
-                              "-p", "isOhosTest=true", "-p", "buildMode=test"],
-                       timeout, log)
-
-
-def _shared_modules(proj: Path, bp: Path) -> list[str]:
-    """shared 类型模块清单（assembleHap 不覆盖，需单独 assembleHsp）。"""
-    main_mod = extract_module_name(bp)
-    out: list[str] = []
-    for mod in extract_module_names(bp):
-        if mod == main_mod:
-            continue
-        mcfg = proj / mod / "src/main/module.json5"
-        if mcfg.is_file() and '"type": "shared"' in mcfg.read_text(errors="replace"):
-            out.append(mod)
-    return out
-
-
-def _build_shared_hsps(proj: Path, bp: Path, log: Path, timeout: int) -> int:
-    """shared 模块逐个 assembleHsp（evictModuleFilePages 依赖 library .hsp 安装）。"""
-    rc = 0
-    if not bp.exists():
-        return rc
-    for mod in _shared_modules(proj, bp):
-        rc |= _run_hvigor(proj, ["-p", f"module={mod}"], timeout, log,
-                          task="assembleHsp")
-    return rc
-
-
-def _first_error(log: Path, rc1: int, rc2: int, rc3: int) -> str:
-    """从编译日志提取首条 Error Message（失败时）。"""
-    try:
-        text = log.read_text(errors="replace")
-    except OSError:
-        text = ""
-    m = re.search(r"Error Message[:：]\s*([^\n]+)", text)
-    if m:
-        return m.group(1).strip()[:200]
-    if "timed out" in text.lower() or rc1 == 255 or rc2 == 255 or rc3 == 255:
-        return "timeout"
-    m2 = re.search(r"ERROR:?\s+[^\n]{10,200}", text)
-    return m2.group(0).strip()[:200] if m2 else f"rc main={rc1} test={rc2} hsp={rc3}"
-
-
 def build_one(proj: Path, timeout_main: int = 400, timeout_test: int = 400,
               log: Optional[Path] = None) -> dict:
-    """编译单工程：main HAP + （有 ohosTest 时）test HAP + shared 模块 .hsp。
+    """编译单工程：main HAP + （有 ohosTest 时）test HAP。
 
     返回 {'ok': bool, 'main_rc': int, 'test_rc': int, 'log': Path,
           'error': 首条 Error Message（失败时）}
@@ -166,16 +102,70 @@ def build_one(proj: Path, timeout_main: int = 400, timeout_test: int = 400,
     proj = Path(proj)
     log = log or Path(tempfile.gettempdir()) / f"build_{proj.name}.log"
     bp = proj / "build-profile.json5"
-    bak = patch_sdk_versions(bp) if bp.exists() else None
+    bak = None
+    if bp.exists():
+        bak = patch_sdk_versions(bp)
+
+    def run(args: list[str], timeout: int) -> int:
+        cmd = [str(NODE), str(HVIGORW_JS), "--mode", "module",
+               "-p", "product=default", *args, "assembleHap",
+               "--analyze=normal", "--parallel", "--incremental", "--no-daemon"]
+        try:
+            with open(log, "a") as f:
+                r = subprocess.run(cmd, cwd=str(proj), env=ENV, timeout=timeout,
+                                   stdout=f, stderr=subprocess.STDOUT)
+            return r.returncode
+        except subprocess.TimeoutExpired:
+            return 255
+
     try:
         log.write_text("")
-        rc1 = _run_hvigor(proj, [], timeout_main, log)
-        rc2 = _build_test_hap(proj, bp, log, timeout_test)
-        rc3 = _build_shared_hsps(proj, bp, log, timeout_main)
+        rc1 = run([], timeout_main)
+        has_test = (proj / "entry/src/ohosTest").is_dir()
+        rc2 = 0
+        if has_test:
+            module = extract_module_name(bp) if bp.exists() else "entry"
+            rc2 = run(["-p", f"module={module}@ohosTest", "-p", "isOhosTest=true",
+                       "-p", "buildMode=test"], timeout_test)
+        # shared 类型模块（library/library2…）产出 .hsp，assembleHap 不覆盖，单独 assembleHsp
+        # （2026-08-18 实战：evictModuleFilePages 依赖 library 模块 .hsp 安装）
+        rc3 = 0
+        if bp.exists():
+            main_mod = extract_module_name(bp)
+            for mod in extract_module_names(bp):
+                if mod == main_mod:
+                    continue
+                mcfg = proj / mod / "src/main/module.json5"
+                if mcfg.is_file() and '"type": "shared"' in mcfg.read_text(errors="replace"):
+                    cmd = [str(NODE), str(HVIGORW_JS), "--mode", "module",
+                           "-p", "product=default", "-p", f"module={mod}", "assembleHsp",
+                           "--analyze=normal", "--parallel", "--incremental", "--no-daemon"]
+                    try:
+                        with open(log, "a") as f:
+                            r = subprocess.run(cmd, cwd=str(proj), env=ENV,
+                                               timeout=timeout_main, stdout=f,
+                                               stderr=subprocess.STDOUT)
+                        rc3 |= r.returncode
+                    except subprocess.TimeoutExpired:
+                        rc3 = 255
     finally:
         restore_sdk_versions(bak)
+
     ok = rc1 == 0 and rc2 == 0 and rc3 == 0
-    err = "" if ok else _first_error(log, rc1, rc2, rc3)
+    err = ""
+    if not ok:
+        try:
+            text = log.read_text(errors="replace")
+        except OSError:
+            text = ""
+        m = re.search(r"Error Message[:：]\s*([^\n]+)", text)
+        if m:
+            err = m.group(1).strip()[:200]
+        elif "timed out" in text.lower() or rc1 == 255 or rc2 == 255 or rc3 == 255:
+            err = "timeout"
+        else:
+            m2 = re.search(r"ERROR:?\s+[^\n]{10,200}", text)
+            err = m2.group(0).strip()[:200] if m2 else f"rc main={rc1} test={rc2} hsp={rc3}"
     return {"ok": ok, "main_rc": rc1, "test_rc": rc2, "hsp_rc": rc3, "log": log, "error": err}
 
 
