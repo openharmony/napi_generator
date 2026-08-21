@@ -41,7 +41,7 @@ def format_hits(hits: list[Hit], domain: str, limit: int = 20) -> str:
     out: list[str] = []
     for rid in sorted(by_rule):
         r = rmap.get(rid, {})
-        hs = by_rule[rid]
+        hs = by_rule.get(rid, [])
         out.append(f"\n[{rid}] {r.get('name', '')} ({r.get('category', '')}/{r.get('severity', '')})"
                    f" — {len(hs)} 处")
         for h in hs[:limit]:

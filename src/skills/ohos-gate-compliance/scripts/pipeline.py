@@ -16,7 +16,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent / "checkers"))
 
 from base import Hit  # noqa: E402
-import cpp_checker, ets_checker, config_checker  # noqa: E402
+import cpp_checker  # noqa: E402
+import ets_checker  # noqa: E402
+import config_checker  # noqa: E402
 from gate_check import _detect_profile, scan_code_file, fix_code_file  # noqa: E402
 
 _AA_LOG = "a" + "a" + "_test.log"

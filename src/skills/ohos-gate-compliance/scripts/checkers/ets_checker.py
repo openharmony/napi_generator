@@ -352,7 +352,7 @@ def _scan_arkts_xtscheck(path: Path, text: str, lines: list[str], add) -> None:
         _check_one_it_jsdoc(path, text, m, add)
     for line_no, msg in _check_async_callback_err(lines):
         add("XTS.CHECK.ASYNC_TESTCASE.02", line_no, msg)
-    _DIALOG_KIT_SYMS = frozenset({
+    _dialog_kit_syms = frozenset({
         "dialog", "DialogPresenter", "DialogResult", "DialogState",
         "DialogDismissal", "DialogBaseController", "DialogBaseAlignment",
         "DialogButtonOrientation",
@@ -364,7 +364,7 @@ def _scan_arkts_xtscheck(path: Path, text: str, lines: list[str], add) -> None:
         if m.group(1):
             names.append(m.group(1))
         names.extend(re.findall(r"[A-Za-z_]\w*", m.group(2)))
-        bad = sorted({n for n in names if n in _DIALOG_KIT_SYMS})
+        bad = sorted({n for n in names if n in _dialog_kit_syms})
         if not bad:
             continue
         line = text[: m.start()].count("\n") + 1

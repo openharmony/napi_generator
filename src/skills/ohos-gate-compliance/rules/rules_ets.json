@@ -257,11 +257,11 @@
   },
   {
    "id": "WordsTool.22",
-   "name": "勿裸写 AudioState",
+   "name": "勿裸写音频状态",
    "category": "gate",
    "severity": "提示",
    "detect": "regex",
-   "pattern": "(audioState 由脚本 chr 拼接检测)",
+   "pattern": "(音频状态由脚本 chr 拼接检测)",
    "fix": "用数值常量或改 UI id"
   },
   {
@@ -302,20 +302,20 @@
   },
   {
    "id": "WordsTool.66",
-   "name": "勿保留 d8 片段",
+   "name": "勿保留双字符片段",
    "category": "gate",
    "severity": "提示",
    "detect": "regex",
-   "pattern": "(d8 由脚本 chr 拼接检测)",
+   "pattern": "(双字符片段由脚本 chr 拼接检测)",
    "fix": "uuid 类编号改 SUB_* 语义号"
   },
   {
    "id": "WordsTool.143",
-   "name": "勿裸写 ndk 缩写",
+   "name": "勿裸写本地开发套件缩写",
    "category": "gate",
    "severity": "提示",
    "detect": "regex",
-   "pattern": "(ndk 由脚本 chr 拼接检测)",
+   "pattern": "(本地开发套件由脚本 chr 拼接检测)",
    "fix": "改 NATIVE 或「专用提供方」"
   },
   {

@@ -36,7 +36,11 @@ sys.path.insert(0, str(SCRIPTS))
 sys.path.insert(0, str(SCRIPTS / "checkers"))
 
 from base import Hit, format_hits, load_rules  # noqa: E402
-import cpp_checker, ets_checker, config_checker, git_checker, skill_checker  # noqa: E402
+import cpp_checker  # noqa: E402
+import ets_checker  # noqa: E402
+import config_checker  # noqa: E402
+import git_checker  # noqa: E402
+import skill_checker  # noqa: E402
 
 SKILLS_ROOT = Path("/root/aiSkill/napi_generator/src/skills")
 
@@ -121,6 +125,25 @@ def fix_code_file(fp: Path, text: str, profile: str) -> tuple[str, int]:
     return text, fixed
 
 
+
+
+def _auto_fix_rounds(targets: list, profile: str) -> None:
+    """两轮自动修复 + 复查（无修复即停）。"""
+    for _ in range(2):
+        fixed_total = 0
+        for fp in targets:
+            try:
+                text = fp.read_text(encoding="utf-8")
+            except OSError:
+                continue
+            new_text, n = fix_code_file(fp, text, profile)
+            if n:
+                fp.write_text(new_text, encoding="utf-8", newline="")
+                fixed_total += n
+        if not fixed_total:
+            break
+
+
 def cmd_code(args) -> int:
     profile = args.profile if args.profile != "auto" else (
         _detect_profile(Path(args.paths[0])) if args.paths else "ets")
@@ -131,21 +154,8 @@ def cmd_code(args) -> int:
         print(f"[gate] 无可扫描文件（profile={profile}，{'staged' if args.staged else args.base or '全量'}）")
         return 0
     want = set(args.rule.split(",")) if args.rule else set()
-    # 两轮自动修复 + 复查
     if args.fix:
-        for _ in range(2):
-            fixed_total = 0
-            for fp in targets:
-                try:
-                    text = fp.read_text(encoding="utf-8")
-                except OSError:
-                    continue
-                new_text, n = fix_code_file(fp, text, profile)
-                if n:
-                    fp.write_text(new_text, encoding="utf-8", newline="")
-                    fixed_total += n
-            if not fixed_total:
-                break
+        _auto_fix_rounds(targets, profile)
     hits: list[Hit] = []
     for fp in targets:
         try:
