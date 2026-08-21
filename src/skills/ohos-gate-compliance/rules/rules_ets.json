@@ -100,7 +100,7 @@
    "severity": "致命",
    "detect": "heuristic",
    "pattern": "await-outside-try",
-   "fix": "await API 调用包 try/catch（含 .then/.catch 链；Utils.sleep 等测试工具除外）"
+   "fix": "await 异步调用包 try/catch；回调须声明 err 且块体内检查/使用 （(err, data) => { if (err) {...} }，uiextensioncontext 2026-08-21 实锤）"
   },
   {
    "id": "XTS.CHECK.ERROR_CODE.01",

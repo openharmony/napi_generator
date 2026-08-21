@@ -158,6 +158,13 @@ def _check_one_it_jsdoc(path: Path, text: str, m: re.Match[str], add) -> None:
 
 
 def _check_async_callback_err(lines: list[str]) -> list[tuple[int, str]]:
+    """XTS.CHECK.ASYNC_TESTCASE.02 子规则 2/3（2026-08-21 收录：块体回调 err 未使用实锤）。
+
+    2) 异步 API 回调未声明 error 参数（零参数 () => 回调）
+    3) 回调声明 err 但未检查/使用：
+       - 表达式体 `(err?: Error) => expr`（原正则）
+       - 块体 `(err, data) => { ... }` 内未出现 err 标识符（新增，uiextensioncontext 3 处实锤）
+    """
     hits: list[tuple[int, str]] = []
     zero_param_re = re.compile(r"(?:Utils\.registerEvent|Utils\.waitForExist)\([^;\n]*\(\s*\)\s*=>")
     unused_err_re = re.compile(r"\(err\?:\s*Error\)\s*=>\s*[^\s{]")
@@ -166,7 +173,29 @@ def _check_async_callback_err(lines: list[str]) -> list[tuple[int, str]]:
             hits.append((i, "异步 API 回调未声明 error 参数：() => 须改 (err: Error)/(err?: Error) 并补错误分支"))
         elif unused_err_re.search(ln):
             hits.append((i, "回调声明 err 但未检查/使用：须 if (err) 错误分支后再返回"))
+    # 块体回调 err 未使用：`(err[, ...]) => {` 起，括号配对找块尾，块内无 err 标识符则违规
+    text = "\n".join(lines)
+    for m in re.finditer(r"\((err)(?:\s*,\s*[A-Za-z_]\w*)*\)\s*=>\s*\{", text):
+        line_no = text.count("\n", 0, m.start()) + 1
+        block = _block_until_brace(text, m.end() - 1)
+        if "err" not in block:
+            hits.append((line_no, "回调声明 err 但块体内未检查/使用：须 if (err) 错误分支后再返回"))
     return hits
+
+
+def _block_until_brace(text: str, start: int) -> str:
+    """括号配对：从 start（'{' 位置）取到配对 '}' 的块。"""
+    depth = 0
+    j = start
+    while j < len(text):
+        if text[j] == "{":
+            depth += 1
+        elif text[j] == "}":
+            depth -= 1
+            if depth == 0:
+                break
+        j += 1
+    return text[start:j + 1]
 
 
 def _strip_line_for_braces(line: str) -> str:
