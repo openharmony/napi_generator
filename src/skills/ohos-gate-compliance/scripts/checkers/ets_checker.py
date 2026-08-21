@@ -118,10 +118,11 @@ def _check_await_outside_try(lines: list[str]) -> list[tuple[int, str]]:
 
 # ---------------- 迁移自 gate_review：xtscheck @tc ----------------
 def _is_hypium_test_ets(path: Path) -> bool:
+    """测试用例文件：ohosTest/ets/test/ 下（含 main/ets/test 一体工程）。"""
     s = str(path).replace("\\", "/")
     if path.suffix != ".ets":
         return False
-    if "/ohosTest/" in s:
+    if "/ohosTest/ets/test/" in s:
         return True
     return s.endswith(".test.ets") and "/ets/test/" in s
 
@@ -238,17 +239,6 @@ def _update_brace_stack(s: str, stack: list[str]) -> None:
             del stack[opens:]
 
 
-def _check_await_outside_try_gate(lines: list[str]) -> list[tuple[int, str]]:
-    """XTS.CHECK.ASYNC_TESTCASE.02 子规则 1（gate_review 版，逐行栈跟踪）。"""
-    hits: list[tuple[int, str]] = []
-    stack: list[str] = []
-    for i, ln in enumerate(lines):
-        if re.search(r"\bawait\s+", ln) and "try" not in stack:
-            hits.append((i + 1, "await 异步调用须在 try...catch 内（waitForExist/sleep/driver.* 均含）"))
-        _update_brace_stack(_strip_line_for_braces(ln).strip(), stack)
-    return hits
-
-
 # ---------------- 主扫描入口 ----------------
 def _scan_regex_quality(lines: list[str], add) -> None:
     """正则类规则：ESObject/;;/命名/行宽/错误码/空循环体/用例编号/大括号。"""
@@ -275,13 +265,20 @@ def _scan_regex_quality(lines: list[str], add) -> None:
 
 
 def _scan_import_any(lines: list[str], add) -> None:
-    """COMPILE.IMPORT.01 import 错位 / COMPILE.ANY.01 显式 any。"""
+    """COMPILE.IMPORT.01 import 错位 / COMPILE.ANY.01 显式 any（多行 import 续行豁免）。"""
     seen_code = False
+    in_import = False  # 多行 import { ... } 块内
     for i, ln in enumerate(lines, 1):
         st = ln.strip()
-        if st.startswith("import ") or st.startswith("//") or st == "" or st.startswith("/*") or st.startswith("*"):
-            if seen_code and st.startswith("import "):
+        if st.startswith("import ") or st == "" or st.startswith("//") or st.startswith("/*") or st.startswith("*"):
+            if seen_code and st.startswith("import ") and not in_import:
                 add("COMPILE.IMPORT.01", i, "import 在代码之后")
+            if "{" in st and "}" not in st:
+                in_import = True
+            continue
+        if in_import:
+            if "}" in st:
+                in_import = False
             continue
         if st.startswith("import"):
             if seen_code:
@@ -299,10 +296,11 @@ def _scan_heuristic(path: Path, text: str, lines: list[str], add) -> None:
         if re.match(r"^\s+(?!public |private |protected )[a-zA-Z_]\w*\s*:\s*"
                     r"(string|number|boolean|LocalStorage|Array|Record|object|any)\s*[=;]", ln):
             add("G.EXT.01", i, ln.strip()[:60])
-    for m in re.finditer(r"\.(then|catch)\(\([^)]*\)\s*=>\s*\{", text):
-        line_no, has_done = _callback_block_has_done(text, m)
-        if not has_done:
-            add("XTS.CHECK.ASYNC_TESTCASE.01", line_no, f".{m.group(1)} 分支无 done()")
+    if _is_hypium_test_ets(path):
+        for m in re.finditer(r"\.(then|catch)\(\([^)]*\)\s*=>\s*\{", text):
+            line_no, has_done = _callback_block_has_done(text, m)
+            if not has_done:
+                add("XTS.CHECK.ASYNC_TESTCASE.01", line_no, f".{m.group(1)} 分支无 done()")
     for line_no, msg in _check_await_outside_try(lines):
         add("XTS.CHECK.ASYNC_TESTCASE.02", line_no, msg)
     _scan_switch_indent(lines, add)
@@ -352,8 +350,6 @@ def _scan_arkts_xtscheck(path: Path, text: str, lines: list[str], add) -> None:
         add("xtscheck", 0, "禁止 forEach 动态生成 it()")
     for m in re.finditer(r"(?m)^(\s*)it\(\s*['\"]([^'\"]+)['\"]", text):
         _check_one_it_jsdoc(path, text, m, add)
-    for line_no, msg in _check_await_outside_try_gate(lines):
-        add("XTS.CHECK.ASYNC_TESTCASE.02", line_no, msg)
     for line_no, msg in _check_async_callback_err(lines):
         add("XTS.CHECK.ASYNC_TESTCASE.02", line_no, msg)
     _DIALOG_KIT_SYMS = frozenset({
