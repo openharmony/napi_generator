@@ -63,6 +63,55 @@ def build_hap_to_main_map() -> dict[str, list[str]]:
     return hap_to_main
 
 
+def _sync_status(row, latest) -> bool:
+    """状态/通过数/报告/备注同步。返回是否更新。"""
+    p = row[2].value
+    if p not in latest:
+        return False
+    status, passed, total, err, report = latest[p]
+    tst = {"PASS": "通过", "FAIL": "失败", "BUILD_FAIL": "编译失败",
+           "INSTALL_FAIL": "安装失败", "DEVICE_OFFLINE": "设备离线",
+           "NO_RESULT": "无结果", "SIGN_FAIL": "签名失败"}.get(status, status)
+    row[6].value = tst
+    row[7].value = f"{passed}/{total}" if passed != "-" else ""
+    row[9].value = report if report != "-" else ""
+    if status == "PASS":
+        if row[10].value and str(row[10].value).startswith("[auto]"):
+            row[10].value = None
+    elif err and err != "-":
+        _update_note(row, err)
+    return True
+
+
+def _update_note(row, err: str) -> None:
+    """失败备注写入（保留人工判定/主hap未通过等既有备注）。"""
+    note = str(err)[:200]
+    cur_note = str(row[10].value or "")
+    if any(k in cur_note for k in ("已判定限制", "主hap暂未测试通过", "主包(")):
+        return
+    if cur_note and not cur_note.startswith("[auto]"):
+        row[10].value = f"{cur_note}；[auto]{note}"
+    else:
+        row[10].value = f"[auto]{note}"
+
+
+
+
+def _resolve_skip_pr(p: str, hap_to_main: dict, main_status: dict, row) -> str:
+    """SKIP 辅助 hap：主 hap 已通过 → 满足 PR；未通过则备注说明。"""
+    name = os.path.basename(p).lower()
+    main_names: list[str] = []
+    for hap, mains in hap_to_main.items():
+        if name in hap.lower() or hap.lower() in name:
+            main_names = mains
+            if any(main_status.get(m, ("", ""))[0] == "通过" for m in mains):
+                return "是"
+    if main_names:
+        note = "主hap暂未测试通过：" + "、".join(m.rsplit("/", 1)[-1] for m in main_names)
+        cur = row[10].value or ""
+        row[10].value = f"{cur}；[auto]{note}" if not str(cur).startswith("[auto]") else f"[auto]{note}"
+    return "否"
+
 def sync_xlsx() -> int:
     latest = latest_from_tsv()
     wb = load_workbook(XLSX)
@@ -76,58 +125,25 @@ def sync_xlsx() -> int:
     hap_to_main = build_hap_to_main_map()
     for row in ws.iter_rows(min_row=2):
         p = row[2].value
-        if p in latest:
-            status, passed, total, err, report = latest[p]
-            tst = {"PASS": "通过", "FAIL": "失败", "BUILD_FAIL": "编译失败",
-                   "INSTALL_FAIL": "安装失败", "DEVICE_OFFLINE": "设备离线",
-                   "NO_RESULT": "无结果", "SIGN_FAIL": "签名失败"}.get(status, status)
-            row[6].value = tst
-            row[7].value = f"{passed}/{total}" if passed != "-" else ""
-            row[9].value = report if report != "-" else ""
-            # 备注列（第 11 列）：失败详情同步（第 5 点，2026-08-18 固化）
-            # PASS 清空备注；失败/限制类写入 err 详情（截断 200 字）
-            if status == "PASS":
-                if row[10].value and str(row[10].value).startswith("[auto]"):
-                    row[10].value = None
-            elif err and err != "-":
-                note = str(err)[:200]
-                cur_note = str(row[10].value or "")
-                # 已判定限制/主hap未通过的备注保留（不覆盖，2026-08-19）
-                if "已判定限制" in cur_note or "主hap暂未测试通过" in cur_note or "主包(" in cur_note:
-                    pass
-                elif cur_note and not cur_note.startswith("[auto]"):
-                    row[10].value = f"{cur_note}；[auto]{note}"
-                else:
-                    row[10].value = f"[auto]{note}"
-            comp = row[4].value
-            # [manual] 手工判定保护：备注含"已通过"判是，否则保持（映射未命中的人工补偿，2026-08-19）
-            if str(row[10].value or "").startswith("[manual]"):
-                if "已通过" in str(row[10].value):
-                    row[8].value = "是"
-                continue
-            pr = "是" if (comp == "编译通过" and tst == "通过") else "否"
-            if pr == "否" and tst == "SKIP" and p.startswith("ability/"):
-                name = os.path.basename(p).lower()
-                main_names: list[str] = []
-                for hap, mains in hap_to_main.items():
-                    if name in hap.lower() or hap.lower() in name:
-                        main_names = mains
-                        if any(main_status.get(m, ("", ""))[0] == "通过" for m in mains):
-                            pr = "是"
-                            break
-                # 口径（2026-08-18 用户确认）：辅助hap满足PR = 主hap测试通过；
-                # 主hap未通过/未列入表格时备注写明"主hap暂未测试通过"
-                if pr == "否" and main_names:
-                    note = "主hap暂未测试通过：" + "、".join(m.rsplit("/", 1)[-1] for m in main_names)
-                    cur = row[10].value or ""
-                    if cur:
-                        row[10].value = f"{cur}；[auto]{note}" if not str(cur).startswith("[auto]") else f"[auto]{note}"
-                    else:
-                        row[10].value = f"[auto]{note}"
-            row[8].value = pr
-            updated += 1
+        if not _sync_status(row, latest):
+            continue
+        # [manual] 手工判定保护：备注含"已通过"判是，否则保持
+        if str(row[10].value or "").startswith("[manual]"):
+            if "已通过" in str(row[10].value):
+                row[8].value = "是"
+            continue
+        comp = row[4].value
+        tst = row[6].value
+        pr = "是" if (comp == "编译通过" and tst == "通过") else "否"
+        if pr == "否" and tst == "SKIP" and p.startswith("ability/"):
+            pr = _resolve_skip_pr(p, hap_to_main, main_status, row)
+        row[8].value = pr
+        updated += 1
     wb.save(XLSX)
     return updated
+
+
+
 
 
 def main() -> None:

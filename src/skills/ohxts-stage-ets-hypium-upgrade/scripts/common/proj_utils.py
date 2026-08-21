@@ -21,6 +21,7 @@ try:
 except ImportError:
     from common.paths import REPO  # noqa: E402
 
+
 # ---------- HAP 元信息（hap_meta.py 迁移） ----------
 def hap_meta(proj: Path) -> dict:
     """解析 HAP 工程元信息: bundle / tmod(测试模块名) / pmain(主模块名) / pkg。"""
@@ -112,6 +113,65 @@ ALIAS = {
 }
 
 
+def _find_project(base_dir: Path, name: str, recursive: bool = False) -> Path | None:
+    """按目录名（大小写不敏感）反查工程根（含 build-profile.json5）。"""
+    it = base_dir.rglob("*") if recursive else base_dir.glob("*")
+    try:
+        for cand in it:
+            if not cand.is_dir() or cand.name.lower() != name.lower():
+                continue
+            if not (cand / "build-profile.json5").exists():
+                continue
+            if any(seg in cand.parts for seg in ("oh_modules", "node_modules", "build")):
+                continue
+            return cand
+    except OSError:
+        pass
+    return None
+
+
+def _find_module_dep(base_dir: Path, name: str) -> tuple[Path | None, str]:
+    """模块级依赖（ModuleN.hap）：反查 工程根::模块目录。"""
+    for cand in base_dir.rglob(name):
+        if not (cand.is_dir() and (cand / "build-profile.json5").exists()):
+            continue
+        if any(seg in cand.parts for seg in ("oh_modules", "node_modules", "build")):
+            continue
+        return cand.parent, cand.name
+    return None, ""
+
+
+def _resolve_kit_dep(fname: str, main_bundle: str, proj_rel: str,
+                     base: Path, base_dir: Path, deps: list[str]) -> None:
+    """单个 kits test-file-name → 依赖工程（模块级/自身排除/反查/ALIAS）。"""
+    if not fname:
+        return
+    is_hap = fname.endswith(".hap")
+    name = fname[:-4] if is_hap else fname
+    if is_hap and name.lower().startswith("module"):
+        found_root, found_mod = _find_module_dep(base_dir, name)
+        if found_root:
+            deps.append(f"{found_root.relative_to(base)}::{found_mod}")
+        return
+    if is_hap and name.lower() == main_bundle.lower():
+        return  # 自身 bundle 排除
+    found = _find_project(base_dir, name)
+    if found is None:
+        found = _find_project(base_dir, name, recursive=True)
+    if found:
+        if str(found.relative_to(base)) != proj_rel:
+            deps.append(str(found.relative_to(base)))
+        return
+    alias = ALIAS.get(name) or ALIAS.get(name.lower())
+    if alias and alias != proj_rel.rsplit("/", 1)[-1]:
+        found_alias = _find_project(base_dir, alias, recursive=True)
+        if found_alias:
+            deps.append(str(found_alias.relative_to(base)))
+        else:
+            print(f"[resolve_deps] ALIAS {alias} 未找到工程目录（{base_dir} 下）",
+                  file=sys.stderr)
+
+
 def resolve_deps(proj_rel: str, base: Path = REPO) -> list[str]:
     """读取工程 Test.json，解析依赖辅助 HAP（kits）对应的工程相对路径。
 
@@ -125,73 +185,18 @@ def resolve_deps(proj_rel: str, base: Path = REPO) -> list[str]:
     except Exception:
         return []
     main_bundle = d.get("driver", {}).get("bundle-name", "")
-    deps: list[str] = []
-    # kits 反查的基准目录：本工程同子系统的上层（如 ability/ability_runtime）
     base_dir = base / "/".join(proj_rel.split("/")[:2])
+    deps: list[str] = []
     for kit in d.get("kits", []):
         fnames = kit.get("test-file-name", [])
         if isinstance(fnames, str):
             fnames = [fnames]
         for fname in fnames:
-            if not fname:
-                continue
-            is_hap = fname.endswith(".hap")
-            name = fname[:-4] if is_hap else fname
-            if is_hap and name.lower().startswith("module"):
-                # 模块级依赖（ModuleN.hap）：反查 工程根::模块目录
-                found_mod = None
-                for cand in base_dir.rglob(name):
-                    if cand.is_dir() and (cand / "build-profile.json5").exists() \
-                            and not any(seg in cand.parts for seg in
-                                        ("oh_modules", "node_modules", "build")):
-                        found_mod = cand
-                        break
-                if found_mod:
-                    proj_root = found_mod.parent
-                    deps.append(f"{proj_root.relative_to(base)}::{found_mod.name}")
-                continue
-            if is_hap and name.lower() == main_bundle.lower():
-                continue  # 自身 bundle 排除
-            # 反查工程：目录名大小写不敏感匹配（kits 名常为驼峰，目录为小写）
-            found = None
-            try:
-                for cand in base_dir.glob("*"):
-                    if cand.is_dir() and cand.name.lower() == name.lower() \
-                            and (cand / "build-profile.json5").exists():
-                        found = cand
-                        break
-            except OSError:
-                pass
-            if found is None:
-                # 深层反查（多级目录，如 faapicover/xxx）
-                for cand in base_dir.rglob("*"):
-                    if cand.is_dir() and cand.name.lower() == name.lower() \
-                            and (cand / "build-profile.json5").exists() \
-                            and not any(seg in cand.parts for seg in
-                                        ("oh_modules", "node_modules", "build")):
-                        found = cand
-                        break
-            if found:
-                if str(found.relative_to(base)) == proj_rel:
-                    continue  # kits 显式列了自身 → 跳过（主流程已装）
-                deps.append(str(found.relative_to(base)))
-                continue
-            # 模糊映射（命中后仍排除自身；反查完整相对路径）
-            alias = ALIAS.get(name) or ALIAS.get(name.lower())
-            if alias and alias != proj_rel.rsplit("/", 1)[-1]:
-                found_alias = None
-                for cand in base_dir.rglob(alias):
-                    if cand.is_dir() and (cand / "build-profile.json5").exists() \
-                            and not any(seg in cand.parts for seg in
-                                        ("oh_modules", "node_modules", "build")):
-                        found_alias = cand
-                        break
-                if found_alias:
-                    deps.append(str(found_alias.relative_to(base)))
-                else:
-                    print(f"[resolve_deps] ALIAS {alias} 未找到工程目录（{base_dir} 下）",
-                          file=sys.stderr)
+            _resolve_kit_dep(fname, main_bundle, proj_rel, base, base_dir, deps)
     return deps
+
+
+
 
 
 if __name__ == "__main__":

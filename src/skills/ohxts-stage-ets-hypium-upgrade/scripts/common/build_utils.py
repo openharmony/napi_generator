@@ -92,6 +92,35 @@ def restore_sdk_versions(bak: Optional[Path]) -> None:
 
 
 # ---------- 单工程编译 ----------
+def _run_hvigor(proj: Path, log: Path, args: list[str], timeout: int,
+                 target: str = "assembleHap") -> int:
+    """执行 hvigor 构建（assembleHap/assembleHsp），超时返回 255。"""
+    cmd = [str(NODE), str(HVIGORW_JS), "--mode", "module",
+           "-p", "product=default", *args, target,
+           "--analyze=normal", "--parallel", "--incremental", "--no-daemon"]
+    try:
+        with open(log, "a") as f:
+            r = subprocess.run(cmd, cwd=str(proj), env=ENV, timeout=timeout,
+                               stdout=f, stderr=subprocess.STDOUT)
+        return r.returncode
+    except subprocess.TimeoutExpired:
+        return 255
+
+
+def _build_shared_hsp(proj: Path, log: Path, bp: Path, timeout_main: int) -> int:
+    """shared 类型模块（library…）产出 .hsp：assembleHap 不覆盖，单独 assembleHsp。"""
+    rc = 0
+    main_mod = extract_module_name(bp)
+    for mod in extract_module_names(bp):
+        if mod == main_mod:
+            continue
+        mcfg = proj / mod / "src/main/module.json5"
+        if not (mcfg.is_file() and '"type": "shared"' in mcfg.read_text(errors="replace")):
+            continue
+        rc |= _run_hvigor(proj, log, ["-p", f"module={mod}"], timeout_main, "assembleHsp")
+    return rc
+
+
 def build_one(proj: Path, timeout_main: int = 400, timeout_test: int = 400,
               log: Optional[Path] = None) -> dict:
     """编译单工程：main HAP + （有 ohosTest 时）test HAP。
@@ -105,68 +134,39 @@ def build_one(proj: Path, timeout_main: int = 400, timeout_test: int = 400,
     bak = None
     if bp.exists():
         bak = patch_sdk_versions(bp)
-
-    def run(args: list[str], timeout: int) -> int:
-        cmd = [str(NODE), str(HVIGORW_JS), "--mode", "module",
-               "-p", "product=default", *args, "assembleHap",
-               "--analyze=normal", "--parallel", "--incremental", "--no-daemon"]
-        try:
-            with open(log, "a") as f:
-                r = subprocess.run(cmd, cwd=str(proj), env=ENV, timeout=timeout,
-                                   stdout=f, stderr=subprocess.STDOUT)
-            return r.returncode
-        except subprocess.TimeoutExpired:
-            return 255
-
     try:
         log.write_text("")
-        rc1 = run([], timeout_main)
-        has_test = (proj / "entry/src/ohosTest").is_dir()
+        rc1 = _run_hvigor(proj, log, [], timeout_main)
         rc2 = 0
-        if has_test:
+        if (proj / "entry/src/ohosTest").is_dir():
             module = extract_module_name(bp) if bp.exists() else "entry"
-            rc2 = run(["-p", f"module={module}@ohosTest", "-p", "isOhosTest=true",
-                       "-p", "buildMode=test"], timeout_test)
-        # shared 类型模块（library/library2…）产出 .hsp，assembleHap 不覆盖，单独 assembleHsp
-        # （2026-08-18 实战：evictModuleFilePages 依赖 library 模块 .hsp 安装）
-        rc3 = 0
-        if bp.exists():
-            main_mod = extract_module_name(bp)
-            for mod in extract_module_names(bp):
-                if mod == main_mod:
-                    continue
-                mcfg = proj / mod / "src/main/module.json5"
-                if mcfg.is_file() and '"type": "shared"' in mcfg.read_text(errors="replace"):
-                    cmd = [str(NODE), str(HVIGORW_JS), "--mode", "module",
-                           "-p", "product=default", "-p", f"module={mod}", "assembleHsp",
-                           "--analyze=normal", "--parallel", "--incremental", "--no-daemon"]
-                    try:
-                        with open(log, "a") as f:
-                            r = subprocess.run(cmd, cwd=str(proj), env=ENV,
-                                               timeout=timeout_main, stdout=f,
-                                               stderr=subprocess.STDOUT)
-                        rc3 |= r.returncode
-                    except subprocess.TimeoutExpired:
-                        rc3 = 255
+            rc2 = _run_hvigor(proj, log, ["-p", f"module={module}@ohosTest",
+                                          "-p", "isOhosTest=true",
+                                          "-p", "buildMode=test"], timeout_test)
+        rc3 = _build_shared_hsp(proj, log, bp, timeout_main) if bp.exists() else 0
     finally:
         restore_sdk_versions(bak)
-
     ok = rc1 == 0 and rc2 == 0 and rc3 == 0
-    err = ""
-    if not ok:
-        try:
-            text = log.read_text(errors="replace")
-        except OSError:
-            text = ""
-        m = re.search(r"Error Message[:：]\s*([^\n]+)", text)
-        if m:
-            err = m.group(1).strip()[:200]
-        elif "timed out" in text.lower() or rc1 == 255 or rc2 == 255 or rc3 == 255:
-            err = "timeout"
-        else:
-            m2 = re.search(r"ERROR:?\s+[^\n]{10,200}", text)
-            err = m2.group(0).strip()[:200] if m2 else f"rc main={rc1} test={rc2} hsp={rc3}"
+    err = _first_error(log, rc1, rc2, rc3)
     return {"ok": ok, "main_rc": rc1, "test_rc": rc2, "hsp_rc": rc3, "log": log, "error": err}
+
+
+def _first_error(log: Path, rc1: int, rc2: int, rc3: int) -> str:
+    """构建日志首条 Error Message（失败时返回）。"""
+    if rc1 == 0 and rc2 == 0 and rc3 == 0:
+        return ""
+    try:
+        text = log.read_text(errors="replace")
+    except OSError:
+        text = ""
+    m = re.search(r"Error Message[:：]\s*([^\n]+)", text)
+    if m:
+        return m.group(1).strip()[:200]
+    if "timed out" in text.lower() or rc1 == 255 or rc2 == 255 or rc3 == 255:
+        return "timeout"
+    m2 = re.search(r"ERROR:?\s+[^\n]{10,200}", text)
+    return m2.group(0).strip()[:200] if m2 else f"rc main={rc1} test={rc2} hsp={rc3}"
+
 
 
 # ---------- 批量编译 ----------

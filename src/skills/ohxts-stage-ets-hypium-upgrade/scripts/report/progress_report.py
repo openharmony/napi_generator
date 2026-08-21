@@ -13,7 +13,14 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common.paths import ACTIVITY_TXT, BROADCAST_MD, PROGRESS_DIR, REPORT_ROOT, TSV  # noqa: E402
+from common.paths import ACTIVE_TXT, BROADCAST_MD, PROGRESS_DIR, REPORT_ROOT, TSV  # noqa: E402
+
+
+def _better_status(cur: str, new: str) -> str:
+    """状态优先级：PASS > 普通 > BUILD_FAIL > DEVICE_OFFLINE。"""
+    order = {"PASS": 3, "": 2}
+    rank = lambda s: 3 if s == "PASS" else (1 if s == "DEVICE_OFFLINE" else (0 if s == "BUILD_FAIL" else 2))
+    return new if rank(new) > rank(cur) else cur
 
 
 def latest_status() -> dict[str, str]:
@@ -26,12 +33,8 @@ def latest_status() -> dict[str, str]:
         rel, status = parts[1], parts[2]
         if rel not in latest:
             latest[rel] = status
-        elif status == "PASS" and latest[rel] != "PASS":
-            latest[rel] = status
-        elif status != "DEVICE_OFFLINE" and latest[rel] in ("DEVICE_OFFLINE",):
-            latest[rel] = status
-        elif status not in ("DEVICE_OFFLINE", "BUILD_FAIL") and latest[rel] in ("BUILD_FAIL",):
-            latest[rel] = status
+        else:
+            latest[rel] = _better_status(latest[rel], status)
     return latest
 
 

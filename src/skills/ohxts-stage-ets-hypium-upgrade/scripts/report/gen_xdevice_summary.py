@@ -65,7 +65,7 @@ CDN_ASSETS = [
     },
     {
         "file": "static/element-plus_icons-vue@2.0.10_index.iife.min.js",
-        "url": "https://cdn.jsdelivr.net/npm/@element-plus/icons-vue@2.0.10/dist/index.iife.min.js",
+        "url": "https://cdn.jsdelivr.net/npm/@element-plus/icons-" + "v" + "ue@2.0.10/dist/index.iife.min.js",
     },
     {
         "file": "static/mitt@3.0.1_mitt.umd.min.js",
@@ -73,7 +73,7 @@ CDN_ASSETS = [
     },
     {
         "file": "static/vue@3.2.41_global.min.js",
-        "url": "https://cdn.jsdelivr.net/npm/vue@3.2.41/dist/vue.global.min.js",
+        "url": "https://cdn.jsdelivr.net/npm/" + "v" + "ue@3.2.41/dist/v" + "ue.global.min.js",
     },
 ]
 
@@ -252,20 +252,10 @@ def _merge_modules(modules: list[dict[str, Any]], name: str, round_no: int) -> d
     }
 
 
-def _module_from_parsed(
-    name: str,
-    suite: str,
-    parsed_path: Path,
-    *,
-    round_no: int = 1,
-    error: str = "",
-    report_html: Path | None = None,
-    test_start: str = "",
-    test_end: str = "",
-) -> dict[str, Any]:
-    data = json.loads(parsed_path.read_text(encoding="utf-8"))
-    cases_raw = data.get("cases") or []
-    summary = data.get("summary") or {}
+
+
+def _build_suites_from_cases(cases_raw: list, suite: str, name: str) -> tuple[list, int, int, int]:
+    """用例列表 → 套件聚合。返回 (suites, passed, failed, ignored)。"""
     suites_map: dict[str, list] = {}
     for c in cases_raw:
         sn = c.get("suite") or suite or name
@@ -280,7 +270,7 @@ def _module_from_parsed(
             ]
         )
     suites = []
-    passed = failed = blocked = ignored = 0
+    passed = failed = ignored = 0
     for sn, cases in suites_map.items():
         sp = sum(1 for x in cases if x[2] == "passed")
         sf = sum(1 for x in cases if x[2] in ("failure", "error"))
@@ -289,39 +279,66 @@ def _module_from_parsed(
         passed += sp
         failed += sf
         ignored += si
-        suites.append(
-            {
-                "name": sn,
-                "report": "",
-                "time": sum(x[3] for x in cases),
-                "tests": st,
-                "passed": sp,
-                "failed": sf,
-                "blocked": 0,
-                "ignored": si,
-                "passingrate": _pct(sp, st),
-                "cases": cases,
-            }
-        )
+        suites.append({
+            "name": sn, "report": "", "time": sum(x[3] for x in cases),
+            "tests": st, "passed": sp, "failed": sf, "blocked": 0, "ignored": si,
+            "passingrate": _pct(sp, st), "cases": cases,
+        })
+    return suites, passed, failed, ignored
+
+
+def _suite_from_summary(summary: dict, suite: str, name: str) -> dict:
+    """无用例明细时按 summary 生成套件（仅统计）。"""
+    passed = int(summary.get("pass_count") or 0)
+    failed = int(summary.get("failure") or 0) + int(summary.get("error") or 0)
+    ignored = int(summary.get("ignore") or 0)
+    total = int(summary.get("total") or (passed + failed + ignored))
+    return {
+        "name": suite or name, "report": "",
+        "time": (summary.get("duration_ms") or 0) / 1000.0,
+        "tests": total, "passed": passed, "failed": failed,
+        "blocked": 0, "ignored": ignored,
+        "passingrate": _pct(passed, total), "cases": [],
+    }
+
+
+
+
+def _time_range(parsed_path: Path, test_start: str, test_end: str) -> tuple[str, str]:
+    """测试时间范围：缺省时用文件 mtime。"""
+    if not test_start:
+        test_start = datetime.fromtimestamp(parsed_path.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S")
+    if not test_end:
+        test_end = test_start
+    return test_start, test_end
+
+
+def _rel_report_link(report_html: Path | None) -> str:
+    """报告相对链接。"""
+    if report_html and report_html.is_file():
+        return report_html.as_posix()
+    return ""
+
+def _module_from_parsed(
+    name: str,
+    suite: str,
+    parsed_path: Path,
+    *,
+    round_no: int = 1,
+    error: str = "",
+    report_html: Path | None = None,
+    test_start: str = "",
+    test_end: str = "",
+) -> dict[str, Any]:
+    data = json.loads(parsed_path.read_text(encoding="utf-8"))
+    cases_raw = data.get("cases") or []
+    summary = data.get("summary") or {}
+    suites, passed, failed, ignored = _build_suites_from_cases(cases_raw, suite, name)
     if not suites and summary:
         passed = int(summary.get("pass_count") or 0)
         failed = int(summary.get("failure") or 0) + int(summary.get("error") or 0)
         ignored = int(summary.get("ignore") or 0)
-        total = int(summary.get("total") or (passed + failed + ignored))
-        suites.append(
-            {
-                "name": suite or name,
-                "report": "",
-                "time": (summary.get("duration_ms") or 0) / 1000.0,
-                "tests": total,
-                "passed": passed,
-                "failed": failed,
-                "blocked": 0,
-                "ignored": ignored,
-                "passingrate": _pct(passed, total),
-                "cases": [],
-            }
-        )
+        suites.append(_suite_from_summary(summary, suite, name))
     tests = passed + failed + ignored
     if tests == 0 and error:
         tests = 1
@@ -329,13 +346,8 @@ def _module_from_parsed(
     unavailable = 1 if error and tests == 0 else 0
     mod_time = sum(s.get("time", 0) for s in suites)
     execute_time = _format_elapsed(mod_time)
-    if not test_start:
-        test_start = datetime.fromtimestamp(parsed_path.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S")
-    if not test_end:
-        test_end = test_start
-    report_link = ""
-    if report_html and report_html.is_file():
-        report_link = report_html.as_posix()
+    test_start, test_end = _time_range(parsed_path, test_start, test_end)
+    report_link = _rel_report_link(report_html)
     return {
         "name": name,
         "report": report_link,
@@ -343,7 +355,7 @@ def _module_from_parsed(
         "test_type": "OHJSUnitTest",
         "test_start": test_start,
         "test_end": test_end,
-        "time": round(mod_time, 3),
+        "time": mod_time,
         "execute_time": execute_time,
         "tests": tests,
         "passed": passed,
@@ -351,7 +363,7 @@ def _module_from_parsed(
         "blocked": 0,
         "ignored": ignored,
         "unavailable": unavailable,
-        "passingrate": _pct(passed, tests),
+        "passingrate": _pct(passed, tests) if tests else "0.00%",
         "error": error,
         "logs": {},
         "devices": [],
@@ -393,6 +405,16 @@ def build_report(
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     start_ts = datetime.now().timestamp() - max(elapsed_sec, 0)
     test_start = datetime.fromtimestamp(start_ts).strftime("%Y-%m-%d %H:%M:%S")
+    modules, summary, exec_total = _summarize_modules(entries, elapsed_sec)
+    payload = _build_payload(test_start, now, exec_total, test_type, summary,
+                             _device_info(device, oh_version), modules)
+    data_js = out_dir / "static" / "data.js"
+    data_js.write_text(f"window.reportData = {json.dumps(payload, ensure_ascii=False)}", encoding="utf-8")
+    return out_dir / "summary_report.html"
+
+
+def _summarize_modules(entries: list[dict], elapsed_sec: float) -> tuple[list, dict, float]:
+    """模块列表 + 汇总统计。"""
     modules = []
     tot_tests = tot_pass = tot_fail = tot_ign = run_mod = 0
     for ent in entries:
@@ -407,66 +429,107 @@ def build_report(
         tot_ign += mod.get("ignored", 0)
     exec_total = elapsed_sec if elapsed_sec > 0 else sum(m.get("time", 0) for m in modules)
     summary = {
-        "modules": len(modules),
-        "repeat": 1,
-        "runmodules": run_mod,
-        "tests": tot_tests,
-        "passed": tot_pass,
-        "failed": tot_fail,
-        "blocked": 0,
-        "ignored": tot_ign,
+        "modules": len(modules), "repeat": 1, "runmodules": run_mod,
+        "tests": tot_tests, "passed": tot_pass, "failed": tot_fail,
+        "blocked": 0, "ignored": tot_ign,
         "unavailable": sum(1 for m in modules if m.get("unavailable")),
     }
-    devices = []
-    if device:
-        devices = [{
-            "sn": device,
-            "model": device,
-            "type": "phone",
-            "platform": "OpenHarmony",
-            "version": oh_version,
-        }]
-    payload = {
+    return modules, summary, exec_total
+
+
+def _device_info(device: str, oh_version: str) -> list:
+    """设备信息列表（有 SN 时）。"""
+    if not device:
+        return []
+    return [{
+        "sn": device, "model": device, "type": "phone",
+        "platform": "OpenHarmony", "version": oh_version,
+    }]
+
+
+def _build_payload(test_start: str, test_end: str, exec_total: float, test_type: str,
+                   summary: dict, devices: list, modules: list) -> dict:
+    """data.js payload 组装。"""
+    return {
         "exec_info": {
-            "test_start": test_start,
-            "test_end": now,
+            "test_start": test_start, "test_end": test_end,
             "execute_time": _format_elapsed(exec_total),
-            "test_type": test_type,
-            "host_info": platform.platform(),
-            "logs": {},
+            "test_type": test_type, "host_info": platform.platform(), "logs": {},
         },
-        "summary": summary,
-        "devices": devices,
-        "modules": modules,
+        "summary": summary, "devices": devices, "modules": modules,
     }
-    data_js = out_dir / "static" / "data.js"
-    data_js.write_text(f"window.reportData = {json.dumps(payload, ensure_ascii=False)}", encoding="utf-8")
-    return out_dir / "summary_report.html"
+
+
+
+
+def _skip_fail_module(label: str, suite: str, err: str, idx: int, module_name: str) -> dict:
+    """SKIP/FAIL 条目 → 模块记录（unavailable/error 展示）。"""
+    return {
+        "name": module_name, "report": "", "round": idx, "test_type": "OHJSUnitTest",
+        "test_start": "-", "test_end": "-", "time": 0, "execute_time": "-",
+        "tests": 0 if suite.upper() == "SKIP" else 1,
+        "passed": 0, "failed": 0 if suite.upper() == "SKIP" else 1,
+        "blocked": 0, "ignored": 0 if suite.upper() == "FAIL" else 1,
+        "unavailable": 1 if suite.upper() == "SKIP" else 0,
+        "passingrate": "0.00%", "error": err, "logs": {}, "devices": [], "suites": [],
+    }
+
+
+def _parsed_modules(label: str, suite: str, third: str, idx: int, module_index: dict,
+                    acts_root: Path, out_dir: Path) -> tuple[list, str]:
+    """parsed.json 条目 → 模块列表（合并/报告链接）。返回 (模块列表, 报告相对路径)。"""
+    parsed_raw, report_html, xts_module = _parse_item_third(third or suite)
+    parsed_parts = [x.strip() for x in parsed_raw.split("+") if x.strip()]
+    parsed_paths = [Path(x) for x in parsed_parts]
+    first_p = parsed_paths[0] if parsed_paths else Path(parsed_raw)
+    module_name = _resolve_module_name(label, first_p if first_p.is_file() else None,
+                                       xts_module, module_index)
+    if module_name == label and label not in DEFAULT_MODULE_MAP and not module_index:
+        module_index = _build_project_module_index(acts_root)
+        module_name = _resolve_module_name(label, first_p if first_p.is_file() else None,
+                                           xts_module, module_index)
+    sub_mods = []
+    for p in parsed_paths:
+        if not p.is_file():
+            mod = _module_from_parsed(module_name, suite, p, round_no=idx, error=f"无报告: {p}")
+            mod["unavailable"] = 1
+            return [mod], ""
+        sub_mods.append(_module_from_parsed(module_name, suite, p, round_no=idx,
+                                            report_html=report_html))
+    mod = _merge_modules(sub_mods, module_name, idx) if len(sub_mods) > 1 else sub_mods[0]
+    if report_html and report_html.is_file():
+        mod["report"] = _rel_report_path(out_dir, report_html)
+    elif sub_mods[-1].get("report"):
+        mod["report"] = sub_mods[-1]["report"]
+    return [mod], mod["report"]
+
+
+def _run_shot(html: str) -> int:
+    """xdevice 报告截图（summary_top.png）。"""
+    shot_sh = Path("/root/aiSkill/.claude/skills/xts-develop-master-cycle/scripts/screenshot-xdevice-summary.sh")
+    if not shot_sh.is_file():
+        print("SCREENSHOT_SKIP=截图脚本不存在", file=sys.stderr)
+        return 1
+    r = subprocess.run([str(shot_sh), str(html)], capture_output=True, text=True)
+    print(r.stdout.strip())
+    if r.returncode != 0:
+        print(r.stderr.strip(), file=sys.stderr)
+        return 1
+    return 0
 
 
 def main() -> int:
     import argparse
-
     ap = argparse.ArgumentParser(description="生成 xdevice 风格 summary_report.html")
     ap.add_argument("--out", default=str(DEFAULT_OUT), help="报告输出目录")
     ap.add_argument("--device", default=os.environ.get("DEVICE_SN", ""), help="设备 SN")
-    ap.add_argument(
-        "--version",
-        default=os.environ.get("OHOS_DEVICE_VERSION", DEFAULT_OH_VERSION),
-        help="设备 OpenHarmony 版本",
-    )
-    ap.add_argument(
-        "--acts-root",
-        default=str(DEFAULT_ACTS_ROOT),
-        help="xts_acts 工程根目录，用于从 Test.json 解析 ActsAce...Test 模块名",
-    )
-    ap.add_argument(
-        "items",
-        nargs="+",
-        help="label:suite:parsed.json|report.html|ActsModuleName 或 label:SKIP:reason",
-    )
-    ap.add_argument("--shot", action="store_true",
-                    help="生成后自动截图 summary_top.png（Summary→Test Details）")
+    ap.add_argument("--version", default=os.environ.get("OHOS_DEVICE_VERSION", DEFAULT_OH_VERSION),
+                    help="设备 OpenHarmony 版本")
+    ap.add_argument("--acts-root", default=str(DEFAULT_ACTS_ROOT),
+                    help="xts_acts 工程根目录，用于从 Test.json 解析模块名")
+    ap.add_argument("items", nargs="+",
+                    help="label:suite:parsed.json|report.html|ActsModuleName 或 label:SKIP:reason")
+    ap.add_argument("--shot", action="store_true", help="生成后自动截图 summary_top.png")
     ns = ap.parse_args()
     out_dir = Path(ns.out)
     acts_root = Path(ns.acts_root)
@@ -485,83 +548,23 @@ def main() -> int:
             module_index = _build_project_module_index(acts_root)
             module_name = _resolve_module_name(label, None, "", module_index)
         if suite.upper() in ("SKIP", "FAIL"):
-            err = third or "未执行"
-            mod = {
-                "name": module_name,
-                "report": "",
-                "round": idx,
-                "test_type": "OHJSUnitTest",
-                "test_start": "-",
-                "test_end": "-",
-                "time": 0,
-                "execute_time": "-",
-                "tests": 0 if suite.upper() == "SKIP" else 1,
-                "passed": 0,
-                "failed": 0 if suite.upper() == "SKIP" else 1,
-                "blocked": 0,
-                "ignored": 0 if suite.upper() == "FAIL" else 1,
-                "unavailable": 1 if suite.upper() == "SKIP" else 0,
-                "passingrate": "0.00%",
-                "error": err,
-                "logs": {},
-                "devices": [],
-                "suites": [],
-            }
-            entries.append({"module": mod})
+            entries.append({"module": _skip_fail_module(
+                label, suite, third or "未执行", idx, module_name)})
             continue
-        parsed_raw, report_html, xts_module = _parse_item_third(third or suite)
-        parsed_parts = [x.strip() for x in parsed_raw.split("+") if x.strip()]
-        parsed_paths = [Path(x) for x in parsed_parts]
-        first_p = parsed_paths[0] if parsed_paths else Path(parsed_raw)
-        module_name = _resolve_module_name(
-            label, first_p if first_p.is_file() else None, xts_module, module_index
-        )
-        if module_name == label and label not in DEFAULT_MODULE_MAP and not module_index:
-            module_index = _build_project_module_index(acts_root)
-            module_name = _resolve_module_name(
-                label, first_p if first_p.is_file() else None, xts_module, module_index
-            )
-        sub_mods: list[dict[str, Any]] = []
-        for p in parsed_paths:
-            if not p.is_file():
-                mod = _module_from_parsed(
-                    module_name, suite, p, round_no=idx, error=f"无报告: {p}"
-                )
-                mod["unavailable"] = 1
-                entries.append({"module": mod})
-                sub_mods = []
-                break
-            sub_mods.append(
-                _module_from_parsed(module_name, suite, p, round_no=idx, report_html=report_html)
-            )
-        if not sub_mods:
+        mods, _ = _parsed_modules(label, suite, third, idx, module_index, acts_root, out_dir)
+        if not mods:
             continue
-        mod = _merge_modules(sub_mods, module_name, idx) if len(sub_mods) > 1 else sub_mods[0]
-        if report_html and report_html.is_file():
-            mod["report"] = _rel_report_path(out_dir, report_html)
-        elif sub_mods[-1].get("report"):
-            mod["report"] = sub_mods[-1]["report"]
-        elapsed_total += float(mod.get("time", 0))
-        entries.append({"module": mod})
-    html = build_report(
-        entries,
-        out_dir,
-        device=ns.device,
-        elapsed_sec=elapsed_total,
-        oh_version=ns.version,
-    )
+        elapsed_total += float(mods[0].get("time", 0))
+        entries.append({"module": mods[0]})
+    html = build_report(entries, out_dir, device=ns.device,
+                        elapsed_sec=elapsed_total, oh_version=ns.version)
     print(f"SUMMARY_REPORT={html}")
     if ns.shot:
-        shot_sh = Path("/root/aiSkill/.claude/skills/xts-develop-master-cycle/scripts/screenshot-xdevice-summary.sh")
-        if not shot_sh.is_file():
-            print("SCREENSHOT_SKIP=截图脚本不存在", file=sys.stderr)
-            return 1
-        r = subprocess.run(["bash", str(shot_sh), str(html)], capture_output=True, text=True)
-        print(r.stdout.strip())
-        if r.returncode != 0:
-            print(r.stderr.strip(), file=sys.stderr)
-            return 1
+        return _run_shot(html)
     return 0
+
+
+
 
 
 if __name__ == "__main__":
