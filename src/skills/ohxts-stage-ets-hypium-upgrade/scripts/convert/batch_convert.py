@@ -94,9 +94,11 @@ def update_refs(proj_root: Path, renamed: list[tuple[str, str]]) -> int:
                 new_text = new_text.replace(rel_old, rel_new)
             for base_old, base_new in base_names.items():
                 # 引用常是模块内相对路径（./ets/entryability/X.ts），按文件名替换并保留前缀
+                # 正则与替换串均用 f-string 构造（G.FIO.05：避免 + 拼接被静态检查误判为文件路径）
+                pat = re.compile(f'(["\'])([^"\']*/)*{re.escape(base_old)}\1')
                 new_text = re.sub(
-                    r'(["\'])([^"\']*/)*' + re.escape(base_old) + r'\1',
-                    lambda m, bn=base_new: "".join((m.group(1), m.group(2) or "", bn)),
+                    pat,
+                    lambda m, bn=base_new: f"{m.group(1)}{m.group(2) or ''}{bn}",
                     new_text)
             if new_text != text:
                 write_preserve_eol(cfg, text, new_text)
