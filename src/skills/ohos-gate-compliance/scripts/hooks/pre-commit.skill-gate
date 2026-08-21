@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+# skill 门禁 pre-commit：仅当提交 napi_generator/src/skills 下 skill 代码时自动运行
+# （其他仓库/其他目录不触发）。规则：Python AST 门禁 + WordsTool 词表 + py_compile。
+set -eu
+
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || true)
+[ -z "$REPO_ROOT" ] && exit 0
+
+# 仅 napi_generator 仓库触发
+case "$REPO_ROOT" in
+  */napi_generator) ;;
+  *) exit 0 ;;
+esac
+
+# 暂存区未含 src/skills 变更则不检查
+if ! git diff --cached --name-only | grep -q '^src/skills/'; then
+  exit 0
+fi
+
+GATE="$REPO_ROOT/src/skills/ohos-gate-compliance/scripts/gate_check.py"
+if [ ! -f "$GATE" ]; then
+  echo "skill-gate: 未找到 $GATE，跳过"
+  exit 0
+fi
+
+echo "skill-gate: 提交 src/skills 变更，运行 skill 门禁..."
+if ! python3 "$GATE" skill --staged --strict --cwd "$REPO_ROOT"; then
+  echo "skill-gate: ❌ skill 门禁未通过，禁止提交（修复后重新 git add + commit）"
+  exit 1
+fi
+echo "skill-gate: ✅ 门禁通过"
+exit 0
