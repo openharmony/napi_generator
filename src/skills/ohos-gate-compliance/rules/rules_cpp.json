@@ -1,0 +1,78 @@
+{
+ "version": "2.0",
+ "desc": "C/C++ 门禁规则注册表（代码门禁检查 capi profile）。规则本体由 cpp_checker.py 实现（正则/启发式），G.FUD.05/FUNC.CC 等启发式规则标注 severity=提示，命中需人工复核。",
+ "rules": [
+  {
+   "id": "G.FMT.06-CPP",
+   "name": "实参续行缩进=起始行+4",
+   "category": "gate",
+   "severity": "提示",
+   "detect": "heuristic",
+   "pattern": "call-indent",
+   "fix": "自动修复：续行缩进抬到起始行缩进+4"
+  },
+  {
+   "id": "G.FUD.05",
+   "name": "函数 nbnc≤50",
+   "category": "gate",
+   "severity": "提示",
+   "detect": "heuristic",
+   "pattern": "func-nbnc",
+   "fix": "拆分函数；CAPI 表注册拆 GetXxxProps"
+  },
+  {
+   "id": "G.FMT.05",
+   "name": "行宽≤120",
+   "category": "gate",
+   "severity": "提示",
+   "detect": "length",
+   "pattern": "len>120",
+   "fix": "折行"
+  },
+  {
+   "id": "FUNC.CC",
+   "name": "圈复杂度≤20（启发式）",
+   "category": "gate",
+   "severity": "提示",
+   "detect": "heuristic",
+   "pattern": "func-cc",
+   "fix": "拆分/简化分支；if/for/while/case/&&/||/catch 计数"
+  },
+  {
+   "id": "FUNC.DEPTH",
+   "name": "嵌套深度≤4（启发式）",
+   "category": "gate",
+   "severity": "提示",
+   "detect": "heuristic",
+   "pattern": "func-depth",
+   "fix": "提取子函数降低嵌套"
+  },
+  {
+   "id": "MAGIC.NUM",
+   "name": "魔法数（启发式）",
+   "category": "gate",
+   "severity": "提示",
+   "detect": "heuristic",
+   "pattern": "magic-number",
+   "fix": "抽 constexpr 命名常量（白名单 0/1/2/-1/1000；排除 case 标签/数组尺寸/宏行）"
+  },
+  {
+   "id": "HEADER.NBNC",
+   "name": "头文件 nbnc≤300",
+   "category": "gate",
+   "severity": "提示",
+   "detect": "heuristic",
+   "pattern": "header-nbnc",
+   "fix": "头文件瘦身：声明进 .cpp，拆分"
+  },
+  {
+   "id": "OAT.3",
+   "name": "Apache 2.0 许可证头",
+   "category": "gate",
+   "severity": "致命",
+   "detect": "regex",
+   "pattern": "license-header",
+   "fix": "补 Apache-2.0 版权头（Copyright + License 声明）"
+  }
+ ]
+}
