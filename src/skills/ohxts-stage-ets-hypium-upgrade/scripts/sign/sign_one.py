@@ -243,6 +243,40 @@ def sign_one_hap(work: Path, hap: Path, bundle: str, profile_type: str,
     return signed
 
 
+def _resolve_profile_type(proj: Path, sx: dict | None, profile_type: str,
+                           system: bool) -> tuple[str, bool]:
+    """system 签名仅当 sx 的 app-feature=hos_system_app 时允许，否则回落 release+ACL。"""
+    if profile_type != "system":
+        return profile_type, system
+    if sx and sx.get("feature") == "hos_system_app":
+        return "debug", True  # system 是 debug 模板 + 特权字段的变体（仅 sx 允许时）
+    print(f"[sign] 拒绝 system 签名：{proj.name} 的 signature/openharmony_sx.p7b "
+          f"app-feature={sx.get('feature') if sx else '无'}（规范：仅 normal，"
+          f"ACL 配置系统权限即可）→ 改用 release/debug + ACL")
+    return "release", False
+
+
+def _resolve_bundle(proj: Path, bundle: str) -> str:
+    """bundle 缺省时从 AppScope/app.json5 提取 bundleName。"""
+    if bundle:
+        return bundle
+    import re as _re
+    try:
+        c = (proj / "AppScope" / "app.json5").read_text(errors="replace")
+        m = _re.search(r'["\']?bundleName["\']?\s*:\s*"([^"]+)"', c)
+        return m.group(1) if m else proj.name
+    except OSError:
+        return proj.name
+
+
+def _collect_unsigned(proj: Path, haps: list[Path] | None) -> list[Path]:
+    """haps 缺省时扫描工程 build 产物全部 unsigned 包。"""
+    if haps:
+        return haps
+    out = list(proj.rglob("*-unsigned.hap")) + list(proj.rglob("*-unsigned.hsp"))
+    return [h for h in out if "oh_modules" not in h.parts]
+
+
 def sign_project(proj: Path, profile_type: str = "release", bundle: str = "",
                  system: bool = False, haps: list[Path] | None = None,
                  acls: list[str] | None = None) -> list[Path]:
@@ -255,31 +289,12 @@ def sign_project(proj: Path, profile_type: str = "release", bundle: str = "",
     # 签名规范（2026-08-18 用户确认）：应用权限等级只允许 normal；ACL 可配置系统权限。
     # system 签名仅当工程 signature/openharmony_sx.p7b 的 app-feature=hos_system_app 时允许。
     sx = load_sx_profile(proj)
-    if profile_type == "system":
-        if sx and sx.get("feature") == "hos_system_app":
-            # system 是 debug 模板 + 特权字段的变体（仅 sx 允许时）
-            profile_type = "debug"
-            system = True
-        else:
-            print(f"[sign] 拒绝 system 签名：{proj.name} 的 signature/openharmony_sx.p7b "
-                  f"app-feature={sx.get('feature') if sx else '无'}（规范：仅 normal，"
-                  f"ACL 配置系统权限即可）→ 改用 release/debug + ACL")
-            profile_type = "release"
-            system = False
+    profile_type, system = _resolve_profile_type(proj, sx, profile_type, system)
     # sx 配置的 ACL 作为默认注入（未显式指定时）
     if acls is None and sx and sx.get("acls"):
         acls = sx["acls"]
-    if not bundle:
-        import re as _re
-        try:
-            c = (proj / "AppScope" / "app.json5").read_text(errors="replace")
-            m = _re.search(r'["\']?bundleName["\']?\s*:\s*"([^"]+)"', c)
-            bundle = m.group(1) if m else proj.name
-        except OSError:
-            bundle = proj.name
-    if not haps:
-        haps = list(proj.rglob("*-unsigned.hap")) + list(proj.rglob("*-unsigned.hsp"))
-        haps = [h for h in haps if "oh_modules" not in h.parts]
+    bundle = _resolve_bundle(proj, bundle)
+    haps = _collect_unsigned(proj, haps)
     if not haps:
         return []
     app_feature = "hos_system_app" if system else "hos_normal_app"

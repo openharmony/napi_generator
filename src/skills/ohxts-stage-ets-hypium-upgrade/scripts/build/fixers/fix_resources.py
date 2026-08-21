@@ -128,23 +128,36 @@ def fix_syscap_general(proj: Path, match: dict, err_file: str = "") -> list[str]
             module = syscap.parent / "module.json5"
         if not module.exists():
             continue
+        dt = _load_device_types(module)
         try:
-            dt = json.loads(re.sub(r"//.*", "", module.read_text(errors="replace"))).get("module", {}).get("deviceTypes", [])
             d = json.loads(syscap.read_text(errors="replace"))
         except Exception:
             continue
-        changed_here = False
-        for sec in ("general", "system", "system_core"):
-            if sec in d and "projects" in d[sec]:
-                for proj_sec in d[sec]["projects"]:
-                    if "general" in proj_sec:
-                        if proj_sec["general"] != dt:
-                            proj_sec["general"] = dt
-                            changed_here = True
-        if changed_here:
+        if _sync_general_arrays(d, dt):
             syscap.write_text(json.dumps(d, indent=2, ensure_ascii=False) + "\n")
             changed.append(str(syscap))
     return changed
+
+
+def _load_device_types(module: Path) -> list:
+    """module.json5 的 deviceTypes（注释剥离，失败空表）。"""
+    try:
+        return json.loads(re.sub(r"//.*", "", module.read_text(errors="replace"))).get("module", {}).get("deviceTypes", [])
+    except Exception:
+        return []
+
+
+def _sync_general_arrays(d: dict, dt: list) -> bool:
+    """各 sec.projects[].general 同步为 dt，返回是否变更。"""
+    changed_here = False
+    for sec in ("general", "system", "system_core"):
+        if sec not in d or "projects" not in d[sec]:
+            continue
+        for proj_sec in d[sec]["projects"]:
+            if "general" in proj_sec and proj_sec["general"] != dt:
+                proj_sec["general"] = dt
+                changed_here = True
+    return changed_here
 
 
 def fix_permission_reason(proj: Path, match: dict, err_file: str = "") -> list[str]:
@@ -165,14 +178,23 @@ def fix_permission_reason(proj: Path, match: dict, err_file: str = "") -> list[s
             t2 = t.replace(m.group(0), f'"reason": "$string:{reason_key}"')
             f.write_text(t2)
             changed.append(str(f))
-            p = _find_json(proj, "string")
-            if p:
-                entries = _load_json(p)
-                if not any(e.get("name") == reason_key for e in entries):
-                    entries.append({"name": reason_key, "value": m.group(1)[:60]})
-                    _save_json(p, entries)
-                    changed.append(str(p))
+            _ensure_string_entry(proj, reason_key, m.group(1)[:60], changed)
     return changed
+
+
+def _ensure_string_entry(proj: Path, key: str, value: str, changed: list[str]) -> None:
+    """string.json 补 reason 条目（无则加）。"""
+    p = _find_json(proj, "string")
+    if not p:
+        return
+    try:
+        entries = _load_json(p)
+    except Exception:
+        return
+    if not any(e.get("name") == key for e in entries):
+        entries.append({"name": key, "value": value})
+        _save_json(p, entries)
+        changed.append(str(p))
 
 
 def fix_startwindow_icon(proj: Path, match: dict, err_file: str = "") -> list[str]:
@@ -185,10 +207,8 @@ def fix_startwindow_icon(proj: Path, match: dict, err_file: str = "") -> list[st
             t = f.read_text(errors="replace")
         except OSError:
             continue
-        if "startWindowIcon" in t:
-            continue
         # 只处理 abilities 段缺该字段的
-        if "abilities" not in t:
+        if "startWindowIcon" in t or "abilities" not in t:
             continue
         new_t = re.sub(
             r'("type"\s*:\s*"page"\s*,\s*\n\s*"name"\s*:\s*"[^"]+")',
@@ -198,14 +218,22 @@ def fix_startwindow_icon(proj: Path, match: dict, err_file: str = "") -> list[st
             f.write_text(new_t)
             changed.append(str(f))
             # 顺带保证 color 有 start_window_background
-            c = _find_json(proj, "color")
-            if c:
-                try:
-                    entries = json.loads(c.read_text(errors="replace")).get("color", [])
-                    if not any(e.get("name") == "start_window_background" for e in entries):
-                        entries.append({"name": "start_window_background", "value": "#FFFFFF"})
-                        c.write_text(json.dumps({"color": entries}, indent=2, ensure_ascii=False) + "\n")
-                        changed.append(str(c))
-                except Exception:
-                    pass
+            changed.extend(_ensure_bg_color(proj))
+    return changed
+
+
+def _ensure_bg_color(proj: Path) -> list[str]:
+    """color.json 补 start_window_background（#FFFFFF），返回新增文件。"""
+    changed: list[str] = []
+    c = _find_json(proj, "color")
+    if not c:
+        return changed
+    try:
+        entries = json.loads(c.read_text(errors="replace")).get("color", [])
+    except Exception:
+        return changed
+    if not any(e.get("name") == "start_window_background" for e in entries):
+        entries.append({"name": "start_window_background", "value": "#FFFFFF"})
+        c.write_text(json.dumps({"color": entries}, indent=2, ensure_ascii=False) + "\n")
+        changed.append(str(c))
     return changed

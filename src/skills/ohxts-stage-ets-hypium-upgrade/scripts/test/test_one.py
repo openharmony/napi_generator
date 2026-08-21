@@ -55,12 +55,12 @@ def device_lock():
         fd.close()
 
 
-def log(msg: str, to_activity: bool = False) -> None:
+def log(msg: str, to_active: bool = False) -> None:
     line = f"[{datetime.now():%H:%M:%S}] {msg}"
     print(line)
     with open(CLOSE_LOG, "a") as f:
         f.write(line + "\n")
-    if to_activity:
+    if to_active:
         with open(ACTIVE_TXT, "a") as f:
             f.write(line + "\n")
 
@@ -105,7 +105,7 @@ def build_dep_hap(rel: str, profile_type: str = "release", system: bool = False,
     proj = REPO / rel
     signed = proj / "entry/build/default/outputs/default/entry-default-signed.hap"
     if not signed.exists():
-        log(f"[依赖] 构建: {rel}", to_activity=True)
+        log(f"[依赖] 构建: {rel}", to_active=True)
         bp = proj / "build-profile.json5"
         bak = None
         if bp.exists():
@@ -144,7 +144,7 @@ def build_dep_module(proj_rel: str, mod: str, profile_type: str = "release",
     hap = proj / mod / "build/default/outputs/default" / f"{mod}-default-signed.hap"
     if hap.exists():
         return True
-    log(f"[依赖] 构建模块: {mod}@{proj_rel}", to_activity=True)
+    log(f"[依赖] 构建模块: {mod}@{proj_rel}", to_active=True)
     bp = proj / "build-profile.json5"
     bak = None
     if bp.exists():
@@ -226,7 +226,7 @@ def run_suites(bundle: str, tmod: str, suites: list[str]) -> dict:
         s = s.strip()
         if not s:
             continue
-        log(f"  运行套件: {s}（60s 无输出判挂起）", to_activity=True)
+        log(f"  运行套件: {s}（60s 无输出判挂起）", to_active=True)
         out, hung = hdc_utils.run_aa_test(bundle, tmod, s)
         if hung:
             hung_suites.append(s)
@@ -252,7 +252,7 @@ def run_suites(bundle: str, tmod: str, suites: list[str]) -> dict:
 
 def _prepare_and_build(rel, proj, ts, profile, system, acls):
     """阶段 0-1：设备就绪、依赖构建、辅助工程判定、双 HAP 编译。"""
-    log(f"===== [{rel}] 测试开始 =====", to_activity=True)
+    log(f"===== [{rel}] 测试开始 =====", to_active=True)
     if not hdc_utils.ensure_device():
         tsv_row(ts, rel, "DEVICE_OFFLINE", "-", "-", "-", "-")
         log("DEVICE_OFFLINE")
@@ -272,7 +272,7 @@ def _prepare_and_build(rel, proj, ts, profile, system, acls):
         log("SKIP: 辅助工程无测试代码")
         refresh_xlsx()
         return 3, deps, dep_haps
-    log(f"构建: {rel}", to_activity=True)
+    log(f"构建: {rel}", to_active=True)
     r = build_one(proj)
     if not r["ok"]:
         tsv_row(ts, rel, "BUILD_FAIL", "-", "-", r["error"], "-")
@@ -363,6 +363,41 @@ def _install_dep_hap(dh: Path) -> tuple:
 
 
 
+def _install_main_haps(bundle: str, main_haps: list[Path]) -> tuple[bool, str]:
+    """安装主 HAP 列表；残留 9568267 时强制卸载重装一次。"""
+    ok1, e1 = True, ""
+    for mh in main_haps:
+        ok, err = hdc_utils.install_hap(str(mh))
+        if not ok:
+            ok1, e1 = False, err
+            break
+    if not ok1 and "9568267" in e1:
+        log("  残留兜底：强制卸载后重装主 HAP")
+        hdc_utils.cleanup_device(bundle)
+        ok1, e1 = True, ""
+        for mh in main_haps:
+            ok, err = hdc_utils.install_hap(str(mh))
+            if not ok:
+                ok1, e1 = False, err
+                break
+    return ok1, e1
+
+
+def _install_deps(deps: list, dep_haps: dict) -> None:
+    """安装 Test.json 依赖 HAP（module 级与 kit 级）。"""
+    for dp in deps:
+        if "::" in dp:
+            dproj, dmod = dp.split("::", 1)
+            dh = REPO / dproj / dmod / "build/default/outputs/default" / f"{dmod}-default-signed.hap"
+            if dh.is_file():
+                ok, err = _install_dep_hap(dh)
+                log(f"  [依赖] {'已安装' if ok else '安装失败'} {dp} {err if not ok else ''}")
+        else:
+            for dh in dep_haps.get(dp, []):
+                ok, err = _install_dep_hap(dh)
+                log(f"  [依赖] {'已安装' if ok else '安装失败'} {dp} {err if not ok else ''}")
+
+
 def _collect_main_haps(proj: Path, main_hap: Path | None) -> list[Path]:
     """收集主模块 HAP/HSP（combined 自包含时由调用方清空）。"""
     main_haps = [h for h in proj.rglob("*/build/default/outputs/default/*-signed.hap")
@@ -373,10 +408,11 @@ def _collect_main_haps(proj: Path, main_hap: Path | None) -> list[Path]:
         main_haps = [main_hap]
     return main_haps
 
+
 def _install_all(proj, bundle, ts, rel, deps, dep_haps, main_hap, test_hap, tmod0, pmain0):
     """阶段 4-5.5：清理设备 + 双装 + 依赖安装。"""
     with device_lock():
-        log("清理设备（卸载非系统应用 + 清 log）", to_activity=True)
+        log("清理设备（卸载非系统应用 + 清 log）", to_active=True)
         hdc_utils.cleanup_device(bundle)
         mem = hdc_utils.mem_free_kb()
         log(f"  设备空闲内存: {mem} kB")
@@ -384,21 +420,7 @@ def _install_all(proj, bundle, ts, rel, deps, dep_haps, main_hap, test_hap, tmod
         if tmod0 and tmod0 == pmain0:
             main_haps = []
             log("  [combined] 跳过主 HAP 安装（测试 hap 自包含 entry 模块）")
-        ok1, e1 = True, ""
-        for mh in main_haps:
-            ok, err = hdc_utils.install_hap(str(mh))
-            if not ok:
-                ok1, e1 = False, err
-                break
-        if not ok1 and "9568267" in e1:
-            log("  残留兜底：强制卸载后重装主 HAP")
-            hdc_utils.cleanup_device(bundle)
-            ok1, e1 = True, ""
-            for mh in main_haps:
-                ok, err = hdc_utils.install_hap(str(mh))
-                if not ok:
-                    ok1, e1 = False, err
-                    break
+        ok1, e1 = _install_main_haps(bundle, main_haps)
         ok2, e2 = hdc_utils.install_hap(str(test_hap))
         log(f"  [安装] 主HAP×{len(main_haps)} ok={ok1} err={e1[:80] if e1 else '-'} | 测试HAP ok={ok2} err={e2[:80] if e2 else '-'}")
         if not (ok1 and ok2):
@@ -407,17 +429,7 @@ def _install_all(proj, bundle, ts, rel, deps, dep_haps, main_hap, test_hap, tmod
             log(f"INSTALL FAIL: {err}")
             refresh_xlsx()
             return 6
-        for dp in deps:
-            if "::" in dp:
-                dproj, dmod = dp.split("::", 1)
-                dh = REPO / dproj / dmod / "build/default/outputs/default" / f"{dmod}-default-signed.hap"
-                if dh.is_file():
-                    ok, err = _install_dep_hap(dh)
-                    log(f"  [依赖] {'已安装' if ok else '安装失败'} {dp} {err if not ok else ''}")
-            else:
-                for dh in dep_haps.get(dp, []):
-                    ok, err = _install_dep_hap(dh)
-                    log(f"  [依赖] {'已安装' if ok else '安装失败'} {dp} {err if not ok else ''}")
+        _install_deps(deps, dep_haps)
     return 0
 
 
@@ -449,7 +461,7 @@ def _finalize(ts, rel, hapname, sub, res, gen_html) -> int:
             f.write(f"结果: PASS\n用例: {res['passed']}/{res['total']} 通过, Failure: 0\n---\n")
             f.write(res["allout"][-3000:])
         tsv_row(ts, rel, "PASS", str(res["passed"]), str(res["total"]), "-", str(report))
-        log(f"✅ PASS {res['passed']}/{res['total']}", to_activity=True)
+        log(f"✅ PASS {res['passed']}/{res['total']}", to_active=True)
         if gen_html:
             _gen_html_report(rel, hapname, res)
         refresh_xlsx()

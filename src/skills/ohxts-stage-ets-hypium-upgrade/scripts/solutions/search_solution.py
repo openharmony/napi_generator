@@ -70,6 +70,25 @@ def _err_file_from(msg: str) -> str:
     return m.group(1).strip() if m else ""
 
 
+def _bump_solutions(solutions: list[dict], hid: str, today: str) -> bool:
+    """命中计数 +1，返回是否变更。"""
+    for s in solutions:
+        if s["id"] == hid:
+            s["count"] = s.get("count", 0) + 1
+            s["last_hit"] = today
+            return True
+    return False
+
+
+def _apply_handler(h: dict, e: str, proj: Path, dry_run: bool) -> str:
+    """执行处置 handler，返回记录串。"""
+    if dry_run:
+        return f"[dry-run] {h['id']}: {h['handler']} @ {proj}"
+    changed_files = _call_handler(h["handler"], proj, h["match"], _err_file_from(e))
+    return f"{h['id']}: 改动 {len(changed_files)} 文件 " \
+           f"{[Path(c).name for c in changed_files][:5]}"
+
+
 def search_and_apply(err: str, proj: Path | None = None, domain: str = "all",
                      dry_run: bool = False, log_file: Path | None = None) -> dict:
     """检索并（可选）应用处置。返回 {'hits': [...], 'applied': [...], 'unmatched': [...]}。"""
@@ -89,21 +108,11 @@ def search_and_apply(err: str, proj: Path | None = None, domain: str = "all",
             continue
         for h in hits:
             # 命中统计（自动维护：count+1）
-            for s in solutions:
-                if s["id"] == h["id"]:
-                    s["count"] = s.get("count", 0) + 1
-                    s["last_hit"] = today
-                    changed = True
-                    break
+            changed = _bump_solutions(solutions, h["id"], today) or changed
             if proj and h.get("handler"):
-                if dry_run:
-                    applied.append(f"[dry-run] {h['id']}: {h['handler']} @ {proj}")
-                    continue
-                changed_files = _call_handler(h["handler"], proj, h["match"],
-                                              _err_file_from(e))
-                applied.append(f"{h['id']}: 改动 {len(changed_files)} 文件 "
-                               f"{[Path(c).name for c in changed_files][:5]}")
-            elif not proj:
+                applied.append(_apply_handler(h, e, proj, dry_run))
+                continue
+            if not proj:
                 applied.append(f"[{h['id']}] {h['hint']}")
     if changed:
         save_solutions(solutions)

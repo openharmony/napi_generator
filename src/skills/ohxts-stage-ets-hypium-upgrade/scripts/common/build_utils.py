@@ -48,22 +48,30 @@ def extract_module_names(build_profile: Path) -> list[str]:
     m = re.search(r"""["']?modules["']?\s*:\s*\[""", text)
     if not m:
         return []
-    # 深度计数找 modules 数组的闭合 ]（嵌套 targets 等也含 [ ]）
-    depth = 0
-    end = -1
-    for i in range(m.end() - 1, len(text)):
-        c = text[i]
-        if c == '[':
-            depth += 1
-        elif c == ']':
-            depth -= 1
-            if depth == 0:
-                end = i
-                break
+    end = _match_bracket(text, m.end() - 1)
     if end < 0:
         return []
     block = text[m.end():end]
     return re.findall(r"""["']?name["']?\s*:\s*["']([^"']+)["']""", block)
+
+
+def _bracket_step(c: str, depth: int) -> int:
+    """括号步进：'[' +1、']' -1、其余不变。"""
+    if c == '[':
+        return depth + 1
+    if c == ']':
+        return depth - 1
+    return depth
+
+
+def _match_bracket(text: str, start: int) -> int:
+    """从 start 起深度计数找配对 ]，返回下标或 -1。"""
+    depth = 0
+    for i in range(start, len(text)):
+        depth = _bracket_step(text[i], depth)
+        if depth == 0 and text[i] == ']':
+            return i
+    return -1
 
 
 # ---------- compileSdk 临时 patch ----------
@@ -166,7 +174,6 @@ def _first_error(log: Path, rc1: int, rc2: int, rc3: int) -> str:
         return "timeout"
     m2 = re.search(r"ERROR:?\s+[^\n]{10,200}", text)
     return m2.group(0).strip()[:200] if m2 else f"rc main={rc1} test={rc2} hsp={rc3}"
-
 
 
 # ---------- 批量编译 ----------

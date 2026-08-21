@@ -18,6 +18,18 @@ from common.paths import REPO, TSV, XLSX  # noqa: E402
 from openpyxl import load_workbook  # noqa: E402
 
 
+def _better_status(cur: tuple, status: str, passed: str, total: str, err: str,
+                    report: str, line: str) -> tuple | None:
+    """PASS 优先状态合并；返回更优记录或 None（保留旧值）。"""
+    if cur[0] == "PASS" and line.startswith("history"):
+        return None
+    if status == "PASS":
+        return (status, passed, total, err, report)
+    if cur[0] == "PASS" or status == "DEVICE_OFFLINE":
+        return None
+    return (status, passed, total, err, report)
+
+
 def latest_from_tsv() -> dict:
     """每工程最新状态（history PASS 最高优先级）。"""
     latest: dict[str, tuple] = {}
@@ -29,18 +41,28 @@ def latest_from_tsv() -> dict:
         if rel not in latest:
             latest[rel] = (status, passed, total, err, report)
             continue
-        cur = latest[rel]
-        if cur[0] == "PASS" and line.startswith("history"):
-            continue
-        if status == "PASS":
-            latest[rel] = (status, passed, total, err, report)
-        elif cur[0] == "PASS":
-            continue
-        elif status == "DEVICE_OFFLINE":
-            continue
-        else:
-            latest[rel] = (status, passed, total, err, report)
+        new = _better_status(latest[rel], status, passed, total, err, report, line)
+        if new:
+            latest[rel] = new
     return latest
+
+
+def _load_test_json(root: str) -> dict | None:
+    """读取目录下 Test.json（失败返回 None）。"""
+    try:
+        return json.load(open(os.path.join(root, "Test.json")))
+    except Exception:
+        return None
+
+
+def _kits_to_map(d: dict, root: str, hap_to_main: dict) -> None:
+    """AppInstallKit 的 test-file-name 注册到 hap 名 → 工程路径映射。"""
+    for kit in d.get("kits", []):
+        if kit.get("type") != "AppInstallKit":
+            continue
+        for hap in kit.get("test-file-name", []):
+            hap_to_main.setdefault(os.path.splitext(hap)[0], []).append(
+                os.path.relpath(root, str(REPO)))
 
 
 def build_hap_to_main_map() -> dict[str, list[str]]:
@@ -50,16 +72,9 @@ def build_hap_to_main_map() -> dict[str, list[str]]:
         if "oh_modules" in root or "/build/" in root:
             continue
         if "Test.json" in files:
-            try:
-                d = json.load(open(os.path.join(root, "Test.json")))
-            except Exception:
-                continue
-            for kit in d.get("kits", []):
-                if kit.get("type") != "AppInstallKit":
-                    continue
-                for hap in kit.get("test-file-name", []):
-                    hap_to_main.setdefault(os.path.splitext(hap)[0], []).append(
-                        os.path.relpath(root, str(REPO)))
+            d = _load_test_json(root)
+            if d:
+                _kits_to_map(d, root, hap_to_main)
     return hap_to_main
 
 
@@ -111,6 +126,7 @@ def _resolve_skip_pr(p: str, hap_to_main: dict, main_status: dict, row) -> str:
         cur = row[10].value or ""
         row[10].value = f"{cur}；[auto]{note}" if not str(cur).startswith("[auto]") else f"[auto]{note}"
     return "否"
+
 
 def sync_xlsx() -> int:
     latest = latest_from_tsv()

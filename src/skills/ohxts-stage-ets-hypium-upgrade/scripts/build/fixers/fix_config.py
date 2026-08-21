@@ -35,29 +35,40 @@ def fix_srcentry(proj: Path, match: dict, err_file: str = "") -> list[str]:
 def fix_module_name_mismatch(proj: Path, match: dict, err_file: str = "") -> list[str]:
     """统一 build-profile.json5 与 module.json5 的 name。"""
     name = match.get("name", "")
-    changed = []
     # build-profile.json5 的 modules[].name ← module.json5 的 module.name
     bp = proj / "build-profile.json5"
-    if bp.exists():
-        try:
-            t = bp.read_text(errors="replace")
-        except OSError:
-            return changed
-        for f in _iter_json5(proj):
-            if f.name != "module.json5":
-                continue
-            try:
-                raw = re.sub(r"//.*", "", f.read_text(errors="replace"))
-                mn = json.loads(raw).get("module", {}).get("name", "")
-            except Exception:
-                mn = ""
-            if mn and mn != name:
-                t2 = re.sub(r'"name"\s*:\s*"' + re.escape(name) + r'"',
-                            f'"name": "{mn}"', t, count=1)
-                if t2 != t:
-                    bp.write_text(t2)
-                    changed.append(str(bp))
-                break
+    if not bp.exists():
+        return []
+    try:
+        t = bp.read_text(errors="replace")
+    except OSError:
+        return []
+    return _fix_first_module_name(proj, bp, t, name)
+
+
+def _module_name(f: Path) -> str:
+    """读取 module.json5 的 module.name（失败空串）。"""
+    try:
+        raw = re.sub(r"//.*", "", f.read_text(errors="replace"))
+        return json.loads(raw).get("module", {}).get("name", "")
+    except Exception:
+        return ""
+
+
+def _fix_first_module_name(proj: Path, bp: Path, t: str, name: str) -> list[str]:
+    """遍历 module.json5 找首个 name 不同者改写 build-profile（count=1）。"""
+    changed: list[str] = []
+    for f in _iter_json5(proj):
+        if f.name != "module.json5":
+            continue
+        mn = _module_name(f)
+        if mn and mn != name:
+            t2 = re.sub(r'"name"\s*:\s*"' + re.escape(name) + r'"',
+                        f'"name": "{mn}"', t, count=1)
+            if t2 != t:
+                bp.write_text(t2)
+                changed.append(str(bp))
+        break
     return changed
 
 
@@ -98,19 +109,22 @@ def fix_srcentry_file(proj: Path, match: dict, err_file: str = "") -> list[str]:
             continue
         # 目标：srcEntry 相对模块目录；尝试从 ohosTest 复制同名文件
         fname = Path(src).name
-        module_dir = f.parent
-        target = module_dir / src.lstrip("./")
-        if not target.exists():
-            # 在 ohosTest 找同名文件
-            for cand in sorted((proj / "entry/src/ohosTest").rglob(fname)):
-                if "build" in cand.parts:
-                    continue
-                target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_text(cand.read_text(errors="replace"))
-                changed.append(str(target))
-                break
+        target = f.parent / src.lstrip("./")
+        if not target.exists() and _copy_from_ohos_test(proj, fname, target):
+            changed.append(str(target))
         break
     return changed
+
+
+def _copy_from_ohos_test(proj: Path, fname: str, target: Path) -> bool:
+    """从 ohosTest 找同名文件复制到 target，返回是否成功。"""
+    for cand in sorted((proj / "entry/src/ohosTest").rglob(fname)):
+        if "build" in cand.parts:
+            continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(cand.read_text(errors="replace"))
+        return True
+    return False
 
 
 def fix_ets_ets_dir(proj: Path, match: dict, err_file: str = "") -> list[str]:

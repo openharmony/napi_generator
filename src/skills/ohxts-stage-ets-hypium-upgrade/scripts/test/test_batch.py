@@ -200,6 +200,17 @@ def run_batch(rel_list: Path | None, profile: str, skip_passed: bool = True,
 
 
 
+def _pending_merge(latest: dict, order: list, rel: str, st: str) -> None:
+    """首次出现记序；PASS 优先、DEVICE_OFFLINE 可被后续真实状态覆盖。"""
+    if rel not in latest:
+        order.append(rel)
+        latest[rel] = st
+    elif st == "PASS" and latest[rel] != "PASS":
+        latest[rel] = st
+    elif st not in ("DEVICE_OFFLINE",) and latest[rel] in ("PASS", "SKIP", "DEVICE_OFFLINE"):
+        latest[rel] = st
+
+
 def pending_list(subdir: str = "") -> tuple[list[str], dict]:
     """从 TSV 生成未闭环清单（表格顺序）+ 状态统计。
 
@@ -214,13 +225,7 @@ def pending_list(subdir: str = "") -> tuple[list[str], dict]:
         if len(parts) < 3:
             continue
         rel, st = parts[1], parts[2]
-        if rel not in latest:
-            order.append(rel)
-            latest[rel] = st
-        elif st == "PASS" and latest[rel] != "PASS":
-            latest[rel] = st
-        elif st not in ("DEVICE_OFFLINE",) and latest[rel] in ("PASS", "SKIP", "DEVICE_OFFLINE"):
-            latest[rel] = st
+        _pending_merge(latest, order, rel, st)
     items = [r for r in order if latest[r] not in SKIP_STATUSES]
     if subdir:
         items = [r for r in items if r.startswith(subdir)]

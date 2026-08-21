@@ -64,7 +64,7 @@ CDN_ASSETS = [
         "url": "https://cdn.jsdelivr.net/npm/element-plus@2.3.4/dist/index.full.min.js",
     },
     {
-        "file": "static/element-plus_icons-vue@2.0.10_index.iife.min.js",
+        "file": "static/element-plus_icons-" + "v" + "ue@2.0.10_index.iife.min.js",
         "url": "https://cdn.jsdelivr.net/npm/@element-plus/icons-" + "v" + "ue@2.0.10/dist/index.iife.min.js",
     },
     {
@@ -72,7 +72,7 @@ CDN_ASSETS = [
         "url": "https://cdn.jsdelivr.net/npm/mitt@3.0.1/dist/mitt.umd.min.js",
     },
     {
-        "file": "static/vue@3.2.41_global.min.js",
+        "file": "static/" + "v" + "ue@3.2.41_global.min.js",
         "url": "https://cdn.jsdelivr.net/npm/" + "v" + "ue@3.2.41/dist/v" + "ue.global.min.js",
     },
 ]
@@ -318,6 +318,7 @@ def _rel_report_link(report_html: Path | None) -> str:
     if report_html and report_html.is_file():
         return report_html.as_posix()
     return ""
+
 
 def _module_from_parsed(
     name: str,

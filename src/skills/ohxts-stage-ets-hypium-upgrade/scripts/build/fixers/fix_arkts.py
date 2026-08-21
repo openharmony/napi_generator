@@ -44,21 +44,23 @@ def fix_duplicate_identifier(proj: Path, match: dict, err_file: str = "") -> lis
     """Duplicate identifier 'X'：删除重复 import 行（保留第一个）。"""
     sym = match.get("sym", "")
     changed = []
-
-    def fn(t: str) -> str:
-        lines = t.splitlines(True)
-        seen = False
-        out = []
-        for ln in lines:
-            if re.search(rf"\bimport\b[^\n]*\b{sym}\b", ln):
-                if seen:
-                    continue  # 重复 import 删除
-                seen = True
-            out.append(ln)
-        return "".join(out)
-
-    _rewrite(_err_files(proj, err_file), fn, changed)
+    _rewrite(_err_files(proj, err_file),
+             lambda t: _dedup_import_lines(sym, t), changed)
     return changed
+
+
+def _dedup_import_lines(sym: str, t: str) -> str:
+    """删除重复 import 行（保留第一个）。"""
+    lines = t.splitlines(True)
+    seen = False
+    out = []
+    for ln in lines:
+        if re.search(rf"\bimport\b[^\n]*\b{sym}\b", ln):
+            if seen:
+                continue  # 重复 import 删除
+            seen = True
+        out.append(ln)
+    return "".join(out)
 
 
 def fix_missing_import(proj: Path, match: dict, err_file: str = "") -> list[str]:
