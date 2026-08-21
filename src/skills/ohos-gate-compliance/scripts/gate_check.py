@@ -132,18 +132,35 @@ def fix_code_file(fp: Path, text: str, profile: str) -> tuple[str, int]:
 
 
 
+def _read_file_preserve_eol(fp: Path) -> tuple[str, bool]:
+    """读文本并探测 CRLF（修复器在 \n 上工作，写回时还原）。"""
+    try:
+        with open(fp, "r", encoding="utf-8", newline="") as f:
+            data = f.read()
+    except (OSError, UnicodeDecodeError):
+        return "", False
+    crlf = "\r\n" in data
+    return (data.replace("\r\n", "\n") if crlf else data), crlf
+
+
+def _write_back(fp: Path, new_text: str, crlf: bool) -> None:
+    """写回修复文本（CRLF 文件还原行尾）。"""
+    if crlf:
+        new_text = new_text.replace("\n", "\r\n")
+    fp.write_text(new_text, encoding="utf-8", newline="")
+
+
 def _auto_fix_rounds(targets: list, profile: str) -> None:
-    """两轮自动修复 + 复查（无修复即停）。"""
+    """两轮自动修复 + 复查（无修复即停）。CRLF 文件写回时还原行尾，避免整文件重写。"""
     for _ in range(2):
         fixed_total = 0
         for fp in targets:
-            try:
-                text = fp.read_text(encoding="utf-8")
-            except OSError:
+            text, crlf = _read_file_preserve_eol(fp)
+            if not text:
                 continue
             new_text, n = fix_code_file(fp, text, profile)
             if n:
-                fp.write_text(new_text, encoding="utf-8", newline="")
+                _write_back(fp, new_text, crlf)
                 fixed_total += n
         if not fixed_total:
             break

@@ -50,10 +50,12 @@ RULES: list[tuple[str, re.Pattern[str], str]] = [
         re.compile(r"\.key\(\s*['\"](?!.*_.+)[^'\"]+['\"]\s*\)"),
         "key 无下划线，可能未按「页面名_组件名」命名",
     ),
-    # G.EXT.02: ESObject 仅检测、不自动替换（setUIContent 等须按 API 改 loadContent）
+    # G.EXT.02: ESObject 仅检测、不自动替换（setUIContent 等须按 API 改 loadContent）。
+    # 与 gitcode 对齐：只报类型注解/声明（: ESObject / ESObject;），不报 as ESObject 绕过
+    # （this as ESObject 是 ArkTS 类型绕过必需写法，gitcode 不报，2026-08-21 实测）
     (
         "G.EXT.02",
-        re.compile(r"\bESObject\b"),
+        re.compile(r":\s*ESObject\b|\bESObject;"),
         "使用 ESObject 作类型注解，应改为具体类型（G.EXT.02）",
     ),
     (

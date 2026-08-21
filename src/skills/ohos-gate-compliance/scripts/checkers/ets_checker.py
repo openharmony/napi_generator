@@ -327,12 +327,25 @@ def _scan_import_any(lines: list[str], add) -> None:
     _scan_any_lines(lines, add)
 
 
+def _ext01_hits(lines: list[str]) -> list[tuple[int, str]]:
+    """G.EXT.01：class 体内无修饰符属性（struct/interface 成员豁免，ArkUI 官方写法）。"""
+    hits: list[tuple[int, str]] = []
+    class_seen = False
+    depth = 0
+    for i, ln in enumerate(lines, 1):
+        st = ln.strip()
+        class_seen, depth = _class_state(ln, st, class_seen, depth)
+        if class_seen and depth == 1 and re.match(
+                r"^\s+(?!public |private |protected )[a-zA-Z_]\w*\s*:\s*"
+                r"(string|number|boolean|LocalStorage|Array|Record|object|any)\s*[=;]", ln):
+            hits.append((i, ln.strip()[:60]))
+    return hits
+
+
 def _scan_heuristic(path: Path, text: str, lines: list[str], add) -> None:
     """启发类：G.EXT.01 属性修饰符 / ASYNC.01 done() / ASYNC.02 await / G.FMT.12 / PRIVATE.01。"""
-    for i, ln in enumerate(lines, 1):
-        if re.match(r"^\s+(?!public |private |protected )[a-zA-Z_]\w*\s*:\s*"
-                    r"(string|number|boolean|LocalStorage|Array|Record|object|any)\s*[=;]", ln):
-            add("G.EXT.01", i, ln.strip()[:60])
+    for i, msg in _ext01_hits(lines):
+        add("G.EXT.01", i, msg)
     if _is_hypium_test_ets(path):
         for m in re.finditer(r"\.(then|catch)\(\([^)]*\)\s*=>\s*\{", text):
             line_no, has_done = _callback_block_has_done(text, m)
@@ -461,10 +474,133 @@ def fix_ets_format(text: str) -> tuple[str, int]:
     if c:
         n += c
         text = text2
-    text2, c = re.subn(r"(for|while)\s*\([^;\n]*;[^;\n]*;[^;\n]*\)\s*;", r"\1(...) { }", text)
+    text2, c = re.subn(r"((?:for|while)\s*\([^;\n]*;[^;\n]*;[^;\n]*\))\s*;", r"\1 { }", text)
     if c:
         n += c
         text = text2
+    return text, n
+
+
+_CLASS_FIELD_RE = re.compile(
+    r"^(\s{2,})([a-zA-Z_]\w*)\s*:\s*(number|string|boolean|bigint)\s*[=;]")
+_PUBLIC_PREFIX_RE = re.compile(r"^\s*(public|private|protected|static|readonly)\b")
+
+
+def _needs_public(line: str) -> bool:
+    """class 体 4 空格基本类型属性且无修饰符。"""
+    return not _PUBLIC_PREFIX_RE.match(line) and _CLASS_FIELD_RE.match(line) is not None
+
+
+def _class_state(line: str, st: str, class_seen: bool, depth: int) -> tuple[bool, int]:
+    """维护 class 体深度状态。返回 (class_seen, depth)。"""
+    if not class_seen:
+        if re.match(r"^(export\s+)?(default\s+)?class\b", st):
+            return True, 1
+        return False, 0
+    if st.startswith(("//", "*", "/*")):
+        return True, depth
+    d = depth + line.count("{") - line.count("}")
+    return (True, d) if d > 0 else (False, 0)
+
+
+def fix_ets_ext01(text: str) -> tuple[str, int]:
+    """G.EXT.01：class 体内 4 空格属性行补 public 修饰符。"""
+    out: list[str] = []
+    n = 0
+    class_seen = False
+    depth = 0
+    for line in text.split("\n"):
+        st = line.strip()
+        class_seen, depth = _class_state(line, st, class_seen, depth)
+        if class_seen and depth == 1:
+            m = _CLASS_FIELD_RE.match(line)
+            if m and not _PUBLIC_PREFIX_RE.match(line):
+                ind = m.group(1)
+                line = ind + "public " + line[len(ind):]
+                n += 1
+        out.append(line)
+    return "\n".join(out), n
+
+
+def fix_ets_dcl06(text: str) -> tuple[str, int]:
+    """G.DCL.06：new Array() → [] 字面量。"""
+    t, n = re.subn(r"=\s*new\s+Array\s*\(\s*\)", "= []", text)
+    return t, n
+
+
+def _to_camel(name: str) -> str:
+    """snake_case/PascalCase → lowerCamelCase（全大写常量、已 camel 不动；段内大小写保留）。"""
+    if not name or name.isupper():
+        return name
+    if "_" in name:
+        parts = name.split("_")
+        first = parts[0].lower() if parts[0].isupper() else parts[0][:1].lower() + parts[0][1:]
+        return first + "".join(p[:1].upper() + p[1:] for p in parts[1:])
+    if name[:1].isupper():
+        return name[0].lower() + name[1:]
+    return name
+
+
+def fix_ets_nam(text: str) -> tuple[str, int]:
+    """G.NAM.02/03：let/const/var/function 声明名 → lowerCamelCase（全文件 token 同步）。"""
+    n = 0
+    decls = set()
+    for m in re.finditer(r"\b(let|const|var|function)\s+([A-Za-z_]\w*)", text):
+        new = _to_camel(m.group(2))
+        if new != m.group(2):
+            decls.add((m.group(2), new))
+    for old, new in decls:
+        text, c = re.subn(r"\b" + re.escape(old) + r"\b", new, text)
+        n += c
+    return text, n
+
+
+def _switch_state(st: str, line: str, sw_indent: int | None,
+                   depth: int) -> tuple[int | None, int]:
+    """switch 块深度/缩进状态。返回 (sw_indent, depth)。"""
+    if sw_indent is None:
+        if re.match(r"switch\s*\(", st):
+            return len(line) - len(st), 1
+        return None, 0
+    if not st.startswith(("//", "*")):
+        depth += line.count("{") - line.count("}")
+    if depth <= 0:
+        return None, 0
+    return sw_indent, depth
+
+
+def fix_ets_fmt12(text: str) -> tuple[str, int]:
+    """G.FMT.12：switch 内 case/default 缩进 = switch 缩进 + 2。"""
+    out: list[str] = []
+    n = 0
+    sw_indent: int | None = None
+    depth = 0
+    for line in text.split("\n"):
+        st = line.lstrip()
+        sw_indent, depth = _switch_state(st, line, sw_indent, depth)
+        if sw_indent is not None and depth == 1 and re.match(r"(case\b|default\s*:)", st):
+            line = " " * (sw_indent + 2) + st
+            n += 1
+        out.append(line)
+    return "\n".join(out), n
+
+
+_ESOBJECT_NAMES = {
+    "caller": "Caller", "firstCaller": "Caller", "secondCaller": "Caller", "thirdCaller": "Caller",
+    "subscriber": "commonEvent.CommonEventSubscriber",
+    "actionStr": "string", "param": "string", "accountId": "string", "message": "string",
+    "tempDir": "string", "applicationTempDir": "string", "currentContext": "string",
+    "applicationContext": "string", "onAcceptWantCalledSeq": "number", "action": "string",
+}
+
+
+def fix_ets_ext02(text: str) -> tuple[str, int]:
+    """G.EXT.02：常见变量名 ESObject 声明 → 具体类型（白名单启发式，回调参数留手动）。"""
+    n = 0
+    for name, typ in _ESOBJECT_NAMES.items():
+        text, c = re.subn(rf"\b(let|var|const)\s+{name}\s*:\s*ESObject\b",
+                          rf"\1 {name}: {typ}", text)
+        n += c
     return text, n
 
 
@@ -478,12 +614,22 @@ def fix_wordstool_97(text: str) -> tuple[str, int]:
 def fix_ets_file(path: Path, text: str) -> tuple[str, int]:
     """按文件类型应用全部自动修复，返回 (新文本, 修复数)。"""
     total = 0
-    if path.suffix == ".ets":
+    if path.suffix in (".ets", ".ts"):
         text, n = fix_ets_xtscheck(text)
         total += n
         text, n = fix_arkts_quality(text)
         total += n
         text, n = fix_ets_format(text)
+        total += n
+        text, n = fix_ets_ext01(text)
+        total += n
+        text, n = fix_ets_nam(text)
+        total += n
+        text, n = fix_ets_ext02(text)
+        total += n
+        text, n = fix_ets_dcl06(text)
+        total += n
+        text, n = fix_ets_fmt12(text)
         total += n
     if path.suffix in (".ets", ".ts", ".json", ".json5") or _is_resource_string_json(path):
         text, n = fix_wordstool_97(text)
