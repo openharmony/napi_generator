@@ -50,3 +50,7 @@ build
 !/src/skills/ohxtsdynamic/arkui-dynamic-xts-generator/README.md
 /src/skills/ohxtscapi/arkui-capi-xts-generator-v3/*
 !/src/skills/ohxtscapi/arkui-capi-xts-generator-v3/README.md
+# suite_v3 bulk
+/src/vscode_plugin/src/test/suite_v3/bulk/
+/src/vscode_plugin/out/test/suite_v3/bulk/
+

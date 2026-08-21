@@ -1,4 +1,4 @@
-{
+﻿{
     "name": "napi-gen",
     "displayName": "napi-gen",
     "description": "Generate NAPI definition code and framework code for OpenHarmony",
@@ -219,7 +219,16 @@
         "lint": "eslint . --ext .ts,.tsx",
         "watch": "tsc -watch -p ./",
         "pretest": "npm run compile",
-        "test": "node ./out/test/runTest.js"
+        "test": "node ./out/test/runTest.js",
+        "suite_v2:count": "npm run compile && node ./out/test/suite_v2/tools/count_gate.js",
+        "suite_v2:generate": "npm run compile && node ./out/test/suite_v2/tools/generate_b1.js",
+        "test:v2": "npm run compile && node ./out/test/runTest_v2.js",
+        "test:v2:generated": "npm run compile && node ./out/test/runTest_v2.js --generated",
+        "test:v2:full": "npm run compile && node ./out/test/runTest_v2.js --full",
+        "suite_v3:generate": "npm run compile && node ./out/test/suite_v3/tools/generate.js && npm run compile",
+        "suite_v3:generate:full": "npm run compile && node ./out/test/suite_v3/tools/generate.js --full",
+        "suite_v3:count": "npm run compile && node ./out/test/suite_v3/tools/count_gate.js",
+        "test:v3": "npm run compile && node ./out/test/runTest_v3.js"
     },
     "devDependencies": {
         "@types/glob": "^7.1.1",
