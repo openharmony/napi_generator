@@ -116,8 +116,7 @@ def fix_string_wrapper(text: str) -> str:
 
 
 def fix_exclamation(text: str) -> str:
-    """definite-assignment 感叹号（storage!: LocalStorage）→ 初始化由人工/模板处理。
-    此处只处理声明处 `let x!: T` → `let x: T`（配合调用处保留，谨慎）。"""
+    """definite-assignment exclamation -> plain declaration."""
     return re.sub(r"(\blet\s+\w+)\s*!\s*:", r"\1:", text)
 
 

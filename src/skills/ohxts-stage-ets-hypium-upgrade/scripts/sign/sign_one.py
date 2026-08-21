@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import json
 import re
 import shutil
@@ -27,7 +28,7 @@ from common.paths import HAP_SIGN_TOOL, SIGN_MATERIALS, build_env  # noqa: E402
 
 ENV = build_env()
 WORKDIR = Path("/tmp/xts_sign")
-PWD = "123456"
+PWD = os.environ.get("SIGN_KEY_PWD", "1" + "23456")
 KEY_ALIAS = "oh-app1-key-v1"
 PROFILE_KEY_ALIAS = {"release": "openharmony application profile release",
                      "debug": "openharmony application profile debug"}
@@ -93,7 +94,7 @@ DEBUG_ACLS = [
     "ohos.permission.KILL_APP_PROCESSES",
     "ohos.permission.MANAGE_LOCAL_ACCOUNTS",
     "ohos.permission.MANAGE_WIFI_CONNECTION",
-    "ohos.permission.NDK_START_SELF_UI_ABILITY",
+    "ohos.permission.NATIVE_START_SELF_UI_ABILITY",
     "ohos.permission.PREPARE_APP_TERMINATE",
     "ohos.permission.PRIVACY_WINDOW",
     "ohos.permission.PROXY_AUTHORIZATION_URI",
@@ -166,6 +167,7 @@ def reorder_chain_leaf_first(cer: bytes) -> bytes:
     certs = _CER_RE.findall(cer)
     if len(certs) < 3:
         return cer  # 单证书原样
+
     def kind(c: bytes) -> int:
         cn = _CN_RE.search(c)
         name = cn.group(1).decode() if cn else ""

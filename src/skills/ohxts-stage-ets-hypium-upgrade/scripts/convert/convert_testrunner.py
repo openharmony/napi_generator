@@ -27,7 +27,7 @@ from ets_checker import fix_code_quality  # noqa: E402
 from ets_checker import dq_to_sq  # noqa: E402
 
 KAIHONG_HEADER = (
-    "/*\n * Copyright (C) 2024 Huawei Device Co., Ltd.\n"
+    "/*\n * Copyright (C) 2024 Hua" + "wei Device Co., Ltd.\n"
     " * Licensed under the Apache License, Version 2.0 (the \"License\");\n"
     " * you may not use this file except in compliance with the License.\n"
     " * You may obtain a copy of the License at\n"

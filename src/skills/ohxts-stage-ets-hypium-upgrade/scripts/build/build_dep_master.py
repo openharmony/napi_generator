@@ -51,7 +51,7 @@ def build(proj_rel: str, suite: str = "") -> list[Path]:
               f"可 --suite 指定（--list 查看）")
         return []
     print(f"[build_dep_master] 套件 {suite} 走 master GN 编译（同步 + 编译，跳过测试）")
-    r = subprocess.run(["bash", str(CYCLE_SH), "--skip-test", suite],
+    r = subprocess.run([str(CYCLE_SH), "--skip-test", suite],
                        capture_output=True, text=True, timeout=1800)
     print(r.stdout[-1500:])
     if r.returncode != 0:

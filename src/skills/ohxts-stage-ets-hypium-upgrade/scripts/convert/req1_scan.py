@@ -39,7 +39,8 @@ JS_SEMANTIC_MARKERS = ("JSProject", "jsinterop", "interop")
 
 
 def sh(cmd: str) -> str:
-    r = subprocess.run(cmd, shell=True, cwd=str(REPO), capture_output=True, text=True)
+    import shlex
+    r = subprocess.run(shlex.split(cmd), cwd=str(REPO), capture_output=True, text=True)
     return r.stdout
 
 

@@ -49,14 +49,6 @@ from pathlib import Path
 def {fn_name}(proj: Path, match: dict, err_file: str = "") -> list[str]:
     """TODO: 实现处置逻辑。match 为 pattern 的 groupdict。"""
     changed = []
-    # 示例：读取报错文件并应用修复
-    # files = [Path(err_file)] if err_file and Path(err_file).is_file() else []
-    # for f in files:
-    #     t = f.read_text(errors="replace")
-    #     t2 = re.sub(r"...", r"...", t)
-    #     if t2 != t:
-    #         f.write_text(t2)
-    #         changed.append(str(f))
     return changed
 
 
