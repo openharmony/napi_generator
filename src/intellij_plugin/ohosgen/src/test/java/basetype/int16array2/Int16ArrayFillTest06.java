@@ -13,14 +13,33 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.int16array2;
+
+import basetype.ArrayBuffer;
+import basetype.BasTest;
+import basetype.EntryResult;
+import basetype.Error;
+import basetype.Int8Array;
+import basetype.IteratorResult;
+import basetype.RangeError;
+import basetype.TypeError;
+import basetype.Uint16Array;
+import basetype.DataView;
+import basetype.Float32Array;
+import basetype.Float64Array;
+import basetype.Int32Array;
+import basetype.IntlOptions;
+import basetype.NullPointerError;
+import basetype.Uint8Array;
+import basetype.Uint8ClampedArray;
+import basetype.Int16Array;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -1241,9 +1260,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     void testInt16ArrayFillTestSix096() {
     Int16Array arr = new Int16Array(new int[] {0, 0, 0});
     arr.fill(32768);
-    boolean result = arr.every((v) -> {
-    return v == -32768;
-    });
+    boolean result = arr.every((v) -> { return v == -32768; });
     assertTrue(result);
     }
 
@@ -1252,9 +1269,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0, 0, 0});
     int val = (int) 77;
     arr.fill(val);
-    boolean result = arr.some((v) -> {
-    return v == ((int) 77);
-    });
+    boolean result = arr.some((v) -> { return v == ((int) 77); });
     assertTrue(result);
     }
 

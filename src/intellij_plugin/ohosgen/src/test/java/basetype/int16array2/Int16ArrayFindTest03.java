@@ -13,14 +13,33 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.int16array2;
+
+import basetype.ArrayBuffer;
+import basetype.BasTest;
+import basetype.EntryResult;
+import basetype.Error;
+import basetype.Int8Array;
+import basetype.IteratorResult;
+import basetype.RangeError;
+import basetype.TypeError;
+import basetype.Uint16Array;
+import basetype.DataView;
+import basetype.Float32Array;
+import basetype.Float64Array;
+import basetype.Int32Array;
+import basetype.IntlOptions;
+import basetype.NullPointerError;
+import basetype.Uint8Array;
+import basetype.Uint8ClampedArray;
+import basetype.Int16Array;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -110,9 +129,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     void testInt16ArrayFindTestThree006() {
     ArrayBuffer buf = new ArrayBuffer(0);
     Int16Array arr = new Int16Array(buf);
-    Integer result = arr.find((_value, _index, _array) -> {
-    return true;
-    });
+    Integer result = arr.find((_value, _index, _array) -> { return true; });
     assertNull(result);
     }
 
@@ -131,18 +148,14 @@ public class Int16ArrayFindTest03 extends BasTest {
     @Test
     void testInt16ArrayFindTestThree008() {
     Int16Array arr = Int16Array.of(42);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value == 42;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value == 42; });
     assertEqual(42, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree009() {
     Int16Array arr = Int16Array.of(99);
-    Integer result = arr.find((_value, _index, _array) -> {
-    return false;
-    });
+    Integer result = arr.find((_value, _index, _array) -> { return false; });
     assertNull(result);
     }
 
@@ -165,9 +178,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     arr.set(2, 0);
     arr.set(3, 0);
     arr.set(4, 0);
-    Integer result = arr.find((_value, _index, _array) -> {
-    return false;
-    });
+    Integer result = arr.find((_value, _index, _array) -> { return false; });
     assertNull(result);
     }
 
@@ -178,9 +189,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     arr.set(1, 0);
     arr.set(2, 0);
     arr.set(3, 0);
-    Integer result = arr.find((_value, _index, _array) -> {
-    return true;
-    });
+    Integer result = arr.find((_value, _index, _array) -> { return true; });
     assertEqual(0, result);
     }
 
@@ -192,36 +201,28 @@ public class Int16ArrayFindTest03 extends BasTest {
     arr.set(2, 100);
     arr.set(3, 100);
     arr.set(4, 100);
-    Integer result = arr.find((_value, index, _array) -> {
-    return index >= 2;
-    });
+    Integer result = arr.find((_value, index, _array) -> { return index >= 2; });
     assertEqual(100, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree014() {
     Int16Array arr = Int16Array.of(50, 50, 50, 50);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value == 50;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value == 50; });
     assertEqual(50, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree015() {
     Int16Array arr = Int16Array.of(-1, -1, -1, -1);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value == -1;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value == -1; });
     assertEqual(-1, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree016() {
     Int16Array arr = Int16Array.of(10, 10, 10, 10);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value > 100;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value > 100; });
     assertNull(result);
     }
 
@@ -454,29 +455,14 @@ public class Int16ArrayFindTest03 extends BasTest {
     @Test
     void testInt16ArrayFindTestThree033() {
     Int16Array arr = Int16Array.of(2, 4, 6, 8);
-    Integer result = arr.find((value, _index, array) -> {
-    Integer inner = array.find((v, _i, _a) -> {;
-    return v > value;
-    });
-    return inner != null;
-    });
+    Integer result = arr.find((value, _index, array) -> { Integer inner = array.find((v, _i, _a) -> { return v > value; }); return inner != null; });
     assertEqual(2, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree034() {
     Int16Array arr = Int16Array.of(3, 6, 9);
-    Integer result = arr.find((_value, _index, array) -> {
-    boolean[] hasSix = {false};
-    array.find((v, _i, _a) -> {
-    if (v == 6) {
-    hasSix[0] = true;
-    return true;
-    }
-    return false;
-    });
-    return hasSix[0];
-    });
+    Integer result = arr.find((_value, _index, array) -> { boolean[] hasSix = {false}; array.find((v, _i, _a) -> { if (v == 6) { hasSix[0] = true; return true; } return false; }); return hasSix[0]; });
     assertEqual(3, result);
     }
 
@@ -484,10 +470,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     void testInt16ArrayFindTestThree035() {
     Int16Array arr = Int16Array.of(1, 2, 3, 4, 5);
     int[] threshold = {0};
-    Integer result = arr.find((value, _index, _array) -> {
-    threshold[0] = threshold[0] + 1;
-    return value > threshold[0];
-    });
+    Integer result = arr.find((value, _index, _array) -> { threshold[0] = threshold[0] + 1; return value > threshold[0]; });
     assertNull(result);
     }
 
@@ -495,64 +478,49 @@ public class Int16ArrayFindTest03 extends BasTest {
     void testInt16ArrayFindTestThree036() {
     Int16Array arr = Int16Array.of(1, 2, 3, 4);
     int[] sum = {0};
-    Integer result = arr.find((value, _index, _array) -> {
-    sum[0] = sum[0] + value;
-    return sum[0] > 5;
-    });
+    Integer result = arr.find((value, _index, _array) -> { sum[0] = sum[0] + value; return sum[0] > 5; });
     assertEqual(3, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree037() {
     Int16Array arr = Int16Array.of(5, 6, 7);
-    Integer result = arr.find((_value, _index, _array) -> {
-    return false;
-    });
+    Integer result = arr.find((_value, _index, _array) -> { return false; });
     assertNull(result);
     }
 
     @Test
     void testInt16ArrayFindTestThree038() {
     Int16Array arr = Int16Array.of(1, 3, 5, 7);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value % 2 == 0;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value % 2 == 0; });
     assertNull(result);
     }
 
     @Test
     void testInt16ArrayFindTestThree039() {
     Int16Array arr = Int16Array.of(10, 15, 20);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value > 5 && value < 18;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value > 5 && value < 18; });
     assertEqual(10, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree040() {
     Int16Array arr = Int16Array.of(1, 100, 200);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value < 0 || value > 150;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value < 0 || value > 150; });
     assertEqual(200, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree041() {
     Int16Array arr = Int16Array.of(0, 1, 2);
-    Integer result = arr.find((value, _index, _array) -> {
-    return !(value == 0);
-    });
+    Integer result = arr.find((value, _index, _array) -> { return !(value == 0); });
     assertEqual(1, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree042() {
     Int16Array arr = Int16Array.of(-5, 0, 5);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value != 0;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value != 0; });
     assertEqual(-5, result);
     }
 
@@ -623,30 +591,22 @@ public class Int16ArrayFindTest03 extends BasTest {
     @Test
     void testInt16ArrayFindTestThree048() {
     Int16Array arr = Int16Array.of(-32768, 0, 100);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value == -32768;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value == -32768; });
     assertEqual(-32768, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree049() {
     Int16Array arr = Int16Array.of(0, 32767, 1);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value == 32767;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value == 32767; });
     assertEqual(32767, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree050() {
     Int16Array arr = Int16Array.of(5, 10, 15);
-    Integer first = arr.find((value, _index, _array) -> {
-    return value > 7;
-    });
-    Integer second = arr.find((value, _index, _array) -> {
-    return value > 7;
-    });
+    Integer first = arr.find((value, _index, _array) -> { return value > 7; });
+    Integer second = arr.find((value, _index, _array) -> { return value > 7; });
     assertEqual(second, first);
     }
 
@@ -679,36 +639,28 @@ public class Int16ArrayFindTest03 extends BasTest {
     @Test
     void testInt16ArrayFindTestThree053() {
     Int16Array arr = Int16Array.of(-5, -3, 2, -1, 4);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value > 0;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value > 0; });
     assertEqual(2, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree054() {
     Int16Array arr = Int16Array.of(3, 1, -2, 5, -4);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value < 0;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value < 0; });
     assertEqual(-2, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree055() {
     Int16Array arr = Int16Array.of(0, 0, 5, 0);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value != 0;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value != 0; });
     assertEqual(5, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree056() {
     Int16Array arr = Int16Array.of(3, 0, 1);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value == 0;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value == 0; });
     assertEqual(0, result);
     }
 
@@ -718,18 +670,14 @@ public class Int16ArrayFindTest03 extends BasTest {
     for (int i = 0; i < 50; i++) {
     arr.set(i, i);
     }
-    Integer result = arr.find((value, _index, _array) -> {
-    return value == 25;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value == 25; });
     assertEqual(25, result);
     }
 
     @Test
     void testInt16ArrayFindTestThree058() {
     Int16Array arr = Int16Array.of(-32768, 0, 32767);
-    Integer result = arr.find((value, _index, _array) -> {
-    return value == 32767;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value == 32767; });
     assertEqual(32767, result);
     }
 
@@ -770,9 +718,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     String expectedErrorName = "Error";
     assertEqual(expectedErrorName, actualErrorName);
     }
-    Integer result = arr.find((value, _index, _array) -> {
-    return value > 7;
-    });
+    Integer result = arr.find((value, _index, _array) -> { return value > 7; });
     assertEqual(10, result);
     }
 }
