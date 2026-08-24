@@ -41,8 +41,20 @@ public class BasTest {
         org.junit.jupiter.api.Assertions.assertEquals(expected, (int) actual);
     }
 
+    public static void assertEqual(Integer expected, int actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+    }
+
     public static void assertEqual(Object expected, Object actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+    }
+
+    public static void assertNotEqual(Object expected, Object actual) {
+        org.junit.jupiter.api.Assertions.assertNotEquals(expected, actual);
+    }
+
+    public static void assertNotEqual(int expected, int actual) {
+        org.junit.jupiter.api.Assertions.assertNotEquals(expected, actual);
     }
 
     public static void assertTrue(boolean condition) {
@@ -60,6 +72,18 @@ public class BasTest {
     /** JS isFinite 语义：int/long 恒为有限数。 */
     public static boolean isFinite(long value) {
         return true;
+    }
+
+    /** 列表 join（ETS 数组 join 语义）。 */
+    public static String joinList(java.util.List<?> values, String sep) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < values.size(); i++) {
+            if (i > 0) {
+                sb.append(sep);
+            }
+            sb.append(values.get(i));
+        }
+        return sb.toString();
     }
 
     public static void fail() {

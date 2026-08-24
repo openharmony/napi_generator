@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
  * 视图（subarray）与宿主数组共享同一 ArrayBuffer，方法名与 JS 行为一一对应。
  * 回调接口提供 1/2/3 参数重载，由重载决议按 lambda 参数个数自动匹配。
  */
-public class Int16Array {
+public class Int16Array implements IntArrayView {
 
     /** 每个元素占用的字节数。 */
     public static final int BYTES_PER_ELEMENT = 2;
@@ -37,13 +37,17 @@ public class Int16Array {
         this(new ArrayBuffer(length * BYTES_PER_ELEMENT), 0, length);
     }
 
+    public Int16Array(double length) {
+        this((int) length);
+    }
+
     public Int16Array() {
         this(0);
     }
 
-    public Int16Array(Int16Array src) {
-        this(src.length);
-        for (int i = 0; i < src.length; i++) {
+    public Int16Array(IntArrayView src) {
+        this(src.length());
+        for (int i = 0; i < src.length(); i++) {
             set(i, src.get(i));
         }
     }
@@ -62,8 +66,27 @@ public class Int16Array {
         }
     }
 
+    public Int16Array(double... values) {
+        this(values.length);
+        for (int i = 0; i < values.length; i++) {
+            set(i, values[i]);
+        }
+    }
+
     public Int16Array(ArrayBuffer buf) {
         this(buf, 0, buf.byteLength() / BYTES_PER_ELEMENT);
+    }
+
+    public Int16Array(ArrayBuffer buf, int byteOffset) {
+        this(buf, byteOffset, (buf.byteLength() - byteOffset) / BYTES_PER_ELEMENT);
+    }
+
+    public Int16Array(ArrayBuffer buf, double byteOffset) {
+        this(buf, (int) byteOffset);
+    }
+
+    public Int16Array(ArrayBuffer buf, double byteOffset, double length) {
+        this(buf, (int) byteOffset, (int) length);
     }
 
     public Int16Array(ArrayBuffer buf, int byteOffset, int length) {
@@ -119,29 +142,60 @@ public class Int16Array {
      * 写入指定索引元素（ToInt16 转换；越界忽略）。
      * 对应 $index 属性赋值语义。
      */
-    public void set(int index, double value) {
+    public Integer set(int index, double value) {
         if (index < 0 || index >= length) {
-            return;
+            return null;
         }
         buffer.setInt16(byteOffset + index * BYTES_PER_ELEMENT, toInt16(value));
+        return null;
     }
 
     /** 使用另一数组的元素填充本数组。 */
-    public void set(Int16Array src) {
-        set(src, 0);
+    public Integer set(Int16Array src) {
+        return set(src, 0);
     }
 
     /** 使用另一数组的元素填充本数组（从 offset 起）。 */
-    public void set(Int16Array src, int offset) {
+    public Integer set(Int16Array src, int offset) {
         for (int i = 0; i < src.length; i++) {
             set(offset + i, src.get(i));
         }
+        return null;
+    }
+
+    /** 使用整型数组的元素填充本数组。 */
+    public Integer set(int[] src) {
+        return set(src, 0);
+    }
+
+    /** 使用整型数组的元素填充本数组。 */
+    public Integer set(int[] src, int offset) {
+        for (int i = 0; i < src.length; i++) {
+            set(offset + i, src[i]);
+        }
+        return null;
+    }
+
+    /** 使用浮点数组的元素填充本数组（ToInt16 转换）。 */
+    public Integer set(double[] src, int offset) {
+        for (int i = 0; i < src.length; i++) {
+            set(offset + i, src[i]);
+        }
+        return null;
+    }
+
+    public Integer set(double[] src) {
+        return set(src, 0);
     }
 
     /**
      * 用 value 填充 [start, end) 区间（含负数索引换算与区间收敛），
      * 返回数组本身以支持链式调用。
      */
+    public Int16Array fill(double value, double start, double end) {
+        return fill(value, toIndexD(start, length), toIndexD(end, length));
+    }
+
     public Int16Array fill(double value, int start, int end) {
         int len = length;
         int from = toIndex(start, len);
@@ -162,6 +216,7 @@ public class Int16Array {
 
     /** 返回首个满足谓词的元素（无则 null），对应 find 语义。 */
     public Integer find(Int16Finder cb) {
+        if (cb == null) { throw new NullPointerError(); }
         for (int i = 0; i < length; i++) {
             int v = get(i);
             if (cb.test(v, i, this)) {
@@ -183,8 +238,56 @@ public class Int16Array {
         return find((v, i, a) -> cb.test(v, i));
     }
 
+    /** 从后向前返回首个满足谓词的元素（无则 null），对应 findLast 语义。 */
+    public Integer findLast(Int16Finder cb) {
+        if (cb == null) { throw new NullPointerError(); }
+        for (int i = length - 1; i >= 0; i--) {
+            int v = get(i);
+            if (cb.test(v, i, this)) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    public Integer findLast(Int16Finder0 cb) {
+        return findLast((v, i, a) -> cb.test());
+    }
+
+    public Integer findLast(Int16Finder1 cb) {
+        return findLast((v, i, a) -> cb.test(v));
+    }
+
+    public Integer findLast(Int16Finder2 cb) {
+        return findLast((v, i, a) -> cb.test(v, i));
+    }
+
+    /** 从后向前返回首个满足谓词的元素下标（无则 -1），对应 findLastIndex 语义。 */
+    public int findLastIndex(Int16Finder cb) {
+        if (cb == null) { throw new NullPointerError(); }
+        for (int i = length - 1; i >= 0; i--) {
+            if (cb.test(get(i), i, this)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int findLastIndex(Int16Finder0 cb) {
+        return findLastIndex((v, i, a) -> cb.test());
+    }
+
+    public int findLastIndex(Int16Finder1 cb) {
+        return findLastIndex((v, i, a) -> cb.test(v));
+    }
+
+    public int findLastIndex(Int16Finder2 cb) {
+        return findLastIndex((v, i, a) -> cb.test(v, i));
+    }
+
     /** 返回首个满足谓词的元素下标（无则 -1），对应 findIndex 语义。 */
     public int findIndex(Int16Finder cb) {
+        if (cb == null) { throw new NullPointerError(); }
         for (int i = 0; i < length; i++) {
             if (cb.test(get(i), i, this)) {
                 return i;
@@ -203,6 +306,7 @@ public class Int16Array {
 
     /** 返回满足谓词的全部元素构成的新数组，对应 filter 语义。 */
     public Int16Array filter(Int16Finder cb) {
+        if (cb == null) { throw new NullPointerError(); }
         int count = 0;
         for (int i = 0; i < length; i++) {
             if (cb.test(get(i), i, this)) {
@@ -219,6 +323,10 @@ public class Int16Array {
         return new Int16Array(picked);
     }
 
+    public Int16Array filter(Int16Finder0 cb) {
+        return filter((v, i, a) -> cb.test());
+    }
+
     public Int16Array filter(Int16Finder1 cb) {
         return filter((v, i, a) -> cb.test(v));
     }
@@ -229,6 +337,7 @@ public class Int16Array {
 
     /** 对每个元素应用回调（返回值构成新数组），对应 map 语义。 */
     public Int16Array map(Int16Mapper cb) {
+        if (cb == null) { throw new NullPointerError(); }
         int[] mapped = new int[length];
         for (int i = 0; i < length; i++) {
             mapped[i] = toInt16(cb.apply(get(i), i, this));
@@ -246,6 +355,7 @@ public class Int16Array {
 
     /** 从左到右归约，返回最终累计值，对应 reduce 语义（含无初始值形式）。 */
     public int reduce(Int16Reducer cb, int initial) {
+        if (cb == null) { throw new NullPointerError(); }
         int acc = initial;
         for (int i = 0; i < length; i++) {
             acc = cb.apply(acc, get(i), i, this);
@@ -262,29 +372,124 @@ public class Int16Array {
     }
 
     public int reduce(Int16Reducer2 cb, int initial) {
-        return reduce((a, v, i, arr) -> cb.apply(a, v), initial);
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        int acc = initial;
+        for (int i = 0; i < length; i++) {
+            acc = cb.apply(acc, get(i));
+        }
+        return acc;
     }
 
     public int reduce(Int16Reducer2 cb) {
-        return reduce((a, v, i, arr) -> cb.apply(a, v));
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        int acc = get(0);
+        for (int i = 1; i < length; i++) {
+            acc = cb.apply(acc, get(i));
+        }
+        return acc;
     }
 
     public int reduce(Int16Reducer3 cb, int initial) {
-        return reduce((a, v, i, arr) -> cb.apply(a, v, i), initial);
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        int acc = initial;
+        for (int i = 0; i < length; i++) {
+            acc = cb.apply(acc, get(i), i);
+        }
+        return acc;
     }
 
     public int reduce(Int16Reducer3 cb) {
-        return reduce((a, v, i, arr) -> cb.apply(a, v, i));
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        int acc = get(0);
+        for (int i = 1; i < length; i++) {
+            acc = cb.apply(acc, get(i), i);
+        }
+        return acc;
+    }
+
+    /** 从右向左归约，返回最终累计值，对应 reduceRight 语义（含无初始值形式）。 */
+    public int reduceRight(Int16Reducer cb, int initial) {
+        if (cb == null) { throw new NullPointerError(); }
+        int acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    public int reduceRight(Int16Reducer cb) {
+        int acc = get(length - 1);
+        for (int i = length - 2; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    public int reduceRight(Int16Reducer2 cb, int initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        int acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i));
+        }
+        return acc;
+    }
+
+    public int reduceRight(Int16Reducer2 cb) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        int acc = get(length - 1);
+        for (int i = length - 2; i >= 0; i--) {
+            acc = cb.apply(acc, get(i));
+        }
+        return acc;
+    }
+
+    public int reduceRight(Int16Reducer3 cb, int initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        int acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i);
+        }
+        return acc;
+    }
+
+    public int reduceRight(Int16Reducer3 cb) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        int acc = get(length - 1);
+        for (int i = length - 2; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i);
+        }
+        return acc;
     }
 
     /** 是否存在元素满足谓词。 */
     public boolean some(Int16Finder cb) {
+        if (cb == null) { throw new NullPointerError(); }
         for (int i = 0; i < length; i++) {
             if (cb.test(get(i), i, this)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean some(Int16Finder0 cb) {
+        return some((v, i, a) -> cb.test());
     }
 
     public boolean some(Int16Finder1 cb) {
@@ -297,12 +502,17 @@ public class Int16Array {
 
     /** 是否所有元素都满足谓词。 */
     public boolean every(Int16Finder cb) {
+        if (cb == null) { throw new NullPointerError(); }
         for (int i = 0; i < length; i++) {
             if (!cb.test(get(i), i, this)) {
                 return false;
             }
         }
         return true;
+    }
+
+    public boolean every(Int16Finder0 cb) {
+        return every((v, i, a) -> cb.test());
     }
 
     public boolean every(Int16Finder1 cb) {
@@ -315,6 +525,7 @@ public class Int16Array {
 
     /** 对每个元素执行回调，对应 forEach 语义。 */
     public void forEach(Int16Consumer cb) {
+        if (cb == null) { throw new NullPointerError(); }
         for (int i = 0; i < length; i++) {
             cb.accept(get(i), i, this);
         }
@@ -351,6 +562,123 @@ public class Int16Array {
     @Override
     public String toString() {
         return join();
+    }
+
+    /** 区域设置字符串（默认 en-US 分组格式），对应 toLocaleString 语义。 */
+    public String toLocaleString() {
+        return toLocaleString("en-US", null);
+    }
+
+    public String toLocaleString(String locales) {
+        return toLocaleString(locales, null);
+    }
+
+    public String toLocaleString(java.util.List<String> locales) {
+        return toLocaleString(locales == null || locales.isEmpty() ? "en-US" : locales.get(0), null);
+    }
+
+    public String toLocaleString(String locales, IntlOptions opts) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            if (i > 0) {
+                sb.append(',');
+            }
+            sb.append(formatIntl(get(i), locales, opts));
+        }
+        return sb.toString();
+    }
+
+    /** 按 locale 与选项格式化单个元素（千分位/补零/小数/百分比/货币）。 */
+    private static String formatIntl(int value, String locales, IntlOptions opts) {
+        boolean grouped = opts == null || opts.useGrouping;
+        boolean percent = opts != null && "percent".equals(opts.style);
+        boolean currency = opts != null && "currency".equals(opts.style);
+        long amount = value;
+        if (percent) {
+            amount = (long) value * 100;
+        }
+        String intPart = Long.toString(Math.abs(amount));
+        int minInt = opts != null ? opts.minimumIntegerDigits : 0;
+        while (intPart.length() < minInt) {
+            intPart = "0" + intPart;
+        }
+        if (grouped) {
+            intPart = groupDigits(intPart, locales);
+        }
+        int minFrac = opts != null ? opts.minimumFractionDigits : (currency ? 2 : -1);
+        if (currency && minFrac < 0) {
+            minFrac = 2;
+        }
+        String fracPart = "";
+        if (minFrac > 0) {
+            fracPart = "." + "0".repeat(minFrac);
+        }
+        String sign = value < 0 ? "-" : "";
+        String body = sign + intPart + fracPart;
+        if (percent) {
+            body = body + "%";
+        }
+        if (currency) {
+            String cur = opts.currency;
+            if ("code".equals(opts.currencyDisplay)) {
+                body = cur + " " + body;
+            } else {
+                String symbol = "USD".equals(cur) ? "$" : "EUR".equals(cur) ? "\u20AC" : "GBP".equals(cur) ? "\u00A3" : cur;
+                body = symbol + body;
+            }
+        }
+        if (locales != null && locales.toLowerCase().contains("ar")) {
+            body = toArabicDigits(body);
+        }
+        return body;
+    }
+
+    /** 千分位分组（按 locale 选择分隔符）。 */
+    private static String groupDigits(String digits, String locales) {
+        String sep = ",";
+        if (locales != null) {
+            String lc = locales.toLowerCase();
+            if (lc.contains("de")) {
+                sep = ".";
+            } else if (lc.contains("fr") || lc.contains("ru")) {
+                sep = "\u00A0";
+            } else if (lc.contains("ar")) {
+                sep = "\u066C";
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        int first = digits.length() % 3;
+        if (first == 0 && digits.length() > 0) {
+            first = 3;
+        }
+        for (int i = 0; i < digits.length(); i++) {
+            if (i > 0 && (i - first) % 3 == 0) {
+                sb.append(sep);
+            }
+            sb.append(digits.charAt(i));
+        }
+        return sb.toString();
+    }
+
+    /** 数字字符替换为阿拉伯-印度数字（ar-SA）。 */
+    private static String toArabicDigits(String body) {
+        char[] ar = {'\u0660', '\u0661', '\u0662', '\u0663', '\u0664',
+                     '\u0665', '\u0666', '\u0667', '\u0668', '\u0669'};
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < body.length(); i++) {
+            char c = body.charAt(i);
+            if (c >= '0' && c <= '9') {
+                sb.append(ar[c - '0']);
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+    /** 返回数组本身，对应 valueOf 语义。 */
+    public Int16Array valueOf() {
+        return this;
     }
 
     /** 返回下标迭代器，对应 keys 语义。 */
@@ -437,6 +765,10 @@ public class Int16Array {
      * 用 value 替换指定下标元素并返回新数组（原数组不变），
      * 对应 with 语义；负下标从末尾倒数。
      */
+    public Int16Array with(double index, double value) {
+        return with(toIndexD(index, length), value);
+    }
+
     public Int16Array with(int index, double value) {
         int len = length;
         int i = index;
@@ -458,6 +790,22 @@ public class Int16Array {
      * 返回 [begin, end) 区间的新视图（与宿主共享底层缓冲区），
      * 负数索引从末尾倒数、越界收敛，对应 subarray 语义。
      */
+    public Int16Array slice(double start, double end) {
+        return slice(toIndexD(start, length), toIndexD(end, length));
+    }
+
+    public Int16Array slice(double start) {
+        return slice(start, length);
+    }
+
+    public Int16Array subarray(double begin, double end) {
+        return subarray(toIndexD(begin, length), toIndexD(end, length));
+    }
+
+    public Int16Array subarray(double begin) {
+        return subarray(begin, length);
+    }
+
     public Int16Array subarray(int begin, int end) {
         int len = length;
         int from = toIndex(begin, len);
@@ -513,6 +861,10 @@ public class Int16Array {
      * 将 [start, end) 区间的元素复制到 target 起始处（覆盖式），
      * 负数索引从末尾倒数，对应 copyWithin 语义。
      */
+    public Int16Array copyWithin(double target, double start, double end) {
+        return copyWithin(toIndexD(target, length), toIndexD(start, length), toIndexD(end, length));
+    }
+
     public Int16Array copyWithin(int target, int start, int end) {
         int len = length;
         int to = toIndex(target, len);
@@ -538,8 +890,21 @@ public class Int16Array {
         return copyWithin(target, start, length);
     }
 
+    /** 按给定比较器排序（原地修改并返回数组本身），对应 sort(compareFn) 语义。 */
+    public Int16Array sort(Int16Comparator cmp) {
+        Integer[] boxed = new Integer[length];
+        for (int i = 0; i < length; i++) {
+            boxed[i] = get(i);
+        }
+        java.util.Arrays.sort(boxed, (a, b) -> (int) cmp.compare(a, b));
+        for (int i = 0; i < length; i++) {
+            set(i, boxed[i]);
+        }
+        return this;
+    }
+
     /**
-     * 按 ECMAScript 默认比较器（元素字符串字典序）升序排序，
+     * 按 ECMAScript 默认比较器（元素数字升序）排序，
      * 原地修改并返回数组本身，对应 sort 语义。
      */
     public Int16Array sort() {
@@ -593,6 +958,27 @@ public class Int16Array {
         return new Int16Array(values);
     }
 
+    /** 从整型列表映射构造，对应 from(arrayLike, mapFn) 语义。 */
+    public static Int16Array from(java.util.List<Integer> values, Int16Mapper2 cb) {
+        int[] copy = new int[values.size()];
+        for (int i = 0; i < values.size(); i++) {
+            copy[i] = toInt16(cb.apply(values.get(i), i));
+        }
+        return new Int16Array(copy);
+    }
+
+    /** 使用整型列表的元素填充本数组。 */
+    public Integer set(java.util.List<Integer> src, int offset) {
+        for (int i = 0; i < src.size(); i++) {
+            set(offset + i, src.get(i));
+        }
+        return null;
+    }
+
+    public Integer set(java.util.List<Integer> src) {
+        return set(src, 0);
+    }
+
     /** 从整型列表构造，对应 from(arrayLike) 语义。 */
     public static Int16Array from(java.util.List<Integer> values) {
         int[] copy = new int[values.size()];
@@ -608,6 +994,15 @@ public class Int16Array {
         int i = 0;
         for (int v : values) {
             copy[i++] = v;
+        }
+        return new Int16Array(copy);
+    }
+
+    /** 从浮点数组构造（ToInt16 转换），对应 from(arrayLike) 语义。 */
+    public static Int16Array from(double[] values) {
+        int[] copy = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            copy[i] = toInt16(values[i]);
         }
         return new Int16Array(copy);
     }
@@ -710,6 +1105,12 @@ public class Int16Array {
         }
     }
 
+    /** 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。 */
+    @FunctionalInterface
+    public interface Int16Comparator {
+        double compare(int a, int b);
+    }
+
     /** 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。 */
     @FunctionalInterface
     public interface Int16Finder {
@@ -770,6 +1171,91 @@ public class Int16Array {
         int apply(int value, int index);
     }
 
+    /** 回调接口：布尔累计归约器（every 式归约场景）。 */
+    @FunctionalInterface
+    public interface Int16BooleanReducer {
+        boolean apply(boolean acc, int value, int index, Int16Array array);
+    }
+
+    /** 布尔累计的 reduce（如 prev && curr > 0）。 */
+    public boolean reduce(Int16BooleanReducer cb, boolean initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        boolean acc = initial;
+        for (int i = 0; i < length; i++) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    /** 回调接口：字符串归约器（reduceRight 字符串累计场景）。 */
+    @FunctionalInterface
+    public interface Int16StringReducer {
+        String apply(String acc, int value, int index, Int16Array array);
+    }
+
+    /** 回调接口：long 累计归约器（大数 seed 场景）。 */
+    @FunctionalInterface
+    public interface Int16LongReducer {
+        long apply(long acc, int value, int index, Int16Array array);
+    }
+
+    /** long 累计的 reduce（大数 seed 不截断；独立方法名避免重载歧义）。 */
+    public long reduceLong(Int16LongReducer cb, long initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        long acc = initial;
+        for (int i = 0; i < length; i++) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    public long reduceLong(Int16LongReducer cb) {
+        long acc = get(0);
+        for (int i = 1; i < length; i++) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    public long reduceRightLong(Int16LongReducer cb, long initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        long acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    /** 字符串累计的 reduce（如 join 式拼接）。 */
+    public String reduce(Int16StringReducer cb, String initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        String acc = initial;
+        for (int i = 0; i < length; i++) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    /** 字符串累计的 reduceRight（如 join 式拼接）。 */
+    public String reduceRight(Int16StringReducer cb, String initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        String acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
     /** 回调接口：reduce 的归约器 (acc, value, index, array)。 */
     @FunctionalInterface
     public interface Int16Reducer {
@@ -786,6 +1272,20 @@ public class Int16Array {
     @FunctionalInterface
     public interface Int16Reducer3 {
         int apply(int acc, int value, int index);
+    }
+
+    /** 下标换算（double 版）：NaN 归 0、±Infinity 收敛到端点。 */
+    private static int toIndexD(double index, int len) {
+        if (Double.isNaN(index)) {
+            return 0;
+        }
+        if (index == Double.POSITIVE_INFINITY) {
+            return len;
+        }
+        if (index == Double.NEGATIVE_INFINITY) {
+            return 0;
+        }
+        return toIndex((int) index, len);
     }
 
     /** 下标换算：负数从末尾倒数、越界收敛到 [0, len]，NaN 归 0。 */
