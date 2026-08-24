@@ -155,6 +155,15 @@ def _tc_number_value(doc_block: str) -> str | None:
     return None if val == ":" else val
 
 
+def _tc_name_value(doc_block: str) -> str | None:
+    """提取 @tc.name 值（gitcode XTS.CHECK.TCNAME.01 对齐）。"""
+    m = re.search(r"@tc\.name\s*(?::\s*)?(\S+)", doc_block)
+    if not m:
+        return None
+    val = m.group(1)
+    return None if val == ":" else val
+
+
 def _check_one_it_jsdoc(path: Path, text: str, m: re.Match[str], add) -> None:
     it_name = m.group(2)
     before = text[: m.start()]
@@ -166,6 +175,9 @@ def _check_one_it_jsdoc(path: Path, text: str, m: re.Match[str], add) -> None:
     num = _tc_number_value(doc_block)
     if num and num != it_name:
         add("xtscheck", line_no, f"@tc.number 与 it() 不一致: {num} != {it_name}")
+    name = _tc_name_value(doc_block)
+    if name and name != it_name:
+        add("XTS.CHECK.TCNAME.01", line_no, f"@tc.name 与 it() 不一致: {name} != {it_name}")
 
 
 def _check_async_callback_err(lines: list[str]) -> list[tuple[int, str]]:
@@ -526,7 +538,7 @@ def fix_ets_ext01(text: str) -> tuple[str, int]:
             m = _CLASS_FIELD_RE.match(line)
             if m and not _PUBLIC_PREFIX_RE.match(line):
                 ind = m.group(1)
-                line = ind + "public " + line[len(ind):]
+                line = f"{ind}public {line[len(ind):]}"
                 n += 1
         out.append(line)
     return "\n".join(out), n
@@ -545,7 +557,7 @@ def _to_camel(name: str) -> str:
     if "_" in name:
         parts = name.split("_")
         first = parts[0].lower() if parts[0].isupper() else parts[0][:1].lower() + parts[0][1:]
-        return first + "".join(p[:1].upper() + p[1:] for p in parts[1:])
+        return f"{first}{''.join(f'{p[:1].upper()}{p[1:]}' for p in parts[1:])}"
     if name[:1].isupper():
         return name[0].lower() + name[1:]
     return name
@@ -560,7 +572,7 @@ def fix_ets_nam(text: str) -> tuple[str, int]:
         if new != m.group(2):
             decls.add((m.group(2), new))
     for old, new in decls:
-        text, c = re.subn(r"\b" + re.escape(old) + r"\b", new, text)
+        text, c = re.subn(rf"\b{re.escape(old)}\b", new, text)
         n += c
     return text, n
 
@@ -703,7 +715,7 @@ def _scan_double_quote(text: str, i: int) -> tuple[str, int, int]:
     content = "".join(body)
     if "'" in content:
         return text[i:j + 1], j + 1, 0
-    return "'" + content + "'", j + 1, 1
+    return f"'{content}'", j + 1, 1
 
 
 def _dq_to_sq_count(text: str) -> tuple[str, int]:
