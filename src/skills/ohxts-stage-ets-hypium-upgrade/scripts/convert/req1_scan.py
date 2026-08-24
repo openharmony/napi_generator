@@ -24,7 +24,6 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import shlex
 import subprocess
 import sys
 from collections import Counter
@@ -40,7 +39,7 @@ JS_SEMANTIC_MARKERS = ("JSProject", "jsinterop", "interop")
 
 
 def sh(cmd: str) -> str:
-    """执行命令（shell=False，参数列表化；仅支持无管道/重定向的简单命令）。"""
+    import shlex
     r = subprocess.run(shlex.split(cmd), cwd=str(REPO), capture_output=True, text=True)
     return r.stdout
 
@@ -100,10 +99,7 @@ def head_business_ts(proj: Path) -> list[str]:
     """HEAD 中该工程内的业务 .ts（历史需转文件，用于已完成工程的 req1 判定）。"""
     rel = str(proj.relative_to(REPO))
     out = []
-    # ls-tree 输出 + Python 过滤（替代 shell 管道 grep）
-    for line in sh(f"git ls-tree -r --name-only HEAD -- {rel}").splitlines():
-        if not line.endswith(".ts"):
-            continue
+    for line in sh(f"git ls-tree -r --name-only HEAD -- {rel} | grep '\\.ts$' || true").splitlines():
         f = REPO / line
         if any(seg in f.parts for seg in EXCLUDE_SEGMENTS):
             continue

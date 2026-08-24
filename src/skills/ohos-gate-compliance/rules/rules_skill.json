@@ -1,0 +1,15 @@
+{
+ "version": "2.0",
+ "desc": "skill 仓门禁规则注册表（skill 门禁检查，仅提交 napi_generator/src/skills 时运行）。规则本体由 skill_checker.py 实现（Python AST + 词表扫描 + py_compile）。",
+ "rules": [
+  {"id": "FILE.NBNC", "name": "文件 nbnc≤2000", "category": "skill", "severity": "致命", "detect": "ast", "pattern": "file-nbnc", "fix": "拆分为多个模块"},
+  {"id": "FUNC.NBNC", "name": "函数 nbnc≤50", "category": "skill", "severity": "致命", "detect": "ast", "pattern": "func-nbnc", "fix": "拆分函数（ohhdc.py 历史豁免）"},
+  {"id": "FUNC.CC", "name": "圈复杂度≤20", "category": "skill", "severity": "致命", "detect": "ast", "pattern": "func-cc", "fix": "拆分分支"},
+  {"id": "FUNC.DEPTH", "name": "嵌套深度≤4", "category": "skill", "severity": "致命", "detect": "ast", "pattern": "func-depth", "fix": "提取子函数"},
+  {"id": "G.NAM.01", "name": "模块 snake_case", "category": "skill", "severity": "致命", "detect": "regex", "pattern": "hyphen-py", "fix": "文件名去连字符"},
+  {"id": "G.EDV.04", "name": "禁 shell=True / bash 作 argv0", "category": "skill", "severity": "致命", "detect": "regex", "pattern": "shell-true", "fix": "subprocess 数组传参直接执行"},
+  {"id": "SYNTAX", "name": "Python 语法错误", "category": "skill", "severity": "致命", "detect": "ast", "pattern": "syntax", "fix": "修复语法"},
+  {"id": "WordsTool.*", "name": "文档/脚本禁用词", "category": "skill", "severity": "提示", "detect": "regex", "pattern": "wordstool", "fix": "词表见 skill_checker（敏感词 chr 拼接，命中提示替换表述）"},
+  {"id": "PY.COMPILE", "name": "py_compile 编译校验", "category": "skill", "severity": "致命", "detect": "build", "pattern": "py-compile", "fix": "修复编译错误"}
+ ]
+}

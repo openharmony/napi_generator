@@ -115,7 +115,7 @@ python3 src/skills/ohxtscapi/ohxtscflow.py deploy-test <工程路径> -s <Suite>
 
 1. 读本清单 + **`miscellaneous/xts_code_check.md`**
 2. 确认 `@tc.name` / `@tc.number` / `it()` 三一致
-3. **G.FMT.06-CPP**：`.cpp` 多行函数调用续行参数 **8 空格**（操作符留行末）；见 **ohos-gate-compliance-pr-check** §G.FMT.06-CPP
+3. **G.FMT.06-CPP**：`.cpp` 多行函数调用续行参数 **8 空格**（操作符留行末）；规则见统一门禁 `ohos-gate-compliance/rules/rules_cpp.json`（`gate_check.py code --profile capi`）
 4. `git diff --cached --shortstat` < 2000
 5. 无 `build/`、`autosign/`、`local.properties` 入暂存
 6. **`signature/openharmony_sx.p7b`**：§1.1 已 gen，bundle 与 app.json5 一致（**非模板拷贝**）

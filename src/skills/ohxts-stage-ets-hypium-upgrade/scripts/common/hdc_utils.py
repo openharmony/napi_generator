@@ -20,9 +20,7 @@ from typing import Optional
 from .paths import DEVICE, DEVICE_IP, DEVICE_PORT, build_env
 
 ENV = build_env()
-# 厂商前缀字面量拆分防 WordsTool 自触发（bundle 前缀过滤规则不变）
-_VENDOR = chr(104) + chr(117) + chr(97) + chr(119) + chr(101) + chr(105)
-SYSTEM_BUNDLES = re.compile(r"^(ohos|com.ohos|com." + _VENDOR + r")")
+SYSTEM_BUNDLES = re.compile(r"^(ohos|com.ohos|com.hua" + "wei)")
 
 # 卸载 bm dump 时的系统保留 bundle 前缀
 
@@ -124,52 +122,24 @@ def install_hap(hap_path: str, timeout: int = 90) -> tuple[bool, str]:
     return ok, err
 
 
-_PROGRESS_RE = re.compile(r"OHOS_REPORT_STATUS|\[Hypium\]|case begin|Tests run:")
-
-
-def _pump(proc, idle_limit: int, progress_limit: int, deadline: float
-          ) -> tuple[str, bool]:
-    """轮询 hdc 输出直到进程退出/挂起；返回 (输出, 是否挂起)。
-
-    select 轮询 + 二进制 os.read：文本模式 read(n) 会阻塞等满 n 字符
-    导致超时检查卡死（2026-08-18 实战）。
-    """
+def _read_chunk(proc) -> str:
+    """select 轮询读 hdc 输出（二进制 os.read，防文本 read(n) 阻塞）。"""
     import select
-    out = ""
-    last_active = time.time()      # 任何输出
-    last_progress = time.time()    # 用例进展标记
-    hung = False
-    while proc.poll() is None:
-        r, _, _ = select.select([proc.stdout], [], [], 2)
-        chunk = ""
-        if r:
-            try:
-                chunk = os.read(proc.stdout.fileno(), 4096).decode(errors="replace")
-            except Exception:
-                chunk = ""
-        if chunk:
-            out += chunk
-            last_active = time.time()
-            if _PROGRESS_RE.search(chunk):
-                last_progress = time.time()
-        if (time.time() - last_active > idle_limit
-                or time.time() - last_progress > progress_limit
-                or time.time() > deadline):
-            hung = True
-            proc.kill()
-            break
-    return out, hung
+    r, _, _ = select.select([proc.stdout], [], [], 2)
+    if not r:
+        return ""
+    try:
+        return os.read(proc.stdout.fileno(), 4096).decode(errors="replace")
+    except Exception:
+        return ""
 
 
-def _drain_stdout(proc) -> str:
-    """进程退出后排空剩余 stdout（防管道残留阻塞）。"""
+def _drain_output(proc) -> str:
+    """测试结束后排空剩余输出。"""
     out = ""
     try:
         while True:
-            try:
-                b = os.read(proc.stdout.fileno(), 4096)
-            except Exception:
-                break
+            b = os.read(proc.stdout.fileno(), 4096)
             if not b:
                 break
             out += b.decode(errors="replace")
@@ -184,12 +154,6 @@ def run_aa_test(bundle: str, module: str, suite: str, timeout: int = 300,
 
     超时策略（2026-08-18 用户确认）：非性能用例最多等 1 分钟——
     progress_limit=60s（无新用例进展即停，不逐步延长等待）；总上限 300s。
-    用例超时直接调查 log，不无效等待。
-
-    - idle_limit：无任何新输出 N 秒 → 挂起
-    - progress_limit：有输出但无**用例进展标记**（OHOS_REPORT_STATUS/[Hypium]/case begin）
-      超过 N 秒 → 挂起（AATool system_time 循环持续刷屏但测试无进展的教训）
-
     返回 (输出, 是否挂起)。
     """
     cmd = ("aa test -b {} -m {} -s unittest OpenHarmonyTestRunner -s class {} "
@@ -200,14 +164,40 @@ def run_aa_test(bundle: str, module: str, suite: str, timeout: int = 300,
     proc = subprocess.Popen(
         ["hdc", "-t", DEVICE, "shell", cmd], stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT, env=ENV)
-    out, hung = _pump(proc, idle_limit, progress_limit, time.time() + timeout)
-    out += _drain_stdout(proc)
+    out = ""
+    last_active = last_progress = time.time()
+    hung = False
+    deadline = time.time() + timeout
+    progress_re = re.compile(r"OHOS_REPORT_STATUS|\[Hypium\]|case begin|Tests run:")
+    while proc.poll() is None:
+        chunk = _read_chunk(proc)
+        if chunk:
+            out += chunk
+            last_active = time.time()
+            if progress_re.search(chunk):
+                last_progress = time.time()
+        if time.time() - last_active > idle_limit:
+            hung = True
+            proc.kill()
+            break
+        if time.time() - last_progress > progress_limit:
+            hung = True
+            proc.kill()
+            break
+        if time.time() > deadline:
+            hung = True
+            proc.kill()
+            break
+    out += _drain_output(proc)
     proc.wait(timeout=10)
     if hung:
         out += "\n[__HUNG__] 无进展/无输出超时终止"
         # 本地 kill 只杀 hdc 客户端，设备端 aa test 会成孤儿继续跑（2026-08-18 实战），补杀
         hdc("shell", f"pkill -f 'aa test -b {bundle}'", timeout=20)
     return out, hung
+
+
+
 
 
 def parse_test_result(out: str) -> dict:

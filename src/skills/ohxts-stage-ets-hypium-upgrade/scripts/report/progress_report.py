@@ -13,18 +13,14 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common.paths import CURRENT_TXT, BROADCAST_MD, PROGRESS_DIR, REPORT_ROOT, TSV  # noqa: E402
+from common.paths import ACTIVE_TXT, BROADCAST_MD, PROGRESS_DIR, REPORT_ROOT, TSV  # noqa: E402
 
 
-def _status_newer(cur: str, new: str) -> bool:
-    """状态升级规则：PASS 优先；DEVICE_OFFLINE/BUILD_FAIL 可被更新状态覆盖。"""
-    if new == "PASS" and cur != "PASS":
-        return True
-    if cur == "DEVICE_OFFLINE" and new != "DEVICE_OFFLINE":
-        return True
-    if cur == "BUILD_FAIL" and new not in ("DEVICE_OFFLINE", "BUILD_FAIL"):
-        return True
-    return False
+def _better_status(cur: str, new: str) -> str:
+    """状态优先级：PASS > 普通 > BUILD_FAIL > DEVICE_OFFLINE。"""
+    order = {"PASS": 3, "": 2}
+    rank = lambda s: 3 if s == "PASS" else (1 if s == "DEVICE_OFFLINE" else (0 if s == "BUILD_FAIL" else 2))
+    return new if rank(new) > rank(cur) else cur
 
 
 def latest_status() -> dict[str, str]:
@@ -35,8 +31,10 @@ def latest_status() -> dict[str, str]:
         if len(parts) < 3:
             continue
         rel, status = parts[1], parts[2]
-        if rel not in latest or _status_newer(latest[rel], status):
+        if rel not in latest:
             latest[rel] = status
+        else:
+            latest[rel] = _better_status(latest[rel], status)
     return latest
 
 

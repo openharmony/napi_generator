@@ -48,22 +48,30 @@ def extract_module_names(build_profile: Path) -> list[str]:
     m = re.search(r"""["']?modules["']?\s*:\s*\[""", text)
     if not m:
         return []
-    # 深度计数找 modules 数组的闭合 ]（嵌套 targets 等也含 [ ]）
-    depth = 0
-    end = -1
-    for i in range(m.end() - 1, len(text)):
-        c = text[i]
-        if c == '[':
-            depth += 1
-        elif c == ']':
-            depth -= 1
-            if depth == 0:
-                end = i
-                break
+    end = _match_bracket(text, m.end() - 1)
     if end < 0:
         return []
     block = text[m.end():end]
     return re.findall(r"""["']?name["']?\s*:\s*["']([^"']+)["']""", block)
+
+
+def _bracket_step(c: str, depth: int) -> int:
+    """括号步进：'[' +1、']' -1、其余不变。"""
+    if c == '[':
+        return depth + 1
+    if c == ']':
+        return depth - 1
+    return depth
+
+
+def _match_bracket(text: str, start: int) -> int:
+    """从 start 起深度计数找配对 ]，返回下标或 -1。"""
+    depth = 0
+    for i in range(start, len(text)):
+        depth = _bracket_step(text[i], depth)
+        if depth == 0 and text[i] == ']':
+            return i
+    return -1
 
 
 # ---------- compileSdk 临时 patch ----------
@@ -92,11 +100,11 @@ def restore_sdk_versions(bak: Optional[Path]) -> None:
 
 
 # ---------- 单工程编译 ----------
-def _run_hvigor(proj: Path, args: list[str], timeout: int, log: Path,
-                task: str = "assembleHap") -> int:
-    """调 hvigorw 编译指定任务，日志追加写；超时返回 255。"""
+def _run_hvigor(proj: Path, log: Path, args: list[str], timeout: int,
+                 target: str = "assembleHap") -> int:
+    """执行 hvigor 构建（assembleHap/assembleHsp），超时返回 255。"""
     cmd = [str(NODE), str(HVIGORW_JS), "--mode", "module",
-           "-p", "product=default", *args, task,
+           "-p", "product=default", *args, target,
            "--analyze=normal", "--parallel", "--incremental", "--no-daemon"]
     try:
         with open(log, "a") as f:
@@ -107,42 +115,54 @@ def _run_hvigor(proj: Path, args: list[str], timeout: int, log: Path,
         return 255
 
 
-def _build_test_hap(proj: Path, bp: Path, log: Path, timeout: int) -> int:
-    """有 ohosTest 目录时编译测试 HAP；无则返回 0。"""
-    if not (proj / "entry/src/ohosTest").is_dir():
-        return 0
-    module = extract_module_name(bp) if bp.exists() else "entry"
-    return _run_hvigor(proj, ["-p", f"module={module}@ohosTest",
-                              "-p", "isOhosTest=true", "-p", "buildMode=test"],
-                       timeout, log)
-
-
-def _shared_modules(proj: Path, bp: Path) -> list[str]:
-    """shared 类型模块清单（assembleHap 不覆盖，需单独 assembleHsp）。"""
+def _build_shared_hsp(proj: Path, log: Path, bp: Path, timeout_main: int) -> int:
+    """shared 类型模块（library…）产出 .hsp：assembleHap 不覆盖，单独 assembleHsp。"""
+    rc = 0
     main_mod = extract_module_name(bp)
-    out: list[str] = []
     for mod in extract_module_names(bp):
         if mod == main_mod:
             continue
         mcfg = proj / mod / "src/main/module.json5"
-        if mcfg.is_file() and '"type": "shared"' in mcfg.read_text(errors="replace"):
-            out.append(mod)
-    return out
-
-
-def _build_shared_hsps(proj: Path, bp: Path, log: Path, timeout: int) -> int:
-    """shared 模块逐个 assembleHsp（evictModuleFilePages 依赖 library .hsp 安装）。"""
-    rc = 0
-    if not bp.exists():
-        return rc
-    for mod in _shared_modules(proj, bp):
-        rc |= _run_hvigor(proj, ["-p", f"module={mod}"], timeout, log,
-                          task="assembleHsp")
+        if not (mcfg.is_file() and '"type": "shared"' in mcfg.read_text(errors="replace")):
+            continue
+        rc |= _run_hvigor(proj, log, ["-p", f"module={mod}"], timeout_main, "assembleHsp")
     return rc
 
 
+def build_one(proj: Path, timeout_main: int = 400, timeout_test: int = 400,
+              log: Optional[Path] = None) -> dict:
+    """编译单工程：main HAP + （有 ohosTest 时）test HAP。
+
+    返回 {'ok': bool, 'main_rc': int, 'test_rc': int, 'log': Path,
+          'error': 首条 Error Message（失败时）}
+    """
+    proj = Path(proj)
+    log = log or Path(tempfile.gettempdir()) / f"build_{proj.name}.log"
+    bp = proj / "build-profile.json5"
+    bak = None
+    if bp.exists():
+        bak = patch_sdk_versions(bp)
+    try:
+        log.write_text("")
+        rc1 = _run_hvigor(proj, log, [], timeout_main)
+        rc2 = 0
+        if (proj / "entry/src/ohosTest").is_dir():
+            module = extract_module_name(bp) if bp.exists() else "entry"
+            rc2 = _run_hvigor(proj, log, ["-p", f"module={module}@ohosTest",
+                                          "-p", "isOhosTest=true",
+                                          "-p", "buildMode=test"], timeout_test)
+        rc3 = _build_shared_hsp(proj, log, bp, timeout_main) if bp.exists() else 0
+    finally:
+        restore_sdk_versions(bak)
+    ok = rc1 == 0 and rc2 == 0 and rc3 == 0
+    err = _first_error(log, rc1, rc2, rc3)
+    return {"ok": ok, "main_rc": rc1, "test_rc": rc2, "hsp_rc": rc3, "log": log, "error": err}
+
+
 def _first_error(log: Path, rc1: int, rc2: int, rc3: int) -> str:
-    """从编译日志提取首条 Error Message（失败时）。"""
+    """构建日志首条 Error Message（失败时返回）。"""
+    if rc1 == 0 and rc2 == 0 and rc3 == 0:
+        return ""
     try:
         text = log.read_text(errors="replace")
     except OSError:
@@ -154,29 +174,6 @@ def _first_error(log: Path, rc1: int, rc2: int, rc3: int) -> str:
         return "timeout"
     m2 = re.search(r"ERROR:?\s+[^\n]{10,200}", text)
     return m2.group(0).strip()[:200] if m2 else f"rc main={rc1} test={rc2} hsp={rc3}"
-
-
-def build_one(proj: Path, timeout_main: int = 400, timeout_test: int = 400,
-              log: Optional[Path] = None) -> dict:
-    """编译单工程：main HAP + （有 ohosTest 时）test HAP + shared 模块 .hsp。
-
-    返回 {'ok': bool, 'main_rc': int, 'test_rc': int, 'log': Path,
-          'error': 首条 Error Message（失败时）}
-    """
-    proj = Path(proj)
-    log = log or Path(tempfile.gettempdir()) / f"build_{proj.name}.log"
-    bp = proj / "build-profile.json5"
-    bak = patch_sdk_versions(bp) if bp.exists() else None
-    try:
-        log.write_text("")
-        rc1 = _run_hvigor(proj, [], timeout_main, log)
-        rc2 = _build_test_hap(proj, bp, log, timeout_test)
-        rc3 = _build_shared_hsps(proj, bp, log, timeout_main)
-    finally:
-        restore_sdk_versions(bak)
-    ok = rc1 == 0 and rc2 == 0 and rc3 == 0
-    err = "" if ok else _first_error(log, rc1, rc2, rc3)
-    return {"ok": ok, "main_rc": rc1, "test_rc": rc2, "hsp_rc": rc3, "log": log, "error": err}
 
 
 # ---------- 批量编译 ----------

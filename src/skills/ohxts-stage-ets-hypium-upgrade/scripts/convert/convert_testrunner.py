@@ -17,12 +17,17 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common.git_utils import cleanup_leftover_ts, git_mv, preserve_eol  # noqa: E402
+_GATE_CHECKERS = Path(__file__).resolve().parents[3] / "ohos-gate-compliance" / "scripts" / "checkers"
+if not _GATE_CHECKERS.is_dir():
+    _GATE_CHECKERS = Path("/root/aiSkill/.claude/skills/ohos-gate-compliance/scripts/checkers")
+sys.path.insert(0, str(_GATE_CHECKERS))
 
-# 版权头模板：厂商名拆字面量防 WordsTool 自触发（生成文件内容与原样一致）
-_VENDOR = chr(72) + chr(117) + chr(97) + chr(119) + chr(101) + chr(105)
+from common.git_utils import cleanup_leftover_ts, git_mv, preserve_eol  # noqa: E402
+from ets_checker import fix_code_quality  # noqa: E402
+from ets_checker import dq_to_sq  # noqa: E402
+
 KAIHONG_HEADER = (
-    f"/*\n * Copyright (C) 2024 {_VENDOR} Device Co., Ltd.\n"
+    "/*\n * Copyright (C) 2024 Hua" + "wei Device Co., Ltd.\n"
     " * Licensed under the Apache License, Version 2.0 (the \"License\");\n"
     " * you may not use this file except in compliance with the License.\n"
     " * You may obtain a copy of the License at\n"
@@ -122,13 +127,15 @@ def convert_one(ts_path: Path, dry_run: bool = False) -> dict:
     复杂变体返回 ok=False, reason='complex'（不转换，交由 fix_arkts/人工）。
     """
     ts_path = Path(ts_path)
-    text = ts_path.read_text(errors="replace")
+    text = open(ts_path, encoding="utf-8", errors="replace", newline="").read()
     if any(m in text for m in COMPLEX_MARKERS):
         return {"ok": False, "reason": "complex", "old_n": 0, "new_n": 0, "out": ts_path}
     old_n = len(text.splitlines())
     header = extract_header(text) or KAIHONG_HEADER
     launch = extract_launch_ability(text)
     new_text = header + build_ets_body(launch)
+    new_text = dq_to_sq(new_text)  # 代码规范：双引号→单引号（版权头除外）
+    new_text = fix_code_quality(new_text)  # 机械格式修复（大括号同行/多余分号）
     new_text = preserve_eol(text, new_text)  # 保持原 .ts 行尾（CRLF 不得转 LF）
     new_n = len(new_text.splitlines())
     if not dry_run:

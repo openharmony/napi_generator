@@ -12,11 +12,11 @@ from common import hdc_utils  # noqa: E402
 
 
 def handle_app_died(proj: Path, match: dict, err_file: str = "") -> str:
-    """App died/启动失败：查 faultlog 与 hilog；原生类多为设备能力限制。"""
+    """App died/启动失败：查 faultlog 与 hilog；NATIVE 类多为设备能力限制。"""
     fl = hdc_utils.faultlog_list().strip().splitlines()[:5]
     actions = ["查 faultlog: " + (", ".join(fl) if fl else "(空)")]
     actions.append("hilog 定位：hdc_utils.hilog_grep('<测试前缀>')；hilog -r 后重跑单套件")
-    actions.append("原生/taskpool 类全失败 → 3.2 设备无法运行 API26 原生库（libentry.so 版本不兼容）→ 设备能力限制，历史 PASS 保留")
+    actions.append("NATIVE/taskpool 类全失败 → 3.2 设备无法运行 API26 NATIVE 库（libentry.so 版本不兼容）→ 设备能力限制，历史 PASS 保留")
     actions.append("多实例/事件类首次失败 → aa force-stop 相关 bundle + hilog -r 后重跑即过")
     return "；".join(actions)
 

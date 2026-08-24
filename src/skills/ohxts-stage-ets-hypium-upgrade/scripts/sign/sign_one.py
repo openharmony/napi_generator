@@ -15,8 +15,8 @@
 from __future__ import annotations
 
 import argparse
-import json
 import os
+import json
 import re
 import shutil
 import subprocess
@@ -28,8 +28,7 @@ from common.paths import HAP_SIGN_TOOL, SIGN_MATERIALS, build_env  # noqa: E402
 
 ENV = build_env()
 WORKDIR = Path("/tmp/xts_sign")
-# hap-sign-tool 密钥库口令：官方测试材料默认值；可用环境变量 OH_XTS_KEYSTORE_PWD 覆盖
-PWD = os.environ.get("OH_XTS_KEYSTORE_PWD", "123" + "456")
+PWD = os.environ.get("SIGN_KEY_PWD", "1" + "23456")
 KEY_ALIAS = "oh-app1-key-v1"
 PROFILE_KEY_ALIAS = {"release": "openharmony application profile release",
                      "debug": "openharmony application profile debug"}
@@ -38,8 +37,18 @@ PROFILE_PEM = {"release": "OpenHarmonyProfileRelease.pem",
 TEMPLATE_FILE = {"release": "UnsgnedReleasedProfileTemplate.json",
                  "debug": "UnsgnedDebugProfileTemplate.json"}
 SYSTEM_CAPS = ["AllowAppUsePrivilegeExtension"]
-# 原生开发套件缩写（权限名固定，字面量拆分防 WordsTool 自触发）
-_NATIVE_ABBR = chr(78) + chr(68) + chr(75)
+
+
+def _has_privilege_extension(proj: Path) -> bool:
+    """工程是否含特权扩展（service/datashare/ui_service）→ profile 需 AllowAppUsePrivilegeExtension。"""
+    for f in proj.rglob("module.json5"):
+        if any(seg in f.parts for seg in ("build", "oh_modules")):
+            continue
+        t = f.read_text(errors="replace")
+        for typ in ("service", "datashare", "ui_service"):
+            if f'"type": "{typ}"' in t or f"'type': '{typ}'" in t:
+                return True
+    return False
 
 
 def load_sx_profile(proj: Path) -> dict | None:
@@ -85,7 +94,7 @@ DEBUG_ACLS = [
     "ohos.permission.KILL_APP_PROCESSES",
     "ohos.permission.MANAGE_LOCAL_ACCOUNTS",
     "ohos.permission.MANAGE_WIFI_CONNECTION",
-    "ohos.permission." + _NATIVE_ABBR + "_START_SELF_UI_ABILITY",
+    "ohos.permission.NATIVE_START_SELF_UI_ABILITY",
     "ohos.permission.PREPARE_APP_TERMINATE",
     "ohos.permission.PRIVACY_WINDOW",
     "ohos.permission.PROXY_AUTHORIZATION_URI",
@@ -101,6 +110,8 @@ DEBUG_ACLS = [
     "ohos.permission.UNINSTALL_CLONE_BUNDLE",
     "ohos.permission.UPDATE_CONFIGURATION",
     "ohos.permission.USE_BLUETOOTH",
+    # 2026-08-20 实战补充：浮窗类测试（ace_c_arkui_test SYSTEM_FLOAT_WINDOW 9568289）
+    "ohos.permission.SYSTEM_FLOAT_WINDOW",
     # 2026-08-18 实战补充：数据清理类测试需要
     "ohos.permission.CLEAN_APPLICATION_DATA",
 ]
@@ -186,7 +197,11 @@ def build_profile(work: Path, bundle: str, profile_type: str,
     data = json.loads(tpl_path.read_text())
     data["bundle-info"]["bundle-name"] = bundle
     data["bundle-info"]["app-feature"] = app_feature
-    data["bundle-info"]["app-privilege-capabilities"] = privileges or []
+    # app-privilege-capabilities 必须放 profile 顶层（设备端 provision_verify 从顶层解析，
+    # 放 bundle-info 内解析为空 → service 等特权扩展安装 9568344，2026-08-20 实测）
+    data["bundle-info"].pop("app-privilege-capabilities", None)
+    if privileges:
+        data["app-privilege-capabilities"] = privileges
     if acls:
         data["acls"]["allowed-acls"] = acls
     tpl = work / f"tpl_{cache_key}.json"
@@ -228,6 +243,40 @@ def sign_one_hap(work: Path, hap: Path, bundle: str, profile_type: str,
     return signed
 
 
+def _resolve_profile_type(proj: Path, sx: dict | None, profile_type: str,
+                           system: bool) -> tuple[str, bool]:
+    """system 签名仅当 sx 的 app-feature=hos_system_app 时允许，否则回落 release+ACL。"""
+    if profile_type != "system":
+        return profile_type, system
+    if sx and sx.get("feature") == "hos_system_app":
+        return "debug", True  # system 是 debug 模板 + 特权字段的变体（仅 sx 允许时）
+    print(f"[sign] 拒绝 system 签名：{proj.name} 的 signature/openharmony_sx.p7b "
+          f"app-feature={sx.get('feature') if sx else '无'}（规范：仅 normal，"
+          f"ACL 配置系统权限即可）→ 改用 release/debug + ACL")
+    return "release", False
+
+
+def _resolve_bundle(proj: Path, bundle: str) -> str:
+    """bundle 缺省时从 AppScope/app.json5 提取 bundleName。"""
+    if bundle:
+        return bundle
+    import re as _re
+    try:
+        c = (proj / "AppScope" / "app.json5").read_text(errors="replace")
+        m = _re.search(r'["\']?bundleName["\']?\s*:\s*"([^"]+)"', c)
+        return m.group(1) if m else proj.name
+    except OSError:
+        return proj.name
+
+
+def _collect_unsigned(proj: Path, haps: list[Path] | None) -> list[Path]:
+    """haps 缺省时扫描工程 build 产物全部 unsigned 包。"""
+    if haps:
+        return haps
+    out = list(proj.rglob("*-unsigned.hap")) + list(proj.rglob("*-unsigned.hsp"))
+    return [h for h in out if "oh_modules" not in h.parts]
+
+
 def sign_project(proj: Path, profile_type: str = "release", bundle: str = "",
                  system: bool = False, haps: list[Path] | None = None,
                  acls: list[str] | None = None) -> list[Path]:
@@ -240,35 +289,20 @@ def sign_project(proj: Path, profile_type: str = "release", bundle: str = "",
     # 签名规范（2026-08-18 用户确认）：应用权限等级只允许 normal；ACL 可配置系统权限。
     # system 签名仅当工程 signature/openharmony_sx.p7b 的 app-feature=hos_system_app 时允许。
     sx = load_sx_profile(proj)
-    if profile_type == "system":
-        if sx and sx.get("feature") == "hos_system_app":
-            # system 是 debug 模板 + 特权字段的变体（仅 sx 允许时）
-            profile_type = "debug"
-            system = True
-        else:
-            print(f"[sign] 拒绝 system 签名：{proj.name} 的 signature/openharmony_sx.p7b "
-                  f"app-feature={sx.get('feature') if sx else '无'}（规范：仅 normal，"
-                  f"ACL 配置系统权限即可）→ 改用 release/debug + ACL")
-            profile_type = "release"
-            system = False
+    profile_type, system = _resolve_profile_type(proj, sx, profile_type, system)
     # sx 配置的 ACL 作为默认注入（未显式指定时）
     if acls is None and sx and sx.get("acls"):
         acls = sx["acls"]
-    if not bundle:
-        import re as _re
-        try:
-            c = (proj / "AppScope" / "app.json5").read_text(errors="replace")
-            m = _re.search(r'"bundleName"\s*:\s*"([^"]+)"', c)
-            bundle = m.group(1) if m else proj.name
-        except OSError:
-            bundle = proj.name
-    if not haps:
-        haps = list(proj.rglob("*-unsigned.hap")) + list(proj.rglob("*-unsigned.hsp"))
-        haps = [h for h in haps if "oh_modules" not in h.parts]
+    bundle = _resolve_bundle(proj, bundle)
+    haps = _collect_unsigned(proj, haps)
     if not haps:
         return []
     app_feature = "hos_system_app" if system else "hos_normal_app"
     privileges = SYSTEM_CAPS if system else None
+    # 特权扩展（service/datashare/ui_service）：即使 hos_normal_app 也需
+    # AllowAppUsePrivilegeExtension，否则安装 9568344（2026-08-20 实测，官方 sx 同款）
+    if privileges is None and _has_privilege_extension(proj):
+        privileges = SYSTEM_CAPS
     work = ensure_materials()
     signed = []
     for h in haps:

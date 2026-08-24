@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+# prepare-commit-msg：补 Signed-off-by（无 -s 时）；Agent 顺序由 commit-msg hook 处理。
+set -eu
+
+MSG_FILE="$1"
+
+name=$(git config user.name 2>/dev/null || true)
+email=$(git config user.email 2>/dev/null || true)
+if [ -z "$name" ] || [ -z "$email" ]; then
+  exit 0
+fi
+
+signoff="Signed-off-by: $name <$email>"
+if ! grep -q '^Signed-off-by:' "$MSG_FILE" 2>/dev/null; then
+  printf '\n%s\n' "$signoff" >> "$MSG_FILE"
+fi

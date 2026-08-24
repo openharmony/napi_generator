@@ -7,7 +7,7 @@
 结果解析 → 报告留存(仅通过) → TSV 落盘 → 更新 Excel。
 
 固化经验（SKILL 7.1/7.2/7.4/7.5/7.7）：清理顺序、合包剥离、同 bundle 多 hap 同装、
-history PASS 不覆盖、60s liveness 判挂起、原生合包主 HAP 提供 libs。
+history PASS 不覆盖、60s liveness 判挂起、NATIVE 合包主 HAP 提供 libs。
 """
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import hdc_utils  # noqa: E402
 from common.build_utils import build_one, patch_sdk_versions, restore_sdk_versions  # noqa: E402
-from common.paths import (CURRENT_TXT, CLOSE_LOG, PROGRESS_DIR, REPORT_ROOT,  # noqa: E402
+from common.paths import (ACTIVE_TXT, CLOSE_LOG, PROGRESS_DIR, REPORT_ROOT,  # noqa: E402
                           REPO, TSV)
 from common.proj_utils import extract_suites, fallback_suites, hap_meta, resolve_deps  # noqa: E402
 
@@ -55,13 +55,13 @@ def device_lock():
         fd.close()
 
 
-def log(msg: str, to_current: bool = False) -> None:
+def log(msg: str, to_active: bool = False) -> None:
     line = f"[{datetime.now():%H:%M:%S}] {msg}"
     print(line)
     with open(CLOSE_LOG, "a") as f:
         f.write(line + "\n")
-    if to_current:
-        with open(CURRENT_TXT, "a") as f:
+    if to_active:
+        with open(ACTIVE_TXT, "a") as f:
             f.write(line + "\n")
 
 
@@ -105,7 +105,7 @@ def build_dep_hap(rel: str, profile_type: str = "release", system: bool = False,
     proj = REPO / rel
     signed = proj / "entry/build/default/outputs/default/entry-default-signed.hap"
     if not signed.exists():
-        log(f"[依赖] 构建: {rel}", to_current=True)
+        log(f"[依赖] 构建: {rel}", to_active=True)
         bp = proj / "build-profile.json5"
         bak = None
         if bp.exists():
@@ -144,7 +144,7 @@ def build_dep_module(proj_rel: str, mod: str, profile_type: str = "release",
     hap = proj / mod / "build/default/outputs/default" / f"{mod}-default-signed.hap"
     if hap.exists():
         return True
-    log(f"[依赖] 构建模块: {mod}@{proj_rel}", to_current=True)
+    log(f"[依赖] 构建模块: {mod}@{proj_rel}", to_active=True)
     bp = proj / "build-profile.json5"
     bak = None
     if bp.exists():
@@ -172,16 +172,23 @@ def build_dep_module(proj_rel: str, mod: str, profile_type: str = "release",
     return hap.exists()
 
 
-def _repack_strip(tmp: Path, unsigned: Path) -> None:
-    """重新打包剥离后的目录到原 unsigned 路径。"""
+def _strip_pack_entry(pi: Path, tmp: Path, unsigned: Path) -> None:
+    """pack.info 剥离 entry 模块并重打包覆盖 unsigned。"""
+    d = json.loads(pi.read_text(errors="replace"))
+    mods = d.get("summary", {}).get("modules", [])
+    if not any(m["distro"]["moduleName"] == "entry" for m in mods):
+        return
+    d["summary"]["modules"] = [m for m in mods if m["distro"]["moduleName"] != "entry"]
+    pi.write_text(json.dumps(d))
     out = Path("/tmp/entry-stripped.unsigned.hap")
     out.unlink(missing_ok=True)
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
         for root, _, files in os.walk(tmp):
             for f in files:
-                p = Path(root) / f
-                z.write(p, p.relative_to(tmp))
+                fp = Path(root) / f
+                z.write(fp, fp.relative_to(tmp))
     shutil.copy(out, unsigned)
+    log("[剥离合包] 测试 HAP 已剥离 entry 模块")
 
 
 def strip_combined_pack(unsigned: Path) -> None:
@@ -198,18 +205,11 @@ def strip_combined_pack(unsigned: Path) -> None:
     with zipfile.ZipFile(unsigned) as z:
         z.extractall(tmp)
     pi = tmp / "pack.info"
-    if not pi.exists():
-        return
-    try:
-        d = json.loads(pi.read_text(errors="replace"))
-        mods = d.get("summary", {}).get("modules", [])
-        if any(m["distro"]["moduleName"] == "entry" for m in mods):
-            d["summary"]["modules"] = [m for m in mods if m["distro"]["moduleName"] != "entry"]
-            pi.write_text(json.dumps(d))
-            _repack_strip(tmp, unsigned)
-            log("[剥离合包] 测试 HAP 已剥离 entry 模块")
-    except Exception as e:
-        log(f"[strip skip] {e}")
+    if pi.exists():
+        try:
+            _strip_pack_entry(pi, tmp, unsigned)
+        except Exception as e:
+            log(f"[strip skip] {e}")
 
 
 def run_suites(bundle: str, tmod: str, suites: list[str]) -> dict:
@@ -226,148 +226,127 @@ def run_suites(bundle: str, tmod: str, suites: list[str]) -> dict:
         s = s.strip()
         if not s:
             continue
-        log(f"  运行套件: {s}（60s 无输出判挂起）", to_current=True)
+        log(f"  运行套件: {s}（60s 无输出判挂起）", to_active=True)
         out, hung = hdc_utils.run_aa_test(bundle, tmod, s)
         if hung:
             hung_suites.append(s)
         allout += f"[{s}]\n{out}\n"
         m = re.search(r"Tests run: (\d+), Failure: (\d+), Error: (\d+), Pass: (\d+)", out)
         if m:
-            total += int(m.group(1))
-            failed += int(m.group(2)) + int(m.group(3))
-            passed += int(m.group(4))
+            # 2026-08-20 防御：汇总行存在但用例级进展标记（OHOS_REPORT_STATUS: test=）远少于
+            # 汇总总数 → 假阳性（空跑/残留输出，实测 57s 报 32/32 但设备端 0 用例执行）
+            case_marks = len(re.findall(r"OHOS_REPORT_STATUS: test=", out))
+            if case_marks < int(m.group(1)):
+                no_result_suites.append(s)
+                log(f"  [{s}] 汇总与用例标记不符({case_marks}<{m.group(1)}) → NO_RESULT")
+            else:
+                total += int(m.group(1))
+                failed += int(m.group(2)) + int(m.group(3))
+                passed += int(m.group(4))
         else:
             no_result_suites.append(s)
             log(f"  [{s}] NO_RESULT")
-    if hung_suites:
-        log(f"  挂起套件: {hung_suites}")
     return {"total": total, "passed": passed, "failed": failed, "allout": allout,
             "hung": hung_suites, "no_result": no_result_suites}
 
 
-def _fail(ts: str, rel: str, status: str, err: str, rc: int,
-          log_msg: str, passed: str = "-", total: str = "-") -> int:
-    """失败落盘：TSV + 日志 + Excel 刷新；返回退出码。"""
-    tsv_row(ts, rel, status, passed, total, err, "-")
-    log(log_msg)
-    refresh_xlsx()
-    return rc
-
-
-def _hap_modname(hap_path: Path) -> str:
-    """读 HAP module.json 的模块名；异常返回 ''。"""
-    try:
-        with zipfile.ZipFile(hap_path) as z:
-            return json.loads(z.read("module.json"))["module"].get("name", "")
-    except Exception:
-        return ""
-
-
-def _build_deps(rel: str, profile: str, system: bool,
-                acls: list[str] | None) -> tuple[list[str], dict]:
-    """解析并构建依赖辅助 HAP；返回 (deps, dep_haps)。"""
+def _prepare_and_build(rel, proj, ts, profile, system, acls):
+    """阶段 0-1：设备就绪、依赖构建、辅助工程判定、双 HAP 编译。"""
+    log(f"===== [{rel}] 测试开始 =====", to_active=True)
+    if not hdc_utils.ensure_device():
+        tsv_row(ts, rel, "DEVICE_OFFLINE", "-", "-", "-", "-")
+        log("DEVICE_OFFLINE")
+        refresh_xlsx()
+        return 2, [], {}
+    hdc_utils.keep_awake()
     deps = resolve_deps(rel)
-    dep_haps: dict[str, list[Path]] = {}
+    dep_haps: dict = {}
     for dp in deps:
         if "::" in dp:
             dproj, dmod = dp.split("::", 1)
             build_dep_module(dproj, dmod, profile, system, acls)
         else:
             dep_haps[dp] = build_dep_hap(dp, profile, system, acls)
-    return deps, dep_haps
+    if not (proj / "entry/src/ohosTest/module.json5").is_file():
+        tsv_row(ts, rel, "SKIP", "-", "-", "辅助工程无测试代码", "-")
+        log("SKIP: 辅助工程无测试代码")
+        refresh_xlsx()
+        return 3, deps, dep_haps
+    log(f"构建: {rel}", to_active=True)
+    r = build_one(proj)
+    if not r["ok"]:
+        tsv_row(ts, rel, "BUILD_FAIL", "-", "-", r["error"], "-")
+        log(f"BUILD FAIL: {r['error']}")
+        refresh_xlsx()
+        return 4, deps, dep_haps
+    return 0, deps, dep_haps
 
 
-def _strip_if_combined(proj: Path) -> tuple[Path, str, str]:
-    """合包剥离判定（须在签名前）：主/测模块名不同才剥离；返回 (test_hap_u, tmod0, pmain0)。
+def _hap_modname(hap_path) -> str:
+    """HAP 内 module.json 的模块名（combined 判定用）。"""
+    import zipfile as _zf
+    try:
+        with _zf.ZipFile(hap_path) as z:
+            return json.loads(z.read("module.json"))["module"].get("name", "")
+    except Exception:
+        return ""
 
-    主/测模块名相同（如均 entry）→ combined 自包含 hap（官方只装测试 hap），不剥离（2026-08-19 实战）。
-    """
+
+def _strip_and_sign(proj, rel, ts, deps, acls, profile, system):
+    """阶段 2-3：合包剥离（签名前）+ 签名。"""
     test_hap_u = proj / "entry/build/default/outputs/ohosTest/entry-ohosTest-unsigned.hap"
-    main_hap0 = next((h for h in proj.rglob("*/build/default/outputs/default/*-unsigned.hap")
-                      if "ohosTest" not in h.parts), None)
+    main0 = next((h for h in proj.rglob("*/build/default/outputs/default/*-unsigned.hap")
+                  if "ohosTest" not in h.parts), None)
     tmod0 = _hap_modname(test_hap_u) if test_hap_u.exists() else ""
-    pmain0 = _hap_modname(main_hap0) if main_hap0 else ""
+    pmain0 = _hap_modname(main0) if main0 else ""
     log(f"  [combined] strip判定 tmod={tmod0} pmain={pmain0}")
     if test_hap_u.exists() and tmod0 != pmain0:
         strip_combined_pack(test_hap_u)
-    return test_hap_u, tmod0, pmain0
-
-
-def _deps_acl(deps: list[str]) -> list[str] | None:
-    """依赖含扩展 → 注入 debug ACL（normal 应用 + ACL 权限，规范见 sign_one）。"""
-    for dp in deps:
-        if "::" not in dp and dep_has_extension(REPO / dp):
-            from sign.sign_one import DEBUG_ACLS
-            log(f"  依赖 {dp} 含扩展 → ACL 注入（normal 应用规范）")
-            return DEBUG_ACLS
-    return None
-
-
-def _find_haps(proj: Path) -> tuple[Path | None, Path | None]:
-    """主/测 HAP 按实际产物发现（模块名不一定是 entry——second/phone 等，2026-08-18 实战）。"""
+    if acls is None:
+        for dp in deps:
+            if "::" not in dp and dep_has_extension(REPO / dp):
+                from sign.sign_one import DEBUG_ACLS
+                acls = DEBUG_ACLS
+                log(f"  依赖 {dp} 含扩展 → ACL 注入（normal 应用规范）")
+                break
+    try:
+        sign_project(proj, profile, system=system, acls=acls)
+    except Exception as e:
+        tsv_row(ts, rel, "SIGN_FAIL", "-", "-", str(e)[:200], "-")
+        log(f"SIGN FAIL: {e}")
+        refresh_xlsx()
+        return 5, None, None, tmod0, pmain0
     main_hap = next((h for h in proj.rglob("*/build/default/outputs/default/*-signed.hap")
                      if "ohosTest" not in h.parts and h.name != "second-ohosTest-signed.hap"), None)
     test_hap = next((h for h in proj.rglob("*/build/default/outputs/ohosTest/*-signed.hap")
                      if "entry" in h.name or True), None)
-    return main_hap, test_hap
+    if not test_hap or not test_hap.is_file():
+        tsv_row(ts, rel, "BUILD_FAIL", "-", "-", "TEST HAP MISSING", "-")
+        log("TEST HAP MISSING")
+        refresh_xlsx()
+        return 4, None, None, tmod0, pmain0
+    return 0, main_hap, test_hap, tmod0, pmain0
 
 
-def _resolve_suites(proj: Path) -> list[str]:
-    """套件名解析：List.test.ets → 兜底 grep → ActsAbilityTest。"""
+def _resolve_suites(proj):
+    """阶段 3.5：bundle/tmod/套件解析。"""
+    meta = hap_meta(proj)
+    bundle = meta["bundle"] or proj.name
+    tmod = meta["tmod"] or "entry"
     list_test = proj / "entry/src/ohosTest/ets/test/List.test.ets"
     if not list_test.is_file():
-        list_test = proj / "entry/src/ohosTest/ets/test/ListTest.ets"  # 非标准入口（freeinstall 等）
-    suites = extract_suites(list_test)
+        list_test = proj / "entry/src/ohosTest/ets/test/ListTest.ets"
+    suites = extract_suites(list_test) if list_test.is_file() else []
     if not suites:
         suites = fallback_suites(proj / "entry/src/ohosTest/ets/test")
     if not suites:
         suites = ["ActsAbilityTest"]
-    return suites
+    log(f"bundle={bundle} tmod={tmod} suites={','.join(suites)}")
+    return bundle, tmod, suites
 
 
-def _main_haps(proj: Path, main_hap: Path | None, tmod0: str, pmain0: str) -> list[Path]:
-    """主模块 HAP 安装清单：entry+feature…全装；shared .hsp 同装；combined 自包含返回空。
-
-    多模块工程缺任一模块会启动失败/挂起；主模块先装、依赖后装（同 bundle 同名模块
-    需依赖最后覆盖生效，2026-08-18 实战）。
-    """
-    haps = [h for h in proj.rglob("*/build/default/outputs/default/*-signed.hap")
-            if "ohosTest" not in h.parts and h.name != "second-ohosTest-signed.hap"]
-    haps += [h for h in proj.rglob("*/build/default/outputs/default/*-signed.hsp")
-             if "ohosTest" not in h.parts]
-    if not haps and main_hap and main_hap.is_file():
-        haps = [main_hap]
-    if tmod0 and tmod0 == pmain0:
-        log("  [combined] 跳过主 HAP 安装（测试 hap 自包含 entry 模块）")
-        return []
-    return haps
-
-
-def _install_list(haps: list[Path]) -> tuple[bool, str]:
-    """逐个安装 HAP；返回 (是否全成功, 首条错误)。"""
-    ok, err = True, ""
-    for mh in haps:
-        ok, err = hdc_utils.install_hap(str(mh))
-        if not ok:
-            break
-    return ok, err
-
-
-def _install_main_and_test(main_haps: list[Path], test_hap: Path,
-                           bundle: str) -> tuple[bool, str]:
-    """装主 HAP（9568267 残留兜底重试一次）+ 测试 HAP；返回 (是否全成功, 首条错误)。"""
-    ok1, e1 = _install_list(main_haps)
-    if not ok1 and "9568267" in e1:
-        log("  残留兜底：强制卸载后重装主 HAP")
-        hdc_utils.cleanup_device(bundle)
-        ok1, e1 = _install_list(main_haps)
-    ok2, e2 = hdc_utils.install_hap(str(test_hap))
-    log(f"  [安装] 主HAP×{len(main_haps)} ok={ok1} err={e1[:80] if e1 else '-'} | 测试HAP ok={ok2} err={e2[:80] if e2 else '-'}")
-    return (ok1 and ok2), (e1 or e2)
-
-
-def _install_dep(dh: Path) -> tuple[bool, str]:
-    """安装单个依赖 HAP；9568332（sign info inconsistent）先卸旧 bundle 再重装。"""
+def _install_dep_hap(dh: Path) -> tuple:
+    """安装依赖 HAP；9568332 旧签名残留 → 先卸旧 bundle 重装。"""
     ok, err = hdc_utils.install_hap(str(dh))
     if not ok and "9568332" in err:
         try:
@@ -382,19 +361,76 @@ def _install_dep(dh: Path) -> tuple[bool, str]:
     return ok, err
 
 
-def _install_deps(deps: list[str], dep_haps: dict) -> None:
-    """安装依赖（主模块之后；用构建返回的实际 signed 路径）。"""
+
+
+def _install_main_haps(bundle: str, main_haps: list[Path]) -> tuple[bool, str]:
+    """安装主 HAP 列表；残留 9568267 时强制卸载重装一次。"""
+    ok1, e1 = True, ""
+    for mh in main_haps:
+        ok, err = hdc_utils.install_hap(str(mh))
+        if not ok:
+            ok1, e1 = False, err
+            break
+    if not ok1 and "9568267" in e1:
+        log("  残留兜底：强制卸载后重装主 HAP")
+        hdc_utils.cleanup_device(bundle)
+        ok1, e1 = True, ""
+        for mh in main_haps:
+            ok, err = hdc_utils.install_hap(str(mh))
+            if not ok:
+                ok1, e1 = False, err
+                break
+    return ok1, e1
+
+
+def _install_deps(deps: list, dep_haps: dict) -> None:
+    """安装 Test.json 依赖 HAP（module 级与 kit 级）。"""
     for dp in deps:
         if "::" in dp:
             dproj, dmod = dp.split("::", 1)
             dh = REPO / dproj / dmod / "build/default/outputs/default" / f"{dmod}-default-signed.hap"
             if dh.is_file():
-                ok, err = _install_dep(dh)
+                ok, err = _install_dep_hap(dh)
                 log(f"  [依赖] {'已安装' if ok else '安装失败'} {dp} {err if not ok else ''}")
         else:
             for dh in dep_haps.get(dp, []):
-                ok, err = _install_dep(dh)
+                ok, err = _install_dep_hap(dh)
                 log(f"  [依赖] {'已安装' if ok else '安装失败'} {dp} {err if not ok else ''}")
+
+
+def _collect_main_haps(proj: Path, main_hap: Path | None) -> list[Path]:
+    """收集主模块 HAP/HSP（combined 自包含时由调用方清空）。"""
+    main_haps = [h for h in proj.rglob("*/build/default/outputs/default/*-signed.hap")
+                 if "ohosTest" not in h.parts and h.name != "second-ohosTest-signed.hap"]
+    main_haps += [h for h in proj.rglob("*/build/default/outputs/default/*-signed.hsp")
+                  if "ohosTest" not in h.parts]
+    if not main_haps and main_hap and main_hap.is_file():
+        main_haps = [main_hap]
+    return main_haps
+
+
+def _install_all(proj, bundle, ts, rel, deps, dep_haps, main_hap, test_hap, tmod0, pmain0):
+    """阶段 4-5.5：清理设备 + 双装 + 依赖安装。"""
+    with device_lock():
+        log("清理设备（卸载非系统应用 + 清 log）", to_active=True)
+        hdc_utils.cleanup_device(bundle)
+        mem = hdc_utils.mem_free_kb()
+        log(f"  设备空闲内存: {mem} kB")
+        main_haps = _collect_main_haps(proj, main_hap)
+        if tmod0 and tmod0 == pmain0:
+            main_haps = []
+            log("  [combined] 跳过主 HAP 安装（测试 hap 自包含 entry 模块）")
+        ok1, e1 = _install_main_haps(bundle, main_haps)
+        ok2, e2 = hdc_utils.install_hap(str(test_hap))
+        log(f"  [安装] 主HAP×{len(main_haps)} ok={ok1} err={e1[:80] if e1 else '-'} | 测试HAP ok={ok2} err={e2[:80] if e2 else '-'}")
+        if not (ok1 and ok2):
+            err = e1 or e2
+            tsv_row(ts, rel, "INSTALL_FAIL", "-", "-", err[:200], "-")
+            log(f"INSTALL FAIL: {err}")
+            refresh_xlsx()
+            return 6
+        _install_deps(deps, dep_haps)
+    return 0
 
 
 def _gen_html_report(rel: str, hapname: str, res: dict) -> None:
@@ -415,100 +451,54 @@ def _gen_html_report(rel: str, hapname: str, res: dict) -> None:
         log(f"[html report skip] {e}")
 
 
-def _pass_result(ts: str, rel: str, hapname: str, sub: str, res: dict,
-                 gen_html: bool) -> int:
-    """通过分支：报告留存 + TSV PASS + 可选 xdevice HTML；返回 0。"""
-    report = REPORT_ROOT / sub / f"{hapname}.txt"
-    report.parent.mkdir(parents=True, exist_ok=True)
-    with open(report, "w") as f:
-        f.write(f"HAP: {hapname}\n工程: {rel}\n测试时间: {datetime.now():%Y-%m-%d %H:%M:%S}\n")
-        f.write(f"结果: PASS\n用例: {res['passed']}/{res['total']} 通过, Failure: 0\n---\n")
-        f.write(res["allout"][-3000:])
-    tsv_row(ts, rel, "PASS", str(res["passed"]), str(res["total"]), "-", str(report))
-    log(f"✅ PASS {res['passed']}/{res['total']}", to_current=True)
-    if gen_html:
-        _gen_html_report(rel, hapname, res)
-    refresh_xlsx()
-    return 0
-
-
-def _fail_result(ts: str, rel: str, hapname: str, res: dict) -> int:
-    """失败分支：保留原始输出到 /tmp 供定位 + NO_RESULT/FAIL 落盘；返回 7。"""
+def _finalize(ts, rel, hapname, sub, res, gen_html) -> int:
+    """阶段 7：结果判定 + 报告留存。"""
+    if res["failed"] == 0 and res["total"] > 0 and not res.get("no_result"):
+        report = REPORT_ROOT / sub / f"{hapname}.txt"
+        report.parent.mkdir(parents=True, exist_ok=True)
+        with open(report, "w") as f:
+            f.write(f"HAP: {hapname}\n工程: {rel}\n测试时间: {datetime.now():%Y-%m-%d %H:%M:%S}\n")
+            f.write(f"结果: PASS\n用例: {res['passed']}/{res['total']} 通过, Failure: 0\n---\n")
+            f.write(res["allout"][-3000:])
+        tsv_row(ts, rel, "PASS", str(res["passed"]), str(res["total"]), "-", str(report))
+        log(f"✅ PASS {res['passed']}/{res['total']}", to_active=True)
+        if gen_html:
+            _gen_html_report(rel, hapname, res)
+        refresh_xlsx()
+        return 0
     try:
         (Path("/tmp") / f"aatest_fail_{hapname}.log").write_text(res["allout"], errors="replace")
     except Exception:
         pass
-    if res["total"] == 0:
-        status = "NO_RESULT" if not res["hung"] else "FAIL"
-        err = "NO_RESULT：无 OHOS_REPORT_RESULT" if not res["hung"] else f"挂起: {res['hung']}"
-    else:
-        status = "FAIL"
-        err = f"Tests run: {res['total']}, Failure: {res['failed']}, Pass: {res['passed']}"
-    return _fail(ts, rel, status, err, 7, f"❌ {status}: {err}",
-                 str(res["passed"]), str(res["total"]))
+    return 1
 
 
 def test_one(rel: str, profile: str = "release", system: bool = False,
              gen_html: bool = False, acls: list[str] | None = None) -> int:
-    """单 HAP 全流程。返回 0 通过 / 非 0 失败/跳过。"""
+    """单 HAP 全流程（编排）。返回 0 通过 / 非 0 失败/跳过。"""
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     proj = REPO / rel
     hapname = rel.rsplit("/", 1)[-1]
     sub = rel.split("/")[0]
-    log(f"===== [{rel}] 测试开始 =====", to_current=True)
-    # 0. 设备就绪
-    if not hdc_utils.ensure_device():
-        return _fail(ts, rel, "DEVICE_OFFLINE", "-", 2, "DEVICE_OFFLINE")
-    hdc_utils.keep_awake()
-    # 0.5 依赖辅助 HAP 解析（构建放前面；安装移到清理之后）
-    deps, dep_haps = _build_deps(rel, profile, system, acls)
-    # 0.6 辅助工程（无 ohosTest）跳过
-    if not (proj / "entry/src/ohosTest/module.json5").is_file():
-        return _fail(ts, rel, "SKIP", "辅助工程无测试代码", 3, "SKIP: 辅助工程无测试代码")
-    # 1. 编译（双 HAP）
-    log(f"构建: {rel}", to_current=True)
-    r = build_one(proj)
-    if not r["ok"]:
-        return _fail(ts, rel, "BUILD_FAIL", r["error"], 4, f"BUILD FAIL: {r['error']}")
-    # 2. 合包剥离（签名前）+ 3. 签名（默认 release；acls 注入 9568289 场景）
-    test_hap_u, tmod0, pmain0 = _strip_if_combined(proj)
-    if acls is None:
-        acls = _deps_acl(deps)
-    try:
-        sign_project(proj, profile, system=system, acls=acls)
-    except Exception as e:
-        return _fail(ts, rel, "SIGN_FAIL", str(e)[:200], 5, f"SIGN FAIL: {e}")
-    # 主/测 HAP 按实际产物发现 + 元信息 / 套件
-    main_hap, test_hap = _find_haps(proj)
-    if not test_hap or not test_hap.is_file():
-        return _fail(ts, rel, "BUILD_FAIL", "TEST HAP MISSING", 4, "TEST HAP MISSING")
-    meta = hap_meta(proj)
-    bundle = meta["bundle"] or proj.name
-    tmod = meta["tmod"] or "entry"
-    suites = _resolve_suites(proj)
-    log(f"bundle={bundle} tmod={tmod} suites={','.join(suites)}")
-    # 4. 清理设备（先清理，后装依赖，避免依赖被卸载）；互斥锁覆盖 清理→安装→套件→卸载
-    with device_lock():
-        log("清理设备（卸载非系统应用 + 清 log）", to_current=True)
-        hdc_utils.cleanup_device(bundle)
-        mem = hdc_utils.mem_free_kb()
-        log(f"  设备空闲内存: {mem} kB")
-        # 5. 安装（剥离已在签名前完成；残留兜底：entry already exist 时强制卸载重装一次）
-        main_haps = _main_haps(proj, main_hap, tmod0, pmain0)
-        ok, err = _install_main_and_test(main_haps, test_hap, bundle)
-        if not ok:
-            return _fail(ts, rel, "INSTALL_FAIL", err[:200], 6, f"INSTALL FAIL: {err}")
-        # 5.5 安装依赖（主模块之后；9568332 旧签名残留先卸旧 bundle 再重装）
-        _install_deps(deps, dep_haps)
-        # 6. 逐套件测试
-        res = run_suites(bundle, tmod, suites)
-        # 6.5 测试结束清理：卸载本 bundle（无论成败，避免残留影响后续，2026-08-18 强化）
-        hdc_utils.hdc("shell", f"bm uninstall -n {bundle}", timeout=20)
-        hdc_utils.hdc("shell", "hilog -r", timeout=15)
-    # 7. 结果判定 + 报告留存（仅通过）
-    if res["failed"] == 0 and res["total"] > 0 and not res.get("no_result"):
-        return _pass_result(ts, rel, hapname, sub, res, gen_html)
-    return _fail_result(ts, rel, hapname, res)
+    rc, deps, dep_haps = _prepare_and_build(rel, proj, ts, profile, system, acls)
+    if rc:
+        return rc
+    rc, main_hap, test_hap, tmod0, pmain0 = _strip_and_sign(proj, rel, ts, deps, acls, profile, system)
+    if rc:
+        return rc
+    bundle, tmod, suites = _resolve_suites(proj)
+    rc = _install_all(proj, bundle, ts, rel, deps, dep_haps, main_hap, test_hap, tmod0, pmain0)
+    if rc:
+        return rc
+    res = run_suites(bundle, tmod, suites)
+    if res["hung"]:
+        log(f"  挂起套件: {res['hung']}")
+    hdc_utils.hdc("shell", f"bm uninstall -n {bundle}", timeout=20)
+    hdc_utils.hdc("shell", "hilog -r", timeout=15)
+    return _finalize(ts, rel, hapname, sub, res, gen_html)
+
+
+
 
 
 def main() -> None:
