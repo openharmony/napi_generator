@@ -15,24 +15,24 @@
 
 package basetype.int16array2;
 
-import basetype.ArrayBuffer;
-import basetype.BasTest;
-import basetype.EntryResult;
-import basetype.Error;
-import basetype.Int8Array;
-import basetype.IteratorResult;
-import basetype.RangeError;
-import basetype.TypeError;
-import basetype.Uint16Array;
-import basetype.DataView;
-import basetype.Float32Array;
-import basetype.Float64Array;
-import basetype.Int32Array;
-import basetype.IntlOptions;
-import basetype.NullPointerError;
-import basetype.Uint8Array;
-import basetype.Uint8ClampedArray;
-import basetype.Int16Array;
+import basetype.common.ArrayBuffer;
+import basetype.common.BasTest;
+import basetype.common.EntryResult;
+import basetype.common.Error;
+import basetype.common.Int8Array;
+import basetype.common.IteratorResult;
+import basetype.common.RangeError;
+import basetype.common.TypeError;
+import basetype.common.Uint16Array;
+import basetype.common.DataView;
+import basetype.common.Float32Array;
+import basetype.common.Float64Array;
+import basetype.common.Int32Array;
+import basetype.common.IntlOptions;
+import basetype.common.NullPointerError;
+import basetype.common.Uint8Array;
+import basetype.common.Uint8ClampedArray;
+import basetype.common.Int16Array;
 
 import java.util.ArrayList;
 import java.util.HashMap;
