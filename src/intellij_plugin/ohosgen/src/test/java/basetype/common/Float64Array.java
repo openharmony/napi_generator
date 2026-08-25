@@ -13,21 +13,18 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.common;
 
 /**
- * 单精度浮点数组（ECMAScript Float32Array 语义的子集），
- * 用于跨类型拷贝构造（如 new Uint16Array(float32 视图)）。
+ * 双精度浮点数组（ECMAScript Float64Array 语义的子集），
+ * 用于跨类型拷贝构造（如 new Uint16Array(float64 视图)）。
  */
-public class Float32Array implements IntArrayView {
+public class Float64Array implements IntArrayView {
 
-    private final float[] data;
+    private final double[] data;
 
-    public Float32Array(double... values) {
-        data = new float[values.length];
-        for (int i = 0; i < values.length; i++) {
-            data[i] = (float) values[i];
-        }
+    public Float64Array(double... values) {
+        data = values;
     }
 
     public int length() {
@@ -44,7 +41,7 @@ public class Float32Array implements IntArrayView {
     }
 
     /** 读取原始浮点值。 */
-    public float getFloat(int index) {
+    public double getDouble(int index) {
         return data[index];
     }
 }

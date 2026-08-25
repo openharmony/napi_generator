@@ -13,19 +13,18 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.common;
 
 /**
- * 运行时错误，对应 ECMAScript Error 语义（name 恒为 "Error"）。
+ * 迭代结果，对应 ECMAScript IteratorResult（value + done）语义。
  */
-public class Error extends RuntimeException {
+public class IteratorResult {
 
-    public Error(String message) {
-        super(message);
-    }
+    public Integer value;
+    public boolean done;
 
-    /** ECMAScript Error.name。 */
-    public String name() {
-        return "Error";
+    public IteratorResult(Integer value, boolean done) {
+        this.value = value;
+        this.done = done;
     }
 }

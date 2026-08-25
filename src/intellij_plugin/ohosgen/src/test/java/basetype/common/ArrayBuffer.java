@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.common;
 
 /**
  * 二进制数据缓冲区，模拟 ECMAScript ArrayBuffer 的字节存储语义。

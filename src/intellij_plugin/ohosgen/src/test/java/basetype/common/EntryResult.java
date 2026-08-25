@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.common;
 
 /**
  * entries 迭代结果：value 为 [index, value] 二元组，done 标记序列结束。

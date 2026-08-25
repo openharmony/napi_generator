@@ -13,19 +13,14 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.common;
 
 /**
- * 范围错误，对应 ECMAScript RangeError 语义（name 恒为 "RangeError"）。
+ * 整型数组视图公共接口：供跨类型拷贝构造（如 new Uint16Array(int32 视图)）使用。
  */
-public class RangeError extends RuntimeException {
+public interface IntArrayView {
 
-    public RangeError(String message) {
-        super(message);
-    }
+    Integer get(int index);
 
-    /** ECMAScript RangeError.name。 */
-    public String name() {
-        return "RangeError";
-    }
+    int length();
 }

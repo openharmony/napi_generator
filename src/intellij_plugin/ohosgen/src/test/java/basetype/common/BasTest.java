@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.common;
 
 /**
  * 断言辅助基类：把 ETS hypium expect(...).assertXxx(...) 桥接到 JUnit5 断言，

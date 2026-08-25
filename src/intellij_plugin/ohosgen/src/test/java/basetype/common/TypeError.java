@@ -13,19 +13,19 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.common;
 
 /**
- * 空指针错误，对应 ETS NullPointerError 语义（name 恒为 "NullPointerError"）。
+ * 类型错误，对应 ECMAScript TypeError 语义（name 恒为 "TypeError"）。
  */
-public class NullPointerError extends RuntimeException {
+public class TypeError extends RuntimeException {
 
-    public NullPointerError() {
-        super("null callback");
+    public TypeError(String message) {
+        super(message);
     }
 
-    /** ETS NullPointerError.name。 */
+    /** ECMAScript TypeError.name。 */
     public String name() {
-        return "NullPointerError";
+        return "TypeError";
     }
 }

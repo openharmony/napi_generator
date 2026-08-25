@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.common;
 
 /**
  * Intl.NumberFormatOptions 的 Java 等价选项对象，

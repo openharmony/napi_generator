@@ -13,27 +13,19 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.common;
 
 /**
- * 二进制视图读写器（ECMAScript DataView 语义的子集），
- * 支持小端 uint16 读写与字节序互操作验证。
+ * 运行时错误，对应 ECMAScript Error 语义（name 恒为 "Error"）。
  */
-public class DataView {
+public class Error extends RuntimeException {
 
-    private final ArrayBuffer buffer;
-
-    public DataView(ArrayBuffer buf) {
-        this.buffer = buf;
+    public Error(String message) {
+        super(message);
     }
 
-    /** 写入无符号 16 位小端值。 */
-    public void setUint16(int byteOffset, int value, boolean littleEndian) {
-        buffer.setInt16(byteOffset, value);
-    }
-
-    /** 读取无符号 16 位小端值。 */
-    public int getUint16(int byteOffset, boolean littleEndian) {
-        return buffer.getInt16(byteOffset) & 0xFFFF;
+    /** ECMAScript Error.name。 */
+    public String name() {
+        return "Error";
     }
 }

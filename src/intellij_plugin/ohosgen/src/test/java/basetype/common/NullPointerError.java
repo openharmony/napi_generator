@@ -13,18 +13,19 @@
  * limitations under the License.
  */
 
-package basetype;
+package basetype.common;
 
 /**
- * 迭代结果，对应 ECMAScript IteratorResult（value + done）语义。
+ * 空指针错误，对应 ETS NullPointerError 语义（name 恒为 "NullPointerError"）。
  */
-public class IteratorResult {
+public class NullPointerError extends RuntimeException {
 
-    public Integer value;
-    public boolean done;
+    public NullPointerError() {
+        super("null callback");
+    }
 
-    public IteratorResult(Integer value, boolean done) {
-        this.value = value;
-        this.done = done;
+    /** ETS NullPointerError.name。 */
+    public String name() {
+        return "NullPointerError";
     }
 }
