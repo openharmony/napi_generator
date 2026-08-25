@@ -344,19 +344,16 @@ public class Uint16Array implements IntArrayView {
     public Uint16Array filter(Uint16ArrayFinder cb) {
         if (cb == null) { throw new NullPointerError(); }
         int count = 0;
+        int[] picked = new int[length];
         for (int i = 0; i < length; i++) {
-            if (cb.test(get(i), i, this)) {
-                count++;
+            int v = get(i);
+            if (cb.test(v, i, this)) {
+                picked[count++] = v;
             }
         }
-        int[] picked = new int[count];
-        int idx = 0;
-        for (int i = 0; i < length; i++) {
-            if (cb.test(get(i), i, this)) {
-                picked[idx++] = get(i);
-            }
-        }
-        return new Uint16Array(picked);
+        int[] result = new int[count];
+        System.arraycopy(picked, 0, result, 0, count);
+        return new Uint16Array(result);
     }
 
     public Uint16Array filter(Uint16ArrayFinder0 cb) {
@@ -1185,6 +1182,23 @@ public class Uint16Array implements IntArrayView {
         return new Uint16Array(copy);
     }
 
+    /** 从 double 数组映射构造（回调接收转换前源值，元素按 ToUint16 转换）。 */
+    public static Uint16Array from(double[] values, Uint16ArrayDoubleMapper1 cb) {
+        int[] copy = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            copy[i] = toUint16(cb.apply(values[i]));
+        }
+        return new Uint16Array(copy);
+    }
+
+    public static Uint16Array from(double[] values, Uint16ArrayDoubleMapper2 cb) {
+        int[] copy = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            copy[i] = toUint16(cb.apply(values[i], i));
+        }
+        return new Uint16Array(copy);
+    }
+
     /** 使用整型列表的元素填充本数组。 */
     /** 使用整型列表的元素填充本数组（从 offset 起，越界抛 RangeError）。 */
     public Integer set(java.util.List<Integer> src, int offset) {
@@ -1205,6 +1219,54 @@ public class Uint16Array implements IntArrayView {
     }
 
     /** 从整型列表构造，对应 from(arrayLike) 语义。 */
+    public static Uint16Array from(java.util.List<Integer> values, Uint16ArrayMapper1 cb) {
+        int[] copy = new int[values.size()];
+        for (int i = 0; i < values.size(); i++) {
+            copy[i] = toUint16(cb.apply(values.get(i)));
+        }
+        return new Uint16Array(copy);
+    }
+
+    public static Uint16Array from(java.util.Set<Integer> values, Uint16ArrayMapper1 cb) {
+        java.util.List<Integer> snapshot = new java.util.ArrayList<>(values);
+        java.util.List<Integer> copy = new java.util.ArrayList<>();
+        for (int i = 0; i < snapshot.size(); i++) {
+            copy.add(toUint16(cb.apply(snapshot.get(i))));
+            syncSet(snapshot, values);
+        }
+        return new Uint16Array(toIntArray(copy));
+    }
+
+    public static Uint16Array from(java.util.Set<Integer> values, Uint16ArrayMapper2 cb) {
+        java.util.List<Integer> snapshot = new java.util.ArrayList<>(values);
+        java.util.List<Integer> copy = new java.util.ArrayList<>();
+        for (int i = 0; i < snapshot.size(); i++) {
+            copy.add(toUint16(cb.apply(snapshot.get(i), i)));
+            syncSet(snapshot, values);
+        }
+        return new Uint16Array(toIntArray(copy));
+    }
+
+    /** 把回调期间新增的 Set 元素同步进快照（ArkTS Set 迭代允许动态修改）。 */
+    private static void syncSet(java.util.List<Integer> snapshot, java.util.Set<Integer> values) {
+        if (snapshot.size() >= values.size()) {
+            return;
+        }
+        for (Integer v : values) {
+            if (!snapshot.contains(v)) {
+                snapshot.add(v);
+            }
+        }
+    }
+
+    private static int[] toIntArray(java.util.List<Integer> list) {
+        int[] arr = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            arr[i] = list.get(i);
+        }
+        return arr;
+    }
+
     public static Uint16Array from(java.util.List<Integer> values) {
         int[] copy = new int[values.size()];
         for (int i = 0; i < values.size(); i++) {
@@ -1382,6 +1444,18 @@ public class Uint16Array implements IntArrayView {
     @FunctionalInterface
     public interface Uint16ArrayMapper {
         int apply(int value, int index, Uint16Array array);
+    }
+
+    /** 回调接口：double 源值映射器（from(double[], cb) 回调接收转换前值）。 */
+    @FunctionalInterface
+    public interface Uint16ArrayDoubleMapper1 {
+        double apply(double value);
+    }
+
+    /** 回调接口：double 源值映射器的 (value, index) 双参数形式。 */
+    @FunctionalInterface
+    public interface Uint16ArrayDoubleMapper2 {
+        double apply(double value, int index);
     }
 
     /** 回调接口：映射器的 (value) 单参数形式。 */

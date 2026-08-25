@@ -60,6 +60,16 @@ public class BasTest {
         assertEqual(expected.doubleValue(), actual);
     }
 
+    /** 整型期望值与装箱浮点实际值按数值相等比较（-1 == -1.0）。 */
+    public static void assertEqual(int expected, Double actual) {
+        assertEqual((double) expected, actual.doubleValue());
+    }
+
+    /** 浮点期望值与装箱浮点实际值按数值相等比较。 */
+    public static void assertEqual(double expected, Double actual) {
+        assertEqual(expected, actual.doubleValue());
+    }
+
     /** 浮点精确相等（NaN 视为相等）。 */
     public static void assertEqual(double expected, double actual) {
         if (Double.isNaN(expected) && Double.isNaN(actual)) {
