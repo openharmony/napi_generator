@@ -22,7 +22,8 @@ public class ArrayBuffer {
 
     /** 判断对象是否为 TypedArray 视图，对应 ArrayBuffer.isView 语义。 */
     public static boolean isView(Object obj) {
-        return obj instanceof Int16Array || obj instanceof Int8Array;
+        return obj instanceof Int16Array || obj instanceof Int8Array || obj instanceof Uint16Array
+                || obj instanceof Uint8Array || obj instanceof Uint8ClampedArray || obj instanceof Int32Array;
     }
 
     private final byte[] bytes;

@@ -20,10 +20,10 @@ package basetype;
  */
 public class IteratorResult {
 
-    public int value;
+    public Integer value;
     public boolean done;
 
-    public IteratorResult(int value, boolean done) {
+    public IteratorResult(Integer value, boolean done) {
         this.value = value;
         this.done = done;
     }

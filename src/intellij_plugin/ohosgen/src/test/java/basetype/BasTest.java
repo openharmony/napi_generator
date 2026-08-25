@@ -45,6 +45,29 @@ public class BasTest {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
     }
 
+    /** 浮点期望值与装箱整型实际值按数值相等比较（219.0 == 219）。 */
+    public static void assertEqual(double expected, Integer actual) {
+        assertEqual(expected, actual.doubleValue());
+    }
+
+    /** 装箱浮点期望值与浮点实际值按数值相等比较（含 NaN==NaN）。 */
+    public static void assertEqual(Double expected, double actual) {
+        assertEqual(expected.doubleValue(), actual);
+    }
+
+    /** 装箱整型期望值与浮点实际值按数值相等比较（200 == 200.0）。 */
+    public static void assertEqual(Integer expected, double actual) {
+        assertEqual(expected.doubleValue(), actual);
+    }
+
+    /** 浮点精确相等（NaN 视为相等）。 */
+    public static void assertEqual(double expected, double actual) {
+        if (Double.isNaN(expected) && Double.isNaN(actual)) {
+            return;
+        }
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual, 0.0);
+    }
+
     public static void assertEqual(Object expected, Object actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
     }
