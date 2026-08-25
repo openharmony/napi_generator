@@ -16,20 +16,16 @@
 package basetype.common;
 
 /**
- * 类型断言失败异常，对应 ArkTS as 类型转换失败抛出的 ClassCastError。
+ * 运行时错误，对应 ECMAScript IndexOutOfBoundsError 语义（name 恒为 "IndexOutOfBoundsError"）。
  */
-public class ClassCastError extends RuntimeException {
+public class IndexOutOfBoundsError extends RuntimeException {
 
-    public ClassCastError() {
-        super();
-    }
-
-    public ClassCastError(String message) {
+    public IndexOutOfBoundsError(String message) {
         super(message);
     }
 
-    /** 语句级抛错辅助（编译器不会将其视为不可达，便于后续 fail() 共存）。 */
-    public static ClassCastError raise() {
-        throw new ClassCastError();
+    /** ECMAScript IndexOutOfBoundsError.name。 */
+    public String name() {
+        return "IndexOutOfBoundsError";
     }
 }

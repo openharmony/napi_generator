@@ -96,6 +96,64 @@ public class BasTest {
         org.junit.jupiter.api.Assertions.assertNotNull(actual);
     }
 
+    /** 展开+map 语义：[...new ARR(N)].map(fn) -> 按索引映射填充数组。 */
+    public static Uint8ClampedArray spreadMap(int size, java.util.function.IntBinaryOperator fn) {
+        Uint8ClampedArray arr = new Uint8ClampedArray(size);
+        for (int i = 0; i < size; i++) {
+            arr.set(i, fn.applyAsInt(0, i));
+        }
+        return arr;
+    }
+
+    /** 空数组字面量 fill 语义：n 个元素全部填充 value。 */
+    public static java.util.List<Integer> filledList(int size, int value) {
+        java.util.List<Integer> list = new java.util.ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            list.add(value);
+        }
+        return list;
+    }
+
+    /** ToUint8Clamp 语义（map 回调 double 返回值：NaN 归 0、越界钳制、半分取偶）。 */
+    public static int clampRound(double v) {
+        if (Double.isNaN(v)) {
+            return 0;
+        }
+        if (v <= 0.0) {
+            return 0;
+        }
+        if (v >= 255.0) {
+            return 255;
+        }
+        long r = Math.round(v);
+        if (v - Math.floor(v) == 0.5 && (r & 1) != 0) {
+            r -= 1;
+        }
+        return (int) r;
+    }
+
+    /** JS typeof 语义：装箱值按运行时类型返回类型名。 */
+    public static String typeofValue(Object v) {
+        if (v == null) {
+            return "object";
+        }
+        if (v instanceof String) {
+            return "string";
+        }
+        if (v instanceof Boolean) {
+            return "boolean";
+        }
+        if (v instanceof Number) {
+            return "number";
+        }
+        return "object";
+    }
+
+    /** 空值合并：null 归回退值（对应 ?? 运算符，避免表达式双求值）。 */
+    public static double coalesce(Integer value, double fallback) {
+        return value == null ? fallback : value;
+    }
+
     /** JS isFinite 语义：int/long 恒为有限数。 */
     public static boolean isFinite(long value) {
         return true;
