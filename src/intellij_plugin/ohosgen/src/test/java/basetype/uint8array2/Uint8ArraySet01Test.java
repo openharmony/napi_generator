@@ -22,6 +22,8 @@ import basetype.common.Error;
 import basetype.common.Int8Array;
 import basetype.common.IteratorResult;
 import basetype.common.RangeError;
+import basetype.common.SyntaxError;
+import basetype.common.URIError;
 import basetype.common.TypeError;
 import basetype.common.Uint16Array;
 import basetype.common.DataView;
@@ -218,7 +220,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -295,7 +297,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -307,7 +309,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -319,7 +321,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -331,7 +333,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -343,7 +345,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -355,7 +357,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -367,7 +369,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -452,7 +454,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -473,7 +475,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -521,7 +523,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -533,7 +535,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -545,7 +547,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -557,7 +559,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -569,7 +571,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -581,7 +583,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -593,7 +595,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -605,7 +607,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -714,7 +716,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -787,7 +789,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -799,7 +801,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -811,7 +813,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -823,7 +825,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -835,7 +837,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
@@ -916,7 +918,7 @@ public class Uint8ArraySet01Test extends BasTest {
     fail();
     } catch (RuntimeException e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    };
     }
 
     @Test
