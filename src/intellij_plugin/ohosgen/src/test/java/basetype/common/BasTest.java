@@ -92,6 +92,10 @@ public class BasTest {
         org.junit.jupiter.api.Assertions.assertNull(actual);
     }
 
+    public static void assertNotNull(Object actual) {
+        org.junit.jupiter.api.Assertions.assertNotNull(actual);
+    }
+
     /** JS isFinite 语义：int/long 恒为有限数。 */
     public static boolean isFinite(long value) {
         return true;

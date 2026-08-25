@@ -36,4 +36,14 @@ public class DataView {
     public int getUint16(int byteOffset, boolean littleEndian) {
         return buffer.getInt16(byteOffset) & 0xFFFF;
     }
+
+    /** 写入无符号 8 位值。 */
+    public void setUint8(int byteOffset, int value) {
+        buffer.setInt8(byteOffset, value);
+    }
+
+    /** 读取无符号 8 位值。 */
+    public int getUint8(int byteOffset) {
+        return buffer.getInt8(byteOffset) & 0xFF;
+    }
 }
