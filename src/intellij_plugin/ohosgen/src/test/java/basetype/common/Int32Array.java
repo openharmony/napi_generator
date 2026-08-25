@@ -19,8 +19,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * 有符号 16 位整型数组，按 ECMAScript %TypedArray%（Int32Array 特化）语义实现：
- * 元素写入经 ToInt16 转换（NaN/Infinity 归 0、小数向零截断、越界 16 位环绕），
+ * 有符号 8 位整型数组，按 ECMAScript %TypedArray%（Int32Array 特化）语义实现：
+ * 元素写入经 ToUint8 转换（NaN/Infinity 归 0、小数向零截断、越界 8 位环绕），
  * 视图（subarray）与宿主数组共享同一 ArrayBuffer，方法名与 JS 行为一一对应。
  * 回调接口提供 1/2/3 参数重载，由重载决议按 lambda 参数个数自动匹配。
  */
@@ -33,12 +33,33 @@ public class Int32Array implements IntArrayView {
     private final int byteOffset;
     private final int length;
 
+    /** 模拟设备端分配上限（超过即抛 OutOfMemoryError，避免 JVM 真实 OOM 崩溃）。 */
+    private static final int MAX_ARRAY_LENGTH = 0x3FFFFFFF;
+
     public Int32Array(int length) {
-        this(new ArrayBuffer(length * BYTES_PER_ELEMENT), 0, length);
+        this(length < 0 ? new ArrayBuffer(0) : allocBuffer(length), 0, length);
+    }
+
+    private static ArrayBuffer allocBuffer(int length) {
+        if (length > MAX_ARRAY_LENGTH) {
+            throw new OutOfMemoryError("Requested array size exceeds VM limit");
+        }
+        return new ArrayBuffer(length * BYTES_PER_ELEMENT);
     }
 
     public Int32Array(double length) {
-        this((int) length);
+        this(toLength(length));
+    }
+
+    /** ToLength 语义：NaN 归 0，负数/超 2^31 抛 RangeError，小数向零截断。 */
+    private static int toLength(double length) {
+        if (Double.isNaN(length)) {
+            return 0;
+        }
+        if (length < 0 || length >= 2147483648.0) {
+            throw new RangeError("Invalid array length");
+        }
+        return (int) length;
     }
 
     public Int32Array() {
@@ -74,11 +95,11 @@ public class Int32Array implements IntArrayView {
     }
 
     public Int32Array(ArrayBuffer buf) {
-        this(buf, 0, buf.byteLength() / BYTES_PER_ELEMENT);
+        this(buf, 0, checkedElements(buf));
     }
 
     public Int32Array(ArrayBuffer buf, int byteOffset) {
-        this(buf, byteOffset, (buf.byteLength() - byteOffset) / BYTES_PER_ELEMENT);
+        this(buf, byteOffset, (checkedElements(buf) * BYTES_PER_ELEMENT - byteOffset) / BYTES_PER_ELEMENT);
     }
 
     public Int32Array(ArrayBuffer buf, double byteOffset) {
@@ -90,9 +111,23 @@ public class Int32Array implements IntArrayView {
     }
 
     public Int32Array(ArrayBuffer buf, int byteOffset, int length) {
+        if (length < 0 || byteOffset < 0 || byteOffset % BYTES_PER_ELEMENT != 0) {
+            throw new RangeError("Invalid array length or offset");
+        }
+        if (byteOffset + length * BYTES_PER_ELEMENT > buf.byteLength()) {
+            throw new RangeError("Offset out of range");
+        }
         this.buffer = buf;
         this.byteOffset = byteOffset;
         this.length = length;
+    }
+
+    /** 底层缓冲字节数须为元素字节数的整数倍，否则抛 RangeError。 */
+    private static int checkedElements(ArrayBuffer buf) {
+        if (buf.byteLength() % BYTES_PER_ELEMENT != 0) {
+            throw new RangeError("Buffer byte length must be a multiple of " + BYTES_PER_ELEMENT);
+        }
+        return buf.byteLength() / BYTES_PER_ELEMENT;
     }
 
     /** 元素个数。 */
@@ -100,9 +135,9 @@ public class Int32Array implements IntArrayView {
         return length;
     }
 
-    /** 元素区间占用的字节数。 */
+    /** 元素区间占用的字节数（奇数底层缓冲时按 ArkTS 行为补 1 字节）。 */
     public int byteLength() {
-        return length * BYTES_PER_ELEMENT;
+        return length * BYTES_PER_ELEMENT + (buffer.byteLength() % BYTES_PER_ELEMENT);
     }
 
     /** 首元素相对底层 ArrayBuffer 的字节偏移。 */
@@ -123,7 +158,7 @@ public class Int32Array implements IntArrayView {
         if (index < 0 || index >= length) {
             throw new RangeError("Index out of range");
         }
-        return buffer.getInt32(byteOffset + index * BYTES_PER_ELEMENT) ;
+        return buffer.getInt8(byteOffset + index * BYTES_PER_ELEMENT) & 0xFF;
     }
 
     /** 相对索引读取（负数从末尾倒数；越界返回 null），对应 at 语义。 */
@@ -139,15 +174,23 @@ public class Int32Array implements IntArrayView {
     }
 
     /**
-     * 写入指定索引元素（ToInt16 转换；越界忽略）。
-     * 对应 $index 属性赋值语义。
+     * 写入指定索引元素（ToUint8 转换；越界抛 RangeError）。
+     * 对应 $index 属性赋值语义（ArkTS 越界赋值抛 RangeError）。
      */
     public Integer set(int index, double value) {
         if (index < 0 || index >= length) {
-            return null;
+            throw new RangeError("Index out of range");
         }
-        buffer.setInt32(byteOffset + index * BYTES_PER_ELEMENT, toInt32(value));
+        buffer.setInt8(byteOffset + index * BYTES_PER_ELEMENT, toInt32(value));
         return null;
+    }
+
+    /** 装箱 Double 写入（$_set 内部 API：null 类型断言失败抛 ClassCastError）。 */
+    public Integer set(int index, Double value) {
+        if (value == null) {
+            throw new ClassCastError();
+        }
+        return set(index, value.doubleValue());
     }
 
     /** 使用另一数组的元素填充本数组。 */
@@ -155,10 +198,26 @@ public class Int32Array implements IntArrayView {
         return set(src, 0);
     }
 
-    /** 使用另一数组的元素填充本数组（从 offset 起）。 */
+    /** 使用另一数组的元素填充本数组（从 offset 起，越界抛 RangeError）。 */
     public Integer set(Int32Array src, int offset) {
+        if (src == null) {
+            throw new NullPointerError();
+        }
+        if (offset < 0) {
+            throw new RangeError("Offset out of range");
+        }
+        if (offset > Integer.MAX_VALUE - src.length) {
+            throw new IndexOutOfBoundsError("Offset out of range");
+        }
+        if (offset + src.length > length) {
+            throw new RangeError("Offset out of range");
+        }
+        int[] tmp = new int[src.length];
         for (int i = 0; i < src.length; i++) {
-            set(offset + i, src.get(i));
+            tmp[i] = src.get(i);
+        }
+        for (int i = 0; i < tmp.length; i++) {
+            buffer.setInt8(byteOffset + (offset + i) * BYTES_PER_ELEMENT, tmp[i]);
         }
         return null;
     }
@@ -168,18 +227,42 @@ public class Int32Array implements IntArrayView {
         return set(src, 0);
     }
 
-    /** 使用整型数组的元素填充本数组。 */
+    /** 使用整型数组的元素填充本数组（从 offset 起，越界抛 RangeError）。 */
     public Integer set(int[] src, int offset) {
+        if (src == null) {
+            throw new NullPointerError();
+        }
+        if (offset < 0) {
+            throw new RangeError("Offset out of range");
+        }
+        if (offset > Integer.MAX_VALUE - src.length) {
+            throw new IndexOutOfBoundsError("Offset out of range");
+        }
+        if (offset + src.length > length) {
+            throw new RangeError("Offset out of range");
+        }
         for (int i = 0; i < src.length; i++) {
-            set(offset + i, src[i]);
+            buffer.setInt8(byteOffset + (offset + i) * BYTES_PER_ELEMENT, toInt32(src[i]));
         }
         return null;
     }
 
-    /** 使用浮点数组的元素填充本数组（ToInt16 转换）。 */
+    /** 使用浮点数组的元素填充本数组（ToUint8 转换）。 */
     public Integer set(double[] src, int offset) {
+        if (src == null) {
+            throw new NullPointerError();
+        }
+        if (offset < 0) {
+            throw new RangeError("Offset out of range");
+        }
+        if (offset > Integer.MAX_VALUE - src.length) {
+            throw new IndexOutOfBoundsError("Offset out of range");
+        }
+        if (offset + src.length > length) {
+            throw new RangeError("Offset out of range");
+        }
         for (int i = 0; i < src.length; i++) {
-            set(offset + i, src[i]);
+            buffer.setInt8(byteOffset + (offset + i) * BYTES_PER_ELEMENT, toInt32(src[i]));
         }
         return null;
     }
@@ -364,6 +447,9 @@ public class Int32Array implements IntArrayView {
     }
 
     public int reduce(Int32ArrayReducer cb) {
+        if (length == 0) {
+            throw new TypeError("Reduce of empty array with no initial value");
+        }
         int acc = get(0);
         for (int i = 1; i < length; i++) {
             acc = cb.apply(acc, get(i), i, this);
@@ -385,6 +471,9 @@ public class Int32Array implements IntArrayView {
     public int reduce(Int32ArrayReducer2 cb) {
         if (cb == null) {
             throw new NullPointerError();
+        }
+        if (length == 0) {
+            throw new TypeError("Reduce of empty array with no initial value");
         }
         int acc = get(0);
         for (int i = 1; i < length; i++) {
@@ -408,6 +497,9 @@ public class Int32Array implements IntArrayView {
         if (cb == null) {
             throw new NullPointerError();
         }
+        if (length == 0) {
+            throw new TypeError("Reduce of empty array with no initial value");
+        }
         int acc = get(0);
         for (int i = 1; i < length; i++) {
             acc = cb.apply(acc, get(i), i);
@@ -426,6 +518,9 @@ public class Int32Array implements IntArrayView {
     }
 
     public int reduceRight(Int32ArrayReducer cb) {
+        if (length == 0) {
+            throw new TypeError("Reduce of empty array with no initial value");
+        }
         int acc = get(length - 1);
         for (int i = length - 2; i >= 0; i--) {
             acc = cb.apply(acc, get(i), i, this);
@@ -447,6 +542,9 @@ public class Int32Array implements IntArrayView {
     public int reduceRight(Int32ArrayReducer2 cb) {
         if (cb == null) {
             throw new NullPointerError();
+        }
+        if (length == 0) {
+            throw new TypeError("Reduce of empty array with no initial value");
         }
         int acc = get(length - 1);
         for (int i = length - 2; i >= 0; i--) {
@@ -470,6 +568,9 @@ public class Int32Array implements IntArrayView {
         if (cb == null) {
             throw new NullPointerError();
         }
+        if (length == 0) {
+            throw new TypeError("Reduce of empty array with no initial value");
+        }
         int acc = get(length - 1);
         for (int i = length - 2; i >= 0; i--) {
             acc = cb.apply(acc, get(i), i);
@@ -489,14 +590,17 @@ public class Int32Array implements IntArrayView {
     }
 
     public boolean some(Int32ArrayFinder0 cb) {
+        if (cb == null) { throw new NullPointerError(); }
         return some((v, i, a) -> cb.test());
     }
 
     public boolean some(Int32ArrayFinder1 cb) {
+        if (cb == null) { throw new NullPointerError(); }
         return some((v, i, a) -> cb.test(v));
     }
 
     public boolean some(Int32ArrayFinder2 cb) {
+        if (cb == null) { throw new NullPointerError(); }
         return some((v, i, a) -> cb.test(v, i));
     }
 
@@ -588,64 +692,233 @@ public class Int32Array implements IntArrayView {
         return sb.toString();
     }
 
-    /** 按 locale 与选项格式化单个元素（千分位/补零/小数/百分比/货币）。 */
+    /** 按 locale 与选项格式化单个元素（分组/补零/小数/有效数字/科学计数/compact/百分比/货币）。 */
     private static String formatIntl(int value, String locales, IntlOptions opts) {
+        String lc = locales == null ? "en-US" : locales.trim().toLowerCase();
+        if (lc.isEmpty() || !isValidLocale(lc)) {
+            throw new RangeError("Invalid locale: " + locales);
+        }
+        String lang = lc.split("[-_]")[0];
         boolean grouped = opts == null || opts.useGrouping;
         boolean percent = opts != null && "percent".equals(opts.style);
         boolean currency = opts != null && "currency".equals(opts.style);
+        String notation = opts == null || opts.notation == null ? "" : opts.notation;
+        String compactDisplay = opts == null || opts.compactDisplay == null ? "short" : opts.compactDisplay;
+        String curDisplay = opts == null || opts.currencyDisplay == null ? "" : opts.currencyDisplay;
+        int minFrac = opts == null ? -1 : opts.minimumFractionDigits;
+        int maxFrac = opts == null ? -1 : opts.maximumFractionDigits;
+        int minSig = opts == null ? 0 : opts.minimumSignificantDigits;
+        int maxSig = opts == null ? 0 : opts.maximumSignificantDigits;
+        int minInt = opts == null ? 0 : opts.minimumIntegerDigits;
+        String groupSep = groupSeparator(lang);
+        String decSep = decimalSeparator(lang);
+
         long amount = value;
         if (percent) {
             amount = (long) value * 100;
         }
-        String intPart = Long.toString(Math.abs(amount));
-        int minInt = opts != null ? opts.minimumIntegerDigits : 0;
-        while (intPart.length() < minInt) {
-            intPart = "0" + intPart;
-        }
-        if (grouped) {
-            intPart = groupDigits(intPart, locales);
-        }
-        int minFrac = opts != null ? opts.minimumFractionDigits : (currency ? 2 : -1);
-        if (currency && minFrac < 0) {
-            minFrac = 2;
-        }
-        String fracPart = "";
-        if (minFrac > 0) {
-            fracPart = "." + "0".repeat(minFrac);
-        }
-        String sign = value < 0 ? "-" : "";
-        String body = sign + intPart + fracPart;
-        if (percent) {
-            body = body + "%";
-        }
-        if (currency) {
-            String cur = opts.currency;
-            if ("code".equals(opts.currencyDisplay)) {
-                body = cur + " " + body;
-            } else {
-                String symbol = "USD".equals(cur) ? "$" : "EUR".equals(cur) ? "\u20AC" : "GBP".equals(cur) ? "\u00A3" : cur;
-                body = symbol + body;
+        String body;
+        if ("scientific".equals(notation) || "engineering".equals(notation)) {
+            body = scientific(amount, "engineering".equals(notation));
+        } else if ("compact".equals(notation)) {
+            body = compact(amount, compactDisplay);
+        } else {
+            int fracDigits = 0;
+            if (minSig > 0) {
+                int digits = Long.toString(Math.abs(amount)).length();
+                if (digits < minSig) {
+                    fracDigits = minSig - digits;
+                }
+            }
+            if (maxSig > 0) {
+                int digits = Long.toString(Math.abs(amount)).length();
+                if (digits > maxSig) {
+                    long factor = pow10(digits - maxSig);
+                    amount = Math.round(amount / (double) factor) * factor;
+                }
+            }
+            if (currency) {
+                int curFrac = "JPY".equals(opts.currency) ? 0 : 2;
+                if (minFrac < 0) {
+                    minFrac = curFrac;
+                }
+                if (maxFrac < 0) {
+                    maxFrac = curFrac;
+                }
+            }
+            if (fracDigits == 0 && minFrac > 0) {
+                fracDigits = minFrac;
+            }
+            String intPart = Long.toString(Math.abs(amount));
+            while (intPart.length() < minInt) {
+                intPart = "0" + intPart;
+            }
+            if (grouped && groupSep != null) {
+                intPart = groupDigits(intPart, groupSep);
+            }
+            body = (amount < 0 ? "-" : "") + intPart;
+            if (fracDigits > 0) {
+                body = body + decSep + "0".repeat(fracDigits);
+            }
+            if (percent) {
+                body = body + "%";
+            }
+            if (currency) {
+                body = attachCurrency(body, opts.currency, curDisplay, lang);
             }
         }
-        if (locales != null && locales.toLowerCase().contains("ar")) {
+        if (lang.startsWith("ar")) {
             body = toArabicDigits(body);
         }
         return body;
     }
 
-    /** 千分位分组（按 locale 选择分隔符）。 */
-    private static String groupDigits(String digits, String locales) {
-        String sep = ",";
-        if (locales != null) {
-            String lc = locales.toLowerCase();
-            if (lc.contains("de")) {
-                sep = ".";
-            } else if (lc.contains("fr") || lc.contains("ru")) {
-                sep = "\u00A0";
-            } else if (lc.contains("ar")) {
-                sep = "\u066C";
+    /** 科学计数法（engineering 时指数取 3 的倍数）。 */
+    private static String scientific(long v, boolean engineering) {
+        if (v == 0) {
+            return "0E0";
+        }
+        long abs = Math.abs(v);
+        int exp = Long.toString(abs).length() - 1;
+        if (engineering) {
+            exp = exp - ((exp % 3) + 3) % 3;
+        }
+        long mantissa = abs / pow10(exp);
+        return (v < 0 ? "-" : "") + mantissa + "E" + exp;
+    }
+
+    /** compact 短/长格式（K/M/B/T、thousand/million/billion/trillion）。 */
+    private static String compact(long v, String display) {
+        if (v == 0) {
+            return "0";
+        }
+        long[] bounds = {1000L, 1000000L, 1000000000L, 1000000000000L};
+        String[] unitsShort = {"K", "M", "B", "T"};
+        String[] unitsLong = {" thousand", " million", " billion", " trillion"};
+        long abs = Math.abs(v);
+        for (int i = bounds.length - 1; i >= 0; i--) {
+            if (abs >= bounds[i]) {
+                long q = v / bounds[i];
+                return "long".equals(display) ? q + unitsLong[i] : q + unitsShort[i];
             }
         }
+        return Long.toString(v);
+    }
+
+    /** 10 的 n 次幂。 */
+    private static long pow10(int n) {
+        long r = 1;
+        for (int i = 0; i < n; i++) {
+            r *= 10;
+        }
+        return r;
+    }
+
+    /** 货币前后缀/展示方式（symbol 前置或 de 后缀、code 与数字间 NBSP、name 后缀）。 */
+    private static String attachCurrency(String body, String cur, String display, String lang) {
+        if ("code".equals(display)) {
+            return cur + "\u00A0" + body;
+        }
+        if ("name".equals(display)) {
+            String name;
+            if ("USD".equals(cur)) {
+                name = "US dollars";
+            } else if ("GBP".equals(cur)) {
+                name = "British pounds";
+            } else if ("EUR".equals(cur)) {
+                name = "euros";
+            } else if ("JPY".equals(cur)) {
+                name = "Japanese yen";
+            } else {
+                name = cur;
+            }
+            return body + " " + name;
+        }
+        String symbol;
+        if ("USD".equals(cur)) {
+            symbol = "$";
+        } else if ("EUR".equals(cur)) {
+            symbol = "\u20AC";
+        } else if ("GBP".equals(cur)) {
+            symbol = "\u00A3";
+        } else if ("JPY".equals(cur)) {
+            symbol = lang.startsWith("ja") || lang.startsWith("zh") ? "\uFFE5" : "\u00A5";
+        } else {
+            symbol = cur;
+        }
+        if (lang.startsWith("de")) {
+            return body + "\u00A0" + symbol;
+        }
+        return symbol + body;
+    }
+
+    /** BCP47 简式校验（语言 2-3 字母 + 可选 2-8 位子标记）。 */
+    private static boolean isValidLocale(String lc) {
+        lc = lc.toLowerCase();
+        if (lc.length() < 2) {
+            return false;
+        }
+        String[] parts = lc.split("-");
+        String lang = parts[0];
+        if (lang.length() < 2 || lang.length() > 3) {
+            return false;
+        }
+        for (int i = 0; i < lang.length(); i++) {
+            char c = lang.charAt(i);
+            if (c < 'a' || c > 'z') {
+                return false;
+            }
+        }
+        for (int i = 1; i < parts.length; i++) {
+            String p = parts[i];
+            if (p.length() == 1 && !"u".equals(p) && !"x".equals(p)) {
+                return false;
+            }
+            if (p.length() > 8) {
+                return false;
+            }
+            for (int j = 0; j < p.length(); j++) {
+                char c = p.charAt(j);
+                if (!((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /** 按语言选千分位分隔符（es/pl 不使用分组）。 */
+    private static String groupSeparator(String lang) {
+        if ("de".equals(lang) || "it".equals(lang) || "pt".equals(lang) || "da".equals(lang)) {
+            return ".";
+        }
+        if ("fr".equals(lang)) {
+            return "\u202F";
+        }
+        if ("ru".equals(lang) || "sv".equals(lang) || "nb".equals(lang) || "fi".equals(lang)) {
+            return "\u00A0";
+        }
+        if ("es".equals(lang) || "pl".equals(lang)) {
+            return null;
+        }
+        if ("ar".equals(lang)) {
+            return "\u066C";
+        }
+        return ",";
+    }
+
+    /** 按语言选小数点分隔符。 */
+    private static String decimalSeparator(String lang) {
+        if ("de".equals(lang) || "it".equals(lang) || "pt".equals(lang) || "fr".equals(lang)
+                || "ru".equals(lang) || "sv".equals(lang) || "es".equals(lang) || "pl".equals(lang)
+                || "ar".equals(lang) || "da".equals(lang) || "nb".equals(lang) || "fi".equals(lang)) {
+            return ",";
+        }
+        return ".";
+    }
+
+    /** 千分位分组（每 3 位插入指定分隔符）。 */
+    private static String groupDigits(String digits, String sep) {
         StringBuilder sb = new StringBuilder();
         int first = digits.length() % 3;
         if (first == 0 && digits.length() > 0) {
@@ -718,7 +991,7 @@ public class Int32Array implements IntArrayView {
         return lastIndexOf(value, length - 1);
     }
 
-    /** 从后向前查找（double 值：NaN 永不匹配，其余 ToInt16 后比较）。 */
+    /** 从后向前查找（double 值：NaN 永不匹配，其余 ToUint8 后比较）。 */
     public int lastIndexOf(double value) {
         return lastIndexOf(value, length - 1);
     }
@@ -810,10 +1083,11 @@ public class Int32Array implements IntArrayView {
         int len = length;
         int from = toIndex(begin, len);
         int to = toIndex(end, len);
-        if (from > to) {
-            from = to;
+        int subLen = to - from;
+        if (subLen < 0) {
+            subLen = 0;
         }
-        return new Int32Array(buffer, byteOffset + from * BYTES_PER_ELEMENT, to - from);
+        return new Int32Array(buffer, byteOffset + from * BYTES_PER_ELEMENT, subLen);
     }
 
     public Int32Array subarray(int begin) {
@@ -939,7 +1213,7 @@ public class Int32Array implements IntArrayView {
         return new Int32Array(copy);
     }
 
-    /** 构造 Int32Array（元素逐一 ToInt16 转换），对应 of 语义。 */
+    /** 构造 Int32Array（元素逐一 ToUint8 转换），对应 of 语义。 */
     public static Int32Array of(int... values) {
         return new Int32Array(values);
     }
@@ -968,9 +1242,22 @@ public class Int32Array implements IntArrayView {
     }
 
     /** 使用整型列表的元素填充本数组。 */
+    /** 使用整型列表的元素填充本数组（从 offset 起，越界抛 RangeError）。 */
     public Integer set(java.util.List<Integer> src, int offset) {
+        if (src == null) {
+            throw new NullPointerError();
+        }
+        if (offset < 0) {
+            throw new RangeError("Offset out of range");
+        }
+        if (offset > Integer.MAX_VALUE - src.size()) {
+            throw new IndexOutOfBoundsError("Offset out of range");
+        }
+        if (offset + src.size() > length) {
+            throw new RangeError("Offset out of range");
+        }
         for (int i = 0; i < src.size(); i++) {
-            set(offset + i, src.get(i));
+            buffer.setInt8(byteOffset + (offset + i) * BYTES_PER_ELEMENT, toInt32(src.get(i)));
         }
         return null;
     }
@@ -998,7 +1285,7 @@ public class Int32Array implements IntArrayView {
         return new Int32Array(copy);
     }
 
-    /** 从浮点数组构造（ToInt16 转换），对应 from(arrayLike) 语义。 */
+    /** 从浮点数组构造（ToUint8 转换），对应 from(arrayLike) 语义。 */
     public static Int32Array from(double[] values) {
         int[] copy = new int[values.length];
         for (int i = 0; i < values.length; i++) {
@@ -1007,7 +1294,7 @@ public class Int32Array implements IntArrayView {
         return new Int32Array(copy);
     }
 
-    /** 从浮点元素序列构造（ToInt16 转换），对应 of 语义的 NaN/Infinity 场景。 */
+    /** 从浮点元素序列构造（ToUint8 转换），对应 of 语义的 NaN/Infinity 场景。 */
     public static Int32Array of(double... values) {
         int[] copy = new int[values.length];
         for (int i = 0; i < values.length; i++) {
@@ -1032,7 +1319,7 @@ public class Int32Array implements IntArrayView {
         /** 返回迭代结果（value + done），对应迭代器 next() 语义。 */
         public IteratorResult next() {
             if (cursor >= length) {
-                return new IteratorResult(0, true);
+                return new IteratorResult(null, true);
             }
             int i = cursor++;
             return new IteratorResult(keys ? i : get(i), false);
@@ -1177,6 +1464,18 @@ public class Int32Array implements IntArrayView {
         boolean apply(boolean acc, int value, int index, Int32Array array);
     }
 
+    /** 布尔累计的 reduceRight（从右向左；如 prev || curr > 0）。 */
+    public boolean reduceRight(Int16BooleanReducer cb, boolean initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        boolean acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
     /** 布尔累计的 reduce（如 prev && curr > 0）。 */
     public boolean reduce(Int16BooleanReducer cb, boolean initial) {
         if (cb == null) {
@@ -1214,6 +1513,9 @@ public class Int32Array implements IntArrayView {
     }
 
     public long reduceLong(Int16LongReducer cb) {
+        if (length == 0) {
+            throw new TypeError("Reduce of empty array with no initial value");
+        }
         long acc = get(0);
         for (int i = 1; i < length; i++) {
             acc = cb.apply(acc, get(i), i, this);
@@ -1227,6 +1529,87 @@ public class Int32Array implements IntArrayView {
         }
         long acc = initial;
         for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    /** List 累计的归约回调（数组归约场景，如 reduceRight<number[]>）。 */
+    @FunctionalInterface
+    public interface Int16ListReducer {
+        java.util.List<Integer> apply(java.util.List<Integer> acc, int value, int index, Int32Array array);
+    }
+
+    /** List 累计的 reduceRight（从右向左收集元素；独立方法名避免重载歧义）。 */
+    public java.util.List<Integer> reduceRightList(Int16ListReducer cb, java.util.List<Integer> initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        java.util.List<Integer> acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    /** List 累计的 reduce（从左向右收集元素）。 */
+    public java.util.List<Integer> reduceList(Int16ListReducer cb, java.util.List<Integer> initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        java.util.List<Integer> acc = initial;
+        for (int i = 0; i < length; i++) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    /** 双精度累计的归约回调（prev 可含小数/Infinity/NaN）。 */
+    @FunctionalInterface
+    public interface Int16DoubleReducer {
+        double apply(double prev, double curr, int index, Int32Array array);
+    }
+
+    /** double 累计的 reduce（小数/Infinity/NaN seed 不截断；独立方法名避免重载歧义）。 */
+    public double reduceDouble(Int16DoubleReducer cb, double initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        double acc = initial;
+        for (int i = 0; i < length; i++) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    public double reduceDouble(Int16DoubleReducer cb) {
+        if (length == 0) {
+            throw new TypeError("Reduce of empty array with no initial value");
+        }
+        double acc = get(0);
+        for (int i = 1; i < length; i++) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    public double reduceRightDouble(Int16DoubleReducer cb, double initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        double acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    public double reduceRightDouble(Int16DoubleReducer cb) {
+        if (length == 0) {
+            throw new TypeError("Reduce of empty array with no initial value");
+        }
+        double acc = get(length - 1);
+        for (int i = length - 2; i >= 0; i--) {
             acc = cb.apply(acc, get(i), i, this);
         }
         return acc;
@@ -1303,10 +1686,17 @@ public class Int32Array implements IntArrayView {
         return i;
     }
 
-    /** ToInt16：NaN/Infinity 归 0，小数向零截断，越界 16 位环绕。 */
+    /** ToUint8：NaN/Infinity 归 0，小数向零截断，越界 8 位环绕。 */
     static int toInt32(double value) {
-
-                return (int) (long) value;
-
+        if (Double.isNaN(value)) {
+            return 0;
+        }
+        if (value == Double.POSITIVE_INFINITY || value == Double.NEGATIVE_INFINITY) {
+            return 0;
+        }
+        if (value == 0.0) {
+            return 0;
+        }
+        return (int) (long) value;
     }
 }
