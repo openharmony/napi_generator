@@ -203,7 +203,13 @@ public class Uint8Array implements IntArrayView {
         if (src == null) {
             throw new NullPointerError();
         }
-        if (offset < 0 || offset + src.length > length) {
+        if (offset < 0) {
+            throw new RangeError("Offset out of range");
+        }
+        if (offset > Integer.MAX_VALUE - src.length) {
+            throw new IndexOutOfBoundsError("Offset out of range");
+        }
+        if (offset + src.length > length) {
             throw new RangeError("Offset out of range");
         }
         int[] tmp = new int[src.length];
@@ -226,7 +232,13 @@ public class Uint8Array implements IntArrayView {
         if (src == null) {
             throw new NullPointerError();
         }
-        if (offset < 0 || offset + src.length > length) {
+        if (offset < 0) {
+            throw new RangeError("Offset out of range");
+        }
+        if (offset > Integer.MAX_VALUE - src.length) {
+            throw new IndexOutOfBoundsError("Offset out of range");
+        }
+        if (offset + src.length > length) {
             throw new RangeError("Offset out of range");
         }
         for (int i = 0; i < src.length; i++) {
@@ -240,7 +252,13 @@ public class Uint8Array implements IntArrayView {
         if (src == null) {
             throw new NullPointerError();
         }
-        if (offset < 0 || offset + src.length > length) {
+        if (offset < 0) {
+            throw new RangeError("Offset out of range");
+        }
+        if (offset > Integer.MAX_VALUE - src.length) {
+            throw new IndexOutOfBoundsError("Offset out of range");
+        }
+        if (offset + src.length > length) {
             throw new RangeError("Offset out of range");
         }
         for (int i = 0; i < src.length; i++) {
@@ -836,23 +854,32 @@ public class Uint8Array implements IntArrayView {
 
     /** BCP47 简式校验（语言 2-3 字母 + 可选 2-8 位子标记）。 */
     private static boolean isValidLocale(String lc) {
-        String[] parts = lc.split("[-_]");
+        lc = lc.toLowerCase();
+        if (lc.length() < 2) {
+            return false;
+        }
+        String[] parts = lc.split("-");
         String lang = parts[0];
         if (lang.length() < 2 || lang.length() > 3) {
             return false;
         }
         for (int i = 0; i < lang.length(); i++) {
-            if (!Character.isLetter(lang.charAt(i))) {
+            char c = lang.charAt(i);
+            if (c < 'a' || c > 'z') {
                 return false;
             }
         }
         for (int i = 1; i < parts.length; i++) {
             String p = parts[i];
-            if (p.length() < 2 || p.length() > 8) {
+            if (p.length() == 1 && !"u".equals(p) && !"x".equals(p)) {
+                return false;
+            }
+            if (p.length() > 8) {
                 return false;
             }
             for (int j = 0; j < p.length(); j++) {
-                if (!Character.isLetterOrDigit(p.charAt(j))) {
+                char c = p.charAt(j);
+                if (!((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'))) {
                     return false;
                 }
             }
@@ -1220,7 +1247,13 @@ public class Uint8Array implements IntArrayView {
         if (src == null) {
             throw new NullPointerError();
         }
-        if (offset < 0 || offset + src.size() > length) {
+        if (offset < 0) {
+            throw new RangeError("Offset out of range");
+        }
+        if (offset > Integer.MAX_VALUE - src.size()) {
+            throw new IndexOutOfBoundsError("Offset out of range");
+        }
+        if (offset + src.size() > length) {
             throw new RangeError("Offset out of range");
         }
         for (int i = 0; i < src.size(); i++) {
@@ -1431,6 +1464,18 @@ public class Uint8Array implements IntArrayView {
         boolean apply(boolean acc, int value, int index, Uint8Array array);
     }
 
+    /** 布尔累计的 reduceRight（从右向左；如 prev || curr > 0）。 */
+    public boolean reduceRight(Int16BooleanReducer cb, boolean initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        boolean acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
     /** 布尔累计的 reduce（如 prev && curr > 0）。 */
     public boolean reduce(Int16BooleanReducer cb, boolean initial) {
         if (cb == null) {
@@ -1484,6 +1529,36 @@ public class Uint8Array implements IntArrayView {
         }
         long acc = initial;
         for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    /** List 累计的归约回调（数组归约场景，如 reduceRight<number[]>）。 */
+    @FunctionalInterface
+    public interface Int16ListReducer {
+        java.util.List<Integer> apply(java.util.List<Integer> acc, int value, int index, Uint8Array array);
+    }
+
+    /** List 累计的 reduceRight（从右向左收集元素；独立方法名避免重载歧义）。 */
+    public java.util.List<Integer> reduceRightList(Int16ListReducer cb, java.util.List<Integer> initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        java.util.List<Integer> acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
+    }
+
+    /** List 累计的 reduce（从左向右收集元素）。 */
+    public java.util.List<Integer> reduceList(Int16ListReducer cb, java.util.List<Integer> initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        java.util.List<Integer> acc = initial;
+        for (int i = 0; i < length; i++) {
             acc = cb.apply(acc, get(i), i, this);
         }
         return acc;
