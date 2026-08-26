@@ -1016,3 +1016,1020 @@ public class Uint8ArrayTotal04Test extends BasTest {
     arr.set(new Uint8Array(new int[] {5, 10}), 0);
     assertTrue(arr.includes(10));
     }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0600
+     * @tc.name testUint8ArrayTotal04_060
+     * @tc.desc Verify $_set then $_get value verification
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_060() {
+    Uint8Array arr = Uint8Array.of(1, 2, 3);
+    arr.set(0, 255);
+    assertEqual(255, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0610
+     * @tc.name testUint8ArrayTotal04_061
+     * @tc.desc Verify multiple $_set then at reads middle position
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_061() {
+    Uint8Array arr = new Uint8Array(3);
+    arr.set(0, 10);
+    arr.set(1, 20);
+    arr.set(2, 30);
+    assertEqual(20, arr.at(1));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0620
+     * @tc.name testUint8ArrayTotal04_062
+     * @tc.desc Verify copyWithin then $_get verifies copy result
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_062() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
+    arr.copyWithin(0, 2);
+    assertEqual(30, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0630
+     * @tc.name testUint8ArrayTotal04_063
+     * @tc.desc Verify set with Uint8Array source then $_get verification
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_063() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    Uint8Array src = Uint8Array.of(99, 88);
+    arr.set(src, 0);
+    assertEqual(99, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0640
+     * @tc.name testUint8ArrayTotal04_064
+     * @tc.desc Verify sort then includes checks sorted array contains max value
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_064() {
+    Uint8Array arr = Uint8Array.of(30, 10, 20);
+    arr.sort();
+    assertTrue(arr.includes(30));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0650
+     * @tc.name testUint8ArrayTotal04_065
+     * @tc.desc Verify fill 77 then findLast verifies fill value
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_065() {
+    Uint8Array arr = new Uint8Array(3);
+    arr.fill(77);
+    Integer result = arr.findLast((v) -> v == 77);
+    assertEqual(77, result);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0660
+     * @tc.name testUint8ArrayTotal04_066
+     * @tc.desc Verify reverse then some checks original first element exists
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_066() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.reverse();
+    boolean[] found = {arr.some((v) -> v == 10)};
+    assertTrue(found[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0670
+     * @tc.name testUint8ArrayTotal04_067
+     * @tc.desc Verify sort then every checks ascending order
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_067() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.sort();
+    boolean allAsc = arr.every((v, i, a) -> { return i == 0 || v >= (a.get(i - 1)); });
+    assertTrue(allAsc);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0680
+     * @tc.name testUint8ArrayTotal04_068
+     * @tc.desc Verify forEach callback writing to next index element modifies array correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_068() {
+    Uint8Array arr = Uint8Array.of(1, 2, 3);
+    arr.forEach((v, i) -> {
+    if (i == 0) {
+    arr.set(1, 99);
+    };
+    });
+    assertEqual(99, arr.get(1));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0690
+     * @tc.name testUint8ArrayTotal04_069
+     * @tc.desc Verify map callback modifying other array position works correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_069() {
+    Uint8Array arr = Uint8Array.of(1, 2, 3);
+    arr.map((v, i) -> {
+    if (i == 0) {
+    arr.set(2, 99);
+    };
+    return v;
+    });
+    assertEqual(99, arr.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0700
+     * @tc.name testUint8ArrayTotal04_070
+     * @tc.desc Verify reduce callback modifying array element works correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_070() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.reduce((acc, v, i, $x1)-> {
+    if (i == 1) {
+    arr.set(1, 99);
+    };
+    return acc + v;
+    }, 0);
+    assertEqual(99, arr.get(1));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0710
+     * @tc.name testUint8ArrayTotal04_071
+     * @tc.desc Verify some callback modifying array element works correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_071() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.some((v, i) -> {
+    if (i == 0) {
+    arr.set(1, 99);
+    };
+    return false;
+    });
+    assertEqual(99, arr.get(1));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0720
+     * @tc.name testUint8ArrayTotal04_072
+     * @tc.desc Verify every callback modifying array element works correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_072() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.every((v, i) -> {
+    if (i == 0) {
+    arr.set(2, 99);
+    };
+    return true;
+    });
+    assertEqual(99, arr.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0730
+     * @tc.name testUint8ArrayTotal04_073
+     * @tc.desc Verify find callback modifying unvisited element works correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_073() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.find((v, i) -> {
+    if (i == 0) {
+    arr.set(2, 99);
+    };
+    return false;
+    });
+    assertEqual(99, arr.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0740
+     * @tc.name testUint8ArrayTotal04_074
+     * @tc.desc Verify forEach modification then re-traverse sum calculation
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_074() {
+    Uint8Array arr = Uint8Array.of(1, 2, 3);
+    arr.forEach((v, i) -> {
+    arr.set(i, v * 2);
+    });
+    int[] sum = {0};
+    arr.forEach((v) -> {
+    sum[0] += v;
+    });
+    assertEqual(12, sum[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0750
+     * @tc.name testUint8ArrayTotal04_075
+     * @tc.desc Verify forEach callback with fill all elements works correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_075() {
+    Uint8Array arr = Uint8Array.of(1, 2, 3);
+    arr.forEach((v, i) -> {
+    if (i == 0) {
+    arr.fill(5);
+    };
+    });
+    assertEqual(5, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0760
+     * @tc.name testUint8ArrayTotal04_076
+     * @tc.desc Verify some callback modification then at verification
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_076() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.some((v, i) -> {
+    if (i == 1) {
+    arr.set(0, 99);
+    return true;
+    };
+    return false;
+    });
+    assertEqual(99, arr.at(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0770
+     * @tc.name testUint8ArrayTotal04_077
+     * @tc.desc Verify findIndex callback setting other position works correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_077() {
+    Uint8Array arr = Uint8Array.of(1, 2, 3);
+    arr.findIndex((v, i) -> {
+    if (i == 0) {
+    arr.set(1, 99);
+    };
+    return false;
+    });
+    assertEqual(99, arr.get(1));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0780
+     * @tc.name testUint8ArrayTotal04_078
+     * @tc.desc Verify findLast callback setting other position works correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_078() {
+    Uint8Array arr = Uint8Array.of(1, 2, 3);
+    arr.findLast((v, i) -> {
+    if (i == 2) {
+    arr.set(0, 99);
+    return true;
+    };
+    return false;
+    });
+    assertEqual(99, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0790
+     * @tc.name testUint8ArrayTotal04_079
+     * @tc.desc Verify forEach callback modifying previous element works correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_079() {
+    Uint8Array arr = Uint8Array.of(1, 2, 3);
+    arr.forEach((v, i) -> {
+    if (i > 0) {
+    arr.set(i - 1, v);
+    };
+    });
+    assertEqual(2, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0800
+     * @tc.name testUint8ArrayTotal04_080
+     * @tc.desc Verify forEach set all to zero then reduce sum equals zero
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_080() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.forEach((v, i) -> {
+    arr.set(i, 0);
+    });
+    int[] sum = {arr.reduce((a, b, $x1, $x2)-> a + b, 0)};
+    assertEqual(0, sum[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0810
+     * @tc.name testUint8ArrayTotal04_081
+     * @tc.desc Verify every callback modifying read element value works correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_081() {
+    Uint8Array arr = Uint8Array.of(3, 2, 1);
+    boolean[] hitFirst = {false};
+    arr.every((v, i) -> {
+    if ((!hitFirst[0]) && i == 0) {
+    hitFirst[0] = true;
+    arr.set(1, 99);
+    };
+    return true;
+    });
+    assertEqual(99, arr.get(1));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0820
+     * @tc.name testUint8ArrayTotal04_082
+     * @tc.desc Verify some early termination and traversal count
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_082() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    int[] visited = {0};
+    arr.some((v) -> {
+    visited[0]++;
+    return true;
+    });
+    assertEqual(1, visited[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0830
+     * @tc.name testUint8ArrayTotal04_083
+     * @tc.desc Verify fill(256) truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_083() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(256);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0840
+     * @tc.name testUint8ArrayTotal04_084
+     * @tc.desc Verify fill(-1) wraps to 255 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_084() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(-1);
+    assertEqual(255, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0850
+     * @tc.name testUint8ArrayTotal04_085
+     * @tc.desc Verify fill(3.14) truncates to 3 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_085() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(3.14);
+    assertEqual(3, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0860
+     * @tc.name testUint8ArrayTotal04_086
+     * @tc.desc Verify fill(255.9) truncates to 255 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_086() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(255.9);
+    assertEqual(255, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0870
+     * @tc.name testUint8ArrayTotal04_087
+     * @tc.desc Verify fill(Infinity) truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_087() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(Double.POSITIVE_INFINITY);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0880
+     * @tc.name testUint8ArrayTotal04_088
+     * @tc.desc Verify fill(NaN) truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_088() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(Double.NaN);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0890
+     * @tc.name testUint8ArrayTotal04_089
+     * @tc.desc Verify fill(-0) retains as 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_089() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(-0);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0900
+     * @tc.name testUint8ArrayTotal04_090
+     * @tc.desc Verify fill(257) truncates to 1 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_090() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(257);
+    assertEqual(1, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0910
+     * @tc.name testUint8ArrayTotal04_091
+     * @tc.desc Verify fill(0x100) hex overflow truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_091() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(0x100);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0920
+     * @tc.name testUint8ArrayTotal04_092
+     * @tc.desc Verify fill(0xFF) hex max retains 255 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_092() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(0xFF);
+    assertEqual(255, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0930
+     * @tc.name testUint8ArrayTotal04_093
+     * @tc.desc Verify fill(-0.5) negative float truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_093() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(-0.5);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0940
+     * @tc.name testUint8ArrayTotal04_094
+     * @tc.desc Verify fill(0o200) octal 128 retains for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_094() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(0200);
+    assertEqual(128, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0950
+     * @tc.name testUint8ArrayTotal04_095
+     * @tc.desc Verify fill(0b11111111) binary 255 retains for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_095() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(0b11111111);
+    assertEqual(255, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0960
+     * @tc.name testUint8ArrayTotal04_096
+     * @tc.desc Verify fill(1e10) scientific notation large value truncates to 0
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_096() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(1e10);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0970
+     * @tc.name testUint8ArrayTotal04_097
+     * @tc.desc Verify fill(512) larger overflow truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_097() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.fill(512);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0980
+     * @tc.name testUint8ArrayTotal04_098
+     * @tc.desc Verify set([256],0) truncates source value to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_098() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.set(new Uint8Array(new int[] {256}), 0);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0990
+     * @tc.name testUint8ArrayTotal04_099
+     * @tc.desc Verify set(Uint8Array.of(257),0) truncates source to 1 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_099() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.set(Uint8Array.of(257), 0);
+    assertEqual(1, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1000
+     * @tc.name testUint8ArrayTotal04_100
+     * @tc.desc Verify set([-1],0) negative source wraps to 255 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_100() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.set(new Uint8Array(new int[] {-1}), 0);
+    assertEqual(255, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1010
+     * @tc.name testUint8ArrayTotal04_101
+     * @tc.desc Verify set([3.9],0) float source truncates to 3 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_101() {
+    Uint8Array arr = Uint8Array.of(10, 20, 30);
+    arr.set(new Uint8Array(new double[] {3.9}), 0);
+    assertEqual(3, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1020
+     * @tc.name testUint8ArrayTotal04_102
+     * @tc.desc Verify from([256]) truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_102() {
+    Uint8Array arr = Uint8Array.from(new int[] {256});
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1030
+     * @tc.name testUint8ArrayTotal04_103
+     * @tc.desc Verify from([-1]) negative wraps to 255 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_103() {
+    Uint8Array arr = Uint8Array.from(new int[] {-1});
+    assertEqual(255, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1040
+     * @tc.name testUint8ArrayTotal04_104
+     * @tc.desc Verify from([3.9]) float truncates to 3 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_104() {
+    Uint8Array arr = Uint8Array.from(new double[] {3.9});
+    assertEqual(3, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1050
+     * @tc.name testUint8ArrayTotal04_105
+     * @tc.desc Verify from([Infinity]) truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_105() {
+    Uint8Array arr = Uint8Array.from(new double[] {Double.POSITIVE_INFINITY});
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1060
+     * @tc.name testUint8ArrayTotal04_106
+     * @tc.desc Verify from([NaN]) truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_106() {
+    Uint8Array arr = Uint8Array.from(new double[] {Double.NaN});
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1070
+     * @tc.name testUint8ArrayTotal04_107
+     * @tc.desc Verify map callback returning 256 truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_107() {
+    Uint8Array arr = Uint8Array.of(1);
+    Uint8Array result = arr.map((v) -> 256);
+    assertEqual(0, result.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1080
+     * @tc.name testUint8ArrayTotal04_108
+     * @tc.desc Verify map callback returning -1 wraps to 255 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_108() {
+    Uint8Array arr = Uint8Array.of(1);
+    Uint8Array result = arr.map((v) -> -1);
+    assertEqual(255, result.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1090
+     * @tc.name testUint8ArrayTotal04_109
+     * @tc.desc Verify map callback returning 3.9 truncates to 3 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_109() {
+    Uint8Array arr = Uint8Array.of(1);
+    Uint8Array result = arr.map((v) -> (int) (3.9));
+    assertEqual(3, result.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1100
+     * @tc.name testUint8ArrayTotal04_110
+     * @tc.desc Verify map callback returning Infinity truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_110() {
+    Uint8Array arr = Uint8Array.of(1);
+    Uint8Array result = arr.map((v) -> 0);
+    assertEqual(0, result.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1110
+     * @tc.name testUint8ArrayTotal04_111
+     * @tc.desc Verify map callback returning NaN truncates to 0 for Uint8Array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_111() {
+    Uint8Array arr = Uint8Array.of(1);
+    Uint8Array result = arr.map((v) -> (int) (Double.NaN));
+    assertEqual(0, result.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1120
+     * @tc.name testUint8ArrayTotal04_112
+     * @tc.desc Verify subarray view reflects parent set modification
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_112() {
+    Uint8Array parent = Uint8Array.of(10, 20, 30, 40);
+    Uint8Array child = parent.subarray(0, 2);
+    parent.set(0, 99);
+    assertEqual(99, child.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1130
+     * @tc.name testUint8ArrayTotal04_113
+     * @tc.desc Verify parent copyWithin affects child subarray view
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_113() {
+    Uint8Array parent = Uint8Array.of(10, 20, 30, 40);
+    Uint8Array child = parent.subarray(0, 2);
+    parent.copyWithin(0, 2);
+    assertEqual(30, child.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1140
+     * @tc.name testUint8ArrayTotal04_114
+     * @tc.desc Verify child set modifies parent view accordingly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_114() {
+    Uint8Array parent = Uint8Array.of(10, 20, 30, 40);
+    Uint8Array child = parent.subarray(1, 3);
+    child.set(new Uint8Array(new int[] {99, 100}), 0);
+    assertEqual(100, parent.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1150
+     * @tc.name testUint8ArrayTotal04_115
+     * @tc.desc Verify multi-level subarray of subarray shares same buffer
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_115() {
+    Uint8Array parent = Uint8Array.of(10, 20, 30, 40);
+    Uint8Array child = parent.subarray(1);
+    Uint8Array grandchild = child.subarray(0, 2);
+    grandchild.set(0, 99);
+    assertEqual(99, parent.get(1));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1160
+     * @tc.name testUint8ArrayTotal04_116
+     * @tc.desc Verify parent fill(0) clears all child view elements
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_116() {
+    Uint8Array parent = new Uint8Array(new int[] {1, 2, 3, 4});
+    Uint8Array child = parent.subarray(0, 2);
+    parent.fill(0);
+    assertEqual(0, child.get(1));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1170
+     * @tc.name testUint8ArrayTotal04_117
+     * @tc.desc Verify parent modification does not change child length
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_117() {
+    Uint8Array parent = Uint8Array.of(10, 20, 30, 40);
+    Uint8Array child = parent.subarray(1, 3);
+    parent.set(2, 99);
+    assertEqual(2, child.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1180
+     * @tc.name testUint8ArrayTotal04_118
+     * @tc.desc Verify sub-subarray of child still shares buffer with parent
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_118() {
+    Uint8Array parent = Uint8Array.of(10, 20, 30, 40);
+    Uint8Array child = parent.subarray(1, 4);
+    Uint8Array sub2 = child.subarray(0, 2);
+    sub2.set(1, 88);
+    assertEqual(88, parent.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1190
+     * @tc.name testUint8ArrayTotal04_119
+     * @tc.desc Verify offset view child byteOffset reflects relative to original ArrayBuffer
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_119() {
+    Uint8Array parent = new Uint8Array(new ArrayBuffer(8), (int) 2);
+    Uint8Array child = parent.subarray(1, 3);
+    assertEqual(3, child.byteOffset());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1200
+     * @tc.name testUint8ArrayTotal04_120
+     * @tc.desc Verify two independent Uint8Array different buffer writes do not affect each other
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_120() {
+    Uint8Array a = Uint8Array.of(1, 2, 3);
+    Uint8Array b = Uint8Array.of(4, 5, 6);
+    a.set(0, 99);
+    assertEqual(4, b.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1210
+     * @tc.name testUint8ArrayTotal04_121
+     * @tc.desc Verify child set(FixedArray) propagates to parent view
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal04_121() {
+    Uint8Array parent = Uint8Array.of(1, 2, 3, 4);
+    Uint8Array child = parent.subarray(0, 2);
+    child.set(new Uint8Array(new int[] {55, 66}), 0);
+    assertEqual(66, parent.get(1));
+    }
+}
