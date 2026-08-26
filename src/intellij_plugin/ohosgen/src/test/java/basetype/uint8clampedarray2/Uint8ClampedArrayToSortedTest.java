@@ -17,35 +17,14 @@ package basetype.uint8clampedarray2;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8ClampedArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ClampedArrayToSortedTest —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ClampedArrayToSortedTest extends BasTest {
 
@@ -56,8 +35,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted002() {
@@ -66,23 +44,20 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted003() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42});
     Uint8ClampedArray sorted = arr.toSorted();
     assertEqual(1, sorted.length());
-    assertEqual(42, sorted.get(0));
-    }
+    assertEqual(42, sorted.get(0));}
 
     @Test
     void testUint8ClampedArrayToSorted004() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     Uint8ClampedArray sorted = arr.toSorted();
-    assertEqual(0, sorted.length());
-    }
+    assertEqual(0, sorted.length());}
 
     @Test
     void testUint8ClampedArrayToSorted005() {
@@ -92,8 +67,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(0, sorted.get(0));
     assertEqual(0, sorted.get(1));
     assertEqual(0, sorted.get(2));
-    assertEqual(0, sorted.get(3));
-    }
+    assertEqual(0, sorted.get(3));}
 
     @Test
     void testUint8ClampedArrayToSorted006() {
@@ -102,8 +76,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(255, sorted.get(0));
     assertEqual(255, sorted.get(1));
-    assertEqual(255, sorted.get(2));
-    }
+    assertEqual(255, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted007() {
@@ -112,8 +85,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(0, sorted.get(0));
     assertEqual(3, sorted.get(1));
-    assertEqual(5, sorted.get(2));
-    }
+    assertEqual(5, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted008() {
@@ -122,8 +94,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(255, sorted.get(2));
     assertEqual(3, sorted.get(0));
-    assertEqual(5, sorted.get(1));
-    }
+    assertEqual(5, sorted.get(1));}
 
     @Test
     void testUint8ClampedArrayToSorted009() {
@@ -132,8 +103,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(0, sorted.get(0));
     assertEqual(128, sorted.get(1));
-    assertEqual(255, sorted.get(2));
-    }
+    assertEqual(255, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted010() {
@@ -142,8 +112,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(127, sorted.get(1));
     assertEqual(1, sorted.get(0));
-    assertEqual(200, sorted.get(2));
-    }
+    assertEqual(200, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted011() {
@@ -152,8 +121,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(128, sorted.get(1));
     assertEqual(1, sorted.get(0));
-    assertEqual(200, sorted.get(2));
-    }
+    assertEqual(200, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted012() {
@@ -162,8 +130,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(1, sorted.get(0));
     assertEqual(128, sorted.get(1));
-    assertEqual(255, sorted.get(2));
-    }
+    assertEqual(255, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted013() {
@@ -172,8 +139,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(254, sorted.get(2));
     assertEqual(1, sorted.get(0));
-    assertEqual(100, sorted.get(1));
-    }
+    assertEqual(100, sorted.get(1));}
 
     @Test
     void testUint8ClampedArrayToSorted014() {
@@ -182,8 +148,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(2, sorted.get(2));
-    }
+    assertEqual(2, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted015() {
@@ -199,8 +164,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(6, sorted.get(6));
     assertEqual(7, sorted.get(7));
     assertEqual(8, sorted.get(8));
-    assertEqual(9, sorted.get(9));
-    }
+    assertEqual(9, sorted.get(9));}
 
     @Test
     void testUint8ClampedArrayToSorted016() {
@@ -210,8 +174,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(256, sorted.length());
     assertEqual(0, sorted.get(0));
     assertEqual(128, sorted.get(128));
-    assertEqual(255, sorted.get(255));
-    }
+    assertEqual(255, sorted.get(255));}
 
     @Test
     void testUint8ClampedArrayToSorted017() {
@@ -221,8 +184,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(1024, sorted.length());
     assertEqual(0, sorted.get(0));
     assertEqual(128, sorted.get(512));
-    assertEqual(255, sorted.get(1023));
-    }
+    assertEqual(255, sorted.get(1023));}
 
     @Test
     void testUint8ClampedArrayToSorted018() {
@@ -231,8 +193,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(0, sorted.get(0));
     assertEqual(3, sorted.get(1));
-    assertEqual(5, sorted.get(2));
-    }
+    assertEqual(5, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted019() {
@@ -241,8 +202,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(3, sorted.get(0));
     assertEqual(5, sorted.get(1));
-    assertEqual(255, sorted.get(2));
-    }
+    assertEqual(255, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted020() {
@@ -251,8 +211,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(0, sorted.get(0));
     assertEqual(3, sorted.get(1));
-    assertEqual(5, sorted.get(2));
-    }
+    assertEqual(5, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted021() {
@@ -261,8 +220,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(3, sorted.get(0));
     assertEqual(5, sorted.get(1));
-    assertEqual(255, sorted.get(2));
-    }
+    assertEqual(255, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted022() {
@@ -271,8 +229,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(0, sorted.get(0));
     assertEqual(3, sorted.get(1));
-    assertEqual(5, sorted.get(2));
-    }
+    assertEqual(5, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted023() {
@@ -281,8 +238,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(0, sorted.get(0));
     assertEqual(1, sorted.get(1));
-    assertEqual(2, sorted.get(2));
-    }
+    assertEqual(2, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted024() {
@@ -291,8 +247,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(5, sorted.get(0));
     assertEqual(10, sorted.get(1));
-    assertEqual(128, sorted.get(2));
-    }
+    assertEqual(128, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted025() {
@@ -301,36 +256,31 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(0, sorted.get(0));
     assertEqual(1, sorted.get(1));
-    assertEqual(5, sorted.get(2));
-    }
+    assertEqual(5, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted026() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0xFF, 0x01, 0x80});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertEqual(1, sorted.get(0));
-    }
+    assertEqual(1, sorted.get(0));}
 
     @Test
     void testUint8ClampedArrayToSorted027() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {077, 010, 01});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertEqual(1, sorted.get(0));
-    }
+    assertEqual(1, sorted.get(0));}
 
     @Test
     void testUint8ClampedArrayToSorted028() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0b11111111, 0b00000001, 0b10000000});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertEqual(128, sorted.get(1));
-    }
+    assertEqual(128, sorted.get(1));}
 
     @Test
     void testUint8ClampedArrayToSorted029() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {1e2, 1, 50});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertEqual(100, sorted.get(2));
-    }
+    assertEqual(100, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted030() {
@@ -339,8 +289,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertNotEqual(arr.buffer(), sorted.buffer());
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted031() {
@@ -351,8 +300,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(50, sorted.get(1));
     assertEqual(100, sorted.get(2));
     assertEqual(150, sorted.get(3));
-    assertEqual(200, sorted.get(4));
-    }
+    assertEqual(200, sorted.get(4));}
 
     @Test
     void testUint8ClampedArrayToSorted032() {
@@ -363,8 +311,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(1, sorted.get(1));
     assertEqual(3, sorted.get(2));
     assertEqual(4, sorted.get(3));
-    assertEqual(5, sorted.get(4));
-    }
+    assertEqual(5, sorted.get(4));}
 
     @Test
     void testUint8ClampedArrayToSorted033() {
@@ -376,8 +323,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(2, arr.get(2));
     assertEqual(99, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted034() {
@@ -387,8 +333,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(3, sorted.get(2));
     assertEqual(1, sorted.get(0));
-    assertEqual(2, sorted.get(1));
-    }
+    assertEqual(2, sorted.get(1));}
 
     @Test
     void testUint8ClampedArrayToSorted035() {
@@ -400,8 +345,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
     assertEqual(5, sorted.get(2));
-    assertEqual(9, sorted.get(3));
-    }
+    assertEqual(9, sorted.get(3));}
 
     @Test
     void testUint8ClampedArrayToSorted036() {
@@ -413,8 +357,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
     assertEqual(5, sorted.get(2));
-    assertEqual(9, sorted.get(3));
-    }
+    assertEqual(9, sorted.get(3));}
 
     @Test
     void testUint8ClampedArrayToSorted037() {
@@ -425,8 +368,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(10, sorted.get(0));
     assertEqual(20, sorted.get(1));
-    assertEqual(30, sorted.get(2));
-    }
+    assertEqual(30, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted038() {
@@ -445,8 +387,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(8, sub.get(2));
     assertEqual(3, sorted.get(0));
     assertEqual(5, sorted.get(1));
-    assertEqual(8, sorted.get(2));
-    }
+    assertEqual(8, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted039() {
@@ -456,8 +397,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(0, sorted.get(3));
     assertEqual(0, sorted.get(0));
     assertEqual(0, sorted.get(1));
-    assertEqual(0, sorted.get(2));
-    }
+    assertEqual(0, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted040() {
@@ -468,8 +408,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(7, sorted.get(0));
     assertEqual(7, sorted.get(1));
     assertEqual(7, sorted.get(3));
-    assertEqual(7, sorted.get(4));
-    }
+    assertEqual(7, sorted.get(4));}
 
     @Test
     void testUint8ClampedArrayToSorted041() {
@@ -478,8 +417,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(128, sorted.get(1));
     assertEqual(0, sorted.get(0));
-    assertEqual(255, sorted.get(2));
-    }
+    assertEqual(255, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted042() {
@@ -487,8 +425,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     Uint8ClampedArray sorted = arr.toSorted();
     assertEqual(2, sorted.length());
     assertEqual(2, sorted.get(1));
-    assertEqual(1, sorted.get(0));
-    }
+    assertEqual(1, sorted.get(0));}
 
     @Test
     void testUint8ClampedArrayToSorted043() {
@@ -496,8 +433,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     Uint8ClampedArray sorted = arr.toSorted();
     assertEqual(2, sorted.length());
     assertEqual(5, sorted.get(0));
-    assertEqual(5, sorted.get(1));
-    }
+    assertEqual(5, sorted.get(1));}
 
     @Test
     void testUint8ClampedArrayToSorted044() {
@@ -506,8 +442,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(2, sorted.get(1));
     assertEqual(1, sorted.get(0));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted045() {
@@ -516,19 +451,17 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(2, sorted.get(1));
     assertEqual(1, sorted.get(0));
-    assertEqual(2, sorted.get(2));
-    }
+    assertEqual(2, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted046() {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
-    for (int i = 0; i < 256; i++) { arr.set(i, i); }
+    for (int i = 0; i < 256; i++) { arr.set(i, i);}
     Uint8ClampedArray sorted = arr.toSorted();
     assertEqual(256, sorted.length());
     assertEqual(255, sorted.get(255));
     assertEqual(0, sorted.get(0));
-    assertEqual(128, sorted.get(128));
-    }
+    assertEqual(128, sorted.get(128));}
 
     @Test
     void testUint8ClampedArrayToSorted047() {
@@ -537,8 +470,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(255, sorted.get(2));
     assertEqual(1, sorted.get(0));
-    assertEqual(128, sorted.get(1));
-    }
+    assertEqual(128, sorted.get(1));}
 
     @Test
     void testUint8ClampedArrayToSorted048() {
@@ -547,8 +479,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(255, sorted.get(1));
     assertEqual(1, sorted.get(0));
-    assertEqual(255, sorted.get(2));
-    }
+    assertEqual(255, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted049() {
@@ -557,8 +488,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(0, sorted.get(1));
     assertEqual(0, sorted.get(0));
-    assertEqual(1, sorted.get(2));
-    }
+    assertEqual(1, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted050() {
@@ -567,8 +497,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(100, sorted.length());
     assertEqual(0, sorted.get(0));
     assertEqual(0, sorted.get(50));
-    assertEqual(0, sorted.get(99));
-    }
+    assertEqual(0, sorted.get(99));}
 
     @Test
     void testUint8ClampedArrayToSorted051() {
@@ -577,8 +506,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.byteLength());
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted052() {
@@ -587,8 +515,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(1, sorted.BYTES_PER_ELEMENT);
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted053() {
@@ -597,8 +524,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertNotEqual(arr, sorted);
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted054() {
@@ -607,8 +533,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(0, sorted.byteOffset());
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted055() {
@@ -618,43 +543,37 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
     assertEqual(3, sorted.get(2));
-    assertEqual(4, sorted.get(3));
-    }
+    assertEqual(4, sorted.get(3));}
 
     @Test
     void testUint8ClampedArrayToSorted056() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {9, 4, 7, 2, 8});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertTrue(sorted.get(0) <= sorted.get(1));
-    }
+    assertTrue(sorted.get(0) <= sorted.get(1));}
 
     @Test
     void testUint8ClampedArrayToSorted057() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {9, 4, 7, 2, 8});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertTrue(sorted.get(1) <= sorted.get(2));
-    }
+    assertTrue(sorted.get(1) <= sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted058() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {9, 4, 7, 2, 8});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertTrue(sorted.get(2) <= sorted.get(3));
-    }
+    assertTrue(sorted.get(2) <= sorted.get(3));}
 
     @Test
     void testUint8ClampedArrayToSorted059() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {9, 4, 7, 2, 8});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertTrue(sorted.get(3) <= sorted.get(4));
-    }
+    assertTrue(sorted.get(3) <= sorted.get(4));}
 
     @Test
     void testUint8ClampedArrayToSorted060() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {3, 1, 2});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertEqual(1, sorted.get(0));
-    }
+    assertEqual(1, sorted.get(0));}
 
     @Test
     void testUint8ClampedArrayToSorted061() {
@@ -665,8 +584,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(2, arr.get(2));
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted062() {
@@ -677,8 +595,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(1, arr.get(1));
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted063() {
@@ -694,8 +611,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(2, sorted.get(1));
     assertEqual(3, sorted.get(2));
     assertEqual(4, sorted.get(3));
-    assertEqual(5, sorted.get(4));
-    }
+    assertEqual(5, sorted.get(4));}
 
     @Test
     void testUint8ClampedArrayToSorted064() {
@@ -704,8 +620,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, arr.byteLength());
     assertEqual(3, sorted.get(0));
     assertEqual(4, sorted.get(1));
-    assertEqual(5, sorted.get(2));
-    }
+    assertEqual(5, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted065() {
@@ -715,8 +630,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(bufBefore, arr.buffer());
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted066() {
@@ -731,8 +645,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(2, sorted.get(1));
     assertEqual(3, sorted.get(2));
     assertEqual(4, sorted.get(3));
-    assertEqual(5, sorted.get(4));
-    }
+    assertEqual(5, sorted.get(4));}
 
     @Test
     void testUint8ClampedArrayToSorted067() {
@@ -747,8 +660,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(2, sorted.get(1));
     assertEqual(3, sorted.get(2));
     assertEqual(4, sorted.get(3));
-    assertEqual(5, sorted.get(4));
-    }
+    assertEqual(5, sorted.get(4));}
 
     @Test
     void testUint8ClampedArrayToSorted068() {
@@ -758,8 +670,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.length());
     assertEqual(1, sorted.get(0));
     assertEqual(2, sorted.get(1));
-    assertEqual(3, sorted.get(2));
-    }
+    assertEqual(3, sorted.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted069() {
@@ -768,8 +679,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, s2.length());
     assertEqual(1, s2.get(0));
     assertEqual(2, s2.get(1));
-    assertEqual(3, s2.get(2));
-    }
+    assertEqual(3, s2.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted070() {
@@ -782,8 +692,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(1, s1.get(0));
     assertEqual(2, s1.get(1));
     assertEqual(3, s1.get(2));
-    assertEqual(4, s1.get(3));
-    }
+    assertEqual(4, s1.get(3));}
 
     @Test
     void testUint8ClampedArrayToSorted071() {
@@ -796,8 +705,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, s1.get(2));
     assertEqual(1, s2.get(0));
     assertEqual(2, s2.get(1));
-    assertEqual(3, s2.get(2));
-    }
+    assertEqual(3, s2.get(2));}
 
     @Test
     void testUint8ClampedArrayToSorted072() {
@@ -811,8 +719,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, sorted.get(2));
     assertEqual(4, sorted.get(3));
     assertEqual(5, sorted.get(4));
-    assertEqual(5, b.get(4));
-    }
+    assertEqual(5, b.get(4));}
 
     @Test
     void testUint8ClampedArrayToSorted073() {
@@ -827,8 +734,7 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(2, sorted.get(1));
     assertEqual(3, sorted.get(2));
     assertEqual(4, sorted.get(3));
-    assertEqual(5, sorted.get(4));
-    }
+    assertEqual(5, sorted.get(4));}
 
     @Test
     void testUint8ClampedArrayToSorted074() {
@@ -836,17 +742,14 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     Uint8ClampedArray sorted = arr.toSorted();
     int sum = 0;
     for (Integer v : sorted.values()) {
-    sum += v;
-    };
-    assertEqual(6, sum);
-    }
+    sum += v;};
+    assertEqual(6, sum);}
 
     @Test
     void testUint8ClampedArrayToSorted075() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {3, 1, 2});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertEqual("1,2,3", sorted.join(","));
-    }
+    assertEqual("1,2,3", sorted.join(","));}
 
     @Test
     void testUint8ClampedArrayToSorted076() {
@@ -857,15 +760,13 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     assertEqual(3, arr.get(0));
     assertEqual(1, arr.get(1));
     assertEqual(2, arr.get(2));
-    assertEqual(2, sorted.get(1));
-    }
+    assertEqual(2, sorted.get(1));}
 
     @Test
     void testUint8ClampedArrayToSorted077() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {3, 1, 2});
     Uint8ClampedArray sorted = arr.toSorted();
-    assertTrue(sorted.includes(3));
-    }
+    assertTrue(sorted.includes(3));}
 
     @Test
     void testUint8ClampedArrayToSorted078() {
@@ -874,6 +775,5 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     Uint8ClampedArray sorted = arr.toSorted();
     assertEqual(500, sorted.length());
     assertTrue(sorted.get(0) <= sorted.get(250));
-    assertTrue(sorted.get(250) <= sorted.get(499));
-    }
+    assertTrue(sorted.get(250) <= sorted.get(499));}
 }
