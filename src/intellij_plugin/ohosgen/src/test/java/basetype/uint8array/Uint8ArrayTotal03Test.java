@@ -1030,3 +1030,1034 @@ public class Uint8ArrayTotal03Test extends BasTest {
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal064() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    int result = arr.get(5);
+    assertNull(result);
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0650
+     * @tc.name testUint8ArrayTotal065
+     * @tc.desc Verify $_get with index 6 equals length+1 returns undefined
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal065() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    int result = arr.get(6);
+    assertNull(result);
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0660
+     * @tc.name testUint8ArrayTotal066
+     * @tc.desc Verify $_get with large positive index 100000 returns undefined
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal066() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    int result = arr.get(100000);
+    assertNull(result);
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0670
+     * @tc.name testUint8ArrayTotal067
+     * @tc.desc Verify $_get with large negative index -100000 returns undefined
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal067() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    int result = arr.get(-100000);
+    assertNull(result);
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0680
+     * @tc.name testUint8ArrayTotal068
+     * @tc.desc Verify $_set with negative index -1 does not modify array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal068() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(-1, 99);
+    assertEqual(10, arr.get(0));
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0690
+     * @tc.name testUint8ArrayTotal069
+     * @tc.desc Verify $_set with negative index -5 equals -length does not modify array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal069() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(-5, 99);
+    assertEqual(10, arr.get(0));
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0700
+     * @tc.name testUint8ArrayTotal070
+     * @tc.desc Verify $_set with negative index -6 equals -length-1 does not modify array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal070() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(-6, 99);
+    assertEqual(10, arr.get(0));
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0710
+     * @tc.name testUint8ArrayTotal071
+     * @tc.desc Verify $_set with index 5 equals length does not modify array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal071() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(5, 99);
+    assertEqual(10, arr.get(0));
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0720
+     * @tc.name testUint8ArrayTotal072
+     * @tc.desc Verify $_set with index 6 equals length+1 does not modify array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal072() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(6, 99);
+    assertEqual(10, arr.get(0));
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0730
+     * @tc.name testUint8ArrayTotal073
+     * @tc.desc Verify $_set with large positive index 100000 does not modify array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal073() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(100000, 99);
+    assertEqual(10, arr.get(0));
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0740
+     * @tc.name testUint8ArrayTotal074
+     * @tc.desc Verify $_set with large negative index -100000 does not modify array
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal074() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(-100000, 99);
+    assertEqual(10, arr.get(0));
+    } catch (RuntimeException e) {
+    assertEqual("basetype.common.RangeError", BasTest.className(e));
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0750
+     * @tc.name testUint8ArrayTotal075
+     * @tc.desc Verify $_set with value 256 overflows and truncates to 0
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal075() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.set(0, 256);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0760
+     * @tc.name testUint8ArrayTotal076
+     * @tc.desc Verify $_set with value -1 wraps around to 255
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal076() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.set(0, -1);
+    assertEqual(255, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0770
+     * @tc.name testUint8ArrayTotal077
+     * @tc.desc Verify $_set with value 512 multiple overflow wraps to 0
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal077() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.set(0, 512);
+    assertEqual(0, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0780
+     * @tc.name testUint8ArrayTotal078
+     * @tc.desc Verify $_set with value -257 negative multiple wraps to 255
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal078() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.set(0, -257);
+    assertEqual(255, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0790
+     * @tc.name testUint8ArrayTotal079
+     * @tc.desc Verify $_set with float value 3.14 truncates to 3
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal079() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.set(0, 3.14);
+    assertEqual(3, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0800
+     * @tc.name testUint8ArrayTotal080
+     * @tc.desc Verify $_set with float value 255.9 truncates to 255
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal080() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.set(0, 255.9);
+    assertEqual(255, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0810
+     * @tc.name testUint8ArrayTotal081
+     * @tc.desc Verify $_set with negative float -3.14 truncates and wraps to 253
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal081() {
+    Uint8Array arr = new Uint8Array(1);
+    arr.set(0, -3.14);
+    assertEqual(253, arr.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0820
+     * @tc.name testUint8ArrayTotal082
+     * @tc.desc Verify at with index 5 equals length returns undefined
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal082() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Integer result = arr.at(5);
+    assertNull(result);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0830
+     * @tc.name testUint8ArrayTotal083
+     * @tc.desc Verify at with index 6 equals length+1 returns undefined
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal083() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Integer result = arr.at(6);
+    assertNull(result);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0840
+     * @tc.name testUint8ArrayTotal084
+     * @tc.desc Verify at with index -6 equals -length-1 returns undefined
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal084() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Integer result = arr.at(-6);
+    assertNull(result);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0850
+     * @tc.name testUint8ArrayTotal085
+     * @tc.desc Verify at with large positive index 100000 returns undefined
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal085() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Integer result = arr.at(100000);
+    assertNull(result);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0860
+     * @tc.name testUint8ArrayTotal086
+     * @tc.desc Verify at with large negative index -100000 returns undefined
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal086() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Integer result = arr.at(-100000);
+    assertNull(result);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0870
+     * @tc.name testUint8ArrayTotal087
+     * @tc.desc Verify with with index -6 equals -length-1 throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal087() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.with(-6, 99);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0880
+     * @tc.name testUint8ArrayTotal088
+     * @tc.desc Verify with with index 5 equals length throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal088() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.with(5, 99);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0890
+     * @tc.name testUint8ArrayTotal089
+     * @tc.desc Verify with with index 6 equals length+1 throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal089() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.with(6, 99);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0900
+     * @tc.name testUint8ArrayTotal090
+     * @tc.desc Verify with with large positive index 100000 throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal090() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.with(100000, 99);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0910
+     * @tc.name testUint8ArrayTotal091
+     * @tc.desc Verify with with large negative index -100000 throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal091() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.with(-100000, 99);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0920
+     * @tc.name testUint8ArrayTotal092
+     * @tc.desc Verify set with negative offset -1 throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal092() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(new Uint8Array(new int[] {99}), -1);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0930
+     * @tc.name testUint8ArrayTotal093
+     * @tc.desc Verify set with offset+source length exceeding this throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal093() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(new Uint8Array(new int[] {99, 100}), 4);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0940
+     * @tc.name testUint8ArrayTotal094
+     * @tc.desc Verify set with offset equal to length throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal094() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(new Uint8Array(new int[] {99, 100}), 5);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0950
+     * @tc.name testUint8ArrayTotal095
+     * @tc.desc Verify set with large positive offset 100000 throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal095() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(new Uint8Array(new int[] {99}), 100000);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0960
+     * @tc.name testUint8ArrayTotal096
+     * @tc.desc Verify set with large negative offset -100000 throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal096() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(new Uint8Array(new int[] {99}), -100000);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0970
+     * @tc.name testUint8ArrayTotal097
+     * @tc.desc Verify set with source array exceeding total target length throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal097() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(new Uint8Array(new int[] {1, 2, 3, 4, 5, 6}), 0);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0980
+     * @tc.name testUint8ArrayTotal098
+     * @tc.desc Verify set with Uint8Array source and offset exceeding throws RangeError
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal098() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    try {
+    arr.set(new Uint8Array(new int[] {1, 2, 3}), 4);
+    fail();
+    } catch (RuntimeException e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    };
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0990
+     * @tc.name testUint8ArrayTotal099
+     * @tc.desc Verify copyWithin with negative target copies from 2nd last position
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal099() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.copyWithin(-2, 0);
+    assertEqual("10,20,30,10,20", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1000
+     * @tc.name testUint8ArrayTotal100
+     * @tc.desc Verify copyWithin with negative start copies from 2nd last element
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal100() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.copyWithin(0, -2);
+    assertEqual("40,50,30,40,50", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1010
+     * @tc.name testUint8ArrayTotal101
+     * @tc.desc Verify copyWithin with negative end excludes the last element
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal101() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.copyWithin(0, 1, -1);
+    assertEqual("20,30,40,40,50", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1020
+     * @tc.name testUint8ArrayTotal102
+     * @tc.desc Verify copyWithin with start far beyond length leaves array unchanged
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal102() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.copyWithin(0, 100);
+    assertEqual("10,20,30,40,50", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1030
+     * @tc.name testUint8ArrayTotal103
+     * @tc.desc Verify copyWithin with start greater than end leaves array unchanged
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal103() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.copyWithin(0, 3, 1);
+    assertEqual("10,20,30,40,50", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1040
+     * @tc.name testUint8ArrayTotal104
+     * @tc.desc Verify copyWithin with large negative start clamps to 0
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal104() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.copyWithin(0, -100, 2);
+    assertEqual("10,20,30,40,50", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1050
+     * @tc.name testUint8ArrayTotal105
+     * @tc.desc Verify copyWithin with negative target beyond start clamps to 0
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal105() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.copyWithin(-100, 2, 4);
+    assertEqual("30,40,30,40,50", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1060
+     * @tc.name testUint8ArrayTotal106
+     * @tc.desc Verify copyWithin with positive indices copies middle segment to front
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal106() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.copyWithin(0, 2, 4);
+    assertEqual("30,40,30,40,50", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1070
+     * @tc.name testUint8ArrayTotal107
+     * @tc.desc Verify copyWithin with overlapping ranges copies correctly
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal107() {
+    Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
+    arr.copyWithin(1, 0, 3);
+    assertEqual("1,1,2,3,5", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1080
+     * @tc.name testUint8ArrayTotal108
+     * @tc.desc Verify fill with negative end clamps to 0, no fill
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal108() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.fill(99, 0, -100);
+    assertEqual("10,20,30,40,50", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1090
+     * @tc.name testUint8ArrayTotal109
+     * @tc.desc Verify fill with negative start replaces from that offset to end
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal109() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.fill(88, -2);
+    assertEqual("10,20,30,88,88", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1100
+     * @tc.name testUint8ArrayTotal110
+     * @tc.desc Verify fill with start greater than end leaves array unchanged
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal110() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.fill(77, 4, 2);
+    assertEqual("10,20,30,40,50", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1110
+     * @tc.name testUint8ArrayTotal111
+     * @tc.desc Verify fill with large overflow end clamps to length
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal111() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.fill(66, 0, 100);
+    assertEqual("66,66,66,66,66", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1120
+     * @tc.name testUint8ArrayTotal112
+     * @tc.desc Verify fill with large negative start clamps to 0
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal112() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    arr.fill(55, -100, 2);
+    assertEqual("55,55,30,40,50", arr.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1130
+     * @tc.name testUint8ArrayTotal113
+     * @tc.desc Verify fill on empty array with default indices does nothing
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal113() {
+    Uint8Array arr = new Uint8Array();
+    arr.fill(99);
+    assertEqual(0, arr.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1140
+     * @tc.name testUint8ArrayTotal114
+     * @tc.desc Verify ArrayBuffer offset mismatch with subarray byteOffset - offset must be multiple of element size
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal114() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(1, 4);
+    assertEqual(1, result.byteOffset());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1150
+     * @tc.name testUint8ArrayTotal115
+     * @tc.desc Verify subarray with negative begin takes last elements
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal115() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(-2);
+    assertEqual("40,50", result.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1160
+     * @tc.name testUint8ArrayTotal116
+     * @tc.desc Verify subarray with negative begin and end selects elements between
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal116() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(-4, -1);
+    assertEqual("20,30,40", result.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1170
+     * @tc.name testUint8ArrayTotal117
+     * @tc.desc Verify subarray with begin greater than end returns empty
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal117() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(4, 1);
+    assertEqual(0, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1180
+     * @tc.name testUint8ArrayTotal118
+     * @tc.desc Verify subarray with begin and end equal returns empty
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal118() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(2, 2);
+    assertEqual(0, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1190
+     * @tc.name testUint8ArrayTotal119
+     * @tc.desc Verify subarray with begin=0 end=length returns full copy
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal119() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(0, 5);
+    assertEqual("10,20,30,40,50", result.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1200
+     * @tc.name testUint8ArrayTotal120
+     * @tc.desc Verify subarray with begin=0 includes first element
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal120() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(0, 1);
+    assertEqual(10, result.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1210
+     * @tc.name testUint8ArrayTotal121
+     * @tc.desc Verify subarray with begin=length-1 takes last element
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal121() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(4);
+    assertEqual(50, result.get(0));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1220
+     * @tc.name testUint8ArrayTotal122
+     * @tc.desc Verify subarray with begin=length returns empty
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal122() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(5);
+    assertEqual(0, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1230
+     * @tc.name testUint8ArrayTotal123
+     * @tc.desc Verify subarray with begin far beyond length returns empty
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal123() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(100);
+    assertEqual(0, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1240
+     * @tc.name testUint8ArrayTotal124
+     * @tc.desc Verify subarray with begin=0 end far beyond length truncates to all elements
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal124() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(0, 100);
+    assertEqual("10,20,30,40,50", result.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1250
+     * @tc.name testUint8ArrayTotal125
+     * @tc.desc Verify subarray with large negative begin clamps to 0 and takes all
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal125() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(-100);
+    assertEqual("10,20,30,40,50", result.join(","));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1260
+     * @tc.name testUint8ArrayTotal126
+     * @tc.desc Verify subarray with large negative begin clamps to 0 and takes first 2
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayTotal126() {
+    Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
+    Uint8Array result = arr.subarray(-100, 2);
+    assertEqual("10,20", result.join(","));
+    }
+}
