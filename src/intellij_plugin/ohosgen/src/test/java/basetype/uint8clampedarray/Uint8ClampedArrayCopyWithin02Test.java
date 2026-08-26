@@ -17,35 +17,14 @@ package basetype.uint8clampedarray;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8ClampedArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ClampedArrayCopyWithin02Test —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     /**
@@ -63,8 +42,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray r = arr.copyWithin(0, 3);
     assertEqual(arr, r);
     assertEqual(4, arr.get(0));
-    assertEqual(5, arr.get(1));
-    }
+    assertEqual(5, arr.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0200
      * @tc.name testUint8ClampedArrayCopyWithinTwo002
@@ -78,8 +56,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo002() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.copyWithin(0, 1);
-    assertEqual(20, r.get(0));
-    }
+    assertEqual(20, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0300
      * @tc.name testUint8ClampedArrayCopyWithinTwo003
@@ -96,8 +73,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     assertEqual(arr, r);
     assertEqual(3, arr.get(0));
     assertEqual(5, arr.get(2));
-    assertEqual(4, arr.get(3));
-    }
+    assertEqual(4, arr.get(3));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0400
      * @tc.name testUint8ClampedArrayCopyWithinTwo004
@@ -112,8 +88,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     Uint8ClampedArray r = arr.copyWithin(0, 0);
     assertEqual(arr, r);
-    assertEqual(0, r.length());
-    }
+    assertEqual(0, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0500
      * @tc.name testUint8ClampedArrayCopyWithinTwo005
@@ -128,8 +103,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {100});
     Uint8ClampedArray r = arr.copyWithin(0, 0);
     assertEqual(arr, r);
-    assertEqual(100, arr.get(0));
-    }
+    assertEqual(100, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0600
      * @tc.name testUint8ClampedArrayCopyWithinTwo006
@@ -145,8 +119,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray r = arr.copyWithin(0, 3, 1);
     assertEqual(arr, r);
     assertEqual(1, arr.get(0));
-    assertEqual(3, arr.get(2));
-    }
+    assertEqual(3, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0700
      * @tc.name testUint8ClampedArrayCopyWithinTwo007
@@ -162,8 +135,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray r = arr.copyWithin(-2, 0);
     assertEqual(arr, r);
     assertEqual(1, arr.get(2));
-    assertEqual(2, arr.get(3));
-    }
+    assertEqual(2, arr.get(3));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0800
      * @tc.name testUint8ClampedArrayCopyWithinTwo008
@@ -177,8 +149,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo008() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 6, 7, 8});
     Uint8ClampedArray r = arr.copyWithin(0, -2);
-    assertEqual(7, r.get(0));
-    }
+    assertEqual(7, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0900
      * @tc.name testUint8ClampedArrayCopyWithinTwo009
@@ -195,8 +166,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     assertEqual(arr, r);
     assertEqual(10, arr.get(0));
     assertEqual(11, arr.get(1));
-    assertEqual(11, arr.get(2));
-    }
+    assertEqual(11, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1000
      * @tc.name testUint8ClampedArrayCopyWithinTwo010
@@ -213,8 +183,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     assertEqual(arr, r);
     assertEqual(2, arr.get(0));
     assertEqual(3, arr.get(1));
-    assertEqual(3, arr.get(2));
-    }
+    assertEqual(3, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1100
      * @tc.name testUint8ClampedArrayCopyWithinTwo011
@@ -228,8 +197,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo011() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {1e2, 0, 0, 0, 0});
     arr.copyWithin(2, 0, 1);
-    assertEqual(100, arr.get(2));
-    }
+    assertEqual(100, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1200
      * @tc.name testUint8ClampedArrayCopyWithinTwo012
@@ -243,8 +211,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo012() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.copyWithin(0, 2);
-    assertEqual(arr, r);
-    }
+    assertEqual(arr, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1300
      * @tc.name testUint8ClampedArrayCopyWithinTwo013
@@ -258,8 +225,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo013() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     Uint8ClampedArray r = arr.copyWithin(0, 2);
-    assertEqual(arr.length(), r.length());
-    }
+    assertEqual(arr.length(), r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1400
      * @tc.name testUint8ClampedArrayCopyWithinTwo014
@@ -273,8 +239,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo014() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.copyWithin(0, 2);
-    assertEqual(arr.buffer(), r.buffer());
-    }
+    assertEqual(arr.buffer(), r.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1500
      * @tc.name testUint8ClampedArrayCopyWithinTwo015
@@ -288,8 +253,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo015() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray r = arr.copyWithin(0, 2).copyWithin(1, 0);
-    assertEqual(arr, r);
-    }
+    assertEqual(arr, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1600
      * @tc.name testUint8ClampedArrayCopyWithinTwo016
@@ -303,8 +267,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo016() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     arr.copyWithin(0, 2);
-    assertEqual(5, arr.byteLength());
-    }
+    assertEqual(5, arr.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1700
      * @tc.name testUint8ClampedArrayCopyWithinTwo017
@@ -318,8 +281,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo017() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     arr.copyWithin(0, 2);
-    assertEqual(0, arr.byteOffset());
-    }
+    assertEqual(0, arr.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1800
      * @tc.name testUint8ClampedArrayCopyWithinTwo018
@@ -334,8 +296,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2, 4);
     arr.copyWithin(0, 1);
-    assertEqual(2, arr.byteOffset());
-    }
+    assertEqual(2, arr.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1900
      * @tc.name testUint8ClampedArrayCopyWithinTwo019
@@ -350,8 +311,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(5);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
     arr.copyWithin(0, 2);
-    assertEqual(buf, arr.buffer());
-    }
+    assertEqual(buf, arr.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2000
      * @tc.name testUint8ClampedArrayCopyWithinTwo020
@@ -368,8 +328,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray b = new Uint8ClampedArray(buf);
     a.set(0, 10); a.set(1, 20); a.set(2, 30); a.set(3, 40);
     a.copyWithin(0, 2);
-    assertEqual(30, b.get(0));
-    }
+    assertEqual(30, b.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2100
      * @tc.name testUint8ClampedArrayCopyWithinTwo021
@@ -384,8 +343,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.copyWithin(0, 2);
     assertEqual(arr.get(0), r.get(0));
-    assertEqual(arr.get(1), r.get(1));
-    }
+    assertEqual(arr.get(1), r.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2200
      * @tc.name testUint8ClampedArrayCopyWithinTwo022
@@ -399,8 +357,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo022() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     Uint8ClampedArray r = arr.copyWithin(0, 1, 1);
-    assertEqual(7, r.get(0));
-    }
+    assertEqual(7, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2300
      * @tc.name testUint8ClampedArrayCopyWithinTwo023
@@ -414,8 +371,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo023() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     Uint8ClampedArray r = arr.copyWithin(0, 1, 1);
-    assertEqual(8, r.get(1));
-    }
+    assertEqual(8, r.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2400
      * @tc.name testUint8ClampedArrayCopyWithinTwo024
@@ -429,8 +385,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo024() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     Uint8ClampedArray r = arr.copyWithin(0, 1, 1);
-    assertEqual(9, r.get(2));
-    }
+    assertEqual(9, r.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2500
      * @tc.name testUint8ClampedArrayCopyWithinTwo025
@@ -447,8 +402,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray b = new Uint8ClampedArray(buf);
     a.set(0, 1); a.set(1, 2); a.set(2, 3); a.set(3, 4); a.set(4, 5);
     a.copyWithin(0, 3);
-    assertEqual(4, b.get(0));
-    }
+    assertEqual(4, b.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2600
      * @tc.name testUint8ClampedArrayCopyWithinTwo026
@@ -465,8 +419,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray b = new Uint8ClampedArray(buf);
     a.set(0, 1); a.set(1, 2); a.set(2, 3); a.set(3, 4); a.set(4, 5);
     a.copyWithin(0, 3);
-    assertEqual(5, b.get(1));
-    }
+    assertEqual(5, b.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2700
      * @tc.name testUint8ClampedArrayCopyWithinTwo027
@@ -483,8 +436,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray b = new Uint8ClampedArray(buf);
     a.set(0, 1); a.set(1, 2); a.set(2, 3); a.set(3, 4); a.set(4, 5);
     a.copyWithin(0, 3);
-    assertEqual(3, b.get(2));
-    }
+    assertEqual(3, b.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2800
      * @tc.name testUint8ClampedArrayCopyWithinTwo028
@@ -500,8 +452,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(buf);
     Uint8ClampedArray b = new Uint8ClampedArray(buf);
     a.copyWithin(0, 2);
-    assertEqual(4, b.length());
-    }
+    assertEqual(4, b.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2900
      * @tc.name testUint8ClampedArrayCopyWithinTwo029
@@ -515,8 +466,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo029() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 0, 200, 0});
     arr.copyWithin(0, 2, 3);
-    assertEqual(200, arr.get(0));
-    }
+    assertEqual(200, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3000
      * @tc.name testUint8ClampedArrayCopyWithinTwo030
@@ -530,8 +480,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo030() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 0, 64, 0});
     arr.copyWithin(0, 2, 3);
-    assertEqual(64, arr.get(0));
-    }
+    assertEqual(64, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3100
      * @tc.name testUint8ClampedArrayCopyWithinTwo031
@@ -544,10 +493,9 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     @Test
     void testUint8ClampedArrayCopyWithinTwo031() {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
-    for (int i = 0; i < 256; i++) { arr.set(i, i); }
+    for (int i = 0; i < 256; i++) { arr.set(i, i);}
     Uint8ClampedArray r = arr.copyWithin(0, 128);
-    assertEqual(256, r.length());
-    }
+    assertEqual(256, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3200
      * @tc.name testUint8ClampedArrayCopyWithinTwo032
@@ -560,10 +508,9 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     @Test
     void testUint8ClampedArrayCopyWithinTwo032() {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
-    for (int i = 0; i < 256; i++) { arr.set(i, i); }
+    for (int i = 0; i < 256; i++) { arr.set(i, i);}
     Uint8ClampedArray r = arr.copyWithin(0, 128);
-    assertEqual(128, r.get(0));
-    }
+    assertEqual(128, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3300
      * @tc.name testUint8ClampedArrayCopyWithinTwo033
@@ -576,10 +523,9 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     @Test
     void testUint8ClampedArrayCopyWithinTwo033() {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
-    for (int i = 0; i < 256; i++) { arr.set(i, i); }
+    for (int i = 0; i < 256; i++) { arr.set(i, i);}
     Uint8ClampedArray r = arr.copyWithin(0, 128);
-    assertEqual(255, r.get(127));
-    }
+    assertEqual(255, r.get(127));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3400
      * @tc.name testUint8ClampedArrayCopyWithinTwo034
@@ -592,10 +538,9 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     @Test
     void testUint8ClampedArrayCopyWithinTwo034() {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
-    for (int i = 0; i < 256; i++) { arr.set(i, i); }
+    for (int i = 0; i < 256; i++) { arr.set(i, i);}
     Uint8ClampedArray r = arr.copyWithin(0, 128);
-    assertEqual(128, r.get(128));
-    }
+    assertEqual(128, r.get(128));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3500
      * @tc.name testUint8ClampedArrayCopyWithinTwo035
@@ -609,8 +554,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo035() {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
     Uint8ClampedArray r = arr.copyWithin(0, 128);
-    assertEqual(arr, r);
-    }
+    assertEqual(arr, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3600
      * @tc.name testUint8ClampedArrayCopyWithinTwo036
@@ -624,8 +568,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo036() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
     Uint8ClampedArray r = arr.copyWithin(0, 512);
-    assertEqual(1024, r.length());
-    }
+    assertEqual(1024, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3700
      * @tc.name testUint8ClampedArrayCopyWithinTwo037
@@ -639,8 +582,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo037() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
     Uint8ClampedArray r = arr.copyWithin(0, 512);
-    assertEqual(1024, r.byteLength());
-    }
+    assertEqual(1024, r.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3800
      * @tc.name testUint8ClampedArrayCopyWithinTwo038
@@ -654,8 +596,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo038() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0x80, 0, 0, 0, 0});
     arr.copyWithin(2, 0, 1);
-    assertEqual(128, arr.get(2));
-    }
+    assertEqual(128, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3900
      * @tc.name testUint8ClampedArrayCopyWithinTwo039
@@ -669,8 +610,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo039() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0xFF, 0, 0, 0, 0});
     arr.copyWithin(2, 0, 1);
-    assertEqual(255, arr.get(2));
-    }
+    assertEqual(255, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_4000
      * @tc.name testUint8ClampedArrayCopyWithinTwo040
@@ -684,8 +624,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo040() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0b11111111, 0, 0, 0, 0});
     arr.copyWithin(2, 0, 1);
-    assertEqual(255, arr.get(2));
-    }
+    assertEqual(255, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_4100
      * @tc.name testUint8ClampedArrayCopyWithinTwo041
@@ -699,6 +638,5 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo041() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0377, 0, 0, 0, 0});
     arr.copyWithin(2, 0, 1);
-    assertEqual(255, arr.get(2));
-    }
+    assertEqual(255, arr.get(2));}
 }
