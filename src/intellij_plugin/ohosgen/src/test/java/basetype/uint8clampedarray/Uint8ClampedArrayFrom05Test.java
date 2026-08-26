@@ -15,37 +15,15 @@
 
 package basetype.uint8clampedarray;
 
-import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8ClampedArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ClampedArrayFrom05Test —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ClampedArrayFrom05Test extends BasTest {
     /**
@@ -62,8 +40,7 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
     Uint8ClampedArray r = Uint8ClampedArray.from(new int[] {1, 2, 3}, (Uint8ClampedArray.Uint8ClampedArrayMapper2) (v, k) -> v + 1);
     assertEqual(2, r.get(0));
     assertEqual(3, r.get(1));
-    assertEqual(4, r.get(2));
-    }
+    assertEqual(4, r.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0200
      * @tc.name testUint8ClampedArrayFromFive002
@@ -78,8 +55,7 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
     Uint8ClampedArray r = Uint8ClampedArray.from(new Uint8ClampedArray(new int[] {10, 20, 30}), (Uint8ClampedArray.Uint8ClampedArrayMapper2) (v, k) -> v + k);
     assertEqual(10, r.get(0));
     assertEqual(21, r.get(1));
-    assertEqual(32, r.get(2));
-    }
+    assertEqual(32, r.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0300
      * @tc.name testUint8ClampedArrayFromFive003
@@ -93,8 +69,7 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
     void testUint8ClampedArrayFromFive003() {
     Uint8ClampedArray r = Uint8ClampedArray.from(new int[] {1, 2, 3, 4});
     Uint8ClampedArray sub = r.subarray(1, 3);
-    assertEqual(2, sub.length());
-    }
+    assertEqual(2, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0400
      * @tc.name testUint8ClampedArrayFromFive004
@@ -109,8 +84,7 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
     Uint8ClampedArray r = Uint8ClampedArray.from(new int[] {0, 0, 0});
     r.fill(123);
     assertEqual(123, r.get(0));
-    assertEqual(123, r.get(2));
-    }
+    assertEqual(123, r.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0500
      * @tc.name testUint8ClampedArrayFromFive005
@@ -123,8 +97,7 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
     @Test
     void testUint8ClampedArrayFromFive005() {
     Uint8ClampedArray r = Uint8ClampedArray.from(new int[] {1, 2, 3, 4, 5});
-    assertEqual(r.length() * r.BYTES_PER_ELEMENT, r.byteLength());
-    }
+    assertEqual(r.length() * r.BYTES_PER_ELEMENT, r.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0600
      * @tc.name testUint8ClampedArrayFromFive006
@@ -137,6 +110,5 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
     @Test
     void testUint8ClampedArrayFromFive006() {
     Uint8ClampedArray r = Uint8ClampedArray.from(new int[] {1, 2, 3}, (Uint8ClampedArray.Uint8ClampedArrayMapper2) (v, k) -> v);
-    assertEqual(r.length(), r.byteLength());
-    }
+    assertEqual(r.length(), r.byteLength());}
 }

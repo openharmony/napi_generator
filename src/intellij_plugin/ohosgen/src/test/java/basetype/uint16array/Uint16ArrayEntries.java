@@ -18,58 +18,35 @@ package basetype.uint16array;
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint16Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint16ArrayEntries —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint16ArrayEntries extends BasTest {
 
     @Test
     void testUint16ArrayEntries033() {
     EntryResult item = new Uint16Array().entries().next();
-    assertTrue(item.done);
-    }
+    assertTrue(item.done);}
 
     @Test
     void testUint16ArrayEntries034() {
     Uint16Array.EntriesIterator iterator = Uint16Array.of(9).entries();
     iterator.next();
     assertTrue(iterator.next().done);
-    assertTrue(iterator.next().done);
-    }
+    assertTrue(iterator.next().done);}
 
     @Test
     void testUint16ArrayEntries035() {
     Uint16Array.EntriesIterator iterator = Uint16Array.of(8, 9, 10).entries();
     assertEqual(0, iterator.next().value[0]);
     assertEqual(1, iterator.next().value[0]);
-    assertEqual(2, iterator.next().value[0]);
-    }
+    assertEqual(2, iterator.next().value[0]);}
 
     @Test
     void testUint16ArrayEntries036() {
@@ -79,8 +56,7 @@ public class Uint16ArrayEntries extends BasTest {
     arr.set(1, 77);
     int[] item = iterator.next().value;
     assertEqual(1, item[0]);
-    assertEqual(77, item[1]);
-    }
+    assertEqual(77, item[1]);}
 
     @Test
     void testUint16ArrayEntries037() {
@@ -91,8 +67,7 @@ public class Uint16ArrayEntries extends BasTest {
     Uint16Array.EntriesIterator iterator = arr.entries();
     iterator.next();
     alias.set(1, 66);
-    assertEqual(66, iterator.next().value[1]);
-    }
+    assertEqual(66, iterator.next().value[1]);}
 
     @Test
     void testUint16ArrayEntries038() {
@@ -102,8 +77,7 @@ public class Uint16ArrayEntries extends BasTest {
     Uint16Array view = new Uint16Array(buffer, 4, 2);
     int[] item = view.entries().next().value;
     assertEqual(0, item[0]);
-    assertEqual(15, item[1]);
-    }
+    assertEqual(15, item[1]);}
 
     @Test
     void testUint16ArrayEntries039() {
@@ -112,8 +86,7 @@ public class Uint16ArrayEntries extends BasTest {
     Uint16Array.EntriesIterator second = arr.entries();
     first.next();
     assertEqual(1, first.next().value[0]);
-    assertEqual(0, second.next().value[0]);
-    }
+    assertEqual(0, second.next().value[0]);}
 
     @Test
     void testUint16ArrayEntries040() {
@@ -121,8 +94,7 @@ public class Uint16ArrayEntries extends BasTest {
     Uint16Array.EntriesIterator iterator = arr.entries();
     iterator.next();
     arr.fill(50, 1);
-    assertEqual(50, iterator.next().value[1]);
-    }
+    assertEqual(50, iterator.next().value[1]);}
 
     @Test
     void testUint16ArrayEntries041() {
@@ -137,6 +109,5 @@ public class Uint16ArrayEntries extends BasTest {
     assertEqual(1, second[0]);
     assertEqual(3, second[1]);
     assertEqual(2, third[0]);
-    assertEqual(4, third[1]);
-    }
+    assertEqual(4, third[1]);}
 }

@@ -17,35 +17,16 @@ package basetype.uint16array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
 import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
 import basetype.common.Uint16Array;
 import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
-import basetype.common.Uint16Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint16ArrayGetOne —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint16ArrayGetOne extends BasTest {
 
@@ -53,15 +34,13 @@ public class Uint16ArrayGetOne extends BasTest {
     void testUint16ArrayGetOne069() {
     Uint16Array all = Uint16Array.of(10, 20, 30);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
-    assertEqual(20, view.get(0));
-    }
+    assertEqual(20, view.get(0));}
 
     @Test
     void testUint16ArrayGetOne070() {
     Uint16Array all = Uint16Array.of(10, 20, 30, 40);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
-    assertEqual(30, view.get(1));
-    }
+    assertEqual(30, view.get(1));}
 
     @Test
     void testUint16ArrayGetOne071() {
@@ -69,8 +48,7 @@ public class Uint16ArrayGetOne extends BasTest {
     Uint16Array first = new Uint16Array(buffer, 0, 3);
     Uint16Array second = new Uint16Array(buffer, 2, 3);
     second.set(0, 91);
-    assertEqual(91, first.get(1));
-    }
+    assertEqual(91, first.get(1));}
 
     @Test
     void testUint16ArrayGetOne072() {
@@ -78,15 +56,13 @@ public class Uint16ArrayGetOne extends BasTest {
     DataView view = new DataView(buffer);
     view.setUint16(2, 2048, true);
     Uint16Array arr = new Uint16Array(buffer);
-    assertEqual(2048, arr.get(1));
-    }
+    assertEqual(2048, arr.get(1));}
 
     @Test
     void testUint16ArrayGetOne073() {
     Uint16Array arr = Uint16Array.of(65535);
     Integer value = arr.get(0);
-    assertEqual(65535, value);
-    }
+    assertEqual(65535, value);}
 
     @Test
     void testUint16ArrayGetOne074() {
@@ -94,8 +70,7 @@ public class Uint16ArrayGetOne extends BasTest {
     arr.get(0);
     arr.get(1);
     assertEqual(2, arr.length());
-    assertEqual(4, arr.byteLength());
-    }
+    assertEqual(4, arr.byteLength());}
 
     @Test
     void testUint16ArrayGetOne075() {
@@ -103,10 +78,7 @@ public class Uint16ArrayGetOne extends BasTest {
     Uint16Array view = new Uint16Array(backing.buffer(), 2, 2);
     try {
     view.get(2);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    assertEqual(40, backing.at(3));
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};
+    assertEqual(40, backing.at(3));}
 }

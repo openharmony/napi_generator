@@ -17,35 +17,15 @@ package basetype.uint16array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
 import basetype.common.Uint16Array;
 import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
-import basetype.common.Uint16Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint16ArrayFillFour —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint16ArrayFillFour extends BasTest {
 
@@ -57,8 +37,7 @@ public class Uint16ArrayFillFour extends BasTest {
     assertEqual(1, all.at(0));
     assertEqual(9, all.at(1));
     assertEqual(9, all.at(2));
-    assertEqual(4, all.at(3));
-    }
+    assertEqual(4, all.at(3));}
 
     @Test
     void testUint16ArrayFillFour028() {
@@ -66,16 +45,14 @@ public class Uint16ArrayFillFour extends BasTest {
     arr.fill(9, 1, 1);
     assertEqual(1, arr.at(0));
     assertEqual(2, arr.at(1));
-    assertEqual(3, arr.at(2));
-    }
+    assertEqual(3, arr.at(2));}
 
     @Test
     void testUint16ArrayFillFour029() {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     arr.fill(9, 10);
     assertEqual(1, arr.at(0));
-    assertEqual(3, arr.at(2));
-    }
+    assertEqual(3, arr.at(2));}
 
     @Test
     void testUint16ArrayFillFour030() {
@@ -84,8 +61,7 @@ public class Uint16ArrayFillFour extends BasTest {
     assertEqual(1, arr.at(0));
     assertEqual(8, arr.at(1));
     assertEqual(8, arr.at(2));
-    assertEqual(4, arr.at(3));
-    }
+    assertEqual(4, arr.at(3));}
 
     @Test
     void testUint16ArrayFillFour031() {
@@ -97,8 +73,7 @@ public class Uint16ArrayFillFour extends BasTest {
     assertEqual(65534, dataView.getUint16(2, true));
     assertEqual(65534, dataView.getUint16(4, true));
     assertEqual(11, backing.at(0));
-    assertEqual(44, backing.at(3));
-    }
+    assertEqual(44, backing.at(3));}
 
     @Test
     void testUint16ArrayFillFour032() {
@@ -110,8 +85,7 @@ public class Uint16ArrayFillFour extends BasTest {
     assertEqual(10, all.at(0));
     assertEqual(99, all.at(1));
     assertEqual(30, all.at(2));
-    assertEqual(40, all.at(3));
-    }
+    assertEqual(40, all.at(3));}
 
     @Test
     void testUint16ArrayFillFour033() {
@@ -124,8 +98,7 @@ public class Uint16ArrayFillFour extends BasTest {
     assertEqual(333, first.at(0));
     assertEqual(333, first.at(1));
     assertEqual(222, second.at(0));
-    assertEqual(222, second.at(1));
-    }
+    assertEqual(222, second.at(1));}
 
     @Test
     void testUint16ArrayFillFour034() {
@@ -137,6 +110,5 @@ public class Uint16ArrayFillFour extends BasTest {
     assertEqual(11, backing.at(0));
     assertEqual(22, backing.at(1));
     assertEqual(33, backing.at(2));
-    assertEqual(44, backing.at(3));
-    }
+    assertEqual(44, backing.at(3));}
 }

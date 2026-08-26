@@ -17,57 +17,34 @@ package basetype.uint16array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
 import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint16Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint16ArrayFindLastTwo —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint16ArrayFindLastTwo extends BasTest {
 
     @Test
     void testUint16ArrayFindLastTwo014() {
-    assertEqual(6, Uint16Array.of(2, 4, 6).findLast((value) -> value % 2 == 0));
-    }
+    assertEqual(6, Uint16Array.of(2, 4, 6).findLast((value) -> value % 2 == 0));}
 
     @Test
     void testUint16ArrayFindLastTwo015() {
     int[] count = {0};
-    Number result = Uint16Array.of(1, 2, 3).findLast((value) -> { count[0]++; return true; });
+    Number result = Uint16Array.of(1, 2, 3).findLast((value) -> { count[0]++; return true;});
     assertEqual(3, result);
-    assertEqual(1, count[0]);
-    }
+    assertEqual(1, count[0]);}
 
     @Test
     void testUint16ArrayFindLastTwo016() {
     Uint16Array source = Uint16Array.of(1, 2, 3);
-    Number result = source.findLast((value, index, array) -> { if (index == 2) { array.set(1, 20); } return value > 10; });
-    assertEqual(20, result);
-    }
+    Number result = source.findLast((value, index, array) -> { if (index == 2) { array.set(1, 20);} return value > 10;});
+    assertEqual(20, result);}
 
     @Test
     void testUint16ArrayFindLastTwo017() {
@@ -75,24 +52,21 @@ public class Uint16ArrayFindLastTwo extends BasTest {
     Uint16Array source = new Uint16Array(buffer);
     source.set(new Uint16Array(new int[] {1, 2, 3}));
     Uint16Array alias = new Uint16Array(buffer);
-    Number result = source.findLast((value, index) -> { if (index == 2) { alias.set(1, 40); } return value > 10; });
-    assertEqual(40, result);
-    }
+    Number result = source.findLast((value, index) -> { if (index == 2) { alias.set(1, 40);} return value > 10;});
+    assertEqual(40, result);}
 
     @Test
     void testUint16ArrayFindLastTwo018() {
     Uint16Array all = Uint16Array.of(9, 2, 3, 8);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
-    assertEqual(3, view.findLast((value) -> value < 9));
-    }
+    assertEqual(3, view.findLast((value) -> value < 9));}
 
     @Test
     void testUint16ArrayFindLastTwo019() {
-    try { Uint16Array.of(1).findLast((value) -> { throw new Error("findLast marker"); }); fail(); } catch (RuntimeException e) { assertEqual("Error", e.getClass().getSimpleName()); assertEqual("findLast marker", e.getMessage()); }
+    try { Uint16Array.of(1).findLast((value) -> { throw new Error("findLast marker");}); fail();} catch (Error e) { assertEqual("Error", e.getClass().getSimpleName()); assertEqual("findLast marker", e.getMessage());}
     }
 
     @Test
     void testUint16ArrayFindLastTwo020() {
-    assertEqual(65535, Uint16Array.of(65534, 0, 65535).findLast((value) -> value >= 65534));
-    }
+    assertEqual(65535, Uint16Array.of(65534, 0, 65535).findLast((value) -> value >= 65534));}
 }
