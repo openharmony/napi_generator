@@ -17,19 +17,18 @@ package basetype.common;
 
 /**
  * 类型错误，对应 ECMAScript TypeError 语义（name 恒为 "TypeError"）。
+ *
+ * @since 2026-08-26
  */
 public class TypeError extends RuntimeException {
 
     public TypeError() {
-        super("");
-    }
+        super("");}
 
     public TypeError(String message) {
-        super(message);
-    }
+        super(message);}
 
     /** ECMAScript TypeError.name。 */
     public String name() {
-        return "TypeError";
-    }
+        return "TypeError";}
 }

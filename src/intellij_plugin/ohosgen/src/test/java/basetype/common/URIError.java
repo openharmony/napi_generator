@@ -17,15 +17,15 @@ package basetype.common;
 
 /**
  * 运行时错误，对应 ECMAScript URIError 语义（name 恒为 "URIError"）。
+ *
+ * @since 2026-08-26
  */
 public class URIError extends RuntimeException {
 
     public URIError(String message) {
-        super(message);
-    }
+        super(message);}
 
     /** ECMAScript URIError.name。 */
     public String name() {
-        return "URIError";
-    }
+        return "URIError";}
 }

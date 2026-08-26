@@ -17,19 +17,18 @@ package basetype.common;
 
 /**
  * 运行时错误，对应 ECMAScript Error 语义（name 恒为 "Error"）。
+ *
+ * @since 2026-08-26
  */
 public class Error extends RuntimeException {
 
     public Error() {
-        super("");
-    }
+        super("");}
 
     public Error(String message) {
-        super(message);
-    }
+        super(message);}
 
     /** ECMAScript Error.name。 */
     public String name() {
-        return "Error";
-    }
+        return "Error";}
 }

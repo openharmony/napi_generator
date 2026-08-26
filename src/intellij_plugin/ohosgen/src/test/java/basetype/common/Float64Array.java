@@ -18,30 +18,27 @@ package basetype.common;
 /**
  * 双精度浮点数组（ECMAScript Float64Array 语义的子集），
  * 用于跨类型拷贝构造（如 new Uint16Array(float64 视图)）。
+ *
+ * @since 2026-08-26
  */
 public class Float64Array implements IntArrayView {
 
     private final double[] data;
 
     public Float64Array(double... values) {
-        data = values;
-    }
+        data = values;}
 
     public int length() {
-        return data.length;
-    }
+        return data.length;}
 
     /** 读取元素（向零截断为 int，对应拷贝构造的 ToIntegerOrInfinity 前值）。 */
     @Override
     public Integer get(int index) {
         if (index < 0 || index >= data.length) {
-            return 0;
-        }
-        return (int) data[index];
-    }
+            return 0;}
+        return (int) data[index];}
 
     /** 读取原始浮点值。 */
     public double getDouble(int index) {
-        return data[index];
-    }
+        return data[index];}
 }

@@ -17,6 +17,8 @@ package basetype.common;
 
 /**
  * 迭代结果，对应 ECMAScript IteratorResult（value + done）语义。
+ *
+ * @since 2026-08-26
  */
 public class IteratorResult {
 
@@ -25,6 +27,5 @@ public class IteratorResult {
 
     public IteratorResult(Integer value, boolean done) {
         this.value = value;
-        this.done = done;
-    }
+        this.done = done;}
 }

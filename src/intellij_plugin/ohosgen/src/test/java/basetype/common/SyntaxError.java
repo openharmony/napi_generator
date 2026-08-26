@@ -17,15 +17,15 @@ package basetype.common;
 
 /**
  * 运行时错误，对应 ECMAScript SyntaxError 语义（name 恒为 "SyntaxError"）。
+ *
+ * @since 2026-08-26
  */
 public class SyntaxError extends RuntimeException {
 
     public SyntaxError(String message) {
-        super(message);
-    }
+        super(message);}
 
     /** ECMAScript SyntaxError.name。 */
     public String name() {
-        return "SyntaxError";
-    }
+        return "SyntaxError";}
 }

@@ -17,19 +17,18 @@ package basetype.common;
 
 /**
  * 类型断言失败异常，对应 ArkTS as 类型转换失败抛出的 ClassCastError。
+ *
+ * @since 2026-08-26
  */
 public class ClassCastError extends RuntimeException {
 
     public ClassCastError() {
-        super();
-    }
+        super();}
 
     public ClassCastError(String message) {
-        super(message);
-    }
+        super(message);}
 
     /** 语句级抛错辅助（编译器不会将其视为不可达，便于后续 fail() 共存）。 */
     public static ClassCastError raise() {
-        throw new ClassCastError();
-    }
+        throw new ClassCastError();}
 }

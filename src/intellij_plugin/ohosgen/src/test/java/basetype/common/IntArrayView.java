@@ -17,10 +17,11 @@ package basetype.common;
 
 /**
  * 整型数组视图公共接口：供跨类型拷贝构造（如 new Uint16Array(int32 视图)）使用。
+ *
+ * @since 2026-08-26
  */
 public interface IntArrayView {
 
     Integer get(int index);
 
-    int length();
-}
+    int length();}

@@ -17,15 +17,15 @@ package basetype.common;
 
 /**
  * 运行时错误，对应 ECMAScript IndexOutOfBoundsError 语义（name 恒为 "IndexOutOfBoundsError"）。
+ *
+ * @since 2026-08-26
  */
 public class IndexOutOfBoundsError extends RuntimeException {
 
     public IndexOutOfBoundsError(String message) {
-        super(message);
-    }
+        super(message);}
 
     /** ECMAScript IndexOutOfBoundsError.name。 */
     public String name() {
-        return "IndexOutOfBoundsError";
-    }
+        return "IndexOutOfBoundsError";}
 }

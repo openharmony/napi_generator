@@ -17,6 +17,8 @@ package basetype.common;
 
 /**
  * entries 迭代结果：value 为 [index, value] 二元组，done 标记序列结束。
+ *
+ * @since 2026-08-26
  */
 public class EntryResult {
 
@@ -25,6 +27,5 @@ public class EntryResult {
 
     public EntryResult(int[] value, boolean done) {
         this.value = value;
-        this.done = done;
-    }
+        this.done = done;}
 }

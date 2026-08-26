@@ -17,35 +17,14 @@ package basetype.uint16array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint16Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint16ArrayIncludesTwo —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint16ArrayIncludesTwo extends BasTest {
 
@@ -55,22 +34,19 @@ public class Uint16ArrayIncludesTwo extends BasTest {
     Uint16Array arr = new Uint16Array(buffer);
     Uint16Array alias = new Uint16Array(buffer);
     alias.set(1, 50);
-    assertTrue(arr.includes(50));
-    }
+    assertTrue(arr.includes(50));}
 
     @Test
     void testUint16ArrayIncludesTwo059() {
     Uint16Array all = Uint16Array.of(9, 1, 2);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
-    assertFalse(view.includes(9));
-    }
+    assertFalse(view.includes(9));}
 
     @Test
     void testUint16ArrayIncludesTwo060() {
     Uint16Array all = Uint16Array.of(9, 1, 2);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
-    assertTrue(view.includes(2));
-    }
+    assertTrue(view.includes(2));}
 
     @Test
     void testUint16ArrayIncludesTwo061() {
@@ -79,16 +55,14 @@ public class Uint16ArrayIncludesTwo extends BasTest {
     arr.set(new Uint16Array(new int[] {7, 8}));
     Uint16Array alias = new Uint16Array(buffer);
     alias.set(0, 6);
-    assertFalse(arr.includes(7));
-    }
+    assertFalse(arr.includes(7));}
 
     @Test
     void testUint16ArrayIncludesTwo062() {
     Uint16Array backing = Uint16Array.of(9, 7, 8, 7, 9);
     Uint16Array view = new Uint16Array(backing.buffer(), 2, 3);
     assertTrue(view.includes(7, 1));
-    assertFalse(view.includes(7, 3));
-    }
+    assertFalse(view.includes(7, 3));}
 
     @Test
     void testUint16ArrayIncludesTwo063() {
@@ -99,6 +73,5 @@ public class Uint16ArrayIncludesTwo extends BasTest {
     assertEqual(-1, array.lastIndexOf(-1));
     assertTrue(array.includes(65535));
     assertEqual(0, array.indexOf(65535));
-    assertEqual(2, array.lastIndexOf(65535));
-    }
+    assertEqual(2, array.lastIndexOf(65535));}
 }

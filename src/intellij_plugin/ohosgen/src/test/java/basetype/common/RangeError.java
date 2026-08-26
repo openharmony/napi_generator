@@ -17,19 +17,18 @@ package basetype.common;
 
 /**
  * 范围错误，对应 ECMAScript RangeError 语义（name 恒为 "RangeError"）。
+ *
+ * @since 2026-08-26
  */
 public class RangeError extends RuntimeException {
 
     public RangeError() {
-        super("");
-    }
+        super("");}
 
     public RangeError(String message) {
-        super(message);
-    }
+        super(message);}
 
     /** ECMAScript RangeError.name。 */
     public String name() {
-        return "RangeError";
-    }
+        return "RangeError";}
 }

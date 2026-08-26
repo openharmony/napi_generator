@@ -17,15 +17,15 @@ package basetype.common;
 
 /**
  * 模拟设备端分配超大数组时的内存溢出错误（RuntimeException 变体，
- * 便于测试 catch (RuntimeException) 捕获并断言异常名）。
+ * 模拟设备端内存溢出异常）。
+ *
+ * @since 2026-08-26
  */
 public class OutOfMemoryError extends RuntimeException {
 
     public OutOfMemoryError() {
-        super();
-    }
+        super();}
 
     public OutOfMemoryError(String message) {
-        super(message);
-    }
+        super(message);}
 }

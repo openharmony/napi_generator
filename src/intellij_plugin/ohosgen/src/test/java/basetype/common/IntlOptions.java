@@ -18,6 +18,8 @@ package basetype.common;
 /**
  * Intl.NumberFormatOptions 的 Java 等价选项对象，
  * 支撑 toLocaleString 的分组/补零/小数位/百分比/货币格式语义。
+ *
+ * @since 2026-08-26
  */
 public class IntlOptions {
 
@@ -55,5 +57,4 @@ public class IntlOptions {
     public String currencyDisplay = "";
 
     /** 区域匹配策略（ArkTS ToLocaleStringOptions，不影响数值格式）。 */
-    public String localeMatcher = "";
-}
+    public String localeMatcher = "";}

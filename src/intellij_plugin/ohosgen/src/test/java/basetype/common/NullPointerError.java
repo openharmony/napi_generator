@@ -17,15 +17,15 @@ package basetype.common;
 
 /**
  * 空指针错误，对应 ETS NullPointerError 语义（name 恒为 "NullPointerError"）。
+ *
+ * @since 2026-08-26
  */
 public class NullPointerError extends RuntimeException {
 
     public NullPointerError() {
-        super("null callback");
-    }
+        super("null callback");}
 
     /** ETS NullPointerError.name。 */
     public String name() {
-        return "NullPointerError";
-    }
+        return "NullPointerError";}
 }
