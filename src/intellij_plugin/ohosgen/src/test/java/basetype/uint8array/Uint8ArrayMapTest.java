@@ -39,7 +39,8 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap001() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v + 1);
-    assertEqual(3, result.length());}
+    assertEqual(3, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0200
      * @tc.name testUint8ArrayMap002
@@ -53,8 +54,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap002() {
     Uint8Array src = new Uint8Array(new int[] {0});
     int[] captured = {0};
-    src.map((v, i, a) -> { captured[0] = v; return v;});
-    assertEqual(0, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = v;
+        return v;
+    });
+    assertEqual(0, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0300
      * @tc.name testUint8ArrayMap003
@@ -68,8 +73,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap003() {
     Uint8Array src = new Uint8Array(new int[] {1});
     int[] captured = {0};
-    src.map((v, i, a) -> { captured[0] = v; return v;});
-    assertEqual(1, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = v;
+        return v;
+    });
+    assertEqual(1, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0400
      * @tc.name testUint8ArrayMap004
@@ -83,8 +92,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap004() {
     Uint8Array src = new Uint8Array(new int[] {127});
     int[] captured = {0};
-    src.map((v, i, a) -> { captured[0] = v; return v;});
-    assertEqual(127, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = v;
+        return v;
+    });
+    assertEqual(127, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0500
      * @tc.name testUint8ArrayMap005
@@ -98,8 +111,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap005() {
     Uint8Array src = new Uint8Array(new int[] {128});
     int[] captured = {0};
-    src.map((v, i, a) -> { captured[0] = v; return v;});
-    assertEqual(128, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = v;
+        return v;
+    });
+    assertEqual(128, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0600
      * @tc.name testUint8ArrayMap006
@@ -113,8 +130,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap006() {
     Uint8Array src = new Uint8Array(new int[] {255});
     int[] captured = {0};
-    src.map((v, i, a) -> { captured[0] = v; return v;});
-    assertEqual(255, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = v;
+        return v;
+    });
+    assertEqual(255, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0700
      * @tc.name testUint8ArrayMap007
@@ -128,8 +149,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap007() {
     Uint8Array src = new Uint8Array(new int[] {0x80});
     int[] captured = {0};
-    src.map((v, i, a) -> { captured[0] = v; return v;});
-    assertEqual(128, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = v;
+        return v;
+    });
+    assertEqual(128, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0800
      * @tc.name testUint8ArrayMap008
@@ -143,8 +168,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap008() {
     Uint8Array src = new Uint8Array(new int[] {0xFF});
     int[] captured = {0};
-    src.map((v, i, a) -> { captured[0] = v; return v;});
-    assertEqual(255, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = v;
+        return v;
+    });
+    assertEqual(255, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0900
      * @tc.name testUint8ArrayMap009
@@ -158,8 +187,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap009() {
     Uint8Array src = new Uint8Array(new int[] {256});
     int[] captured = {0};
-    src.map((v, i, a) -> { captured[0] = v; return v;});
-    assertEqual(0, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = v;
+        return v;
+    });
+    assertEqual(0, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1000
      * @tc.name testUint8ArrayMap010
@@ -173,8 +206,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap010() {
     Uint8Array src = new Uint8Array(new int[] {-1});
     int[] captured = {0};
-    src.map((v, i, a) -> { captured[0] = v; return v;});
-    assertEqual(255, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = v;
+        return v;
+    });
+    assertEqual(255, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1100
      * @tc.name testUint8ArrayMap011
@@ -188,8 +225,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap011() {
     Uint8Array src = new Uint8Array(3);
     int[] captured = {0};
-    src.map((v, i, a) -> { captured[0] = v; return v;});
-    assertEqual(0, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = v;
+        return v;
+    });
+    assertEqual(0, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1200
      * @tc.name testUint8ArrayMap012
@@ -204,9 +245,12 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {10, 20});
     int[] captured = {-1};
     src.map((v, i, a) -> {
-    if (captured[0] == -1) { captured[0] = i;};
-    return v;});
-    assertEqual(0, captured[0]);}
+    if (captured[0] == -1) { captured[0] = i;
+    }
+    return v;
+        });
+    assertEqual(0, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1300
      * @tc.name testUint8ArrayMap013
@@ -222,10 +266,13 @@ public class Uint8ArrayMapTest extends BasTest {
     int[] captured = {-1};
     int[] callCount = {0};
     src.map((v, i, a) -> {
-    if (callCount[0] == 1) { captured[0] = i;};
+    if (callCount[0] == 1) { captured[0] = i;
+    }
     callCount[0]++;
-    return v;});
-    assertEqual(1, captured[0]);}
+    return v;
+        });
+    assertEqual(1, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1400
      * @tc.name testUint8ArrayMap014
@@ -239,8 +286,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap014() {
     Uint8Array src = new Uint8Array(new int[] {0, 0, 0});
     String[] indices = {""};
-    src.map((v, i, a) -> { indices[0] += String.valueOf(i); return v;});
-    assertEqual("012", indices[0]);}
+    src.map((v, i, a) -> {
+        indices[0] += String.valueOf(i);
+        return v;
+    });
+    assertEqual("012", indices[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1500
      * @tc.name testUint8ArrayMap015
@@ -257,7 +308,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(1, result.get(1));
     assertEqual(2, result.get(2));
-    assertEqual(3, result.get(3));}
+    assertEqual(3, result.get(3));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1600
      * @tc.name testUint8ArrayMap016
@@ -271,8 +323,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap016() {
     Uint8Array src = new Uint8Array(new int[] {42});
     int[] captured = {-1};
-    src.map((v, i, a) -> { captured[0] = i; return v;});
-    assertEqual(0, captured[0]);}
+    src.map((v, i, a) -> {
+        captured[0] = i;
+        return v;
+    });
+    assertEqual(0, captured[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1700
      * @tc.name testUint8ArrayMap017
@@ -289,7 +345,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(64, result.get(1));
     assertEqual(128, result.get(2));
-    assertEqual(192, result.get(3));}
+    assertEqual(192, result.get(3));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1800
      * @tc.name testUint8ArrayMap018
@@ -303,8 +360,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap018() {
     Uint8Array src = new Uint8Array(new int[] {1, 2});
     boolean[] sameRef = {false};
-    src.map((v, i, a) -> { sameRef[0] = (a == src); return v;});
-    assertTrue(sameRef[0]);}
+    src.map((v, i, a) -> {
+        sameRef[0] = (a == src);
+        return v;
+    });
+    assertTrue(sameRef[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1900
      * @tc.name testUint8ArrayMap019
@@ -318,8 +379,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap019() {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     int[] arrLen = {0};
-    src.map((v, i, a) -> { arrLen[0] = a.length(); return v;});
-    assertEqual(3, arrLen[0]);}
+    src.map((v, i, a) -> {
+        arrLen[0] = a.length();
+        return v;
+    });
+    assertEqual(3, arrLen[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2000
      * @tc.name testUint8ArrayMap020
@@ -334,9 +399,12 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {77, 88});
     boolean[] match = {true};
     src.map((v, i, a) -> {
-    if (a.get(i) != v) { match[0] = false;};
-    return v;});
-    assertTrue(match[0]);}
+    if (a.get(i) != v) { match[0] = false;
+    }
+    return v;
+        });
+    assertTrue(match[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2100
      * @tc.name testUint8ArrayMap021
@@ -351,9 +419,12 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     int[] sum = {0};
     src.map((v, i, a) -> {
-    if (i == 1) { sum[0] = a.get(0) + a.get(2);};
-    return v;});
-    assertEqual(40, sum[0]);}
+    if (i == 1) { sum[0] = a.get(0) + a.get(2);
+    }
+    return v;
+        });
+    assertEqual(40, sum[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2200
      * @tc.name testUint8ArrayMap022
@@ -368,9 +439,12 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {5, 10, 15});
     int[] lastVal = {0};
     src.map((v, i, a) -> {
-    if (i == 0) { lastVal[0] = a.get(a.length() - 1);};
-    return v;});
-    assertEqual(15, lastVal[0]);}
+    if (i == 0) { lastVal[0] = a.get(a.length() - 1);
+    }
+    return v;
+        });
+    assertEqual(15, lastVal[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2300
      * @tc.name testUint8ArrayMap023
@@ -386,7 +460,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 0);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2400
      * @tc.name testUint8ArrayMap024
@@ -402,7 +477,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 1);
     assertEqual(1, result.get(0));
     assertEqual(1, result.get(1));
-    assertEqual(1, result.get(2));}
+    assertEqual(1, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2500
      * @tc.name testUint8ArrayMap025
@@ -418,7 +494,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 127);
     assertEqual(127, result.get(0));
     assertEqual(127, result.get(1));
-    assertEqual(127, result.get(2));}
+    assertEqual(127, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2600
      * @tc.name testUint8ArrayMap026
@@ -434,7 +511,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 128);
     assertEqual(128, result.get(0));
     assertEqual(128, result.get(1));
-    assertEqual(128, result.get(2));}
+    assertEqual(128, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2700
      * @tc.name testUint8ArrayMap027
@@ -450,7 +528,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 255);
     assertEqual(255, result.get(0));
     assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));}
+    assertEqual(255, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2800
      * @tc.name testUint8ArrayMap028
@@ -466,7 +545,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 256);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2900
      * @tc.name testUint8ArrayMap029
@@ -482,7 +562,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> -1);
     assertEqual(255, result.get(0));
     assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));}
+    assertEqual(255, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3000
      * @tc.name testUint8ArrayMap030
@@ -498,7 +579,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> -256);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3100
      * @tc.name testUint8ArrayMap031
@@ -514,7 +596,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> -257);
     assertEqual(255, result.get(0));
     assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));}
+    assertEqual(255, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3200
      * @tc.name testUint8ArrayMap032
@@ -530,7 +613,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> (int) (1.0));
     assertEqual(1, result.get(0));
     assertEqual(1, result.get(1));
-    assertEqual(1, result.get(2));}
+    assertEqual(1, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3300
      * @tc.name testUint8ArrayMap033
@@ -546,7 +630,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> (int) (1.9));
     assertEqual(1, result.get(0));
     assertEqual(1, result.get(1));
-    assertEqual(1, result.get(2));}
+    assertEqual(1, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3400
      * @tc.name testUint8ArrayMap034
@@ -562,7 +647,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> (int) (255.9));
     assertEqual(255, result.get(0));
     assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));}
+    assertEqual(255, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3500
      * @tc.name testUint8ArrayMap035
@@ -578,7 +664,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> (int) (-0.5));
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3600
      * @tc.name testUint8ArrayMap036
@@ -594,7 +681,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> (int) (-1.5));
     assertEqual(255, result.get(0));
     assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));}
+    assertEqual(255, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3700
      * @tc.name testUint8ArrayMap037
@@ -610,7 +698,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> (int) (Double.NaN));
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3800
      * @tc.name testUint8ArrayMap038
@@ -626,7 +715,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 0);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3900
      * @tc.name testUint8ArrayMap039
@@ -642,7 +732,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 0);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4000
      * @tc.name testUint8ArrayMap040
@@ -658,7 +749,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 0);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4100
      * @tc.name testUint8ArrayMap041
@@ -674,7 +766,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 257);
     assertEqual(1, result.get(0));
     assertEqual(1, result.get(1));
-    assertEqual(1, result.get(2));}
+    assertEqual(1, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4200
      * @tc.name testUint8ArrayMap042
@@ -690,7 +783,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 512);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4300
      * @tc.name testUint8ArrayMap043
@@ -706,7 +800,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 1000);
     assertEqual(232, result.get(0));
     assertEqual(232, result.get(1));
-    assertEqual(232, result.get(2));}
+    assertEqual(232, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4400
      * @tc.name testUint8ArrayMap044
@@ -722,7 +817,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> -512);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4500
      * @tc.name testUint8ArrayMap045
@@ -738,7 +834,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> -1000);
     assertEqual(24, result.get(0));
     assertEqual(24, result.get(1));
-    assertEqual(24, result.get(2));}
+    assertEqual(24, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4600
      * @tc.name testUint8ArrayMap046
@@ -754,7 +851,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 65536);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4700
      * @tc.name testUint8ArrayMap047
@@ -770,7 +868,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> -65536);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4800
      * @tc.name testUint8ArrayMap048
@@ -786,7 +885,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 0x100);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4900
      * @tc.name testUint8ArrayMap049
@@ -802,7 +902,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 0xFF);
     assertEqual(255, result.get(0));
     assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));}
+    assertEqual(255, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5000
      * @tc.name testUint8ArrayMap050
@@ -818,7 +919,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 0x1FF);
     assertEqual(255, result.get(0));
     assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));}
+    assertEqual(255, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5100
      * @tc.name testUint8ArrayMap051
@@ -834,7 +936,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 0400);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5200
      * @tc.name testUint8ArrayMap052
@@ -850,7 +953,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 0377);
     assertEqual(255, result.get(0));
     assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));}
+    assertEqual(255, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5300
      * @tc.name testUint8ArrayMap053
@@ -866,7 +970,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> 0b100000000);
     assertEqual(0, result.get(0));
     assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));}
+    assertEqual(0, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5400
      * @tc.name testUint8ArrayMap054
@@ -885,7 +990,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(3, src.get(2));
     assertEqual(2, result.get(0));
     assertEqual(4, result.get(1));
-    assertEqual(6, result.get(2));}
+    assertEqual(6, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5500
      * @tc.name testUint8ArrayMap055
@@ -899,7 +1005,8 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap055() {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30, 40, 50});
     Uint8Array result = src.map((v, i, a) -> v);
-    assertEqual(5, result.length());}
+    assertEqual(5, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5600
      * @tc.name testUint8ArrayMap056
@@ -913,7 +1020,8 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap056() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v);
-    assertEqual(3, result.length());}
+    assertEqual(3, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5700
      * @tc.name testUint8ArrayMap057
@@ -928,7 +1036,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v * 2);
     result.set(new Uint8Array(new int[] {99}), 0);
-    assertEqual(1, src.at(0));}
+    assertEqual(1, src.at(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5800
      * @tc.name testUint8ArrayMap058
@@ -942,7 +1051,8 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap058() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v);
-    assertTrue(result.buffer() != src.buffer());}
+    assertTrue(result.buffer() != src.buffer());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5900
      * @tc.name testUint8ArrayMap059
@@ -956,7 +1066,8 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap059() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = src.map((v, i, a) -> v);
-    assertEqual(5, result.byteLength());}
+    assertEqual(5, result.byteLength());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6000
      * @tc.name testUint8ArrayMap060
@@ -970,7 +1081,8 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap060() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v);
-    assertEqual(0, result.byteOffset());}
+    assertEqual(0, result.byteOffset());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6100
      * @tc.name testUint8ArrayMap061
@@ -986,7 +1098,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v + 100);
     assertEqual(101, result.get(0));
     assertEqual(102, result.get(1));
-    assertEqual(103, result.get(2));}
+    assertEqual(103, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6200
      * @tc.name testUint8ArrayMap062
@@ -1002,7 +1115,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v * 2);
     assertEqual(2, result.get(0));
     assertEqual(4, result.get(1));
-    assertEqual(6, result.get(2));}
+    assertEqual(6, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6300
      * @tc.name testUint8ArrayMap063
@@ -1018,7 +1132,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v - 1);
     assertEqual(0, result.get(0));
     assertEqual(1, result.get(1));
-    assertEqual(2, result.get(2));}
+    assertEqual(2, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6400
      * @tc.name testUint8ArrayMap064
@@ -1034,7 +1149,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v / 2);
     assertEqual(1, result.get(0));
     assertEqual(2, result.get(1));
-    assertEqual(3, result.get(2));}
+    assertEqual(3, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6500
      * @tc.name testUint8ArrayMap065
@@ -1052,7 +1168,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(1, result.get(2));
     assertEqual(0, result.get(3));
-    assertEqual(1, result.get(4));}
+    assertEqual(1, result.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6600
      * @tc.name testUint8ArrayMap066
@@ -1070,7 +1187,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(15, result.get(1));
     assertEqual(0, result.get(2));
     assertEqual(15, result.get(3));
-    assertEqual(0, result.get(4));}
+    assertEqual(0, result.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6700
      * @tc.name testUint8ArrayMap067
@@ -1087,7 +1205,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(128, result.get(0));
     assertEqual(129, result.get(1));
     assertEqual(130, result.get(2));
-    assertEqual(131, result.get(3));}
+    assertEqual(131, result.get(3));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6800
      * @tc.name testUint8ArrayMap068
@@ -1105,7 +1224,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(254, result.get(1));
     assertEqual(128, result.get(2));
     assertEqual(127, result.get(3));
-    assertEqual(0, result.get(4));}
+    assertEqual(0, result.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6900
      * @tc.name testUint8ArrayMap069
@@ -1123,7 +1243,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(4, result.get(1));
     assertEqual(8, result.get(2));
     assertEqual(16, result.get(3));
-    assertEqual(32, result.get(4));}
+    assertEqual(32, result.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7000
      * @tc.name testUint8ArrayMap070
@@ -1141,7 +1262,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(2, result.get(1));
     assertEqual(4, result.get(2));
     assertEqual(8, result.get(3));
-    assertEqual(16, result.get(4));}
+    assertEqual(16, result.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7100
      * @tc.name testUint8ArrayMap071
@@ -1159,7 +1281,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(254, result.get(1));
     assertEqual(128, result.get(2));
     assertEqual(127, result.get(3));
-    assertEqual(0, result.get(4));}
+    assertEqual(0, result.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7200
      * @tc.name testUint8ArrayMap072
@@ -1177,7 +1300,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(4, result.get(1));
     assertEqual(9, result.get(2));
     assertEqual(16, result.get(3));
-    assertEqual(25, result.get(4));}
+    assertEqual(25, result.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7300
      * @tc.name testUint8ArrayMap073
@@ -1195,7 +1319,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(64, result.get(1));
     assertEqual(0, result.get(2));
     assertEqual(64, result.get(3));
-    assertEqual(127, result.get(4));}
+    assertEqual(127, result.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7400
      * @tc.name testUint8ArrayMap074
@@ -1213,7 +1338,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     assertEqual(255, result.get(3));
-    assertEqual(255, result.get(4));}
+    assertEqual(255, result.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7500
      * @tc.name testUint8ArrayMap075
@@ -1230,7 +1356,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(255, result.get(0));
     assertEqual(1, result.get(1));
     assertEqual(128, result.get(2));
-    assertEqual(255, result.get(3));}
+    assertEqual(255, result.get(3));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7600
      * @tc.name testUint8ArrayMap076
@@ -1248,7 +1375,8 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(1, result.get(1));
     assertEqual(0, result.get(2));
     assertEqual(3, result.get(3));
-    assertEqual(0, result.get(4));}
+    assertEqual(0, result.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7700
      * @tc.name testUint8ArrayMap077
@@ -1264,7 +1392,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v + i);
     assertEqual(10, result.get(0));
     assertEqual(21, result.get(1));
-    assertEqual(32, result.get(2));}
+    assertEqual(32, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7800
      * @tc.name testUint8ArrayMap078
@@ -1280,7 +1409,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v * i);
     assertEqual(0, result.get(0));
     assertEqual(20, result.get(1));
-    assertEqual(60, result.get(2));}
+    assertEqual(60, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7900
      * @tc.name testUint8ArrayMap079
@@ -1296,7 +1426,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v + a.get(i));
     assertEqual(20, result.get(0));
     assertEqual(40, result.get(1));
-    assertEqual(60, result.get(2));}
+    assertEqual(60, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_8000
      * @tc.name testUint8ArrayMap080
@@ -1312,7 +1443,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v + a.get((i + 1) % a.length()));
     assertEqual(30, result.get(0));
     assertEqual(50, result.get(1));
-    assertEqual(40, result.get(2));}
+    assertEqual(40, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_8100
      * @tc.name testUint8ArrayMap081
@@ -1328,7 +1460,8 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v + a.get((i - 1 + a.length()) % a.length()));
     assertEqual(40, result.get(0));
     assertEqual(30, result.get(1));
-    assertEqual(50, result.get(2));}
+    assertEqual(50, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_8200
      * @tc.name testUint8ArrayMap082
@@ -1341,10 +1474,14 @@ public class Uint8ArrayMapTest extends BasTest {
     @Test
     void testUint8ArrayMap082() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
-    Uint8Array result = src.map((v, i, a) -> { if (i == 0) { a.set(new Uint8Array(new int[] {255}), 1);} return v;});
+    Uint8Array result = src.map((v, i, a) -> {
+        if (i == 0) { a.set(new Uint8Array(new int[] {255}), 1);
+        } return v;
+    });
     assertEqual(1, result.get(0));
     assertEqual(255, result.get(1));
-    assertEqual(3, result.get(2));}
+    assertEqual(3, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_8300
      * @tc.name testUint8ArrayMap083
@@ -1357,10 +1494,17 @@ public class Uint8ArrayMapTest extends BasTest {
     @Test
     void testUint8ArrayMap083() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
-    Uint8Array result = src.map((v, i, a) -> { int[] sum = {0}; for (int j = 0; j < a.length(); j++) { sum[0] += a.get(j);} return v + sum[0];});
+    Uint8Array result = src.map((v, i, a) -> {
+        int[] sum = {0};
+        for (int j = 0;
+        j < a.length();
+        j++) { sum[0] += a.get(j);
+        } return v + sum[0];
+    });
     assertEqual(7, result.get(0));
     assertEqual(8, result.get(1));
-    assertEqual(9, result.get(2));}
+    assertEqual(9, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_8400
      * @tc.name testUint8ArrayMap084
@@ -1373,8 +1517,15 @@ public class Uint8ArrayMapTest extends BasTest {
     @Test
     void testUint8ArrayMap084() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
-    Uint8Array result = src.map((v, i, a) -> { int max = 0; for (int j = 0; j < a.length(); j++) { if (a.get(j) > max) { max = a.get(j);} } return v + max;});
+    Uint8Array result = src.map((v, i, a) -> {
+        int max = 0;
+        for (int j = 0;
+        j < a.length();
+        j++) { if (a.get(j) > max) { max = a.get(j);
+        } } return v + max;
+    });
     assertEqual(4, result.get(0));
     assertEqual(5, result.get(1));
-    assertEqual(6, result.get(2));}
+    assertEqual(6, result.get(2));
+    }
 }
