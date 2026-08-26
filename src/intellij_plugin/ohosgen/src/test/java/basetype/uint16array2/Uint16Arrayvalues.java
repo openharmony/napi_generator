@@ -17,33 +17,17 @@ package basetype.uint16array2;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
 import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint16Array;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint16Arrayvalues —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint16Arrayvalues extends BasTest {
 
@@ -53,26 +37,22 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array.KeyIterator iter = arr.values();
     int count = 0;
     for (Integer v : iter) {
-    count++;
-    }
-    assertEqual(2, count);
-    }
+    count++;}
+    assertEqual(2, count);}
 
     @Test
     void testUint16ArrayValues002() {
     Uint16Array arr = new Uint16Array(new int[] {42});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(42, result.value);
-    }
+    assertEqual(42, result.value);}
 
     @Test
     void testUint16ArrayValues003() {
     Uint16Array arr = new Uint16Array(new int[] {42});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertFalse(result.done);
-    }
+    assertFalse(result.done);}
 
     @Test
     void testUint16ArrayValues004() {
@@ -83,34 +63,29 @@ public class Uint16Arrayvalues extends BasTest {
     assertEqual(1, r1.value);
     assertFalse(r1.done);
     assertEqual(2, r2.value);
-    assertFalse(r2.done);
-    }
+    assertFalse(r2.done);}
 
     @Test
     void testUint16ArrayValues005() {
     Uint16Array arr = new Uint16Array(0);
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertTrue(result.done);
-    }
+    assertTrue(result.done);}
 
     @Test
     void testUint16ArrayValues006() {
     Uint16Array arr = new Uint16Array(0);
     int count = 0;
     for (Integer v : arr.values()) {
-    count++;
-    }
-    assertEqual(0, count);
-    }
+    count++;}
+    assertEqual(0, count);}
 
     @Test
     void testUint16ArrayValues007() {
     Uint16Array arr = new Uint16Array(0);
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertNull(result.value);
-    }
+    assertNull(result.value);}
 
     @Test
     void testUint16ArrayValues008() {
@@ -118,40 +93,35 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array.KeyIterator iter = arr.values();
     iter.next();
     IteratorResult result = iter.next();
-    assertTrue(result.done);
-    }
+    assertTrue(result.done);}
 
     @Test
     void testUint16ArrayValues009() {
     Uint16Array arr = new Uint16Array(new int[] {0});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(0, result.value);
-    }
+    assertEqual(0, result.value);}
 
     @Test
     void testUint16ArrayValues010() {
     Uint16Array arr = new Uint16Array(new int[] {65535});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(65535, result.value);
-    }
+    assertEqual(65535, result.value);}
 
     @Test
     void testUint16ArrayValues011() {
     Uint16Array arr = new Uint16Array(new int[] {32768});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(32768, result.value);
-    }
+    assertEqual(32768, result.value);}
 
     @Test
     void testUint16ArrayValues012() {
     Uint16Array arr = new Uint16Array(new int[] {1});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(1, result.value);
-    }
+    assertEqual(1, result.value);}
 
     @Test
     void testUint16ArrayValues013() {
@@ -160,8 +130,7 @@ public class Uint16Arrayvalues extends BasTest {
     IteratorResult first = iter.next();
     IteratorResult second = iter.next();
     assertEqual(0, first.value);
-    assertEqual(65535, second.value);
-    }
+    assertEqual(65535, second.value);}
 
     @Test
     void testUint16ArrayValues014() {
@@ -175,8 +144,7 @@ public class Uint16Arrayvalues extends BasTest {
     assertEqual(2, v2.value);
     assertFalse(v2.done);
     assertEqual(3, v3.value);
-    assertFalse(v3.done);
-    }
+    assertFalse(v3.done);}
 
     @Test
     void testUint16ArrayValues015() {
@@ -185,16 +153,14 @@ public class Uint16Arrayvalues extends BasTest {
     iter.next();
     iter.next();
     IteratorResult last = iter.next();
-    assertEqual(65535, last.value);
-    }
+    assertEqual(65535, last.value);}
 
     @Test
     void testUint16ArrayValues016() {
     Uint16Array arr = new Uint16Array(new int[] {65535, 0, 65535});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(65535, first.value);
-    }
+    assertEqual(65535, first.value);}
 
     @Test
     void testUint16ArrayValues017() {
@@ -203,16 +169,14 @@ public class Uint16Arrayvalues extends BasTest {
     IteratorResult first = iter.next();
     IteratorResult second = iter.next();
     IteratorResult third = iter.next();
-    assertEqual(0, third.value);
-    }
+    assertEqual(0, third.value);}
 
     @Test
     void testUint16ArrayValues018() {
     Uint16Array arr = new Uint16Array(new int[] {5, 4, 3, 2, 1});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(5, first.value);
-    }
+    assertEqual(5, first.value);}
 
     @Test
     void testUint16ArrayValues019() {
@@ -222,10 +186,8 @@ public class Uint16Arrayvalues extends BasTest {
     IteratorResult result = iter.next();
     while (!result.done) {
     count++;
-    result = iter.next();
-    }
-    assertEqual(10, count);
-    }
+    result = iter.next();}
+    assertEqual(10, count);}
 
     @Test
     void testUint16ArrayValues020() {
@@ -233,18 +195,15 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
     IteratorResult second = iter.next();
-    assertEqual(42, second.value);
-    }
+    assertEqual(42, second.value);}
 
     @Test
     void testUint16ArrayValues021() {
     Uint16Array arr = new Uint16Array(new int[] {10, 20, 30, 40, 50});
     int sum = 0;
     for (Integer v : arr.values()) {
-    sum += (int) v;
-    }
-    assertEqual(150, sum);
-    }
+    sum += (int) v;}
+    assertEqual(150, sum);}
 
     @Test
     void testUint16ArrayValues022() {
@@ -253,11 +212,9 @@ public class Uint16Arrayvalues extends BasTest {
     for (Integer v : arr.values()) {
     count++;
     if (count == 2) {
-    break;
+    break;}
     }
-    }
-    assertEqual(2, count);
-    }
+    assertEqual(2, count);}
 
     @Test
     void testUint16ArrayValues023() {
@@ -265,12 +222,9 @@ public class Uint16Arrayvalues extends BasTest {
     int sum = 0;
     for (Integer v : arr.values()) {
     if (((int) v) == 2) {
-    continue;
-    }
-    sum += (int) v;
-    }
-    assertEqual(4, sum);
-    }
+    continue;}
+    sum += (int) v;}
+    assertEqual(4, sum);}
 
     @Test
     void testUint16ArrayValues024() {
@@ -278,21 +232,17 @@ public class Uint16Arrayvalues extends BasTest {
     int count = 0;
     for (Integer v1 : arr.values()) {
     for (Integer v2 : arr.values()) {
-    count++;
+    count++;}
     }
-    }
-    assertEqual(4, count);
-    }
+    assertEqual(4, count);}
 
     @Test
     void testUint16ArrayValues025() {
     Uint16Array arr = new Uint16Array(new int[] {7, 8, 9});
     List<Integer> collected = new ArrayList<>();
     for (Integer v : arr.values()) {
-    collected.add((int) v);
-    }
-    assertEqual("7,8,9", BasTest.joinList(collected, ","));
-    }
+    collected.add((int) v);}
+    assertEqual("7,8,9", BasTest.joinList(collected, ","));}
 
     @Test
     void testUint16ArrayValues026() {
@@ -301,16 +251,14 @@ public class Uint16Arrayvalues extends BasTest {
     iter.next();
     iter.next();
     IteratorResult last = iter.next();
-    assertEqual(300, last.value);
-    }
+    assertEqual(300, last.value);}
 
     @Test
     void testUint16ArrayValues027() {
     Uint16Array arr = new Uint16Array(new int[] {5});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertFalse(result.done);
-    }
+    assertFalse(result.done);}
 
     @Test
     void testUint16ArrayValues028() {
@@ -318,8 +266,7 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array.KeyIterator iter = arr.values();
     iter.next();
     IteratorResult result = iter.next();
-    assertTrue(result.done);
-    }
+    assertTrue(result.done);}
 
     @Test
     void testUint16ArrayValues029() {
@@ -330,8 +277,7 @@ public class Uint16Arrayvalues extends BasTest {
     IteratorResult after1 = iter.next();
     IteratorResult after2 = iter.next();
     assertTrue(after1.done);
-    assertTrue(after2.done);
-    }
+    assertTrue(after2.done);}
 
     @Test
     void testUint16ArrayValues030() {
@@ -340,8 +286,7 @@ public class Uint16Arrayvalues extends BasTest {
     iter.next();
     iter.next();
     IteratorResult mid = iter.next();
-    assertEqual(3, mid.value);
-    }
+    assertEqual(3, mid.value);}
 
     @Test
     void testUint16ArrayValues031() {
@@ -349,8 +294,7 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array.KeyIterator iter = arr.values();
     iter.next();
     IteratorResult after = iter.next();
-    assertNull(after.value);
-    }
+    assertNull(after.value);}
 
     @Test
     void testUint16ArrayValues032() {
@@ -358,8 +302,7 @@ public class Uint16Arrayvalues extends BasTest {
     arr.set(0, 99);
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(99, result.value);
-    }
+    assertEqual(99, result.value);}
 
     @Test
     void testUint16ArrayValues033() {
@@ -367,8 +310,7 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array.KeyIterator iter = arr.values();
     arr.set(0, 88);
     IteratorResult result = iter.next();
-    assertEqual(88, result.value);
-    }
+    assertEqual(88, result.value);}
 
     @Test
     void testUint16ArrayValues034() {
@@ -376,8 +318,7 @@ public class Uint16Arrayvalues extends BasTest {
     arr.fill(42);
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(42, first.value);
-    }
+    assertEqual(42, first.value);}
 
     @Test
     void testUint16ArrayValues035() {
@@ -385,8 +326,7 @@ public class Uint16Arrayvalues extends BasTest {
     arr.set(new Uint16Array(new int[] {10, 20}), 0);
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(10, first.value);
-    }
+    assertEqual(10, first.value);}
 
     @Test
     void testUint16ArrayValues036() {
@@ -394,8 +334,7 @@ public class Uint16Arrayvalues extends BasTest {
     arr.copyWithin(0, 3, 5);
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(4, first.value);
-    }
+    assertEqual(4, first.value);}
 
     @Test
     void testUint16ArrayValues037() {
@@ -405,8 +344,7 @@ public class Uint16Arrayvalues extends BasTest {
     iter.next();
     arr.set(2, 99);
     IteratorResult third = iter.next();
-    assertEqual(99, third.value);
-    }
+    assertEqual(99, third.value);}
 
     @Test
     void testUint16ArrayValues038() {
@@ -415,8 +353,7 @@ public class Uint16Arrayvalues extends BasTest {
     iter.next();
     arr.set(1, 77);
     IteratorResult second = iter.next();
-    assertEqual(77, second.value);
-    }
+    assertEqual(77, second.value);}
 
     @Test
     void testUint16ArrayValues039() {
@@ -427,8 +364,7 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array.KeyIterator iter = arr2.values();
     arr1.set(0, 55);
     IteratorResult result = iter.next();
-    assertEqual(55, result.value);
-    }
+    assertEqual(55, result.value);}
 
     @Test
     void testUint16ArrayValues040() {
@@ -437,8 +373,7 @@ public class Uint16Arrayvalues extends BasTest {
     iter.next();
     arr.reverse();
     IteratorResult second = iter.next();
-    assertEqual(3, second.value);
-    }
+    assertEqual(3, second.value);}
 
     @Test
     void testUint16ArrayValues041() {
@@ -451,8 +386,7 @@ public class Uint16Arrayvalues extends BasTest {
     IteratorResult r2 = iter2.next();
     assertEqual(3, r1.value);
     assertFalse(r1.done);
-    assertEqual(1, r2.value);
-    }
+    assertEqual(1, r2.value);}
 
     @Test
     void testUint16ArrayValues042() {
@@ -462,8 +396,7 @@ public class Uint16Arrayvalues extends BasTest {
     iter1.next();
     iter1.next();
     IteratorResult r2 = iter2.next();
-    assertEqual(10, r2.value);
-    }
+    assertEqual(10, r2.value);}
 
     @Test
     void testUint16ArrayValues043() {
@@ -474,8 +407,7 @@ public class Uint16Arrayvalues extends BasTest {
     iter1.next();
     iter1.next();
     IteratorResult r2 = iter2.next();
-    assertEqual(1, r2.value);
-    }
+    assertEqual(1, r2.value);}
 
     @Test
     void testUint16ArrayValues044() {
@@ -484,8 +416,7 @@ public class Uint16Arrayvalues extends BasTest {
     arr.set(0, 100);
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(100, result.value);
-    }
+    assertEqual(100, result.value);}
 
     @Test
     void testUint16ArrayValues045() {
@@ -493,24 +424,21 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array arr = new Uint16Array(src);
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(10, first.value);
-    }
+    assertEqual(10, first.value);}
 
     @Test
     void testUint16ArrayValues046() {
     Uint16Array arr = Uint16Array.of(100, 200, 300);
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(100, first.value);
-    }
+    assertEqual(100, first.value);}
 
     @Test
     void testUint16ArrayValues047() {
     Uint16Array arr = Uint16Array.from(new int[] {50, 60, 70});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(50, first.value);
-    }
+    assertEqual(50, first.value);}
 
     @Test
     void testUint16ArrayValues048() {
@@ -518,8 +446,7 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array sub = arr.subarray(1, 3);
     Uint16Array.KeyIterator iter = sub.values();
     IteratorResult first = iter.next();
-    assertEqual(2, first.value);
-    }
+    assertEqual(2, first.value);}
 
     @Test
     void testUint16ArrayValues049() {
@@ -527,157 +454,134 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array sliced = arr.slice(1);
     Uint16Array.KeyIterator iter = sliced.values();
     IteratorResult first = iter.next();
-    assertEqual(200, first.value);
-    }
+    assertEqual(200, first.value);}
 
     @Test
     void testUint16ArrayValues050() {
     Uint16Array arr = new Uint16Array(new int[] {65536});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(0, result.value);
-    }
+    assertEqual(0, result.value);}
 
     @Test
     void testUint16ArrayValues051() {
     Uint16Array arr = new Uint16Array(new int[] {-1});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(65535, result.value);
-    }
+    assertEqual(65535, result.value);}
 
     @Test
     void testUint16ArrayValues052() {
     Uint16Array arr = new Uint16Array(new double[] {3.14});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(3, result.value);
-    }
+    assertEqual(3, result.value);}
 
     @Test
     void testUint16ArrayValues053() {
     Uint16Array arr = new Uint16Array(new double[] {Double.NaN});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(0, result.value);
-    }
+    assertEqual(0, result.value);}
 
     @Test
     void testUint16ArrayValues054() {
     Uint16Array arr = new Uint16Array(new double[] {Double.POSITIVE_INFINITY});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(0, result.value);
-    }
+    assertEqual(0, result.value);}
 
     @Test
     void testUint16ArrayValues055() {
     Uint16Array arr = new Uint16Array(new double[] {-Double.POSITIVE_INFINITY});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(0, result.value);
-    }
+    assertEqual(0, result.value);}
 
     @Test
     void testUint16ArrayValues056() {
     Uint16Array arr = new Uint16Array(new double[] {65535.9});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(65535, result.value);
-    }
+    assertEqual(65535, result.value);}
 
     @Test
     void testUint16ArrayValues057() {
     Uint16Array arr = new Uint16Array(new int[] {131072});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(0, result.value);
-    }
+    assertEqual(0, result.value);}
 
     @Test
     void testUint16ArrayValues058() {
     Uint16Array arr = new Uint16Array(new int[] {0xFFFF});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(65535, result.value);
-    }
+    assertEqual(65535, result.value);}
 
     @Test
     void testUint16ArrayValues059() {
     Uint16Array arr = new Uint16Array(new int[] {0x8000});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(32768, result.value);
-    }
+    assertEqual(32768, result.value);}
 
     @Test
     void testUint16ArrayValues060() {
     Uint16Array arr = new Uint16Array(new int[] {0177777});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(65535, result.value);
-    }
+    assertEqual(65535, result.value);}
 
     @Test
     void testUint16ArrayValues061() {
     Uint16Array arr = new Uint16Array(new int[] {0b1111111111111111});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(65535, result.value);
-    }
+    assertEqual(65535, result.value);}
 
     @Test
     void testUint16ArrayValues062() {
     Uint16Array arr = new Uint16Array(new double[] {1e4});
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult result = iter.next();
-    assertEqual(10000, result.value);
-    }
+    assertEqual(10000, result.value);}
 
     @Test
     void testUint16ArrayValues063() {
     Uint16Array arr = new Uint16Array(100);
     for (int i = 0; i < 100; i++) {
-    arr.set(i, i);
-    }
+    arr.set(i, i);}
     int count = 0;
     for (Integer v : arr.values()) {
-    count++;
-    }
+    count++;}
     assertEqual(100, count);
     assertEqual(0, arr.get(0));
-    assertEqual(99, arr.get(99));
-    }
+    assertEqual(99, arr.get(99));}
 
     @Test
     void testUint16ArrayValues064() {
     Uint16Array arr = new Uint16Array(256);
     for (int i = 0; i < 256; i++) {
-    arr.set(i, i);
-    }
+    arr.set(i, i);}
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
     assertEqual(0, first.value);
     IteratorResult last = first;
     for (int i = 1; i < 256; i++) {
-    last = iter.next();
-    }
+    last = iter.next();}
     assertEqual(255, last.value);
-    assertFalse(last.done);
-    }
+    assertFalse(last.done);}
 
     @Test
     void testUint16ArrayValues065() {
     Uint16Array arr = new Uint16Array(256);
     for (int i = 0; i < 256; i++) {
-    arr.set(i, i);
-    }
+    arr.set(i, i);}
     int sum = 0;
     for (Integer v : arr.values()) {
-    sum += (int) v;
-    }
-    assertEqual(32640, sum);
-    }
+    sum += (int) v;}
+    assertEqual(32640, sum);}
 
     @Test
     void testUint16ArrayValues066() {
@@ -690,8 +594,7 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array.KeyIterator iter2 = arr2.values();
     iter1.next();
     IteratorResult r2 = iter2.next();
-    assertEqual(10, r2.value);
-    }
+    assertEqual(10, r2.value);}
 
     @Test
     void testUint16ArrayValues067() {
@@ -702,8 +605,7 @@ public class Uint16Arrayvalues extends BasTest {
     arr2.set(0, 25);
     Uint16Array.KeyIterator iter = arr1.values();
     IteratorResult result = iter.next();
-    assertEqual(25, result.value);
-    }
+    assertEqual(25, result.value);}
 
     @Test
     void testUint16ArrayValues068() {
@@ -718,8 +620,7 @@ public class Uint16Arrayvalues extends BasTest {
     IteratorResult r2 = iter2.next();
     assertEqual(100, r1.value);
     assertFalse(r1.done);
-    assertEqual(200, r2.value);
-    }
+    assertEqual(200, r2.value);}
 
     @Test
     void testUint16ArrayValues069() {
@@ -727,8 +628,7 @@ public class Uint16Arrayvalues extends BasTest {
     arr.reverse();
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(3, first.value);
-    }
+    assertEqual(3, first.value);}
 
     @Test
     void testUint16ArrayValues070() {
@@ -736,8 +636,7 @@ public class Uint16Arrayvalues extends BasTest {
     arr.sort();
     Uint16Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(1, first.value);
-    }
+    assertEqual(1, first.value);}
 
     @Test
     void testUint16ArrayValues071() {
@@ -748,8 +647,7 @@ public class Uint16Arrayvalues extends BasTest {
     IteratorResult third = iterator.next();
     assertEqual(4, first.value);
     assertEqual(5, second.value);
-    assertEqual(6, third.value);
-    }
+    assertEqual(6, third.value);}
 
     @Test
     void testUint16ArrayValues072() {
@@ -758,15 +656,13 @@ public class Uint16Arrayvalues extends BasTest {
     IteratorResult first = iterator.next();
     IteratorResult done = iterator.next();
     assertFalse(first.done);
-    assertTrue(done.done);
-    }
+    assertTrue(done.done);}
 
     @Test
     void testUint16ArrayValues073() {
     Uint16Array source = new Uint16Array();
     IteratorResult result = source.values().next();
-    assertTrue(result.done);
-    }
+    assertTrue(result.done);}
 
     @Test
     void testUint16ArrayValues074() {
@@ -776,8 +672,7 @@ public class Uint16Arrayvalues extends BasTest {
     firstIterator.next();
     firstIterator.next();
     assertEqual(3, firstIterator.next().value);
-    assertEqual(1, secondIterator.next().value);
-    }
+    assertEqual(1, secondIterator.next().value);}
 
     @Test
     void testUint16ArrayValues075() {
@@ -785,8 +680,7 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array.KeyIterator iterator = source.values();
     assertEqual(1, iterator.next().value);
     source.set(1, 22);
-    assertEqual(22, iterator.next().value);
-    }
+    assertEqual(22, iterator.next().value);}
 
     @Test
     void testUint16ArrayValues076() {
@@ -796,20 +690,16 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array view = new Uint16Array(buffer, 2, 3);
     String encoded = "";
     for (Integer value : view.values()) {
-    encoded = encoded + String.valueOf(value) + ",";
-    }
-    assertEqual("2,4,6,", encoded);
-    }
+    encoded = encoded + String.valueOf(value) + ",";}
+    assertEqual("2,4,6,", encoded);}
 
     @Test
     void testUint16ArrayValues077() {
     Uint16Array source = new Uint16Array(new int[] {-1, 65536, 65537});
     String encoded = "";
     for (Integer value : source.values()) {
-    encoded = encoded + String.valueOf(value) + ",";
-    }
-    assertEqual("65535,0,1,", encoded);
-    }
+    encoded = encoded + String.valueOf(value) + ",";}
+    assertEqual("65535,0,1,", encoded);}
 
     @Test
     void testUint16ArrayValues078() {
@@ -818,11 +708,9 @@ public class Uint16Arrayvalues extends BasTest {
     int sum = 0;
     for (Integer value : source.values()) {
     count++;
-    sum = sum + value;
-    }
+    sum = sum + value;}
     assertEqual(4, count);
-    assertEqual(17, sum);
-    }
+    assertEqual(17, sum);}
 
     @Test
     void testUint16ArrayValues079() {
@@ -832,8 +720,7 @@ public class Uint16Arrayvalues extends BasTest {
     IteratorResult firstDone = iterator.next();
     IteratorResult secondDone = iterator.next();
     assertTrue(firstDone.done);
-    assertTrue(secondDone.done);
-    }
+    assertTrue(secondDone.done);}
 
     @Test
     void testUint16ArrayValues080() {
@@ -845,6 +732,5 @@ public class Uint16Arrayvalues extends BasTest {
     Uint16Array.KeyIterator iterator = source.values();
     iterator.next();
     iterator.next();
-    assertEqual(55, iterator.next().value);
-    }
+    assertEqual(55, iterator.next().value);}
 }

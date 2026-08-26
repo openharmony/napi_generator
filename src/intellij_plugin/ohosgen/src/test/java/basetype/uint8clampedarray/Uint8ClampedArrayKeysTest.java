@@ -17,23 +17,7 @@ package basetype.uint8clampedarray;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
 import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
@@ -46,6 +30,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ClampedArrayKeysTest —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ClampedArrayKeysTest extends BasTest {
     /**
@@ -63,8 +49,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray.KeyIterator it = arr.keys();
     assertEqual(0, it.next().value);
     assertEqual(1, it.next().value);
-    assertEqual(2, it.next().value);
-    }
+    assertEqual(2, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0200
      * @tc.name testUint8ClampedArrayKeys002
@@ -78,8 +63,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     void testUint8ClampedArrayKeys002() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertTrue(it.next().done);
-    }
+    assertTrue(it.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0300
      * @tc.name testUint8ClampedArrayKeys003
@@ -93,8 +77,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     void testUint8ClampedArrayKeys003() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42});
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertEqual(0, it.next().value);
-    }
+    assertEqual(0, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0400
      * @tc.name testUint8ClampedArrayKeys004
@@ -109,8 +92,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     Uint8ClampedArray.KeyIterator it = arr.keys();
     IteratorResult r = it.next();
-    assertTrue(r.done);
-    }
+    assertTrue(r.done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0500
      * @tc.name testUint8ClampedArrayKeys005
@@ -125,8 +107,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     Uint8ClampedArray.KeyIterator it = arr.keys();
     IteratorResult r = it.next();
-    assertNull(r.value);
-    }
+    assertNull(r.value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0600
      * @tc.name testUint8ClampedArrayKeys006
@@ -140,8 +121,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     void testUint8ClampedArrayKeys006() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10});
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertEqual(0, it.next().value);
-    }
+    assertEqual(0, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0700
      * @tc.name testUint8ClampedArrayKeys007
@@ -156,8 +136,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10});
     Uint8ClampedArray.KeyIterator it = arr.keys();
     it.next();
-    assertTrue(it.next().done);
-    }
+    assertTrue(it.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0800
      * @tc.name testUint8ClampedArrayKeys008
@@ -171,8 +150,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     void testUint8ClampedArrayKeys008() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20});
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertEqual(0, it.next().value);
-    }
+    assertEqual(0, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0900
      * @tc.name testUint8ClampedArrayKeys009
@@ -187,8 +165,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20});
     Uint8ClampedArray.KeyIterator it = arr.keys();
     it.next();
-    assertEqual(1, it.next().value);
-    }
+    assertEqual(1, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1000
      * @tc.name testUint8ClampedArrayKeys010
@@ -204,8 +181,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray.KeyIterator it = arr.keys();
     it.next();
     it.next();
-    assertTrue(it.next().done);
-    }
+    assertTrue(it.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1100
      * @tc.name testUint8ClampedArrayKeys011
@@ -220,13 +196,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     List<Integer> keys = new ArrayList<>();
     for (Integer k : arr.keys()) {
-    keys.add(k);
-    };
+    keys.add(k);};
     assertEqual(3, keys.size());
     assertEqual(0, keys.get(0));
     assertEqual(1, keys.get(1));
-    assertEqual(2, keys.get(2));
-    }
+    assertEqual(2, keys.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1200
      * @tc.name testUint8ClampedArrayKeys012
@@ -240,8 +214,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     void testUint8ClampedArrayKeys012() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertEqual(0, it.next().value);
-    }
+    assertEqual(0, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1300
      * @tc.name testUint8ClampedArrayKeys013
@@ -257,8 +230,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray.KeyIterator it = arr.keys();
     it.next();
     it.next();
-    assertEqual(2, it.next().value);
-    }
+    assertEqual(2, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1400
      * @tc.name testUint8ClampedArrayKeys014
@@ -275,8 +247,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     it.next();
     it.next();
     it.next();
-    assertTrue(it.next().done);
-    }
+    assertTrue(it.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1500
      * @tc.name testUint8ClampedArrayKeys015
@@ -291,10 +262,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(10);
     int count = 0;
     for (Integer k : arr.keys()) {
-    count++;
-    };
-    assertEqual(10, count);
-    }
+    count++;};
+    assertEqual(10, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1600
      * @tc.name testUint8ClampedArrayKeys016
@@ -308,8 +277,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     void testUint8ClampedArrayKeys016() {
     Uint8ClampedArray arr = new Uint8ClampedArray(10);
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertEqual(0, it.next().value);
-    }
+    assertEqual(0, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1700
      * @tc.name testUint8ClampedArrayKeys017
@@ -324,10 +292,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(10);
     int last = -1;
     for (Integer k : arr.keys()) {
-    last = k;
-    };
-    assertEqual(9, last);
-    }
+    last = k;};
+    assertEqual(9, last);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1800
      * @tc.name testUint8ClampedArrayKeys018
@@ -342,10 +308,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(255);
     int count = 0;
     for (Integer k : arr.keys()) {
-    count++;
-    };
-    assertEqual(255, count);
-    }
+    count++;};
+    assertEqual(255, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1900
      * @tc.name testUint8ClampedArrayKeys019
@@ -360,10 +324,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(255);
     int last = -1;
     for (Integer k : arr.keys()) {
-    last = k;
-    };
-    assertEqual(254, last);
-    }
+    last = k;};
+    assertEqual(254, last);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2000
      * @tc.name testUint8ClampedArrayKeys020
@@ -378,10 +340,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
     int count = 0;
     for (Integer k : arr.keys()) {
-    count++;
-    };
-    assertEqual(256, count);
-    }
+    count++;};
+    assertEqual(256, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2100
      * @tc.name testUint8ClampedArrayKeys021
@@ -396,10 +356,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
     int last = -1;
     for (Integer k : arr.keys()) {
-    last = k;
-    };
-    assertEqual(255, last);
-    }
+    last = k;};
+    assertEqual(255, last);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2200
      * @tc.name testUint8ClampedArrayKeys022
@@ -414,10 +372,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
     int count = 0;
     for (Integer k : arr.keys()) {
-    count++;
-    };
-    assertEqual(1024, count);
-    }
+    count++;};
+    assertEqual(1024, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2300
      * @tc.name testUint8ClampedArrayKeys023
@@ -432,10 +388,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
     int last = -1;
     for (Integer k : arr.keys()) {
-    last = k;
-    };
-    assertEqual(1023, last);
-    }
+    last = k;};
+    assertEqual(1023, last);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2400
      * @tc.name testUint8ClampedArrayKeys024
@@ -450,8 +404,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     List<Number> src = java.util.Arrays.asList(10, 20, 30);
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertEqual(0, it.next().value);
-    }
+    assertEqual(0, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2500
      * @tc.name testUint8ClampedArrayKeys025
@@ -466,10 +419,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.of(10, 20, 30, 40);
     int last = -1;
     for (Integer k : arr.keys()) {
-    last = k;
-    };
-    assertEqual(3, last);
-    }
+    last = k;};
+    assertEqual(3, last);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2600
      * @tc.name testUint8ClampedArrayKeys026
@@ -485,10 +436,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
     int count = 0;
     for (Integer k : arr.keys()) {
-    count++;
-    };
-    assertEqual(4, count);
-    }
+    count++;};
+    assertEqual(4, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2700
      * @tc.name testUint8ClampedArrayKeys027
@@ -503,8 +452,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2, 4);
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertEqual(0, it.next().value);
-    }
+    assertEqual(0, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2800
      * @tc.name testUint8ClampedArrayKeys028
@@ -520,10 +468,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2, 4);
     int count = 0;
     for (Integer k : arr.keys()) {
-    count++;
-    };
-    assertEqual(4, count);
-    }
+    count++;};
+    assertEqual(4, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2900
      * @tc.name testUint8ClampedArrayKeys029
@@ -538,8 +484,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 4, 0);
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertTrue(it.next().done);
-    }
+    assertTrue(it.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3000
      * @tc.name testUint8ClampedArrayKeys030
@@ -555,10 +500,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 4);
     int count = 0;
     for (Integer k : sub.keys()) {
-    count++;
-    };
-    assertEqual(3, count);
-    }
+    count++;};
+    assertEqual(3, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3100
      * @tc.name testUint8ClampedArrayKeys031
@@ -574,10 +517,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray s = arr.slice(0, 3);
     int last = -1;
     for (Integer k : s.keys()) {
-    last = k;
-    };
-    assertEqual(2, last);
-    }
+    last = k;};
+    assertEqual(2, last);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3200
      * @tc.name testUint8ClampedArrayKeys032
@@ -592,8 +533,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     Uint8ClampedArray.KeyIterator it = arr.keys();
     assertEqual(0, it.next().value);
-    assertEqual(1, it.next().value);
-    }
+    assertEqual(1, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3300
      * @tc.name testUint8ClampedArrayKeys033
@@ -608,8 +548,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1});
     Uint8ClampedArray.KeyIterator it = arr.keys();
     IteratorResult r = it.next();
-    assertEqual(0, r.value);
-    }
+    assertEqual(0, r.value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3400
      * @tc.name testUint8ClampedArrayKeys034
@@ -624,8 +563,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     Uint8ClampedArray.KeyIterator it = arr.keys();
     Integer v = it.next().value;
-    assertEqual(0, v);
-    }
+    assertEqual(0, v);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3500
      * @tc.name testUint8ClampedArrayKeys035
@@ -639,8 +577,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     void testUint8ClampedArrayKeys035() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertFalse(it.next().done);
-    }
+    assertFalse(it.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3600
      * @tc.name testUint8ClampedArrayKeys036
@@ -655,10 +592,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int sum = 0;
     for (Integer k : arr.keys()) {
-    sum += k;
-    };
-    assertEqual(3, sum);
-    }
+    sum += k;};
+    assertEqual(3, sum);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3700
      * @tc.name testUint8ClampedArrayKeys037
@@ -673,10 +608,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(5);
     int sum = 0;
     for (Integer k : arr.keys()) {
-    sum += k;
-    };
-    assertEqual(10, sum);
-    }
+    sum += k;};
+    assertEqual(10, sum);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3800
      * @tc.name testUint8ClampedArrayKeys038
@@ -695,8 +628,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     assertEqual(1, it.next().value);
     assertEqual(2, it.next().value);
     assertTrue(it.next().done);
-    assertEqual(before, arr.length());
-    }
+    assertEqual(before, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3900
      * @tc.name testUint8ClampedArrayKeys039
@@ -714,8 +646,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     assertEqual(1, it.next().value);
     assertEqual(2, it.next().value);
     assertTrue(it.next().done);
-    assertEqual(10, arr.get(0));
-    }
+    assertEqual(10, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4000
      * @tc.name testUint8ClampedArrayKeys040
@@ -733,8 +664,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     assertEqual(1, it.next().value);
     assertEqual(2, it.next().value);
     assertTrue(it.next().done);
-    assertEqual(30, arr.get(2));
-    }
+    assertEqual(30, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4100
      * @tc.name testUint8ClampedArrayKeys041
@@ -751,8 +681,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     it.next();
     it.next();
     it.next();
-    assertTrue(it.next().done);
-    }
+    assertTrue(it.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4200
      * @tc.name testUint8ClampedArrayKeys042
@@ -769,8 +698,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     it.next();
     it.next();
     IteratorResult r = it.next();
-    assertNull(r.value);
-    }
+    assertNull(r.value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4300
      * @tc.name testUint8ClampedArrayKeys043
@@ -786,8 +714,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray.KeyIterator it1 = arr.keys();
     Uint8ClampedArray.KeyIterator it2 = arr.keys();
     it1.next();
-    assertEqual(0, it2.next().value);
-    }
+    assertEqual(0, it2.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4400
      * @tc.name testUint8ClampedArrayKeys044
@@ -804,8 +731,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     int a = BasTest.coalesce(it.next().value, 0);
     int b = BasTest.coalesce(it.next().value, 0);
     assertEqual(0, a);
-    assertEqual(1, b);
-    }
+    assertEqual(1, b);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4500
      * @tc.name testUint8ClampedArrayKeys045
@@ -821,8 +747,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray.KeyIterator it = arr.keys();
     int a = BasTest.coalesce(it.next().value, 0);
     int b = BasTest.coalesce(it.next().value, 0);
-    assertEqual(1, b - a);
-    }
+    assertEqual(1, b - a);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4600
      * @tc.name testUint8ClampedArrayKeys046
@@ -837,10 +762,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     List<Integer> collected = new ArrayList<>();
     for (Integer k : arr.keys()) {
-    collected.add(k);
-    };
-    assertEqual(3, collected.size());
-    }
+    collected.add(k);};
+    assertEqual(3, collected.size());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4700
      * @tc.name testUint8ClampedArrayKeys047
@@ -855,10 +778,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 6, 7});
     List<Integer> collected = new ArrayList<>();
     for (Integer k : arr.keys()) {
-    collected.add(k);
-    };
-    assertEqual(0, collected.get(0));
-    }
+    collected.add(k);};
+    assertEqual(0, collected.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4800
      * @tc.name testUint8ClampedArrayKeys048
@@ -873,10 +794,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 6, 7, 8});
     List<Integer> collected = new ArrayList<>();
     for (Integer k : arr.keys()) {
-    collected.add(k);
-    };
-    assertEqual(3, collected.get(collected.size() - 1));
-    }
+    collected.add(k);};
+    assertEqual(3, collected.get(collected.size() - 1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4900
      * @tc.name testUint8ClampedArrayKeys049
@@ -890,8 +809,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     void testUint8ClampedArrayKeys049() {
     Uint8ClampedArray arr = new Uint8ClampedArray(65535);
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertEqual(0, it.next().value);
-    }
+    assertEqual(0, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5000
      * @tc.name testUint8ClampedArrayKeys050
@@ -909,8 +827,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray.KeyIterator it3 = arr.keys();
     assertEqual(0, it1.next().value);
     assertEqual(0, it2.next().value);
-    assertEqual(0, it3.next().value);
-    }
+    assertEqual(0, it3.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5100
      * @tc.name testUint8ClampedArrayKeys051
@@ -925,8 +842,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(0);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertTrue(it.next().done);
-    }
+    assertTrue(it.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5200
      * @tc.name testUint8ClampedArrayKeys052
@@ -942,13 +858,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     int count = 0;
     for (Integer k : arr.keys()) {
     arr.set(k, 99);
-    count++;
-    };
+    count++;};
     assertEqual(3, count);
     assertEqual(99, arr.get(0));
     assertEqual(99, arr.get(1));
-    assertEqual(99, arr.get(2));
-    }
+    assertEqual(99, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5300
      * @tc.name testUint8ClampedArrayKeys053
@@ -962,12 +876,10 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     void testUint8ClampedArrayKeys053() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     for (Integer k : arr.keys()) {
-    arr.set(k, 300);
-    };
+    arr.set(k, 300);};
     assertEqual(255, arr.get(0));
     assertEqual(255, arr.get(1));
-    assertEqual(255, arr.get(2));
-    }
+    assertEqual(255, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5400
      * @tc.name testUint8ClampedArrayKeys054
@@ -983,10 +895,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     arr.fill(7);
     int last = -1;
     for (Integer k : arr.keys()) {
-    last = k;
-    };
-    assertEqual(3, last);
-    }
+    last = k;};
+    assertEqual(3, last);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5500
      * @tc.name testUint8ClampedArrayKeys055
@@ -1001,8 +911,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     arr.reverse();
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertEqual(0, it.next().value);
-    }
+    assertEqual(0, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5600
      * @tc.name testUint8ClampedArrayKeys056
@@ -1018,10 +927,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     arr.sort();
     int last = -1;
     for (Integer k : arr.keys()) {
-    last = k;
-    };
-    assertEqual(2, last);
-    }
+    last = k;};
+    assertEqual(2, last);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5700
      * @tc.name testUint8ClampedArrayKeys057
@@ -1038,8 +945,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray.KeyIterator it2 = arr.keys();
     it1.next();
     it1.next();
-    assertEqual(0, it2.next().value);
-    }
+    assertEqual(0, it2.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5800
      * @tc.name testUint8ClampedArrayKeys058
@@ -1055,10 +961,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     List<Integer> expected = java.util.Arrays.asList(0, 1, 2, 3);
     List<Integer> got = new ArrayList<>();
     for (Integer k : arr.keys()) {
-    got.add(k);
-    };
-    assertEqual(expected.get(0), got.get(0));
-    }
+    got.add(k);};
+    assertEqual(expected.get(0), got.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5900
      * @tc.name testUint8ClampedArrayKeys059
@@ -1073,10 +977,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     List<Integer> got = new ArrayList<>();
     for (Integer k : arr.keys()) {
-    got.add(k);
-    };
-    assertEqual(1, got.get(1));
-    }
+    got.add(k);};
+    assertEqual(1, got.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6000
      * @tc.name testUint8ClampedArrayKeys060
@@ -1091,10 +993,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     List<Integer> got = new ArrayList<>();
     for (Integer k : arr.keys()) {
-    got.add(k);
-    };
-    assertEqual(2, got.get(2));
-    }
+    got.add(k);};
+    assertEqual(2, got.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6100
      * @tc.name testUint8ClampedArrayKeys061
@@ -1109,10 +1009,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     List<Integer> got = new ArrayList<>();
     for (Integer k : arr.keys()) {
-    got.add(k);
-    };
-    assertEqual(3, got.get(3));
-    }
+    got.add(k);};
+    assertEqual(3, got.get(3));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6200
      * @tc.name testUint8ClampedArrayKeys062
@@ -1129,8 +1027,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     it.next();
     it.next();
     it.next();
-    assertEqual(3, it.next().value);
-    }
+    assertEqual(3, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6300
      * @tc.name testUint8ClampedArrayKeys063
@@ -1146,10 +1043,8 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray.KeyIterator it = arr.keys();
     int steps = 0;
     while (!it.next().done) {
-    steps++;
-    };
-    assertEqual(3, steps);
-    }
+    steps++;};
+    assertEqual(3, steps);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6400
      * @tc.name testUint8ClampedArrayKeys064
@@ -1165,11 +1060,9 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     arr.set(0, Double.NaN);
     int count = 0;
     for (Integer k : arr.keys()) {
-    count++;
-    };
+    count++;};
     assertEqual(3, count);
-    assertEqual(0, arr.get(0));
-    }
+    assertEqual(0, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6500
      * @tc.name testUint8ClampedArrayKeys065
@@ -1184,8 +1077,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20});
     arr.set(0, -1);
     Uint8ClampedArray.KeyIterator it = arr.keys();
-    assertEqual(0, it.next().value);
-    }
+    assertEqual(0, it.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6600
      * @tc.name testUint8ClampedArrayKeys066
@@ -1201,11 +1093,9 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     arr.set(0, Double.POSITIVE_INFINITY);
     int count = 0;
     for (Integer k : arr.keys()) {
-    count++;
-    };
+    count++;};
     assertEqual(3, count);
-    assertEqual(255, arr.get(0));
-    }
+    assertEqual(255, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6700
      * @tc.name testUint8ClampedArrayKeys067
@@ -1221,8 +1111,6 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     arr.copyWithin(0, 2);
     int last = -1;
     for (Integer k : arr.keys()) {
-    last = k;
-    };
-    assertEqual(3, last);
-    }
+    last = k;};
+    assertEqual(3, last);}
 }
