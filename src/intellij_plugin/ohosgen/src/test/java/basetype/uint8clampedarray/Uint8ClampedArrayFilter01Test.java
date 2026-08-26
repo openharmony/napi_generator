@@ -17,35 +17,15 @@ package basetype.uint8clampedarray;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
 import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8ClampedArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ClampedArrayFilter01Test —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ClampedArrayFilter01Test extends BasTest {
     /**
@@ -61,8 +41,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne001() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v > 2);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_0200
      * @tc.name testUint8ClampedArrayFilterOne002
@@ -76,8 +55,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne002() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 20);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_0300
      * @tc.name testUint8ClampedArrayFilterOne003
@@ -91,8 +69,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne003() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> i % 2 == 0);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_0400
      * @tc.name testUint8ClampedArrayFilterOne004
@@ -106,8 +83,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne004() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
-    assertEqual(arr.length(), r.length());
-    }
+    assertEqual(arr.length(), r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_0500
      * @tc.name testUint8ClampedArrayFilterOne005
@@ -121,8 +97,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne005() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
-    assertEqual(7, r.get(0));
-    }
+    assertEqual(7, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_0600
      * @tc.name testUint8ClampedArrayFilterOne006
@@ -136,8 +111,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne006() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
-    assertEqual(9, r.get(2));
-    }
+    assertEqual(9, r.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_0700
      * @tc.name testUint8ClampedArrayFilterOne007
@@ -151,8 +125,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne007() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> false);
-    assertEqual(0, r.length());
-    }
+    assertEqual(0, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_0800
      * @tc.name testUint8ClampedArrayFilterOne008
@@ -167,8 +140,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> false);
     assertEqual(0, r.length());
-    assertNotEqual(arr.buffer(), r.buffer());
-    }
+    assertNotEqual(arr.buffer(), r.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_0900
      * @tc.name testUint8ClampedArrayFilterOne009
@@ -182,8 +154,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne009() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5, 6});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v % 2 == 0);
-    assertEqual(3, r.length());
-    }
+    assertEqual(3, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_1000
      * @tc.name testUint8ClampedArrayFilterOne010
@@ -197,8 +168,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne010() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5, 6});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v % 2 == 1);
-    assertEqual(3, r.length());
-    }
+    assertEqual(3, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_1100
      * @tc.name testUint8ClampedArrayFilterOne011
@@ -212,8 +182,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne011() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 50, 100, 150, 200});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v > 100);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_1200
      * @tc.name testUint8ClampedArrayFilterOne012
@@ -227,8 +196,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne012() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 50, 100, 150, 200});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v < 100);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_1300
      * @tc.name testUint8ClampedArrayFilterOne013
@@ -242,8 +210,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne013() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 5, 5, 5, 9});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 5);
-    assertEqual(3, r.length());
-    }
+    assertEqual(3, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_1400
      * @tc.name testUint8ClampedArrayFilterOne014
@@ -257,8 +224,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne014() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 1, 0, 2, 0});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 0);
-    assertEqual(3, r.length());
-    }
+    assertEqual(3, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_1500
      * @tc.name testUint8ClampedArrayFilterOne015
@@ -272,8 +238,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne015() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {255, 0, 255, 0, 255});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 255);
-    assertEqual(3, r.length());
-    }
+    assertEqual(3, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_1600
      * @tc.name testUint8ClampedArrayFilterOne016
@@ -287,8 +252,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne016() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     Uint8ClampedArray r = arr.filter((v, i, a) -> i >= 2);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_1700
      * @tc.name testUint8ClampedArrayFilterOne017
@@ -302,8 +266,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne017() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> i == 0);
-    assertEqual(10, r.get(0));
-    }
+    assertEqual(10, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_1800
      * @tc.name testUint8ClampedArrayFilterOne018
@@ -317,8 +280,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne018() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> i == a.length() - 1);
-    assertEqual(30, r.get(0));
-    }
+    assertEqual(30, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_1900
      * @tc.name testUint8ClampedArrayFilterOne019
@@ -332,8 +294,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne019() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == a.length());
-    assertEqual(1, r.length());
-    }
+    assertEqual(1, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_2000
      * @tc.name testUint8ClampedArrayFilterOne020
@@ -347,8 +308,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne020() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 5, 5, 7});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == a.get(0));
-    assertEqual(3, r.length());
-    }
+    assertEqual(3, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_2100
      * @tc.name testUint8ClampedArrayFilterOne021
@@ -362,8 +322,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne021() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v > 15 && i < 3);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_2200
      * @tc.name testUint8ClampedArrayFilterOne022
@@ -377,8 +336,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne022() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
-    assertEqual(0, r.length());
-    }
+    assertEqual(0, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_2300
      * @tc.name testUint8ClampedArrayFilterOne023
@@ -392,9 +350,8 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne023() {
     int[] called = {0};
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {});
-    arr.filter((v, i, a) -> { called[0]++; return true; });
-    assertEqual(0, called[0]);
-    }
+    arr.filter((v, i, a) -> { called[0]++; return true;});
+    assertEqual(0, called[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_2400
      * @tc.name testUint8ClampedArrayFilterOne024
@@ -408,8 +365,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne024() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     Uint8ClampedArray r = arr.filter((v, i, a) -> i == 0);
-    assertEqual(1, r.get(0));
-    }
+    assertEqual(1, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_2500
      * @tc.name testUint8ClampedArrayFilterOne025
@@ -423,8 +379,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne025() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     Uint8ClampedArray r = arr.filter((v, i, a) -> i == 1);
-    assertEqual(2, r.get(0));
-    }
+    assertEqual(2, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_2600
      * @tc.name testUint8ClampedArrayFilterOne026
@@ -438,8 +393,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne026() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 255, 0, 255});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 0);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_2700
      * @tc.name testUint8ClampedArrayFilterOne027
@@ -453,8 +407,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne027() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {127, 128, 129});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 128);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_2800
      * @tc.name testUint8ClampedArrayFilterOne028
@@ -468,10 +421,9 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne028() {
     ArrayBuffer buf = new ArrayBuffer(256);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
-    for (int i = 0; i < 256; i++) { arr.set(i, i); }
+    for (int i = 0; i < 256; i++) { arr.set(i, i);}
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 128);
-    assertEqual(128, r.length());
-    }
+    assertEqual(128, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_2900
      * @tc.name testUint8ClampedArrayFilterOne029
@@ -485,10 +437,9 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne029() {
     ArrayBuffer buf = new ArrayBuffer(1024);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
-    for (int i = 0; i < 1024; i++) { arr.set(i, i % 256); }
+    for (int i = 0; i < 1024; i++) { arr.set(i, i % 256);}
     Uint8ClampedArray r = arr.filter((v, i, a) -> i % 2 == 0);
-    assertEqual(512, r.length());
-    }
+    assertEqual(512, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_3000
      * @tc.name testUint8ClampedArrayFilterOne030
@@ -502,12 +453,11 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne030() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
-    for (int i = 0; i < 8; i++) { arr.set(i, i * 30); }
+    for (int i = 0; i < 8; i++) { arr.set(i, i * 30);}
     Uint8ClampedArray r = arr.filter((v, i, a) -> v > 100);
     assertEqual(4, r.length());
     assertEqual(120, r.get(0));
-    assertEqual(210, r.get(3));
-    }
+    assertEqual(210, r.get(3));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_3100
      * @tc.name testUint8ClampedArrayFilterOne031
@@ -523,8 +473,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2, 4);
     arr.set(0, 10); arr.set(1, 20); arr.set(2, 30); arr.set(3, 40);
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 20);
-    assertEqual(3, r.length());
-    }
+    assertEqual(3, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_3200
      * @tc.name testUint8ClampedArrayFilterOne032
@@ -538,8 +487,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne032() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(5, 10, 15, 20);
     Uint8ClampedArray r = arr.filter((v, i, a) -> v > 10);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_3300
      * @tc.name testUint8ClampedArrayFilterOne033
@@ -553,8 +501,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne033() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {256, 10, 256});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 255);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_3400
      * @tc.name testUint8ClampedArrayFilterOne034
@@ -568,8 +515,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne034() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {-1, 50, -1});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 0);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_3500
      * @tc.name testUint8ClampedArrayFilterOne035
@@ -583,8 +529,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne035() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {Double.NaN, 100, Double.NaN});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 0);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_3600
      * @tc.name testUint8ClampedArrayFilterOne036
@@ -598,8 +543,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne036() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {Double.POSITIVE_INFINITY, 100, Double.POSITIVE_INFINITY});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 255);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_3700
      * @tc.name testUint8ClampedArrayFilterOne037
@@ -613,8 +557,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne037() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {-Double.POSITIVE_INFINITY, 100, -Double.POSITIVE_INFINITY});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 0);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_3800
      * @tc.name testUint8ClampedArrayFilterOne038
@@ -628,8 +571,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne038() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {127.5, 1, 127.5});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 128);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_3900
      * @tc.name testUint8ClampedArrayFilterOne039
@@ -643,8 +585,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne039() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {128.5, 1, 128.5});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 128);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_4000
      * @tc.name testUint8ClampedArrayFilterOne040
@@ -658,8 +599,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne040() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {0.4, 0.4, 0.4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 0);
-    assertEqual(3, r.length());
-    }
+    assertEqual(3, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_4100
      * @tc.name testUint8ClampedArrayFilterOne041
@@ -673,8 +613,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne041() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {0.9, 0.9, 0.9});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 1);
-    assertEqual(3, r.length());
-    }
+    assertEqual(3, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_4200
      * @tc.name testUint8ClampedArrayFilterOne042
@@ -688,8 +627,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne042() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {1e2, 1, 1e2});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 100);
-    assertEqual(2, r.length());
-    }
+    assertEqual(2, r.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_4300
      * @tc.name testUint8ClampedArrayFilterOne043
@@ -703,8 +641,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne043() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
-    assertEqual(1, r.BYTES_PER_ELEMENT);
-    }
+    assertEqual(1, r.BYTES_PER_ELEMENT);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_4400
      * @tc.name testUint8ClampedArrayFilterOne044
@@ -718,8 +655,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne044() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 2);
-    assertEqual(r.length(), r.byteLength());
-    }
+    assertEqual(r.length(), r.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_4500
      * @tc.name testUint8ClampedArrayFilterOne045
@@ -733,8 +669,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne045() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v > 0);
-    assertEqual(0, r.byteOffset());
-    }
+    assertEqual(0, r.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_4600
      * @tc.name testUint8ClampedArrayFilterOne046
@@ -748,8 +683,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne046() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 3);
-    assertEqual(3, r.get(0));
-    }
+    assertEqual(3, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_4700
      * @tc.name testUint8ClampedArrayFilterOne047
@@ -763,8 +697,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne047() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 3);
-    assertEqual(4, r.get(1));
-    }
+    assertEqual(4, r.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_4800
      * @tc.name testUint8ClampedArrayFilterOne048
@@ -778,8 +711,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne048() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40, 50});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 20);
-    assertEqual(30, r.get(1));
-    }
+    assertEqual(30, r.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_4900
      * @tc.name testUint8ClampedArrayFilterOne049
@@ -793,8 +725,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne049() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 1, 6, 2, 7, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 5);
-    assertEqual(5, r.get(0));
-    }
+    assertEqual(5, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_5000
      * @tc.name testUint8ClampedArrayFilterOne050
@@ -808,8 +739,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne050() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 1, 6, 2, 7, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 5);
-    assertEqual(6, r.get(1));
-    }
+    assertEqual(6, r.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_5100
      * @tc.name testUint8ClampedArrayFilterOne051
@@ -823,8 +753,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne051() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 1, 6, 2, 7, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 5);
-    assertEqual(7, r.get(2));
-    }
+    assertEqual(7, r.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_5200
      * @tc.name testUint8ClampedArrayFilterOne052
@@ -839,8 +768,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 2);
     assertEqual(1, r.length());
-    assertEqual(2, r.get(0));
-    }
+    assertEqual(2, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_5300
      * @tc.name testUint8ClampedArrayFilterOne053
@@ -854,8 +782,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne053() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 20);
-    assertEqual(20, r.get(0));
-    }
+    assertEqual(20, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_5400
      * @tc.name testUint8ClampedArrayFilterOne054
@@ -869,8 +796,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne054() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     arr.filter((v, i, a) -> v > 2);
-    assertEqual(4, arr.length());
-    }
+    assertEqual(4, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_5500
      * @tc.name testUint8ClampedArrayFilterOne055
@@ -884,8 +810,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne055() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     arr.filter((v, i, a) -> v > 2);
-    assertEqual(1, arr.get(0));
-    }
+    assertEqual(1, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_5600
      * @tc.name testUint8ClampedArrayFilterOne056
@@ -899,8 +824,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne056() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
-    assertNotEqual(arr.buffer(), r.buffer());
-    }
+    assertNotEqual(arr.buffer(), r.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_5700
      * @tc.name testUint8ClampedArrayFilterOne057
@@ -915,8 +839,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
     r.set(0, 99);
-    assertEqual(10, arr.get(0));
-    }
+    assertEqual(10, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_5800
      * @tc.name testUint8ClampedArrayFilterOne058
@@ -931,8 +854,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
     arr.set(0, 99);
-    assertEqual(10, r.get(0));
-    }
+    assertEqual(10, r.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_5900
      * @tc.name testUint8ClampedArrayFilterOne059
@@ -946,9 +868,8 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne059() {
     int[] called = {0};
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
-    arr.filter((v, i, a) -> { called[0]++; return true; });
-    assertEqual(4, called[0]);
-    }
+    arr.filter((v, i, a) -> { called[0]++; return true;});
+    assertEqual(4, called[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_6000
      * @tc.name testUint8ClampedArrayFilterOne060
@@ -962,9 +883,8 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne060() {
     int[] firstIndex = {-1};
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
-    arr.filter((v, i, a) -> { if (firstIndex[0] == -1) firstIndex[0] = i; return true; });
-    assertEqual(0, firstIndex[0]);
-    }
+    arr.filter((v, i, a) -> { if (firstIndex[0] == -1) firstIndex[0] = i; return true;});
+    assertEqual(0, firstIndex[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_6100
      * @tc.name testUint8ClampedArrayFilterOne061
@@ -978,9 +898,8 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne061() {
     int[] lastIndex = {-1};
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
-    arr.filter((v, i, a) -> { lastIndex[0] = i; return true; });
-    assertEqual(2, lastIndex[0]);
-    }
+    arr.filter((v, i, a) -> { lastIndex[0] = i; return true;});
+    assertEqual(2, lastIndex[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_6200
      * @tc.name testUint8ClampedArrayFilterOne062
@@ -994,9 +913,8 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne062() {
     int[] captured = {-1};
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42, 1, 1});
-    arr.filter((v, i, a) -> { if (i == 0) captured[0] = v; return true; });
-    assertEqual(42, captured[0]);
-    }
+    arr.filter((v, i, a) -> { if (i == 0) captured[0] = v; return true;});
+    assertEqual(42, captured[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_6300
      * @tc.name testUint8ClampedArrayFilterOne063
@@ -1010,9 +928,8 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne063() {
     Uint8ClampedArray[] captured = {null};
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
-    arr.filter((v, i, a) -> { captured[0] = a; return true; });
-    assertEqual(arr, captured[0]);
-    }
+    arr.filter((v, i, a) -> { captured[0] = a; return true;});
+    assertEqual(arr, captured[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_ONE_6400
      * @tc.name testUint8ClampedArrayFilterOne064
@@ -1026,10 +943,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne064() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    arr.filter((v, i, a) -> { throw new Error("cb-fail"); });
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
-    }
+    arr.filter((v, i, a) -> { throw new Error("cb-fail");});
+    fail();} catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());};}
 }
