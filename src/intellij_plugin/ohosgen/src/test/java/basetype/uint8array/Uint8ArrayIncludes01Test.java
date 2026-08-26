@@ -15,37 +15,15 @@
 
 package basetype.uint8array;
 
-import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ArrayIncludes01Test —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ArrayIncludes01Test extends BasTest {
     /**
@@ -61,8 +39,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes001() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_0200
      * @tc.name testUint8ArrayIncludes002
@@ -76,8 +53,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes002() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(20, 1);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_0300
      * @tc.name testUint8ArrayIncludes003
@@ -91,8 +67,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes003() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes(0);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_0400
      * @tc.name testUint8ArrayIncludes004
@@ -106,8 +81,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes004() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes(255);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_0500
      * @tc.name testUint8ArrayIncludes005
@@ -121,8 +95,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes005() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes(127);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_0600
      * @tc.name testUint8ArrayIncludes006
@@ -136,8 +109,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes006() {
     Uint8Array arr = new Uint8Array(new int[] {128, 0, 255});
     boolean result = arr.includes(128);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_0700
      * @tc.name testUint8ArrayIncludes007
@@ -151,8 +123,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes007() {
     Uint8Array arr = new Uint8Array(new int[] {1, 127, 255});
     boolean result = arr.includes(0);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_0800
      * @tc.name testUint8ArrayIncludes008
@@ -166,8 +137,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes008() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 254});
     boolean result = arr.includes(255);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_0900
      * @tc.name testUint8ArrayIncludes009
@@ -181,8 +151,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes009() {
     Uint8Array arr = new Uint8Array(new int[] {0, 128, 255});
     boolean result = arr.includes(127);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_1000
      * @tc.name testUint8ArrayIncludes010
@@ -196,8 +165,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes010() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes(128);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_1100
      * @tc.name testUint8ArrayIncludes011
@@ -211,8 +179,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes011() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes(256);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_1200
      * @tc.name testUint8ArrayIncludes012
@@ -226,8 +193,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes012() {
     Uint8Array arr = new Uint8Array(new int[] {1, 127, 255});
     boolean result = arr.includes(256);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_1300
      * @tc.name testUint8ArrayIncludes013
@@ -241,8 +207,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes013() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes(-1);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_1400
      * @tc.name testUint8ArrayIncludes014
@@ -256,8 +221,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes014() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 254});
     boolean result = arr.includes(-1);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_1500
      * @tc.name testUint8ArrayIncludes015
@@ -271,8 +235,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes015() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0, 1});
     boolean result = arr.includes(511);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_1600
      * @tc.name testUint8ArrayIncludes016
@@ -286,8 +249,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes016() {
     Uint8Array arr = new Uint8Array(new int[] {254, 0, 1});
     boolean result = arr.includes(511);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_1700
      * @tc.name testUint8ArrayIncludes017
@@ -301,8 +263,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes017() {
     Uint8Array arr = new Uint8Array(new int[] {1, 0, 2});
     boolean result = arr.includes(-255);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_1800
      * @tc.name testUint8ArrayIncludes018
@@ -316,8 +277,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes018() {
     Uint8Array arr = new Uint8Array(new int[] {0, 2, 3});
     boolean result = arr.includes(-255);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_1900
      * @tc.name testUint8ArrayIncludes019
@@ -331,8 +291,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes019() {
     Uint8Array arr = new Uint8Array(new int[] {1, 0, 255});
     boolean result = arr.includes(257);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_2000
      * @tc.name testUint8ArrayIncludes020
@@ -346,8 +305,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes020() {
     Uint8Array arr = new Uint8Array(new int[] {2, 0, 255});
     boolean result = arr.includes(257);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_2100
      * @tc.name testUint8ArrayIncludes021
@@ -361,8 +319,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes021() {
     Uint8Array arr = new Uint8Array(new int[] {254, 0, 127});
     boolean result = arr.includes(-2);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_2200
      * @tc.name testUint8ArrayIncludes022
@@ -376,8 +333,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes022() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0, 127});
     boolean result = arr.includes(-2);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_2300
      * @tc.name testUint8ArrayIncludes023
@@ -391,8 +347,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes023() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes(-256);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_2400
      * @tc.name testUint8ArrayIncludes024
@@ -406,8 +361,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes024() {
     Uint8Array arr = new Uint8Array(new int[] {1, 127, 255});
     boolean result = arr.includes(-256);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_2500
      * @tc.name testUint8ArrayIncludes025
@@ -421,8 +375,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes025() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0, 127});
     boolean result = arr.includes(0xFF);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_2600
      * @tc.name testUint8ArrayIncludes026
@@ -436,8 +389,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes026() {
     Uint8Array arr = new Uint8Array(new int[] {254, 0, 127});
     boolean result = arr.includes(0xFF);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_2700
      * @tc.name testUint8ArrayIncludes027
@@ -451,8 +403,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes027() {
     Uint8Array arr = new Uint8Array(new int[] {128, 0, 255});
     boolean result = arr.includes(0x80);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_2800
      * @tc.name testUint8ArrayIncludes028
@@ -466,8 +417,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes028() {
     Uint8Array arr = new Uint8Array(new int[] {127, 0, 255});
     boolean result = arr.includes(0x80);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_2900
      * @tc.name testUint8ArrayIncludes029
@@ -481,8 +431,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes029() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes(0x100);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_3000
      * @tc.name testUint8ArrayIncludes030
@@ -496,8 +445,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes030() {
     Uint8Array arr = new Uint8Array(new int[] {1, 127, 255});
     boolean result = arr.includes(0x100);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_3100
      * @tc.name testUint8ArrayIncludes031
@@ -511,8 +459,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes031() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 127});
     boolean result = arr.includes(0x0A);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_3200
      * @tc.name testUint8ArrayIncludes032
@@ -526,8 +473,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes032() {
     Uint8Array arr = new Uint8Array(new int[] {11, 20, 127});
     boolean result = arr.includes(0x0A);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_3300
      * @tc.name testUint8ArrayIncludes033
@@ -541,8 +487,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes033() {
     Uint8Array arr = new Uint8Array(new int[] {128, 0, 255});
     boolean result = arr.includes(0200);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_3400
      * @tc.name testUint8ArrayIncludes034
@@ -556,8 +501,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes034() {
     Uint8Array arr = new Uint8Array(new int[] {129, 0, 255});
     boolean result = arr.includes(0200);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_3500
      * @tc.name testUint8ArrayIncludes035
@@ -571,8 +515,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes035() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0, 127});
     boolean result = arr.includes(0377);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_3600
      * @tc.name testUint8ArrayIncludes036
@@ -586,8 +529,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes036() {
     Uint8Array arr = new Uint8Array(new int[] {254, 0, 127});
     boolean result = arr.includes(0377);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_3700
      * @tc.name testUint8ArrayIncludes037
@@ -601,8 +543,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes037() {
     Uint8Array arr = new Uint8Array(new int[] {10, 0, 255});
     boolean result = arr.includes(012);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_3800
      * @tc.name testUint8ArrayIncludes038
@@ -616,8 +557,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes038() {
     Uint8Array arr = new Uint8Array(new int[] {11, 0, 255});
     boolean result = arr.includes(012);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_3900
      * @tc.name testUint8ArrayIncludes039
@@ -631,8 +571,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes039() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes(0b0);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_4000
      * @tc.name testUint8ArrayIncludes040
@@ -646,8 +585,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes040() {
     Uint8Array arr = new Uint8Array(new int[] {1, 127, 255});
     boolean result = arr.includes(0b0);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_4100
      * @tc.name testUint8ArrayIncludes041
@@ -661,8 +599,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes041() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0, 127});
     boolean result = arr.includes(0b11111111);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_4200
      * @tc.name testUint8ArrayIncludes042
@@ -676,8 +613,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes042() {
     Uint8Array arr = new Uint8Array(new int[] {254, 0, 127});
     boolean result = arr.includes(0b11111111);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_4300
      * @tc.name testUint8ArrayIncludes043
@@ -691,8 +627,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes043() {
     Uint8Array arr = new Uint8Array(new int[] {128, 0, 255});
     boolean result = arr.includes(0b10000000);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_4400
      * @tc.name testUint8ArrayIncludes044
@@ -706,8 +641,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes044() {
     Uint8Array arr = new Uint8Array(new int[] {127, 0, 255});
     boolean result = arr.includes(0b10000000);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_4500
      * @tc.name testUint8ArrayIncludes045
@@ -721,8 +655,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes045() {
     Uint8Array arr = new Uint8Array(new int[] {1, 127, 255});
     boolean result = arr.includes(1e0);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_4600
      * @tc.name testUint8ArrayIncludes046
@@ -736,8 +669,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes046() {
     Uint8Array arr = new Uint8Array(new int[] {2, 127, 255});
     boolean result = arr.includes(1e0);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_4700
      * @tc.name testUint8ArrayIncludes047
@@ -751,8 +683,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes047() {
     Uint8Array arr = new Uint8Array(new int[] {100, 0, 255});
     boolean result = arr.includes(1e2);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_4800
      * @tc.name testUint8ArrayIncludes048
@@ -766,8 +697,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes048() {
     Uint8Array arr = new Uint8Array(new int[] {99, 0, 255});
     boolean result = arr.includes(1e2);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_4900
      * @tc.name testUint8ArrayIncludes049
@@ -781,8 +711,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes049() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0, 127});
     boolean result = arr.includes(2.55e2);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_5000
      * @tc.name testUint8ArrayIncludes050
@@ -796,8 +725,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes050() {
     Uint8Array arr = new Uint8Array(new int[] {254, 0, 127});
     boolean result = arr.includes(2.55e2);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_5100
      * @tc.name testUint8ArrayIncludes051
@@ -811,8 +739,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes051() {
     Uint8Array arr = new Uint8Array(new int[] {0, 2, 255});
     boolean result = arr.includes((int) (2.9));
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_5200
      * @tc.name testUint8ArrayIncludes052
@@ -826,8 +753,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes052() {
     Uint8Array arr = new Uint8Array(new int[] {0, 3, 255});
     boolean result = arr.includes(2.9);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_5300
      * @tc.name testUint8ArrayIncludes053
@@ -841,8 +767,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes053() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes((int) (127.9));
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_5400
      * @tc.name testUint8ArrayIncludes054
@@ -856,8 +781,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes054() {
     Uint8Array arr = new Uint8Array(new int[] {0, 128, 255});
     boolean result = arr.includes(127.9);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_5500
      * @tc.name testUint8ArrayIncludes055
@@ -871,8 +795,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes055() {
     Uint8Array arr = new Uint8Array(new int[] {0, 3, 255});
     boolean result = arr.includes(3.0);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_5600
      * @tc.name testUint8ArrayIncludes056
@@ -886,8 +809,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes056() {
     Uint8Array arr = new Uint8Array(new int[] {0, 4, 255});
     boolean result = arr.includes(3.0);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_5700
      * @tc.name testUint8ArrayIncludes057
@@ -901,8 +823,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes057() {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 255});
     boolean result = arr.includes((int) (0.1));
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_5800
      * @tc.name testUint8ArrayIncludes058
@@ -916,8 +837,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes058() {
     Uint8Array arr = new Uint8Array(new int[] {1, 127, 255});
     boolean result = arr.includes(0.1);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_5900
      * @tc.name testUint8ArrayIncludes059
@@ -931,8 +851,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes059() {
     Uint8Array arr = new Uint8Array(new int[] {254, 0, 127});
     boolean result = arr.includes((int) (254.9));
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_6000
      * @tc.name testUint8ArrayIncludes060
@@ -946,8 +865,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes060() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0, 127});
     boolean result = arr.includes(254.9);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_6100
      * @tc.name testUint8ArrayIncludes061
@@ -961,8 +879,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes061() {
     Uint8Array arr = new Uint8Array(new int[] {5});
     boolean result = arr.includes(5);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_6200
      * @tc.name testUint8ArrayIncludes062
@@ -976,8 +893,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes062() {
     Uint8Array arr = new Uint8Array(new int[] {5});
     boolean result = arr.includes(6);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_6300
      * @tc.name testUint8ArrayIncludes063
@@ -991,8 +907,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes063() {
     Uint8Array arr = new Uint8Array(0);
     boolean result = arr.includes(0);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_6400
      * @tc.name testUint8ArrayIncludes064
@@ -1006,8 +921,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes064() {
     Uint8Array arr = new Uint8Array(0);
     boolean result = arr.includes(255);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_6500
      * @tc.name testUint8ArrayIncludes065
@@ -1021,8 +935,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes065() {
     Uint8Array arr = new Uint8Array(0);
     boolean result = arr.includes(256);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_6600
      * @tc.name testUint8ArrayIncludes066
@@ -1036,8 +949,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes066() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(99);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_6700
      * @tc.name testUint8ArrayIncludes067
@@ -1051,8 +963,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes067() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, 0);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_6800
      * @tc.name testUint8ArrayIncludes068
@@ -1066,8 +977,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes068() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(99, 0);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_6900
      * @tc.name testUint8ArrayIncludes069
@@ -1081,8 +991,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes069() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, -0);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_7000
      * @tc.name testUint8ArrayIncludes070
@@ -1096,8 +1005,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes070() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(99, -0);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_7100
      * @tc.name testUint8ArrayIncludes071
@@ -1111,8 +1019,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes071() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, 1);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_7200
      * @tc.name testUint8ArrayIncludes072
@@ -1126,8 +1033,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes072() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(30, 1);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_7300
      * @tc.name testUint8ArrayIncludes073
@@ -1141,8 +1047,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes073() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, 3);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_7400
      * @tc.name testUint8ArrayIncludes074
@@ -1156,8 +1061,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes074() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(20, 100);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_7500
      * @tc.name testUint8ArrayIncludes075
@@ -1171,8 +1075,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes075() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, 9999);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_7600
      * @tc.name testUint8ArrayIncludes076
@@ -1186,8 +1089,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes076() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(30, -1);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_7700
      * @tc.name testUint8ArrayIncludes077
@@ -1201,8 +1103,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes077() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(20, -1);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_7800
      * @tc.name testUint8ArrayIncludes078
@@ -1216,8 +1117,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes078() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(30, -2);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_7900
      * @tc.name testUint8ArrayIncludes079
@@ -1231,8 +1131,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes079() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(20, -2);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_8000
      * @tc.name testUint8ArrayIncludes080
@@ -1246,8 +1145,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes080() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, -3);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_8100
      * @tc.name testUint8ArrayIncludes081
@@ -1261,8 +1159,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes081() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, -4);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_8200
      * @tc.name testUint8ArrayIncludes082
@@ -1276,8 +1173,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes082() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, -999);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_8300
      * @tc.name testUint8ArrayIncludes083
@@ -1291,8 +1187,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes083() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, -2);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_8400
      * @tc.name testUint8ArrayIncludes084
@@ -1306,8 +1201,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes084() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(20, (int) (1.0));
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_8500
      * @tc.name testUint8ArrayIncludes085
@@ -1321,8 +1215,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes085() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(20, (int) (1.9));
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_8600
      * @tc.name testUint8ArrayIncludes086
@@ -1336,8 +1229,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes086() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(20, (int) (2.5));
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_8700
      * @tc.name testUint8ArrayIncludes087
@@ -1351,8 +1243,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes087() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, (int) (0.9));
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_8800
      * @tc.name testUint8ArrayIncludes088
@@ -1366,8 +1257,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes088() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(10, 0);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_8900
      * @tc.name testUint8ArrayIncludes089
@@ -1381,8 +1271,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes089() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     boolean result = arr.includes(99, 0);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_9000
      * @tc.name testUint8ArrayIncludes090
@@ -1396,8 +1285,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes090() {
     Uint8Array arr = new Uint8Array(new int[] {5});
     boolean result = arr.includes(5, -1);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_9100
      * @tc.name testUint8ArrayIncludes091
@@ -1411,8 +1299,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes091() {
     Uint8Array arr = new Uint8Array(new int[] {5});
     boolean result = arr.includes(5, 1);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_9200
      * @tc.name testUint8ArrayIncludes092
@@ -1426,8 +1313,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes092() {
     Uint8Array arr = new Uint8Array(new int[] {5});
     boolean result = arr.includes(5, -2);
-    assertTrue(result);
-    }
+    assertTrue(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_9300
      * @tc.name testUint8ArrayIncludes093
@@ -1441,8 +1327,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes093() {
     Uint8Array arr = new Uint8Array(0);
     boolean result = arr.includes(0, 0);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_9400
      * @tc.name testUint8ArrayIncludes094
@@ -1456,8 +1341,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes094() {
     Uint8Array arr = new Uint8Array(0);
     boolean result = arr.includes(0, -1);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_9500
      * @tc.name testUint8ArrayIncludes095
@@ -1471,8 +1355,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes095() {
     Uint8Array arr = new Uint8Array(0);
     boolean result = arr.includes(0, -0);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_9600
      * @tc.name testUint8ArrayIncludes096
@@ -1486,8 +1369,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes096() {
     Uint8Array arr = new Uint8Array(new int[] {1, 0, 255});
     boolean result = arr.includes(256, 1);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_9700
      * @tc.name testUint8ArrayIncludes097
@@ -1501,8 +1383,7 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes097() {
     Uint8Array arr = new Uint8Array(new int[] {1, 0, 255});
     boolean result = arr.includes(-1, 2);
-    assertFalse(result);
-    }
+    assertFalse(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INCLUDES01_9800
      * @tc.name testUint8ArrayIncludes098
@@ -1516,6 +1397,5 @@ public class Uint8ArrayIncludes01Test extends BasTest {
     void testUint8ArrayIncludes098() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0, 127});
     boolean result = arr.includes(-1, 1);
-    assertFalse(result);
-    }
+    assertFalse(result);}
 }
