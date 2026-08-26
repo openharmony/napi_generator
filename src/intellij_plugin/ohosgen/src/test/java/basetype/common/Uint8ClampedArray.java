@@ -73,10 +73,11 @@ public class Uint8ClampedArray implements IntArrayView {
         }
     }
 
-    public Uint8ClampedArray(java.util.List<Integer> src) {
+    public Uint8ClampedArray(java.util.Collection<? extends Number> src) {
         this(src.size());
-        for (int i = 0; i < src.size(); i++) {
-            set(i, src.get(i));
+        int i = 0;
+        for (Number v : src) {
+            set(i++, v.doubleValue());
         }
     }
 
@@ -390,20 +391,17 @@ public class Uint8ClampedArray implements IntArrayView {
     /** 返回满足谓词的全部元素构成的新数组，对应 filter 语义。 */
     public Uint8ClampedArray filter(Uint8ClampedArrayFinder cb) {
         if (cb == null) { throw new NullPointerError(); }
-        int count = 0;
+        java.util.List<Integer> picked = new java.util.ArrayList<>();
         for (int i = 0; i < length; i++) {
             if (cb.test(get(i), i, this)) {
-                count++;
+                picked.add(get(i));
             }
         }
-        int[] picked = new int[count];
-        int idx = 0;
-        for (int i = 0; i < length; i++) {
-            if (cb.test(get(i), i, this)) {
-                picked[idx++] = get(i);
-            }
+        int[] out = new int[picked.size()];
+        for (int i = 0; i < picked.size(); i++) {
+            out[i] = picked.get(i);
         }
-        return new Uint8ClampedArray(picked);
+        return new Uint8ClampedArray(out);
     }
 
     public Uint8ClampedArray filter(Uint8ClampedArrayFinder0 cb) {
@@ -997,13 +995,53 @@ public class Uint8ClampedArray implements IntArrayView {
     }
 
     public int lastIndexOf(double value, int fromIndex) {
-        if (Double.isNaN(value) || Double.isInfinite(value) || value != Math.rint(value)) {
+        if (Double.isNaN(value)) {
             return -1;
         }
-        return lastIndexOf(toUint8Clamp(value), fromIndex);
+        int len = length;
+        int from = fromIndex;
+        if (from < 0) {
+            from += len;
+        }
+        if (from >= len) {
+            from = len - 1;
+        }
+        for (int i = from; i >= 0; i--) {
+            if (get(i) == value) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /** 从前往后查找指定值，返回下标（无则 -1），对应 indexOf 语义。 */
+    /** indexOf 的浮点形式参数：精确比较，NaN/非整数值恒不匹配。 */
+    public int indexOf(double value) {
+        for (int i = 0; i < length; i++) {
+            if (get(i) == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int indexOf(long value) {
+        return indexOf((int) value);
+    }
+
+    public int indexOf(int value, double fromIndex) {
+        return indexOf(value, (int) fromIndex);
+    }
+
+    public int indexOf(double value, int fromIndex) {
+        for (int i = fromIndex < 0 ? 0 : fromIndex; i < length; i++) {
+            if (get(i) == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public int indexOf(int value, int fromIndex) {
         int len = length;
         int from = fromIndex;
@@ -1026,6 +1064,24 @@ public class Uint8ClampedArray implements IntArrayView {
     }
 
     /** 是否包含指定值（SameValueZero 相等语义）。 */
+    /** includes 的浮点形式参数（如 1e9）：精确比较，NaN/非整数值恒不匹配。 */
+    public boolean includes(double value) {
+        for (int i = 0; i < length; i++) {
+            if (get(i) == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean includes(int value, double fromIndex) {
+        return includes(value, (int) fromIndex);
+    }
+
+    public boolean includes(double value, int fromIndex) {
+        return includes((int) value, fromIndex);
+    }
+
     public boolean includes(int value, int fromIndex) {
         return indexOf(value, fromIndex) != -1;
     }
@@ -1135,7 +1191,16 @@ public class Uint8ClampedArray implements IntArrayView {
      * 将 [start, end) 区间的元素复制到 target 起始处（覆盖式），
      * 负数索引从末尾倒数，对应 copyWithin 语义。
      */
-    public Uint8ClampedArray copyWithin(double target, double start, double end) {
+        /** copyWithin(target)：start/end 缺省为 0/末尾。 */
+    public Uint8ClampedArray copyWithin(int target) {
+        return copyWithin(target, 0, length);
+    }
+
+    public Uint8ClampedArray copyWithin(int target, int start) {
+        return copyWithin(target, start, length);
+    }
+
+public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return copyWithin(toIndexD(target, length), toIndexD(start, length), toIndexD(end, length));
     }
 
@@ -1158,10 +1223,6 @@ public class Uint8ClampedArray implements IntArrayView {
             }
         }
         return this;
-    }
-
-    public Uint8ClampedArray copyWithin(int target, int start) {
-        return copyWithin(target, start, length);
     }
 
     /** 按给定比较器排序（原地修改并返回数组本身），对应 sort(compareFn) 语义。 */
@@ -1232,17 +1293,91 @@ public class Uint8ClampedArray implements IntArrayView {
         return new Uint8ClampedArray(values);
     }
 
-    /** 从整型列表映射构造，对应 from(arrayLike, mapFn) 语义。 */
-    public static Uint8ClampedArray from(java.util.List<Integer> values, Uint8ClampedArrayMapper2 cb) {
+    /** 从数值集合映射构造，对应 from(iterable, mapFn) 语义。 */
+    public static Uint8ClampedArray from(java.util.Collection<? extends Number> values,
+            Uint8ClampedArrayDoubleMapper2 cb) {
+        if (cb == null) {
+            return from(values);
+        }
         int[] copy = new int[values.size()];
-        for (int i = 0; i < values.size(); i++) {
-            copy[i] = toUint8Clamp(cb.apply(values.get(i), i));
+        int i = 0;
+        for (Number v : values) {
+            copy[i] = toUint8Clamp(cb.apply(v.doubleValue(), i));
+            i++;
         }
         return new Uint8ClampedArray(copy);
     }
 
+    /** from(typed array, cb)：源值逐元素映射填充。 */
+    public static Uint8ClampedArray from(Uint8ClampedArray src, Uint8ClampedArrayMapper2 cb) {
+        int[] copy = new int[src.length];
+        for (int i = 0; i < src.length; i++) {
+            copy[i] = toUint8Clamp(cb.apply(src.get(i), i));
+        }
+        return new Uint8ClampedArray(copy);
+    }
+
+    public static Uint8ClampedArray from(Uint8ClampedArray src, Uint8ClampedArrayDoubleMapper2 cb) {
+        if (cb == null) {
+            return from(src);
+        }
+        int[] copy = new int[src.length];
+        for (int i = 0; i < src.length; i++) {
+            copy[i] = toUint8Clamp(cb.apply(src.get(i), i));
+        }
+        return new Uint8ClampedArray(copy);
+    }
+
+    public static Uint8ClampedArray from(int[] values, Uint8ClampedArrayMapper2 cb) {
+        int[] copy = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            copy[i] = toUint8Clamp(cb.apply(values[i], i));
+        }
+        return new Uint8ClampedArray(copy);
+    }
+
+    public static Uint8ClampedArray from(int[] values, Uint8ClampedArrayDoubleMapper2 cb) {
+        if (cb == null) {
+            return from(values);
+        }
+        int[] copy = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            copy[i] = toUint8Clamp(cb.apply(values[i], i));
+        }
+        return new Uint8ClampedArray(copy);
+    }
+
+    public static Uint8ClampedArray from(java.util.List<? extends Number> values, Uint8ClampedArrayDoubleMapper2 cb) {
+        return from((java.util.Collection<? extends Number>) values, cb);
+    }
+
     /** 使用整型列表的元素填充本数组。 */
     /** 使用整型列表的元素填充本数组（从 offset 起，越界抛 RangeError）。 */
+    public Integer set(java.util.Collection<? extends Number> src, int offset) {
+        if (src == null) {
+            throw new NullPointerError();
+        }
+        if (offset < 0) {
+            throw new RangeError("Offset out of range");
+        }
+        if (offset > Integer.MAX_VALUE - src.size()) {
+            throw new RangeError("Offset out of range");
+        }
+        if (offset + src.size() > length) {
+            throw new RangeError("Offset out of range");
+        }
+        int i = 0;
+        for (Number v : src) {
+            buffer.setInt8(byteOffset + (offset + i) * BYTES_PER_ELEMENT, toUint8Clamp(v.doubleValue()));
+            i++;
+        }
+        return null;
+    }
+
+    public Integer set(java.util.Collection<? extends Number> src) {
+        return set(src, 0);
+    }
+
     public Integer set(java.util.List<Integer> src, int offset) {
         if (src == null) {
             throw new NullPointerError();
@@ -1268,24 +1403,47 @@ public class Uint8ClampedArray implements IntArrayView {
 
     /** 从整型列表构造，对应 from(arrayLike) 语义。 */
     public static Uint8ClampedArray from(java.util.List<Integer> values) {
-        int[] copy = new int[values.size()];
-        for (int i = 0; i < values.size(); i++) {
-            copy[i] = values.get(i);
-        }
-        return new Uint8ClampedArray(copy);
+        return from((java.util.Collection<? extends Number>) values);
     }
 
-    /** 从整型集合构造，对应 from(arrayLike) 语义。 */
-    public static Uint8ClampedArray from(java.util.Set<Integer> values) {
+    /** 从数值集合构造（ToUint8Clamp），对应 from / 构造 iterable 语义。 */
+    public static Uint8ClampedArray from(java.util.Collection<? extends Number> values) {
         int[] copy = new int[values.size()];
         int i = 0;
-        for (int v : values) {
-            copy[i++] = v;
+        for (Number v : values) {
+            copy[i++] = toUint8Clamp(v.doubleValue());
         }
         return new Uint8ClampedArray(copy);
     }
 
     /** 从浮点数组构造（ToUint8 转换），对应 from(arrayLike) 语义。 */
+    /** 回调接口：double 源值映射器（from(double[], cb) 回调接收转换前值）。 */
+    @FunctionalInterface
+    public interface Uint8ClampedArrayDoubleMapper1 {
+        double apply(double value);
+    }
+
+    @FunctionalInterface
+    public interface Uint8ClampedArrayDoubleMapper2 {
+        double apply(double value, int index);
+    }
+
+    public static Uint8ClampedArray from(double[] values, Uint8ClampedArrayDoubleMapper1 cb) {
+        int[] copy = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            copy[i] = toUint8Clamp(cb.apply(values[i]));
+        }
+        return new Uint8ClampedArray(copy);
+    }
+
+    public static Uint8ClampedArray from(double[] values, Uint8ClampedArrayDoubleMapper2 cb) {
+        int[] copy = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            copy[i] = toUint8Clamp(cb.apply(values[i], i));
+        }
+        return new Uint8ClampedArray(copy);
+    }
+
     public static Uint8ClampedArray from(double[] values) {
         int[] copy = new int[values.length];
         for (int i = 0; i < values.length; i++) {
@@ -1368,27 +1526,21 @@ public class Uint8ClampedArray implements IntArrayView {
 
         @Override
         public Iterator<int[]> iterator() {
-            return new EntryCursor();
-        }
-
-        /** for-of 增强循环专用游标（一次性）。 */
-        private final class EntryCursor implements Iterator<int[]> {
-
-            private int pos;
-
-            @Override
-            public boolean hasNext() {
-                return pos < length;
-            }
-
-            @Override
-            public int[] next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
+            return new Iterator<int[]>() {
+                @Override
+                public boolean hasNext() {
+                    return cursor < length;
                 }
-                int i = pos++;
-                return new int[] {i, get(i)};
-            }
+
+                @Override
+                public int[] next() {
+                    EntryResult er = EntriesIterator.this.next();
+                    if (er.done) {
+                        throw new java.util.NoSuchElementException();
+                    }
+                    return er.value;
+                }
+            };
         }
     }
 

@@ -78,6 +78,11 @@ public class BasTest {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual, 0.0);
     }
 
+    /** 浮点期望值与整型实际值按数值相等比较（1.0 == 1）。 */
+    public static void assertEqual(double expected, int actual) {
+        assertEqual(expected, (double) actual);
+    }
+
     public static void assertEqual(Object expected, Object actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
     }
@@ -157,6 +162,24 @@ public class BasTest {
         return sb.append("}").toString();
     }
 
+    /** Number.isNaN 语义：非数值判定。 */
+    public static boolean isNaN(int v) {
+        return false;
+    }
+
+    public static boolean isNaN(double v) {
+        return Double.isNaN(v);
+    }
+
+    /** Number.isFinite 语义：有限数值判定。 */
+    public static boolean isFinite(int v) {
+        return true;
+    }
+
+    public static boolean isFinite(double v) {
+        return !Double.isNaN(v) && !Double.isInfinite(v);
+    }
+
     /** parseInt 失败归 0（JS parseInt NaN 语义）。 */
     public static int parseIntSafe(String s) {
         try {
@@ -232,6 +255,10 @@ public class BasTest {
     }
 
     /** 空值合并：null 归回退值（对应 ?? 运算符，避免表达式双求值）。 */
+    public static int coalesce(Integer value, int fallback) {
+        return value == null ? fallback : value;
+    }
+
     public static double coalesce(Integer value, double fallback) {
         return value == null ? fallback : value;
     }
