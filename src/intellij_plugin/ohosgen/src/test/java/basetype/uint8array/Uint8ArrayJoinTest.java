@@ -42,7 +42,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin001() {
     Uint8Array arr = new Uint8Array();
     String result = arr.join();
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_0200
      * @tc.name testUint8ArrayJoin002
@@ -56,7 +57,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin002() {
     Uint8Array arr = new Uint8Array(new int[] {99});
     String result = arr.join();
-    assertEqual("99", result);}
+    assertEqual("99", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_0300
      * @tc.name testUint8ArrayJoin003
@@ -70,7 +72,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin003() {
     Uint8Array arr = new Uint8Array(new int[] {5, 10, 15});
     String result = arr.join();
-    assertEqual("5,10,15", result);}
+    assertEqual("5,10,15", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_0400
      * @tc.name testUint8ArrayJoin004
@@ -84,7 +87,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin004() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join(",");
-    assertEqual("1,2,3", result);}
+    assertEqual("1,2,3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_0500
      * @tc.name testUint8ArrayJoin005
@@ -98,7 +102,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin005() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     String result = arr.join("");
-    assertEqual("102030", result);}
+    assertEqual("102030", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_0600
      * @tc.name testUint8ArrayJoin006
@@ -112,7 +117,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin006() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join("|");
-    assertEqual("1|2|3", result);}
+    assertEqual("1|2|3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_0700
      * @tc.name testUint8ArrayJoin007
@@ -126,7 +132,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin007() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join(" ");
-    assertEqual("1 2 3", result);}
+    assertEqual("1 2 3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_0800
      * @tc.name testUint8ArrayJoin008
@@ -140,7 +147,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin008() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join("\t");
-    assertEqual("1\t2\t3", result);}
+    assertEqual("1\t2\t3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_0900
      * @tc.name testUint8ArrayJoin009
@@ -154,7 +162,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin009() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join(" => ");
-    assertEqual("1 => 2 => 3", result);}
+    assertEqual("1 => 2 => 3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_1000
      * @tc.name testUint8ArrayJoin010
@@ -168,7 +177,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin010() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join(" -> ");
-    assertEqual("1 -> 2 -> 3", result);}
+    assertEqual("1 -> 2 -> 3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_1100
      * @tc.name testUint8ArrayJoin011
@@ -182,7 +192,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin011() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join("---");
-    assertEqual("1---2---3", result);}
+    assertEqual("1---2---3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_1200
      * @tc.name testUint8ArrayJoin012
@@ -196,7 +207,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin012() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join("...");
-    assertEqual("1...2...3", result);}
+    assertEqual("1...2...3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_1300
      * @tc.name testUint8ArrayJoin013
@@ -210,7 +222,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin013() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join("_");
-    assertEqual("1_2_3", result);}
+    assertEqual("1_2_3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_1400
      * @tc.name testUint8ArrayJoin014
@@ -224,7 +237,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin014() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join("::");
-    assertEqual("1::2::3", result);}
+    assertEqual("1::2::3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_1500
      * @tc.name testUint8ArrayJoin015
@@ -238,7 +252,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin015() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join("-*-");
-    assertEqual("1-*-2-*-3", result);}
+    assertEqual("1-*-2-*-3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_1600
      * @tc.name testUint8ArrayJoin016
@@ -252,7 +267,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin016() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join("!@#");
-    assertEqual("1!@#2!@#3", result);}
+    assertEqual("1!@#2!@#3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_1700
      * @tc.name testUint8ArrayJoin017
@@ -266,7 +282,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin017() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join("中");
-    assertEqual("1中2中3", result);}
+    assertEqual("1中2中3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_1800
      * @tc.name testUint8ArrayJoin018
@@ -280,7 +297,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin018() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = arr.join("~");
-    assertEqual("1~2~3", result);}
+    assertEqual("1~2~3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_1900
      * @tc.name testUint8ArrayJoin019
@@ -294,7 +312,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin019() {
     Uint8Array arr = new Uint8Array(new int[] {255});
     String result = arr.join();
-    assertEqual("255", result);}
+    assertEqual("255", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_2000
      * @tc.name testUint8ArrayJoin020
@@ -308,7 +327,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin020() {
     Uint8Array arr = new Uint8Array(new int[] {128});
     String result = arr.join();
-    assertEqual("128", result);}
+    assertEqual("128", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_2100
      * @tc.name testUint8ArrayJoin021
@@ -322,7 +342,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin021() {
     Uint8Array arr = new Uint8Array(new int[] {1});
     String result = arr.join();
-    assertEqual("1", result);}
+    assertEqual("1", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_2200
      * @tc.name testUint8ArrayJoin022
@@ -336,7 +357,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin022() {
     Uint8Array arr = new Uint8Array(new int[] {127});
     String result = arr.join();
-    assertEqual("127", result);}
+    assertEqual("127", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_2300
      * @tc.name testUint8ArrayJoin023
@@ -350,7 +372,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin023() {
     Uint8Array arr = new Uint8Array(new int[] {129});
     String result = arr.join();
-    assertEqual("129", result);}
+    assertEqual("129", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_2400
      * @tc.name testUint8ArrayJoin024
@@ -364,7 +387,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin024() {
     Uint8Array arr = new Uint8Array(new int[] {254});
     String result = arr.join();
-    assertEqual("254", result);}
+    assertEqual("254", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_2500
      * @tc.name testUint8ArrayJoin025
@@ -378,7 +402,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin025() {
     Uint8Array arr = new Uint8Array(new int[] {2});
     String result = arr.join();
-    assertEqual("2", result);}
+    assertEqual("2", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_2600
      * @tc.name testUint8ArrayJoin026
@@ -392,7 +417,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin026() {
     Uint8Array arr = new Uint8Array(new int[] {3});
     String result = arr.join();
-    assertEqual("3", result);}
+    assertEqual("3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_2700
      * @tc.name testUint8ArrayJoin027
@@ -406,7 +432,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin027() {
     Uint8Array arr = new Uint8Array(new int[] {252});
     String result = arr.join();
-    assertEqual("252", result);}
+    assertEqual("252", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_2800
      * @tc.name testUint8ArrayJoin028
@@ -420,7 +447,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin028() {
     Uint8Array arr = new Uint8Array(new int[] {4});
     String result = arr.join();
-    assertEqual("4", result);}
+    assertEqual("4", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_2900
      * @tc.name testUint8ArrayJoin029
@@ -434,7 +462,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin029() {
     Uint8Array arr = new Uint8Array(new int[] {251});
     String result = arr.join();
-    assertEqual("251", result);}
+    assertEqual("251", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_3000
      * @tc.name testUint8ArrayJoin030
@@ -448,7 +477,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin030() {
     Uint8Array arr = new Uint8Array(new int[] {5});
     String result = arr.join();
-    assertEqual("5", result);}
+    assertEqual("5", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_3100
      * @tc.name testUint8ArrayJoin031
@@ -462,7 +492,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin031() {
     Uint8Array arr = new Uint8Array(new int[] {250});
     String result = arr.join();
-    assertEqual("250", result);}
+    assertEqual("250", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_3200
      * @tc.name testUint8ArrayJoin032
@@ -476,7 +507,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin032() {
     Uint8Array arr = new Uint8Array(new int[] {6});
     String result = arr.join();
-    assertEqual("6", result);}
+    assertEqual("6", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_3300
      * @tc.name testUint8ArrayJoin033
@@ -490,7 +522,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin033() {
     Uint8Array arr = new Uint8Array(new int[] {249});
     String result = arr.join();
-    assertEqual("249", result);}
+    assertEqual("249", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_3400
      * @tc.name testUint8ArrayJoin034
@@ -504,7 +537,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin034() {
     Uint8Array arr = new Uint8Array(new int[] {7});
     String result = arr.join();
-    assertEqual("7", result);}
+    assertEqual("7", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_3500
      * @tc.name testUint8ArrayJoin035
@@ -518,7 +552,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin035() {
     Uint8Array arr = new Uint8Array(new int[] {248});
     String result = arr.join();
-    assertEqual("248", result);}
+    assertEqual("248", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_3600
      * @tc.name testUint8ArrayJoin036
@@ -532,7 +567,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin036() {
     Uint8Array arr = new Uint8Array(new int[] {8});
     String result = arr.join();
-    assertEqual("8", result);}
+    assertEqual("8", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_3700
      * @tc.name testUint8ArrayJoin037
@@ -546,7 +582,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin037() {
     Uint8Array arr = new Uint8Array(new int[] {247});
     String result = arr.join();
-    assertEqual("247", result);}
+    assertEqual("247", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_3800
      * @tc.name testUint8ArrayJoin038
@@ -560,7 +597,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin038() {
     Uint8Array arr = new Uint8Array(new int[] {9});
     String result = arr.join();
-    assertEqual("9", result);}
+    assertEqual("9", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_3900
      * @tc.name testUint8ArrayJoin039
@@ -574,7 +612,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin039() {
     Uint8Array arr = new Uint8Array(new int[] {246});
     String result = arr.join();
-    assertEqual("246", result);}
+    assertEqual("246", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_4000
      * @tc.name testUint8ArrayJoin040
@@ -588,7 +627,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin040() {
     Uint8Array arr = new Uint8Array(new int[] {10});
     String result = arr.join();
-    assertEqual("10", result);}
+    assertEqual("10", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_4100
      * @tc.name testUint8ArrayJoin041
@@ -602,7 +642,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin041() {
     Uint8Array arr = new Uint8Array(new int[] {245});
     String result = arr.join();
-    assertEqual("245", result);}
+    assertEqual("245", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_4200
      * @tc.name testUint8ArrayJoin042
@@ -616,7 +657,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin042() {
     Uint8Array arr = new Uint8Array(new int[] {11});
     String result = arr.join();
-    assertEqual("11", result);}
+    assertEqual("11", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_4300
      * @tc.name testUint8ArrayJoin043
@@ -630,7 +672,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin043() {
     Uint8Array arr = new Uint8Array(new int[] {244});
     String result = arr.join();
-    assertEqual("244", result);}
+    assertEqual("244", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_4400
      * @tc.name testUint8ArrayJoin044
@@ -644,7 +687,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin044() {
     Uint8Array arr = new Uint8Array(new int[] {12});
     String result = arr.join();
-    assertEqual("12", result);}
+    assertEqual("12", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_4500
      * @tc.name testUint8ArrayJoin045
@@ -658,7 +702,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin045() {
     Uint8Array arr = new Uint8Array(new int[] {243});
     String result = arr.join();
-    assertEqual("243", result);}
+    assertEqual("243", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_4600
      * @tc.name testUint8ArrayJoin046
@@ -672,7 +717,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin046() {
     Uint8Array arr = new Uint8Array(new int[] {13});
     String result = arr.join();
-    assertEqual("13", result);}
+    assertEqual("13", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_4700
      * @tc.name testUint8ArrayJoin047
@@ -686,7 +732,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin047() {
     Uint8Array arr = new Uint8Array(new int[] {242});
     String result = arr.join();
-    assertEqual("242", result);}
+    assertEqual("242", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_4800
      * @tc.name testUint8ArrayJoin048
@@ -700,7 +747,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin048() {
     Uint8Array arr = new Uint8Array(new int[] {14});
     String result = arr.join();
-    assertEqual("14", result);}
+    assertEqual("14", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_4900
      * @tc.name testUint8ArrayJoin049
@@ -714,7 +762,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin049() {
     Uint8Array arr = new Uint8Array(new int[] {241});
     String result = arr.join();
-    assertEqual("241", result);}
+    assertEqual("241", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_5000
      * @tc.name testUint8ArrayJoin050
@@ -728,7 +777,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin050() {
     Uint8Array arr = new Uint8Array(new int[] {15});
     String result = arr.join();
-    assertEqual("15", result);}
+    assertEqual("15", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_5100
      * @tc.name testUint8ArrayJoin051
@@ -742,7 +792,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin051() {
     Uint8Array arr = new Uint8Array(new int[] {240});
     String result = arr.join();
-    assertEqual("240", result);}
+    assertEqual("240", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_5200
      * @tc.name testUint8ArrayJoin052
@@ -756,7 +807,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin052() {
     Uint8Array arr = new Uint8Array(new int[] {16});
     String result = arr.join();
-    assertEqual("16", result);}
+    assertEqual("16", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_5300
      * @tc.name testUint8ArrayJoin053
@@ -770,7 +822,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin053() {
     Uint8Array arr = new Uint8Array(new int[] {239});
     String result = arr.join();
-    assertEqual("239", result);}
+    assertEqual("239", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_5400
      * @tc.name testUint8ArrayJoin054
@@ -784,7 +837,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin054() {
     Uint8Array arr = new Uint8Array(new int[] {17});
     String result = arr.join();
-    assertEqual("17", result);}
+    assertEqual("17", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_5500
      * @tc.name testUint8ArrayJoin055
@@ -798,7 +852,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin055() {
     Uint8Array arr = new Uint8Array(new int[] {238});
     String result = arr.join();
-    assertEqual("238", result);}
+    assertEqual("238", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_5600
      * @tc.name testUint8ArrayJoin056
@@ -812,7 +867,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin056() {
     Uint8Array arr = new Uint8Array(new int[] {18});
     String result = arr.join();
-    assertEqual("18", result);}
+    assertEqual("18", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_5700
      * @tc.name testUint8ArrayJoin057
@@ -826,7 +882,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin057() {
     Uint8Array arr = new Uint8Array(new int[] {237});
     String result = arr.join();
-    assertEqual("237", result);}
+    assertEqual("237", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_5800
      * @tc.name testUint8ArrayJoin058
@@ -840,7 +897,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin058() {
     Uint8Array arr = new Uint8Array(new int[] {19});
     String result = arr.join();
-    assertEqual("19", result);}
+    assertEqual("19", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_5900
      * @tc.name testUint8ArrayJoin059
@@ -854,7 +912,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin059() {
     Uint8Array arr = new Uint8Array(new int[] {236});
     String result = arr.join();
-    assertEqual("236", result);}
+    assertEqual("236", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_6000
      * @tc.name testUint8ArrayJoin060
@@ -868,7 +927,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin060() {
     Uint8Array arr = new Uint8Array(new int[] {20});
     String result = arr.join();
-    assertEqual("20", result);}
+    assertEqual("20", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_6100
      * @tc.name testUint8ArrayJoin061
@@ -882,7 +942,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin061() {
     Uint8Array arr = new Uint8Array(new int[] {235});
     String result = arr.join();
-    assertEqual("235", result);}
+    assertEqual("235", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_6200
      * @tc.name testUint8ArrayJoin062
@@ -896,7 +957,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin062() {
     Uint8Array arr = new Uint8Array(new int[] {21});
     String result = arr.join();
-    assertEqual("21", result);}
+    assertEqual("21", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_6300
      * @tc.name testUint8ArrayJoin063
@@ -910,7 +972,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin063() {
     Uint8Array arr = new Uint8Array(new int[] {234});
     String result = arr.join();
-    assertEqual("234", result);}
+    assertEqual("234", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_6400
      * @tc.name testUint8ArrayJoin064
@@ -924,7 +987,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin064() {
     Uint8Array arr = new Uint8Array(new int[] {22});
     String result = arr.join();
-    assertEqual("22", result);}
+    assertEqual("22", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_6500
      * @tc.name testUint8ArrayJoin065
@@ -938,7 +1002,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin065() {
     Uint8Array arr = new Uint8Array(new int[] {233});
     String result = arr.join();
-    assertEqual("233", result);}
+    assertEqual("233", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_6600
      * @tc.name testUint8ArrayJoin066
@@ -952,7 +1017,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin066() {
     Uint8Array arr = new Uint8Array(new int[] {23});
     String result = arr.join();
-    assertEqual("23", result);}
+    assertEqual("23", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_6700
      * @tc.name testUint8ArrayJoin067
@@ -966,7 +1032,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin067() {
     Uint8Array arr = new Uint8Array(new int[] {24});
     String result = arr.join();
-    assertEqual("24", result);}
+    assertEqual("24", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_6800
      * @tc.name testUint8ArrayJoin068
@@ -980,7 +1047,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin068() {
     Uint8Array arr = new Uint8Array(new int[] {25});
     String result = arr.join();
-    assertEqual("25", result);}
+    assertEqual("25", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_6900
      * @tc.name testUint8ArrayJoin069
@@ -994,7 +1062,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin069() {
     Uint8Array arr = new Uint8Array(new int[] {26});
     String result = arr.join();
-    assertEqual("26", result);}
+    assertEqual("26", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_7000
      * @tc.name testUint8ArrayJoin070
@@ -1008,7 +1077,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin070() {
     Uint8Array arr = new Uint8Array(new int[] {256});
     String result = arr.join();
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_7100
      * @tc.name testUint8ArrayJoin071
@@ -1022,7 +1092,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin071() {
     Uint8Array arr = new Uint8Array(new int[] {512});
     String result = arr.join();
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_7200
      * @tc.name testUint8ArrayJoin072
@@ -1036,7 +1107,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     void testUint8ArrayJoin072() {
     Uint8Array arr = new Uint8Array(new int[] {253});
     String result = arr.join();
-    assertEqual("253", result);}
+    assertEqual("253", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_7300
      * @tc.name testUint8ArrayJoin073
@@ -1056,7 +1128,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     firstView.set(new Uint8Array(new int[] {30}), 2);
     String firstResult = firstView.join();
     String secondResult = secondView.join();
-    assertEqual(secondResult, firstResult);}
+    assertEqual(secondResult, firstResult);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_7400
      * @tc.name testUint8ArrayJoin074
@@ -1071,7 +1144,8 @@ public class Uint8ArrayJoinTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array sub = arr.subarray(1, 4);
     String result = sub.join();
-    assertEqual("2,3,4", result);}
+    assertEqual("2,3,4", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_JOIN_7500
      * @tc.name testUint8ArrayJoin075
@@ -1086,8 +1160,11 @@ public class Uint8ArrayJoinTest extends BasTest {
     Uint8Array arr = new Uint8Array();
     boolean threw = false;
     try {
-    arr.join();} catch (RangeError e) {
+    arr.join();
+    } catch (RangeError e) {
     threw = true;
-    assertEqual("Error", e.getClass().getSimpleName());};
-    assertFalse(threw);}
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    assertFalse(threw);
+    }
 }

@@ -35,14 +35,18 @@ public class Uint8ArrayFrom01Test extends BasTest {
     private static List<Integer> createNumberArray(int len) {
     List<Integer> result = new ArrayList<>();
     for (int i = 0; i < len; i++) {
-    result.add(0);};
-    return result;}
+    result.add(0);
+    }
+    return result;
+    }
 
     private static List<Integer> createBigIntArray(int len) {
     List<Integer> result = new ArrayList<>();
     for (int i = 0; i < len; i++) {
-    result.add(0);};
-    return result;}
+    result.add(0);
+    }
+    return result;
+    }
 /**
  * Helper to create an Array<number> filled with zeros
  */
@@ -62,7 +66,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom001() {
     int[] src = new int[] {1, 2};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_0200
      * @tc.name testUint8ArrayFrom002
@@ -76,7 +81,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom002() {
     Uint8Array src = Uint8Array.of(1, 2);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_0300
      * @tc.name testUint8ArrayFrom003
@@ -90,7 +96,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom003() {
     List<Integer> src = createNumberArray(2);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_0400
      * @tc.name testUint8ArrayFrom004
@@ -105,7 +112,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     Set<Integer> set = new LinkedHashSet<>();
     set.add(1);
     Uint8Array result = Uint8Array.from(set);
-    assertEqual(1, result.length());}
+    assertEqual(1, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_0500
      * @tc.name testUint8ArrayFrom005
@@ -120,7 +128,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     Set<Integer> set = new LinkedHashSet<>();
     set.add(1);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v);
-    assertEqual(1, result.length());}
+    assertEqual(1, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_0600
      * @tc.name testUint8ArrayFrom006
@@ -134,7 +143,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom006() {
     int[] src = new int[] {};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.length());}
+    assertEqual(0, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_0700
      * @tc.name testUint8ArrayFrom007
@@ -148,7 +158,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom007() {
     int[] src = new int[] {0};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));}
+    assertEqual(0, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_0800
      * @tc.name testUint8ArrayFrom008
@@ -162,7 +173,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom008() {
     int[] src = new int[] {255};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));}
+    assertEqual(255, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_0900
      * @tc.name testUint8ArrayFrom009
@@ -176,7 +188,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom009() {
     int[] src = new int[] {127};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(127, result.get(0));}
+    assertEqual(127, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_1000
      * @tc.name testUint8ArrayFrom010
@@ -190,7 +203,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom010() {
     int[] src = new int[] {128};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(128, result.get(0));}
+    assertEqual(128, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_1100
      * @tc.name testUint8ArrayFrom011
@@ -204,7 +218,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom011() {
     int[] src = new int[] {1, 2, 3, 4, 5};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual("1,2,3,4,5", result.join(","));}
+    assertEqual("1,2,3,4,5", result.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_1200
      * @tc.name testUint8ArrayFrom012
@@ -218,7 +233,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom012() {
     int[] src = new int[] {256};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));}
+    assertEqual(0, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_1300
      * @tc.name testUint8ArrayFrom013
@@ -232,7 +248,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom013() {
     int[] src = new int[] {-1};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));}
+    assertEqual(255, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_1400
      * @tc.name testUint8ArrayFrom014
@@ -246,7 +263,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom014() {
     int[] src = new int[] {-128};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(128, result.get(0));}
+    assertEqual(128, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_1500
      * @tc.name testUint8ArrayFrom015
@@ -260,7 +278,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom015() {
     int[] src = new int[] {0, 255, 256, -1};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual("0,255,0,255", result.join(","));}
+    assertEqual("0,255,0,255", result.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_1600
      * @tc.name testUint8ArrayFrom016
@@ -274,7 +293,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom016() {
     int[] src = new int[] {0x10, 0x20, 0x30};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual("16,32,48", result.join(","));}
+    assertEqual("16,32,48", result.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_1700
      * @tc.name testUint8ArrayFrom017
@@ -288,7 +308,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom017() {
     int[] src = new int[] {0b1, 0b10, 0b11};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual("1,2,3", result.join(","));}
+    assertEqual("1,2,3", result.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_1800
      * @tc.name testUint8ArrayFrom018
@@ -302,7 +323,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom018() {
     int[] src = new int[] {077, 0100, 0177};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual("63,64,127", result.join(","));}
+    assertEqual("63,64,127", result.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_1900
      * @tc.name testUint8ArrayFrom019
@@ -316,7 +338,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom019() {
     double[] src = new double[] {2147483647};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));}
+    assertEqual(255, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_2000
      * @tc.name testUint8ArrayFrom020
@@ -330,7 +353,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom020() {
     double[] src = new double[] {Integer.MIN_VALUE};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));}
+    assertEqual(0, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_2100
      * @tc.name testUint8ArrayFrom021
@@ -344,7 +368,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom021() {
     int[] src = new int[] {-0};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));}
+    assertEqual(0, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_2200
      * @tc.name testUint8ArrayFrom022
@@ -359,7 +384,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     int[] src = new int[] {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
     Uint8Array result = Uint8Array.from(src);
     assertEqual(10, result.length());
-    assertEqual(100, result.get(9));}
+    assertEqual(100, result.get(9));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_2300
      * @tc.name testUint8ArrayFrom023
@@ -373,7 +399,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom023() {
     Uint8Array src = Uint8Array.of();
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.length());}
+    assertEqual(0, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_2400
      * @tc.name testUint8ArrayFrom024
@@ -387,7 +414,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom024() {
     Uint8Array src = Uint8Array.of(42);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(42, result.get(0));}
+    assertEqual(42, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_2500
      * @tc.name testUint8ArrayFrom025
@@ -401,7 +429,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom025() {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual("1,2,3", result.join(","));}
+    assertEqual("1,2,3", result.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_2600
      * @tc.name testUint8ArrayFrom026
@@ -415,7 +444,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom026() {
     Uint8Array src = Uint8Array.of(0, 255, 127);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual("0,255,127", result.join(","));}
+    assertEqual("0,255,127", result.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_2700
      * @tc.name testUint8ArrayFrom027
@@ -430,7 +460,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     Uint8Array result = Uint8Array.from(src);
     src.set(0, 99);
-    assertEqual(1, result.get(0));}
+    assertEqual(1, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_2800
      * @tc.name testUint8ArrayFrom028
@@ -447,7 +478,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     src.set(99, 10);
     Uint8Array result = Uint8Array.from(src);
     assertEqual(100, result.length());
-    assertEqual(5, result.get(0));}
+    assertEqual(5, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_2900
      * @tc.name testUint8ArrayFrom029
@@ -461,7 +493,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom029() {
     Uint8Array src = Uint8Array.of(1, 2);
     Uint8Array result = Uint8Array.from(src);
-    assertTrue(result != src);}
+    assertTrue(result != src);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_3000
      * @tc.name testUint8ArrayFrom030
@@ -475,7 +508,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom030() {
     Uint8Array src = Uint8Array.of(0, 0, 0);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual("0,0,0", result.join(","));}
+    assertEqual("0,0,0", result.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_3100
      * @tc.name testUint8ArrayFrom031
@@ -489,7 +523,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom031() {
     List<Integer> src = createNumberArray(0);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.length());}
+    assertEqual(0, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_3200
      * @tc.name testUint8ArrayFrom032
@@ -503,7 +538,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom032() {
     List<Integer> src = createNumberArray(3);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual("0,0,0", result.join(","));}
+    assertEqual("0,0,0", result.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_3300
      * @tc.name testUint8ArrayFrom033
@@ -517,7 +553,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom033() {
     int[] src = new int[] {1, 2, 3};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual("1,2,3", result.join(","));}
+    assertEqual("1,2,3", result.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_3400
      * @tc.name testUint8ArrayFrom034
@@ -531,7 +568,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom034() {
     int[] src = new int[] {3};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(3, result.get(0));}
+    assertEqual(3, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_3500
      * @tc.name testUint8ArrayFrom035
@@ -545,7 +583,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom035() {
     int[] src = new int[] {0xFF};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));}
+    assertEqual(255, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_3600
      * @tc.name testUint8ArrayFrom036
@@ -561,7 +600,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(42);
     Uint8Array result = Uint8Array.from(set);
     assertEqual(1, result.length());
-    assertEqual(42, result.get(0));}
+    assertEqual(42, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_3700
      * @tc.name testUint8ArrayFrom037
@@ -578,7 +618,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(2);
     set.add(3);
     Uint8Array result = Uint8Array.from(set);
-    assertEqual(3, result.length());}
+    assertEqual(3, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_3800
      * @tc.name testUint8ArrayFrom038
@@ -594,7 +635,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(0);
     set.add(255);
     Uint8Array result = Uint8Array.from(set);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_3900
      * @tc.name testUint8ArrayFrom039
@@ -608,7 +650,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom039() {
     Set<Integer> set = new LinkedHashSet<>();
     Uint8Array result = Uint8Array.from(set);
-    assertEqual(0, result.length());}
+    assertEqual(0, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_4000
      * @tc.name testUint8ArrayFrom040
@@ -624,7 +667,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(256);
     set.add(-1);
     Uint8Array result = Uint8Array.from(set);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_4100
      * @tc.name testUint8ArrayFrom041
@@ -640,7 +684,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(127);
     set.add(128);
     Uint8Array result = Uint8Array.from(set);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_4200
      * @tc.name testUint8ArrayFrom042
@@ -654,9 +699,11 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom042() {
     Set<Integer> set = new LinkedHashSet<>();
     for (int i = 1; i <= 10; i++) {
-    set.add(i);};
+    set.add(i);
+    }
     Uint8Array result = Uint8Array.from(set);
-    assertEqual(10, result.length());}
+    assertEqual(10, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_4300
      * @tc.name testUint8ArrayFrom043
@@ -673,7 +720,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(0x20);
     set.add(0x30);
     Uint8Array result = Uint8Array.from(set);
-    assertEqual(3, result.length());}
+    assertEqual(3, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_4400
      * @tc.name testUint8ArrayFrom044
@@ -689,7 +737,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(1);
     set.add(2);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_4500
      * @tc.name testUint8ArrayFrom045
@@ -705,7 +754,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(1);
     set.add(2);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v * 2);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_4600
      * @tc.name testUint8ArrayFrom046
@@ -721,7 +771,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(2);
     set.add(3);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v * v);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_4700
      * @tc.name testUint8ArrayFrom047
@@ -737,7 +788,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(10);
     set.add(20);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v % 3);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_4800
      * @tc.name testUint8ArrayFrom048
@@ -753,7 +805,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(0xFF);
     set.add(0x0F);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v & 0x0F);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_4900
      * @tc.name testUint8ArrayFrom049
@@ -769,7 +822,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(0xF0);
     set.add(0x0F);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v | 0x01);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_5000
      * @tc.name testUint8ArrayFrom050
@@ -785,7 +839,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(0xFF);
     set.add(0x0F);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v ^ 0xFF);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_5100
      * @tc.name testUint8ArrayFrom051
@@ -801,7 +856,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(1);
     set.add(2);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v << 1);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_5200
      * @tc.name testUint8ArrayFrom052
@@ -817,7 +873,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(4);
     set.add(8);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v >> 1);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_5300
      * @tc.name testUint8ArrayFrom053
@@ -833,7 +890,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(4);
     set.add(8);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v >>> 1);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_5400
      * @tc.name testUint8ArrayFrom054
@@ -849,7 +907,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(0);
     set.add(1);
     Uint8Array result = Uint8Array.from(set, (v, index) -> ~v);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_5500
      * @tc.name testUint8ArrayFrom055
@@ -865,7 +924,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(1);
     set.add(2);
     Uint8Array result = Uint8Array.from(set, (v, index) -> +v);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_5600
      * @tc.name testUint8ArrayFrom056
@@ -881,7 +941,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(1);
     set.add(2);
     Uint8Array result = Uint8Array.from(set, (v, index) -> -v);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_5700
      * @tc.name testUint8ArrayFrom057
@@ -897,7 +958,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(1);
     set.add(2);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v > 1 ? 100 : 0);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_5800
      * @tc.name testUint8ArrayFrom058
@@ -913,7 +975,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(1);
     set.add(2);
     Uint8Array result = Uint8Array.from(set, (v, index) -> (int) (v * 1.5));
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_5900
      * @tc.name testUint8ArrayFrom059
@@ -929,7 +992,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(-1);
     set.add(-2);
     Uint8Array result = Uint8Array.from(set, (v, index) -> Math.abs(v));
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_6000
      * @tc.name testUint8ArrayFrom060
@@ -943,7 +1007,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom060() {
     int[] src = new int[] {1, 2};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(2, result.length());}
+    assertEqual(2, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_6100
      * @tc.name testUint8ArrayFrom061
@@ -957,7 +1022,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom061() {
     int[] src = new int[] {1, 2, 3};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(3, result.length());}
+    assertEqual(3, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_6200
      * @tc.name testUint8ArrayFrom062
@@ -971,7 +1037,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom062() {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(1, result.get(0));}
+    assertEqual(1, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_6300
      * @tc.name testUint8ArrayFrom063
@@ -985,7 +1052,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom063() {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(3, result.length());}
+    assertEqual(3, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_6400
      * @tc.name testUint8ArrayFrom064
@@ -999,7 +1067,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom064() {
     List<Integer> src = createNumberArray(1);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(1, result.length());}
+    assertEqual(1, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_6500
      * @tc.name testUint8ArrayFrom065
@@ -1013,7 +1082,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom065() {
     List<Integer> src = createNumberArray(3);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(3, result.length());}
+    assertEqual(3, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_6600
      * @tc.name testUint8ArrayFrom066
@@ -1028,7 +1098,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     Set<Integer> set = new LinkedHashSet<>();
     set.add(1);
     Uint8Array result = Uint8Array.from(set);
-    assertEqual(1, result.length());}
+    assertEqual(1, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_6700
      * @tc.name testUint8ArrayFrom067
@@ -1043,7 +1114,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     Set<Integer> set = new LinkedHashSet<>();
     set.add(1);
     Uint8Array result = Uint8Array.from(set, (v, index) -> v);
-    assertEqual(1, result.length());}
+    assertEqual(1, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_6800
      * @tc.name testUint8ArrayFrom068
@@ -1057,7 +1129,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom068() {
     List<Integer> src = createBigIntArray(1);
     Uint8Array result = Uint8Array.from(src, (v, index) -> v);
-    assertEqual(1, result.length());}
+    assertEqual(1, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_6900
      * @tc.name testUint8ArrayFrom069
@@ -1071,7 +1144,8 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom069() {
     List<Integer> src = createBigIntArray(3);
     Uint8Array result = Uint8Array.from(src, (v, index) -> v);
-    assertEqual(3, result.length());}
+    assertEqual(3, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM01_7000
      * @tc.name testUint8ArrayFrom070
@@ -1087,7 +1161,11 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(1);
     try {
     Uint8Array.from(set, (v, index) -> {
-    throw new Error("mapfn error");});
-    fail();} catch (Error e) {
-    assertEqual("Error", e.getClass().getSimpleName());};}
+    throw new Error("mapfn error");
+        });
+    fail();
+    } catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    }
 }

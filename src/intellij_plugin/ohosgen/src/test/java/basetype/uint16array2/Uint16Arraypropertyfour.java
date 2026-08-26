@@ -34,28 +34,33 @@ public class Uint16Arraypropertyfour extends BasTest {
     void testUint16Arraypropertyfour001() {
     ArrayBuffer buf = new ArrayBuffer(6);
     Uint16Array arr = new Uint16Array(buf, 0);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour002() {
     Uint16Array arr = new Uint16Array(10);
-    assertEqual(10, arr.length());}
+    assertEqual(10, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour003() {
     Uint16Array arr = Uint16Array.of(10, 20);
-    assertEqual(2, arr.length());}
+    assertEqual(2, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour004() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5);
-    assertEqual(5, arr.length());}
+    assertEqual(5, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour005() {
     int[] src = new int[] {10, 20, 30, 40};
     Uint16Array arr = Uint16Array.from(src);
-    assertEqual(4, arr.length());}
+    assertEqual(4, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour006() {
@@ -63,110 +68,129 @@ public class Uint16Arraypropertyfour extends BasTest {
     s.add(5);
     s.add(10);
     Uint16Array arr = Uint16Array.from(s);
-    assertEqual(2, arr.length());}
+    assertEqual(2, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour007() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint16Array arr = new Uint16Array(buf, 2);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour008() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint16Array arr = new Uint16Array(buf, 2, 2);
-    assertEqual(2, arr.length());}
+    assertEqual(2, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour009() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(1, 4);
-    assertEqual(3, sub.length());}
+    assertEqual(3, sub.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour010() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40);
     Uint16Array sub = arr.subarray(2);
-    assertEqual(2, sub.length());}
+    assertEqual(2, sub.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour011() {
     Uint16Array src = Uint16Array.of(1, 2, 3);
     Uint16Array dst = new Uint16Array(src);
-    assertEqual(3, dst.length());}
+    assertEqual(3, dst.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour012() {
     int[] src = new int[] {5, 10, 15, 20};
     Uint16Array arr = new Uint16Array(src);
-    assertEqual(4, arr.length());}
+    assertEqual(4, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour013() {
     double[] src = new double[] {1.0, 2.0, 3.0};
     Uint16Array arr = new Uint16Array(src);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour014() {
     ArrayBuffer buf = new ArrayBuffer(6);
     Uint16Array arr = new Uint16Array(buf, 0);
-    assertEqual("Uint16Array", arr.getClass().getSimpleName());}
+    assertEqual("Uint16Array", arr.getClass().getSimpleName());
+    }
 
     @Test
     void testUint16Arraypropertyfour015() {
     Uint16Array arr = Uint16Array.of(10, 20);
-    assertEqual("Uint16Array", arr.getClass().getSimpleName());}
+    assertEqual("Uint16Array", arr.getClass().getSimpleName());
+    }
 
     @Test
     void testUint16Arraypropertyfour016() {
     int[] src = new int[] {1, 2, 3};
     Uint16Array arr = Uint16Array.from(src);
-    assertEqual("Uint16Array", arr.getClass().getSimpleName());}
+    assertEqual("Uint16Array", arr.getClass().getSimpleName());
+    }
 
     @Test
     void testUint16Arraypropertyfour017() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
     Uint16Array sub = arr.subarray(0, 2);
-    assertEqual("Uint16Array", sub.getClass().getSimpleName());}
+    assertEqual("Uint16Array", sub.getClass().getSimpleName());
+    }
 
     @Test
     void testUint16Arraypropertyfour018() {
     Uint16Array src = Uint16Array.of(1, 2);
     Uint16Array dst = new Uint16Array(src);
-    assertEqual("Uint16Array", dst.getClass().getSimpleName());}
+    assertEqual("Uint16Array", dst.getClass().getSimpleName());
+    }
 
     @Test
     void testUint16Arraypropertyfour019() {
     Uint16Array arr = new Uint16Array();
-    assertEqual(arr.length() * 2, arr.byteLength());}
+    assertEqual(arr.length() * 2, arr.byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour020() {
     Uint16Array arr = new Uint16Array(3);
-    assertEqual(arr.length() * 2, arr.byteLength());}
+    assertEqual(arr.length() * 2, arr.byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour021() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40);
-    assertEqual(arr.length() * 2, arr.byteLength());}
+    assertEqual(arr.length() * 2, arr.byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour022() {
     Uint16Array arr = new Uint16Array(5);
-    assertEqual(arr.byteLength(), Uint16Array.BYTES_PER_ELEMENT * arr.length());}
+    assertEqual(arr.byteLength(), Uint16Array.BYTES_PER_ELEMENT * arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour023() {
     Uint16Array arr = new Uint16Array(3);
-    assertEqual(arr.byteLength(), arr.buffer().byteLength());}
+    assertEqual(arr.byteLength(), arr.buffer().byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour024() {
     ArrayBuffer buf = new ArrayBuffer(10);
     Uint16Array arr = new Uint16Array(buf, 2, 3);
     assertEqual(10, arr.buffer().byteLength());
-    assertEqual(6, arr.byteLength());}
+    assertEqual(6, arr.byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour025() {
@@ -174,19 +198,22 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array arr = new Uint16Array(buf, 4, 2);
     assertEqual(4, arr.byteOffset());
     assertEqual(4, arr.byteLength());
-    assertEqual(10, arr.buffer().byteLength());}
+    assertEqual(10, arr.buffer().byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour026() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint16Array arr = new Uint16Array(buf, 2);
-    assertEqual(arr.buffer().byteLength(), arr.byteOffset() + arr.byteLength());}
+    assertEqual(arr.buffer().byteLength(), arr.byteOffset() + arr.byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour027() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40);
     Uint16Array sub = arr.subarray(2);
-    assertEqual(arr.byteOffset() + 2 * Uint16Array.BYTES_PER_ELEMENT, sub.byteOffset());}
+    assertEqual(arr.byteOffset() + 2 * Uint16Array.BYTES_PER_ELEMENT, sub.byteOffset());
+    }
 
     @Test
     void testUint16Arraypropertyfour028() {
@@ -194,7 +221,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array arr = new Uint16Array(buf, 0);
     arr.set(0, 0x1234);
     Uint16Array view2 = new Uint16Array(buf, 0);
-    assertEqual(0x1234, view2.get(0));}
+    assertEqual(0x1234, view2.get(0));
+    }
 
     @Test
     void testUint16Arraypropertyfour029() {
@@ -203,21 +231,24 @@ public class Uint16Arraypropertyfour extends BasTest {
     arr.set(0, 0);
     Uint16Array view2 = new Uint16Array(buf, 0);
     view2.set(0, 0xABCD);
-    assertEqual(0xABCD, arr.get(0));}
+    assertEqual(0xABCD, arr.get(0));
+    }
 
     @Test
     void testUint16Arraypropertyfour030() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40);
     Uint16Array sub = arr.subarray(1, 3);
     sub.set(0, 99);
-    assertEqual(99, arr.get(1));}
+    assertEqual(99, arr.get(1));
+    }
 
     @Test
     void testUint16Arraypropertyfour031() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40);
     Uint16Array sub = arr.subarray(1, 3);
     arr.set(1, 77);
-    assertEqual(77, sub.get(0));}
+    assertEqual(77, sub.get(0));
+    }
 
     @Test
     void testUint16Arraypropertyfour032() {
@@ -227,26 +258,30 @@ public class Uint16Arraypropertyfour extends BasTest {
     v1.set(0, 0xAAAA);
     v2.set(0, 0xBBBB);
     assertEqual(0xAAAA, v1.get(0));
-    assertEqual(0xBBBB, v2.get(0));}
+    assertEqual(0xBBBB, v2.get(0));
+    }
 
     @Test
     void testUint16Arraypropertyfour033() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
     Uint16Array sub = arr.subarray(0);
-    assertEqual(arr.byteOffset(), sub.byteOffset());}
+    assertEqual(arr.byteOffset(), sub.byteOffset());
+    }
 
     @Test
     void testUint16Arraypropertyfour034() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40);
     Uint16Array sub = arr.subarray(2);
-    assertEqual(4, sub.byteOffset());}
+    assertEqual(4, sub.byteOffset());
+    }
 
     @Test
     void testUint16Arraypropertyfour035() {
     ArrayBuffer buf = new ArrayBuffer(12);
     Uint16Array arr = new Uint16Array(buf, 2, 4);
     Uint16Array sub = arr.subarray(1, 3);
-    assertEqual(4, sub.byteOffset());}
+    assertEqual(4, sub.byteOffset());
+    }
 
     @Test
     void testUint16Arraypropertyfour036() {
@@ -255,7 +290,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     arr.set(src, 0);
     assertEqual(1, arr.get(0));
     assertEqual(2, arr.get(1));
-    assertEqual(0, arr.get(2));}
+    assertEqual(0, arr.get(2));
+    }
 
     @Test
     void testUint16Arraypropertyfour037() {
@@ -264,7 +300,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     assertEqual(arr, result);
     assertEqual(5, arr.get(0));
     assertEqual(5, arr.get(1));
-    assertEqual(5, arr.get(2));}
+    assertEqual(5, arr.get(2));
+    }
 
     @Test
     void testUint16Arraypropertyfour038() {
@@ -274,37 +311,44 @@ public class Uint16Arraypropertyfour extends BasTest {
     assertEqual(3, arr.get(0));
     assertEqual(4, arr.get(1));
     assertEqual(3, arr.get(2));
-    assertEqual(4, arr.get(3));}
+    assertEqual(4, arr.get(3));
+    }
 
     @Test
     void testUint16Arraypropertyfour039() {
     Uint16Array arr = Uint16Array.of(65535, 0, 32768);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour040() {
     Uint16Array arr = Uint16Array.of(65535, 0, 32768);
-    assertEqual(6, arr.byteLength());}
+    assertEqual(6, arr.byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour041() {
     Uint16Array arr = new Uint16Array(100);
-    assertEqual(200, arr.byteLength());}
+    assertEqual(200, arr.byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour042() {
     Uint16Array arr = new Uint16Array(100);
-    assertEqual(200, arr.buffer().byteLength());}
+    assertEqual(200, arr.buffer().byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour043() {
     Uint16Array arr = Uint16Array.of(42);
-    assertEqual(1, arr.length());}
+    assertEqual(1, arr.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour044() {
     Uint16Array arr = Uint16Array.of(42);
-    assertEqual(2, arr.byteLength());}
+    assertEqual(2, arr.byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour045() {
@@ -313,7 +357,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array r = a.reverse();
     assertEqual(a, r);
     assertEqual("3,2,1", a.join(","));
-    assertEqual(b, a.buffer());}
+    assertEqual(b, a.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour046() {
@@ -321,7 +366,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array r = a.sort();
     assertEqual(a, r);
     assertEqual("1,2,3", a.join(","));
-    assertEqual(6, a.byteLength());}
+    assertEqual(6, a.byteLength());
+    }
 
     @Test
     void testUint16Arraypropertyfour047() {
@@ -330,14 +376,16 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array r = a.fill(9, 1, 3);
     assertEqual(a, r);
     assertEqual("1,9,9,4", a.join(","));
-    assertEqual(b, a.buffer());}
+    assertEqual(b, a.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour048() {
     Uint16Array a = Uint16Array.of(1, 2, 3, 4);
     Uint16Array r = a.copyWithin(1, 0, 3);
     assertEqual(a, r);
-    assertEqual("1,1,2,3", a.join(","));}
+    assertEqual("1,1,2,3", a.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour049() {
@@ -346,7 +394,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     a.set(Uint16Array.of(8, 9), 1);
     assertEqual("1,8,9,4", a.join(","));
     assertEqual(b, a.buffer());
-    assertEqual(4, a.length());}
+    assertEqual(4, a.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour050() {
@@ -355,7 +404,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     r.set(0, 9);
     assertEqual("1,2,3", a.join(","));
     assertEqual("9,2,1", r.join(","));
-    assertNotEqual(a.buffer(), r.buffer());}
+    assertNotEqual(a.buffer(), r.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour051() {
@@ -363,7 +413,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array r = a.toSorted();
     r.set(0, 9);
     assertEqual("3,1,2", a.join(","));
-    assertEqual("9,2,3", r.join(","));}
+    assertEqual("9,2,3", r.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour052() {
@@ -371,7 +422,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array r = a.with(1, 9);
     assertEqual("1,2,3", a.join(","));
     assertEqual("1,9,3", r.join(","));
-    assertNotEqual(a.buffer(), r.buffer());}
+    assertNotEqual(a.buffer(), r.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour053() {
@@ -379,7 +431,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array r = a.slice(1, 3);
     r.set(0, 20);
     assertEqual("1,2,3,4", a.join(","));
-    assertEqual("20,3", r.join(","));}
+    assertEqual("20,3", r.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour054() {
@@ -387,7 +440,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array r = a.subarray(1, 3);
     r.set(0, 20);
     assertEqual("1,20,3,4", a.join(","));
-    assertEqual(a.buffer(), r.buffer());}
+    assertEqual(a.buffer(), r.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour055() {
@@ -395,7 +449,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array r = a.valueOf();
     a.set(1, 22);
     assertEqual(a, r);
-    assertEqual("1,22", r.join(","));}
+    assertEqual("1,22", r.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour056() {
@@ -403,7 +458,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array r = a.map((v) -> v * 2);
     r.set(0, 9);
     assertEqual("1,2,3", a.join(","));
-    assertEqual("9,4,6", r.join(","));}
+    assertEqual("9,4,6", r.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour057() {
@@ -411,16 +467,18 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array r = a.filter((v) -> v % 2 == 0);
     r.set(0, 20);
     assertEqual("1,2,3,4", a.join(","));
-    assertEqual("20,4", r.join(","));}
+    assertEqual("20,4", r.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour058() {
     Uint16Array a = Uint16Array.of(1, 2, 3);
     ArrayBuffer b = a.buffer();
-    int sum = a.reduce((p, v, array, unused3)-> p + v, 0);
+    int sum = a.reduce((p, v, array, unused3) ->  p + v, 0);
     assertEqual(6, sum);
     assertEqual("1,2,3", a.join(","));
-    assertEqual(b, a.buffer());}
+    assertEqual(b, a.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour059() {
@@ -429,7 +487,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     boolean r = a.some((v) -> v == 2);
     assertTrue(r);
     assertEqual("1,2,3", a.join(","));
-    assertEqual(b, a.buffer());}
+    assertEqual(b, a.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour060() {
@@ -437,7 +496,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     ArrayBuffer b = a.buffer();
     assertEqual("10,20", String.valueOf(a));
     assertEqual(b, a.buffer());
-    assertEqual("10,20", a.join(","));}
+    assertEqual("10,20", a.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour061() {
@@ -446,7 +506,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array.KeyIterator it = a.values();
     assertEqual(4, it.next().value);
     assertEqual(5, it.next().value);
-    assertEqual(b, a.buffer());}
+    assertEqual(b, a.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour062() {
@@ -455,7 +516,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     int[] first = iterator.next().value;
     assertEqual(0, first[0]);
     assertEqual(7, first[1]);
-    assertEqual("7,8", a.join(","));}
+    assertEqual("7,8", a.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour063() {
@@ -463,7 +525,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array.KeyIterator it = a.keys();
     assertEqual(0, it.next().value);
     assertEqual(1, it.next().value);
-    assertEqual("7,8,9", a.join(","));}
+    assertEqual("7,8,9", a.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour064() {
@@ -471,26 +534,30 @@ public class Uint16Arraypropertyfour extends BasTest {
     ArrayBuffer b = a.buffer();
     assertEqual(5, a.at(1));
     assertEqual(b, a.buffer());
-    assertEqual(3, a.length());}
+    assertEqual(3, a.length());
+    }
 
     @Test
     void testUint16Arraypropertyfour065() {
     Uint16Array a = Uint16Array.of(4, 5, 6);
     boolean r = a.includes(5);
     assertTrue(r);
-    assertEqual("4,5,6", a.join(","));}
+    assertEqual("4,5,6", a.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour066() {
     Uint16Array a = Uint16Array.of(4, 5, 4);
     assertEqual(0, a.indexOf(4));
-    assertEqual("4,5,4", a.join(","));}
+    assertEqual("4,5,4", a.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour067() {
     Uint16Array a = Uint16Array.of(4, 5, 4);
     assertEqual(2, a.lastIndexOf(4));
-    assertEqual("4,5,4", a.join(","));}
+    assertEqual("4,5,4", a.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour068() {
@@ -498,42 +565,49 @@ public class Uint16Arraypropertyfour extends BasTest {
     ArrayBuffer b = a.buffer();
     boolean r = a.every((v) -> v % 2 == 0);
     assertTrue(r);
-    assertEqual(b, a.buffer());}
+    assertEqual(b, a.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour069() {
     Uint16Array a = Uint16Array.of(2, 5, 8);
     assertEqual(5, a.find((v) -> v > 4));
-    assertEqual("2,5,8", a.join(","));}
+    assertEqual("2,5,8", a.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour070() {
     Uint16Array a = Uint16Array.of(2, 5, 8);
     assertEqual(2, a.findIndex((v) -> v == 8));
-    assertEqual("2,5,8", a.join(","));}
+    assertEqual("2,5,8", a.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour071() {
     Uint16Array a = Uint16Array.of(1, 2, 3);
     ArrayBuffer b = a.buffer();
-    int r = a.reduceRight((p, v, array, unused3)-> p + v, 0);
+    int r = a.reduceRight((p, v, array, unused3) ->  p + v, 0);
     assertEqual(6, r);
-    assertEqual(b, a.buffer());}
+    assertEqual(b, a.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour072() {
     Uint16Array a = Uint16Array.of(1, 2, 3);
     ArrayBuffer b = a.buffer();
     a.forEach((v, i, x) -> {
-    x.set(i, v * 2);});
+    x.set(i, v * 2);
+        });
     assertEqual("2,4,6", a.join(","));
-    assertEqual(b, a.buffer());}
+    assertEqual(b, a.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour073() {
     Uint16Array a = Uint16Array.of(1, 2, 3);
     assertEqual("1|2|3", a.join("|"));
-    assertEqual("1,2,3", a.join(","));}
+    assertEqual("1,2,3", a.join(","));
+    }
 
     @Test
     void testUint16Arraypropertyfour074() {
@@ -541,7 +615,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     ArrayBuffer b = a.buffer();
     String r = a.toLocaleString();
     assertEqual("10,20", r);
-    assertEqual(b, a.buffer());}
+    assertEqual(b, a.buffer());
+    }
 
     @Test
     void testUint16Arraypropertyfour075() {
@@ -550,5 +625,6 @@ public class Uint16Arraypropertyfour extends BasTest {
     a.set(1, 77);
     assertEqual(2, a.byteOffset());
     assertEqual(3, a.length());
-    assertEqual(77, new Uint16Array(b).get(2));}
+    assertEqual(77, new Uint16Array(b).get(2));
+    }
 }
