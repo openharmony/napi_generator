@@ -61,7 +61,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal001() {
     Uint8Array arr = new Uint8Array();
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0020
      * @tc.name testUint8ArrayTotal002
@@ -74,7 +75,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal002() {
     Uint8Array arr = new Uint8Array(3);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0030
      * @tc.name testUint8ArrayTotal003
@@ -87,7 +89,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal003() {
     Uint8Array arr = new Uint8Array(5.0);
-    assertEqual(5, arr.length());}
+    assertEqual(5, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0040
      * @tc.name testUint8ArrayTotal004
@@ -101,7 +104,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal004() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0050
      * @tc.name testUint8ArrayTotal005
@@ -114,7 +118,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal005() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0060
      * @tc.name testUint8ArrayTotal006
@@ -128,7 +133,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal006() {
     List<Integer> src = java.util.Arrays.asList(4, 5, 6);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0070
      * @tc.name testUint8ArrayTotal007
@@ -142,7 +148,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal007() {
     double[] src = new double[] {7.0, 8.0, 9.0};
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0080
      * @tc.name testUint8ArrayTotal008
@@ -156,7 +163,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal008() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8Array arr = new Uint8Array(buf);
-    assertEqual(8, arr.length());}
+    assertEqual(8, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0090
      * @tc.name testUint8ArrayTotal009
@@ -170,7 +178,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal009() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8Array arr = new Uint8Array(buf, 4);
-    assertEqual(4, arr.length());}
+    assertEqual(4, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0100
      * @tc.name testUint8ArrayTotal010
@@ -184,7 +193,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal010() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8Array arr = new Uint8Array(buf, 2.0);
-    assertEqual(6, arr.length());}
+    assertEqual(6, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0110
      * @tc.name testUint8ArrayTotal011
@@ -198,7 +208,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal011() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8Array arr = new Uint8Array(buf, 2, 3);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0120
      * @tc.name testUint8ArrayTotal012
@@ -212,7 +223,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal012() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8Array arr = new Uint8Array(buf);
-    assertEqual(8, arr.length());}
+    assertEqual(8, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0130
      * @tc.name testUint8ArrayTotal013
@@ -225,7 +237,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal013() {
     Uint8Array arr = new Uint8Array(0);
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0140
      * @tc.name testUint8ArrayTotal014
@@ -238,7 +251,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal014() {
     Uint8Array arr = new Uint8Array(1);
-    assertEqual(1, arr.length());}
+    assertEqual(1, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0150
      * @tc.name testUint8ArrayTotal015
@@ -251,7 +265,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal015() {
     Uint8Array arr = new Uint8Array(255);
-    assertEqual(255, arr.length());}
+    assertEqual(255, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0160
      * @tc.name testUint8ArrayTotal016
@@ -264,7 +279,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal016() {
     Uint8Array arr = new Uint8Array(0.0);
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0170
      * @tc.name testUint8ArrayTotal017
@@ -277,7 +293,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal017() {
     Uint8Array arr = new Uint8Array(3.9);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0180
      * @tc.name testUint8ArrayTotal018
@@ -291,7 +308,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal018() {
     Uint8Array src = new Uint8Array();
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0190
      * @tc.name testUint8ArrayTotal019
@@ -306,7 +324,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array src = Uint8Array.of(0, 127, 255);
     Uint8Array arr = new Uint8Array(src);
     assertEqual(0, arr.get(0));
-    assertEqual(255, arr.get(2));}
+    assertEqual(255, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0200
      * @tc.name testUint8ArrayTotal020
@@ -320,7 +339,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal020() {
     Uint8Array arr = new Uint8Array(new int[] {0x0A, 0xFF, 0x00});
     assertEqual(10, arr.get(0));
-    assertEqual(255, arr.get(1));}
+    assertEqual(255, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0210
      * @tc.name testUint8ArrayTotal021
@@ -334,7 +354,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal021() {
     Uint8Array arr = new Uint8Array(new double[] {1.5, 2.9, 3.1});
     assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));}
+    assertEqual(2, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0220
      * @tc.name testUint8ArrayTotal022
@@ -348,7 +369,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal022() {
     Uint8Array arr = new Uint8Array(new int[] {0b1010, 0b11111111});
     assertEqual(10, arr.get(0));
-    assertEqual(255, arr.get(1));}
+    assertEqual(255, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0230
      * @tc.name testUint8ArrayTotal023
@@ -362,7 +384,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal023() {
     Uint8Array arr = new Uint8Array(new int[] {0377, 0200});
     assertEqual(255, arr.get(0));
-    assertEqual(128, arr.get(1));}
+    assertEqual(128, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0240
      * @tc.name testUint8ArrayTotal024
@@ -376,7 +399,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal024() {
     List<Integer> src = new ArrayList<>();
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0250
      * @tc.name testUint8ArrayTotal025
@@ -390,7 +414,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal025() {
     List<Integer> src = java.util.Arrays.asList(42);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(42, arr.get(0));}
+    assertEqual(42, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0260
      * @tc.name testUint8ArrayTotal026
@@ -404,7 +429,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal026() {
     ArrayBuffer buf = new ArrayBuffer(1);
     Uint8Array arr = new Uint8Array(buf);
-    assertEqual(1, arr.length());}
+    assertEqual(1, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0270
      * @tc.name testUint8ArrayTotal027
@@ -418,7 +444,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal027() {
     ArrayBuffer buf = new ArrayBuffer(0);
     Uint8Array arr = new Uint8Array(buf);
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0280
      * @tc.name testUint8ArrayTotal028
@@ -432,7 +459,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal028() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf, 0);
-    assertEqual(0, arr.byteOffset());}
+    assertEqual(0, arr.byteOffset());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0290
      * @tc.name testUint8ArrayTotal029
@@ -446,7 +474,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal029() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf, 2);
-    assertEqual(2, arr.byteOffset());}
+    assertEqual(2, arr.byteOffset());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0300
      * @tc.name testUint8ArrayTotal030
@@ -460,7 +489,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal030() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf, 0.0);
-    assertEqual(0, arr.byteOffset());}
+    assertEqual(0, arr.byteOffset());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0310
      * @tc.name testUint8ArrayTotal031
@@ -474,7 +504,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal031() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf, 1.9);
-    assertEqual(1, arr.byteOffset());}
+    assertEqual(1, arr.byteOffset());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0320
      * @tc.name testUint8ArrayTotal032
@@ -488,7 +519,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal032() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8Array arr = new Uint8Array(buf, 0, 0);
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0330
      * @tc.name testUint8ArrayTotal033
@@ -502,7 +534,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal033() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8Array arr = new Uint8Array(buf, 0, 1);
-    assertEqual(1, arr.length());}
+    assertEqual(1, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0340
      * @tc.name testUint8ArrayTotal034
@@ -515,7 +548,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal034() {
     Uint8Array arr = new Uint8Array(1);
-    assertEqual(1, arr.BYTES_PER_ELEMENT);}
+    assertEqual(1, arr.BYTES_PER_ELEMENT);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0350
      * @tc.name testUint8ArrayTotal035
@@ -530,7 +564,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf);
     ArrayBuffer result = arr.buffer();
-    assertEqual(buf, result);}
+    assertEqual(buf, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0360
      * @tc.name testUint8ArrayTotal036
@@ -544,7 +579,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal036() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf);
-    assertEqual(0, arr.byteOffset());}
+    assertEqual(0, arr.byteOffset());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0370
      * @tc.name testUint8ArrayTotal037
@@ -557,7 +593,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal037() {
     Uint8Array arr = new Uint8Array(4);
-    assertEqual(4, arr.byteLength());}
+    assertEqual(4, arr.byteLength());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0380
      * @tc.name testUint8ArrayTotal038
@@ -570,7 +607,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal038() {
     Uint8Array arr = new Uint8Array(5);
-    assertEqual(5, arr.length());}
+    assertEqual(5, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0390
      * @tc.name testUint8ArrayTotal039
@@ -584,7 +622,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal039() {
     Uint8Array arr = new Uint8Array(1);
     String name = arr.getClass().getSimpleName();
-    assertEqual("Uint8Array", name);}
+    assertEqual("Uint8Array", name);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0400
      * @tc.name testUint8ArrayTotal040
@@ -598,7 +637,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal040() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int val = arr.get(1);
-    assertEqual(20, val);}
+    assertEqual(20, val);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0410
      * @tc.name testUint8ArrayTotal041
@@ -612,7 +652,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal041() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int val = arr.get(0);
-    assertEqual(10, val);}
+    assertEqual(10, val);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0420
      * @tc.name testUint8ArrayTotal042
@@ -626,7 +667,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal042() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int val = arr.get(2);
-    assertEqual(30, val);}
+    assertEqual(30, val);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0430
      * @tc.name testUint8ArrayTotal043
@@ -641,7 +683,10 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     try {
     int val = arr.get(3);
-    assertNull(val);} catch (RangeError e) { assertEqual("basetype.common.RangeError", BasTest.className(e));};}
+    assertNull(val);
+    } catch (RangeError e) { assertEqual("basetype.common.RangeError", BasTest.className(e));
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0440
      * @tc.name testUint8ArrayTotal044
@@ -655,7 +700,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal044() {
     Uint8Array arr = new Uint8Array(3);
     arr.set(1, 42);
-    assertEqual(42, arr.get(1));}
+    assertEqual(42, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0450
      * @tc.name testUint8ArrayTotal045
@@ -669,7 +715,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal045() {
     Uint8Array arr = new Uint8Array(3);
     arr.set(0, 100);
-    assertEqual(100, arr.get(0));}
+    assertEqual(100, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0460
      * @tc.name testUint8ArrayTotal046
@@ -683,7 +730,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal046() {
     Uint8Array arr = new Uint8Array(3);
     arr.set(2, 200);
-    assertEqual(200, arr.get(2));}
+    assertEqual(200, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0470
      * @tc.name testUint8ArrayTotal047
@@ -698,7 +746,10 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = new Uint8Array(3);
     try {
     arr.set(3, 100);
-    assertEqual(3, arr.length());} catch (RangeError e) { assertEqual("basetype.common.RangeError", BasTest.className(e));};}
+    assertEqual(3, arr.length());
+    } catch (RangeError e) { assertEqual("basetype.common.RangeError", BasTest.className(e));
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0480
      * @tc.name testUint8ArrayTotal048
@@ -712,7 +763,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal048() {
     Uint8Array arr = new Uint8Array(3);
     arr.set(0, 0);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0490
      * @tc.name testUint8ArrayTotal049
@@ -726,7 +778,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal049() {
     Uint8Array arr = new Uint8Array(3);
     arr.set(0, 255);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0500
      * @tc.name testUint8ArrayTotal050
@@ -740,7 +793,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal050() {
     Uint8Array arr = new Uint8Array(3);
     arr.set(0, 128);
-    assertEqual(128, arr.get(0));}
+    assertEqual(128, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0510
      * @tc.name testUint8ArrayTotal051
@@ -754,7 +808,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal051() {
     Uint8Array arr = new Uint8Array(3);
     arr.set(0, 256);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0520
      * @tc.name testUint8ArrayTotal052
@@ -768,7 +823,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal052() {
     Uint8Array arr = new Uint8Array(3);
     arr.set(0, -1);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0530
      * @tc.name testUint8ArrayTotal053
@@ -782,7 +838,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal053() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Integer val = arr.at(1);
-    assertEqual(20, val);}
+    assertEqual(20, val);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0540
      * @tc.name testUint8ArrayTotal054
@@ -796,7 +853,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal054() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Integer val = arr.at(0);
-    assertEqual(10, val);}
+    assertEqual(10, val);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0550
      * @tc.name testUint8ArrayTotal055
@@ -810,7 +868,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal055() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Integer val = arr.at(-1);
-    assertEqual(30, val);}
+    assertEqual(30, val);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0560
      * @tc.name testUint8ArrayTotal056
@@ -824,7 +883,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal056() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Integer val = arr.at(-3);
-    assertEqual(10, val);}
+    assertEqual(10, val);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0570
      * @tc.name testUint8ArrayTotal057
@@ -838,7 +898,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal057() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Integer val = arr.at(3);
-    assertNull(val);}
+    assertNull(val);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0580
      * @tc.name testUint8ArrayTotal058
@@ -852,7 +913,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal058() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Integer val = arr.at(-4);
-    assertNull(val);}
+    assertNull(val);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0590
      * @tc.name testUint8ArrayTotal059
@@ -866,7 +928,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal059() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array result = arr.with(1, 99);
-    assertEqual(99, result.get(1));}
+    assertEqual(99, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0600
      * @tc.name testUint8ArrayTotal060
@@ -880,7 +943,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal060() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array result = arr.with(0, 99);
-    assertEqual(99, result.get(0));}
+    assertEqual(99, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0610
      * @tc.name testUint8ArrayTotal061
@@ -894,7 +958,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal061() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array result = arr.with(2, 99);
-    assertEqual(99, result.get(2));}
+    assertEqual(99, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0620
      * @tc.name testUint8ArrayTotal062
@@ -908,7 +973,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal062() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array result = arr.with(1, 127);
-    assertEqual(127, result.get(1));}
+    assertEqual(127, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0630
      * @tc.name testUint8ArrayTotal063
@@ -922,7 +988,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal063() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array result = arr.with(1, 256);
-    assertEqual(0, result.get(1));}
+    assertEqual(0, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0640
      * @tc.name testUint8ArrayTotal064
@@ -936,7 +1003,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal064() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array result = arr.with(1, -1);
-    assertEqual(255, result.get(1));}
+    assertEqual(255, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0650
      * @tc.name testUint8ArrayTotal065
@@ -952,7 +1020,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     arr.set(src, 1);
     assertEqual(1, arr.get(1));
-    assertEqual(2, arr.get(2));}
+    assertEqual(2, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0660
      * @tc.name testUint8ArrayTotal066
@@ -968,7 +1037,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     arr.set(src, 0);
     assertEqual(1, arr.get(0));
-    assertEqual(3, arr.get(2));}
+    assertEqual(3, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0670
      * @tc.name testUint8ArrayTotal067
@@ -984,7 +1054,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array src = Uint8Array.of(1, 2);
     arr.set(src, 3);
     assertEqual(1, arr.get(3));
-    assertEqual(2, arr.get(4));}
+    assertEqual(2, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0680
      * @tc.name testUint8ArrayTotal068
@@ -999,7 +1070,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = new Uint8Array(5);
     Uint8Array src = Uint8Array.of(1, 2);
     arr.set(src, (int) (1.9));
-    assertEqual(1, arr.get(1));}
+    assertEqual(1, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0690
      * @tc.name testUint8ArrayTotal069
@@ -1014,7 +1086,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = new Uint8Array(5);
     arr.set(new Uint8Array(new double[] {10.0, 20.0, 30.0}), 0);
     assertEqual(10, arr.get(0));
-    assertEqual(30, arr.get(2));}
+    assertEqual(30, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0700
      * @tc.name testUint8ArrayTotal070
@@ -1030,7 +1103,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     double[] src = new double[] {10.0, 20.0, 30.0};
     arr.set(src, 0);
     assertEqual(10, arr.get(0));
-    assertEqual(30, arr.get(2));}
+    assertEqual(30, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0710
      * @tc.name testUint8ArrayTotal071
@@ -1046,7 +1120,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     double[] src = new double[] {10.0, 20.0, 30.0};
     arr.set(src, 0);
     assertEqual(10, arr.get(0));
-    assertEqual(30, arr.get(2));}
+    assertEqual(30, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0720
      * @tc.name testUint8ArrayTotal072
@@ -1060,7 +1135,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal072() {
     Uint8Array arr = new Uint8Array(3);
     arr.set(new Uint8Array(new int[] {0}), 0);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0730
      * @tc.name testUint8ArrayTotal073
@@ -1074,7 +1150,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal073() {
     Uint8Array arr = new Uint8Array(3);
     arr.set(new Uint8Array(new int[] {255}), 0);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0740
      * @tc.name testUint8ArrayTotal074
@@ -1089,7 +1166,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     arr.copyWithin(0, 3, 5);
     assertEqual(4, arr.get(0));
-    assertEqual(5, arr.get(1));}
+    assertEqual(5, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0750
      * @tc.name testUint8ArrayTotal075
@@ -1104,7 +1182,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     arr.copyWithin(0, 2);
     assertEqual(3, arr.get(0));
-    assertEqual(5, arr.get(2));}
+    assertEqual(5, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0760
      * @tc.name testUint8ArrayTotal076
@@ -1119,7 +1198,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     arr.copyWithin(-2, 0, 2);
     assertEqual(1, arr.get(3));
-    assertEqual(2, arr.get(4));}
+    assertEqual(2, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0770
      * @tc.name testUint8ArrayTotal077
@@ -1134,7 +1214,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     arr.copyWithin(0, -3, -1);
     assertEqual(3, arr.get(0));
-    assertEqual(4, arr.get(1));}
+    assertEqual(4, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0780
      * @tc.name testUint8ArrayTotal078
@@ -1149,7 +1230,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     arr.copyWithin(0, 1, -1);
     assertEqual(2, arr.get(0));
-    assertEqual(3, arr.get(1));}
+    assertEqual(3, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0790
      * @tc.name testUint8ArrayTotal079
@@ -1166,7 +1248,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     assertEqual(0, arr.get(0));
     assertEqual(42, arr.get(1));
     assertEqual(42, arr.get(3));
-    assertEqual(0, arr.get(4));}
+    assertEqual(0, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0800
      * @tc.name testUint8ArrayTotal080
@@ -1182,7 +1265,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     arr.fill(42, 2);
     assertEqual(0, arr.get(0));
     assertEqual(42, arr.get(2));
-    assertEqual(42, arr.get(4));}
+    assertEqual(42, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0810
      * @tc.name testUint8ArrayTotal081
@@ -1197,7 +1281,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = new Uint8Array(5);
     arr.fill(42);
     assertEqual(42, arr.get(0));
-    assertEqual(42, arr.get(4));}
+    assertEqual(42, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0820
      * @tc.name testUint8ArrayTotal082
@@ -1212,7 +1297,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = new Uint8Array(3);
     arr.fill(0);
     assertEqual(0, arr.get(0));
-    assertEqual(0, arr.get(2));}
+    assertEqual(0, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0830
      * @tc.name testUint8ArrayTotal083
@@ -1227,7 +1313,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = new Uint8Array(3);
     arr.fill(255);
     assertEqual(255, arr.get(0));
-    assertEqual(255, arr.get(2));}
+    assertEqual(255, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0840
      * @tc.name testUint8ArrayTotal084
@@ -1242,7 +1329,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = new Uint8Array(3);
     arr.fill(128);
     assertEqual(128, arr.get(0));
-    assertEqual(128, arr.get(2));}
+    assertEqual(128, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0850
      * @tc.name testUint8ArrayTotal085
@@ -1256,7 +1344,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal085() {
     Uint8Array arr = new Uint8Array(3);
     arr.fill(256);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0860
      * @tc.name testUint8ArrayTotal086
@@ -1270,7 +1359,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal086() {
     Uint8Array arr = new Uint8Array(3);
     arr.fill(-1);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0870
      * @tc.name testUint8ArrayTotal087
@@ -1286,7 +1376,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     arr.fill(42, -3);
     assertEqual(0, arr.get(0));
     assertEqual(42, arr.get(2));
-    assertEqual(42, arr.get(4));}
+    assertEqual(42, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0880
      * @tc.name testUint8ArrayTotal088
@@ -1303,7 +1394,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     assertEqual(0, arr.get(0));
     assertEqual(42, arr.get(1));
     assertEqual(42, arr.get(3));
-    assertEqual(0, arr.get(4));}
+    assertEqual(0, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0890
      * @tc.name testUint8ArrayTotal089
@@ -1318,7 +1410,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = new Uint8Array(5);
     arr.fill(42, 3, 1);
     assertEqual(0, arr.get(0));
-    assertEqual(0, arr.get(4));}
+    assertEqual(0, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0900
      * @tc.name testUint8ArrayTotal090
@@ -1332,7 +1425,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal090() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     assertEqual(10, arr.get(0));
-    assertEqual(30, arr.get(2));}
+    assertEqual(30, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0910
      * @tc.name testUint8ArrayTotal091
@@ -1345,7 +1439,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal091() {
     Uint8Array arr = Uint8Array.of();
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0920
      * @tc.name testUint8ArrayTotal092
@@ -1358,7 +1453,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal092() {
     Uint8Array arr = Uint8Array.of(42);
-    assertEqual(42, arr.get(0));}
+    assertEqual(42, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0930
      * @tc.name testUint8ArrayTotal093
@@ -1371,7 +1467,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal093() {
     Uint8Array arr = Uint8Array.of(0);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0940
      * @tc.name testUint8ArrayTotal094
@@ -1384,7 +1481,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal094() {
     Uint8Array arr = Uint8Array.of(255);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0950
      * @tc.name testUint8ArrayTotal095
@@ -1399,7 +1497,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     List<Integer> src = java.util.Arrays.asList(1, 2, 3);
     Uint8Array arr = Uint8Array.from(src);
     assertEqual(1, arr.get(0));
-    assertEqual(3, arr.get(2));}
+    assertEqual(3, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0960
      * @tc.name testUint8ArrayTotal096
@@ -1414,7 +1513,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     List<Integer> src = java.util.Arrays.asList(1, 2, 3);
     Uint8Array arr = Uint8Array.from(src, (x, index) -> x * 2);
     assertEqual(2, arr.at(0));
-    assertEqual(6, arr.at(2));}
+    assertEqual(6, arr.at(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0970
      * @tc.name testUint8ArrayTotal097
@@ -1430,7 +1530,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     int multiplier = 3;
     Uint8Array arr = Uint8Array.from(src, (x, index) -> x * multiplier);
     assertEqual(3, arr.at(0));
-    assertEqual(9, arr.at(2));}
+    assertEqual(9, arr.at(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0980
      * @tc.name testUint8ArrayTotal098
@@ -1444,7 +1545,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal098() {
     List<Integer> src = new ArrayList<>();
     Uint8Array arr = Uint8Array.from(src);
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_0990
      * @tc.name testUint8ArrayTotal099
@@ -1459,7 +1561,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array arr = Uint8Array.from(src);
     assertEqual(10, arr.get(0));
-    assertEqual(30, arr.get(2));}
+    assertEqual(30, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1000
      * @tc.name testUint8ArrayTotal100
@@ -1474,7 +1577,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     double[] src = new double[] {7.0, 8.0, 9.0};
     Uint8Array arr = Uint8Array.from(src);
     assertEqual(7, arr.get(0));
-    assertEqual(9, arr.get(2));}
+    assertEqual(9, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1010
      * @tc.name testUint8ArrayTotal101
@@ -1489,7 +1593,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     List<Integer> src = java.util.Arrays.asList(1, 2, 3);
     Uint8Array arr = Uint8Array.from(src, (x, index) -> 0);
     assertEqual(0, arr.at(0));
-    assertEqual(0, arr.at(2));}
+    assertEqual(0, arr.at(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1020
      * @tc.name testUint8ArrayTotal102
@@ -1504,7 +1609,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     List<Integer> src = java.util.Arrays.asList(1, 2, 3);
     Uint8Array arr = Uint8Array.from(src, (x, index) -> 255);
     assertEqual(255, arr.at(0));
-    assertEqual(255, arr.at(2));}
+    assertEqual(255, arr.at(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1030
      * @tc.name testUint8ArrayTotal103
@@ -1518,7 +1624,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal103() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     Uint8Array result = arr.valueOf();
-    assertEqual(arr, result);}
+    assertEqual(arr, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1040
      * @tc.name testUint8ArrayTotal104
@@ -1536,7 +1643,9 @@ public class Uint8ArrayTotal01Test extends BasTest {
     int[] firstValue = first.value;
     if (firstValue != null) {
     assertEqual(0, firstValue[0]);
-    assertEqual(10, firstValue[1]);};}
+    assertEqual(10, firstValue[1]);
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1050
      * @tc.name testUint8ArrayTotal105
@@ -1551,7 +1660,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array.KeyIterator iter = arr.keys();
     IteratorResult first = iter.next();
-    assertEqual(0, first.value);}
+    assertEqual(0, first.value);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1060
      * @tc.name testUint8ArrayTotal106
@@ -1566,7 +1676,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array.KeyIterator iter = arr.values();
     IteratorResult first = iter.next();
-    assertEqual(10, first.value);}
+    assertEqual(10, first.value);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1070
      * @tc.name testUint8ArrayTotal107
@@ -1581,8 +1692,10 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int[] sum = {0};
     for (Integer val : arr.values()) {
-    sum[0] += val;};
-    assertEqual(60, sum[0]);}
+    sum[0] += val;
+    }
+    assertEqual(60, sum[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1080
      * @tc.name testUint8ArrayTotal108
@@ -1596,7 +1709,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal108() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     boolean result = arr.includes(20);
-    assertTrue(result);}
+    assertTrue(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1090
      * @tc.name testUint8ArrayTotal109
@@ -1610,7 +1724,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal109() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     boolean result = arr.includes(99);
-    assertFalse(result);}
+    assertFalse(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1100
      * @tc.name testUint8ArrayTotal110
@@ -1624,7 +1739,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal110() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 20);
     boolean result = arr.includes(20, 2);
-    assertTrue(result);}
+    assertTrue(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1110
      * @tc.name testUint8ArrayTotal111
@@ -1638,7 +1754,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal111() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     boolean result = arr.includes(10, -2);
-    assertFalse(result);}
+    assertFalse(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1120
      * @tc.name testUint8ArrayTotal112
@@ -1652,7 +1769,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal112() {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
     boolean result = arr.includes(0);
-    assertTrue(result);}
+    assertTrue(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1130
      * @tc.name testUint8ArrayTotal113
@@ -1666,7 +1784,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal113() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 20);
     int idx = arr.indexOf(20);
-    assertEqual(1, idx);}
+    assertEqual(1, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1140
      * @tc.name testUint8ArrayTotal114
@@ -1680,7 +1799,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal114() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int idx = arr.indexOf(99);
-    assertEqual(-1, idx);}
+    assertEqual(-1, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1150
      * @tc.name testUint8ArrayTotal115
@@ -1694,7 +1814,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal115() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 20);
     int idx = arr.indexOf(20, 2);
-    assertEqual(3, idx);}
+    assertEqual(3, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1160
      * @tc.name testUint8ArrayTotal116
@@ -1708,7 +1829,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal116() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int idx = arr.indexOf(10, -2);
-    assertEqual(-1, idx);}
+    assertEqual(-1, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1170
      * @tc.name testUint8ArrayTotal117
@@ -1722,7 +1844,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal117() {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
     int idx = arr.indexOf(255);
-    assertEqual(2, idx);}
+    assertEqual(2, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1180
      * @tc.name testUint8ArrayTotal118
@@ -1736,7 +1859,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal118() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 20);
     int idx = arr.lastIndexOf(20);
-    assertEqual(3, idx);}
+    assertEqual(3, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1190
      * @tc.name testUint8ArrayTotal119
@@ -1750,7 +1874,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal119() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int idx = arr.lastIndexOf(99);
-    assertEqual(-1, idx);}
+    assertEqual(-1, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1200
      * @tc.name testUint8ArrayTotal120
@@ -1764,7 +1889,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal120() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 20);
     int idx = arr.lastIndexOf(20, 2);
-    assertEqual(1, idx);}
+    assertEqual(1, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1210
      * @tc.name testUint8ArrayTotal121
@@ -1778,7 +1904,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal121() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int idx = arr.lastIndexOf(30, -1);
-    assertEqual(2, idx);}
+    assertEqual(2, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1220
      * @tc.name testUint8ArrayTotal122
@@ -1792,7 +1919,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal122() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
     Integer result = arr.find((v) -> v > 25);
-    assertEqual(30, result);}
+    assertEqual(30, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1230
      * @tc.name testUint8ArrayTotal123
@@ -1806,7 +1934,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal123() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Integer result = arr.find((v) -> v > 100);
-    assertNull(result);}
+    assertNull(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1240
      * @tc.name testUint8ArrayTotal124
@@ -1821,7 +1950,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int threshold = 15;
     Integer result = arr.find((v) -> v > threshold);
-    assertEqual(20, result);}
+    assertEqual(20, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1250
      * @tc.name testUint8ArrayTotal125
@@ -1835,7 +1965,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal125() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
     int idx = arr.findIndex((v) -> v > 25);
-    assertEqual(2, idx);}
+    assertEqual(2, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1260
      * @tc.name testUint8ArrayTotal126
@@ -1849,7 +1980,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal126() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int idx = arr.findIndex((v) -> v > 100);
-    assertEqual(-1, idx);}
+    assertEqual(-1, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1270
      * @tc.name testUint8ArrayTotal127
@@ -1864,7 +1996,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int threshold = 15;
     int idx = arr.findIndex((v) -> v > threshold);
-    assertEqual(1, idx);}
+    assertEqual(1, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1280
      * @tc.name testUint8ArrayTotal128
@@ -1878,7 +2011,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal128() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
     Integer result = arr.findLast((v) -> v > 25);
-    assertEqual(40, result);}
+    assertEqual(40, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1290
      * @tc.name testUint8ArrayTotal129
@@ -1892,7 +2026,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal129() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
     int idx = arr.findLastIndex((v) -> v > 25);
-    assertEqual(3, idx);}
+    assertEqual(3, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1300
      * @tc.name testUint8ArrayTotal130
@@ -1907,8 +2042,10 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     int[] sum = {0};
     arr.forEach((v) -> {
-    sum[0] += v;});
-    assertEqual(6, sum[0]);}
+    sum[0] += v;
+        });
+    assertEqual(6, sum[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1310
      * @tc.name testUint8ArrayTotal131
@@ -1924,8 +2061,10 @@ public class Uint8ArrayTotal01Test extends BasTest {
     int[] total = {0};
     int factor = 2;
     arr.forEach((v) -> {
-    total[0] += v * factor;});
-    assertEqual(12, total[0]);}
+    total[0] += v * factor;
+        });
+    assertEqual(12, total[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1320
      * @tc.name testUint8ArrayTotal132
@@ -1939,7 +2078,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal132() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     boolean result = arr.some((v) -> v > 25);
-    assertTrue(result);}
+    assertTrue(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1330
      * @tc.name testUint8ArrayTotal133
@@ -1953,7 +2093,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal133() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     boolean result = arr.some((v) -> v > 100);
-    assertFalse(result);}
+    assertFalse(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1340
      * @tc.name testUint8ArrayTotal134
@@ -1968,7 +2109,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int threshold = 15;
     boolean result = arr.some((v) -> v > threshold);
-    assertTrue(result);}
+    assertTrue(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1350
      * @tc.name testUint8ArrayTotal135
@@ -1982,7 +2124,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal135() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     boolean result = arr.every((v) -> v > 5);
-    assertTrue(result);}
+    assertTrue(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1360
      * @tc.name testUint8ArrayTotal136
@@ -1996,7 +2139,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal136() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     boolean result = arr.every((v) -> v > 15);
-    assertFalse(result);}
+    assertFalse(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1370
      * @tc.name testUint8ArrayTotal137
@@ -2011,7 +2155,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int minVal = 5;
     boolean result = arr.every((v) -> v > minVal);
-    assertTrue(result);}
+    assertTrue(result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1380
      * @tc.name testUint8ArrayTotal138
@@ -2026,7 +2171,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array result = arr.slice();
     assertEqual(10, result.get(0));
-    assertEqual(30, result.get(2));}
+    assertEqual(30, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1390
      * @tc.name testUint8ArrayTotal139
@@ -2041,7 +2187,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
     Uint8Array result = arr.slice(1);
     assertEqual(20, result.get(0));
-    assertEqual(40, result.get(2));}
+    assertEqual(40, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1400
      * @tc.name testUint8ArrayTotal140
@@ -2056,7 +2203,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
     Uint8Array result = arr.slice(1, 3);
     assertEqual(20, result.get(0));
-    assertEqual(30, result.get(1));}
+    assertEqual(30, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1410
      * @tc.name testUint8ArrayTotal141
@@ -2071,7 +2219,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
     Uint8Array result = arr.slice(-2);
     assertEqual(30, result.get(0));
-    assertEqual(40, result.get(1));}
+    assertEqual(40, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1420
      * @tc.name testUint8ArrayTotal142
@@ -2086,7 +2235,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
     Uint8Array result = arr.slice(1, -1);
     assertEqual(20, result.get(0));
-    assertEqual(30, result.get(1));}
+    assertEqual(30, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1430
      * @tc.name testUint8ArrayTotal143
@@ -2100,7 +2250,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal143() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array result = arr.slice(3, 1);
-    assertEqual(0, result.length());}
+    assertEqual(0, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1440
      * @tc.name testUint8ArrayTotal144
@@ -2114,7 +2265,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal144() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array result = arr.slice(1, 1);
-    assertEqual(0, result.length());}
+    assertEqual(0, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1450
      * @tc.name testUint8ArrayTotal145
@@ -2129,7 +2281,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     arr.reverse();
     assertEqual(30, arr.get(0));
-    assertEqual(10, arr.get(2));}
+    assertEqual(10, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1460
      * @tc.name testUint8ArrayTotal146
@@ -2145,7 +2298,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array result = arr.toReversed();
     assertEqual(30, result.get(0));
     assertEqual(10, result.get(2));
-    assertEqual(10, arr.get(0));}
+    assertEqual(10, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1470
      * @tc.name testUint8ArrayTotal147
@@ -2160,7 +2314,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(30, 10, 20);
     arr.sort();
     assertEqual(10, arr.get(0));
-    assertEqual(30, arr.get(2));}
+    assertEqual(30, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1480
      * @tc.name testUint8ArrayTotal148
@@ -2175,7 +2330,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 30, 20);
     arr.sort((a, b) -> (int) (a - b));
     assertEqual(10, arr.get(0));
-    assertEqual(30, arr.get(2));}
+    assertEqual(30, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1490
      * @tc.name testUint8ArrayTotal149
@@ -2190,7 +2346,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 30, 20);
     arr.sort((a, b) -> (int) (b - a));
     assertEqual(30, arr.get(0));
-    assertEqual(10, arr.get(2));}
+    assertEqual(10, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1500
      * @tc.name testUint8ArrayTotal150
@@ -2206,7 +2363,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     arr.sort((a, b) -> (int) (a - b));
     assertEqual(10, arr.get(0));
     assertEqual(20, arr.get(1));
-    assertEqual(20, arr.get(2));}
+    assertEqual(20, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1510
      * @tc.name testUint8ArrayTotal151
@@ -2222,7 +2380,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array result = arr.toSorted();
     assertEqual(10, result.get(0));
     assertEqual(30, result.get(2));
-    assertEqual(30, arr.get(0));}
+    assertEqual(30, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1520
      * @tc.name testUint8ArrayTotal152
@@ -2237,7 +2396,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     Uint8Array result = arr.map((v) -> v * 2);
     assertEqual(2, result.get(0));
-    assertEqual(6, result.get(2));}
+    assertEqual(6, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1530
      * @tc.name testUint8ArrayTotal153
@@ -2253,7 +2413,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     int factor = 3;
     Uint8Array result = arr.map((v) -> v * factor);
     assertEqual(3, result.get(0));
-    assertEqual(9, result.get(2));}
+    assertEqual(9, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1540
      * @tc.name testUint8ArrayTotal154
@@ -2268,7 +2429,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
     Uint8Array result = arr.map((v) -> v);
     assertEqual(0, result.get(0));
-    assertEqual(255, result.get(2));}
+    assertEqual(255, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1550
      * @tc.name testUint8ArrayTotal155
@@ -2283,7 +2445,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
     Uint8Array result = arr.filter((v) -> v > 25);
     assertEqual(30, result.get(0));
-    assertEqual(40, result.get(1));}
+    assertEqual(40, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1560
      * @tc.name testUint8ArrayTotal156
@@ -2297,7 +2460,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal156() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     Uint8Array result = arr.filter((v) -> v > 100);
-    assertEqual(0, result.length());}
+    assertEqual(0, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1570
      * @tc.name testUint8ArrayTotal157
@@ -2313,7 +2477,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     int minVal = 15;
     Uint8Array result = arr.filter((v) -> v > minVal);
     assertEqual(20, result.get(0));
-    assertEqual(30, result.get(1));}
+    assertEqual(30, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1580
      * @tc.name testUint8ArrayTotal158
@@ -2328,7 +2493,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
     Uint8Array result = arr.filter((v) -> v > 100);
     assertEqual(127, result.get(0));
-    assertEqual(255, result.get(1));}
+    assertEqual(255, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1590
      * @tc.name testUint8ArrayTotal159
@@ -2341,8 +2507,9 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal159() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    int result = arr.reduce((acc, v, index, array)-> acc + v, 0);
-    assertEqual(6, result);}
+    int result = arr.reduce((acc, v, index, array) ->  acc + v, 0);
+    assertEqual(6, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1600
      * @tc.name testUint8ArrayTotal160
@@ -2355,8 +2522,9 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal160() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    int result = arr.reduce((acc, v, index, array)-> acc + v);
-    assertEqual(6, result);}
+    int result = arr.reduce((acc, v, index, array) ->  acc + v);
+    assertEqual(6, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1610
      * @tc.name testUint8ArrayTotal161
@@ -2373,8 +2541,11 @@ public class Uint8ArrayTotal01Test extends BasTest {
     for (int i = 0; i < arr.length(); i++) {
     Integer val = arr.at(i);
     if (val != null) {
-    result += String.valueOf(val);};};
-    assertEqual("123", result);}
+    result += String.valueOf(val);
+    }
+    }
+    assertEqual("123", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1620
      * @tc.name testUint8ArrayTotal162
@@ -2387,8 +2558,9 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal162() {
     Uint8Array arr = Uint8Array.of(1, 2);
-    int result = arr.reduce((acc, v, index, array)-> acc + v, 10);
-    assertEqual(13, result);}
+    int result = arr.reduce((acc, v, index, array) ->  acc + v, 10);
+    assertEqual(13, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1630
      * @tc.name testUint8ArrayTotal163
@@ -2401,8 +2573,9 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal163() {
     Uint8Array arr = new Uint8Array();
-    int result = arr.reduce((acc, v, index, array)-> acc + v, 0);
-    assertEqual(0, result);}
+    int result = arr.reduce((acc, v, index, array) ->  acc + v, 0);
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1640
      * @tc.name testUint8ArrayTotal164
@@ -2415,8 +2588,9 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal164() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    int result = arr.reduceRight((acc, v, index, array)-> acc + v, 0);
-    assertEqual(6, result);}
+    int result = arr.reduceRight((acc, v, index, array) ->  acc + v, 0);
+    assertEqual(6, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1650
      * @tc.name testUint8ArrayTotal165
@@ -2433,8 +2607,11 @@ public class Uint8ArrayTotal01Test extends BasTest {
     for (int i = arr.length() - 1; i >= 0; i--) {
     Integer val = arr.at(i);
     if (val != null) {
-    result += String.valueOf(val);};};
-    assertEqual("321", result);}
+    result += String.valueOf(val);
+    }
+    }
+    assertEqual("321", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1660
      * @tc.name testUint8ArrayTotal166
@@ -2451,8 +2628,11 @@ public class Uint8ArrayTotal01Test extends BasTest {
     for (int i = arr.length() - 1; i >= 0; i--) {
     Integer val = arr.at(i);
     if (val != null) {
-    result += String.valueOf(val);};};
-    assertEqual("21", result);}
+    result += String.valueOf(val);
+    }
+    }
+    assertEqual("21", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1670
      * @tc.name testUint8ArrayTotal167
@@ -2465,8 +2645,9 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal167() {
     Uint8Array arr = Uint8Array.of(1, 2);
-    int result = arr.reduceRight((acc, v, index, array)-> acc + v, 0);
-    assertEqual(3, result);}
+    int result = arr.reduceRight((acc, v, index, array) ->  acc + v, 0);
+    assertEqual(3, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1680
      * @tc.name testUint8ArrayTotal168
@@ -2480,7 +2661,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal168() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     String str = arr.join();
-    assertEqual("10,20,30", str);}
+    assertEqual("10,20,30", str);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1690
      * @tc.name testUint8ArrayTotal169
@@ -2494,7 +2676,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal169() {
     Uint8Array arr = Uint8Array.of(1, 2);
     String str = arr.join("|");
-    assertEqual("1|2", str);}
+    assertEqual("1|2", str);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1700
      * @tc.name testUint8ArrayTotal170
@@ -2508,7 +2691,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal170() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     String str = arr.join("");
-    assertEqual("123", str);}
+    assertEqual("123", str);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1710
      * @tc.name testUint8ArrayTotal171
@@ -2522,7 +2706,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal171() {
     Uint8Array arr = Uint8Array.of(255, 0);
     String str = arr.join("");
-    assertEqual("2550", str);}
+    assertEqual("2550", str);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1720
      * @tc.name testUint8ArrayTotal172
@@ -2536,7 +2721,8 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal172() {
     Uint8Array arr = Uint8Array.of(1000, 2000);
     String str = arr.toLocaleString();
-    assertTrue(str.length() > 0);}
+    assertTrue(str.length() > 0);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL01_1730
      * @tc.name testUint8ArrayTotal173
@@ -2550,5 +2736,6 @@ public class Uint8ArrayTotal01Test extends BasTest {
     void testUint8ArrayTotal173() {
     Uint8Array arr = Uint8Array.of(1000);
     String str = arr.toLocaleString("en-US");
-    assertTrue(str.length() > 0);}
+    assertTrue(str.length() > 0);
+    }
 }
