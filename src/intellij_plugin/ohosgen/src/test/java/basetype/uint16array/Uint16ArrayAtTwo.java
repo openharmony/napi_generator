@@ -41,5 +41,6 @@ public class Uint16ArrayAtTwo extends BasTest {
     assertEqual(456, view.at(1));
     assertEqual(456, view.at(-1));
     assertNull(view.at(2));
-    assertNull(view.at(-3));}
+    assertNull(view.at(-3));
+    }
 }

@@ -31,24 +31,38 @@ public class Uint16ArrayFindTwo extends BasTest {
     @Test
     void testUint16ArrayFindTwo020() {
     int[] count = {0};
-    Number result = Uint16Array.of(1, 2, 3).find((value) -> { count[0]++; return false;});
+    Number result = Uint16Array.of(1, 2, 3).find((value) -> {
+        count[0]++;
+        return false;
+    });
     assertNull(result);
-    assertEqual(3, count[0]);}
+    assertEqual(3, count[0]);
+    }
 
     @Test
     void testUint16ArrayFindTwo021() {
     Uint16Array source = Uint16Array.of(1, 2, 3);
-    Number result = source.find((value, index, array) -> { if (index == 0) { array.set(1, 20);} return value > 10;});
-    assertEqual(20, result);}
+    Number result = source.find((value, index, array) -> {
+        if (index == 0) { array.set(1, 20);
+        } return value > 10;
+    });
+    assertEqual(20, result);
+    }
 
     @Test
     void testUint16ArrayFindTwo022() {
     Uint16Array all = Uint16Array.of(1, 2, 3, 4);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
-    assertEqual(2, view.find((value) -> value > 1));}
+    assertEqual(2, view.find((value) -> value > 1));
+    }
 
     @Test
     void testUint16ArrayFindTwo023() {
-    try { Uint16Array.of(1).find((value) -> { throw new Error("find marker");}); fail();} catch (Error e) { assertEqual("find marker", e.getMessage());}
+    try { Uint16Array.of(1).find((value) -> {
+        throw new Error("find marker");
+        });
+        fail();
+        } catch (Error e) { assertEqual("find marker", e.getMessage());
+    }
     }
 }

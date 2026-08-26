@@ -32,28 +32,43 @@ public class Uint16ArrayEveryTwo extends BasTest {
     @Test
     void testUint16ArrayEveryTwo015() {
     int[] count = {0};
-    Uint16Array.of(1, 2, 3).every((value) -> { count[0]++; return false;});
-    assertEqual(1, count[0]);}
+    Uint16Array.of(1, 2, 3).every((value) -> {
+        count[0]++;
+        return false;
+    });
+    assertEqual(1, count[0]);
+    }
 
     @Test
     void testUint16ArrayEveryTwo016() {
     int[] expected = {0};
-    Uint16Array.of(1, 2, 3).every((value, index) -> { assertEqual(expected[0], index); expected[0]++; return true;});
-    assertEqual(3, expected[0]);}
+    Uint16Array.of(1, 2, 3).every((value, index) -> {
+        assertEqual(expected[0], index);
+        expected[0]++;
+        return true;
+    });
+    assertEqual(3, expected[0]);
+    }
 
     @Test
     void testUint16ArrayEveryTwo017() {
     Uint16Array source = Uint16Array.of(1, 2);
     boolean same = source.every((value, index, array) -> array == source);
-    assertTrue(same);}
+    assertTrue(same);
+    }
 
     @Test
     void testUint16ArrayEveryTwo018() {
     Uint16Array source = Uint16Array.of(1, 2);
     int[] count = {0};
-    boolean result = source.every((value, index, array) -> { count[0]++; if (index == 1) { array.set(0, 0);} return value > 0;});;
+    boolean result = source.every((value, index, array) -> {
+        count[0]++;
+        if (index == 1) { array.set(0, 0);
+        } return value > 0;
+        });
     assertTrue(result);
-    assertEqual(2, count[0]);}
+    assertEqual(2, count[0]);
+    }
 
     @Test
     void testUint16ArrayEveryTwo019() {
@@ -61,33 +76,49 @@ public class Uint16ArrayEveryTwo extends BasTest {
     Uint16Array source = new Uint16Array(buffer);
     source.set(new Uint16Array(new int[] {1, 2, 3}));
     Uint16Array alias = new Uint16Array(buffer);
-    boolean result = source.every((value, index) -> { if (index == 0) { alias.set(1, 0);} return value > 0;});;
-    assertFalse(result);}
+    boolean result = source.every((value, index) -> {
+        if (index == 0) { alias.set(1, 0);
+        } return value > 0;
+        });
+    assertFalse(result);
+    }
 
     @Test
     void testUint16ArrayEveryTwo020() {
     Uint16Array all = Uint16Array.of(0, 2, 4, 0);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
-    assertTrue(view.every((value) -> value > 0));}
+    assertTrue(view.every((value) -> value > 0));
+    }
 
     @Test
     void testUint16ArrayEveryTwo021() {
-    try { Uint16Array.of(1).every((value) -> { throw new Error("every marker");}); fail();} catch (Error e) { assertEqual("every marker", e.getMessage());}
+    try { Uint16Array.of(1).every((value) -> {
+        throw new Error("every marker");
+        });
+        fail();
+        } catch (Error e) { assertEqual("every marker", e.getMessage());
+    }
     }
 
     @Test
     void testUint16ArrayEveryTwo022() {
-    assertTrue(Uint16Array.of(65535).every((value) -> value <= 65535));}
+    assertTrue(Uint16Array.of(65535).every((value) -> value <= 65535));
+    }
 
     @Test
     void testUint16ArrayEveryTwo023() {
     Uint16Array source = Uint16Array.of(2, 4, 6);
-    assertTrue(source.every((value, index, array) -> value >= array.get(0)));}
+    assertTrue(source.every((value, index, array) -> value >= array.get(0)));
+    }
 
     @Test
     void testUint16ArrayEveryTwo024() {
     int[] count = {0};
-    boolean result = Uint16Array.of(1, 2, 0).every((value) -> { count[0]++; return value > 0;});
+    boolean result = Uint16Array.of(1, 2, 0).every((value) -> {
+        count[0]++;
+        return value > 0;
+    });
     assertFalse(result);
-    assertEqual(3, count[0]);}
+    assertEqual(3, count[0]);
+    }
 }

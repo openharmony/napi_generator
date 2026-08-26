@@ -33,5 +33,6 @@ public class Uint16ArrayJoinTwo extends BasTest {
     Uint16Array view = new Uint16Array(backing.buffer(), 2, 3);
     Uint16Array alias = new Uint16Array(backing.buffer());
     alias.set(2, 7);
-    assertEqual("1-7-3", view.join("-"));}
+    assertEqual("1-7-3", view.join("-"));
+    }
 }

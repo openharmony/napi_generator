@@ -35,14 +35,16 @@ public class Uint16ArraySetTwo extends BasTest {
     Uint16Array all = Uint16Array.of(1, 2, 3, 4);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
     view.set(0, 20);
-    assertEqual(20, all.at(1));}
+    assertEqual(20, all.at(1));
+    }
 
     @Test
     void testUint16ArraySetTwo052() {
     Uint16Array all = Uint16Array.of(1, 2, 3, 4);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
     all.set(2, 30);
-    assertEqual(30, view.at(1));}
+    assertEqual(30, view.at(1));
+    }
 
     @Test
     void testUint16ArraySetTwo053() {
@@ -50,7 +52,8 @@ public class Uint16ArraySetTwo extends BasTest {
     Uint16Array first = new Uint16Array(buffer, 0, 3);
     Uint16Array second = new Uint16Array(buffer, 2, 3);
     first.set(1, 55);
-    assertEqual(55, second.at(0));}
+    assertEqual(55, second.at(0));
+    }
 
     @Test
     void testUint16ArraySetTwo054() {
@@ -58,7 +61,8 @@ public class Uint16ArraySetTwo extends BasTest {
     Uint16Array view = new Uint16Array(buffer, 4, 2);
     view.set(1, 77);
     Uint16Array all = new Uint16Array(buffer);
-    assertEqual(77, all.at(3));}
+    assertEqual(77, all.at(3));
+    }
 
     @Test
     void testUint16ArraySetTwo055() {
@@ -66,7 +70,8 @@ public class Uint16ArraySetTwo extends BasTest {
     arr.set(1, 0);
     assertEqual(0, arr.at(1));
     assertEqual(3, arr.length());
-    assertEqual(6, arr.byteLength());}
+    assertEqual(6, arr.byteLength());
+    }
 
     @Test
     void testUint16ArraySetTwo056() {
@@ -74,7 +79,8 @@ public class Uint16ArraySetTwo extends BasTest {
     Uint16Array view = new Uint16Array(buffer, 2, 3);
     view.set(0, 65535);
     assertEqual(65535, view.at(0));
-    assertEqual(2, view.byteOffset());}
+    assertEqual(2, view.byteOffset());
+    }
 
     @Test
     void testUint16ArraySetTwo057() {
@@ -83,7 +89,8 @@ public class Uint16ArraySetTwo extends BasTest {
     arr.set(2, 33);
     assertEqual(11, arr.at(0));
     assertEqual(0, arr.at(1));
-    assertEqual(33, arr.at(2));}
+    assertEqual(33, arr.at(2));
+    }
 
     @Test
     void testUint16ArraySetTwo058() {
@@ -91,7 +98,8 @@ public class Uint16ArraySetTwo extends BasTest {
     Uint16Array arr = new Uint16Array(buffer);
     arr.set(0, 1234);
     DataView view = new DataView(buffer);
-    assertEqual(1234, view.getUint16(0, true));}
+    assertEqual(1234, view.getUint16(0, true));
+    }
 
     @Test
     void testUint16ArraySetTwo059() {
@@ -99,7 +107,8 @@ public class Uint16ArraySetTwo extends BasTest {
     Uint16Array arr = new Uint16Array(buffer);
     arr.set(1, 4321);
     DataView view = new DataView(buffer);
-    assertEqual(4321, view.getUint16(2, true));}
+    assertEqual(4321, view.getUint16(2, true));
+    }
 
     @Test
     void testUint16ArraySetTwo060() {
@@ -107,7 +116,8 @@ public class Uint16ArraySetTwo extends BasTest {
     Uint16Array first = new Uint16Array(buffer);
     Uint16Array second = new Uint16Array(buffer);
     first.set(0, 8.9);
-    assertEqual(8, second.at(0));}
+    assertEqual(8, second.at(0));
+    }
 
     @Test
     void testUint16ArraySetTwo061() {
@@ -115,7 +125,8 @@ public class Uint16ArraySetTwo extends BasTest {
     Uint16Array first = new Uint16Array(buffer);
     Uint16Array second = new Uint16Array(buffer);
     first.set(0, -2);
-    assertEqual(65534, second.at(0));}
+    assertEqual(65534, second.at(0));
+    }
 
     @Test
     void testUint16ArraySetTwo062() {
@@ -123,7 +134,8 @@ public class Uint16ArraySetTwo extends BasTest {
     Uint16Array first = new Uint16Array(buffer);
     Uint16Array second = new Uint16Array(buffer);
     first.set(0, 65538);
-    assertEqual(2, second.at(0));}
+    assertEqual(2, second.at(0));
+    }
 
     @Test
     void testUint16ArraySetTwo063() {
@@ -135,7 +147,8 @@ public class Uint16ArraySetTwo extends BasTest {
     typedView.set(1, 0xABCD);
     assertEqual(0xABCD, dataView.getUint16(2, true));
     assertEqual(0, new Uint16Array(buffer).at(1));
-    assertEqual(0, new Uint16Array(buffer).at(4));}
+    assertEqual(0, new Uint16Array(buffer).at(4));
+    }
 
     @Test
     void testUint16ArraySetTwo064() {
@@ -143,8 +156,11 @@ public class Uint16ArraySetTwo extends BasTest {
     Uint16Array view = new Uint16Array(backing.buffer(), 2, 2);
     try {
     view.set(2, 99);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
     assertEqual(40, backing.at(3));
-    assertEqual(2, view.length());}
+    assertEqual(2, view.length());
+    }
 }

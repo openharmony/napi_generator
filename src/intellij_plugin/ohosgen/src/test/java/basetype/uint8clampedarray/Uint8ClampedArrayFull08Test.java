@@ -42,7 +42,8 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 10, 15});
     int target = 10;
     int idx = arr.findIndex((v, i, _a) -> v == target);
-    assertEqual(1, idx);}
+    assertEqual(1, idx);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_0200
      * @tc.name testUint8ClampedArrayFullEight002
@@ -56,7 +57,8 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     void testUint8ClampedArrayFullEight002() {
     Uint8ClampedArray arr = new Uint8ClampedArray(3);
     arr.set(0, 50);
-    assertEqual(50, arr.get(0));}
+    assertEqual(50, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_0300
      * @tc.name testUint8ClampedArrayFullEight003
@@ -72,7 +74,8 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     arr.set(0, 1);
     arr.set(0, 2);
     arr.set(0, 3);
-    assertEqual(3, arr.get(0));}
+    assertEqual(3, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_0400
      * @tc.name testUint8ClampedArrayFullEight004
@@ -86,8 +89,12 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     void testUint8ClampedArrayFullEight004() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int[] last = {0};
-    arr.forEach((v, i, _a) -> { if (i == 0) { arr.set(2, 99);} last[0] = v;});
-    assertEqual(99, last[0]);}
+    arr.forEach((v, i, _a) -> {
+        if (i == 0) { arr.set(2, 99);
+        } last[0] = v;
+    });
+    assertEqual(99, last[0]);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_0500
      * @tc.name testUint8ClampedArrayFullEight005
@@ -102,8 +109,10 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     arr.set(1, 88);
     int sum = 0;
-    for (Integer v : arr.values()) { sum += v;}
-    assertEqual(92, sum);}
+    for (Integer v : arr.values()) { sum += v;
+    }
+    assertEqual(92, sum);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_0600
      * @tc.name testUint8ClampedArrayFullEight006
@@ -118,7 +127,8 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(5);
     arr.set(0, 1);
     arr.set(4, 5);
-    assertEqual(5, arr.length());}
+    assertEqual(5, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_0700
      * @tc.name testUint8ClampedArrayFullEight007
@@ -132,7 +142,8 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     void testUint8ClampedArrayFullEight007() {
     Uint8ClampedArray arr = new Uint8ClampedArray(3);
     arr.set(1, 77);
-    assertEqual(77, arr.get(1));}
+    assertEqual(77, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_0800
      * @tc.name testUint8ClampedArrayFullEight008
@@ -147,8 +158,11 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.set(100, 50);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_0900
      * @tc.name testUint8ClampedArrayFullEight009
@@ -162,7 +176,8 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     void testUint8ClampedArrayFullEight009() {
     Uint8ClampedArray arr = new Uint8ClampedArray(5);
     arr.set(4, 200);
-    assertEqual(200, arr.get(4));}
+    assertEqual(200, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_1000
      * @tc.name testUint8ClampedArrayFullEight010
@@ -178,7 +193,8 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     Uint8ClampedArray r = arr.slice(2);
     assertEqual(2, r.length());
     assertEqual(3, r.get(0));
-    assertEqual(4, r.get(1));}
+    assertEqual(4, r.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_1100
      * @tc.name testUint8ClampedArrayFullEight011
@@ -193,9 +209,13 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.forEach((v, i, _a) -> {
-    throw new Error("cb");});
-    fail();} catch (Error e) {
-    assertEqual("Error", e.getClass().getSimpleName());};}
+    throw new Error("cb");
+        });
+    fail();
+    } catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_1200
      * @tc.name testUint8ClampedArrayFullEight012
@@ -210,9 +230,13 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.map((v, i, _a) -> {
-    throw new Error("cb");});
-    fail();} catch (Error e) {
-    assertEqual("Error", e.getClass().getSimpleName());};}
+    throw new Error("cb");
+        });
+    fail();
+    } catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_1300
      * @tc.name testUint8ClampedArrayFullEight013
@@ -227,7 +251,11 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.filter((v, i, _a) -> {
-    throw new Error("cb");});
-    fail();} catch (Error e) {
-    assertEqual("Error", e.getClass().getSimpleName());};}
+    throw new Error("cb");
+        });
+    fail();
+    } catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    }
 }

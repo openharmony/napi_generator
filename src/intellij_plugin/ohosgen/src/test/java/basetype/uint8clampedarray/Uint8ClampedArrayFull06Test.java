@@ -49,7 +49,8 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     Uint8ClampedArray.KeyIterator it = arr.values();
     IteratorResult r = it.next();
-    assertTrue(r.done);}
+    assertTrue(r.done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0200
      * @tc.name testUint8ClampedArrayFullSix002
@@ -64,7 +65,8 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     Uint8ClampedArray.EntriesIterator it = arr.entries();
     EntryResult r = it.next();
-    assertTrue(r.done);}
+    assertTrue(r.done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0300
      * @tc.name testUint8ClampedArrayFullSix003
@@ -83,7 +85,8 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     assertFalse(r1.done);
     IteratorResult r2 = it.next();
     assertNull(r2.value);
-    assertTrue(r2.done);}
+    assertTrue(r2.done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0400
      * @tc.name testUint8ClampedArrayFullSix004
@@ -99,7 +102,8 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     Uint8ClampedArray.KeyIterator it = arr.values();
     IteratorResult r = it.next();
     assertEqual(99, r.value);
-    assertFalse(r.done);}
+    assertFalse(r.done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0500
      * @tc.name testUint8ClampedArrayFullSix005
@@ -115,7 +119,8 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     arr.fill(-1e9);
     assertEqual(0, arr.get(0));
     assertEqual(0, arr.get(1));
-    assertEqual(0, arr.get(2));}
+    assertEqual(0, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0600
      * @tc.name testUint8ClampedArrayFullSix006
@@ -130,8 +135,11 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.with(10, 99);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0700
      * @tc.name testUint8ClampedArrayFullSix007
@@ -147,6 +155,9 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     List<Number> src = java.util.Arrays.asList(1, 2);
     try {
     dst.set(src, 2);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
+    }
 }

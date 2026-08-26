@@ -33,97 +33,111 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
     arr.copyWithin(2, 0, 0);
     assertEqual(1, arr.at(0));
-    assertEqual(4, arr.at(3));}
+    assertEqual(4, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree012() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
     arr.copyWithin(4, 0, 2);
     assertEqual(1, arr.at(0));
-    assertEqual(4, arr.at(3));}
+    assertEqual(4, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree013() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
     arr.copyWithin(0, 4);
     assertEqual(1, arr.at(0));
-    assertEqual(4, arr.at(3));}
+    assertEqual(4, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree014() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
     arr.copyWithin(-4, 2);
     assertEqual(3, arr.at(0));
-    assertEqual(4, arr.at(1));}
+    assertEqual(4, arr.at(1));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree015() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
     arr.copyWithin(2, -4, -2);
     assertEqual(1, arr.at(2));
-    assertEqual(2, arr.at(3));}
+    assertEqual(2, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree016() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
     arr.copyWithin(1, 0, -4);
     assertEqual(2, arr.at(1));
-    assertEqual(4, arr.at(3));}
+    assertEqual(4, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree017() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5);
     arr.copyWithin(0, 1, 5);
     assertEqual(2, arr.at(0));
-    assertEqual(5, arr.at(3));}
+    assertEqual(5, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree018() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5);
     arr.copyWithin(4, 0, 3);
     assertEqual(4, arr.at(3));
-    assertEqual(1, arr.at(4));}
+    assertEqual(1, arr.at(4));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree019() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5);
     arr.copyWithin(-2, 1, 4);
     assertEqual(2, arr.at(3));
-    assertEqual(3, arr.at(4));}
+    assertEqual(3, arr.at(4));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree020() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5);
     arr.copyWithin(0, -2);
     assertEqual(4, arr.at(0));
-    assertEqual(5, arr.at(1));}
+    assertEqual(5, arr.at(1));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree021() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5);
     arr.copyWithin(2, 0, -1);
     assertEqual(1, arr.at(2));
-    assertEqual(3, arr.at(4));}
+    assertEqual(3, arr.at(4));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree022() {
     Uint16Array arr = Uint16Array.of(9);
     Uint16Array result = arr.copyWithin(0, 0, 1);
     assertEqual(arr, result);
-    assertEqual(9, arr.at(0));}
+    assertEqual(9, arr.at(0));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree023() {
     Uint16Array arr = new Uint16Array();
     Uint16Array result = arr.copyWithin(0, 0);
     assertEqual(arr, result);
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree024() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
     arr.copyWithin(1, 2);
-    assertEqual(8, arr.byteLength());}
+    assertEqual(8, arr.byteLength());
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree025() {
@@ -131,7 +145,8 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     Uint16Array view = new Uint16Array(buffer, 2, 4);
     view.set(new Uint16Array(new int[] {1, 2, 3, 4}));
     view.copyWithin(1, 2);
-    assertEqual(2, view.byteOffset());}
+    assertEqual(2, view.byteOffset());
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree026() {
@@ -141,7 +156,8 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     Uint16Array view = new Uint16Array(buffer, 2, 4);
     view.copyWithin(0, 2);
     assertEqual(40, all.at(1));
-    assertEqual(50, all.at(2));}
+    assertEqual(50, all.at(2));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree027() {
@@ -151,7 +167,8 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     Uint16Array view = new Uint16Array(buffer, 4, 3);
     view.copyWithin(1, 0, 2);
     assertEqual(30, all.at(3));
-    assertEqual(40, all.at(4));}
+    assertEqual(40, all.at(4));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree028() {
@@ -160,7 +177,8 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     assertEqual(1, arr.at(0));
     assertEqual(2, arr.at(1));
     assertEqual(3, arr.at(2));
-    assertEqual(4, arr.at(3));}
+    assertEqual(4, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree029() {
@@ -169,7 +187,8 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     assertEqual(1, arr.at(0));
     assertEqual(2, arr.at(1));
     assertEqual(3, arr.at(2));
-    assertEqual(4, arr.at(3));}
+    assertEqual(4, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree030() {
@@ -178,7 +197,8 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     assertEqual(3, arr.at(0));
     assertEqual(4, arr.at(1));
     assertEqual(3, arr.at(2));
-    assertEqual(4, arr.at(3));}
+    assertEqual(4, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree031() {
@@ -187,7 +207,8 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     assertEqual(3, arr.at(0));
     assertEqual(4, arr.at(1));
     assertEqual(3, arr.at(2));
-    assertEqual(4, arr.at(3));}
+    assertEqual(4, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree032() {
@@ -196,7 +217,8 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     assertEqual(1, arr.at(0));
     assertEqual(2, arr.at(1));
     assertEqual(1, arr.at(2));
-    assertEqual(2, arr.at(3));}
+    assertEqual(2, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree033() {
@@ -205,7 +227,8 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     assertEqual(1, arr.at(0));
     assertEqual(2, arr.at(1));
     assertEqual(3, arr.at(2));
-    assertEqual(4, arr.at(3));}
+    assertEqual(4, arr.at(3));
+    }
 
     @Test
     void testUint16ArrayCopyWithinThree034() {
@@ -217,5 +240,6 @@ public class Uint16ArrayCopyWithinThree extends BasTest {
     assertEqual(30, backing.at(3));
     assertEqual(20, second.at(0));
     assertEqual(30, second.at(1));
-    assertEqual(50, second.at(2));}
+    assertEqual(50, second.at(2));
+    }
 }
