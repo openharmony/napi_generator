@@ -17,23 +17,8 @@ package basetype.uint8array2;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
 import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
 import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8Array;
 
 import java.util.ArrayList;
@@ -46,6 +31,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ArrayConstructor04Test —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ArrayConstructor04Test extends BasTest {
 
@@ -55,8 +42,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(0);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_002() {
@@ -64,28 +50,21 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(0.0);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_003() {
     try {
     Uint8Array b = new Uint8Array(-1);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_004() {
     try {
     Uint8Array b = new Uint8Array(-1.0);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_005() {
@@ -93,8 +72,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(10.0);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_006() {
@@ -103,8 +81,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(10, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(9));
-    }
+    assertEqual(0, a.get(9));}
 
     @Test
     void testUint8ArrayConstructor04_007() {
@@ -113,16 +90,14 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(2));
-    }
+    assertEqual(0, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_008() {
     Uint8Array a = new Uint8Array(0.9);
     assertEqual(0, a.length());
     assertEqual(0, a.byteOffset());
-    assertEqual(0, a.byteLength());
-    }
+    assertEqual(0, a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_009() {
@@ -131,8 +106,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(255, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(254));
-    }
+    assertEqual(0, a.get(254));}
 
     @Test
     void testUint8ArrayConstructor04_010() {
@@ -141,8 +115,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(255, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(254));
-    }
+    assertEqual(0, a.get(254));}
 
     @Test
     void testUint8ArrayConstructor04_011() {
@@ -151,8 +124,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(100, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(99));
-    }
+    assertEqual(0, a.get(99));}
 
     @Test
     void testUint8ArrayConstructor04_012() {
@@ -162,8 +134,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array ua2 = new Uint8Array(arr);
     assertEqual(ua2.length(), ua1.length());
     assertEqual(ua2.byteOffset(), ua1.byteOffset());
-    assertEqual(ua2.byteLength(), ua1.byteLength());
-    }
+    assertEqual(ua2.byteLength(), ua1.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_013() {
@@ -173,8 +144,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(fn);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_014() {
@@ -186,8 +156,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(0, a.byteLength());
     assertEqual(0, c.byteOffset());
-    assertEqual(0, c.byteLength());
-    }
+    assertEqual(0, c.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_015() {
@@ -196,8 +165,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(ab, 0);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_016() {
@@ -206,8 +174,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(ab, 0.0);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_017() {
@@ -216,8 +183,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(ab, 3.0);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_018() {
@@ -226,8 +192,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(ab, 1.0, 3.0);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_019() {
@@ -236,8 +201,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(ab, 2);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_020() {
@@ -246,8 +210,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(ab, 0, 8);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_021() {
@@ -257,8 +220,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, dst.byteOffset());
     assertEqual(src.byteLength(), dst.byteLength());
     assertEqual(0, dst.get(0));
-    assertEqual(0, dst.get(2));
-    }
+    assertEqual(0, dst.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_022() {
@@ -266,8 +228,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(new int[] {255});
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_023() {
@@ -275,8 +236,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(new int[] {255});
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_024() {
@@ -284,18 +244,14 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(127);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_025() {
     try {
     Uint8Array a = new Uint8Array(-3.5);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_026() {
@@ -303,8 +259,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(0);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_027() {
@@ -312,8 +267,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(2);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_028() {
@@ -322,8 +276,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array b = new Uint8Array(ab, 1.0);
     assertEqual(b.length(), a.length());
     assertEqual(b.byteOffset(), a.byteOffset());
-    assertEqual(b.byteLength(), a.byteLength());
-    }
+    assertEqual(b.byteLength(), a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_029() {
@@ -332,8 +285,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array rest = new Uint8Array(ab, 2);
     assertEqual(rest.length(), full.length());
     assertEqual(rest.byteOffset(), full.byteOffset());
-    assertEqual(rest.byteLength(), full.byteLength());
-    }
+    assertEqual(rest.byteLength(), full.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_030() {
@@ -342,8 +294,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(5, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(4));
-    }
+    assertEqual(0, a.get(4));}
 
     @Test
     void testUint8ArrayConstructor04_031() {
@@ -352,8 +303,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(5, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(4));
-    }
+    assertEqual(0, a.get(4));}
 
     @Test
     void testUint8ArrayConstructor04_032() {
@@ -363,8 +313,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(4, a.byteLength());
     assertEqual(1, a.get(0));
-    assertEqual(4, a.get(3));
-    }
+    assertEqual(4, a.get(3));}
 
     @Test
     void testUint8ArrayConstructor04_033() {
@@ -374,8 +323,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(1, a.get(0));
-    assertEqual(3, a.get(2));
-    }
+    assertEqual(3, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_034() {
@@ -385,8 +333,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(5, a.byteLength());
     assertEqual(10, a.get(0));
-    assertEqual(50, a.get(4));
-    }
+    assertEqual(50, a.get(4));}
 
     @Test
     void testUint8ArrayConstructor04_035() {
@@ -396,8 +343,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, dst.byteOffset());
     assertEqual(src.byteLength(), dst.byteLength());
     assertEqual(0, dst.get(0));
-    assertEqual(0, dst.get(6));
-    }
+    assertEqual(0, dst.get(6));}
 
     @Test
     void testUint8ArrayConstructor04_036() {
@@ -407,8 +353,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(10, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(9));
-    }
+    assertEqual(0, a.get(9));}
 
     @Test
     void testUint8ArrayConstructor04_037() {
@@ -417,8 +362,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(7, a.length());
     assertEqual(3, a.byteOffset());
     assertEqual(7, a.byteLength());
-    assertEqual(0, a.get(0));
-    }
+    assertEqual(0, a.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_038() {
@@ -427,8 +371,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(4, a.length());
     assertEqual(2, a.byteOffset());
     assertEqual(4, a.byteLength());
-    assertEqual(0, a.get(0));
-    }
+    assertEqual(0, a.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_039() {
@@ -437,8 +380,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(10, a.length());
     assertEqual(0, a.byteOffset());
     assertEqual(10, a.byteLength());
-    assertEqual(0, a.get(0));
-    }
+    assertEqual(0, a.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_040() {
@@ -446,8 +388,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array a = new Uint8Array(empty);
     assertEqual(0, a.length());
     assertEqual(0, a.byteOffset());
-    assertEqual(0, a.byteLength());
-    }
+    assertEqual(0, a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_041() {
@@ -465,28 +406,21 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(4, c.byteLength());
     assertEqual(0, a.get(0));
     assertEqual(1, b.get(0));
-    assertEqual(0, c.get(0));
-    }
+    assertEqual(0, c.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_042() {
     try {
     Uint8Array a = new Uint8Array(-5);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_043() {
     try {
     Uint8Array a = new Uint8Array(-5.0);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_044() {
@@ -495,16 +429,14 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(2));
-    }
+    assertEqual(0, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_045() {
     Uint8Array a = new Uint8Array(0.1);
     assertEqual(0, a.length());
     assertEqual(0, a.byteOffset());
-    assertEqual(0, a.byteLength());
-    }
+    assertEqual(0, a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_046() {
@@ -513,8 +445,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(6, a.length());
     assertEqual(2, a.byteOffset());
     assertEqual(6, a.byteLength());
-    assertEqual(0, a.get(0));
-    }
+    assertEqual(0, a.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_047() {
@@ -522,8 +453,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(5, a.length());
     assertEqual(0, a.byteOffset());
     assertEqual(5, a.byteLength());
-    assertEqual(0, a.get(0));
-    }
+    assertEqual(0, a.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_048() {
@@ -532,41 +462,31 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(8, a.length());
     assertEqual(0, a.byteOffset());
     assertEqual(8, a.byteLength());
-    assertEqual(0, a.get(0));
-    }
+    assertEqual(0, a.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_049() {
     ArrayBuffer ab = new ArrayBuffer(4);
     try {
     Uint8Array a = new Uint8Array(ab, 0, 10);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_050() {
     ArrayBuffer ab = new ArrayBuffer(4);
     try {
     Uint8Array a = new Uint8Array(ab, 10);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_051() {
     ArrayBuffer ab = new ArrayBuffer(6);
     try {
     Uint8Array a = new Uint8Array(ab, 3, 4);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_052() {
@@ -574,52 +494,39 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array a = new Uint8Array(ab, 4);
     assertEqual(0, a.length());
     assertEqual(4, a.byteOffset());
-    assertEqual(0, a.byteLength());
-    }
+    assertEqual(0, a.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_053() {
     ArrayBuffer ab = new ArrayBuffer(4);
     try {
     Uint8Array a = new Uint8Array(ab, 0, 5);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_054() {
     ArrayBuffer ab = new ArrayBuffer(4);
     try {
     Uint8Array a = new Uint8Array(ab, 1.0, 5);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_055() {
     ArrayBuffer ab = new ArrayBuffer(4);
     try {
     Uint8Array a = new Uint8Array(ab, 1, 4);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_056() {
     ArrayBuffer ab = new ArrayBuffer(4);
     try {
     Uint8Array a = new Uint8Array(ab, -1);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_057() {
@@ -627,83 +534,63 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     int caught = 0;
     try {
     Uint8Array a = new Uint8Array(ab, 0, 10);
-    fail();
-    } catch (RuntimeException e) {
+    fail();} catch (RangeError e) {
     caught++;
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
+    assertEqual("RangeError", e.getClass().getSimpleName());};
     try {
     Uint8Array b = new Uint8Array(ab, 10);
-    fail();
-    } catch (RuntimeException e) {
+    fail();} catch (RangeError e) {
     caught++;
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    assertEqual(2, caught);
-    }
+    assertEqual("RangeError", e.getClass().getSimpleName());};
+    assertEqual(2, caught);}
 
     @Test
     void testUint8ArrayConstructor04_058() {
     ArrayBuffer ab = new ArrayBuffer(8);
     try {
     Uint8Array a = new Uint8Array(ab, 0, 20);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};
     Uint8Array b = new Uint8Array(ab, 2, 4);
     assertEqual(4, b.length());
     assertEqual(2, b.byteOffset());
-    assertEqual(4, b.byteLength());
-    }
+    assertEqual(4, b.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_059() {
     ArrayBuffer ab = new ArrayBuffer(4);
     try {
     Uint8Array a = new Uint8Array(ab, 100.0, 1);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_060() {
     ArrayBuffer ab = new ArrayBuffer(4);
     try {
     Uint8Array a = new Uint8Array(ab, 10);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_061() {
     ArrayBuffer ab = new ArrayBuffer(4);
     try {
     Uint8Array a = new Uint8Array(ab, 0.0, 20);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
 
     @Test
     void testUint8ArrayConstructor04_062() {
     ArrayBuffer ab = new ArrayBuffer(8);
     try {
     Uint8Array a = new Uint8Array(ab, 0, 20);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};
     Uint8Array ok = new Uint8Array(ab, 0, 4);
     assertEqual(4, ok.length());
     assertEqual(0, ok.byteOffset());
-    assertEqual(4, ok.byteLength());
-    }
+    assertEqual(4, ok.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_063() {
@@ -712,8 +599,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(2));
-    }
+    assertEqual(0, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_064() {
@@ -722,8 +608,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(2));
-    }
+    assertEqual(0, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_065() {
@@ -732,8 +617,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(1, a.get(0));
-    assertEqual(3, a.get(2));
-    }
+    assertEqual(3, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_066() {
@@ -742,8 +626,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(10, a.get(0));
-    assertEqual(30, a.get(2));
-    }
+    assertEqual(30, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_067() {
@@ -753,8 +636,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(100, a.get(0));
-    assertEqual(255, a.get(2));
-    }
+    assertEqual(255, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_068() {
@@ -764,8 +646,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, dst.byteOffset());
     assertEqual(src.byteLength(), dst.byteLength());
     assertEqual(5, dst.get(0));
-    assertEqual(15, dst.get(2));
-    }
+    assertEqual(15, dst.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_069() {
@@ -775,8 +656,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(2));
-    }
+    assertEqual(0, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_070() {
@@ -791,8 +671,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(1, a.byteOffset());
     assertEqual(2, a.byteLength());
     assertEqual(20, a.get(0));
-    assertEqual(30, a.get(1));
-    }
+    assertEqual(30, a.get(1));}
 
     @Test
     void testUint8ArrayConstructor04_071() {
@@ -809,8 +688,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(2, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(3, a.get(0));
-    assertEqual(5, a.get(2));
-    }
+    assertEqual(5, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_072() {
@@ -820,8 +698,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(3, a.byteLength());
     assertEqual(0, a.get(0));
-    assertEqual(0, a.get(2));
-    }
+    assertEqual(0, a.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_073() {
@@ -830,8 +707,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(4, a.length());
     assertEqual(2, a.byteOffset());
     assertEqual(4, a.byteLength());
-    assertEqual(0, a.get(0));
-    }
+    assertEqual(0, a.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_074() {
@@ -840,8 +716,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(3, a.length());
     assertEqual(1, a.byteOffset());
     assertEqual(3, a.byteLength());
-    assertEqual(0, a.get(0));
-    }
+    assertEqual(0, a.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_075() {
@@ -851,8 +726,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(5, a.byteLength());
     assertEqual(1, a.get(0));
-    assertEqual(5, a.get(4));
-    }
+    assertEqual(5, a.get(4));}
 
     @Test
     void testUint8ArrayConstructor04_076() {
@@ -861,8 +735,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(5, dst.length());
     assertEqual(0, dst.byteOffset());
     assertEqual(5, dst.byteLength());
-    assertEqual(0, dst.get(0));
-    }
+    assertEqual(0, dst.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_077() {
@@ -872,8 +745,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, dst.byteOffset());
     assertEqual(src.byteLength(), dst.byteLength());
     assertEqual(10, dst.get(0));
-    assertEqual(30, dst.get(2));
-    }
+    assertEqual(30, dst.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_078() {
@@ -882,8 +754,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(src.length(), dst.length());
     assertEqual(0, dst.byteOffset());
     assertEqual(src.byteLength(), dst.byteLength());
-    assertEqual(0, dst.get(0));
-    }
+    assertEqual(0, dst.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_079() {
@@ -895,8 +766,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, view1.byteOffset());
     assertEqual(2, view1.byteLength());
     assertEqual(2, view2.byteOffset());
-    assertEqual(2, view2.byteLength());
-    }
+    assertEqual(2, view2.byteLength());}
 
     @Test
     void testUint8ArrayConstructor04_080() {
@@ -905,8 +775,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(6, a.length());
     assertEqual(0, a.byteOffset());
     assertEqual(6, a.byteLength());
-    assertEqual(0, a.get(0));
-    }
+    assertEqual(0, a.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_081() {
@@ -916,8 +785,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, v.byteOffset());
     assertEqual(5, v.byteLength());
     assertEqual(0, v.get(0));
-    assertEqual(0, v.get(4));
-    }
+    assertEqual(0, v.get(4));}
 
     @Test
     void testUint8ArrayConstructor04_082() {
@@ -928,8 +796,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(5, view2.length());
     assertEqual(3, view2.byteOffset());
     assertEqual(5, view2.byteLength());
-    assertEqual(77, view2.get(0));
-    }
+    assertEqual(77, view2.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_083() {
@@ -940,8 +807,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(4, src.length());
     assertEqual(0, src.byteOffset());
     assertEqual(4, src.byteLength());
-    assertEqual(100, src.get(0));
-    }
+    assertEqual(100, src.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_084() {
@@ -951,8 +817,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, dst.byteOffset());
     assertEqual(100, dst.byteLength());
     assertEqual(0, dst.get(0));
-    assertEqual(0, dst.get(99));
-    }
+    assertEqual(0, dst.get(99));}
 
     @Test
     void testUint8ArrayConstructor04_085() {
@@ -963,8 +828,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(4, view.length());
     assertEqual(2, view.byteOffset());
     assertEqual(4, view.byteLength());
-    assertEqual(100, view.get(0));
-    }
+    assertEqual(100, view.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_086() {
@@ -978,8 +842,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(1, view.byteOffset());
     assertEqual(3, view.byteLength());
     assertEqual(10, view.get(0));
-    assertEqual(30, view.get(2));
-    }
+    assertEqual(30, view.get(2));}
 
     @Test
     void testUint8ArrayConstructor04_087() {
@@ -992,8 +855,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, view.byteOffset());
     assertEqual(4, view.byteLength());
     assertEqual(100, view.get(0));
-    assertEqual(200, view.get(1));
-    }
+    assertEqual(200, view.get(1));}
 
     @Test
     void testUint8ArrayConstructor04_088() {
@@ -1002,8 +864,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(3, dst.length());
     assertEqual(0, dst.byteOffset());
     assertEqual(3, dst.byteLength());
-    assertEqual(0, dst.get(0));
-    }
+    assertEqual(0, dst.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_089() {
@@ -1019,8 +880,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(2, view2.byteOffset());
     assertEqual(2, view2.byteLength());
     assertEqual(100, view1.get(0));
-    assertEqual(0, view2.get(0));
-    }
+    assertEqual(0, view2.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_090() {
@@ -1030,8 +890,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(0, dst.byteOffset());
     assertEqual(1000, dst.byteLength());
     assertEqual(0, dst.get(0));
-    assertEqual(0, dst.get(999));
-    }
+    assertEqual(0, dst.get(999));}
 
     @Test
     void testUint8ArrayConstructor04_091() {
@@ -1042,8 +901,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(3, view.length());
     assertEqual(3, view.byteOffset());
     assertEqual(3, view.byteLength());
-    assertEqual(100, view.get(0));
-    }
+    assertEqual(100, view.get(0));}
 
     @Test
     void testUint8ArrayConstructor04_092() {
@@ -1056,8 +914,7 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     assertEqual(2, view.byteOffset());
     assertEqual(2, view.byteLength());
     assertEqual(100, view.get(0));
-    assertEqual(200, view.get(1));
-    }
+    assertEqual(200, view.get(1));}
 
     @Test
     void testUint8ArrayConstructor04_093() {
@@ -1065,6 +922,5 @@ public class Uint8ArrayConstructor04Test extends BasTest {
     Uint8Array dst = new Uint8Array(src);
     assertEqual(0, dst.length());
     assertEqual(0, dst.byteOffset());
-    assertEqual(0, dst.byteLength());
-    }
+    assertEqual(0, dst.byteLength());}
 }
