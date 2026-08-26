@@ -40,7 +40,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo001() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 100});
     String r = arr.join(",");
-    assertEqual("1,100", r);}
+    assertEqual("1,100", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0200
      * @tc.name testUint8ClampedArrayJoinTwo002
@@ -54,7 +55,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo002() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0x0A});
     String r = arr.join();
-    assertEqual("10", r);}
+    assertEqual("10", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0300
      * @tc.name testUint8ClampedArrayJoinTwo003
@@ -68,7 +70,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo003() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0b1111});
     String r = arr.join();
-    assertEqual("15", r);}
+    assertEqual("15", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0400
      * @tc.name testUint8ClampedArrayJoinTwo004
@@ -82,7 +85,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo004() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {017});
     String r = arr.join();
-    assertEqual("15", r);}
+    assertEqual("15", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0500
      * @tc.name testUint8ClampedArrayJoinTwo005
@@ -96,7 +100,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo005() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {1e2});
     String r = arr.join();
-    assertEqual("100", r);}
+    assertEqual("100", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0600
      * @tc.name testUint8ClampedArrayJoinTwo006
@@ -110,7 +115,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo006() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     String r = arr.join();
-    assertEqual("1,2", r);}
+    assertEqual("1,2", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0700
      * @tc.name testUint8ClampedArrayJoinTwo007
@@ -124,7 +130,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo007() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     String r = arr.join();
-    assertEqual(0, r.length());}
+    assertEqual(0, r.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0800
      * @tc.name testUint8ClampedArrayJoinTwo008
@@ -138,7 +145,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo008() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42});
     String r = arr.join();
-    assertEqual(2, r.length());}
+    assertEqual(2, r.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0900
      * @tc.name testUint8ClampedArrayJoinTwo009
@@ -152,7 +160,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo009() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     String r = arr.join(",");
-    assertEqual(5, r.length());}
+    assertEqual(5, r.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1000
      * @tc.name testUint8ClampedArrayJoinTwo010
@@ -166,7 +175,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo010() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     String r = arr.join("");
-    assertEqual(6, r.length());}
+    assertEqual(6, r.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1100
      * @tc.name testUint8ClampedArrayJoinTwo011
@@ -181,7 +191,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int oldLen = arr.length();
     assertEqual("1,2,3", arr.join(","));
-    assertEqual(oldLen, arr.length());}
+    assertEqual(oldLen, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1200
      * @tc.name testUint8ClampedArrayJoinTwo012
@@ -197,7 +208,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     assertEqual("1,2,3", arr.join(","));
     assertEqual(1, arr.get(0));
     assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));}
+    assertEqual(3, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1300
      * @tc.name testUint8ClampedArrayJoinTwo013
@@ -212,7 +224,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     String r1 = arr.join(",");
     String r2 = arr.join(",");
-    assertEqual(r2, r1);}
+    assertEqual(r2, r1);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1400
      * @tc.name testUint8ClampedArrayJoinTwo014
@@ -227,7 +240,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     String r1 = arr.join(",");
     String r2 = arr.join("|");
-    assertNotEqual(r2, r1);}
+    assertNotEqual(r2, r1);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1500
      * @tc.name testUint8ClampedArrayJoinTwo015
@@ -245,7 +259,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     sep = "@";
     String r2 = arr.join(sep);
     assertEqual("1#2", r1);
-    assertEqual("1@2", r2);}
+    assertEqual("1@2", r2);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1600
      * @tc.name testUint8ClampedArrayJoinTwo016
@@ -260,7 +275,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     int old = arr.buffer().byteLength();
     assertEqual("1,2,3,4", arr.join(","));
-    assertEqual(old, arr.buffer().byteLength() );}
+    assertEqual(old, arr.buffer().byteLength() );
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1700
      * @tc.name testUint8ClampedArrayJoinTwo017
@@ -276,7 +292,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2, 4);
     int old = arr.byteOffset();
     assertEqual("0,0,0,0", arr.join(","));
-    assertEqual(old, arr.byteOffset() );}
+    assertEqual(old, arr.byteOffset() );
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1800
      * @tc.name testUint8ClampedArrayJoinTwo018
@@ -290,7 +307,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo018() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     String r = arr.join(arr.join(","));
-    assertEqual("11,22", r);}
+    assertEqual("11,22", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1900
      * @tc.name testUint8ClampedArrayJoinTwo019
@@ -306,7 +324,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 3);
     assertEqual("2,3", sub.join(","));
     assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));}
+    assertEqual(3, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2000
      * @tc.name testUint8ClampedArrayJoinTwo020
@@ -320,7 +339,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo020() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     String r = arr.join(",");
-    assertEqual("10,20,30", r);}
+    assertEqual("10,20,30", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2100
      * @tc.name testUint8ClampedArrayJoinTwo021
@@ -333,7 +353,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     @Test
     void testUint8ClampedArrayJoinTwo021() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
-    assertEqual("1xxxxxxxxxxxxxxxx2xxxxxxxxxxxxxxxx3xxxxxxxxxxxxxxxx4xxxxxxxxxxxxxxxx5", arr.join("xxxxxxxxxxxxxxxx"));}
+    assertEqual("1xxxxxxxxxxxxxxxx2xxxxxxxxxxxxxxxx3xxxxxxxxxxxxxxxx4xxxxxxxxxxxxxxxx5", arr.join("xxxxxxxxxxxxxxxx"));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2200
      * @tc.name testUint8ClampedArrayJoinTwo022
@@ -348,8 +369,10 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1});
     String s = "";
     for (int i = 0; i < 500; i++) {
-    s = s + "k";};
-    assertEqual("1", arr.join(s));}
+    s = s + "k";
+    }
+    assertEqual("1", arr.join(s));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2300
      * @tc.name testUint8ClampedArrayJoinTwo023
@@ -364,7 +387,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 1000);
     String r = arr.join();
-    assertEqual("255", r);}
+    assertEqual("255", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2400
      * @tc.name testUint8ClampedArrayJoinTwo024
@@ -379,7 +403,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, -1000);
     String r = arr.join();
-    assertEqual("0", r);}
+    assertEqual("0", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2500
      * @tc.name testUint8ClampedArrayJoinTwo025
@@ -394,7 +419,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, Double.MAX_VALUE);
     String r = arr.join();
-    assertEqual("255", r);}
+    assertEqual("255", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2600
      * @tc.name testUint8ClampedArrayJoinTwo026
@@ -409,7 +435,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, Double.MIN_VALUE);
     String r = arr.join();
-    assertEqual("0", r);}
+    assertEqual("0", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2700
      * @tc.name testUint8ClampedArrayJoinTwo027
@@ -427,7 +454,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     arr.set(2, Double.NaN);
     arr.set(3, 128);
     String r = arr.join(",");
-    assertEqual("255,0,0,128", r);}
+    assertEqual("255,0,0,128", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2800
      * @tc.name testUint8ClampedArrayJoinTwo028
@@ -442,7 +470,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 0.9);
     String r = arr.join();
-    assertEqual("1", r);}
+    assertEqual("1", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2900
      * @tc.name testUint8ClampedArrayJoinTwo029
@@ -457,7 +486,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 0.4);
     String r = arr.join();
-    assertEqual("0", r);}
+    assertEqual("0", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3000
      * @tc.name testUint8ClampedArrayJoinTwo030
@@ -472,7 +502,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 254.5);
     String r = arr.join();
-    assertEqual("254", r);}
+    assertEqual("254", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3100
      * @tc.name testUint8ClampedArrayJoinTwo031
@@ -487,7 +518,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 255.5);
     String r = arr.join();
-    assertEqual("255", r);}
+    assertEqual("255", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3200
      * @tc.name testUint8ClampedArrayJoinTwo032
@@ -502,7 +534,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, -0);
     String r = arr.join();
-    assertEqual("0", r);}
+    assertEqual("0", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3300
      * @tc.name testUint8ClampedArrayJoinTwo033
@@ -518,7 +551,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray sub = parent.subarray(1, 4);
     parent.set(2, 99);
     String r = sub.join(",");
-    assertEqual("2,99,4", r);}
+    assertEqual("2,99,4", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3400
      * @tc.name testUint8ClampedArrayJoinTwo034
@@ -534,7 +568,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray sub = parent.subarray(1, 4);
     sub.set(0, 88);
     String r = parent.join(",");
-    assertEqual("1,88,3,4,5", r);}
+    assertEqual("1,88,3,4,5", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3500
      * @tc.name testUint8ClampedArrayJoinTwo035
@@ -550,7 +585,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray s = parent.slice();
     parent.set(0, 100);
     String r = s.join(",");
-    assertEqual("1,2,3", r);}
+    assertEqual("1,2,3", r);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3600
      * @tc.name testUint8ClampedArrayJoinTwo036
@@ -570,7 +606,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     secondView.set(0, 30);
     secondView.set(1, 40);
     assertEqual("10,20", firstView.join(","));
-    assertEqual("30,40", secondView.join(","));}
+    assertEqual("30,40", secondView.join(","));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3700
      * @tc.name testUint8ClampedArrayJoinTwo037
@@ -587,5 +624,6 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray secondView = new Uint8ClampedArray(buf, 1, 2);
     firstView.set(1, 50);
     firstView.set(2, 60);
-    assertEqual("50,60", secondView.join(","));}
+    assertEqual("50,60", secondView.join(","));
+    }
 }
