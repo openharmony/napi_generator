@@ -37,179 +37,209 @@ public class Int16ArrayJoinTest03 extends BasTest {
     void testInt16ArrayJoinTestThree001() {
     Int16Array arr = new Int16Array(0);
     String result = arr.join(null);
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree002() {
     Int16Array arr = new Int16Array(0);
     String result = arr.join(" -- ");
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree003() {
     Int16Array arr = new Int16Array(0);
     String result = arr.join("\t");
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree004() {
     Int16Array arr = new Int16Array(0);
     String result = arr.join("中文");
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree005() {
     Int16Array arr = new Int16Array(0);
     String result = arr.join("<script>");
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree006() {
     Int16Array arr = new Int16Array(0);
     String result = arr.join("\0");
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree007() {
     String sep = "";
     for (int i = 0; i < 100; i++) {
-    sep = sep + "x";}
+    sep = sep + "x";
+    }
     Int16Array arr = new Int16Array(0);
     String result = arr.join(sep);
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree008() {
     Int16Array arr = Int16Array.of(0);
     String result = arr.join();
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree009() {
     Int16Array arr = Int16Array.of(32767);
     String result = arr.join();
-    assertEqual("32767", result);}
+    assertEqual("32767", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree010() {
     Int16Array arr = Int16Array.of(-32768);
     String result = arr.join();
-    assertEqual("-32768", result);}
+    assertEqual("-32768", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree011() {
     Int16Array arr = Int16Array.of(-1);
     String result = arr.join();
-    assertEqual("-1", result);}
+    assertEqual("-1", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree012() {
     Int16Array arr = Int16Array.of(0);
     String result = arr.join("|");
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree013() {
     Int16Array arr = Int16Array.of(32767);
     String result = arr.join("\n");
-    assertEqual("32767", result);}
+    assertEqual("32767", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree014() {
     Int16Array arr = Int16Array.of(-32768);
     String result = arr.join(" -- ");
-    assertEqual("-32768", result);}
+    assertEqual("-32768", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree015() {
     Int16Array arr = Int16Array.of(0);
     String result = arr.join("");
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree016() {
     Int16Array arr = Int16Array.of(1);
     String result = arr.join(",");
-    assertEqual("1", result);}
+    assertEqual("1", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree017() {
     Int16Array arr = Int16Array.of(-32768);
     String result = arr.join(",");
     int actual1 = result.indexOf(",");
-    assertEqual(-1, actual1);}
+    assertEqual(-1, actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree018() {
     Int16Array arr = Int16Array.of(0, 0, 0, 0, 0);
     String result = arr.join();
-    assertEqual("0,0,0,0,0", result);}
+    assertEqual("0,0,0,0,0", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree019() {
     Int16Array arr = Int16Array.of(0, 0, 0, 0, 0);
     String result = arr.join("|");
-    assertEqual("0|0|0|0|0", result);}
+    assertEqual("0|0|0|0|0", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree020() {
     Int16Array arr = Int16Array.of(0, 0, 0, 0, 0);
     String result = arr.join("");
-    assertEqual("00000", result);}
+    assertEqual("00000", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree021() {
     Int16Array arr = Int16Array.of(32767, 32767, 32767);
     String result = arr.join();
-    assertEqual("32767,32767,32767", result);}
+    assertEqual("32767,32767,32767", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree022() {
     Int16Array arr = Int16Array.of(32767, 32767, 32767);
     String result = arr.join("|");
-    assertEqual("32767|32767|32767", result);}
+    assertEqual("32767|32767|32767", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree023() {
     Int16Array arr = Int16Array.of(-32768, -32768, -32768);
     String result = arr.join();
-    assertEqual("-32768,-32768,-32768", result);}
+    assertEqual("-32768,-32768,-32768", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree024() {
     Int16Array arr = Int16Array.of(-32768, -32768, -32768);
     String result = arr.join("|");
-    assertEqual("-32768|-32768|-32768", result);}
+    assertEqual("-32768|-32768|-32768", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree025() {
     Int16Array arr = Int16Array.of(-1, -1, -1, -1);
     String result = arr.join();
-    assertEqual("-1,-1,-1,-1", result);}
+    assertEqual("-1,-1,-1,-1", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree026() {
     Int16Array arr = Int16Array.of(-1, -1, -1, -1);
     String result = arr.join("");
-    assertEqual("-1-1-1-1", result);}
+    assertEqual("-1-1-1-1", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree027() {
     Int16Array arr = Int16Array.of(1, 1, 1, 1, 1);
     String result = arr.join();
-    assertEqual("1,1,1,1,1", result);}
+    assertEqual("1,1,1,1,1", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree028() {
     Int16Array arr = Int16Array.of(42, 42, 42);
     String result = arr.join();
-    assertEqual("42,42,42", result);}
+    assertEqual("42,42,42", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree029() {
     Int16Array arr = Int16Array.of(-5, -5, -5);
     String result = arr.join("-");
-    assertEqual("-5--5--5", result);}
+    assertEqual("-5--5--5", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree030() {
@@ -218,7 +248,8 @@ public class Int16ArrayJoinTest03 extends BasTest {
     arr.join();
     int actual1 = arr.length();
     int expected1 = lenBefore;
-    assertEqual(expected1, actual1);}
+    assertEqual(expected1, actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree031() {
@@ -227,7 +258,8 @@ public class Int16ArrayJoinTest03 extends BasTest {
     arr.join("|");
     Integer actual1 = arr.get((int) 0);
     int expected1 = valBefore;
-    assertEqual(expected1, actual1);}
+    assertEqual(expected1, actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree032() {
@@ -237,7 +269,8 @@ public class Int16ArrayJoinTest03 extends BasTest {
     arr.join("|");
     Integer actual1 = arr.get(lastIdx);
     int expected1 = valBefore;
-    assertEqual(expected1, actual1);}
+    assertEqual(expected1, actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree033() {
@@ -248,48 +281,55 @@ public class Int16ArrayJoinTest03 extends BasTest {
     Integer actual2 = arr.get((int) 1);
     assertEqual(20, actual2);
     Integer actual3 = arr.get((int) 2);
-    assertEqual(30, actual3);}
+    assertEqual(30, actual3);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree034() {
     Int16Array arr = new Int16Array(0);
     String result = arr.join("|");
     int actual1 = result.length();
-    assertEqual(0, actual1);}
+    assertEqual(0, actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree035() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     String result = arr.join("|");
     boolean actual1 = result.startsWith("|");
-    assertFalse(actual1);}
+    assertFalse(actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree036() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     String result = arr.join("|");
     boolean actual1 = result.endsWith("|");
-    assertFalse(actual1);}
+    assertFalse(actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree037() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     String result = arr.join("|");
     boolean actual1 = result.startsWith("10");
-    assertTrue(actual1);}
+    assertTrue(actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree038() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     String result = arr.join("|");
     boolean actual1 = result.endsWith("30");
-    assertTrue(actual1);}
+    assertTrue(actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree039() {
     Int16Array arr = Int16Array.of(100, 200);
     String result = arr.join();
-    assertEqual("100,200", result);}
+    assertEqual("100,200", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree040() {
@@ -297,14 +337,16 @@ public class Int16ArrayJoinTest03 extends BasTest {
     String result = arr.join("|");
     String[] parts = result.split(java.util.regex.Pattern.quote("|"));
     int actual1 = parts.length;
-    assertEqual(4, actual1);}
+    assertEqual(4, actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree041() {
     Int16Array arr = Int16Array.of(10, 20, 30, 40, 50);
     Int16Array sub = arr.subarray(1, 4);
     String result = sub.join();
-    assertEqual("20,30,40", result);}
+    assertEqual("20,30,40", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree042() {
@@ -315,7 +357,8 @@ public class Int16ArrayJoinTest03 extends BasTest {
     Int16Array arr = Int16Array.from(s);
     String result = arr.join();
     boolean found = result.indexOf("10") != -1;
-    assertTrue(found);}
+    assertTrue(found);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree043() {
@@ -323,19 +366,22 @@ public class Int16ArrayJoinTest03 extends BasTest {
     Int16Array sub = arr.subarray(0, 4);
     String originalResult = arr.join("|");
     String subResult = sub.join("|");
-    assertEqual(originalResult, subResult);}
+    assertEqual(originalResult, subResult);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree044() {
     Int16Array arr = Int16Array.of(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
     String result = arr.join();
-    assertEqual("0,0", result);}
+    assertEqual("0,0", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree045() {
     Int16Array arr = Int16Array.of(-Double.POSITIVE_INFINITY, -Double.POSITIVE_INFINITY);
     String result = arr.join();
-    assertEqual("0,0", result);}
+    assertEqual("0,0", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree046() {
@@ -343,100 +389,118 @@ public class Int16ArrayJoinTest03 extends BasTest {
     arr.set((int) 0, 32768);
     arr.set((int) 1, -32769);
     String result = arr.join("|");
-    assertEqual("-32768|32767", result);}
+    assertEqual("-32768|32767", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree047() {
     Int16Array arr = Int16Array.of(10, -20, 30, -40);
     String result = arr.join();
-    assertEqual("10,-20,30,-40", result);}
+    assertEqual("10,-20,30,-40", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree048() {
     Int16Array arr = Int16Array.of(-10, -20, -30);
     String result = arr.join();
-    assertEqual("-10,-20,-30", result);}
+    assertEqual("-10,-20,-30", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree049() {
     Int16Array arr = Int16Array.of(0, -0);
     String result = arr.join();
-    assertEqual("0,0", result);}
+    assertEqual("0,0", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree050() {
     Int16Array arr = new Int16Array(1);
     arr.set((int) 0, 3.7);
     String result = arr.join();
-    assertEqual("3", result);}
+    assertEqual("3", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree051() {
     Int16Array arr = new Int16Array(500);
     for (int i = 0; i < 500; i++) {
-    arr.set(i, 0);}
+    arr.set(i, 0);
+    }
     String result = arr.join();
     int actual1 = result.length();
-    assertEqual(999, actual1);}
+    assertEqual(999, actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree052() {
     Int16Array arr = new Int16Array(500);
     for (int i = 0; i < 500; i++) {
-    arr.set(i, 1);}
+    arr.set(i, 1);
+    }
     String result = arr.join("");
     int actual1 = result.length();
-    assertEqual(500, actual1);}
+    assertEqual(500, actual1);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree053() {
     Int16Array arr = new Int16Array(1000);
     for (int i = 0; i < 1000; i++) {
-    arr.set(i, i);}
+    arr.set(i, i);
+    }
     String result = arr.join("|");
     int sepCount = 0;
     for (int j = 0; j < result.length(); j++) {
     if (result.charAt(j) == '|') {
-    sepCount = sepCount + 1;}
+    sepCount = sepCount + 1;
     }
-    assertEqual(999, sepCount);}
+    }
+    assertEqual(999, sepCount);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree054() {
     Int16Array arr = new Int16Array(2000);
     for (int i = 0; i < 2000; i++) {
-    arr.set(i, 32767);}
+    arr.set(i, 32767);
+    }
     String result = arr.join();
     boolean actual1 = result.startsWith("32767,");
     assertTrue(actual1);
     boolean actual2 = result.endsWith("32767");
-    assertTrue(actual2);}
+    assertTrue(actual2);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree055() {
     Int16Array arr = Int16Array.of(1, 2, 3, 4, 5, 6);
     Int16Array sub = arr.subarray(2, 5);
     String result = sub.join(":");
-    assertEqual("3:4:5", result);}
+    assertEqual("3:4:5", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree056() {
     Int16Array arr = Int16Array.of(1, 2, 3, 4, 5);
     Int16Array sub = arr.subarray(2, 3);
     String result = sub.join(",");
-    assertEqual("3", result);}
+    assertEqual("3", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree057() {
     Int16Array arr = new Int16Array(5);
     arr.fill(7);
     String result = arr.join();
-    assertEqual("7,7,7,7,7", result);}
+    assertEqual("7,7,7,7,7", result);
+    }
 
     @Test
     void testInt16ArrayJoinTestThree058() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.reverse();
     String result = arr.join();
-    assertEqual("30,20,10", result);}
+    assertEqual("30,20,10", result);
+    }
 }

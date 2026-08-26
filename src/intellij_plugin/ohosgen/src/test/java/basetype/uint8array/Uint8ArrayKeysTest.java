@@ -43,7 +43,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     void testUint8ArrayKeys001() {
     Uint8Array arr = new Uint8Array(3);
     Uint8Array.KeyIterator iter = arr.keys();
-    assertNotNull(iter);}
+    assertNotNull(iter);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0200
      * @tc.name testUint8ArrayKeys002
@@ -58,8 +59,10 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(3);
     int count = 0;
     for (Integer key : arr.keys()) {
-    count++;};
-    assertEqual(3, count);}
+    count++;
+    }
+    assertEqual(3, count);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0300
      * @tc.name testUint8ArrayKeys003
@@ -73,7 +76,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     void testUint8ArrayKeys003() {
     Uint8Array arr = new Uint8Array();
     Uint8Array.KeyIterator iter = arr.keys();
-    assertEqual(true, iter.next().done);}
+    assertEqual(true, iter.next().done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0400
      * @tc.name testUint8ArrayKeys004
@@ -87,7 +91,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     void testUint8ArrayKeys004() {
     Uint8Array arr = new Uint8Array(0);
     Uint8Array.KeyIterator iter = arr.keys();
-    assertEqual(true, iter.next().done);}
+    assertEqual(true, iter.next().done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0500
      * @tc.name testUint8ArrayKeys005
@@ -103,7 +108,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.keys();
     iter.next();
     assertEqual(true, iter.next().done);
-    assertEqual(true, iter.next().done);}
+    assertEqual(true, iter.next().done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0600
      * @tc.name testUint8ArrayKeys006
@@ -118,8 +124,10 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array();
     boolean executed = false;
     for (Integer key : arr.keys()) {
-    executed = true;};
-    assertEqual(false, executed);}
+    executed = true;
+    }
+    assertEqual(false, executed);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0700
      * @tc.name testUint8ArrayKeys007
@@ -133,7 +141,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     void testUint8ArrayKeys007() {
     Uint8Array arr = new Uint8Array();
     List<Integer> result = BasTest.collect(arr.keys());
-    assertEqual(0, result.size());}
+    assertEqual(0, result.size());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0800
      * @tc.name testUint8ArrayKeys008
@@ -147,7 +156,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     void testUint8ArrayKeys008() {
     Uint8Array arr = new Uint8Array(1);
     Uint8Array.KeyIterator iter = arr.keys();
-    assertEqual(0, iter.next().value);}
+    assertEqual(0, iter.next().value);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0900
      * @tc.name testUint8ArrayKeys009
@@ -162,7 +172,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(1);
     Uint8Array.KeyIterator iter = arr.keys();
     iter.next();
-    assertEqual(true, iter.next().done);}
+    assertEqual(true, iter.next().done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1000
      * @tc.name testUint8ArrayKeys010
@@ -177,8 +188,10 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(1);
     int key = -1;
     for (Integer k : arr.keys()) {
-    key = k;};
-    assertEqual(0, key);}
+    key = k;
+    }
+    assertEqual(0, key);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1100
      * @tc.name testUint8ArrayKeys011
@@ -193,7 +206,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(1);
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(1, result.size());
-    assertEqual(0, result.get(0));}
+    assertEqual(0, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1200
      * @tc.name testUint8ArrayKeys012
@@ -209,7 +223,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.keys();
     assertEqual(0, iter.next().value);
     assertEqual(1, iter.next().value);
-    assertEqual(2, iter.next().value);}
+    assertEqual(2, iter.next().value);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1300
      * @tc.name testUint8ArrayKeys013
@@ -226,7 +241,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     iter.next();
     iter.next();
     iter.next();
-    assertEqual(true, iter.next().done);}
+    assertEqual(true, iter.next().done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1400
      * @tc.name testUint8ArrayKeys014
@@ -241,8 +257,10 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(5);
     int sum = 0;
     for (Integer key : arr.keys()) {
-    sum += key;};
-    assertEqual(10, sum);}
+    sum += key;
+    }
+    assertEqual(10, sum);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1500
      * @tc.name testUint8ArrayKeys015
@@ -256,7 +274,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     void testUint8ArrayKeys015() {
     Uint8Array arr = new Uint8Array(10);
     List<Integer> result = BasTest.collect(arr.keys());
-    assertEqual(10, result.size());}
+    assertEqual(10, result.size());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1600
      * @tc.name testUint8ArrayKeys016
@@ -271,7 +290,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(10);
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(0, result.get(0));
-    assertEqual(9, result.get(9));}
+    assertEqual(9, result.get(9));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1700
      * @tc.name testUint8ArrayKeys017
@@ -286,8 +306,10 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(100);
     int count = 0;
     for (Integer key : arr.keys()) {
-    count++;};
-    assertEqual(100, count);}
+    count++;
+    }
+    assertEqual(100, count);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1800
      * @tc.name testUint8ArrayKeys018
@@ -302,8 +324,10 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(255);
     int count = 0;
     for (Integer key : arr.keys()) {
-    count++;};
-    assertEqual(255, count);}
+    count++;
+    }
+    assertEqual(255, count);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1900
      * @tc.name testUint8ArrayKeys019
@@ -318,8 +342,10 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(256);
     int count = 0;
     for (Integer key : arr.keys()) {
-    count++;};
-    assertEqual(256, count);}
+    count++;
+    }
+    assertEqual(256, count);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2000
      * @tc.name testUint8ArrayKeys020
@@ -334,8 +360,10 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(1000);
     int count = 0;
     for (Integer key : arr.keys()) {
-    count++;};
-    assertEqual(1000, count);}
+    count++;
+    }
+    assertEqual(1000, count);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2100
      * @tc.name testUint8ArrayKeys021
@@ -350,7 +378,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(2);
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(0, result.get(0));
-    assertEqual(1, result.get(1));}
+    assertEqual(1, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2200
      * @tc.name testUint8ArrayKeys022
@@ -365,7 +394,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(127);
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(0, result.get(0));
-    assertEqual(126, result.get(126));}
+    assertEqual(126, result.get(126));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2300
      * @tc.name testUint8ArrayKeys023
@@ -380,7 +410,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(128);
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(0, result.get(0));
-    assertEqual(127, result.get(127));}
+    assertEqual(127, result.get(127));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2400
      * @tc.name testUint8ArrayKeys024
@@ -394,7 +425,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     void testUint8ArrayKeys024() {
     Uint8Array arr = Uint8Array.of();
     Uint8Array.KeyIterator iter = arr.keys();
-    assertEqual(true, iter.next().done);}
+    assertEqual(true, iter.next().done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2500
      * @tc.name testUint8ArrayKeys025
@@ -409,8 +441,10 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     int count = 0;
     for (Integer key : arr.keys()) {
-    count++;};
-    assertEqual(3, count);}
+    count++;
+    }
+    assertEqual(3, count);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2600
      * @tc.name testUint8ArrayKeys026
@@ -427,7 +461,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(2, result.size());
     assertEqual(0, result.get(0));
-    assertEqual(1, result.get(1));}
+    assertEqual(1, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2700
      * @tc.name testUint8ArrayKeys027
@@ -442,7 +477,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     int[] numbers = new int[] {5, 10, 15};
     Uint8Array arr = new Uint8Array(numbers);
     List<Integer> result = BasTest.collect(arr.keys());
-    assertEqual(3, result.size());}
+    assertEqual(3, result.size());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2800
      * @tc.name testUint8ArrayKeys028
@@ -458,8 +494,10 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(src);
     int count = 0;
     for (Integer key : arr.keys()) {
-    count++;};
-    assertEqual(4, count);}
+    count++;
+    }
+    assertEqual(4, count);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2900
      * @tc.name testUint8ArrayKeys029
@@ -476,7 +514,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(4, result.size());
     assertEqual(0, result.get(0));
-    assertEqual(3, result.get(3));}
+    assertEqual(3, result.get(3));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3000
      * @tc.name testUint8ArrayKeys030
@@ -492,7 +531,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(buf, 1);
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(0, result.get(0));
-    assertEqual(3, result.size());}
+    assertEqual(3, result.size());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3100
      * @tc.name testUint8ArrayKeys031
@@ -508,7 +548,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(buf, 2);
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(0, result.get(0));
-    assertEqual(3, result.size());}
+    assertEqual(3, result.size());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3200
      * @tc.name testUint8ArrayKeys032
@@ -526,7 +567,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(3, result.size());
     assertEqual(0, result.get(0));
     assertEqual(1, result.get(1));
-    assertEqual(2, result.get(2));}
+    assertEqual(2, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3300
      * @tc.name testUint8ArrayKeys033
@@ -548,7 +590,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(2, iter1.next().value);
     assertEqual(2, iter2.next().value);
     assertEqual(true, iter1.next().done);
-    assertEqual(true, iter2.next().done);}
+    assertEqual(true, iter2.next().done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3400
      * @tc.name testUint8ArrayKeys034
@@ -564,8 +607,11 @@ public class Uint8ArrayKeysTest extends BasTest {
     int sum = 0;
     for (Integer i : arr.keys()) {
     for (Integer j : arr.keys()) {
-    sum += (i + j);};};
-    assertEqual(4, sum);}
+    sum += (i + j);
+    }
+    }
+    assertEqual(4, sum);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3500
      * @tc.name testUint8ArrayKeys035
@@ -581,9 +627,12 @@ public class Uint8ArrayKeysTest extends BasTest {
     int count = 0;
     for (Integer key : arr.keys()) {
     if (key >= 2) {
-    break;};
-    count++;};
-    assertEqual(2, count);}
+    break;
+    }
+    count++;
+    }
+    assertEqual(2, count);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3600
      * @tc.name testUint8ArrayKeys036
@@ -598,10 +647,13 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(5);
     for (Integer key : arr.keys()) {
     if (key >= 2) {
-    break;};};
+    break;
+    }
+    }
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(5, result.size());
-    assertEqual(0, result.get(0));}
+    assertEqual(0, result.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3700
      * @tc.name testUint8ArrayKeys037
@@ -619,7 +671,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     iter.next();
     assertEqual(true, iter.next().done);
     assertEqual(true, iter.next().done);
-    assertEqual(true, iter.next().done);}
+    assertEqual(true, iter.next().done);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3800
      * @tc.name testUint8ArrayKeys038
@@ -635,7 +688,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(3, result.size());
     assertEqual(0, result.get(0));
-    assertEqual(2, result.get(2));}
+    assertEqual(2, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3900
      * @tc.name testUint8ArrayKeys039
@@ -650,7 +704,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {255, 255, 255});
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(3, result.size());
-    assertEqual(1, result.get(1));}
+    assertEqual(1, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4000
      * @tc.name testUint8ArrayKeys040
@@ -665,7 +720,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {127, 0, 255, 1});
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(4, result.size());
-    assertEqual(3, result.get(3));}
+    assertEqual(3, result.get(3));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4100
      * @tc.name testUint8ArrayKeys041
@@ -681,7 +737,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(3, result.size());
     assertEqual(0, result.get(0));
-    assertEqual(2, result.get(2));}
+    assertEqual(2, result.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4200
      * @tc.name testUint8ArrayKeys042
@@ -696,7 +753,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {-1, -2});
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(2, result.size());
-    assertEqual(1, result.get(1));}
+    assertEqual(1, result.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4300
      * @tc.name testUint8ArrayKeys043
@@ -710,7 +768,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     void testUint8ArrayKeys043() {
     Uint8Array arr = new Uint8Array(new double[] {1.5, 2.7, 3.2});
     List<Integer> result = BasTest.collect(arr.keys());
-    assertEqual(3, result.size());}
+    assertEqual(3, result.size());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4400
      * @tc.name testUint8ArrayKeys044
@@ -729,7 +788,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     iter.next();
     iter.next();
     String after = arr.join(",");
-    assertEqual(before, after);}
+    assertEqual(before, after);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4500
      * @tc.name testUint8ArrayKeys045
@@ -745,7 +805,8 @@ public class Uint8ArrayKeysTest extends BasTest {
     int before = arr.length();
     for (Integer key : arr.keys()) {
     };
-    assertEqual(before, arr.length());}
+    assertEqual(before, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4600
      * @tc.name testUint8ArrayKeys046
@@ -761,10 +822,13 @@ public class Uint8ArrayKeysTest extends BasTest {
     boolean caught = false;
     try {
     Uint8Array.KeyIterator iter = arr.keys();
-    iter.next();} catch (RangeError e) {
+    iter.next();
+    } catch (RangeError e) {
     caught = true;
-    assertEqual("Error", e.getClass().getSimpleName());};
-    assertEqual(false, caught);}
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    assertEqual(false, caught);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4700
      * @tc.name testUint8ArrayKeys047
@@ -780,8 +844,11 @@ public class Uint8ArrayKeysTest extends BasTest {
     boolean caught = false;
     try {
     for (Integer key : arr.keys()) {
-    };} catch (RangeError e) {
+    };
+    } catch (RangeError e) {
     caught = true;
-    assertEqual("Error", e.getClass().getSimpleName());};
-    assertEqual(false, caught);}
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    assertEqual(false, caught);
+    }
 }
