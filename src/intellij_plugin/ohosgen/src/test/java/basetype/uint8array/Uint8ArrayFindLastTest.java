@@ -62,8 +62,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast001() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v) -> { return v == 5;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v) -> { return v == 5;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_0200
      * @tc.name testUint8ArrayFindLast002
@@ -76,8 +78,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast002() {
     Uint8Array arr = Uint8Array.of(5, 4, 3, 2, 1);
-    Integer result = arr.findLast((v) -> { return v == 1;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v == 1;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_0300
      * @tc.name testUint8ArrayFindLast003
@@ -90,8 +94,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast003() {
     Uint8Array arr = Uint8Array.of(0, 1, 2);
-    Integer result = arr.findLast((v) -> { return v == 0;});
-    assertEqual(0, result);}
+    Integer result = arr.findLast((v) -> { return v == 0;
+        });
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_0400
      * @tc.name testUint8ArrayFindLast004
@@ -104,8 +110,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast004() {
     Uint8Array arr = Uint8Array.of(255);
-    Integer result = arr.findLast((v) -> { return v == 255;});
-    assertEqual(255, result);}
+    Integer result = arr.findLast((v) -> { return v == 255;
+        });
+    assertEqual(255, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_0500
      * @tc.name testUint8ArrayFindLast005
@@ -118,8 +126,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast005() {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
-    Integer result = arr.findLast((v) -> { return v == 127;});
-    assertEqual(127, result);}
+    Integer result = arr.findLast((v) -> { return v == 127;
+        });
+    assertEqual(127, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_0600
      * @tc.name testUint8ArrayFindLast006
@@ -132,8 +142,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast006() {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
-    Integer result = arr.findLast((v) -> { return v > 200;});
-    assertEqual(255, result);}
+    Integer result = arr.findLast((v) -> { return v > 200;
+        });
+    assertEqual(255, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_0700
      * @tc.name testUint8ArrayFindLast007
@@ -146,8 +158,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast007() {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
-    Integer result = arr.findLast((v) -> { return v < 100;});
-    assertEqual(0, result);}
+    Integer result = arr.findLast((v) -> { return v < 100;
+        });
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_0800
      * @tc.name testUint8ArrayFindLast008
@@ -160,8 +174,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast008() {
     Uint8Array arr = Uint8Array.of(0x00, 0x80, 0xFF);
-    Integer result = arr.findLast((v) -> { return v == 0x00;});
-    assertEqual(0, result);}
+    Integer result = arr.findLast((v) -> { return v == 0x00;
+        });
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_0900
      * @tc.name testUint8ArrayFindLast009
@@ -174,8 +190,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast009() {
     Uint8Array arr = Uint8Array.of(100, 200, 100);
-    Integer result = arr.findLast((v) -> { return v == 100;});
-    assertEqual(100, result);}
+    Integer result = arr.findLast((v) -> { return v == 100;
+        });
+    assertEqual(100, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_1000
      * @tc.name testUint8ArrayFindLast010
@@ -188,8 +206,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast010() {
     Uint8Array arr = Uint8Array.of(100, 200, 100);
-    Integer result = arr.findLast((v) -> { return v == 200;});
-    assertEqual(200, result);}
+    Integer result = arr.findLast((v) -> { return v == 200;
+        });
+    assertEqual(200, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_1100
      * @tc.name testUint8ArrayFindLast011
@@ -202,8 +222,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast011() {
     Uint8Array arr = Uint8Array.of(256, 5);
-    Integer result = arr.findLast((v) -> { return v == 0;});
-    assertEqual(0, result);}
+    Integer result = arr.findLast((v) -> { return v == 0;
+        });
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_1200
      * @tc.name testUint8ArrayFindLast012
@@ -216,8 +238,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast012() {
     Uint8Array arr = Uint8Array.of(256, -1);
-    Integer result = arr.findLast((v) -> { return v == 255;});
-    assertEqual(255, result);}
+    Integer result = arr.findLast((v) -> { return v == 255;
+        });
+    assertEqual(255, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_1300
      * @tc.name testUint8ArrayFindLast013
@@ -230,8 +254,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast013() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v) -> { return v >= 4;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v) -> { return v >= 4;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_1400
      * @tc.name testUint8ArrayFindLast014
@@ -244,8 +270,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast014() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v) -> { return v <= 3;});
-    assertEqual(3, result);}
+    Integer result = arr.findLast((v) -> { return v <= 3;
+        });
+    assertEqual(3, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_1500
      * @tc.name testUint8ArrayFindLast015
@@ -258,8 +286,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast015() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v) -> { return v != 3;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v) -> { return v != 3;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_1600
      * @tc.name testUint8ArrayFindLast016
@@ -272,8 +302,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast016() {
     Uint8Array arr = Uint8Array.of(0, 0, 0, 1, 0);
-    Integer result = arr.findLast((v) -> { return v > 0;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v > 0;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_1700
      * @tc.name testUint8ArrayFindLast017
@@ -286,8 +318,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast017() {
     Uint8Array arr = Uint8Array.of(0, 0, 0, 0, 0);
-    Integer result = arr.findLast((v) -> { return v == 0;});
-    assertEqual(0, result);}
+    Integer result = arr.findLast((v) -> { return v == 0;
+        });
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_1800
      * @tc.name testUint8ArrayFindLast018
@@ -300,8 +334,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast018() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v) -> { return v % 2 != 0;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v) -> { return v % 2 != 0;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_1900
      * @tc.name testUint8ArrayFindLast019
@@ -314,8 +350,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast019() {
     Uint8Array arr = Uint8Array.of(0, 200, 255);
-    Integer result = arr.findLast((v) -> { return v > 200;});
-    assertEqual(255, result);}
+    Integer result = arr.findLast((v) -> { return v > 200;
+        });
+    assertEqual(255, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_2000
      * @tc.name testUint8ArrayFindLast020
@@ -328,8 +366,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast020() {
     Uint8Array arr = Uint8Array.of(0, 200, 255);
-    Integer result = arr.findLast((v) -> { return v < 200;});
-    assertEqual(0, result);}
+    Integer result = arr.findLast((v) -> { return v < 200;
+        });
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_2100
      * @tc.name testUint8ArrayFindLast021
@@ -342,8 +382,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast021() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
-    Integer result = arr.findLast((v, i) -> { return i == 0;});
-    assertEqual(10, result);}
+    Integer result = arr.findLast((v, i) -> { return i == 0;
+        });
+    assertEqual(10, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_2200
      * @tc.name testUint8ArrayFindLast022
@@ -356,8 +398,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast022() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
-    Integer result = arr.findLast((v, i) -> { return i == 2;});
-    assertEqual(30, result);}
+    Integer result = arr.findLast((v, i) -> { return i == 2;
+        });
+    assertEqual(30, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_2300
      * @tc.name testUint8ArrayFindLast023
@@ -370,8 +414,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast023() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
-    Integer result = arr.findLast((v, i) -> { return i == 4;});
-    assertEqual(50, result);}
+    Integer result = arr.findLast((v, i) -> { return i == 4;
+        });
+    assertEqual(50, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_2400
      * @tc.name testUint8ArrayFindLast024
@@ -384,8 +430,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast024() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
-    Integer result = arr.findLast((v, i) -> { return i < 2;});
-    assertEqual(20, result);}
+    Integer result = arr.findLast((v, i) -> { return i < 2;
+        });
+    assertEqual(20, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_2500
      * @tc.name testUint8ArrayFindLast025
@@ -398,8 +446,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast025() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
-    Integer result = arr.findLast((v, i) -> { return i >= 3;});
-    assertEqual(50, result);}
+    Integer result = arr.findLast((v, i) -> { return i >= 3;
+        });
+    assertEqual(50, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_2600
      * @tc.name testUint8ArrayFindLast026
@@ -412,8 +462,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast026() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
-    Integer result = arr.findLast((v, i) -> { return i != 4;});
-    assertEqual(40, result);}
+    Integer result = arr.findLast((v, i) -> { return i != 4;
+        });
+    assertEqual(40, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_2700
      * @tc.name testUint8ArrayFindLast027
@@ -426,8 +478,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast027() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
-    Integer result = arr.findLast((v, i) -> { return i == 1 || i == 3;});
-    assertEqual(40, result);}
+    Integer result = arr.findLast((v, i) -> { return i == 1 || i == 3;
+        });
+    assertEqual(40, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_2800
      * @tc.name testUint8ArrayFindLast028
@@ -440,8 +494,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast028() {
     Uint8Array arr = Uint8Array.of(5, 0, 0, 0, 0);
-    Integer result = arr.findLast((v, i) -> { return i > 0;});
-    assertEqual(0, result);}
+    Integer result = arr.findLast((v, i) -> { return i > 0;
+        });
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_2900
      * @tc.name testUint8ArrayFindLast029
@@ -454,8 +510,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast029() {
     Uint8Array arr = Uint8Array.of(0, 0, 0, 0, 5);
-    Integer result = arr.findLast((v, i) -> { return i < 4;});
-    assertEqual(0, result);}
+    Integer result = arr.findLast((v, i) -> { return i < 4;
+        });
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_3000
      * @tc.name testUint8ArrayFindLast030
@@ -468,8 +526,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast030() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
-    Integer result = arr.findLast((v, i) -> { return i >= 0;});
-    assertEqual(30, result);}
+    Integer result = arr.findLast((v, i) -> { return i >= 0;
+        });
+    assertEqual(30, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_3100
      * @tc.name testUint8ArrayFindLast031
@@ -482,8 +542,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast031() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    Integer result = arr.findLast((v, i, a) -> { return a.length() == 3;});
-    assertEqual(3, result);}
+    Integer result = arr.findLast((v, i, a) -> { return a.length() == 3;
+        });
+    assertEqual(3, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_3200
      * @tc.name testUint8ArrayFindLast032
@@ -496,8 +558,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast032() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    Integer result = arr.findLast((v, i, a) -> { return a == arr;});
-    assertEqual(3, result);}
+    Integer result = arr.findLast((v, i, a) -> { return a == arr;
+        });
+    assertEqual(3, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_3300
      * @tc.name testUint8ArrayFindLast033
@@ -510,8 +574,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast033() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    Integer result = arr.findLast((v, i, a) -> { return a.get(0) == 1;});
-    assertEqual(3, result);}
+    Integer result = arr.findLast((v, i, a) -> { return a.get(0) == 1;
+        });
+    assertEqual(3, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_3400
      * @tc.name testUint8ArrayFindLast034
@@ -524,8 +590,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast034() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v, i, a) -> { return a.get(a.length() - 1) == 5;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v, i, a) -> { return a.get(a.length() - 1) == 5;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_3500
      * @tc.name testUint8ArrayFindLast035
@@ -538,8 +606,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast035() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    Integer result = arr.findLast((v, i, a) -> { return v > 0 && a.length() == 3;});
-    assertEqual(3, result);}
+    Integer result = arr.findLast((v, i, a) -> { return v > 0 && a.length() == 3;
+        });
+    assertEqual(3, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_3600
      * @tc.name testUint8ArrayFindLast036
@@ -552,8 +622,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast036() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v, i) -> { return v > 3 && i < 4;});
-    assertEqual(4, result);}
+    Integer result = arr.findLast((v, i) -> { return v > 3 && i < 4;
+        });
+    assertEqual(4, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_3700
      * @tc.name testUint8ArrayFindLast037
@@ -566,8 +638,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast037() {
     Uint8Array arr = Uint8Array.of(1, 1, 1, 1, 1);
-    Integer result = arr.findLast((v, i) -> { return v == 1 && i == 3;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v, i) -> { return v == 1 && i == 3;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_3800
      * @tc.name testUint8ArrayFindLast038
@@ -580,8 +654,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast038() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v, i, a) -> { return v == 2 && a.get(i + 1) == 3;});
-    assertEqual(2, result);}
+    Integer result = arr.findLast((v, i, a) -> { return v == 2 && a.get(i + 1) == 3;
+        });
+    assertEqual(2, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_3900
      * @tc.name testUint8ArrayFindLast039
@@ -594,8 +670,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast039() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v, i) -> { return i >= 2 && v >= 4;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v, i) -> { return i >= 2 && v >= 4;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_4000
      * @tc.name testUint8ArrayFindLast040
@@ -608,8 +686,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast040() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v, i) -> { return i < 4 && v < 5;});
-    assertEqual(4, result);}
+    Integer result = arr.findLast((v, i) -> { return i < 4 && v < 5;
+        });
+    assertEqual(4, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_4100
      * @tc.name testUint8ArrayFindLast041
@@ -622,8 +702,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast041() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    Integer result = arr.findLast((v, i, a) -> { return a.get(i) == v;});
-    assertEqual(3, result);}
+    Integer result = arr.findLast((v, i, a) -> { return a.get(i) == v;
+        });
+    assertEqual(3, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_4200
      * @tc.name testUint8ArrayFindLast042
@@ -636,8 +718,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast042() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    Integer result = arr.findLast((v, i, a) -> { return a.get(0) == v;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v, i, a) -> { return a.get(0) == v;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_4300
      * @tc.name testUint8ArrayFindLast043
@@ -650,8 +734,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast043() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v) -> { return v >= 3;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v) -> { return v >= 3;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_4400
      * @tc.name testUint8ArrayFindLast044
@@ -664,8 +750,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast044() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    Integer result = arr.findLast((index) -> { return true;});
-    assertEqual(3, result);}
+    Integer result = arr.findLast((index) -> { return true;
+        });
+    assertEqual(3, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_4500
      * @tc.name testUint8ArrayFindLast045
@@ -678,8 +766,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast045() {
     Uint8Array arr = Uint8Array.of(42);
-    Integer result = arr.findLast((index) -> { return true;});
-    assertEqual(42, result);}
+    Integer result = arr.findLast((index) -> { return true;
+        });
+    assertEqual(42, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_4600
      * @tc.name testUint8ArrayFindLast046
@@ -692,8 +782,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast046() {
     Uint8Array arr = Uint8Array.of(0);
-    Integer result = arr.findLast((v) -> { return v == 0;});
-    assertEqual(0, result);}
+    Integer result = arr.findLast((v) -> { return v == 0;
+        });
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_4700
      * @tc.name testUint8ArrayFindLast047
@@ -706,8 +798,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast047() {
     Uint8Array arr = Uint8Array.of(0, 0, 0);
-    Integer result = arr.findLast((v) -> { return v == 0;});
-    assertEqual(0, result);}
+    Integer result = arr.findLast((v) -> { return v == 0;
+        });
+    assertEqual(0, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_4800
      * @tc.name testUint8ArrayFindLast048
@@ -721,8 +815,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     void testUint8ArrayFindLast048() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     int lenBefore = arr.length();
-    arr.findLast((v) -> { return v > 3;});
-    assertEqual(lenBefore, arr.length());}
+    arr.findLast((v) -> { return v > 3;
+        });
+    assertEqual(lenBefore, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_4900
      * @tc.name testUint8ArrayFindLast049
@@ -735,9 +831,11 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast049() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    arr.findLast((v) -> { return v > 3;});
+    arr.findLast((v) -> { return v > 3;
+        });
     assertEqual(1, arr.get(0));
-    assertEqual(5, arr.get(4));}
+    assertEqual(5, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_5000
      * @tc.name testUint8ArrayFindLast050
@@ -750,9 +848,12 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast050() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    int r1 = arr.findLast((v) -> { return v > 2;});
-    int r2 = arr.findLast((v) -> { return v > 2;});
-    assertEqual(r2, r1);}
+    int r1 = arr.findLast((v) -> { return v > 2;
+        });
+    int r2 = arr.findLast((v) -> { return v > 2;
+        });
+    assertEqual(r2, r1);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_5100
      * @tc.name testUint8ArrayFindLast051
@@ -765,9 +866,12 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast051() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    int idx = arr.findLastIndex((v) -> { return v > 2;});
-    int val = arr.findLast((v) -> { return v > 2;});
-    assertEqual(arr.get(idx), val);}
+    int idx = arr.findLastIndex((v) -> { return v > 2;
+        });
+    int val = arr.findLast((v) -> { return v > 2;
+        });
+    assertEqual(arr.get(idx), val);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_5200
      * @tc.name testUint8ArrayFindLast052
@@ -782,8 +886,11 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     try {
     basetype.common.ClassCastError.raise();
-    fail();} catch (ClassCastError e) {
-    assertEqual("ClassCastError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (ClassCastError e) {
+    assertEqual("ClassCastError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_5300
      * @tc.name testUint8ArrayFindLast053
@@ -798,9 +905,13 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     try {
     arr.findLast((v) -> {
-    throw new Error("test error");});
-    fail();} catch (Error e) {
-    assertEqual("Error", e.getClass().getSimpleName());};}
+    throw new Error("test error");
+        });
+    fail();
+    } catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_5400
      * @tc.name testUint8ArrayFindLast054
@@ -815,10 +926,14 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     try {
     arr.findLast((v) -> {
-    throw new TypeError("type error");});
-    fail();} catch (TypeError e) {
+    throw new TypeError("type error");
+        });
+    fail();
+    } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
-    assertEqual("TypeError", e.getClass().getSimpleName());};}
+    assertEqual("TypeError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_5500
      * @tc.name testUint8ArrayFindLast055
@@ -836,10 +951,15 @@ public class Uint8ArrayFindLastTest extends BasTest {
     arr.findLast((v) -> {
     callCount[0]++;
     if (callCount[0] == 1) {
-    throw new Error("first call error");};
-    return false;});
-    fail();} catch (Error e) {
-    assertEqual("Error", e.getClass().getSimpleName());};}
+    throw new Error("first call error");
+    }
+    return false;
+        });
+    fail();
+    } catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_5600
      * @tc.name testUint8ArrayFindLast056
@@ -857,10 +977,15 @@ public class Uint8ArrayFindLastTest extends BasTest {
     arr.findLast((v) -> {
     callCount[0]++;
     if (callCount[0] == 3) {
-    throw new Error("last call error");};
-    return v > 3;});
-    fail();} catch (Error e) {
-    assertEqual("Error", e.getClass().getSimpleName());};}
+    throw new Error("last call error");
+    }
+    return v > 3;
+        });
+    fail();
+    } catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_5700
      * @tc.name testUint8ArrayFindLast057
@@ -873,8 +998,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast057() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v) -> { return v > 3;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v) -> { return v > 3;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_5800
      * @tc.name testUint8ArrayFindLast058
@@ -887,8 +1014,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast058() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v) -> { return v > 4;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v) -> { return v > 4;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_5900
      * @tc.name testUint8ArrayFindLast059
@@ -901,8 +1030,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast059() {
     Uint8Array arr = Uint8Array.of(5, 4, 3, 2, 1);
-    Integer result = arr.findLast((v) -> { return v < 3;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v < 3;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6000
      * @tc.name testUint8ArrayFindLast060
@@ -915,8 +1046,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast060() {
     Uint8Array arr = Uint8Array.of(5, 4, 3, 2, 1);
-    Integer result = arr.findLast((v) -> { return v < 4;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v < 4;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6100
      * @tc.name testUint8ArrayFindLast061
@@ -929,8 +1062,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast061() {
     Uint8Array arr = Uint8Array.of(5, 4, 3, 2, 1);
-    Integer result = arr.findLast((v) -> { return v < 5;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v < 5;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6200
      * @tc.name testUint8ArrayFindLast062
@@ -943,8 +1078,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast062() {
     Uint8Array arr = Uint8Array.of(5, 4, 3, 2, 1);
-    Integer result = arr.findLast((v) -> { return v > 3;});
-    assertEqual(4, result);}
+    Integer result = arr.findLast((v) -> { return v > 3;
+        });
+    assertEqual(4, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6300
      * @tc.name testUint8ArrayFindLast063
@@ -957,8 +1094,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast063() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 2, 1);
-    Integer result = arr.findLast((v) -> { return v == 2;});
-    assertEqual(2, result);}
+    Integer result = arr.findLast((v) -> { return v == 2;
+        });
+    assertEqual(2, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6400
      * @tc.name testUint8ArrayFindLast064
@@ -971,8 +1110,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast064() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 2, 1);
-    Integer result = arr.findLast((v) -> { return v == 1;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v == 1;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6500
      * @tc.name testUint8ArrayFindLast065
@@ -985,8 +1126,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast065() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 2, 1);
-    Integer result = arr.findLast((v) -> { return v < 3;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v < 3;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6600
      * @tc.name testUint8ArrayFindLast066
@@ -999,8 +1142,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast066() {
     Uint8Array arr = Uint8Array.of(5, 4, 3, 2, 1);
-    Integer result = arr.findLast((v) -> { return v >= 2;});
-    assertEqual(2, result);}
+    Integer result = arr.findLast((v) -> { return v >= 2;
+        });
+    assertEqual(2, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6700
      * @tc.name testUint8ArrayFindLast067
@@ -1013,8 +1158,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast067() {
     Uint8Array arr = Uint8Array.of(5, 5, 5, 3, 5);
-    Integer result = arr.findLast((v) -> { return v == 5;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v) -> { return v == 5;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6800
      * @tc.name testUint8ArrayFindLast068
@@ -1027,8 +1174,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast068() {
     Uint8Array arr = Uint8Array.of(5, 5, 5, 3, 5);
-    Integer result = arr.findLast((v) -> { return v == 3;});
-    assertEqual(3, result);}
+    Integer result = arr.findLast((v) -> { return v == 3;
+        });
+    assertEqual(3, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6900
      * @tc.name testUint8ArrayFindLast069
@@ -1041,8 +1190,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast069() {
     Uint8Array arr = Uint8Array.of(1, 1, 1, 1, 2);
-    Integer result = arr.findLast((v) -> { return v == 1;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v == 1;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7000
      * @tc.name testUint8ArrayFindLast070
@@ -1055,8 +1206,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast070() {
     Uint8Array arr = Uint8Array.of(2, 1, 1, 1, 1);
-    Integer result = arr.findLast((v) -> { return v == 1;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v == 1;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7100
      * @tc.name testUint8ArrayFindLast071
@@ -1069,8 +1222,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast071() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v) -> { return v >= 1;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v) -> { return v >= 1;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7200
      * @tc.name testUint8ArrayFindLast072
@@ -1083,8 +1238,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast072() {
     Uint8Array arr = Uint8Array.of(0, 0, 0, 1, 0);
-    Integer result = arr.findLast((v) -> { return v == 1;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v == 1;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7300
      * @tc.name testUint8ArrayFindLast073
@@ -1097,8 +1254,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast073() {
     Uint8Array arr = Uint8Array.of(0, 1, 0, 1, 0);
-    Integer result = arr.findLast((v) -> { return v == 1;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v == 1;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7400
      * @tc.name testUint8ArrayFindLast074
@@ -1111,8 +1270,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast074() {
     Uint8Array arr = Uint8Array.of(1, 0, 1, 0, 1);
-    Integer result = arr.findLast((v) -> { return v == 1;});
-    assertEqual(1, result);}
+    Integer result = arr.findLast((v) -> { return v == 1;
+        });
+    assertEqual(1, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7500
      * @tc.name testUint8ArrayFindLast075
@@ -1125,8 +1286,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast075() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v, i) -> { return i % 2 == 0;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v, i) -> { return i % 2 == 0;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7600
      * @tc.name testUint8ArrayFindLast076
@@ -1140,9 +1303,12 @@ public class Uint8ArrayFindLastTest extends BasTest {
     void testUint8ArrayFindLast076() {
     Uint8Array arr = new Uint8Array(100);
     for (int i = 0; i < 100; i++) {
-    arr.set(i, i);};
-    Integer result = arr.findLast((v) -> { return v == 99;});
-    assertEqual(99, result);}
+    arr.set(i, i);
+    }
+    Integer result = arr.findLast((v) -> { return v == 99;
+        });
+    assertEqual(99, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7700
      * @tc.name testUint8ArrayFindLast077
@@ -1156,9 +1322,12 @@ public class Uint8ArrayFindLastTest extends BasTest {
     void testUint8ArrayFindLast077() {
     Uint8Array arr = new Uint8Array(100);
     for (int i = 0; i < 100; i++) {
-    arr.set(i, i);};
-    Integer result = arr.findLast((v) -> { return v > 98;});
-    assertEqual(99, result);}
+    arr.set(i, i);
+    }
+    Integer result = arr.findLast((v) -> { return v > 98;
+        });
+    assertEqual(99, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7800
      * @tc.name testUint8ArrayFindLast078
@@ -1172,9 +1341,12 @@ public class Uint8ArrayFindLastTest extends BasTest {
     void testUint8ArrayFindLast078() {
     Uint8Array arr = new Uint8Array(100);
     for (int i = 0; i < 100; i++) {
-    arr.set(i, i);};
-    Integer result = arr.findLast((v, i) -> { return i == 50;});
-    assertEqual(50, result);}
+    arr.set(i, i);
+    }
+    Integer result = arr.findLast((v, i) -> { return i == 50;
+        });
+    assertEqual(50, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7900
      * @tc.name testUint8ArrayFindLast079
@@ -1188,8 +1360,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     void testUint8ArrayFindLast079() {
     List<Integer> fixed = java.util.Arrays.asList(10, 20, 30, 40, 50);
     Uint8Array arr = new Uint8Array(fixed);
-    Integer result = arr.findLast((v) -> { return v > 25;});
-    assertEqual(50, result);}
+    Integer result = arr.findLast((v) -> { return v > 25;
+        });
+    assertEqual(50, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_8000
      * @tc.name testUint8ArrayFindLast080
@@ -1208,8 +1382,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     arr.set(2, 30);
     arr.set(3, 40);
     arr.set(4, 50);
-    Integer result = arr.findLast((v) -> { return v == 30;});
-    assertEqual(30, result);}
+    Integer result = arr.findLast((v) -> { return v == 30;
+        });
+    assertEqual(30, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_8100
      * @tc.name testUint8ArrayFindLast081
@@ -1223,8 +1399,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     void testUint8ArrayFindLast081() {
     Uint8Array src = Uint8Array.of(5, 10, 15, 20);
     Uint8Array arr = new Uint8Array(src);
-    Integer result = arr.findLast((v) -> { return v % 10 == 0;});
-    assertEqual(20, result);}
+    Integer result = arr.findLast((v) -> { return v % 10 == 0;
+        });
+    assertEqual(20, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_8200
      * @tc.name testUint8ArrayFindLast082
@@ -1238,9 +1416,12 @@ public class Uint8ArrayFindLastTest extends BasTest {
     void testUint8ArrayFindLast082() {
     Uint8Array arr = new Uint8Array(256);
     for (int i = 0; i < 256; i++) {
-    arr.set(i, i);};
-    Integer result = arr.findLast((v) -> { return v == 0xFF;});
-    assertEqual(255, result);}
+    arr.set(i, i);
+    }
+    Integer result = arr.findLast((v) -> { return v == 0xFF;
+        });
+    assertEqual(255, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_8300
      * @tc.name testUint8ArrayFindLast083
@@ -1253,10 +1434,12 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast083() {
     Uint8Array.Uint8ArrayFinder1 isGreaterThan3 = (v) -> {
-    return v > 3;};
+    return v > 3;
+    };
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     Integer result = arr.findLast(isGreaterThan3);
-    assertEqual(5, result);}
+    assertEqual(5, result);
+    };
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_8400
      * @tc.name testUint8ArrayFindLast084
@@ -1270,8 +1453,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     void testUint8ArrayFindLast084() {
     int threshold = 3;
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v) -> { return v > threshold;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v) -> { return v > threshold;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_8500
      * @tc.name testUint8ArrayFindLast085
@@ -1284,8 +1469,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast085() {
     Uint8Array arr = Uint8Array.of(0x0A, 0xFF, 0b10, 077);
-    Integer result = arr.findLast((v) -> { return v == 0xFF;});
-    assertEqual(255, result);}
+    Integer result = arr.findLast((v) -> { return v == 0xFF;
+        });
+    assertEqual(255, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_8600
      * @tc.name testUint8ArrayFindLast086
@@ -1298,8 +1485,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast086() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v, i) -> { return v > 0 && i % 2 == 0;});
-    assertEqual(5, result);}
+    Integer result = arr.findLast((v, i) -> { return v > 0 && i % 2 == 0;
+        });
+    assertEqual(5, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_8700
      * @tc.name testUint8ArrayFindLast087
@@ -1312,8 +1501,10 @@ public class Uint8ArrayFindLastTest extends BasTest {
     @Test
     void testUint8ArrayFindLast087() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.findLast((v, i) -> { return v < 5 && i % 2 == 1;});
-    assertEqual(4, result);}
+    Integer result = arr.findLast((v, i) -> { return v < 5 && i % 2 == 1;
+        });
+    assertEqual(4, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_8800
      * @tc.name testUint8ArrayFindLast088
@@ -1328,6 +1519,8 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     arr.findLast((v, i, a) -> {
     int x = a.get(0);
-    return v > 3;});
-    assertEqual(1, arr.get(0));}
+    return v > 3;
+        });
+    assertEqual(1, arr.get(0));
+    }
 }
