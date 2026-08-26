@@ -15,43 +15,21 @@
 
 package basetype.uint8array;
 
-import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
 import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ArrayForEachTest —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ArrayForEachTest extends BasTest {
 
     private static void forEachThrowTest(int value) {
-    throw new Error("test");
-    }
+    throw new Error("test");}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0100
      * @tc.name testUint8ArrayForEach001
@@ -65,9 +43,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach001() {
     int[] callCount = {0};
     Uint8Array arr = Uint8Array.of(42, 84);
-    arr.forEach((value) -> { callCount[0]++; });
-    assertEqual(2, callCount[0]);
-    }
+    arr.forEach((value) -> { callCount[0]++;});
+    assertEqual(2, callCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0200
      * @tc.name testUint8ArrayForEach002
@@ -81,9 +58,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach002() {
     int[] captured = {0};
     Uint8Array arr = Uint8Array.of(42);
-    arr.forEach((value) -> { captured[0] = value; });
-    assertEqual(42, captured[0]);
-    }
+    arr.forEach((value) -> { captured[0] = value;});
+    assertEqual(42, captured[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0300
      * @tc.name testUint8ArrayForEach003
@@ -97,9 +73,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach003() {
     int[] sum = {0};
     Uint8Array arr = Uint8Array.of(10, 20, 30);
-    arr.forEach((value) -> { sum[0] += value; });
-    assertEqual(60, sum[0]);
-    }
+    arr.forEach((value) -> { sum[0] += value;});
+    assertEqual(60, sum[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0400
      * @tc.name testUint8ArrayForEach004
@@ -113,9 +88,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach004() {
     int[] indexSum = {0};
     Uint8Array arr = Uint8Array.of(5, 10, 15, 20);
-    arr.forEach((value, index) -> { indexSum[0] += index; });
-    assertEqual(6, indexSum[0]);
-    }
+    arr.forEach((value, index) -> { indexSum[0] += index;});
+    assertEqual(6, indexSum[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0500
      * @tc.name testUint8ArrayForEach005
@@ -130,10 +104,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     int[] firstIndex = {-1};
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     arr.forEach((value, index) -> {
-    if (firstIndex[0] == -1) { firstIndex[0] = index; };
-    });
-    assertEqual(0, firstIndex[0]);
-    }
+    if (firstIndex[0] == -1) { firstIndex[0] = index;};});
+    assertEqual(0, firstIndex[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0600
      * @tc.name testUint8ArrayForEach006
@@ -147,9 +119,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach006() {
     int[] lastIndex = {-1};
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    arr.forEach((value, index) -> { lastIndex[0] = index; });
-    assertEqual(2, lastIndex[0]);
-    }
+    arr.forEach((value, index) -> { lastIndex[0] = index;});
+    assertEqual(2, lastIndex[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0700
      * @tc.name testUint8ArrayForEach007
@@ -164,10 +135,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     boolean[] sameRef = {true};
     Uint8Array arr = Uint8Array.of(1, 2);
     arr.forEach((value, index, array) -> {
-    if (array != arr) { sameRef[0] = false; };
-    });
-    assertTrue(sameRef[0]);
-    }
+    if (array != arr) { sameRef[0] = false;};});
+    assertTrue(sameRef[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0800
      * @tc.name testUint8ArrayForEach008
@@ -181,9 +150,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach008() {
     int[] count = {0};
     Uint8Array arr = Uint8Array.of(7, 14, 21, 28, 35);
-    arr.forEach((value) -> { count[0]++; });
-    assertEqual(5, count[0]);
-    }
+    arr.forEach((value) -> { count[0]++;});
+    assertEqual(5, count[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0900
      * @tc.name testUint8ArrayForEach009
@@ -199,11 +167,9 @@ public class Uint8ArrayForEachTest extends BasTest {
     boolean[] ordered = {true};
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4);
     arr.forEach((value, index) -> {
-    if (index <= prev[0]) { ordered[0] = false; };
-    prev[0] = index;
-    });
-    assertTrue(ordered[0]);
-    }
+    if (index <= prev[0]) { ordered[0] = false;};
+    prev[0] = index;});
+    assertTrue(ordered[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1000
      * @tc.name testUint8ArrayForEach010
@@ -218,10 +184,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     int[] paramCount = {0};
     Uint8Array arr = Uint8Array.of(1);
     arr.forEach((value, index, array) -> {
-    paramCount[0] = 3;
-    });
-    assertEqual(3, paramCount[0]);
-    }
+    paramCount[0] = 3;});
+    assertEqual(3, paramCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1100
      * @tc.name testUint8ArrayForEach011
@@ -238,10 +202,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     Uint8Array arr = Uint8Array.of(3, 6, 9);
     arr.forEach((value, index) -> {
     sumVal[0] += value;
-    sumIdx[0] += index;
-    });
-    assertEqual(21, sumVal[0] + sumIdx[0]);
-    }
+    sumIdx[0] += index;});
+    assertEqual(21, sumVal[0] + sumIdx[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1200
      * @tc.name testUint8ArrayForEach012
@@ -255,9 +217,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach012() {
     int[] total = {0};
     Uint8Array arr = Uint8Array.of(4, 8, 12);
-    arr.forEach((value) -> { total[0] += value; });
-    assertEqual(24, total[0]);
-    }
+    arr.forEach((value) -> { total[0] += value;});
+    assertEqual(24, total[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1300
      * @tc.name testUint8ArrayForEach013
@@ -271,9 +232,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach013() {
     boolean[] called = {false};
     Uint8Array arr = Uint8Array.of(1);
-    arr.forEach(($x1) -> { called[0] = true; });
-    assertTrue(called[0]);
-    }
+    arr.forEach((index) -> { called[0] = true;});
+    assertTrue(called[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1400
      * @tc.name testUint8ArrayForEach014
@@ -287,9 +247,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach014() {
     int[] acc = {0};
     Uint8Array arr = Uint8Array.of(2, 4, 6);
-    arr.forEach((value) -> { acc[0] += value; });
-    assertEqual(12, acc[0]);
-    }
+    arr.forEach((value) -> { acc[0] += value;});
+    assertEqual(12, acc[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1500
      * @tc.name testUint8ArrayForEach015
@@ -302,11 +261,10 @@ public class Uint8ArrayForEachTest extends BasTest {
     @Test
     void testUint8ArrayForEach015() {
     int[] accum = {0};
-    Uint8Array.Uint8ArrayConsumer1 addValue = (val) -> { accum[0] += val; };
+    Uint8Array.Uint8ArrayConsumer1 addValue = (val) -> { accum[0] += val;};
     Uint8Array arr = Uint8Array.of(1, 3, 5);
     arr.forEach(addValue);
-    assertEqual(9, accum[0]);
-    }
+    assertEqual(9, accum[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1600
      * @tc.name testUint8ArrayForEach016
@@ -320,9 +278,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach016() {
     int[] res = {0};
     Uint8Array arr = Uint8Array.of(10, 20);
-    arr.forEach((value) -> { res[0] += value; });
-    assertEqual(30, res[0]);
-    }
+    arr.forEach((value) -> { res[0] += value;});
+    assertEqual(30, res[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1700
      * @tc.name testUint8ArrayForEach017
@@ -337,9 +294,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     int[] val = {255};
     Uint8Array arr = new Uint8Array(1);
     arr.set(0, 0);
-    arr.forEach((value) -> { val[0] = value; });
-    assertEqual(0, val[0]);
-    }
+    arr.forEach((value) -> { val[0] = value;});
+    assertEqual(0, val[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1800
      * @tc.name testUint8ArrayForEach018
@@ -354,9 +310,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     int[] val = {0};
     Uint8Array arr = new Uint8Array(1);
     arr.set(0, 255);
-    arr.forEach((value) -> { val[0] = value; });
-    assertEqual(255, val[0]);
-    }
+    arr.forEach((value) -> { val[0] = value;});
+    assertEqual(255, val[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1900
      * @tc.name testUint8ArrayForEach019
@@ -370,9 +325,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach019() {
     int[] val = {0};
     Uint8Array arr = Uint8Array.of(127);
-    arr.forEach((value) -> { val[0] = value; });
-    assertEqual(127, val[0]);
-    }
+    arr.forEach((value) -> { val[0] = value;});
+    assertEqual(127, val[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2000
      * @tc.name testUint8ArrayForEach020
@@ -386,9 +340,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach020() {
     int[] val = {0};
     Uint8Array arr = Uint8Array.of(128);
-    arr.forEach((value) -> { val[0] = value; });
-    assertEqual(128, val[0]);
-    }
+    arr.forEach((value) -> { val[0] = value;});
+    assertEqual(128, val[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2100
      * @tc.name testUint8ArrayForEach021
@@ -402,9 +355,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach021() {
     int[] val = {255};
     Uint8Array arr = Uint8Array.of(0x00);
-    arr.forEach((value) -> { val[0] = value; });
-    assertEqual(0, val[0]);
-    }
+    arr.forEach((value) -> { val[0] = value;});
+    assertEqual(0, val[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2200
      * @tc.name testUint8ArrayForEach022
@@ -418,9 +370,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach022() {
     int[] val = {0};
     Uint8Array arr = Uint8Array.of(0xFF);
-    arr.forEach((value) -> { val[0] = value; });
-    assertEqual(255, val[0]);
-    }
+    arr.forEach((value) -> { val[0] = value;});
+    assertEqual(255, val[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2300
      * @tc.name testUint8ArrayForEach023
@@ -434,9 +385,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach023() {
     int[] val = {0};
     Uint8Array arr = Uint8Array.of(0x80);
-    arr.forEach((value) -> { val[0] = value; });
-    assertEqual(128, val[0]);
-    }
+    arr.forEach((value) -> { val[0] = value;});
+    assertEqual(128, val[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2400
      * @tc.name testUint8ArrayForEach024
@@ -450,9 +400,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach024() {
     int[] val = {0};
     Uint8Array arr = Uint8Array.of(0x7F);
-    arr.forEach((value) -> { val[0] = value; });
-    assertEqual(127, val[0]);
-    }
+    arr.forEach((value) -> { val[0] = value;});
+    assertEqual(127, val[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2500
      * @tc.name testUint8ArrayForEach025
@@ -466,9 +415,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach025() {
     int[] val = {0};
     Uint8Array arr = Uint8Array.of(1);
-    arr.forEach((value) -> { val[0] = value; });
-    assertEqual(1, val[0]);
-    }
+    arr.forEach((value) -> { val[0] = value;});
+    assertEqual(1, val[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2600
      * @tc.name testUint8ArrayForEach026
@@ -482,9 +430,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach026() {
     String[] vals = {""};
     Uint8Array arr = Uint8Array.of(0, 255, 127, 128);
-    arr.forEach((value) -> { vals[0] += String.valueOf(value) + ","; });
-    assertEqual("0,255,127,128,", vals[0]);
-    }
+    arr.forEach((value) -> { vals[0] += String.valueOf(value) + ",";});
+    assertEqual("0,255,127,128,", vals[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2700
      * @tc.name testUint8ArrayForEach027
@@ -498,9 +445,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach027() {
     boolean[] called = {false};
     Uint8Array arr = new Uint8Array();
-    arr.forEach((value) -> { called[0] = true; });
-    assertFalse(called[0]);
-    }
+    arr.forEach((value) -> { called[0] = true;});
+    assertFalse(called[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2800
      * @tc.name testUint8ArrayForEach028
@@ -514,9 +460,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach028() {
     int[] cnt = {0};
     Uint8Array arr = Uint8Array.of(99);
-    arr.forEach((value) -> { cnt[0]++; });
-    assertEqual(1, cnt[0]);
-    }
+    arr.forEach((value) -> { cnt[0]++;});
+    assertEqual(1, cnt[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2900
      * @tc.name testUint8ArrayForEach029
@@ -530,9 +475,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach029() {
     int[] cnt = {0};
     Uint8Array arr = Uint8Array.of(11, 22);
-    arr.forEach((value) -> { cnt[0]++; });
-    assertEqual(2, cnt[0]);
-    }
+    arr.forEach((value) -> { cnt[0]++;});
+    assertEqual(2, cnt[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3000
      * @tc.name testUint8ArrayForEach030
@@ -546,9 +490,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach030() {
     int[] cnt = {0};
     Uint8Array arr = Uint8Array.of(33, 44, 55);
-    arr.forEach((value) -> { cnt[0]++; });
-    assertEqual(3, cnt[0]);
-    }
+    arr.forEach((value) -> { cnt[0]++;});
+    assertEqual(3, cnt[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3100
      * @tc.name testUint8ArrayForEach031
@@ -562,9 +505,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach031() {
     int[] cnt = {0};
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    arr.forEach((value) -> { cnt[0]++; });
-    assertEqual(5, cnt[0]);
-    }
+    arr.forEach((value) -> { cnt[0]++;});
+    assertEqual(5, cnt[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3200
      * @tc.name testUint8ArrayForEach032
@@ -578,9 +520,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach032() {
     int[] cnt = {0};
     Uint8Array arr = Uint8Array.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-    arr.forEach((value) -> { cnt[0]++; });
-    assertEqual(10, cnt[0]);
-    }
+    arr.forEach((value) -> { cnt[0]++;});
+    assertEqual(10, cnt[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3300
      * @tc.name testUint8ArrayForEach033
@@ -594,9 +535,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach033() {
     int[] cnt = {0};
     Uint8Array arr = new Uint8Array(100);
-    arr.forEach((value) -> { cnt[0]++; });
-    assertEqual(100, cnt[0]);
-    }
+    arr.forEach((value) -> { cnt[0]++;});
+    assertEqual(100, cnt[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3400
      * @tc.name testUint8ArrayForEach034
@@ -610,9 +550,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach034() {
     int[] cnt = {0};
     Uint8Array arr = new Uint8Array(256);
-    arr.forEach((value) -> { cnt[0]++; });
-    assertEqual(256, cnt[0]);
-    }
+    arr.forEach((value) -> { cnt[0]++;});
+    assertEqual(256, cnt[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3500
      * @tc.name testUint8ArrayForEach035
@@ -627,10 +566,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     int[] firstIdx = {-1};
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     arr.forEach((value, index) -> {
-    if (firstIdx[0] == -1) { firstIdx[0] = index; };
-    });
-    assertEqual(0, firstIdx[0]);
-    }
+    if (firstIdx[0] == -1) { firstIdx[0] = index;};});
+    assertEqual(0, firstIdx[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3600
      * @tc.name testUint8ArrayForEach036
@@ -645,10 +582,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     int[] secondIdx = {-1};
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     arr.forEach((value, index) -> {
-    if (index == 1) { secondIdx[0] = index; };
-    });
-    assertEqual(1, secondIdx[0]);
-    }
+    if (index == 1) { secondIdx[0] = index;};});
+    assertEqual(1, secondIdx[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3700
      * @tc.name testUint8ArrayForEach037
@@ -663,10 +598,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     int[] thirdIdx = {-1};
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     arr.forEach((value, index) -> {
-    if (index == 2) { thirdIdx[0] = index; };
-    });
-    assertEqual(2, thirdIdx[0]);
-    }
+    if (index == 2) { thirdIdx[0] = index;};});
+    assertEqual(2, thirdIdx[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3800
      * @tc.name testUint8ArrayForEach038
@@ -681,10 +614,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     int[] tenthIdx = {-1};
     Uint8Array arr = new Uint8Array(10);
     arr.forEach((value, index) -> {
-    if (index == 9) { tenthIdx[0] = index; };
-    });
-    assertEqual(9, tenthIdx[0]);
-    }
+    if (index == 9) { tenthIdx[0] = index;};});
+    assertEqual(9, tenthIdx[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3900
      * @tc.name testUint8ArrayForEach039
@@ -699,10 +630,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     int[] hundredthIdx = {-1};
     Uint8Array arr = new Uint8Array(100);
     arr.forEach((value, index) -> {
-    if (index == 99) { hundredthIdx[0] = index; };
-    });
-    assertEqual(99, hundredthIdx[0]);
-    }
+    if (index == 99) { hundredthIdx[0] = index;};});
+    assertEqual(99, hundredthIdx[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4000
      * @tc.name testUint8ArrayForEach040
@@ -717,10 +646,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     int[] lastIdx = {-1};
     Uint8Array arr = new Uint8Array(256);
     arr.forEach((value, index) -> {
-    if (index == 255) { lastIdx[0] = index; };
-    });
-    assertEqual(255, lastIdx[0]);
-    }
+    if (index == 255) { lastIdx[0] = index;};});
+    assertEqual(255, lastIdx[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4100
      * @tc.name testUint8ArrayForEach041
@@ -734,9 +661,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach041() {
     int[] idx = {-1};
     Uint8Array arr = Uint8Array.of(42);
-    arr.forEach((value, index) -> { idx[0] = index; });
-    assertEqual(0, idx[0]);
-    }
+    arr.forEach((value, index) -> { idx[0] = index;});
+    assertEqual(0, idx[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4200
      * @tc.name testUint8ArrayForEach042
@@ -750,9 +676,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach042() {
     int[] lastIdx = {-1};
     Uint8Array arr = Uint8Array.of(1, 2);
-    arr.forEach((value, index) -> { lastIdx[0] = index; });
-    assertEqual(1, lastIdx[0]);
-    }
+    arr.forEach((value, index) -> { lastIdx[0] = index;});
+    assertEqual(1, lastIdx[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4300
      * @tc.name testUint8ArrayForEach043
@@ -766,9 +691,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach043() {
     int[] lastIdx = {-1};
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    arr.forEach((value, index) -> { lastIdx[0] = index; });
-    assertEqual(4, lastIdx[0]);
-    }
+    arr.forEach((value, index) -> { lastIdx[0] = index;});
+    assertEqual(4, lastIdx[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4400
      * @tc.name testUint8ArrayForEach044
@@ -783,10 +707,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     boolean[] isUint8Array = {false};
     Uint8Array arr = Uint8Array.of(1, 2);
     arr.forEach((value, index, array) -> {
-    if (BasTest.instanceOf(array, Uint8Array.class)) { isUint8Array[0] = true; };
-    });
-    assertTrue(isUint8Array[0]);
-    }
+    if (BasTest.instanceOf(array, Uint8Array.class)) { isUint8Array[0] = true;};});
+    assertTrue(isUint8Array[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4500
      * @tc.name testUint8ArrayForEach045
@@ -801,10 +723,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     boolean[] sameLength = {false};
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     arr.forEach((value, index, array) -> {
-    if (array.length() == arr.length()) { sameLength[0] = true; };
-    });
-    assertTrue(sameLength[0]);
-    }
+    if (array.length() == arr.length()) { sameLength[0] = true;};});
+    assertTrue(sameLength[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4600
      * @tc.name testUint8ArrayForEach046
@@ -819,10 +739,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     boolean[] sameElements = {true};
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     arr.forEach((value, index, array) -> {
-    if (array.get(index) != arr.get(index)) { sameElements[0] = false; };
-    });
-    assertTrue(sameElements[0]);
-    }
+    if (array.get(index) != arr.get(index)) { sameElements[0] = false;};});
+    assertTrue(sameElements[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4700
      * @tc.name testUint8ArrayForEach047
@@ -837,10 +755,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     boolean[] sameBuffer = {false};
     Uint8Array arr = Uint8Array.of(1, 2);
     arr.forEach((value, index, array) -> {
-    if (array.buffer() == arr.buffer()) { sameBuffer[0] = true; };
-    });
-    assertTrue(sameBuffer[0]);
-    }
+    if (array.buffer() == arr.buffer()) { sameBuffer[0] = true;};});
+    assertTrue(sameBuffer[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4800
      * @tc.name testUint8ArrayForEach048
@@ -855,10 +771,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     boolean[] sameOffset = {false};
     Uint8Array arr = Uint8Array.of(1, 2);
     arr.forEach((value, index, array) -> {
-    if (array.byteOffset() == arr.byteOffset()) { sameOffset[0] = true; };
-    });
-    assertTrue(sameOffset[0]);
-    }
+    if (array.byteOffset() == arr.byteOffset()) { sameOffset[0] = true;};});
+    assertTrue(sameOffset[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4900
      * @tc.name testUint8ArrayForEach049
@@ -872,8 +786,7 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach049() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     Object result = null; arr.forEach((value) -> {});
-    assertNull(result);
-    }
+    assertNull(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5000
      * @tc.name testUint8ArrayForEach050
@@ -887,8 +800,7 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach050() {
     Uint8Array arr = new Uint8Array(0);
     Object result = null; arr.forEach((value) -> {});
-    assertNull(result);
-    }
+    assertNull(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5100
      * @tc.name testUint8ArrayForEach051
@@ -902,8 +814,7 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach051() {
     Uint8Array arr = Uint8Array.of(42);
     Object result = null; arr.forEach((value) -> {});
-    assertNull(result);
-    }
+    assertNull(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5200
      * @tc.name testUint8ArrayForEach052
@@ -917,8 +828,7 @@ public class Uint8ArrayForEachTest extends BasTest {
     void testUint8ArrayForEach052() {
     Uint8Array arr = new Uint8Array(1000);
     Object result = null; arr.forEach((value) -> {});
-    assertNull(result);
-    }
+    assertNull(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5300
      * @tc.name testUint8ArrayForEach053
@@ -933,12 +843,9 @@ public class Uint8ArrayForEachTest extends BasTest {
     Object result = null;
     Uint8Array arr = Uint8Array.of(1);
     try {
-    arr.forEach(Uint8ArrayForEachTest::forEachThrowTest); result = null;
-    } catch (RuntimeException e) {
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
-    assertNull(result);
-    }
+    arr.forEach(Uint8ArrayForEachTest::forEachThrowTest); result = null;} catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());};
+    assertNull(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5400
      * @tc.name testUint8ArrayForEach054
@@ -951,9 +858,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     @Test
     void testUint8ArrayForEach054() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    Object result = null; arr.forEach((value, index) -> { arr.set(index, value * 2); });
-    assertNull(result);
-    }
+    Object result = null; arr.forEach((value, index) -> { arr.set(index, value * 2);});
+    assertNull(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5500
      * @tc.name testUint8ArrayForEach055
@@ -966,9 +872,8 @@ public class Uint8ArrayForEachTest extends BasTest {
     @Test
     void testUint8ArrayForEach055() {
     Uint8Array arr = Uint8Array.of(1, 2);
-    Object result = null; arr.forEach((value, index) -> { arr.set(index, value + 10); });
-    assertNull(result);
-    }
+    Object result = null; arr.forEach((value, index) -> { arr.set(index, value + 10);});
+    assertNull(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5600
      * @tc.name testUint8ArrayForEach056
@@ -981,7 +886,6 @@ public class Uint8ArrayForEachTest extends BasTest {
     @Test
     void testUint8ArrayForEach056() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
-    Object result = null; arr.forEach((value, index) -> { arr.set(index, value); });
-    assertNull(result);
-    }
+    Object result = null; arr.forEach((value, index) -> { arr.set(index, value);});
+    assertNull(result);}
 }

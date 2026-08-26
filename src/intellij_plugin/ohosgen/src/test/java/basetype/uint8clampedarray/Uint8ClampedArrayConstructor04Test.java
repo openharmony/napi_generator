@@ -17,23 +17,8 @@ package basetype.uint8clampedarray;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
 import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
 import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
@@ -46,6 +31,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ClampedArrayConstructor04Test —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ClampedArrayConstructor04Test extends BasTest {
     /**
@@ -61,8 +48,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour001() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(3, arr.length());
-    }
+    assertEqual(3, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_0200
      * @tc.name testUint8ClampedArrayConstructorFour002
@@ -76,8 +62,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour002() {
     Uint8ClampedArray src = new Uint8ClampedArray(0);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(0, arr.length());
-    }
+    assertEqual(0, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_0300
      * @tc.name testUint8ClampedArrayConstructorFour003
@@ -91,8 +76,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour003() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {42});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(1, arr.length());
-    }
+    assertEqual(1, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_0400
      * @tc.name testUint8ClampedArrayConstructorFour004
@@ -106,8 +90,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour004() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {42});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(42, arr.get(0));
-    }
+    assertEqual(42, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_0500
      * @tc.name testUint8ClampedArrayConstructorFour005
@@ -121,8 +104,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour005() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(5, arr.length());
-    }
+    assertEqual(5, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_0600
      * @tc.name testUint8ClampedArrayConstructorFour006
@@ -136,8 +118,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour006() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(1, arr.get(0));
-    }
+    assertEqual(1, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_0700
      * @tc.name testUint8ClampedArrayConstructorFour007
@@ -151,8 +132,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour007() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(5, arr.get(4));
-    }
+    assertEqual(5, arr.get(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_0800
      * @tc.name testUint8ClampedArrayConstructorFour008
@@ -166,8 +146,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour008() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {0, 0, 0});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(0, arr.get(0));
-    }
+    assertEqual(0, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_0900
      * @tc.name testUint8ClampedArrayConstructorFour009
@@ -181,8 +160,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour009() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {255, 255, 255});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(255, arr.get(0));
-    }
+    assertEqual(255, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_1000
      * @tc.name testUint8ClampedArrayConstructorFour010
@@ -196,8 +174,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour010() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {127});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(127, arr.get(0));
-    }
+    assertEqual(127, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_1100
      * @tc.name testUint8ClampedArrayConstructorFour011
@@ -211,8 +188,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour011() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {128});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(128, arr.get(0));
-    }
+    assertEqual(128, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_1200
      * @tc.name testUint8ClampedArrayConstructorFour012
@@ -226,8 +202,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour012() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {256});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(255, arr.get(0));
-    }
+    assertEqual(255, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_1300
      * @tc.name testUint8ClampedArrayConstructorFour013
@@ -241,8 +216,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour013() {
     Uint8ClampedArray src = new Uint8ClampedArray(new double[] {Double.POSITIVE_INFINITY});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(255, arr.get(0));
-    }
+    assertEqual(255, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_1400
      * @tc.name testUint8ClampedArrayConstructorFour014
@@ -256,8 +230,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour014() {
     Uint8ClampedArray src = new Uint8ClampedArray(10);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(10, arr.length());
-    }
+    assertEqual(10, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_1500
      * @tc.name testUint8ClampedArrayConstructorFour015
@@ -271,8 +244,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour015() {
     Uint8ClampedArray src = new Uint8ClampedArray(255);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(255, arr.length());
-    }
+    assertEqual(255, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_1600
      * @tc.name testUint8ClampedArrayConstructorFour016
@@ -286,8 +258,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour016() {
     Uint8ClampedArray src = new Uint8ClampedArray(256);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(256, arr.length());
-    }
+    assertEqual(256, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_1700
      * @tc.name testUint8ClampedArrayConstructorFour017
@@ -301,8 +272,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour017() {
     Uint8ClampedArray src = new Uint8ClampedArray(1024);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(1024, arr.length());
-    }
+    assertEqual(1024, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_1800
      * @tc.name testUint8ClampedArrayConstructorFour018
@@ -316,8 +286,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour018() {
     Uint8ClampedArray src = new Uint8ClampedArray(65535);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(65535, arr.length());
-    }
+    assertEqual(65535, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_1900
      * @tc.name testUint8ClampedArrayConstructorFour019
@@ -331,8 +300,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour019() {
     Uint8ClampedArray src = new Uint8ClampedArray(5);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(0, arr.get(2));
-    }
+    assertEqual(0, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2000
      * @tc.name testUint8ClampedArrayConstructorFour020
@@ -346,8 +314,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour020() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(20, arr.get(1));
-    }
+    assertEqual(20, arr.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2100
      * @tc.name testUint8ClampedArrayConstructorFour021
@@ -362,8 +329,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     src.set(0, 99);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(99, arr.get(0));
-    }
+    assertEqual(99, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2200
      * @tc.name testUint8ClampedArrayConstructorFour022
@@ -378,8 +344,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray src = new Uint8ClampedArray(3);
     src.fill(7);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(7, arr.get(1));
-    }
+    assertEqual(7, arr.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2300
      * @tc.name testUint8ClampedArrayConstructorFour023
@@ -393,8 +358,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour023() {
     Uint8ClampedArray src = Uint8ClampedArray.of(11, 22, 33);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(33, arr.get(2));
-    }
+    assertEqual(33, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2400
      * @tc.name testUint8ClampedArrayConstructorFour024
@@ -409,8 +373,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     List<Number> fa = java.util.Arrays.asList(5, 10, 15);
     Uint8ClampedArray src = Uint8ClampedArray.from(fa);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(5, arr.get(0));
-    }
+    assertEqual(5, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2500
      * @tc.name testUint8ClampedArrayConstructorFour025
@@ -425,8 +388,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(new int[] {1, 2});
     Uint8ClampedArray b = new Uint8ClampedArray(a);
     Uint8ClampedArray c = new Uint8ClampedArray(b);
-    assertEqual(1, c.get(0));
-    }
+    assertEqual(1, c.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2600
      * @tc.name testUint8ClampedArrayConstructorFour026
@@ -441,8 +403,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(new int[] {7, 8});
     Uint8ClampedArray b = new Uint8ClampedArray(a);
     Uint8ClampedArray c = new Uint8ClampedArray(b);
-    assertEqual(2, c.length());
-    }
+    assertEqual(2, c.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2700
      * @tc.name testUint8ClampedArrayConstructorFour027
@@ -456,8 +417,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour027() {
     ArrayBuffer buf = new ArrayBuffer(0);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
-    assertEqual(0, arr.length());
-    }
+    assertEqual(0, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2800
      * @tc.name testUint8ClampedArrayConstructorFour028
@@ -471,8 +431,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour028() {
     ArrayBuffer buf = new ArrayBuffer(255);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
-    assertEqual(255, arr.length());
-    }
+    assertEqual(255, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2900
      * @tc.name testUint8ClampedArrayConstructorFour029
@@ -486,8 +445,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour029() {
     ArrayBuffer buf = new ArrayBuffer(256);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
-    assertEqual(256, arr.length());
-    }
+    assertEqual(256, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_3000
      * @tc.name testUint8ClampedArrayConstructorFour030
@@ -501,8 +459,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour030() {
     ArrayBuffer buf = new ArrayBuffer(1024);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
-    assertEqual(1024, arr.length());
-    }
+    assertEqual(1024, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_3100
      * @tc.name testUint8ClampedArrayConstructorFour031
@@ -516,8 +473,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour031() {
     ArrayBuffer buf = new ArrayBuffer(65535);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
-    assertEqual(65535, arr.length());
-    }
+    assertEqual(65535, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_3200
      * @tc.name testUint8ClampedArrayConstructorFour032
@@ -531,8 +487,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour032() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
-    assertEqual(0, arr.get(0));
-    }
+    assertEqual(0, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_3300
      * @tc.name testUint8ClampedArrayConstructorFour033
@@ -546,8 +501,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour033() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
-    assertEqual(0, arr.get(3));
-    }
+    assertEqual(0, arr.get(3));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_3400
      * @tc.name testUint8ClampedArrayConstructorFour034
@@ -561,8 +515,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour034() {
     Uint8ClampedArray parent = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray arr = new Uint8ClampedArray(parent.buffer(), 0);
-    assertEqual(4, arr.length());
-    }
+    assertEqual(4, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_3500
      * @tc.name testUint8ClampedArrayConstructorFour035
@@ -576,8 +529,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour035() {
     Uint8ClampedArray parent = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     Uint8ClampedArray arr = new Uint8ClampedArray(parent.buffer(), 0);
-    assertEqual(40, arr.get(3));
-    }
+    assertEqual(40, arr.get(3));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_3600
      * @tc.name testUint8ClampedArrayConstructorFour036
@@ -591,8 +543,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour036() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
-    assertEqual(8, arr.length());
-    }
+    assertEqual(8, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_3700
      * @tc.name testUint8ClampedArrayConstructorFour037
@@ -606,8 +557,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour037() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 1);
-    assertEqual(7, arr.length());
-    }
+    assertEqual(7, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_3800
      * @tc.name testUint8ClampedArrayConstructorFour038
@@ -621,8 +571,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour038() {
     ArrayBuffer buf = new ArrayBuffer(16);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0x4);
-    assertEqual(12, arr.length());
-    }
+    assertEqual(12, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_3900
      * @tc.name testUint8ClampedArrayConstructorFour039
@@ -636,8 +585,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour039() {
     ArrayBuffer buf = new ArrayBuffer(16);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 04);
-    assertEqual(12, arr.length());
-    }
+    assertEqual(12, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_4000
      * @tc.name testUint8ClampedArrayConstructorFour040
@@ -651,8 +599,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour040() {
     ArrayBuffer buf = new ArrayBuffer(16);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0b100);
-    assertEqual(12, arr.length());
-    }
+    assertEqual(12, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_4100
      * @tc.name testUint8ClampedArrayConstructorFour041
@@ -667,8 +614,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     int off = 2;
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, off);
-    assertEqual(6, arr.length());
-    }
+    assertEqual(6, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_4200
      * @tc.name testUint8ClampedArrayConstructorFour042
@@ -682,8 +628,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour042() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 1 + 1);
-    assertEqual(6, arr.length());
-    }
+    assertEqual(6, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_4300
      * @tc.name testUint8ClampedArrayConstructorFour043
@@ -697,8 +642,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour043() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 5 - 2);
-    assertEqual(5, arr.length());
-    }
+    assertEqual(5, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_4400
      * @tc.name testUint8ClampedArrayConstructorFour044
@@ -712,8 +656,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour044() {
     ArrayBuffer buf = new ArrayBuffer(16);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2 * 3);
-    assertEqual(10, arr.length());
-    }
+    assertEqual(10, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_4500
      * @tc.name testUint8ClampedArrayConstructorFour045
@@ -727,8 +670,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour045() {
     ArrayBuffer buf = new ArrayBuffer(16);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 11 % 4);
-    assertEqual(13, arr.length());
-    }
+    assertEqual(13, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_4600
      * @tc.name testUint8ClampedArrayConstructorFour046
@@ -742,8 +684,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour046() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(1, arr.length());
-    }
+    assertEqual(1, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_4700
      * @tc.name testUint8ClampedArrayConstructorFour047
@@ -757,8 +698,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour047() {
     ArrayBuffer buf = new ArrayBuffer(2);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
-    assertEqual(2, arr.length());
-    }
+    assertEqual(2, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_4800
      * @tc.name testUint8ClampedArrayConstructorFour048
@@ -772,8 +712,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour048() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(3, arr.byteLength());
-    }
+    assertEqual(3, arr.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_4900
      * @tc.name testUint8ClampedArrayConstructorFour049
@@ -787,8 +726,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour049() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 3);
-    assertEqual(5, arr.byteLength());
-    }
+    assertEqual(5, arr.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_5000
      * @tc.name testUint8ClampedArrayConstructorFour050
@@ -802,8 +740,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour050() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(0, arr.byteOffset());
-    }
+    assertEqual(0, arr.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_5100
      * @tc.name testUint8ClampedArrayConstructorFour051
@@ -817,8 +754,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour051() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2);
-    assertEqual(2, arr.byteOffset());
-    }
+    assertEqual(2, arr.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_5200
      * @tc.name testUint8ClampedArrayConstructorFour052
@@ -832,8 +768,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour052() {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 7);
-    assertEqual(7, arr.byteOffset());
-    }
+    assertEqual(7, arr.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_5300
      * @tc.name testUint8ClampedArrayConstructorFour053
@@ -847,8 +782,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour053() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(src.length(), arr.length());
-    }
+    assertEqual(src.length(), arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_5400
      * @tc.name testUint8ClampedArrayConstructorFour054
@@ -862,8 +796,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour054() {
     ArrayBuffer buf = new ArrayBuffer(10);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 3);
-    assertEqual(7, arr.length());
-    }
+    assertEqual(7, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_5500
      * @tc.name testUint8ClampedArrayConstructorFour055
@@ -879,8 +812,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(0, 99);
     Uint8Array peer = new Uint8Array(buf, 0);
-    assertEqual(99, peer.get(0));
-    }
+    assertEqual(99, peer.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_5600
      * @tc.name testUint8ClampedArrayConstructorFour056
@@ -896,8 +828,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     Uint8Array peer = new Uint8Array(buf, 0);
     peer.set(1, 77);
-    assertEqual(77, arr.get(1));
-    }
+    assertEqual(77, arr.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_5700
      * @tc.name testUint8ClampedArrayConstructorFour057
@@ -913,8 +844,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(buf, 0);
     Uint8ClampedArray b = new Uint8ClampedArray(buf, 4);
     a.set(4, 88);
-    assertEqual(88, b.get(0));
-    }
+    assertEqual(88, b.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_5800
      * @tc.name testUint8ClampedArrayConstructorFour058
@@ -928,8 +858,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour058() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 4);
-    assertEqual(0, arr.byteLength());
-    }
+    assertEqual(0, arr.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_5900
      * @tc.name testUint8ClampedArrayConstructorFour059
@@ -944,8 +873,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     arr.set(0, 99);
-    assertEqual(1, src.get(0));
-    }
+    assertEqual(1, src.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_6000
      * @tc.name testUint8ClampedArrayConstructorFour060
@@ -959,8 +887,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour060() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertNotEqual(src.buffer(), arr.buffer());
-    }
+    assertNotEqual(src.buffer(), arr.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_6100
      * @tc.name testUint8ClampedArrayConstructorFour061
@@ -975,8 +902,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     arr.fill(0);
-    assertEqual(2, src.get(1));
-    }
+    assertEqual(2, src.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_6200
      * @tc.name testUint8ClampedArrayConstructorFour062
@@ -991,8 +917,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     src.fill(0);
-    assertEqual(2, arr.get(1));
-    }
+    assertEqual(2, arr.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_6300
      * @tc.name testUint8ClampedArrayConstructorFour063
@@ -1006,8 +931,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour063() {
     Uint8ClampedArray big = new Uint8ClampedArray(new ArrayBuffer(8), 2);
     Uint8ClampedArray arr = new Uint8ClampedArray(big);
-    assertEqual(0, arr.byteOffset());
-    }
+    assertEqual(0, arr.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_6400
      * @tc.name testUint8ClampedArrayConstructorFour064
@@ -1021,8 +945,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour064() {
     Uint8ClampedArray big = new Uint8ClampedArray(new ArrayBuffer(8), 2);
     Uint8ClampedArray arr = new Uint8ClampedArray(big);
-    assertEqual(6, arr.length());
-    }
+    assertEqual(6, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_6500
      * @tc.name testUint8ClampedArrayConstructorFour065
@@ -1036,8 +959,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour065() {
     Uint8ClampedArray big = new Uint8ClampedArray(new ArrayBuffer(8), 2);
     Uint8ClampedArray arr = new Uint8ClampedArray(big);
-    assertEqual(6, arr.byteLength());
-    }
+    assertEqual(6, arr.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_6600
      * @tc.name testUint8ClampedArrayConstructorFour066
@@ -1051,8 +973,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour066() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {0});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(0, arr.get(0));
-    }
+    assertEqual(0, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_6700
      * @tc.name testUint8ClampedArrayConstructorFour067
@@ -1066,8 +987,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour067() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(1, arr.get(0));
-    }
+    assertEqual(1, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_6800
      * @tc.name testUint8ClampedArrayConstructorFour068
@@ -1081,8 +1001,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour068() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {254});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(254, arr.get(0));
-    }
+    assertEqual(254, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_6900
      * @tc.name testUint8ClampedArrayConstructorFour069
@@ -1096,8 +1015,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour069() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {255});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(255, arr.get(0));
-    }
+    assertEqual(255, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_7000
      * @tc.name testUint8ClampedArrayConstructorFour070
@@ -1112,8 +1030,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {100});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     arr.set(0, 256);
-    assertEqual(255, arr.get(0));
-    }
+    assertEqual(255, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_7100
      * @tc.name testUint8ClampedArrayConstructorFour071
@@ -1128,8 +1045,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {100});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     arr.set(0, -1);
-    assertEqual(0, arr.get(0));
-    }
+    assertEqual(0, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_7200
      * @tc.name testUint8ClampedArrayConstructorFour072
@@ -1144,8 +1060,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(0, 256);
-    assertEqual(255, arr.get(0));
-    }
+    assertEqual(255, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_7300
      * @tc.name testUint8ClampedArrayConstructorFour073
@@ -1160,8 +1075,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(0, Double.NaN);
-    assertEqual(0, arr.get(0));
-    }
+    assertEqual(0, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_7400
      * @tc.name testUint8ClampedArrayConstructorFour074
@@ -1176,8 +1090,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(0, Double.POSITIVE_INFINITY);
-    assertEqual(255, arr.get(0));
-    }
+    assertEqual(255, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_7500
      * @tc.name testUint8ClampedArrayConstructorFour075
@@ -1192,8 +1105,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(0, -Double.POSITIVE_INFINITY);
-    assertEqual(0, arr.get(0));
-    }
+    assertEqual(0, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_7600
      * @tc.name testUint8ClampedArrayConstructorFour076
@@ -1208,8 +1120,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(0, 0.4);
-    assertEqual(0, arr.get(0));
-    }
+    assertEqual(0, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_7700
      * @tc.name testUint8ClampedArrayConstructorFour077
@@ -1224,8 +1135,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(0, 0.9);
-    assertEqual(1, arr.get(0));
-    }
+    assertEqual(1, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_7800
      * @tc.name testUint8ClampedArrayConstructorFour078
@@ -1240,8 +1150,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(0, -1e9);
-    assertEqual(0, arr.get(0));
-    }
+    assertEqual(0, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_7900
      * @tc.name testUint8ClampedArrayConstructorFour079
@@ -1256,8 +1165,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(3, 200);
-    assertEqual(200, arr.get(3));
-    }
+    assertEqual(200, arr.get(3));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_8000
      * @tc.name testUint8ClampedArrayConstructorFour080
@@ -1272,8 +1180,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 1);
     arr.set(0, 33);
-    assertEqual(33, arr.get(0));
-    }
+    assertEqual(33, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_8100
      * @tc.name testUint8ClampedArrayConstructorFour081
@@ -1288,8 +1195,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2);
     arr.set(1, 44);
-    assertEqual(44, arr.get(1));
-    }
+    assertEqual(44, arr.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_8200
      * @tc.name testUint8ClampedArrayConstructorFour082
@@ -1304,11 +1210,8 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     try {
     new Uint8ClampedArray(buf, 2147483647);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_8300
      * @tc.name testUint8ClampedArrayConstructorFour083
@@ -1323,11 +1226,8 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     try {
     new Uint8ClampedArray(buf, Integer.MIN_VALUE);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_8400
      * @tc.name testUint8ClampedArrayConstructorFour084
@@ -1342,11 +1242,8 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(8);
     try {
     new Uint8ClampedArray(buf, 9);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_8500
      * @tc.name testUint8ClampedArrayConstructorFour085
@@ -1361,11 +1258,8 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     try {
     new Uint8ClampedArray(buf, 0x7FFFFFFF);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_8600
      * @tc.name testUint8ClampedArrayConstructorFour086
@@ -1380,8 +1274,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray src = new Uint8ClampedArray(2);
     src.set(0, 300);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(255, arr.get(0));
-    }
+    assertEqual(255, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_8700
      * @tc.name testUint8ClampedArrayConstructorFour087
@@ -1396,8 +1289,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray src = new Uint8ClampedArray(2);
     src.set(0, -50);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(0, arr.get(0));
-    }
+    assertEqual(0, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_8800
      * @tc.name testUint8ClampedArrayConstructorFour088
@@ -1414,8 +1306,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     arr.set(1, 99);
     assertEqual(2, arr.length());
     assertEqual(99, arr.get(1));
-    assertEqual(2, src.get(1));
-    }
+    assertEqual(2, src.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_8900
      * @tc.name testUint8ClampedArrayConstructorFour089
@@ -1431,8 +1322,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(3, 99);
     assertEqual(4, arr.length());
-    assertEqual(99, arr.get(3));
-    }
+    assertEqual(99, arr.get(3));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_9000
      * @tc.name testUint8ClampedArrayConstructorFour090
@@ -1447,8 +1337,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(0, 5);
-    assertEqual(5, arr.get(0));
-    }
+    assertEqual(5, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_9100
      * @tc.name testUint8ClampedArrayConstructorFour091
@@ -1464,8 +1353,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     arr.set(0, 100);
     Uint8ClampedArray peer = new Uint8ClampedArray(buf, 0);
-    assertEqual(100, peer.get(0));
-    }
+    assertEqual(100, peer.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_9200
      * @tc.name testUint8ClampedArrayConstructorFour092
@@ -1479,8 +1367,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour092() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(3, arr.buffer().byteLength());
-    }
+    assertEqual(3, arr.buffer().byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_9300
      * @tc.name testUint8ClampedArrayConstructorFour093
@@ -1494,8 +1381,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour093() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
-    assertEqual(buf, arr.buffer());
-    }
+    assertEqual(buf, arr.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_9400
      * @tc.name testUint8ClampedArrayConstructorFour094
@@ -1509,8 +1395,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     void testUint8ClampedArrayConstructorFour094() {
     ArrayBuffer buf = new ArrayBuffer(16);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 5);
-    assertEqual(16, arr.length() + arr.byteOffset());
-    }
+    assertEqual(16, arr.length() + arr.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_9500
      * @tc.name testUint8ClampedArrayConstructorFour095
@@ -1527,8 +1412,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     arr.set(0, 11);
     arr.set(1, 22);
     Uint8ClampedArray peer = new Uint8ClampedArray(buf, 0);
-    assertEqual(11, peer.get(0));
-    }
+    assertEqual(11, peer.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_9600
      * @tc.name testUint8ClampedArrayConstructorFour096
@@ -1544,8 +1428,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray parent = new Uint8ClampedArray(buf, 0);
     Uint8ClampedArray child = new Uint8ClampedArray(buf, 2);
     child.set(0, 300);
-    assertEqual(255, parent.get(2));
-    }
+    assertEqual(255, parent.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_9700
      * @tc.name testUint8ClampedArrayConstructorFour097
@@ -1561,8 +1444,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     Uint8ClampedArray parent = new Uint8ClampedArray(buf, 0);
     Uint8ClampedArray child = new Uint8ClampedArray(buf, 2);
     child.set(0, -100);
-    assertEqual(0, parent.get(2));
-    }
+    assertEqual(0, parent.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_9800
      * @tc.name testUint8ClampedArrayConstructorFour098
@@ -1577,8 +1459,7 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     Uint8ClampedArray sub = arr.subarray(2, 5);
-    assertEqual(buf, sub.buffer());
-    }
+    assertEqual(buf, sub.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_9900
      * @tc.name testUint8ClampedArrayConstructorFour099
@@ -1593,6 +1474,5 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(8);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     Uint8ClampedArray sl = arr.slice(0, 3);
-    assertNotEqual(buf, sl.buffer());
-    }
+    assertNotEqual(buf, sl.buffer());}
 }

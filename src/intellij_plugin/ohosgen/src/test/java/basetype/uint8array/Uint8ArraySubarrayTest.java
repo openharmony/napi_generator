@@ -17,35 +17,14 @@ package basetype.uint8array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ArraySubarrayTest —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ArraySubarrayTest extends BasTest {
     /**
@@ -61,8 +40,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray001() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray();
-    assertEqual(5, sub.length());
-    }
+    assertEqual(5, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0020
      * @tc.name testUint8ArraySubarray002
@@ -76,8 +54,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray002() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray(0, 0);
-    assertEqual(0, sub.length());
-    }
+    assertEqual(0, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0030
      * @tc.name testUint8ArraySubarray003
@@ -91,8 +68,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray003() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(1, 3);
-    assertEqual(2, sub.length());
-    }
+    assertEqual(2, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0040
      * @tc.name testUint8ArraySubarray004
@@ -106,8 +82,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray004() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(-3);
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0050
      * @tc.name testUint8ArraySubarray005
@@ -121,8 +96,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray005() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray();
-    assertTrue(sub != src);
-    }
+    assertTrue(sub != src);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0060
      * @tc.name testUint8ArraySubarray006
@@ -136,8 +110,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray006() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray();
-    assertNotNull(sub.buffer());
-    }
+    assertNotNull(sub.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0070
      * @tc.name testUint8ArraySubarray007
@@ -151,8 +124,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray007() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray();
-    assertEqual(0, sub.byteOffset());
-    }
+    assertEqual(0, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0080
      * @tc.name testUint8ArraySubarray008
@@ -166,8 +138,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray008() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray();
-    assertEqual(3, sub.byteLength());
-    }
+    assertEqual(3, sub.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0090
      * @tc.name testUint8ArraySubarray009
@@ -181,8 +152,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray009() {
     Uint8Array src = new Uint8Array();
     Uint8Array sub = src.subarray();
-    assertEqual(0, sub.length());
-    }
+    assertEqual(0, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0100
      * @tc.name testUint8ArraySubarray010
@@ -196,8 +166,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray010() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray();
-    assertEqual(1, sub.BYTES_PER_ELEMENT);
-    }
+    assertEqual(1, sub.BYTES_PER_ELEMENT);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0110
      * @tc.name testUint8ArraySubarray011
@@ -211,8 +180,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray011() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray(0, 256);
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0120
      * @tc.name testUint8ArraySubarray012
@@ -226,8 +194,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray012() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50, 60);
     Uint8Array sub = src.subarray(5, 5);
-    assertEqual(0, sub.length());
-    }
+    assertEqual(0, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0130
      * @tc.name testUint8ArraySubarray013
@@ -241,8 +208,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray013() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50, 60);
     Uint8Array sub = src.subarray(5, 3);
-    assertEqual(0, sub.length());
-    }
+    assertEqual(0, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0140
      * @tc.name testUint8ArraySubarray014
@@ -257,8 +223,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub1 = src.subarray(1, 4);
     Uint8Array sub2 = sub1.subarray(0, 2);
-    assertEqual(2, sub2.length());
-    }
+    assertEqual(2, sub2.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0150
      * @tc.name testUint8ArraySubarray015
@@ -272,8 +237,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray015() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray();
-    assertEqual("Uint8Array", sub.getClass().getSimpleName());
-    }
+    assertEqual("Uint8Array", sub.getClass().getSimpleName());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0160
      * @tc.name testUint8ArraySubarray016
@@ -291,8 +255,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(20, sub.get(1));
     assertEqual(30, sub.get(2));
     assertEqual(40, sub.get(3));
-    assertEqual(50, sub.get(4));
-    }
+    assertEqual(50, sub.get(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0170
      * @tc.name testUint8ArraySubarray017
@@ -309,8 +272,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(10, sub.get(0));
     assertEqual(20, sub.get(1));
     assertEqual(30, sub.get(2));
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0180
      * @tc.name testUint8ArraySubarray018
@@ -327,8 +289,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(30, sub.get(0));
     assertEqual(40, sub.get(1));
     assertEqual(50, sub.get(2));
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0190
      * @tc.name testUint8ArraySubarray019
@@ -345,8 +306,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(30, sub.get(0));
     assertEqual(40, sub.get(1));
     assertEqual(50, sub.get(2));
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0200
      * @tc.name testUint8ArraySubarray020
@@ -362,8 +322,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array sub = src.subarray(-3, -1);
     assertEqual(30, sub.get(0));
     assertEqual(40, sub.get(1));
-    assertEqual(2, sub.length());
-    }
+    assertEqual(2, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0210
      * @tc.name testUint8ArraySubarray021
@@ -377,8 +336,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray021() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0, 0);
-    assertEqual(0, sub.length());
-    }
+    assertEqual(0, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0220
      * @tc.name testUint8ArraySubarray022
@@ -392,8 +350,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray022() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(3, 3);
-    assertEqual(0, sub.length());
-    }
+    assertEqual(0, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0230
      * @tc.name testUint8ArraySubarray023
@@ -407,8 +364,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray023() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(5, 3);
-    assertEqual(0, sub.length());
-    }
+    assertEqual(0, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0240
      * @tc.name testUint8ArraySubarray024
@@ -423,8 +379,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray(0, 1);
     assertEqual(10, sub.get(0));
-    assertEqual(1, sub.length());
-    }
+    assertEqual(1, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0250
      * @tc.name testUint8ArraySubarray025
@@ -440,8 +395,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array sub = src.subarray(3, 5);
     assertEqual(40, sub.get(0));
     assertEqual(50, sub.get(1));
-    assertEqual(2, sub.length());
-    }
+    assertEqual(2, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0260
      * @tc.name testUint8ArraySubarray026
@@ -459,8 +413,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(30, sub.get(1));
     assertEqual(40, sub.get(2));
     assertEqual(50, sub.get(3));
-    assertEqual(4, sub.length());
-    }
+    assertEqual(4, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0270
      * @tc.name testUint8ArraySubarray027
@@ -477,8 +430,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(10, sub.get(0));
     assertEqual(20, sub.get(1));
     assertEqual(30, sub.get(2));
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0280
      * @tc.name testUint8ArraySubarray028
@@ -495,8 +447,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(10, sub.get(0));
     assertEqual(20, sub.get(1));
     assertEqual(30, sub.get(2));
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0290
      * @tc.name testUint8ArraySubarray029
@@ -513,8 +464,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(10, sub.get(0));
     assertEqual(20, sub.get(1));
     assertEqual(30, sub.get(2));
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0300
      * @tc.name testUint8ArraySubarray030
@@ -531,8 +481,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(40, sub.get(0));
     assertEqual(50, sub.get(1));
     assertEqual(60, sub.get(2));
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0310
      * @tc.name testUint8ArraySubarray031
@@ -548,8 +497,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array sub = src.subarray(0, 3);
     assertEqual(0, sub.get(0));
     assertEqual(255, sub.get(1));
-    assertEqual(128, sub.get(2));
-    }
+    assertEqual(128, sub.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0320
      * @tc.name testUint8ArraySubarray032
@@ -564,8 +512,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(42);
     Uint8Array sub = src.subarray(0);
     assertEqual(42, sub.get(0));
-    assertEqual(1, sub.length());
-    }
+    assertEqual(1, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0330
      * @tc.name testUint8ArraySubarray033
@@ -581,8 +528,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array sub = src.subarray(0, 3);
     assertEqual(255, sub.get(0));
     assertEqual(0, sub.get(1));
-    assertEqual(171, sub.get(2));
-    }
+    assertEqual(171, sub.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0340
      * @tc.name testUint8ArraySubarray034
@@ -596,8 +542,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray034() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray();
-    assertEqual(5, sub.length());
-    }
+    assertEqual(5, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0350
      * @tc.name testUint8ArraySubarray035
@@ -611,8 +556,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray035() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0);
-    assertEqual(5, sub.length());
-    }
+    assertEqual(5, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0360
      * @tc.name testUint8ArraySubarray036
@@ -626,8 +570,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray036() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0, 3);
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0370
      * @tc.name testUint8ArraySubarray037
@@ -641,8 +584,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray037() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(1);
-    assertEqual(4, sub.length());
-    }
+    assertEqual(4, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0380
      * @tc.name testUint8ArraySubarray038
@@ -656,8 +598,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray038() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(-3);
-    assertEqual(3, sub.length());
-    }
+    assertEqual(3, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0390
      * @tc.name testUint8ArraySubarray039
@@ -671,8 +612,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray039() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0, 0);
-    assertEqual(0, sub.length());
-    }
+    assertEqual(0, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0400
      * @tc.name testUint8ArraySubarray040
@@ -686,8 +626,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray040() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(5, 5);
-    assertEqual(0, sub.length());
-    }
+    assertEqual(0, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0410
      * @tc.name testUint8ArraySubarray041
@@ -701,8 +640,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray041() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(3, 5);
-    assertEqual(2, sub.length());
-    }
+    assertEqual(2, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0420
      * @tc.name testUint8ArraySubarray042
@@ -716,8 +654,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray042() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0, 4);
-    assertEqual(4, sub.length());
-    }
+    assertEqual(4, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0430
      * @tc.name testUint8ArraySubarray043
@@ -731,8 +668,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray043() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(1, 5);
-    assertEqual(4, sub.length());
-    }
+    assertEqual(4, sub.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0440
      * @tc.name testUint8ArraySubarray044
@@ -746,8 +682,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray044() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray();
-    assertEqual(5, sub.byteLength());
-    }
+    assertEqual(5, sub.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0450
      * @tc.name testUint8ArraySubarray045
@@ -761,8 +696,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray045() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0, 3);
-    assertEqual(3, sub.byteLength());
-    }
+    assertEqual(3, sub.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0460
      * @tc.name testUint8ArraySubarray046
@@ -776,8 +710,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray046() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(-3);
-    assertEqual(3, sub.byteLength());
-    }
+    assertEqual(3, sub.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0470
      * @tc.name testUint8ArraySubarray047
@@ -791,8 +724,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray047() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0, 0);
-    assertEqual(0, sub.byteLength());
-    }
+    assertEqual(0, sub.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0480
      * @tc.name testUint8ArraySubarray048
@@ -806,8 +738,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray048() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0, 4);
-    assertEqual(4, sub.byteLength());
-    }
+    assertEqual(4, sub.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0490
      * @tc.name testUint8ArraySubarray049
@@ -821,8 +752,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray049() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(1, 5);
-    assertEqual(4, sub.byteLength());
-    }
+    assertEqual(4, sub.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0500
      * @tc.name testUint8ArraySubarray050
@@ -836,8 +766,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray050() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray();
-    assertEqual(0, sub.byteOffset());
-    }
+    assertEqual(0, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0510
      * @tc.name testUint8ArraySubarray051
@@ -851,8 +780,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray051() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0);
-    assertEqual(0, sub.byteOffset());
-    }
+    assertEqual(0, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0520
      * @tc.name testUint8ArraySubarray052
@@ -866,8 +794,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray052() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(2, 5);
-    assertEqual(2, sub.byteOffset());
-    }
+    assertEqual(2, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0530
      * @tc.name testUint8ArraySubarray053
@@ -881,8 +808,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray053() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(1);
-    assertEqual(1, sub.byteOffset());
-    }
+    assertEqual(1, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0540
      * @tc.name testUint8ArraySubarray054
@@ -896,8 +822,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray054() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(-3);
-    assertEqual(2, sub.byteOffset());
-    }
+    assertEqual(2, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0550
      * @tc.name testUint8ArraySubarray055
@@ -911,8 +836,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray055() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0, 0);
-    assertEqual(0, sub.byteOffset());
-    }
+    assertEqual(0, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0560
      * @tc.name testUint8ArraySubarray056
@@ -926,8 +850,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray056() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(5, 5);
-    assertEqual(5, sub.byteOffset());
-    }
+    assertEqual(5, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0570
      * @tc.name testUint8ArraySubarray057
@@ -941,8 +864,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray057() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(5, 3);
-    assertEqual(5, sub.byteOffset());
-    }
+    assertEqual(5, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0580
      * @tc.name testUint8ArraySubarray058
@@ -956,8 +878,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray058() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(0, 3);
-    assertEqual(0, sub.byteOffset());
-    }
+    assertEqual(0, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0590
      * @tc.name testUint8ArraySubarray059
@@ -971,8 +892,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray059() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(3);
-    assertEqual(3, sub.byteOffset());
-    }
+    assertEqual(3, sub.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0600
      * @tc.name testUint8ArraySubarray060
@@ -987,8 +907,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub1 = src.subarray(1);
     Uint8Array sub2 = sub1.subarray(0, 2);
-    assertEqual(1, sub2.byteOffset());
-    }
+    assertEqual(1, sub2.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0610
      * @tc.name testUint8ArraySubarray061
@@ -1003,8 +922,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub1 = src.subarray(2);
     Uint8Array sub2 = sub1.subarray(0);
-    assertEqual(2, sub2.byteOffset());
-    }
+    assertEqual(2, sub2.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0620
      * @tc.name testUint8ArraySubarray062
@@ -1018,8 +936,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray062() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     src.subarray();
-    assertEqual(5, src.length());
-    }
+    assertEqual(5, src.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0630
      * @tc.name testUint8ArraySubarray063
@@ -1033,8 +950,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray063() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     src.subarray();
-    assertEqual(0, src.byteOffset());
-    }
+    assertEqual(0, src.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0640
      * @tc.name testUint8ArraySubarray064
@@ -1048,8 +964,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray064() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     src.subarray(1);
-    assertEqual(10, src.get(0));
-    }
+    assertEqual(10, src.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0650
      * @tc.name testUint8ArraySubarray065
@@ -1067,8 +982,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(20, src.get(1));
     assertEqual(30, src.get(2));
     assertEqual(40, src.get(3));
-    assertEqual(50, src.get(4));
-    }
+    assertEqual(50, src.get(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0660
      * @tc.name testUint8ArraySubarray066
@@ -1083,8 +997,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     ArrayBuffer bufBefore = src.buffer();
     src.subarray();
-    assertEqual(bufBefore, src.buffer());
-    }
+    assertEqual(bufBefore, src.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0670
      * @tc.name testUint8ArraySubarray067
@@ -1100,8 +1013,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     src.subarray(1, 3);
     assertEqual(10, src.get(0));
     assertEqual(40, src.get(3));
-    assertEqual(50, src.get(4));
-    }
+    assertEqual(50, src.get(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0680
      * @tc.name testUint8ArraySubarray068
@@ -1119,8 +1031,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(20, src.get(1));
     assertEqual(30, src.get(2));
     assertEqual(40, src.get(3));
-    assertEqual(50, src.get(4));
-    }
+    assertEqual(50, src.get(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0690
      * @tc.name testUint8ArraySubarray069
@@ -1134,8 +1045,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray069() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     src.subarray(-3);
-    assertEqual(10, src.get(0));
-    }
+    assertEqual(10, src.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0700
      * @tc.name testUint8ArraySubarray070
@@ -1149,8 +1059,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray070() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     src.subarray();
-    assertEqual(1, src.BYTES_PER_ELEMENT);
-    }
+    assertEqual(1, src.BYTES_PER_ELEMENT);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0710
      * @tc.name testUint8ArraySubarray071
@@ -1165,8 +1074,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub1 = src.subarray();
     Uint8Array sub2 = sub1.subarray();
-    assertEqual(5, sub2.length());
-    }
+    assertEqual(5, sub2.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0720
      * @tc.name testUint8ArraySubarray072
@@ -1181,8 +1089,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray();
     String result = sub.join(",");
-    assertEqual("10,20,30", result);
-    }
+    assertEqual("10,20,30", result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0730
      * @tc.name testUint8ArraySubarray073
@@ -1197,8 +1104,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray();
     int idx = sub.indexOf(30);
-    assertEqual(2, idx);
-    }
+    assertEqual(2, idx);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0740
      * @tc.name testUint8ArraySubarray074
@@ -1213,8 +1119,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray();
     boolean hasValue = sub.includes(30);
-    assertTrue(hasValue);
-    }
+    assertTrue(hasValue);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0750
      * @tc.name testUint8ArraySubarray075
@@ -1229,8 +1134,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray();
     boolean hasLarge = sub.some((val, idx, arr) -> val > 40);
-    assertTrue(hasLarge);
-    }
+    assertTrue(hasLarge);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0760
      * @tc.name testUint8ArraySubarray076
@@ -1245,8 +1149,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray();
     boolean allPositive = sub.every((val, idx, arr) -> val > 0);
-    assertTrue(allPositive);
-    }
+    assertTrue(allPositive);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0770
      * @tc.name testUint8ArraySubarray077
@@ -1263,8 +1166,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array filled = sub.fill(7);
     assertEqual(7, filled.get(0));
     assertEqual(7, filled.get(1));
-    assertEqual(7, filled.get(2));
-    }
+    assertEqual(7, filled.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0780
      * @tc.name testUint8ArraySubarray078
@@ -1283,8 +1185,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(40, reversed.get(1));
     assertEqual(30, reversed.get(2));
     assertEqual(20, reversed.get(3));
-    assertEqual(10, reversed.get(4));
-    }
+    assertEqual(10, reversed.get(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0790
      * @tc.name testUint8ArraySubarray079
@@ -1301,8 +1202,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array filtered = sub.filter((val, idx, arr) -> val > 25);
     assertEqual(30, filtered.get(0));
     assertEqual(40, filtered.get(1));
-    assertEqual(50, filtered.get(2));
-    }
+    assertEqual(50, filtered.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0800
      * @tc.name testUint8ArraySubarray080
@@ -1319,8 +1219,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array mapped = sub.map((val, idx, arr) -> val * 2);
     assertEqual(20, mapped.get(0));
     assertEqual(40, mapped.get(1));
-    assertEqual(60, mapped.get(2));
-    }
+    assertEqual(60, mapped.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0810
      * @tc.name testUint8ArraySubarray081
@@ -1334,8 +1233,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray081() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray();
-    assertEqual(src.buffer(), sub.buffer());
-    }
+    assertEqual(src.buffer(), sub.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0820
      * @tc.name testUint8ArraySubarray082
@@ -1349,8 +1247,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray082() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(1, 3);
-    assertEqual(src.buffer(), sub.buffer());
-    }
+    assertEqual(src.buffer(), sub.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0830
      * @tc.name testUint8ArraySubarray083
@@ -1364,8 +1261,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray083() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array sub = src.subarray(0, 0);
-    assertEqual(src.buffer(), sub.buffer());
-    }
+    assertEqual(src.buffer(), sub.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0840
      * @tc.name testUint8ArraySubarray084
@@ -1379,8 +1275,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     void testUint8ArraySubarray084() {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(-3);
-    assertEqual(src.buffer(), sub.buffer());
-    }
+    assertEqual(src.buffer(), sub.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0850
      * @tc.name testUint8ArraySubarray085
@@ -1395,8 +1290,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(1, 4);
     sub.set(0, 99);
-    assertEqual(99, src.get(1));
-    }
+    assertEqual(99, src.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0860
      * @tc.name testUint8ArraySubarray086
@@ -1415,8 +1309,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     sub.set(2, 77);
     assertEqual(111, src.get(2));
     assertEqual(222, src.get(3));
-    assertEqual(77, src.get(4));
-    }
+    assertEqual(77, src.get(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0870
      * @tc.name testUint8ArraySubarray087
@@ -1431,8 +1324,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(1, 4);
     src.set(2, 222);
-    assertEqual(222, sub.get(1));
-    }
+    assertEqual(222, sub.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0880
      * @tc.name testUint8ArraySubarray088
@@ -1448,8 +1340,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array subA = src.subarray(0, 3);
     Uint8Array subB = src.subarray(1, 4);
     subA.set(1, 99);
-    assertEqual(99, subB.get(0));
-    }
+    assertEqual(99, subB.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0890
      * @tc.name testUint8ArraySubarray089
@@ -1465,8 +1356,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array subA = src.subarray(0, 2);
     Uint8Array subB = src.subarray(3, 5);
     subA.set(1, 99);
-    assertEqual(40, subB.get(0));
-    }
+    assertEqual(40, subB.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0900
      * @tc.name testUint8ArraySubarray090
@@ -1481,8 +1371,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub1 = src.subarray(1, 4);
     Uint8Array sub2 = sub1.subarray(0, 2);
-    assertEqual(src.buffer(), sub2.buffer());
-    }
+    assertEqual(src.buffer(), sub2.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0910
      * @tc.name testUint8ArraySubarray091
@@ -1498,8 +1387,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array sub1 = src.subarray(1, 4);
     Uint8Array sub2 = sub1.subarray(0, 2);
     sub2.set(0, 99);
-    assertEqual(99, src.get(1));
-    }
+    assertEqual(99, src.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0920
      * @tc.name testUint8ArraySubarray092
@@ -1515,8 +1403,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array sub1 = src.subarray(1, 4);
     Uint8Array sub2 = sub1.subarray(0, 2);
     src.set(2, 222);
-    assertEqual(222, sub2.get(1));
-    }
+    assertEqual(222, sub2.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0930
      * @tc.name testUint8ArraySubarray093
@@ -1532,8 +1419,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array sub1 = src.subarray(0, 4);
     Uint8Array sub2 = sub1.subarray(1, 3);
     Uint8Array sub3 = sub2.subarray(0, 1);
-    assertEqual(src.buffer(), sub3.buffer());
-    }
+    assertEqual(src.buffer(), sub3.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0940
      * @tc.name testUint8ArraySubarray094
@@ -1548,8 +1434,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(1, 4);
     src.set(1, 222);
-    assertEqual(222, sub.get(0));
-    }
+    assertEqual(222, sub.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0950
      * @tc.name testUint8ArraySubarray095
@@ -1566,8 +1451,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     src.set(0, 99);
     src.set(4, 88);
     assertEqual(20, sub.get(0));
-    assertEqual(30, sub.get(1));
-    }
+    assertEqual(30, sub.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0960
      * @tc.name testUint8ArraySubarray096
@@ -1587,8 +1471,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     src.set(3, 40);
     src.set(4, 50);
     Uint8Array sub = src.subarray(1, 4);
-    assertEqual(buf, sub.buffer());
-    }
+    assertEqual(buf, sub.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0970
      * @tc.name testUint8ArraySubarray097
@@ -1608,8 +1491,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     src.set(3, 40);
     src.set(4, 50);
     Uint8Array sub = src.subarray(1, 4);
-    assertEqual(buf, sub.buffer());
-    }
+    assertEqual(buf, sub.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0980
      * @tc.name testUint8ArraySubarray098
@@ -1626,8 +1508,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array view = new Uint8Array(src.buffer(), 1, 3);
     assertEqual(view.get(0), sub.get(0));
     assertEqual(view.get(1), sub.get(1));
-    assertEqual(view.get(2), sub.get(2));
-    }
+    assertEqual(view.get(2), sub.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0990
      * @tc.name testUint8ArraySubarray099
@@ -1642,8 +1523,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(2, 5);
     sub.set(0, 111);
-    assertEqual(111, src.get(2));
-    }
+    assertEqual(111, src.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_1000
      * @tc.name testUint8ArraySubarray100
@@ -1667,8 +1547,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(3, src.get(2));
     assertEqual(88, src.get(3));
     assertEqual(5, src.get(4));
-    assertEqual(77, src.get(5));
-    }
+    assertEqual(77, src.get(5));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_1010
      * @tc.name testUint8ArraySubarray101
@@ -1685,8 +1564,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     src.fill(0, 0, 1);
     src.fill(0, 3, 5);
     assertEqual(20, sub.get(0));
-    assertEqual(30, sub.get(1));
-    }
+    assertEqual(30, sub.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_1020
      * @tc.name testUint8ArraySubarray102
@@ -1704,8 +1582,7 @@ public class Uint8ArraySubarrayTest extends BasTest {
     src.set(data, 1);
     assertEqual(77, sub.get(0));
     assertEqual(88, sub.get(1));
-    assertEqual(99, sub.get(2));
-    }
+    assertEqual(99, sub.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_1030
      * @tc.name testUint8ArraySubarray103
@@ -1725,6 +1602,5 @@ public class Uint8ArraySubarrayTest extends BasTest {
     assertEqual(2, sub1.byteOffset());
     assertEqual(4, sub2.byteOffset());
     assertEqual(sub1.buffer(), sub0.buffer());
-    assertEqual(sub2.buffer(), sub1.buffer());
-    }
+    assertEqual(sub2.buffer(), sub1.buffer());}
 }
