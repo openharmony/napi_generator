@@ -42,7 +42,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne001() {
     Uint8ClampedArray arr = new Uint8ClampedArray(10);
-    assertEqual(10, arr.length());}
+    assertEqual(10, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_0200
      * @tc.name testUint8ClampedArrayFullOne002
@@ -55,7 +56,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne002() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_0300
      * @tc.name testUint8ClampedArrayFullOne003
@@ -69,7 +71,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne003() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 1);
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_0400
      * @tc.name testUint8ClampedArrayFullOne004
@@ -82,7 +85,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne004() {
     Uint8ClampedArray arr = Uint8ClampedArray.of();
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_0500
      * @tc.name testUint8ClampedArrayFullOne005
@@ -95,7 +99,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne005() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(10);
-    assertEqual(10, arr.get(0));}
+    assertEqual(10, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_0600
      * @tc.name testUint8ClampedArrayFullOne006
@@ -108,7 +113,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne006() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(1, 2, 3, 4);
-    assertEqual(4, arr.length());}
+    assertEqual(4, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_0700
      * @tc.name testUint8ClampedArrayFullOne007
@@ -121,7 +127,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne007() {
     Uint8ClampedArray arr = Uint8ClampedArray.from(new int[] {1, 2, 3});
-    assertEqual(3, arr.length());}
+    assertEqual(3, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_0800
      * @tc.name testUint8ClampedArrayFullOne008
@@ -135,7 +142,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne008() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 0);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_0900
      * @tc.name testUint8ClampedArrayFullOne009
@@ -149,7 +157,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne009() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 255);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_1000
      * @tc.name testUint8ClampedArrayFullOne010
@@ -163,7 +172,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne010() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 256);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_1100
      * @tc.name testUint8ClampedArrayFullOne011
@@ -177,7 +187,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne011() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, -1);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_1200
      * @tc.name testUint8ClampedArrayFullOne012
@@ -191,7 +202,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne012() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 127);
-    assertEqual(127, arr.get(0));}
+    assertEqual(127, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_1300
      * @tc.name testUint8ClampedArrayFullOne013
@@ -205,7 +217,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne013() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 128);
-    assertEqual(128, arr.get(0));}
+    assertEqual(128, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_1400
      * @tc.name testUint8ClampedArrayFullOne014
@@ -219,7 +232,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne014() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, Double.NaN);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_1500
      * @tc.name testUint8ClampedArrayFullOne015
@@ -233,7 +247,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne015() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, Double.POSITIVE_INFINITY);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_1600
      * @tc.name testUint8ClampedArrayFullOne016
@@ -247,7 +262,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne016() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, -Double.POSITIVE_INFINITY);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_1700
      * @tc.name testUint8ClampedArrayFullOne017
@@ -261,7 +277,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne017() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, -0);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_1800
      * @tc.name testUint8ClampedArrayFullOne018
@@ -275,7 +292,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne018() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, Double.MIN_VALUE);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_1900
      * @tc.name testUint8ClampedArrayFullOne019
@@ -289,7 +307,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne019() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 0.4);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_2000
      * @tc.name testUint8ClampedArrayFullOne020
@@ -303,7 +322,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne020() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 0.5);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_2100
      * @tc.name testUint8ClampedArrayFullOne021
@@ -317,7 +337,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne021() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 0.9);
-    assertEqual(1, arr.get(0));}
+    assertEqual(1, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_2200
      * @tc.name testUint8ClampedArrayFullOne022
@@ -331,7 +352,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne022() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 1.5);
-    assertEqual(2, arr.get(0));}
+    assertEqual(2, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_2300
      * @tc.name testUint8ClampedArrayFullOne023
@@ -345,7 +367,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne023() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 2.5);
-    assertEqual(2, arr.get(0));}
+    assertEqual(2, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_2400
      * @tc.name testUint8ClampedArrayFullOne024
@@ -359,7 +382,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne024() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 254.5);
-    assertEqual(254, arr.get(0));}
+    assertEqual(254, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_2500
      * @tc.name testUint8ClampedArrayFullOne025
@@ -373,7 +397,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne025() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 0xFF);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_2600
      * @tc.name testUint8ClampedArrayFullOne026
@@ -387,7 +412,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne026() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 077);
-    assertEqual(63, arr.get(0));}
+    assertEqual(63, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_2700
      * @tc.name testUint8ClampedArrayFullOne027
@@ -401,7 +427,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne027() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 2e2);
-    assertEqual(200, arr.get(0));}
+    assertEqual(200, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_2800
      * @tc.name testUint8ClampedArrayFullOne028
@@ -415,7 +442,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne028() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 0x100);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_2900
      * @tc.name testUint8ClampedArrayFullOne029
@@ -428,7 +456,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne029() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
-    assertEqual(10, arr.get(0));}
+    assertEqual(10, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_3000
      * @tc.name testUint8ClampedArrayFullOne030
@@ -441,7 +470,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne030() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
-    assertEqual(30, arr.get(2));}
+    assertEqual(30, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_3100
      * @tc.name testUint8ClampedArrayFullOne031
@@ -456,8 +486,11 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     try {
     arr.get(3);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_3200
      * @tc.name testUint8ClampedArrayFullOne032
@@ -472,8 +505,11 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     try {
     arr.get(-1);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_3300
      * @tc.name testUint8ClampedArrayFullOne033
@@ -488,8 +524,11 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     try {
     arr.set(3, 99);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_3400
      * @tc.name testUint8ClampedArrayFullOne034
@@ -504,8 +543,11 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     try {
     arr.set(-1, 99);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_3500
      * @tc.name testUint8ClampedArrayFullOne035
@@ -520,8 +562,11 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     try {
     arr.set(2147483647, 99);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_3600
      * @tc.name testUint8ClampedArrayFullOne036
@@ -535,7 +580,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne036() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     assertEqual(0, arr.length());
-    assertEqual(0, arr.byteLength());}
+    assertEqual(0, arr.byteLength());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_3700
      * @tc.name testUint8ClampedArrayFullOne037
@@ -549,7 +595,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne037() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     assertEqual(1, arr.length());
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_3800
      * @tc.name testUint8ClampedArrayFullOne038
@@ -564,7 +611,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(1);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
     assertEqual(1, arr.length());
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_3900
      * @tc.name testUint8ClampedArrayFullOne039
@@ -579,7 +627,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0);
     assertEqual(4, arr.length());
-    assertEqual(0, arr.byteOffset());}
+    assertEqual(0, arr.byteOffset());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_4000
      * @tc.name testUint8ClampedArrayFullOne040
@@ -593,7 +642,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne040() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 4);
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_4100
      * @tc.name testUint8ClampedArrayFullOne041
@@ -608,8 +658,11 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     try {
     new Uint8ClampedArray(buf, 2, 4);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_4200
      * @tc.name testUint8ClampedArrayFullOne042
@@ -622,7 +675,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne042() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {});
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_4300
      * @tc.name testUint8ClampedArrayFullOne043
@@ -635,7 +689,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne043() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0});
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_4400
      * @tc.name testUint8ClampedArrayFullOne044
@@ -648,7 +703,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne044() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {255});
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_4500
      * @tc.name testUint8ClampedArrayFullOne045
@@ -662,7 +718,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne045() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {-10, 0, 128, 255, 256});
     assertEqual(0, arr.get(0));
-    assertEqual(255, arr.get(4));}
+    assertEqual(255, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_4600
      * @tc.name testUint8ClampedArrayFullOne046
@@ -676,7 +733,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne046() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 0, 0, 0});
     assertEqual(4, arr.length());
-    assertEqual(0, arr.get(2));}
+    assertEqual(0, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_4700
      * @tc.name testUint8ClampedArrayFullOne047
@@ -690,9 +748,11 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne047() {
     List<Integer> src = new ArrayList<>();
     for (int i = 0; i < 100; i++) {
-    src.add(i);};
+    src.add(i);
+    }
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(100, arr.length());}
+    assertEqual(100, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_4800
      * @tc.name testUint8ClampedArrayFullOne048
@@ -705,7 +765,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne048() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(256);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_4900
      * @tc.name testUint8ClampedArrayFullOne049
@@ -718,7 +779,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne049() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(-10);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5000
      * @tc.name testUint8ClampedArrayFullOne050
@@ -731,7 +793,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne050() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(Double.NaN);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5100
      * @tc.name testUint8ClampedArrayFullOne051
@@ -744,7 +807,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne051() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(Double.POSITIVE_INFINITY);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5200
      * @tc.name testUint8ClampedArrayFullOne052
@@ -757,7 +821,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne052() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(0xFF);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5300
      * @tc.name testUint8ClampedArrayFullOne053
@@ -771,7 +836,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne053() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(-1, 0, 127, 255, 256);
     assertEqual(0, arr.get(0));
-    assertEqual(255, arr.get(4));}
+    assertEqual(255, arr.get(4));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5400
      * @tc.name testUint8ClampedArrayFullOne054
@@ -784,7 +850,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne054() {
     Uint8ClampedArray arr = Uint8ClampedArray.from(new int[] {});
-    assertEqual(0, arr.length());}
+    assertEqual(0, arr.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5500
      * @tc.name testUint8ClampedArrayFullOne055
@@ -797,7 +864,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne055() {
     Uint8ClampedArray arr = Uint8ClampedArray.from(new int[] {256});
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5600
      * @tc.name testUint8ClampedArrayFullOne056
@@ -810,7 +878,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne056() {
     Uint8ClampedArray arr = Uint8ClampedArray.from(new int[] {-1});
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5700
      * @tc.name testUint8ClampedArrayFullOne057
@@ -823,7 +892,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne057() {
     Uint8ClampedArray arr = Uint8ClampedArray.from(new double[] {Double.NaN});
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5800
      * @tc.name testUint8ClampedArrayFullOne058
@@ -838,7 +908,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(3, arr.length());
-    assertEqual(2, arr.get(1));}
+    assertEqual(2, arr.get(1));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5900
      * @tc.name testUint8ClampedArrayFullOne059
@@ -852,7 +923,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne059() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 0);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_6000
      * @tc.name testUint8ClampedArrayFullOne060
@@ -866,7 +938,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne060() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 256);
-    assertEqual(255, arr.get(0));}
+    assertEqual(255, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_6100
      * @tc.name testUint8ClampedArrayFullOne061
@@ -880,7 +953,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne061() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, -1);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_6200
      * @tc.name testUint8ClampedArrayFullOne062
@@ -894,7 +968,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne062() {
     Uint8ClampedArray arr = new Uint8ClampedArray(3);
     arr.set(0, 100);
-    assertEqual(100, arr.get(0));}
+    assertEqual(100, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_6300
      * @tc.name testUint8ClampedArrayFullOne063
@@ -908,7 +983,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne063() {
     Uint8ClampedArray arr = new Uint8ClampedArray(3);
     arr.set(2, 77);
-    assertEqual(77, arr.get(2));}
+    assertEqual(77, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_6400
      * @tc.name testUint8ClampedArrayFullOne064
@@ -922,7 +998,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     void testUint8ClampedArrayFullOne064() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, -5);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_6500
      * @tc.name testUint8ClampedArrayFullOne065
@@ -937,8 +1014,11 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(2);
     try {
     arr.set(10, 88);
-    fail();} catch (RangeError e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());};}
+    fail();
+    } catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());
+    }
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_6600
      * @tc.name testUint8ClampedArrayFullOne066
@@ -951,7 +1031,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne066() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
-    assertEqual(7, arr.get(0));}
+    assertEqual(7, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_6700
      * @tc.name testUint8ClampedArrayFullOne067
@@ -964,7 +1045,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullOne067() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
-    assertEqual(9, arr.get(2));}
+    assertEqual(9, arr.get(2));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_6800
      * @tc.name testUint8ClampedArrayFullOne068
@@ -979,7 +1061,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     int v = 0;
     arr.set(0, v);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_6900
      * @tc.name testUint8ClampedArrayFullOne069
@@ -994,7 +1077,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     int v = 127;
     arr.set(0, v);
-    assertEqual(127, arr.get(0));}
+    assertEqual(127, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_7000
      * @tc.name testUint8ClampedArrayFullOne070
@@ -1009,7 +1093,8 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     int v = -1;
     arr.set(0, v);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_7100
      * @tc.name testUint8ClampedArrayFullOne071
@@ -1024,5 +1109,6 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     int v = -128;
     arr.set(0, v);
-    assertEqual(0, arr.get(0));}
+    assertEqual(0, arr.get(0));
+    }
 }
