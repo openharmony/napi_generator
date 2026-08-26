@@ -37,7 +37,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(99, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(99, actual3);}
+    assertEqual(99, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo002() {
@@ -50,7 +51,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual3 = arr.get(2);
     assertEqual(77, actual3);
     Integer actual4 = arr.get(4);
-    assertEqual(77, actual4);}
+    assertEqual(77, actual4);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo003() {
@@ -63,7 +65,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual3 = arr.get(2);
     assertEqual(88, actual3);
     Integer actual4 = arr.get(3);
-    assertEqual(4, actual4);}
+    assertEqual(4, actual4);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo004() {
@@ -74,7 +77,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(32767, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(32767, actual3);}
+    assertEqual(32767, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo005() {
@@ -85,7 +89,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(-32768, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(-32768, actual3);}
+    assertEqual(-32768, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo006() {
@@ -96,7 +101,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(0, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(0, actual3);}
+    assertEqual(0, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo007() {
@@ -107,21 +113,24 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(-1, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(-1, actual3);}
+    assertEqual(-1, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo008() {
     Int16Array arr = new Int16Array();
     arr.fill(1);
     int actual1 = arr.length();
-    assertEqual(0, actual1);}
+    assertEqual(0, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo009() {
     Int16Array arr = Int16Array.of(0);
     arr.fill(5);
     Integer actual1 = arr.get(0);
-    assertEqual(5, actual1);}
+    assertEqual(5, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo010() {
@@ -129,7 +138,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     int base = 10;
     arr.fill(base * 3);
     Integer actual1 = arr.get(0);
-    assertEqual(30, actual1);}
+    assertEqual(30, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo011() {
@@ -140,7 +150,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(-32768, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(-32768, actual3);}
+    assertEqual(-32768, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo012() {
@@ -151,7 +162,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(32767, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(32767, actual3);}
+    assertEqual(32767, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo013() {
@@ -162,7 +174,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(-1, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(-1, actual3);}
+    assertEqual(-1, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo014() {
@@ -171,7 +184,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(0, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(0, actual2);}
+    assertEqual(0, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo015() {
@@ -180,7 +194,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(0, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(0, actual2);}
+    assertEqual(0, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo016() {
@@ -189,7 +204,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(-32768, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(-32768, actual2);}
+    assertEqual(-32768, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo017() {
@@ -198,7 +214,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(0, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(0, actual2);}
+    assertEqual(0, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo018() {
@@ -206,7 +223,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     int v = 32767 + 1;
     arr.fill(v);
     Integer actual1 = arr.get(0);
-    assertEqual(-32768, actual1);}
+    assertEqual(-32768, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo019() {
@@ -215,7 +233,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(32767, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(32767, actual2);}
+    assertEqual(32767, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo020() {
@@ -224,7 +243,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(-32768, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(-32768, actual2);}
+    assertEqual(-32768, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo021() {
@@ -235,7 +255,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(0, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(0, actual3);}
+    assertEqual(0, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo022() {
@@ -246,7 +267,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(0, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(0, actual3);}
+    assertEqual(0, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo023() {
@@ -257,7 +279,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(0, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(0, actual3);}
+    assertEqual(0, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo024() {
@@ -266,7 +289,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(3, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(3, actual2);}
+    assertEqual(3, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo025() {
@@ -275,7 +299,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(-3, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(-3, actual2);}
+    assertEqual(-3, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo026() {
@@ -284,7 +309,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(0, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(0, actual2);}
+    assertEqual(0, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo027() {
@@ -293,21 +319,24 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(0, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(0, actual2);}
+    assertEqual(0, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo028() {
     Int16Array arr = Int16Array.of(0, 0);
     arr.fill(32767.5);
     Integer actual1 = arr.get(0);
-    assertEqual(32767, actual1);}
+    assertEqual(32767, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo029() {
     Int16Array arr = Int16Array.of(0);
     arr.fill(32768.1);
     Integer actual1 = arr.get(0);
-    assertEqual(-32768, actual1);}
+    assertEqual(-32768, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo030() {
@@ -318,7 +347,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(0, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(0, actual3);}
+    assertEqual(0, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo031() {
@@ -331,7 +361,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     assertEqual(expected1, actual1);
     Integer actual2 = arr1.get(1);
     Integer expected2 = arr2.get(1);
-    assertEqual(expected2, actual2);}
+    assertEqual(expected2, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo032() {
@@ -340,14 +371,16 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(0, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(0, actual2);}
+    assertEqual(0, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo033() {
     Int16Array arr = Int16Array.of(0, 0);
     arr.fill(98304);
     Integer actual1 = arr.get(0);
-    assertEqual(-32768, actual1);}
+    assertEqual(-32768, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo034() {
@@ -358,7 +391,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(99, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(99, actual3);}
+    assertEqual(99, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo035() {
@@ -369,7 +403,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(99, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(99, actual3);}
+    assertEqual(99, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo036() {
@@ -380,7 +415,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(3);
     assertEqual(4, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(99, actual3);}
+    assertEqual(99, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo037() {
@@ -392,7 +428,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(2, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(55, actual3);}
+    assertEqual(55, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo038() {
@@ -403,7 +440,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(3);
     assertEqual(4, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(99, actual3);}
+    assertEqual(99, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo039() {
@@ -416,7 +454,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual3 = arr.get(3);
     assertEqual(99, actual3);
     Integer actual4 = arr.get(4);
-    assertEqual(99, actual4);}
+    assertEqual(99, actual4);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo040() {
@@ -425,7 +464,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(99, actual1);
     Integer actual2 = arr.get(4);
-    assertEqual(99, actual2);}
+    assertEqual(99, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo041() {
@@ -436,7 +476,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(2, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(5, actual3);}
+    assertEqual(5, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo042() {
@@ -445,7 +486,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(1, actual1);
     Integer actual2 = arr.get(4);
-    assertEqual(5, actual2);}
+    assertEqual(5, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo043() {
@@ -454,7 +496,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(1, actual1);
     Integer actual2 = arr.get(2);
-    assertEqual(3, actual2);}
+    assertEqual(3, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo044() {
@@ -465,7 +508,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(99, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(99, actual3);}
+    assertEqual(99, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo045() {
@@ -478,7 +522,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     assertEqual(expected1, actual1);
     Integer actual2 = arr1.get(2);
     Integer expected2 = arr2.get(2);
-    assertEqual(expected2, actual2);}
+    assertEqual(expected2, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo046() {
@@ -489,7 +534,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(2, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(3, actual3);}
+    assertEqual(3, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo047() {
@@ -500,7 +546,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(3);
     assertEqual(99, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(5, actual3);}
+    assertEqual(5, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo048() {
@@ -509,7 +556,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(99, actual1);
     Integer actual2 = arr.get(4);
-    assertEqual(99, actual2);}
+    assertEqual(99, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo049() {
@@ -523,7 +571,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual3 = arr.get(2);
     assertEqual(77, actual3);
     Integer actual4 = arr.get(3);
-    assertEqual(4, actual4);}
+    assertEqual(4, actual4);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo050() {
@@ -534,7 +583,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(3);
     assertEqual(99, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(5, actual3);}
+    assertEqual(5, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo051() {
@@ -547,7 +597,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual3 = arr.get(3);
     assertEqual(4, actual3);
     Integer actual4 = arr.get(4);
-    assertEqual(5, actual4);}
+    assertEqual(5, actual4);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo052() {
@@ -558,7 +609,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(2, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(5, actual3);}
+    assertEqual(5, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo053() {
@@ -571,7 +623,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual3 = arr.get(2);
     assertEqual(99, actual3);
     Integer actual4 = arr.get(4);
-    assertEqual(99, actual4);}
+    assertEqual(99, actual4);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo054() {
@@ -582,7 +635,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(99, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(99, actual3);}
+    assertEqual(99, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo055() {
@@ -593,7 +647,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(1);
     assertEqual(2, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(5, actual3);}
+    assertEqual(5, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo056() {
@@ -604,7 +659,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(2);
     assertEqual(3, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(5, actual3);}
+    assertEqual(5, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo057() {
@@ -615,7 +671,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(3);
     assertEqual(4, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(5, actual3);}
+    assertEqual(5, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo058() {
@@ -626,7 +683,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual2 = arr.get(3);
     assertEqual(4, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(5, actual3);}
+    assertEqual(5, actual3);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo059() {
@@ -635,14 +693,16 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(1, actual1);
     Integer actual2 = arr.get(4);
-    assertEqual(5, actual2);}
+    assertEqual(5, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo060() {
     Int16Array arr = Int16Array.of(1, 2, 3, 4, 5);
     arr.fill(99, -1, 0);
     Integer actual1 = arr.get(4);
-    assertEqual(5, actual1);}
+    assertEqual(5, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo061() {
@@ -657,42 +717,48 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual4 = arr.get(3);
     assertEqual(99, actual4);
     Integer actual5 = arr.get(4);
-    assertEqual(5, actual5);}
+    assertEqual(5, actual5);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo062() {
     Int16Array arr = new Int16Array();
     arr.fill(99, 0);
     int actual1 = arr.length();
-    assertEqual(0, actual1);}
+    assertEqual(0, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo063() {
     Int16Array arr = Int16Array.of(42);
     arr.fill(99, 0, 1);
     Integer actual1 = arr.get(0);
-    assertEqual(99, actual1);}
+    assertEqual(99, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo064() {
     Int16Array arr = Int16Array.of(42);
     arr.fill(99, 0, 0);
     Integer actual1 = arr.get(0);
-    assertEqual(42, actual1);}
+    assertEqual(42, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo065() {
     Int16Array arr = Int16Array.of(42);
     arr.fill(99, -1);
     Integer actual1 = arr.get(0);
-    assertEqual(99, actual1);}
+    assertEqual(99, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo066() {
     Int16Array arr = Int16Array.of(1, 2, 3);
     Int16Array result = arr.fill(99);
     boolean actual1 = result == arr;
-    assertTrue(actual1);}
+    assertTrue(actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo067() {
@@ -700,7 +766,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Int16Array returned = arr.fill(88, 0, 2);
     returned.set(0, 77);
     Integer actual1 = arr.get(0);
-    assertEqual(77, actual1);}
+    assertEqual(77, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo068() {
@@ -713,7 +780,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual3 = arr.get(2);
     assertEqual(99, actual3);
     Integer actual4 = arr.get(3);
-    assertEqual(99, actual4);}
+    assertEqual(99, actual4);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo069() {
@@ -728,7 +796,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual4 = arr.get(3);
     assertEqual(2, actual4);
     Integer actual5 = arr.get(4);
-    assertEqual(2, actual5);}
+    assertEqual(2, actual5);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo070() {
@@ -741,7 +810,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual3 = ret.get(3);
     assertEqual(0, actual3);
     Integer actual4 = ret.get(4);
-    assertEqual(5, actual4);}
+    assertEqual(5, actual4);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo071() {
@@ -750,7 +820,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Int16Array ret2 = ret1.fill(20, 1, 2);
     Int16Array ret3 = ret2.fill(30, 2, 3);
     boolean actual1 = ret3 == arr;
-    assertTrue(actual1);}
+    assertTrue(actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo072() {
@@ -760,7 +831,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = arr.get(0);
     assertEqual(-32768, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(-32768, actual2);}
+    assertEqual(-32768, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo073() {
@@ -773,21 +845,24 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual3 = arr.get(2);
     assertEqual(-32768, actual3);
     Integer actual4 = arr.get(3);
-    assertEqual(40, actual4);}
+    assertEqual(40, actual4);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo074() {
     Int16Array arr = Int16Array.of(1, 1, 1);
     arr.fill(Double.NaN, 1, 2);
     Integer actual1 = arr.get(1);
-    assertEqual(0, actual1);}
+    assertEqual(0, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo075() {
     Int16Array arr = Int16Array.of(1, 1, 1);
     arr.fill(Double.POSITIVE_INFINITY, 0, 1);
     Integer actual1 = arr.get(0);
-    assertEqual(0, actual1);}
+    assertEqual(0, actual1);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo076() {
@@ -800,7 +875,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     assertEqual(expected1, actual1);
     Integer actual2 = arr1.get(1);
     Integer expected2 = arr2.get(1);
-    assertEqual(expected2, actual2);}
+    assertEqual(expected2, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo077() {
@@ -810,7 +886,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual1 = sliced.get(0);
     assertEqual(16, actual1);
     Integer actual2 = sliced.get(2);
-    assertEqual(16, actual2);}
+    assertEqual(16, actual2);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo078() {
@@ -826,7 +903,8 @@ public class Int16ArrayFillTest02 extends BasTest {
     Integer actual4 = arr.get(3);
     assertEqual(40, actual4);
     Integer actual5 = arr.get(4);
-    assertEqual(50, actual5);}
+    assertEqual(50, actual5);
+    }
 
     @Test
     void testInt16ArrayFillTestTwo079() {
@@ -835,7 +913,10 @@ public class Int16ArrayFillTest02 extends BasTest {
     int[] count = {0};
     arr.forEach((v, i) -> {
     if (i >= 2 && i < 4) {
-    assertEqual(99, v);}
-    count[0]++;});
-    assertEqual(5, count[0]);}
+    assertEqual(99, v);
+    }
+    count[0]++;
+        });
+    assertEqual(5, count[0]);
+    }
 }
