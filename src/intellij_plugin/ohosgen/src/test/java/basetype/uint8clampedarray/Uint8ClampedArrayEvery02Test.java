@@ -17,23 +17,9 @@ package basetype.uint8clampedarray;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
 import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
 import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
 import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
@@ -46,6 +32,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ClampedArrayEvery02Test —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ClampedArrayEvery02Test extends BasTest {
     /**
@@ -61,8 +49,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo001() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 128, 255});
     boolean r = arr.every((e, i, a) -> e >= 0 && e <= 255);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0200
      * @tc.name testUint8ClampedArrayEveryTwo002
@@ -76,8 +63,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo002() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     boolean r = arr.every((e, i, a) -> (int) (e) == e);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0300
      * @tc.name testUint8ClampedArrayEveryTwo003
@@ -91,10 +77,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo003() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int[] calls = {0};
-    boolean r = arr.every((e, i, a) -> { calls[0]++; return true; });
+    boolean r = arr.every((e, i, a) -> { calls[0]++; return true;});
     assertTrue(r);
-    assertEqual(3, calls[0]);
-    }
+    assertEqual(3, calls[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0400
      * @tc.name testUint8ClampedArrayEveryTwo004
@@ -108,10 +93,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo004() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int[] calls = {0};
-    boolean r = arr.every((e, i, a) -> { calls[0]++; return false; });
+    boolean r = arr.every((e, i, a) -> { calls[0]++; return false;});
     assertFalse(r);
-    assertEqual(1, calls[0]);
-    }
+    assertEqual(1, calls[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0500
      * @tc.name testUint8ClampedArrayEveryTwo005
@@ -125,8 +109,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo005() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     boolean r = arr.every((e, i, a) -> true);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0600
      * @tc.name testUint8ClampedArrayEveryTwo006
@@ -140,8 +123,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo006() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     boolean r = arr.every((e, i, a) -> e != 2);
-    assertFalse(r);
-    }
+    assertFalse(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0700
      * @tc.name testUint8ClampedArrayEveryTwo007
@@ -157,8 +139,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     boolean r1 = arr.every((e, i, a) -> true);
     boolean r2 = arr.every((e, i, a) -> false);
     assertTrue(r1);
-    assertFalse(r2);
-    }
+    assertFalse(r2);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0800
      * @tc.name testUint8ClampedArrayEveryTwo008
@@ -173,8 +154,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     boolean r = arr.every((e, i, a) -> true);
     assertTrue(r);
-    assertEqual(4, arr.length());
-    }
+    assertEqual(4, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0900
      * @tc.name testUint8ClampedArrayEveryTwo009
@@ -189,8 +169,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     boolean r = arr.every((e, i, a) -> true);
     assertTrue(r);
-    assertEqual(10, arr.get(0));
-    }
+    assertEqual(10, arr.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1000
      * @tc.name testUint8ClampedArrayEveryTwo010
@@ -205,8 +184,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     boolean r = arr.every((e, i, a) -> true);
     assertTrue(r);
-    assertEqual(20, arr.get(1));
-    }
+    assertEqual(20, arr.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1100
      * @tc.name testUint8ClampedArrayEveryTwo011
@@ -221,8 +199,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     boolean r = arr.every((e, i, a) -> true);
     assertTrue(r);
-    assertEqual(30, arr.get(2));
-    }
+    assertEqual(30, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1200
      * @tc.name testUint8ClampedArrayEveryTwo012
@@ -238,8 +215,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     int before = arr.byteLength();
     boolean r = arr.every((e, i, a) -> true);
     assertTrue(r);
-    assertEqual(before, arr.byteLength());
-    }
+    assertEqual(before, arr.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1300
      * @tc.name testUint8ClampedArrayEveryTwo013
@@ -255,8 +231,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     ArrayBuffer buf = arr.buffer();
     boolean r = arr.every((e, i, a) -> true);
     assertTrue(r);
-    assertEqual(buf, arr.buffer());
-    }
+    assertEqual(buf, arr.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1400
      * @tc.name testUint8ClampedArrayEveryTwo014
@@ -273,8 +248,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     assertFalse(r);
     assertEqual(10, arr.get(0));
     assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
-    }
+    assertEqual(30, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1500
      * @tc.name testUint8ClampedArrayEveryTwo015
@@ -289,13 +263,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.every((e, i, a) -> {
-    throw new Error("predicate fail");
-    });
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
-    }
+    throw new Error("predicate fail");});
+    fail();} catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());};}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1600
      * @tc.name testUint8ClampedArrayEveryTwo016
@@ -310,13 +280,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.every((e, i, a) -> {
-    throw new TypeError("bad type");
-    });
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("TypeError", e.getClass().getSimpleName());
-    };
-    }
+    throw new TypeError("bad type");});
+    fail();} catch (TypeError e) {
+    assertEqual("TypeError", e.getClass().getSimpleName());};}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1700
      * @tc.name testUint8ClampedArrayEveryTwo017
@@ -331,13 +297,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.every((e, i, a) -> {
-    throw new RangeError("out of range");
-    });
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    };
-    }
+    throw new RangeError("out of range");});
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());};}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1800
      * @tc.name testUint8ClampedArrayEveryTwo018
@@ -354,14 +316,10 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     try {
     arr.every((e, i, a) -> {
     visits[0] = visits[0] + 1;
-    throw new Error("stop");
-    });
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
-    assertEqual(1, visits[0]);
-    }
+    throw new Error("stop");});
+    fail();} catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());};
+    assertEqual(1, visits[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1900
      * @tc.name testUint8ClampedArrayEveryTwo019
@@ -379,16 +337,11 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     arr.every((e, i, a) -> {
     visits[0] = visits[0] + 1;
     if (i == 1) {
-    throw new Error("stop at 1");
-    };
-    return true;
-    });
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
-    assertEqual(2, visits[0]);
-    }
+    throw new Error("stop at 1");};
+    return true;});
+    fail();} catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());};
+    assertEqual(2, visits[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2000
      * @tc.name testUint8ClampedArrayEveryTwo020
@@ -406,16 +359,11 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     arr.every((e, i, a) -> {
     visits[0] = visits[0] + 1;
     if (i == 3) {
-    throw new Error("stop at 3");
-    };
-    return true;
-    });
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
-    assertEqual(4, visits[0]);
-    }
+    throw new Error("stop at 3");};
+    return true;});
+    fail();} catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());};
+    assertEqual(4, visits[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2100
      * @tc.name testUint8ClampedArrayEveryTwo021
@@ -430,16 +378,12 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     try {
     arr.every((e, i, a) -> {
-    throw new Error("e");
-    });
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
+    throw new Error("e");});
+    fail();} catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());};
     assertEqual(10, arr.get(0));
     assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
-    }
+    assertEqual(30, arr.get(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2200
      * @tc.name testUint8ClampedArrayEveryTwo022
@@ -455,15 +399,10 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     try {
     arr.every((e, i, a) -> {
     if (e == 100) {
-    throw new Error("hit 100");
-    };
-    return true;
-    });
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
-    }
+    throw new Error("hit 100");};
+    return true;});
+    fail();} catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());};}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2300
      * @tc.name testUint8ClampedArrayEveryTwo023
@@ -476,9 +415,8 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     @Test
     void testUint8ClampedArrayEveryTwo023() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 0, 100});
-    boolean r = arr.every((e, i, a) -> { if (e == 100) { throw new Error("must not reach"); } return e != 0; });
-    assertFalse(r);
-    }
+    boolean r = arr.every((e, i, a) -> { if (e == 100) { throw new Error("must not reach");} return e != 0;});
+    assertFalse(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2400
      * @tc.name testUint8ClampedArrayEveryTwo024
@@ -494,15 +432,10 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     try {
     arr.every((e, i, a) -> {
     if (e == 100) {
-    throw new Error("hit");
-    };
-    return e != 0;
-    });
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
-    }
+    throw new Error("hit");};
+    return e != 0;});
+    fail();} catch (Error e) {
+    assertEqual("Error", e.getClass().getSimpleName());};}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2500
      * @tc.name testUint8ClampedArrayEveryTwo025
@@ -517,8 +450,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     boolean r1 = arr.every((e, i, a) -> e > 0);
     boolean r2 = arr.every((e, i, a) -> e > 0);
-    assertEqual(r2, r1);
-    }
+    assertEqual(r2, r1);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2600
      * @tc.name testUint8ClampedArrayEveryTwo026
@@ -532,9 +464,8 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo026() {
     Uint8ClampedArray arr1 = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray arr2 = new Uint8ClampedArray(new int[] {10, 20, 30});
-    boolean r = arr1.every((e, i, a) -> { return arr2.every((e2, i2, a2) -> e2 >= 10); });
-    assertTrue(r);
-    }
+    boolean r = arr1.every((e, i, a) -> { return arr2.every((e2, i2, a2) -> e2 >= 10);});
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2700
      * @tc.name testUint8ClampedArrayEveryTwo027
@@ -547,9 +478,8 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     @Test
     void testUint8ClampedArrayEveryTwo027() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 1, 1});
-    boolean r = arr.every((e, i, a) -> { return a.every((e2, i2, a2) -> e2 == 1); });
-    assertTrue(r);
-    }
+    boolean r = arr.every((e, i, a) -> { return a.every((e2, i2, a2) -> e2 == 1);});
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2800
      * @tc.name testUint8ClampedArrayEveryTwo028
@@ -564,10 +494,8 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     boolean[] passed = {false};
     if (arr.every((e, i, a) -> e > 0)) {
-    passed[0] = true;
-    };
-    assertTrue(passed[0]);
-    }
+    passed[0] = true;};
+    assertTrue(passed[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2900
      * @tc.name testUint8ClampedArrayEveryTwo029
@@ -581,8 +509,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo029() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     boolean r = arr.every((e, i, a) -> e > 0) && arr.length() == 3;
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3000
      * @tc.name testUint8ClampedArrayEveryTwo030
@@ -597,10 +524,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     int[] visits = {0};
     Uint8ClampedArray parent = new Uint8ClampedArray(new int[] {1, 2, 0, 4, 5});
     Uint8ClampedArray sub = parent.subarray(0, 5);
-    boolean r = sub.every((e, i, a) -> { visits[0] = visits[0] + 1; return e != 0; });
+    boolean r = sub.every((e, i, a) -> { visits[0] = visits[0] + 1; return e != 0;});
     assertFalse(r);
-    assertEqual(3, visits[0]);
-    }
+    assertEqual(3, visits[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3100
      * @tc.name testUint8ClampedArrayEveryTwo031
@@ -615,8 +541,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray parent = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray sub = parent.subarray(1, 1);
     boolean r = sub.every((e, i, a) -> false);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3200
      * @tc.name testUint8ClampedArrayEveryTwo032
@@ -631,8 +556,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     List<Number> src = java.util.Arrays.asList(10, 20, 30);
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     boolean r = arr.every((e, i, a) -> e >= 10);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3300
      * @tc.name testUint8ClampedArrayEveryTwo033
@@ -646,8 +570,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo033() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(5, 5, 5);
     boolean r = arr.every((e, i, a) -> e == 5);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3400
      * @tc.name testUint8ClampedArrayEveryTwo034
@@ -662,8 +585,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(10);
     arr.fill(42);
     boolean r = arr.every((e, i, a) -> e == 42);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3500
      * @tc.name testUint8ClampedArrayEveryTwo035
@@ -679,8 +601,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     arr.fill(10);
     arr.set(2, 99);
     boolean r = arr.every((e, i, a) -> e == 10);
-    assertFalse(r);
-    }
+    assertFalse(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3600
      * @tc.name testUint8ClampedArrayEveryTwo036
@@ -694,10 +615,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo036() {
     int[] calls = {0};
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5, 6, 7});
-    boolean r = arr.every((e, i, a) -> { calls[0] = calls[0] + 1; return true; });
+    boolean r = arr.every((e, i, a) -> { calls[0] = calls[0] + 1; return true;});
     assertTrue(r);
-    assertEqual(arr.length(), calls[0]);
-    }
+    assertEqual(arr.length(), calls[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3700
      * @tc.name testUint8ClampedArrayEveryTwo037
@@ -711,8 +631,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo037() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     boolean r = arr.every((e, i, a) -> e > i);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3800
      * @tc.name testUint8ClampedArrayEveryTwo038
@@ -726,8 +645,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo038() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     boolean r = arr.every((e, i, a) -> i == 0 || e >= a.get(i - 1));
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3900
      * @tc.name testUint8ClampedArrayEveryTwo039
@@ -742,10 +660,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     int[] calls = {0};
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
     arr.fill(1);
-    boolean r = arr.every((e, i, a) -> { calls[0] = calls[0] + 1; return true; });
+    boolean r = arr.every((e, i, a) -> { calls[0] = calls[0] + 1; return true;});
     assertEqual(1024, calls[0]);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4000
      * @tc.name testUint8ClampedArrayEveryTwo040
@@ -761,10 +678,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
     arr.fill(1);
     arr.set(500, 0);
-    boolean r = arr.every((e, i, a) -> { calls[0] = calls[0] + 1; return e != 0; });
+    boolean r = arr.every((e, i, a) -> { calls[0] = calls[0] + 1; return e != 0;});
     assertEqual(501, calls[0]);
-    assertFalse(r);
-    }
+    assertFalse(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4100
      * @tc.name testUint8ClampedArrayEveryTwo041
@@ -778,10 +694,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo041() {
     List<Integer> seen = new ArrayList<>();
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
-    boolean r = arr.every((e, i, a) -> { seen.add(i); return true; });
+    boolean r = arr.every((e, i, a) -> { seen.add(i); return true;});
     assertEqual(4, seen.size());
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4200
      * @tc.name testUint8ClampedArrayEveryTwo042
@@ -795,8 +710,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo042() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     boolean r = arr.every((e, i, a) -> Math.max(e, 0) == e);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4300
      * @tc.name testUint8ClampedArrayEveryTwo043
@@ -810,8 +724,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo043() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     boolean r = arr.every((e, i, a) -> Math.min(e, 255) == e);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4400
      * @tc.name testUint8ClampedArrayEveryTwo044
@@ -825,8 +738,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo044() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 7, 7, 7});
     boolean r = arr.every((e, i, a) -> e == a.get(0));
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4500
      * @tc.name testUint8ClampedArrayEveryTwo045
@@ -841,8 +753,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     List<Number> src = java.util.Arrays.asList(-0, -0, 0);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     boolean r = arr.every((e, i, a) -> e == 0);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4600
      * @tc.name testUint8ClampedArrayEveryTwo046
@@ -857,8 +768,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     double[] src = new double[] {Double.NaN, Double.NaN, 1};
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     boolean r = arr.every((e, i, a) -> !BasTest.isNaN(e));
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4700
      * @tc.name testUint8ClampedArrayEveryTwo047
@@ -872,8 +782,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo047() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 255});
     boolean r = arr.every((e, i, a) -> BasTest.isFinite(e));
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4800
      * @tc.name testUint8ClampedArrayEveryTwo048
@@ -888,8 +797,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     double[] src = new double[] {1.5, 2.5, 3.5};
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     boolean r = arr.every((e, i, a) -> BasTest.isInteger(e));
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4900
      * @tc.name testUint8ClampedArrayEveryTwo049
@@ -903,8 +811,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo049() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {255, 0, 255, 0, 255, 0});
     boolean r = arr.every((e, i, a) -> e == 0 || e == 255);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_5000
      * @tc.name testUint8ClampedArrayEveryTwo050
@@ -918,8 +825,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     void testUint8ClampedArrayEveryTwo050() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 99, 20, 99, 30});
     boolean r = arr.every((e, i, a) -> i % 2 == 1 || e % 10 == 0);
-    assertTrue(r);
-    }
+    assertTrue(r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_5100
      * @tc.name testUint8ClampedArrayEveryTwo051
@@ -932,7 +838,6 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     @Test
     void testUint8ClampedArrayEveryTwo051() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {100, 50, 50, 50, 100});
-    boolean r = arr.every((e, i, a) -> { if (i == 0 || i == a.length() - 1) { return e == 100; } return e == 50; });
-    assertTrue(r);
-    }
+    boolean r = arr.every((e, i, a) -> { if (i == 0 || i == a.length() - 1) { return e == 100;} return e == 50;});
+    assertTrue(r);}
 }

@@ -17,35 +17,14 @@ package basetype.uint8array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ArrayLastIndexOf2Test —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ArrayLastIndexOf2Test extends BasTest {
     /**
@@ -61,8 +40,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf001() {
     Uint8Array arr = new Uint8Array(new int[] {5, 10, 15});
     int r = arr.lastIndexOf(10);
-    assertEqual(1, r);
-    }
+    assertEqual(1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_0200
      * @tc.name testUint8ArrayLastIndexOf002
@@ -76,8 +54,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf002() {
     Uint8Array arr = new Uint8Array(new int[] {5, 10, 15});
     int r = arr.lastIndexOf(99);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_0300
      * @tc.name testUint8ArrayLastIndexOf003
@@ -91,8 +68,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf003() {
     Uint8Array arr = new Uint8Array();
     int r = arr.lastIndexOf(0);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_0400
      * @tc.name testUint8ArrayLastIndexOf004
@@ -106,8 +82,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf004() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(1, 0);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_0500
      * @tc.name testUint8ArrayLastIndexOf005
@@ -121,8 +96,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf005() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(3, -1);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_0600
      * @tc.name testUint8ArrayLastIndexOf006
@@ -136,8 +110,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf006() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(2);
-    assertEqual(1, r);
-    }
+    assertEqual(1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_0700
      * @tc.name testUint8ArrayLastIndexOf007
@@ -151,8 +124,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf007() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1});
     int r = arr.lastIndexOf(0);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_0800
      * @tc.name testUint8ArrayLastIndexOf008
@@ -166,8 +138,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf008() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0});
     int r = arr.lastIndexOf(255);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_0900
      * @tc.name testUint8ArrayLastIndexOf009
@@ -181,8 +152,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf009() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1});
     int r = arr.lastIndexOf(256);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_1000
      * @tc.name testUint8ArrayLastIndexOf010
@@ -196,8 +166,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf010() {
     Uint8Array arr = new Uint8Array(new int[] {255});
     int r = arr.lastIndexOf(-1);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_1100
      * @tc.name testUint8ArrayLastIndexOf011
@@ -211,8 +180,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf011() {
     Uint8Array arr = new Uint8Array(new int[] {3, 1, 3});
     int r = arr.lastIndexOf(3);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_1200
      * @tc.name testUint8ArrayLastIndexOf012
@@ -226,8 +194,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf012() {
     Uint8Array arr = new Uint8Array(new int[] {42});
     int r = arr.lastIndexOf(42);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_1300
      * @tc.name testUint8ArrayLastIndexOf013
@@ -241,8 +208,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf013() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2});
     int r = arr.lastIndexOf(1, 10);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_1400
      * @tc.name testUint8ArrayLastIndexOf014
@@ -256,8 +222,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf014() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(1, -10);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_1500
      * @tc.name testUint8ArrayLastIndexOf015
@@ -271,8 +236,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf015() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(Double.NaN);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_1600
      * @tc.name testUint8ArrayLastIndexOf016
@@ -286,8 +250,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf016() {
     Uint8Array arr = new Uint8Array(new int[] {5, 10});
     int r = arr.lastIndexOf(5);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_1700
      * @tc.name testUint8ArrayLastIndexOf017
@@ -301,8 +264,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf017() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 9});
     int r = arr.lastIndexOf(9);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_1800
      * @tc.name testUint8ArrayLastIndexOf018
@@ -316,8 +278,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf018() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     int r = arr.lastIndexOf(20);
-    assertEqual(1, r);
-    }
+    assertEqual(1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_1900
      * @tc.name testUint8ArrayLastIndexOf019
@@ -331,8 +292,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf019() {
     Uint8Array arr = new Uint8Array(new int[] {99});
     int r = arr.lastIndexOf(99);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_2000
      * @tc.name testUint8ArrayLastIndexOf020
@@ -346,8 +306,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf020() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(99);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_2100
      * @tc.name testUint8ArrayLastIndexOf021
@@ -361,8 +320,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf021() {
     Uint8Array arr = new Uint8Array(new int[] {5});
     int r = arr.lastIndexOf(10);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_2200
      * @tc.name testUint8ArrayLastIndexOf022
@@ -376,8 +334,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf022() {
     Uint8Array arr = new Uint8Array(new int[] {5, 1, 5});
     int r = arr.lastIndexOf(5);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_2300
      * @tc.name testUint8ArrayLastIndexOf023
@@ -391,8 +348,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf023() {
     Uint8Array arr = new Uint8Array(new int[] {3, 3, 3});
     int r = arr.lastIndexOf(3);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_2400
      * @tc.name testUint8ArrayLastIndexOf024
@@ -406,8 +362,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf024() {
     Uint8Array arr = new Uint8Array(new int[] {7, 7, 7, 7});
     int r = arr.lastIndexOf(7);
-    assertEqual(3, r);
-    }
+    assertEqual(3, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_2500
      * @tc.name testUint8ArrayLastIndexOf025
@@ -421,8 +376,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf025() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 1});
     int r = arr.lastIndexOf(1);
-    assertEqual(3, r);
-    }
+    assertEqual(3, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_2600
      * @tc.name testUint8ArrayLastIndexOf026
@@ -436,8 +390,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf026() {
     Uint8Array arr = new Uint8Array(new int[] {5, 1});
     int r = arr.lastIndexOf(5, 0);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_2700
      * @tc.name testUint8ArrayLastIndexOf027
@@ -451,8 +404,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf027() {
     Uint8Array arr = new Uint8Array(new int[] {5, 1});
     int r = arr.lastIndexOf(1, 0);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_2800
      * @tc.name testUint8ArrayLastIndexOf028
@@ -466,8 +418,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf028() {
     Uint8Array arr = new Uint8Array();
     int r = arr.lastIndexOf(0, 0);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_2900
      * @tc.name testUint8ArrayLastIndexOf029
@@ -481,8 +432,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf029() {
     Uint8Array arr = new Uint8Array(new int[] {1, 8});
     int r = arr.lastIndexOf(8, -1);
-    assertEqual(1, r);
-    }
+    assertEqual(1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_3000
      * @tc.name testUint8ArrayLastIndexOf030
@@ -496,8 +446,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf030() {
     Uint8Array arr = new Uint8Array(new int[] {1, 8});
     int r = arr.lastIndexOf(1, -1);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_3100
      * @tc.name testUint8ArrayLastIndexOf031
@@ -511,8 +460,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf031() {
     Uint8Array arr = new Uint8Array(new int[] {1, 8, 3});
     int r = arr.lastIndexOf(1, -2);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_3200
      * @tc.name testUint8ArrayLastIndexOf032
@@ -526,8 +474,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf032() {
     Uint8Array arr = new Uint8Array(new int[] {1, 8});
     int r = arr.lastIndexOf(8, -2);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_3300
      * @tc.name testUint8ArrayLastIndexOf033
@@ -541,8 +488,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf033() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(3, -3);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_3400
      * @tc.name testUint8ArrayLastIndexOf034
@@ -556,8 +502,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf034() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(1, -4);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_3500
      * @tc.name testUint8ArrayLastIndexOf035
@@ -571,8 +516,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf035() {
     Uint8Array arr = new Uint8Array(new int[] {5});
     int r = arr.lastIndexOf(5, -1);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_3600
      * @tc.name testUint8ArrayLastIndexOf036
@@ -586,8 +530,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf036() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(3, 2);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_3700
      * @tc.name testUint8ArrayLastIndexOf037
@@ -601,8 +544,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf037() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(1, 3);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_3800
      * @tc.name testUint8ArrayLastIndexOf038
@@ -616,8 +558,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf038() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 1});
     int r = arr.lastIndexOf(1, 1);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_3900
      * @tc.name testUint8ArrayLastIndexOf039
@@ -631,8 +572,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf039() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0});
     int r = arr.lastIndexOf(0);
-    assertEqual(1, r);
-    }
+    assertEqual(1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_4000
      * @tc.name testUint8ArrayLastIndexOf040
@@ -646,8 +586,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf040() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0});
     int r = arr.lastIndexOf(255);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_4100
      * @tc.name testUint8ArrayLastIndexOf041
@@ -661,8 +600,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf041() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1});
     int r = arr.lastIndexOf(256);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_4200
      * @tc.name testUint8ArrayLastIndexOf042
@@ -676,8 +614,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf042() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0});
     int r = arr.lastIndexOf(-1);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_4300
      * @tc.name testUint8ArrayLastIndexOf043
@@ -691,8 +628,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf043() {
     Uint8Array arr = new Uint8Array(new int[] {0, 255});
     int r = arr.lastIndexOf(0xFF);
-    assertEqual(1, r);
-    }
+    assertEqual(1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_4400
      * @tc.name testUint8ArrayLastIndexOf044
@@ -706,8 +642,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf044() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1});
     int r = arr.lastIndexOf(0x100);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_4500
      * @tc.name testUint8ArrayLastIndexOf045
@@ -721,8 +656,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf045() {
     Uint8Array arr = new Uint8Array(new int[] {127, 0});
     int r = arr.lastIndexOf(127);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_4600
      * @tc.name testUint8ArrayLastIndexOf046
@@ -736,8 +670,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf046() {
     Uint8Array arr = new Uint8Array(new int[] {0, 128});
     int r = arr.lastIndexOf(128);
-    assertEqual(1, r);
-    }
+    assertEqual(1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_4700
      * @tc.name testUint8ArrayLastIndexOf047
@@ -751,8 +684,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf047() {
     Uint8Array arr = new Uint8Array(new int[] {128, 0});
     int r = arr.lastIndexOf(0x80);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_4800
      * @tc.name testUint8ArrayLastIndexOf048
@@ -766,8 +698,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf048() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 2});
     int r = arr.lastIndexOf(Double.NaN);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_4900
      * @tc.name testUint8ArrayLastIndexOf049
@@ -781,8 +712,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf049() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1});
     int r = arr.lastIndexOf(-0);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_5000
      * @tc.name testUint8ArrayLastIndexOf050
@@ -796,8 +726,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf050() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1});
     int r = arr.lastIndexOf(Double.POSITIVE_INFINITY);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_5100
      * @tc.name testUint8ArrayLastIndexOf051
@@ -811,8 +740,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf051() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1});
     int r = arr.lastIndexOf(Double.NEGATIVE_INFINITY);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_5200
      * @tc.name testUint8ArrayLastIndexOf052
@@ -826,8 +754,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf052() {
     Uint8Array arr = new Uint8Array(new int[] {3, 6});
     int r = arr.lastIndexOf(3.0);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_5300
      * @tc.name testUint8ArrayLastIndexOf053
@@ -841,8 +768,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf053() {
     Uint8Array arr = new Uint8Array(new int[] {255, 0});
     int r = arr.lastIndexOf(255.7);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_5400
      * @tc.name testUint8ArrayLastIndexOf054
@@ -856,8 +782,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf054() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1});
     int r = arr.lastIndexOf(1e10);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_5500
      * @tc.name testUint8ArrayLastIndexOf055
@@ -871,8 +796,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf055() {
     Uint8Array arr = new Uint8Array(new int[] {5, 1, 5});
     int r = arr.lastIndexOf(5, -2);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_5600
      * @tc.name testUint8ArrayLastIndexOf056
@@ -886,8 +810,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf056() {
     Uint8Array arr = new Uint8Array(new int[] {0, 0, 0});
     int r = arr.lastIndexOf(0);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_5700
      * @tc.name testUint8ArrayLastIndexOf057
@@ -901,8 +824,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf057() {
     Uint8Array arr = new Uint8Array(new int[] {255, 255, 255});
     int r = arr.lastIndexOf(255);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_5800
      * @tc.name testUint8ArrayLastIndexOf058
@@ -916,8 +838,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf058() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
     int r = arr.lastIndexOf(30);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_5900
      * @tc.name testUint8ArrayLastIndexOf059
@@ -931,8 +852,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf059() {
     Uint8Array arr = new Uint8Array(new int[] {5, 5});
     int r = arr.lastIndexOf(5, 0);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_6000
      * @tc.name testUint8ArrayLastIndexOf060
@@ -946,8 +866,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf060() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1});
     int r = arr.lastIndexOf(1, -2);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_6100
      * @tc.name testUint8ArrayLastIndexOf061
@@ -961,8 +880,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf061() {
     Uint8Array arr = new Uint8Array(new int[] {42});
     int r = arr.lastIndexOf(42, 0);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_6200
      * @tc.name testUint8ArrayLastIndexOf062
@@ -977,8 +895,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int lenBefore = arr.length();
     arr.lastIndexOf(2);
-    assertEqual(lenBefore, arr.length());
-    }
+    assertEqual(lenBefore, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_6300
      * @tc.name testUint8ArrayLastIndexOf063
@@ -993,8 +910,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int lenBefore = arr.length();
     arr.lastIndexOf(99);
-    assertEqual(lenBefore, arr.length());
-    }
+    assertEqual(lenBefore, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_6400
      * @tc.name testUint8ArrayLastIndexOf064
@@ -1009,8 +925,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int lenBefore = arr.length();
     arr.lastIndexOf(1, 0);
-    assertEqual(lenBefore, arr.length());
-    }
+    assertEqual(lenBefore, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_6500
      * @tc.name testUint8ArrayLastIndexOf065
@@ -1024,8 +939,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf065() {
     Uint8Array arr = new Uint8Array();
     arr.lastIndexOf(0);
-    assertEqual(0, arr.length());
-    }
+    assertEqual(0, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_6600
      * @tc.name testUint8ArrayLastIndexOf066
@@ -1040,8 +954,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     Uint8Array arr = new Uint8Array(5);
     int blBefore = arr.byteLength();
     arr.lastIndexOf(0);
-    assertEqual(blBefore, arr.byteLength());
-    }
+    assertEqual(blBefore, arr.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_6700
      * @tc.name testUint8ArrayLastIndexOf067
@@ -1056,8 +969,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     Uint8Array arr = new Uint8Array(5);
     int bufBlBefore = arr.buffer().byteLength();
     arr.lastIndexOf(0);
-    assertEqual(bufBlBefore, arr.buffer().byteLength());
-    }
+    assertEqual(bufBlBefore, arr.buffer().byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_6800
      * @tc.name testUint8ArrayLastIndexOf068
@@ -1071,8 +983,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf068() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     arr.lastIndexOf(20);
-    assertEqual(10, arr.at(0));
-    }
+    assertEqual(10, arr.at(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_6900
      * @tc.name testUint8ArrayLastIndexOf069
@@ -1086,8 +997,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf069() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     arr.lastIndexOf(20);
-    assertEqual(20, arr.at(1));
-    }
+    assertEqual(20, arr.at(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_7000
      * @tc.name testUint8ArrayLastIndexOf070
@@ -1101,8 +1011,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf070() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     arr.lastIndexOf(20);
-    assertEqual(30, arr.at(2));
-    }
+    assertEqual(30, arr.at(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_7100
      * @tc.name testUint8ArrayLastIndexOf071
@@ -1116,8 +1025,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf071() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     arr.lastIndexOf(99);
-    assertEqual(10, arr.at(0));
-    }
+    assertEqual(10, arr.at(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_7200
      * @tc.name testUint8ArrayLastIndexOf072
@@ -1134,8 +1042,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     arr.set(new Uint8Array(new int[] {10}), 0);
     arr.set(new Uint8Array(new int[] {20}), 1);
     arr.lastIndexOf(20);
-    assertEqual(10, arr.at(0));
-    }
+    assertEqual(10, arr.at(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_7300
      * @tc.name testUint8ArrayLastIndexOf073
@@ -1151,8 +1058,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     Uint8Array arr = new Uint8Array(buf, 1, 3);
     int offBefore = arr.byteOffset();
     arr.lastIndexOf(0);
-    assertEqual(offBefore, arr.byteOffset());
-    }
+    assertEqual(offBefore, arr.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_7400
      * @tc.name testUint8ArrayLastIndexOf074
@@ -1166,8 +1072,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf074() {
     Uint8Array arr = new Uint8Array(3);
     arr.lastIndexOf(0);
-    assertEqual(1, arr.BYTES_PER_ELEMENT);
-    }
+    assertEqual(1, arr.BYTES_PER_ELEMENT);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_7500
      * @tc.name testUint8ArrayLastIndexOf075
@@ -1182,8 +1087,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r1 = arr.lastIndexOf(2);
     int r2 = arr.lastIndexOf(2);
-    assertEqual(r2, r1);
-    }
+    assertEqual(r2, r1);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_7600
      * @tc.name testUint8ArrayLastIndexOf076
@@ -1198,8 +1102,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r1 = arr.lastIndexOf(99);
     int r2 = arr.lastIndexOf(99);
-    assertEqual(r2, r1);
-    }
+    assertEqual(r2, r1);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_7700
      * @tc.name testUint8ArrayLastIndexOf077
@@ -1213,8 +1116,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf077() {
     Uint8Array arr = new Uint8Array(new int[] {3, 2, 1, 2, 3});
     int r = arr.lastIndexOf(2);
-    assertEqual(3, r);
-    }
+    assertEqual(3, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_7800
      * @tc.name testUint8ArrayLastIndexOf078
@@ -1228,8 +1130,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf078() {
     Uint8Array arr = new Uint8Array(new int[] {255, 128, 255});
     int r = arr.lastIndexOf(255);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_7900
      * @tc.name testUint8ArrayLastIndexOf079
@@ -1243,8 +1144,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf079() {
     Uint8Array arr = new Uint8Array(new int[] {0, 128, 0});
     int r = arr.lastIndexOf(0);
-    assertEqual(2, r);
-    }
+    assertEqual(2, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_8000
      * @tc.name testUint8ArrayLastIndexOf080
@@ -1258,8 +1158,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf080() {
     Uint8Array arr = new Uint8Array(new int[] {7, 7});
     int r = arr.lastIndexOf(7, 0);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_8100
      * @tc.name testUint8ArrayLastIndexOf081
@@ -1273,8 +1172,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf081() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     int r = arr.lastIndexOf(1, -2);
-    assertEqual(0, r);
-    }
+    assertEqual(0, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_8200
      * @tc.name testUint8ArrayLastIndexOf082
@@ -1288,8 +1186,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf082() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2});
     int r = arr.lastIndexOf(1, -3);
-    assertEqual(-1, r);
-    }
+    assertEqual(-1, r);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_8300
      * @tc.name testUint8ArrayLastIndexOf083
@@ -1305,8 +1202,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     Uint8Array arr = new Uint8Array(buf, 3, 5);
     int offBefore = arr.byteOffset();
     arr.lastIndexOf(0);
-    assertEqual(offBefore, arr.byteOffset());
-    }
+    assertEqual(offBefore, arr.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF2_8400
      * @tc.name testUint8ArrayLastIndexOf084
@@ -1321,6 +1217,5 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     Uint8Array arr = new Uint8Array(4);
     ArrayBuffer bufBefore = arr.buffer();
     arr.lastIndexOf(0);
-    assertEqual(bufBefore.byteLength(), arr.buffer().byteLength());
-    }
+    assertEqual(bufBefore.byteLength(), arr.buffer().byteLength());}
 }

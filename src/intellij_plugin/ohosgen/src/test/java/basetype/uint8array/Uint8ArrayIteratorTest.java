@@ -15,37 +15,18 @@
 
 package basetype.uint8array;
 
-import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
 import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint8Array;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ArrayIteratorTest —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ArrayIteratorTest extends BasTest {
     /**
@@ -61,8 +42,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator001() {
     Uint8Array arr = Uint8Array.of(10, 20);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertNotNull(iter);
-    }
+    assertNotNull(iter);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0200
      * @tc.name testUint8ArrayIterator002
@@ -78,8 +58,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult result = iter.next();
     assertFalse(result.done);
-    assertEqual(10, result.value);
-    }
+    assertEqual(10, result.value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0300
      * @tc.name testUint8ArrayIterator003
@@ -95,8 +74,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult result = iter.next();
     assertFalse(result.done);
-    assertEqual(10, result.value);
-    }
+    assertEqual(10, result.value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0400
      * @tc.name testUint8ArrayIterator004
@@ -111,8 +89,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = Uint8Array.of(10);
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult result = iter.next();
-    assertFalse(result.done);
-    }
+    assertFalse(result.done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0500
      * @tc.name testUint8ArrayIterator005
@@ -127,8 +104,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = Uint8Array.of(10);
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult result = iter.next();
-    assertEqual(10, result.value);
-    }
+    assertEqual(10, result.value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0600
      * @tc.name testUint8ArrayIterator006
@@ -146,10 +122,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
     count++;
-    nextResult = iter.next();
-    };
-    assertEqual(2, count);
-    }
+    nextResult = iter.next();};
+    assertEqual(2, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0700
      * @tc.name testUint8ArrayIterator007
@@ -167,10 +141,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
     count++;
-    nextResult = iter.next();
-    };
-    assertEqual(0, count);
-    }
+    nextResult = iter.next();};
+    assertEqual(0, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0800
      * @tc.name testUint8ArrayIterator008
@@ -185,8 +157,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = new Uint8Array();
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult result = iter.next();
-    assertEqual(true, result.done);
-    }
+    assertEqual(true, result.done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0900
      * @tc.name testUint8ArrayIterator009
@@ -201,8 +172,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = new Uint8Array();
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult result = iter.next();
-    assertNull(result.value);
-    }
+    assertNull(result.value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1000
      * @tc.name testUint8ArrayIterator010
@@ -218,8 +188,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     iter.next();
     IteratorResult result = iter.next();
-    assertEqual(true, result.done);
-    }
+    assertEqual(true, result.done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1100
      * @tc.name testUint8ArrayIterator011
@@ -235,10 +204,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
-    nextResult = iter.next();
-    };
-    assertEqual(0, arr.length());
-    }
+    nextResult = iter.next();};
+    assertEqual(0, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1200
      * @tc.name testUint8ArrayIterator012
@@ -256,10 +223,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
     count++;
-    nextResult = iter.next();
-    };
-    assertEqual(1, count);
-    }
+    nextResult = iter.next();};
+    assertEqual(1, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1300
      * @tc.name testUint8ArrayIterator013
@@ -273,8 +238,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator013() {
     Uint8Array arr = Uint8Array.of(0);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(0, iter.next().value);
-    }
+    assertEqual(0, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1400
      * @tc.name testUint8ArrayIterator014
@@ -288,8 +252,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator014() {
     Uint8Array arr = Uint8Array.of(0);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(false, iter.next().done);
-    }
+    assertEqual(false, iter.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1500
      * @tc.name testUint8ArrayIterator015
@@ -304,8 +267,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = Uint8Array.of(0);
     Uint8Array.KeyIterator iter = arr.$_iterator();
     iter.next();
-    assertEqual(true, iter.next().done);
-    }
+    assertEqual(true, iter.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1600
      * @tc.name testUint8ArrayIterator016
@@ -319,8 +281,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator016() {
     Uint8Array arr = Uint8Array.of(255);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(255, iter.next().value);
-    }
+    assertEqual(255, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1700
      * @tc.name testUint8ArrayIterator017
@@ -334,8 +295,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator017() {
     Uint8Array arr = Uint8Array.of(128);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(128, iter.next().value);
-    }
+    assertEqual(128, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1800
      * @tc.name testUint8ArrayIterator018
@@ -349,8 +309,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator018() {
     Uint8Array arr = Uint8Array.of(127);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(arr.at(0), iter.next().value);
-    }
+    assertEqual(arr.at(0), iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1900
      * @tc.name testUint8ArrayIterator019
@@ -368,10 +327,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
     count++;
-    nextResult = iter.next();
-    };
-    assertEqual(3, count);
-    }
+    nextResult = iter.next();};
+    assertEqual(3, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2000
      * @tc.name testUint8ArrayIterator020
@@ -385,8 +342,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator020() {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(0, iter.next().value);
-    }
+    assertEqual(0, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2100
      * @tc.name testUint8ArrayIterator021
@@ -401,8 +357,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
     Uint8Array.KeyIterator iter = arr.$_iterator();
     iter.next();
-    assertEqual(127, iter.next().value);
-    }
+    assertEqual(127, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2200
      * @tc.name testUint8ArrayIterator022
@@ -418,8 +373,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     iter.next();
     iter.next();
-    assertEqual(255, iter.next().value);
-    }
+    assertEqual(255, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2300
      * @tc.name testUint8ArrayIterator023
@@ -435,10 +389,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
-    nextResult = iter.next();
-    };
-    assertEqual(true, iter.next().done);
-    }
+    nextResult = iter.next();};
+    assertEqual(true, iter.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2400
      * @tc.name testUint8ArrayIterator024
@@ -456,10 +408,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
     collected.add(nextResult.value);
-    nextResult = iter.next();
-    };
-    assertEqual(5, collected.size());
-    }
+    nextResult = iter.next();};
+    assertEqual(5, collected.size());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2500
      * @tc.name testUint8ArrayIterator025
@@ -476,11 +426,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     boolean ok = true;
     for (int i = 0; i < 5; i++) {
     if (iter.next().value != arr.at(i)) {
-    ok = false;
-    };
-    };
-    assertTrue(ok);
-    }
+    ok = false;};};
+    assertTrue(ok);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2600
      * @tc.name testUint8ArrayIterator026
@@ -494,17 +441,13 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator026() {
     Uint8Array arr = new Uint8Array(100);
     for (int i = 0; i < 100; i++) {
-    arr.set(new Uint8Array(new int[] {i}), i);
-    };
+    arr.set(new Uint8Array(new int[] {i}), i);};
     Uint8Array.KeyIterator iter = arr.$_iterator();
     boolean ok = true;
     for (int i = 0; i < 100; i++) {
     if (iter.next().value != i) {
-    ok = false;
-    };
-    };
-    assertTrue(ok);
-    }
+    ok = false;};};
+    assertTrue(ok);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2700
      * @tc.name testUint8ArrayIterator027
@@ -518,8 +461,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator027() {
     Uint8Array arr = Uint8Array.of(256);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(0, iter.next().value);
-    }
+    assertEqual(0, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2800
      * @tc.name testUint8ArrayIterator028
@@ -533,8 +475,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator028() {
     Uint8Array arr = Uint8Array.of(-1);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(255, iter.next().value);
-    }
+    assertEqual(255, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2900
      * @tc.name testUint8ArrayIterator029
@@ -548,8 +489,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator029() {
     Uint8Array arr = Uint8Array.of(0xFF);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(255, iter.next().value);
-    }
+    assertEqual(255, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3000
      * @tc.name testUint8ArrayIterator030
@@ -563,8 +503,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator030() {
     Uint8Array arr = Uint8Array.of(0x100);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(0, iter.next().value);
-    }
+    assertEqual(0, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3100
      * @tc.name testUint8ArrayIterator031
@@ -578,8 +517,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator031() {
     Uint8Array arr = Uint8Array.of(0x80);
     Uint8Array.KeyIterator iter = arr.$_iterator();
-    assertEqual(128, iter.next().value);
-    }
+    assertEqual(128, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3200
      * @tc.name testUint8ArrayIterator032
@@ -597,10 +535,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
     count++;
-    nextResult = iter.next();
-    };
-    assertEqual(4, count);
-    }
+    nextResult = iter.next();};
+    assertEqual(4, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3300
      * @tc.name testUint8ArrayIterator033
@@ -619,12 +555,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     while (!nextResult.done) {
     count++;
     if (count == 2) {
-    break;
-    };
-    nextResult = iter.next();
-    };
-    assertEqual(2, count);
-    }
+    break;};
+    nextResult = iter.next();};
+    assertEqual(2, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3400
      * @tc.name testUint8ArrayIterator034
@@ -644,13 +577,10 @@ public class Uint8ArrayIteratorTest extends BasTest {
     int v = nextResult.value;
     if (v == 2) {
     nextResult = iter.next();
-    continue;
-    };
+    continue;};
     sum += v;
-    nextResult = iter.next();
-    };
-    assertEqual(4, sum);
-    }
+    nextResult = iter.next();};
+    assertEqual(4, sum);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3500
      * @tc.name testUint8ArrayIterator035
@@ -671,12 +601,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult nextB = iterB.next();
     while (!nextB.done) {
     outer++;
-    nextB = iterB.next();
-    };
-    nextA = iterA.next();
-    };
-    assertEqual(4, outer);
-    }
+    nextB = iterB.next();};
+    nextA = iterA.next();};
+    assertEqual(4, outer);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3600
      * @tc.name testUint8ArrayIterator036
@@ -693,11 +620,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     boolean match = true;
     for (int i = 0; i < 3; i++) {
     if (iter.next().value != arr.at(i)) {
-    match = false;
-    };
-    };
-    assertTrue(match);
-    }
+    match = false;};};
+    assertTrue(match);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3700
      * @tc.name testUint8ArrayIterator037
@@ -715,10 +639,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
     values.add(nextResult.value);
-    nextResult = iter.next();
-    };
-    assertEqual(5, values.get(0));
-    }
+    nextResult = iter.next();};
+    assertEqual(5, values.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3800
      * @tc.name testUint8ArrayIterator038
@@ -733,8 +655,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = new Uint8Array();
     Uint8Array.KeyIterator iterA = arr.$_iterator();
     Uint8Array.KeyIterator iterB = arr.values();
-    assertEqual(iterB.next().done, iterA.next().done);
-    }
+    assertEqual(iterB.next().done, iterA.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3900
      * @tc.name testUint8ArrayIterator039
@@ -747,8 +668,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     @Test
     void testUint8ArrayIterator039() {
     Uint8Array arr = Uint8Array.of(0, 128);
-    assertEqual(arr.values().next().value, arr.$_iterator().next().value);
-    }
+    assertEqual(arr.values().next().value, arr.$_iterator().next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4000
      * @tc.name testUint8ArrayIterator040
@@ -765,8 +685,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator b = arr.values();
     a.next();
     b.next();
-    assertEqual(b.next().value, a.next().value);
-    }
+    assertEqual(b.next().value, a.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4100
      * @tc.name testUint8ArrayIterator041
@@ -785,16 +704,13 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult nextA = iterA.next();
     while (!nextA.done) {
     countA++;
-    nextA = iterA.next();
-    };
+    nextA = iterA.next();};
     Uint8Array.KeyIterator iterB = arr.values();
     IteratorResult nextB = iterB.next();
     while (!nextB.done) {
     countB++;
-    nextB = iterB.next();
-    };
-    assertEqual(countB, countA);
-    }
+    nextB = iterB.next();};
+    assertEqual(countB, countA);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4200
      * @tc.name testUint8ArrayIterator042
@@ -812,11 +728,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     boolean equal = true;
     for (int i = 0; i < 5; i++) {
     if ((iterA.next().value.intValue() != iterB.next().value.intValue())) {
-    equal = false;
-    };
-    };
-    assertTrue(equal);
-    }
+    equal = false;};};
+    assertTrue(equal);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4300
      * @tc.name testUint8ArrayIterator043
@@ -835,16 +748,13 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult next1 = iter1.next();
     while (!next1.done) {
     first.add(next1.value);
-    next1 = iter1.next();
-    };
+    next1 = iter1.next();};
     Uint8Array.KeyIterator iter2 = arr.$_iterator();
     IteratorResult next2 = iter2.next();
     while (!next2.done) {
     second.add(next2.value);
-    next2 = iter2.next();
-    };
-    assertEqual(second.get(0), first.get(0));
-    }
+    next2 = iter2.next();};
+    assertEqual(second.get(0), first.get(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4400
      * @tc.name testUint8ArrayIterator044
@@ -861,8 +771,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter2 = arr.$_iterator();
     iter1.next();
     iter1.next();
-    assertEqual(1, iter2.next().value);
-    }
+    assertEqual(1, iter2.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4500
      * @tc.name testUint8ArrayIterator045
@@ -878,10 +787,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
-    nextResult = iter.next();
-    };
-    assertEqual(5, arr.at(0));
-    }
+    nextResult = iter.next();};
+    assertEqual(5, arr.at(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4600
      * @tc.name testUint8ArrayIterator046
@@ -898,10 +805,8 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
-    nextResult = iter.next();
-    };
-    assertEqual(before, arr.length());
-    }
+    nextResult = iter.next();};
+    assertEqual(before, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4700
      * @tc.name testUint8ArrayIterator047
@@ -918,8 +823,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     while (!iter.next().done) {
     };
     Uint8Array.KeyIterator iter2 = arr.$_iterator();
-    assertEqual(7, iter2.next().value);
-    }
+    assertEqual(7, iter2.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4800
      * @tc.name testUint8ArrayIterator048
@@ -936,8 +840,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     iter.next();
     iter.next();
     arr.set(new Uint8Array(new int[] {99}), 2);
-    assertEqual(99, iter.next().value);
-    }
+    assertEqual(99, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4900
      * @tc.name testUint8ArrayIterator049
@@ -953,8 +856,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     arr.set(new Uint8Array(new int[] {200}), 1);
     Uint8Array.KeyIterator iter = arr.$_iterator();
     iter.next();
-    assertEqual(200, iter.next().value);
-    }
+    assertEqual(200, iter.next().value);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_5000
      * @tc.name testUint8ArrayIterator050
@@ -970,11 +872,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     IteratorResult nextResult = iter.next();
     while (!nextResult.done) {
-    nextResult = iter.next();
-    };
+    nextResult = iter.next();};
     arr.set(new Uint8Array(new int[] {100}), 0);
-    assertEqual(100, arr.at(0));
-    }
+    assertEqual(100, arr.at(0));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_5100
      * @tc.name testUint8ArrayIterator051
@@ -993,12 +893,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     while (!nextResult.done) {
     count++;
     if (count == 2) {
-    arr.fill(9);
-    };
-    nextResult = iter.next();
-    };
-    assertEqual(5, count);
-    }
+    arr.fill(9);};
+    nextResult = iter.next();};
+    assertEqual(5, count);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_5200
      * @tc.name testUint8ArrayIterator052
@@ -1014,8 +911,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     iter.next();
     IteratorResult result = iter.next();
-    assertNotNull(result);
-    }
+    assertNotNull(result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_5300
      * @tc.name testUint8ArrayIterator053
@@ -1030,8 +926,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = Uint8Array.of(1);
     Uint8Array.KeyIterator iter = arr.$_iterator();
     iter.next();
-    assertEqual(true, iter.next().done);
-    }
+    assertEqual(true, iter.next().done);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_5400
      * @tc.name testUint8ArrayIterator054
@@ -1046,6 +941,5 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = Uint8Array.of(1);
     Uint8Array.KeyIterator iter = arr.$_iterator();
     iter.next();
-    assertNull(iter.next().value);
-    }
+    assertNull(iter.next().value);}
 }
