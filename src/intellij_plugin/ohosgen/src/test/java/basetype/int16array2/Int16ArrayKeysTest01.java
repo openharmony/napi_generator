@@ -17,21 +17,7 @@ package basetype.int16array2;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
 import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Int16Array;
 
 import java.util.ArrayList;
@@ -44,6 +30,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Int16ArrayKeysTest01 —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Int16ArrayKeysTest01 extends BasTest {
 
@@ -51,8 +39,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     void testInt16ArrayKeysTestOne001() {
     Int16Array arr = new Int16Array(new int[] {10, 20, 30});
     Int16Array.KeyIterator iter = arr.keys();
-    assertEqual(0, iter.next().value);
-    }
+    assertEqual(0, iter.next().value);}
 
     @Test
     void testInt16ArrayKeysTestOne002() {
@@ -60,8 +47,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     boolean actual1 = result.done;
-    assertTrue(actual1);
-    }
+    assertTrue(actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne003() {
@@ -70,8 +56,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     boolean actual1 = result.done;
-    assertTrue(actual1);
-    }
+    assertTrue(actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne004() {
@@ -79,8 +64,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne005() {
@@ -88,8 +72,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     boolean actual1 = result.done;
-    assertFalse(actual1);
-    }
+    assertFalse(actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne006() {
@@ -98,8 +81,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     iter.next();
     IteratorResult result = iter.next();
     boolean actual1 = result.done;
-    assertTrue(actual1);
-    }
+    assertTrue(actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne007() {
@@ -107,8 +89,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne008() {
@@ -117,8 +98,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     iter.next();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(1, actual1);
-    }
+    assertEqual(1, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne009() {
@@ -128,8 +108,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     iter.next();
     IteratorResult result = iter.next();
     boolean actual1 = result.done;
-    assertTrue(actual1);
-    }
+    assertTrue(actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne010() {
@@ -137,8 +116,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     boolean actual1 = result.done;
-    assertFalse(actual1);
-    }
+    assertFalse(actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne011() {
@@ -146,8 +124,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne012() {
@@ -156,8 +133,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     iter.next();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(1, actual1);
-    }
+    assertEqual(1, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne013() {
@@ -167,8 +143,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     iter.next();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(2, actual1);
-    }
+    assertEqual(2, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne014() {
@@ -179,8 +154,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     iter.next();
     IteratorResult result = iter.next();
     boolean actual1 = result.done;
-    assertTrue(actual1);
-    }
+    assertTrue(actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne015() {
@@ -194,8 +168,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual2 = r1.value;
     assertEqual(1, actual2);
     Integer actual3 = r2.value;
-    assertEqual(2, actual3);
-    }
+    assertEqual(2, actual3);}
 
     @Test
     void testInt16ArrayKeysTestOne016() {
@@ -203,32 +176,27 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne017() {
     Int16Array arr = new Int16Array(100);
     Int16Array.KeyIterator iter = arr.keys();
     for (int i = 0; i < 99; i++) {
-    iter.next();
-    }
+    iter.next();}
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(99, actual1);
-    }
+    assertEqual(99, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne018() {
     Int16Array arr = new Int16Array(100);
     Int16Array.KeyIterator iter = arr.keys();
     for (int i = 0; i < 100; i++) {
-    iter.next();
-    }
+    iter.next();}
     IteratorResult result = iter.next();
     boolean actual1 = result.done;
-    assertTrue(actual1);
-    }
+    assertTrue(actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne019() {
@@ -236,8 +204,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne020() {
@@ -248,8 +215,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     iter.next();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(3, actual1);
-    }
+    assertEqual(3, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne021() {
@@ -258,8 +224,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne022() {
@@ -270,8 +235,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     iter.next();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(2, actual1);
-    }
+    assertEqual(2, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne023() {
@@ -280,8 +244,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne024() {
@@ -292,8 +255,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     iter.next();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(2, actual1);
-    }
+    assertEqual(2, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne025() {
@@ -305,8 +267,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual1 = r0.value;
     assertEqual(0, actual1);
     Integer actual2 = r1.value;
-    assertEqual(1, actual2);
-    }
+    assertEqual(1, actual2);}
 
     @Test
     void testInt16ArrayKeysTestOne026() {
@@ -315,28 +276,23 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     boolean actual1 = result.done;
-    assertTrue(actual1);
-    }
+    assertTrue(actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne027() {
     Int16Array arr = new Int16Array(new int[] {1, 2, 3});
     int count = 0;
     for (Integer key : arr.keys()) {
-    count = count + 1;
-    }
-    assertEqual(3, count);
-    }
+    count = count + 1;}
+    assertEqual(3, count);}
 
     @Test
     void testInt16ArrayKeysTestOne028() {
     Int16Array arr = new Int16Array(0);
     boolean entered = false;
     for (Integer key : arr.keys()) {
-    entered = true;
-    }
-    assertFalse(entered);
-    }
+    entered = true;}
+    assertFalse(entered);}
 
     @Test
     void testInt16ArrayKeysTestOne029() {
@@ -350,8 +306,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     boolean actual2 = r2.done;
     assertTrue(actual2);
     boolean actual3 = r3.done;
-    assertTrue(actual3);
-    }
+    assertTrue(actual3);}
 
     @Test
     void testInt16ArrayKeysTestOne030() {
@@ -363,8 +318,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual1 = a1.value;
     assertEqual(0, actual1);
     Integer actual2 = b1.value;
-    assertEqual(0, actual2);
-    }
+    assertEqual(0, actual2);}
 
     @Test
     void testInt16ArrayKeysTestOne031() {
@@ -377,8 +331,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual1 = a2.value;
     assertEqual(1, actual1);
     Integer actual2 = b1.value;
-    assertEqual(0, actual2);
-    }
+    assertEqual(0, actual2);}
 
     @Test
     void testInt16ArrayKeysTestOne032() {
@@ -392,8 +345,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual1 = r.value;
     assertEqual(0, actual1);
     boolean actual2 = r.done;
-    assertFalse(actual2);
-    }
+    assertFalse(actual2);}
 
     @Test
     void testInt16ArrayKeysTestOne033() {
@@ -401,8 +353,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne034() {
@@ -416,8 +367,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual2 = r1.value;
     assertEqual(1, actual2);
     Integer actual3 = r2.value;
-    assertEqual(2, actual3);
-    }
+    assertEqual(2, actual3);}
 
     @Test
     void testInt16ArrayKeysTestOne035() {
@@ -427,8 +377,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual1 = r.value;
     assertEqual(0, actual1);
     boolean actual2 = r.done;
-    assertFalse(actual2);
-    }
+    assertFalse(actual2);}
 
     @Test
     void testInt16ArrayKeysTestOne036() {
@@ -436,8 +385,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult r = iter.next();
     Integer actual1 = r.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne037() {
@@ -445,8 +393,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult r = iter.next();
     Integer actual1 = r.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne038() {
@@ -455,8 +402,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne039() {
@@ -466,8 +412,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     iter.next();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(1, actual1);
-    }
+    assertEqual(1, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne040() {
@@ -475,8 +420,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
     Integer actual1 = result.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne041() {
@@ -486,13 +430,11 @@ public class Int16ArrayKeysTest01 extends BasTest {
     IteratorResult r = iter.next();
     while (!r.done) {
     indices.add(r.value);
-    r = iter.next();
-    }
+    r = iter.next();}
     int actual1 = indices.get(0);
     assertEqual(0, actual1);
     int actual2 = indices.get(4);
-    assertEqual(4, actual2);
-    }
+    assertEqual(4, actual2);}
 
     @Test
     void testInt16ArrayKeysTestOne042() {
@@ -510,8 +452,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual3 = r2.value;
     assertEqual(2, actual3);
     Integer actual4 = r3.value;
-    assertEqual(3, actual4);
-    }
+    assertEqual(3, actual4);}
 
     @Test
     void testInt16ArrayKeysTestOne043() {
@@ -520,8 +461,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult r = iter.next();
     Integer actual1 = r.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne044() {
@@ -534,8 +474,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     boolean actual1 = rEmpty.done;
     assertTrue(actual1);
     boolean actual2 = rOne.done;
-    assertFalse(actual2);
-    }
+    assertFalse(actual2);}
 
     @Test
     void testInt16ArrayKeysTestOne045() {
@@ -546,49 +485,42 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer thirdValue = iter.next().value;
     assertEqual(0, firstValue);
     assertEqual(1, secondValue);
-    assertEqual(2, thirdValue);
-    }
+    assertEqual(2, thirdValue);}
 
     @Test
     void testInt16ArrayKeysTestOne046() {
     Int16Array arr = new Int16Array(new int[] {99});
     int count = 0;
     for (Integer k : arr.keys()) {
-    count = count + 1;
-    }
-    assertEqual(1, count);
-    }
+    count = count + 1;}
+    assertEqual(1, count);}
 
     @Test
     void testInt16ArrayKeysTestOne047() {
     Int16Array arr = new Int16Array(new int[] {1, 2});
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
-    assertEqual(0, result.value);
-    }
+    assertEqual(0, result.value);}
 
     @Test
     void testInt16ArrayKeysTestOne048() {
     Int16Array arr = new Int16Array(new int[] {0});
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult result = iter.next();
-    assertFalse(result.done);
-    }
+    assertFalse(result.done);}
 
     @Test
     void testInt16ArrayKeysTestOne049() {
     Int16Array arr = new Int16Array(new int[] {1, 2, 3});
     List<Integer> collected = new ArrayList<>();
     for (Integer k : arr.keys()) {
-    collected.add(k);
-    }
+    collected.add(k);}
     int actual1 = collected.get(0);
     assertEqual(0, actual1);
     int actual2 = collected.get(1);
     assertEqual(1, actual2);
     int actual3 = collected.get(2);
-    assertEqual(2, actual3);
-    }
+    assertEqual(2, actual3);}
 
     @Test
     void testInt16ArrayKeysTestOne050() {
@@ -597,14 +529,11 @@ public class Int16ArrayKeysTest01 extends BasTest {
     int count1 = 0;
     int count2 = 0;
     for (Integer k : iter) {
-    count1 = count1 + 1;
-    }
+    count1 = count1 + 1;}
     for (Integer k : iter) {
-    count2 = count2 + 1;
-    }
+    count2 = count2 + 1;}
     assertEqual(2, count1);
-    assertEqual(0, count2);
-    }
+    assertEqual(0, count2);}
 
     @Test
     void testInt16ArrayKeysTestOne051() {
@@ -619,8 +548,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual2 = r1.value;
     assertEqual(1, actual2);
     Integer actual3 = r2.value;
-    assertEqual(2, actual3);
-    }
+    assertEqual(2, actual3);}
 
     @Test
     void testInt16ArrayKeysTestOne052() {
@@ -637,8 +565,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual2 = r1.value;
     assertEqual(1, actual2);
     Integer actual3 = r2.value;
-    assertEqual(2, actual3);
-    }
+    assertEqual(2, actual3);}
 
     @Test
     void testInt16ArrayKeysTestOne053() {
@@ -648,8 +575,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult r = iter.next();
     Integer actual1 = r.value;
-    assertEqual(0, actual1);
-    }
+    assertEqual(0, actual1);}
 
     @Test
     void testInt16ArrayKeysTestOne054() {
@@ -666,8 +592,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual2 = r1.value;
     assertEqual(1, actual2);
     Integer actual3 = r2.value;
-    assertEqual(2, actual3);
-    }
+    assertEqual(2, actual3);}
 
     @Test
     void testInt16ArrayKeysTestOne055() {
@@ -686,8 +611,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual3 = r2.value;
     assertEqual(2, actual3);
     Integer actual4 = r3.value;
-    assertEqual(3, actual4);
-    }
+    assertEqual(3, actual4);}
 
     @Test
     void testInt16ArrayKeysTestOne056() {
@@ -699,8 +623,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual1 = r0.value;
     assertEqual(0, actual1);
     Integer actual2 = r1.value;
-    assertEqual(1, actual2);
-    }
+    assertEqual(1, actual2);}
 
     @Test
     void testInt16ArrayKeysTestOne057() {
@@ -713,8 +636,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual1 = a1.value;
     assertEqual(0, actual1);
     Integer actual2 = b1.value;
-    assertEqual(0, actual2);
-    }
+    assertEqual(0, actual2);}
 
     @Test
     void testInt16ArrayKeysTestOne058() {
@@ -728,8 +650,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual1 = rBuf.value;
     assertEqual(0, actual1);
     Integer actual2 = rInd.value;
-    assertEqual(0, actual2);
-    }
+    assertEqual(0, actual2);}
 
     @Test
     void testInt16ArrayKeysTestOne059() {
@@ -739,6 +660,5 @@ public class Int16ArrayKeysTest01 extends BasTest {
     Integer actual1 = result.value;
     assertEqual(0, actual1);
     boolean actual2 = result.done;
-    assertFalse(actual2);
-    }
+    assertFalse(actual2);}
 }
