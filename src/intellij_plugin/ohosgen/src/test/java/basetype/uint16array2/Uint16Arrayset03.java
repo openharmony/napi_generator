@@ -17,33 +17,15 @@ package basetype.uint16array2;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
 import basetype.common.RangeError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Uint16Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
  * Uint16Arrayset03 —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint16Arrayset03 extends BasTest {
 
@@ -56,8 +38,7 @@ public class Uint16Arrayset03 extends BasTest {
     assertEqual(20, target.get(1));
     assertEqual(30, target.get(2));
     assertEqual(0, target.get(3));
-    assertEqual(0, target.get(4));
-    }
+    assertEqual(0, target.get(4));}
 
     @Test
     void testUint16ArraySet03Test002() {
@@ -66,8 +47,7 @@ public class Uint16Arrayset03 extends BasTest {
     target.set(source);
     assertEqual(5, target.get(0));
     assertEqual(10, target.get(1));
-    assertEqual(15, target.get(2));
-    }
+    assertEqual(15, target.get(2));}
 
     @Test
     void testUint16ArraySet03Test003() {
@@ -78,8 +58,7 @@ public class Uint16Arrayset03 extends BasTest {
     assertEqual(0, target.get(1));
     assertEqual(0, target.get(2));
     assertEqual(0, target.get(3));
-    assertEqual(0, target.get(4));
-    }
+    assertEqual(0, target.get(4));}
 
     @Test
     void testUint16ArraySet03Test004() {
@@ -87,64 +66,56 @@ public class Uint16Arrayset03 extends BasTest {
     int[] source = new int[] {42};
     target.set(source);
     assertEqual(42, target.get(0));
-    assertEqual(0, target.get(1));
-    }
+    assertEqual(0, target.get(1));}
 
     @Test
     void testUint16ArraySet03Test005() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {0};
     target.set(source);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test006() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {65535};
     target.set(source);
-    assertEqual(65535, target.get(0));
-    }
+    assertEqual(65535, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test007() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {32768};
     target.set(source);
-    assertEqual(32768, target.get(0));
-    }
+    assertEqual(32768, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test008() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {0xFFFF};
     target.set(source);
-    assertEqual(65535, target.get(0));
-    }
+    assertEqual(65535, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test009() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {0x7FFF};
     target.set(source);
-    assertEqual(32767, target.get(0));
-    }
+    assertEqual(32767, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test010() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {0b1111111111111111};
     target.set(source);
-    assertEqual(65535, target.get(0));
-    }
+    assertEqual(65535, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test011() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {0177777};
     target.set(source);
-    assertEqual(65535, target.get(0));
-    }
+    assertEqual(65535, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test012() {
@@ -155,24 +126,21 @@ public class Uint16Arrayset03 extends BasTest {
     assertEqual(65535, target.get(1));
     assertEqual(32768, target.get(2));
     assertEqual(0, target.get(3));
-    assertEqual(65535, target.get(4));
-    }
+    assertEqual(65535, target.get(4));}
 
     @Test
     void testUint16ArraySet03Test013() {
     Uint16Array target = new Uint16Array(3);
     double[] source = new double[] {1e4};
     target.set(source);
-    assertEqual(10000, target.get(0));
-    }
+    assertEqual(10000, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test014() {
     Uint16Array target = new Uint16Array(5);
     int[] source = new int[] {1, 2, 3};
     target.set(source);
-    assertEqual("1,2,3,0,0", target.join(","));
-    }
+    assertEqual("1,2,3,0,0", target.join(","));}
 
     @Test
     void testUint16ArraySet03Test015() {
@@ -180,10 +148,8 @@ public class Uint16Arrayset03 extends BasTest {
     int[] source = new int[] {1, 2, 3, 4};
     try {
     target.set(source);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());}
     }
 
     @Test
@@ -192,10 +158,8 @@ public class Uint16Arrayset03 extends BasTest {
     int[] source = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     try {
     target.set(source);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());}
     }
 
     @Test
@@ -203,56 +167,49 @@ public class Uint16Arrayset03 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {0x10000};
     target.set(source);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test018() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {65537};
     target.set(source);
-    assertEqual(1, target.get(0));
-    }
+    assertEqual(1, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test019() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {-65535};
     target.set(source);
-    assertEqual(1, target.get(0));
-    }
+    assertEqual(1, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test020() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {-65536};
     target.set(source);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test021() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {-32768};
     target.set(source);
-    assertEqual(32768, target.get(0));
-    }
+    assertEqual(32768, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test022() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {65536 * 2};
     target.set(source);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test023() {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {65536 * 3};
     target.set(source);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test024() {
@@ -260,8 +217,7 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {1.0, 2.0};
     target.set(source, 0);
     assertEqual(1, target.get(0));
-    assertEqual(2, target.get(1));
-    }
+    assertEqual(2, target.get(1));}
 
     @Test
     void testUint16ArraySet03Test025() {
@@ -270,8 +226,7 @@ public class Uint16Arrayset03 extends BasTest {
     target.set(source, 0);
     assertEqual(1, target.get(0));
     assertEqual(2, target.get(1));
-    assertEqual(3, target.get(2));
-    }
+    assertEqual(3, target.get(2));}
 
     @Test
     void testUint16ArraySet03Test026() {
@@ -279,88 +234,77 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {};
     target.set(source, 0);
     assertEqual(0, target.get(0));
-    assertEqual(0, target.get(1));
-    }
+    assertEqual(0, target.get(1));}
 
     @Test
     void testUint16ArraySet03Test027() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {99.0};
     target.set(source, 0);
-    assertEqual(99, target.get(0));
-    }
+    assertEqual(99, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test028() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {3.14};
     target.set(source, 0);
-    assertEqual(3, target.get(0));
-    }
+    assertEqual(3, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test029() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {0.5};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test030() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {1.5};
     target.set(source, 0);
-    assertEqual(1, target.get(0));
-    }
+    assertEqual(1, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test031() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {65535.0};
     target.set(source, 0);
-    assertEqual(65535, target.get(0));
-    }
+    assertEqual(65535, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test032() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {0.0};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test033() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {32768.0};
     target.set(source, 0);
-    assertEqual(32768, target.get(0));
-    }
+    assertEqual(32768, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test034() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {1e4};
     target.set(source, 0);
-    assertEqual(10000, target.get(0));
-    }
+    assertEqual(10000, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test035() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {0xFFFF};
     target.set(source, 0);
-    assertEqual(65535, target.get(0));
-    }
+    assertEqual(65535, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test036() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {0b1111111111111111};
     target.set(source, 0);
-    assertEqual(65535, target.get(0));
-    }
+    assertEqual(65535, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test037() {
@@ -371,8 +315,7 @@ public class Uint16Arrayset03 extends BasTest {
     assertEqual(10, target.get(1));
     assertEqual(20, target.get(2));
     assertEqual(0, target.get(3));
-    assertEqual(0, target.get(4));
-    }
+    assertEqual(0, target.get(4));}
 
     @Test
     void testUint16ArraySet03Test038() {
@@ -380,32 +323,28 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {10.0, 20.0};
     target.set(source, 3);
     assertEqual(10, target.get(3));
-    assertEqual(20, target.get(4));
-    }
+    assertEqual(20, target.get(4));}
 
     @Test
     void testUint16ArraySet03Test039() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {99.0};
     target.set(source, 4);
-    assertEqual(99, target.get(4));
-    }
+    assertEqual(99, target.get(4));}
 
     @Test
     void testUint16ArraySet03Test040() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test041() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {};
     target.set(source, 3);
-    assertEqual(0, target.get(3));
-    }
+    assertEqual(0, target.get(3));}
 
     @Test
     void testUint16ArraySet03Test042() {
@@ -414,16 +353,14 @@ public class Uint16Arrayset03 extends BasTest {
     target.set(source, 0);
     assertEqual(1, target.get(0));
     assertEqual(2, target.get(1));
-    assertEqual(3, target.get(2));
-    }
+    assertEqual(3, target.get(2));}
 
     @Test
     void testUint16ArraySet03Test043() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {1.0, 2.0};
     target.set(source, 1);
-    assertEqual("0,1,2,0,0", target.join(","));
-    }
+    assertEqual("0,1,2,0,0", target.join(","));}
 
     @Test
     void testUint16ArraySet03Test044() {
@@ -431,10 +368,8 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {1.0};
     try {
     target.set(source, -1);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());}
     }
 
     @Test
@@ -443,10 +378,8 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {1.0};
     try {
     target.set(source, 5);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());}
     }
 
     @Test
@@ -455,10 +388,8 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {1.0};
     try {
     target.set(source, 6);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());}
     }
 
     @Test
@@ -467,10 +398,8 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {1.0};
     try {
     target.set(source, -5);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());}
     }
 
     @Test
@@ -479,10 +408,8 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {1.0};
     try {
     target.set(source, -6);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());}
     }
 
     @Test
@@ -491,10 +418,8 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {1.0};
     try {
     target.set(source, 999999);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());}
     }
 
     @Test
@@ -503,10 +428,8 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {1.0, 2.0, 3.0};
     try {
     target.set(source, 4);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());}
     }
 
     @Test
@@ -515,10 +438,8 @@ public class Uint16Arrayset03 extends BasTest {
     double[] source = new double[] {1.0, 2.0, 3.0, 4.0, 5.0};
     try {
     target.set(source, 1);
-    fail();
-    } catch (RuntimeException e) {
-    assertEqual("RangeError", e.getClass().getSimpleName());
-    }
+    fail();} catch (RangeError e) {
+    assertEqual("RangeError", e.getClass().getSimpleName());}
     }
 
     @Test
@@ -526,152 +447,133 @@ public class Uint16Arrayset03 extends BasTest {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {65536.0};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test053() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {0x10000};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test054() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {-1.0};
     target.set(source, 0);
-    assertEqual(65535, target.get(0));
-    }
+    assertEqual(65535, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test055() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {65535.9};
     target.set(source, 0);
-    assertEqual(65535, target.get(0));
-    }
+    assertEqual(65535, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test056() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {-0.5};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test057() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {Double.POSITIVE_INFINITY};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test058() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {-Double.POSITIVE_INFINITY};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test059() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {Double.NaN};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test060() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {65537.0};
     target.set(source, 0);
-    assertEqual(1, target.get(0));
-    }
+    assertEqual(1, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test061() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {-32768.0};
     target.set(source, 0);
-    assertEqual(32768, target.get(0));
-    }
+    assertEqual(32768, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test062() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {-65535.0};
     target.set(source, 0);
-    assertEqual(1, target.get(0));
-    }
+    assertEqual(1, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test063() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {-65536.0};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test064() {
     Uint16Array target = new Uint16Array(5);
     double[] source = new double[] {65536.0 * 2};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    }
+    assertEqual(0, target.get(0));}
 
     @Test
     void testUint16ArraySet03Test065() {
     Uint16Array t = new Uint16Array(4);
     int[] s = new int[] {1, 2, 3, 4};
     t.set(s);
-    assertEqual("1,2,3,4", t.join(","));
-    }
+    assertEqual("1,2,3,4", t.join(","));}
 
     @Test
     void testUint16ArraySet03Test066() {
     Uint16Array t = new Uint16Array(3);
     double[] s = new double[] {1.9, 2.1, 3.8};
     t.set(s);
-    assertEqual("1,2,3", t.join(","));
-    }
+    assertEqual("1,2,3", t.join(","));}
 
     @Test
     void testUint16ArraySet03Test067() {
     Uint16Array t = Uint16Array.of(9, 9, 9, 9, 9);
     int[] s = new int[] {4, 5, 6};
     t.set(s, 1);
-    assertEqual("9,4,5,6,9", t.join(","));
-    }
+    assertEqual("9,4,5,6,9", t.join(","));}
 
     @Test
     void testUint16ArraySet03Test068() {
     Uint16Array t = Uint16Array.of(1, 2, 3);
     int[] s = new int[] {};
     t.set(s, 3);
-    assertEqual("1,2,3", t.join(","));
-    }
+    assertEqual("1,2,3", t.join(","));}
 
     @Test
     void testUint16ArraySet03Test069() {
     Uint16Array t = new Uint16Array(4);
     int[] s = new int[] {-1, 65536, 65537, -32768};
     t.set(s);
-    assertEqual("65535,0,1,32768", t.join(","));
-    }
+    assertEqual("65535,0,1,32768", t.join(","));}
 
     @Test
     void testUint16ArraySet03Test070() {
     Uint16Array t = new Uint16Array(3);
     double[] s = new double[] {Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY};
     t.set(s);
-    assertEqual("0,0,0", t.join(","));
-    }
+    assertEqual("0,0,0", t.join(","));}
 
     @Test
     void testUint16ArraySet03Test071() {
@@ -679,11 +581,9 @@ public class Uint16Arrayset03 extends BasTest {
     int[] s = new int[] {1, 2, 3};
     try {
     t.set(s, 1);
-    fail();
-    } catch (RuntimeException e) {
+    fail();} catch (RangeError e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    assertEqual("8,8,8", t.join(","));
-    }
+    assertEqual("8,8,8", t.join(","));}
     }
 
     @Test
@@ -692,11 +592,9 @@ public class Uint16Arrayset03 extends BasTest {
     int[] s = new int[] {1};
     try {
     t.set(s, -1);
-    fail();
-    } catch (RuntimeException e) {
+    fail();} catch (RangeError e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    assertEqual("8,8", t.join(","));
-    }
+    assertEqual("8,8", t.join(","));}
     }
 
     @Test
@@ -705,8 +603,7 @@ public class Uint16Arrayset03 extends BasTest {
     Uint16Array t = new Uint16Array(3);
     t.set(s);
     s.set(0, 9);
-    assertEqual("1,2,3", t.join(","));
-    }
+    assertEqual("1,2,3", t.join(","));}
 
     @Test
     void testUint16ArraySet03Test074() {
@@ -714,22 +611,19 @@ public class Uint16Arrayset03 extends BasTest {
     Uint16Array s = base.subarray(1, 4);
     Uint16Array t = new Uint16Array(5);
     t.set(s, 1);
-    assertEqual("0,2,4,6,0", t.join(","));
-    }
+    assertEqual("0,2,4,6,0", t.join(","));}
 
     @Test
     void testUint16ArraySet03Test075() {
     Uint16Array t = Uint16Array.of(1, 2, 3, 4);
     t.set(t.subarray(0, 3), 1);
-    assertEqual("1,1,2,3", t.join(","));
-    }
+    assertEqual("1,1,2,3", t.join(","));}
 
     @Test
     void testUint16ArraySet03Test076() {
     Uint16Array t = Uint16Array.of(1, 2, 3, 4);
     t.set(t.subarray(1, 4), 0);
-    assertEqual("2,3,4,4", t.join(","));
-    }
+    assertEqual("2,3,4,4", t.join(","));}
 
     @Test
     void testUint16ArraySet03Test077() {
@@ -739,8 +633,7 @@ public class Uint16Arrayset03 extends BasTest {
     Uint16Array s = new Uint16Array(b, 0, 2);
     Uint16Array t = new Uint16Array(b, 4, 4);
     t.set(s, 2);
-    assertEqual("1,2,3,4,1,2", all.join(","));
-    }
+    assertEqual("1,2,3,4,1,2", all.join(","));}
 
     @Test
     void testUint16ArraySet03Test078() {
@@ -748,11 +641,9 @@ public class Uint16Arrayset03 extends BasTest {
     Uint16Array t = Uint16Array.of(7, 7, 7);
     try {
     t.set(s);
-    fail();
-    } catch (RuntimeException e) {
+    fail();} catch (RangeError e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
-    assertEqual("7,7,7", t.join(","));
-    }
+    assertEqual("7,7,7", t.join(","));}
     }
 
     @Test
@@ -760,8 +651,7 @@ public class Uint16Arrayset03 extends BasTest {
     Uint16Array s = Uint16Array.of(5, 6);
     Uint16Array t = Uint16Array.of(0, 0, 0, 0);
     t.set(s, 2);
-    assertEqual("0,0,5,6", t.join(","));
-    }
+    assertEqual("0,0,5,6", t.join(","));}
 
     @Test
     void testUint16ArraySet080() {
@@ -770,6 +660,5 @@ public class Uint16Arrayset03 extends BasTest {
     all.set(Uint16Array.of(1, 2, 3, 4, 5));
     Uint16Array s = new Uint16Array(b, 2, 3);
     all.set(s, 0);
-    assertEqual("2,3,4,4,5", all.join(","));
-    }
+    assertEqual("2,3,4,4,5", all.join(","));}
 }
