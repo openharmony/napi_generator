@@ -44,7 +44,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString001() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = String.valueOf(arr);
-    assertEqual("1,2,3", result);}
+    assertEqual("1,2,3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0200
      * @tc.name testUint8ArrayToString002
@@ -58,7 +59,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString002() {
     Uint8Array arr = new Uint8Array(0);
     String result = String.valueOf(arr);
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0300
      * @tc.name testUint8ArrayToString003
@@ -72,7 +74,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString003() {
     Uint8Array arr = new Uint8Array(new int[] {});
     String result = String.valueOf(arr);
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0400
      * @tc.name testUint8ArrayToString004
@@ -86,7 +89,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString004() {
     Uint8Array arr = Uint8Array.of();
     String result = String.valueOf(arr);
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0500
      * @tc.name testUint8ArrayToString005
@@ -100,7 +104,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString005() {
     Uint8Array arr = Uint8Array.from(new int[] {}, (x, index) -> x);
     String result = String.valueOf(arr);
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0600
      * @tc.name testUint8ArrayToString006
@@ -115,7 +120,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(0);
     Uint8Array arr = new Uint8Array(buf);
     String result = String.valueOf(arr);
-    assertEqual("", result);}
+    assertEqual("", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0700
      * @tc.name testUint8ArrayToString007
@@ -129,7 +135,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString007() {
     Uint8Array arr = new Uint8Array(new int[] {0});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0800
      * @tc.name testUint8ArrayToString008
@@ -143,7 +150,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString008() {
     Uint8Array arr = new Uint8Array(new int[] {255});
     String result = String.valueOf(arr);
-    assertEqual("255", result);}
+    assertEqual("255", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0900
      * @tc.name testUint8ArrayToString009
@@ -157,7 +165,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString009() {
     Uint8Array arr = new Uint8Array(new int[] {127});
     String result = String.valueOf(arr);
-    assertEqual("127", result);}
+    assertEqual("127", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1000
      * @tc.name testUint8ArrayToString010
@@ -171,7 +180,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString010() {
     Uint8Array arr = new Uint8Array(new int[] {128});
     String result = String.valueOf(arr);
-    assertEqual("128", result);}
+    assertEqual("128", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1100
      * @tc.name testUint8ArrayToString011
@@ -185,7 +195,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString011() {
     Uint8Array arr = new Uint8Array(new int[] {1});
     String result = String.valueOf(arr);
-    assertEqual("1", result);}
+    assertEqual("1", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1200
      * @tc.name testUint8ArrayToString012
@@ -199,7 +210,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString012() {
     Uint8Array arr = new Uint8Array(new int[] {254});
     String result = String.valueOf(arr);
-    assertEqual("254", result);}
+    assertEqual("254", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1300
      * @tc.name testUint8ArrayToString013
@@ -213,7 +225,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString013() {
     Uint8Array arr = new Uint8Array(new int[] {256});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1400
      * @tc.name testUint8ArrayToString014
@@ -227,7 +240,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString014() {
     Uint8Array arr = new Uint8Array(new int[] {-1});
     String result = String.valueOf(arr);
-    assertEqual("255", result);}
+    assertEqual("255", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1500
      * @tc.name testUint8ArrayToString015
@@ -241,7 +255,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString015() {
     Uint8Array arr = new Uint8Array(new int[] {0x80});
     String result = String.valueOf(arr);
-    assertEqual("128", result);}
+    assertEqual("128", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1600
      * @tc.name testUint8ArrayToString016
@@ -255,7 +270,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString016() {
     Uint8Array arr = new Uint8Array(new int[] {0xFF});
     String result = String.valueOf(arr);
-    assertEqual("255", result);}
+    assertEqual("255", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1700
      * @tc.name testUint8ArrayToString017
@@ -269,7 +285,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString017() {
     Uint8Array arr = new Uint8Array(new int[] {0x100});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1800
      * @tc.name testUint8ArrayToString018
@@ -283,7 +300,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString018() {
     Uint8Array arr = new Uint8Array(new double[] {1e2});
     String result = String.valueOf(arr);
-    assertEqual("100", result);}
+    assertEqual("100", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1900
      * @tc.name testUint8ArrayToString019
@@ -297,7 +315,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString019() {
     Uint8Array arr = new Uint8Array(new double[] {Double.NaN});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2000
      * @tc.name testUint8ArrayToString020
@@ -311,7 +330,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString020() {
     Uint8Array arr = new Uint8Array(new double[] {3.5});
     String result = String.valueOf(arr);
-    assertEqual("3", result);}
+    assertEqual("3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2100
      * @tc.name testUint8ArrayToString021
@@ -325,7 +345,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString021() {
     Uint8Array arr = new Uint8Array(new double[] {-3.5});
     String result = String.valueOf(arr);
-    assertEqual("253", result);}
+    assertEqual("253", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2200
      * @tc.name testUint8ArrayToString022
@@ -339,7 +360,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString022() {
     Uint8Array arr = new Uint8Array(new int[] {-0});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2300
      * @tc.name testUint8ArrayToString023
@@ -353,7 +375,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString023() {
     Uint8Array arr = new Uint8Array(new int[] {0b11111111});
     String result = String.valueOf(arr);
-    assertEqual("255", result);}
+    assertEqual("255", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2400
      * @tc.name testUint8ArrayToString024
@@ -367,7 +390,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString024() {
     Uint8Array arr = new Uint8Array(new double[] {1.0});
     String result = String.valueOf(arr);
-    assertEqual("1", result);}
+    assertEqual("1", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2500
      * @tc.name testUint8ArrayToString025
@@ -381,7 +405,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString025() {
     Uint8Array arr = new Uint8Array(new int[] {-128});
     String result = String.valueOf(arr);
-    assertEqual("128", result);}
+    assertEqual("128", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2600
      * @tc.name testUint8ArrayToString026
@@ -395,7 +420,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString026() {
     Uint8Array arr = new Uint8Array(new int[] {-255});
     String result = String.valueOf(arr);
-    assertEqual("1", result);}
+    assertEqual("1", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2700
      * @tc.name testUint8ArrayToString027
@@ -409,7 +435,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString027() {
     Uint8Array arr = new Uint8Array(new int[] {0, 255, 127, 128});
     String result = String.valueOf(arr);
-    assertEqual("0,255,127,128", result);}
+    assertEqual("0,255,127,128", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2800
      * @tc.name testUint8ArrayToString028
@@ -423,7 +450,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString028() {
     Uint8Array arr = new Uint8Array(new int[] {256, -1, 0x100});
     String result = String.valueOf(arr);
-    assertEqual("0,255,0", result);}
+    assertEqual("0,255,0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2900
      * @tc.name testUint8ArrayToString029
@@ -437,7 +465,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString029() {
     Uint8Array arr = new Uint8Array(new int[] {0, 0, 0});
     String result = String.valueOf(arr);
-    assertEqual("0,0,0", result);}
+    assertEqual("0,0,0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3000
      * @tc.name testUint8ArrayToString030
@@ -451,7 +480,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString030() {
     Uint8Array arr = new Uint8Array(new int[] {255, 255, 255});
     String result = String.valueOf(arr);
-    assertEqual("255,255,255", result);}
+    assertEqual("255,255,255", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3100
      * @tc.name testUint8ArrayToString031
@@ -465,7 +495,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString031() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
     String result = String.valueOf(arr);
-    assertEqual("1,2,3,4,5,6,7,8,9,10", result);}
+    assertEqual("1,2,3,4,5,6,7,8,9,10", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3200
      * @tc.name testUint8ArrayToString032
@@ -479,7 +510,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString032() {
     Uint8Array arr = new Uint8Array(new int[] {-128, 127, 256});
     String result = String.valueOf(arr);
-    assertEqual("128,127,0", result);}
+    assertEqual("128,127,0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3300
      * @tc.name testUint8ArrayToString033
@@ -493,7 +525,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString033() {
     Uint8Array arr = new Uint8Array(new int[] {0, 0, 0, 0, 0});
     String result = String.valueOf(arr);
-    assertEqual("0,0,0,0,0", result);}
+    assertEqual("0,0,0,0,0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3400
      * @tc.name testUint8ArrayToString034
@@ -507,7 +540,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString034() {
     Uint8Array arr = new Uint8Array(new double[] {3.5, 2.7});
     String result = String.valueOf(arr);
-    assertEqual("3,2", result);}
+    assertEqual("3,2", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3500
      * @tc.name testUint8ArrayToString035
@@ -521,7 +555,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString035() {
     Uint8Array arr = new Uint8Array(new int[] {0x7F, 0x80, 0xFF});
     String result = String.valueOf(arr);
-    assertEqual("127,128,255", result);}
+    assertEqual("127,128,255", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3600
      * @tc.name testUint8ArrayToString036
@@ -535,7 +570,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString036() {
     Uint8Array arr = new Uint8Array(new double[] {1e1, 2e1, 3e1});
     String result = String.valueOf(arr);
-    assertEqual("10,20,30", result);}
+    assertEqual("10,20,30", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3700
      * @tc.name testUint8ArrayToString037
@@ -549,7 +585,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString037() {
     Uint8Array arr = new Uint8Array(new int[] {100, 200, 300});
     String result = String.valueOf(arr);
-    assertEqual("100,200,44", result);}
+    assertEqual("100,200,44", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3800
      * @tc.name testUint8ArrayToString038
@@ -563,7 +600,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString038() {
     Uint8Array arr = new Uint8Array(new int[] {-1, -2, -3});
     String result = String.valueOf(arr);
-    assertEqual("255,254,253", result);}
+    assertEqual("255,254,253", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3900
      * @tc.name testUint8ArrayToString039
@@ -577,7 +615,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString039() {
     Uint8Array arr = new Uint8Array(new double[] {Double.NaN, 3.5, 2.7});
     String result = String.valueOf(arr);
-    assertEqual("0,3,2", result);}
+    assertEqual("0,3,2", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4000
      * @tc.name testUint8ArrayToString040
@@ -591,7 +630,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString040() {
     Uint8Array arr = new Uint8Array(new int[] {0b1010, 0b1111});
     String result = String.valueOf(arr);
-    assertEqual("10,15", result);}
+    assertEqual("10,15", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4100
      * @tc.name testUint8ArrayToString041
@@ -605,7 +645,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString041() {
     Uint8Array arr = new Uint8Array(new int[] {1000, 2000, 3000});
     String result = String.valueOf(arr);
-    assertEqual("232,208,184", result);}
+    assertEqual("232,208,184", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4200
      * @tc.name testUint8ArrayToString042
@@ -619,7 +660,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString042() {
     Uint8Array arr = new Uint8Array(new int[] {-0, 0, -0});
     String result = String.valueOf(arr);
-    assertEqual("0,0,0", result);}
+    assertEqual("0,0,0", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4300
      * @tc.name testUint8ArrayToString043
@@ -633,7 +675,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString043() {
     Uint8Array arr = new Uint8Array(new double[] {0.1, 0.9, 1.1});
     String result = String.valueOf(arr);
-    assertEqual("0,0,1", result);}
+    assertEqual("0,0,1", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4400
      * @tc.name testUint8ArrayToString044
@@ -651,7 +694,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     uint8.set(1, 2);
     uint8.set(2, 3);
     String result = String.valueOf(uint8);
-    assertEqual("1,2,3", result);}
+    assertEqual("1,2,3", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4500
      * @tc.name testUint8ArrayToString045
@@ -669,7 +713,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     uint8.set(1, 20);
     uint8.set(2, 30);
     String result = String.valueOf(uint8);
-    assertEqual("10,20,30", result);}
+    assertEqual("10,20,30", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4600
      * @tc.name testUint8ArrayToString046
@@ -683,7 +728,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString046() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     String result = String.valueOf(arr);
-    assertEqual("1,2,3,4,5", result);}
+    assertEqual("1,2,3,4,5", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4700
      * @tc.name testUint8ArrayToString047
@@ -697,7 +743,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString047() {
     Uint8Array arr = Uint8Array.from(new double[] {1.0, 2.0, 3.0}, (x, index) -> x * 2);
     String result = String.valueOf(arr);
-    assertEqual("2,4,6", result);}
+    assertEqual("2,4,6", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4800
      * @tc.name testUint8ArrayToString048
@@ -712,7 +759,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array arr = new Uint8Array(src);
     String result = String.valueOf(arr);
-    assertEqual("10,20,30", result);}
+    assertEqual("10,20,30", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4900
      * @tc.name testUint8ArrayToString049
@@ -727,7 +775,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Int32Array src = new Int32Array(new int[] {1, 2, 3});
     Uint8Array arr = new Uint8Array(src);
     String result = String.valueOf(arr);
-    assertEqual("1,2,3", result);}
+    assertEqual("1,2,3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5000
      * @tc.name testUint8ArrayToString050
@@ -741,7 +790,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString050() {
     Uint8Array arr = new Uint8Array(new int[] {300, 400, 500});
     String result = String.valueOf(arr);
-    assertEqual("44,144,244", result);}
+    assertEqual("44,144,244", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5100
      * @tc.name testUint8ArrayToString051
@@ -755,7 +805,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString051() {
     Uint8Array arr = new Uint8Array(new int[] {-10, -20, -30});
     String result = String.valueOf(arr);
-    assertEqual("246,236,226", result);}
+    assertEqual("246,236,226", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5200
      * @tc.name testUint8ArrayToString052
@@ -769,7 +820,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString052() {
     Uint8Array arr = new Uint8Array(new double[] {1.5, 2.5, 3.5});
     String result = String.valueOf(arr);
-    assertEqual("1,2,3", result);}
+    assertEqual("1,2,3", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5300
      * @tc.name testUint8ArrayToString053
@@ -783,7 +835,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString053() {
     Uint8Array arr = new Uint8Array(new double[] {Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY});
     String result = String.valueOf(arr);
-    assertEqual("0,0,0", result);}
+    assertEqual("0,0,0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5400
      * @tc.name testUint8ArrayToString054
@@ -797,7 +850,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString054() {
     Uint8Array arr = new Uint8Array(new double[] {0.1, 0.2, 0.3});
     String result = String.valueOf(arr);
-    assertEqual("0,0,0", result);}
+    assertEqual("0,0,0", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5500
      * @tc.name testUint8ArrayToString055
@@ -812,7 +866,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array sliced = arr.slice(1, 3);
     String result = String.valueOf(sliced);
-    assertEqual("2,3", result);}
+    assertEqual("2,3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5600
      * @tc.name testUint8ArrayToString056
@@ -827,7 +882,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array filtered = arr.filter((x) -> x > 2);
     String result = String.valueOf(filtered);
-    assertEqual("3,4,5", result);}
+    assertEqual("3,4,5", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5700
      * @tc.name testUint8ArrayToString057
@@ -842,7 +898,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array mapped = arr.map((x) -> x * 10);
     String result = String.valueOf(mapped);
-    assertEqual("10,20,30", result);}
+    assertEqual("10,20,30", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5800
      * @tc.name testUint8ArrayToString058
@@ -857,7 +914,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     arr.reverse();
     String result = String.valueOf(arr);
-    assertEqual("3,2,1", result);}
+    assertEqual("3,2,1", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5900
      * @tc.name testUint8ArrayToString059
@@ -872,7 +930,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {3, 1, 2});
     arr.sort();
     String result = String.valueOf(arr);
-    assertEqual("1,2,3", result);}
+    assertEqual("1,2,3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6000
      * @tc.name testUint8ArrayToString060
@@ -887,7 +946,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(3);
     arr.fill(7);
     String result = String.valueOf(arr);
-    assertEqual("7,7,7", result);}
+    assertEqual("7,7,7", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6100
      * @tc.name testUint8ArrayToString061
@@ -902,7 +962,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     arr.copyWithin(0, 3, 5);
     String result = String.valueOf(arr);
-    assertEqual("4,5,3,4,5", result);}
+    assertEqual("4,5,3,4,5", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6200
      * @tc.name testUint8ArrayToString062
@@ -917,7 +978,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(3);
     arr.set(new Uint8Array(new int[] {10, 20, 30}));
     String result = String.valueOf(arr);
-    assertEqual("10,20,30", result);}
+    assertEqual("10,20,30", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6300
      * @tc.name testUint8ArrayToString063
@@ -933,7 +995,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {100, 200, 255});
     arr.set(src);
     String result = String.valueOf(arr);
-    assertEqual("100,200,255", result);}
+    assertEqual("100,200,255", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6400
      * @tc.name testUint8ArrayToString064
@@ -948,7 +1011,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array reversed = arr.toReversed();
     String result = String.valueOf(reversed);
-    assertEqual("3,2,1", result);}
+    assertEqual("3,2,1", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6500
      * @tc.name testUint8ArrayToString065
@@ -963,7 +1027,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {3, 1, 2});
     Uint8Array sorted = arr.toSorted();
     String result = String.valueOf(sorted);
-    assertEqual("1,2,3", result);}
+    assertEqual("1,2,3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6600
      * @tc.name testUint8ArrayToString066
@@ -980,7 +1045,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     arr.set(1, 255);
     arr.set(2, 128);
     String result = String.valueOf(arr);
-    assertEqual("0,255,128", result);}
+    assertEqual("0,255,128", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6700
      * @tc.name testUint8ArrayToString067
@@ -994,9 +1060,11 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString067() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     arr.forEach((value, index) -> {
-    arr.set(index, value * 2);});
+    arr.set(index, value * 2);
+        });
     String result = String.valueOf(arr);
-    assertEqual("2,4,6", result);}
+    assertEqual("2,4,6", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6800
      * @tc.name testUint8ArrayToString068
@@ -1009,8 +1077,9 @@ public class Uint8ArrayToStringTest extends BasTest {
     @Test
     void testUint8ArrayToString068() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    int sum = arr.reduce((acc, val, index, array)-> acc + val, 0);
-    assertEqual(6, sum);}
+    int sum = arr.reduce((acc, val, index, array) ->  acc + val, 0);
+    assertEqual(6, sum);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6900
      * @tc.name testUint8ArrayToString069
@@ -1023,8 +1092,9 @@ public class Uint8ArrayToStringTest extends BasTest {
     @Test
     void testUint8ArrayToString069() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    int result = arr.reduceRight((acc, val, index, array)-> acc + val, 0);
-    assertEqual(6, result);}
+    int result = arr.reduceRight((acc, val, index, array) ->  acc + val, 0);
+    assertEqual(6, result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7000
      * @tc.name testUint8ArrayToString070
@@ -1041,7 +1111,9 @@ public class Uint8ArrayToStringTest extends BasTest {
     EntryResult first = iter.next();
     int[] val = first.value;
     if (val != null) {
-    assertEqual(1, val[1]);};}
+    assertEqual(1, val[1]);
+    }
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7100
      * @tc.name testUint8ArrayToString071
@@ -1055,7 +1127,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString071() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = String.valueOf(arr);
-    assertEqual("1,2,3", result);}
+    assertEqual("1,2,3", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7200
      * @tc.name testUint8ArrayToString072
@@ -1070,7 +1143,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = String.valueOf(arr);
     boolean hasComma = result.contains(",");
-    assertTrue(hasComma);}
+    assertTrue(hasComma);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7300
      * @tc.name testUint8ArrayToString073
@@ -1085,7 +1159,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {42});
     String result = String.valueOf(arr);
     boolean hasComma = result.contains(",");
-    assertFalse(hasComma);}
+    assertFalse(hasComma);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7400
      * @tc.name testUint8ArrayToString074
@@ -1100,7 +1175,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     String result = String.valueOf(arr);
     boolean endsWithComma = result.endsWith(",");
-    assertFalse(endsWithComma);}
+    assertFalse(endsWithComma);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7500
      * @tc.name testUint8ArrayToString075
@@ -1114,7 +1190,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString075() {
     Uint8Array arr = new Uint8Array(new int[] {999});
     String result = String.valueOf(arr);
-    assertEqual("231", result);}
+    assertEqual("231", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7600
      * @tc.name testUint8ArrayToString076
@@ -1128,7 +1205,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString076() {
     Uint8Array arr = new Uint8Array(new int[] {-256});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7700
      * @tc.name testUint8ArrayToString077
@@ -1142,7 +1220,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString077() {
     Uint8Array arr = new Uint8Array(new double[] {0.999});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7800
      * @tc.name testUint8ArrayToString078
@@ -1156,7 +1235,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString078() {
     Uint8Array arr = new Uint8Array(new double[] {-0.999});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7900
      * @tc.name testUint8ArrayToString079
@@ -1170,7 +1250,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString079() {
     Uint8Array arr = new Uint8Array(new double[] {Double.POSITIVE_INFINITY});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8000
      * @tc.name testUint8ArrayToString080
@@ -1184,7 +1265,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString080() {
     Uint8Array arr = new Uint8Array(new double[] {Double.NEGATIVE_INFINITY});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8100
      * @tc.name testUint8ArrayToString081
@@ -1198,7 +1280,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString081() {
     Uint8Array arr = new Uint8Array(new double[] {-1e-10});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8200
      * @tc.name testUint8ArrayToString082
@@ -1215,7 +1298,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array view2 = new Uint8Array(buf);
     view1.set(0, 42);
     String result = String.valueOf(view2);
-    assertEqual("42,0,0", result);}
+    assertEqual("42,0,0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8300
      * @tc.name testUint8ArrayToString083
@@ -1231,7 +1315,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array sub = arr.subarray(1, 4);
     arr.set(2, 99);
     String result = String.valueOf(sub);
-    assertEqual("2,99,4", result);}
+    assertEqual("2,99,4", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8400
      * @tc.name testUint8ArrayToString084
@@ -1247,7 +1332,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array sliced = arr.slice(0, 2);
     arr.set(0, 99);
     String result = String.valueOf(sliced);
-    assertEqual("1,2", result);}
+    assertEqual("1,2", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8500
      * @tc.name testUint8ArrayToString085
@@ -1268,7 +1354,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     full.set(4, 50);
     Uint8Array offsetView = new Uint8Array(buf, 2, 2);
     String result = String.valueOf(offsetView);
-    assertEqual("30,40", result);}
+    assertEqual("30,40", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8600
      * @tc.name testUint8ArrayToString086
@@ -1287,7 +1374,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     firstView.set(1, 10);
     firstView.set(2, 15);
     String result = String.valueOf(secondView);
-    assertEqual("5,10,15", result);}
+    assertEqual("5,10,15", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8700
      * @tc.name testUint8ArrayToString087
@@ -1301,7 +1389,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString087() {
     Uint8Array arr = new Uint8Array(new double[] {Double.MAX_VALUE});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8800
      * @tc.name testUint8ArrayToString088
@@ -1315,7 +1404,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString088() {
     Uint8Array arr = new Uint8Array(new double[] {Double.MIN_VALUE});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8900
      * @tc.name testUint8ArrayToString089
@@ -1329,7 +1419,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString089() {
     Uint8Array arr = new Uint8Array(new double[] {-Double.MAX_VALUE});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9000
      * @tc.name testUint8ArrayToString090
@@ -1343,7 +1434,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString090() {
     Uint8Array arr = new Uint8Array(new double[] {-Double.MIN_VALUE});
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9100
      * @tc.name testUint8ArrayToString091
@@ -1358,7 +1450,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(1);
     arr.set(0, 255);
     String result = String.valueOf(arr);
-    assertEqual("255", result);}
+    assertEqual("255", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9200
      * @tc.name testUint8ArrayToString092
@@ -1373,7 +1466,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(1);
     arr.set(0, 256);
     String result = String.valueOf(arr);
-    assertEqual("0", result);}
+    assertEqual("0", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9300
      * @tc.name testUint8ArrayToString093
@@ -1391,7 +1485,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     arr.set(2, 30);
     arr.set(3, 40);
     String result = String.valueOf(arr);
-    assertEqual("10,20,30,40", result);}
+    assertEqual("10,20,30,40", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9400
      * @tc.name testUint8ArrayToString094
@@ -1406,7 +1501,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(1);
     arr.set(0, 7.9);
     String result = String.valueOf(arr);
-    assertEqual("7", result);}
+    assertEqual("7", result);
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9500
      * @tc.name testUint8ArrayToString095
@@ -1421,7 +1517,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(1);
     arr.set(0, -1);
     String result = String.valueOf(arr);
-    assertEqual("255", result);}
+    assertEqual("255", result);
+    }
 /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9600
      * @tc.name testUint8ArrayToString096
@@ -1435,7 +1532,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString096() {
     Uint8Array arr = new Uint8Array(100);
     String result = String.valueOf(arr);
-    assertEqual(199, result.length());}
+    assertEqual(199, result.length());
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9700
      * @tc.name testUint8ArrayToString097
@@ -1449,7 +1547,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString097() {
     Uint8Array arr = new Uint8Array(100);
     String result = String.valueOf(arr);
-    assertEqual("0", String.valueOf(result.charAt(0)));}
+    assertEqual("0", String.valueOf(result.charAt(0)));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9800
      * @tc.name testUint8ArrayToString098
@@ -1463,7 +1562,8 @@ public class Uint8ArrayToStringTest extends BasTest {
     void testUint8ArrayToString098() {
     Uint8Array arr = new Uint8Array(new int[] {5});
     String result = String.valueOf(arr);
-    assertEqual("5", String.valueOf(result.charAt(0)));}
+    assertEqual("5", String.valueOf(result.charAt(0)));
+    }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9900
      * @tc.name testUint8ArrayToString099
@@ -1478,8 +1578,11 @@ public class Uint8ArrayToStringTest extends BasTest {
     Uint8Array arr = new Uint8Array(0);
     boolean threw = false;
     try {
-    String.valueOf(arr);} catch (RangeError e) {
+    String.valueOf(arr);
+    } catch (RangeError e) {
     threw = true;
-    assertEqual("Error", e.getClass().getSimpleName());};
-    assertFalse(threw);}
+    assertEqual("Error", e.getClass().getSimpleName());
+    }
+    assertFalse(threw);
+    }
 }
