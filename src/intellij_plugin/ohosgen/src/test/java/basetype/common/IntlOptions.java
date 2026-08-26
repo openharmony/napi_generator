@@ -53,4 +53,7 @@ public class IntlOptions {
 
     /** 货币展示方式（"" / "symbol" / "code"）。 */
     public String currencyDisplay = "";
+
+    /** 区域匹配策略（ArkTS ToLocaleStringOptions，不影响数值格式）。 */
+    public String localeMatcher = "";
 }

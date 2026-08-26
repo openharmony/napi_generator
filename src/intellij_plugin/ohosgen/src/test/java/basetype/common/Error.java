@@ -20,6 +20,10 @@ package basetype.common;
  */
 public class Error extends RuntimeException {
 
+    public Error() {
+        super("");
+    }
+
     public Error(String message) {
         super(message);
     }

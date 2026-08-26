@@ -20,6 +20,10 @@ package basetype.common;
  */
 public class RangeError extends RuntimeException {
 
+    public RangeError() {
+        super("");
+    }
+
     public RangeError(String message) {
         super(message);
     }

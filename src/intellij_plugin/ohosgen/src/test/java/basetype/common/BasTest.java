@@ -115,6 +115,78 @@ public class BasTest {
         return arr;
     }
 
+    /** 展开迭代器到列表（[...iter] 语义）。 */
+    public static java.util.List<Integer> collect(java.lang.Iterable<Integer> it) {
+        java.util.List<Integer> list = new java.util.ArrayList<>();
+        for (Integer v : it) {
+            list.add(v);
+        }
+        return list;
+    }
+
+    /** [x, ...list] 语义：元素前置到列表头部（reduce 数组归约场景）。 */
+    public static java.util.List<Integer> prepend(int v, java.util.List<Integer> list) {
+        java.util.List<Integer> l = new java.util.ArrayList<>(list);
+        l.add(0, v);
+        return l;
+    }
+
+    /** Number.isInteger 语义：整数值判定。 */
+    public static boolean isInteger(int v) {
+        return true;
+    }
+
+    public static boolean isInteger(double v) {
+        return !Double.isNaN(v) && !Double.isInfinite(v) && v == Math.floor(v);
+    }
+
+    /** instanceof 语义：运行时类型判定。 */
+    public static boolean instanceOf(Object o, Class<?> c) {
+        return c.isInstance(o);
+    }
+
+    /** JSON.stringify 语义：Uint8Array 序列化为 {"i":v,...}。 */
+    public static String stringify(Uint8Array a) {
+        StringBuilder sb = new StringBuilder("{");
+        for (int i = 0; i < a.length(); i++) {
+            if (i > 0) {
+                sb.append(",");
+            }
+            sb.append('"').append(i).append('"').append(':').append(a.get(i));
+        }
+        return sb.append("}").toString();
+    }
+
+    /** parseInt 失败归 0（JS parseInt NaN 语义）。 */
+    public static int parseIntSafe(String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    /** Class.of(X).getName() 语义：ETS number 运行时为 double。 */
+    public static String className(int v) {
+        return "java.lang.Double";
+    }
+
+    public static String className(double v) {
+        return "java.lang.Double";
+    }
+
+    public static String className(boolean v) {
+        return "java.lang.Boolean";
+    }
+
+    public static String className(String v) {
+        return "java.lang.String";
+    }
+
+    public static String className(Object o) {
+        return o == null ? null : o.getClass().getName();
+    }
+
     /** 空数组字面量 fill 语义：n 个元素全部填充 value。 */
     public static java.util.List<Integer> filledList(int size, int value) {
         java.util.List<Integer> list = new java.util.ArrayList<>();

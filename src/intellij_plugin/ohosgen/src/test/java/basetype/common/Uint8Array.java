@@ -699,81 +699,59 @@ public class Uint8Array implements IntArrayView {
             throw new RangeError("Invalid locale: " + locales);
         }
         String lang = lc.split("[-_]")[0];
+        // ArkTS typed array toLocaleString 忽略全部 Intl 选项，仅 locale 分组与数字系统生效
         boolean grouped = opts == null || opts.useGrouping;
-        boolean percent = opts != null && "percent".equals(opts.style);
-        boolean currency = opts != null && "currency".equals(opts.style);
-        String notation = opts == null || opts.notation == null ? "" : opts.notation;
-        String compactDisplay = opts == null || opts.compactDisplay == null ? "short" : opts.compactDisplay;
-        String curDisplay = opts == null || opts.currencyDisplay == null ? "" : opts.currencyDisplay;
-        int minFrac = opts == null ? -1 : opts.minimumFractionDigits;
-        int maxFrac = opts == null ? -1 : opts.maximumFractionDigits;
-        int minSig = opts == null ? 0 : opts.minimumSignificantDigits;
-        int maxSig = opts == null ? 0 : opts.maximumSignificantDigits;
-        int minInt = opts == null ? 0 : opts.minimumIntegerDigits;
         String groupSep = groupSeparator(lang);
-        String decSep = decimalSeparator(lang);
-
-        long amount = value;
-        if (percent) {
-            amount = (long) value * 100;
+        String body = Integer.toString(value);
+        if (grouped && groupSep != null && body.length() > 3) {
+            body = groupDigits(body, groupSep);
         }
-        String body;
-        if ("scientific".equals(notation) || "engineering".equals(notation)) {
-            body = scientific(amount, "engineering".equals(notation));
-        } else if ("compact".equals(notation)) {
-            body = compact(amount, compactDisplay);
-        } else {
-            int fracDigits = 0;
-            if (minSig > 0) {
-                int digits = Long.toString(Math.abs(amount)).length();
-                if (digits < minSig) {
-                    fracDigits = minSig - digits;
-                }
-            }
-            if (maxSig > 0) {
-                int digits = Long.toString(Math.abs(amount)).length();
-                if (digits > maxSig) {
-                    long factor = pow10(digits - maxSig);
-                    amount = Math.round(amount / (double) factor) * factor;
-                }
-            }
-            if (currency) {
-                int curFrac = "JPY".equals(opts.currency) ? 0 : 2;
-                if (minFrac < 0) {
-                    minFrac = curFrac;
-                }
-                if (maxFrac < 0) {
-                    maxFrac = curFrac;
-                }
-            }
-            if (fracDigits == 0 && minFrac > 0) {
-                fracDigits = minFrac;
-            }
-            String intPart = Long.toString(Math.abs(amount));
-            while (intPart.length() < minInt) {
-                intPart = "0" + intPart;
-            }
-            if (grouped && groupSep != null) {
-                intPart = groupDigits(intPart, groupSep);
-            }
-            body = (amount < 0 ? "-" : "") + intPart;
-            if (fracDigits > 0) {
-                body = body + decSep + "0".repeat(fracDigits);
-            }
-            if (percent) {
-                body = body + "%";
-            }
-            if (currency) {
-                body = attachCurrency(body, opts.currency, curDisplay, lang);
-            }
-        }
-        if (lang.startsWith("ar")) {
-            body = toArabicDigits(body);
+        String digits = numberSystemDigits(lc);
+        if (digits != null) {
+            body = mapDigits(body, digits);
         }
         return body;
     }
 
-    /** 科学计数法（engineering 时指数取 3 的倍数）。 */
+    /** 解析 locale 扩展 -u-nu-XXX 的数字系统（无扩展时按语言默认）。 */
+    private static String numberSystemDigits(String lc) {
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("-u-nu-([a-z]+)").matcher(lc);
+        String nu = m.find() ? m.group(1) : null;
+        if (nu == null) {
+            if (lc.startsWith("ar")) {
+                return "\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669";
+            }
+            return null;
+        }
+        switch (nu) {
+            case "thai":
+                return "\u0E50\u0E51\u0E52\u0E53\u0E54\u0E55\u0E56\u0E57\u0E58\u0E59";
+            case "hanidec":
+                return "\u3007\u4E00\u4E8C\u4E09\u56DB\u4E94\u516D\u4E03\u516B\u4E5D";
+            case "fullwide":
+                return "\uFF10\uFF11\uFF12\uFF13\uFF14\uFF15\uFF16\uFF17\uFF18\uFF19";
+            case "arab":
+                return "\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669";
+            default:
+                return null;
+        }
+    }
+
+    /** 把数字字符按数字系统映射（其余字符原样保留）。 */
+    private static String mapDigits(String body, String digits) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < body.length(); i++) {
+            char c = body.charAt(i);
+            if (c >= '0' && c <= '9') {
+                sb.append(digits.charAt(c - '0'));
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+
     private static String scientific(long v, boolean engineering) {
         if (v == 0) {
             return "0E0";
@@ -955,6 +933,11 @@ public class Uint8Array implements IntArrayView {
     }
 
     /** 返回下标迭代器，对应 keys 语义。 */
+    /** Symbol.iterator 语义：数组迭代器（等价 values）。 */
+    public KeyIterator $_iterator() {
+        return new KeyIterator(false);
+    }
+
     public KeyIterator keys() {
         return new KeyIterator(true);
     }
@@ -991,19 +974,32 @@ public class Uint8Array implements IntArrayView {
         return lastIndexOf(value, length - 1);
     }
 
-    /** 从后向前查找（double 值：NaN 永不匹配，其余 ToUint8 后比较）。 */
+    /** 从后向前查找（double 值：精确比较，NaN/非整数值恒不匹配）。 */
     public int lastIndexOf(double value) {
-        return lastIndexOf(value, length - 1);
-    }
-
-    public int lastIndexOf(double value, int fromIndex) {
-        if (Double.isNaN(value) || Double.isInfinite(value) || value != Math.rint(value)) {
-            return -1;
+        for (int i = length - 1; i >= 0; i--) {
+            if (get(i) == value) {
+                return i;
+            }
         }
-        return lastIndexOf(toUint8(value), fromIndex);
+        return -1;
     }
 
     /** 从前往后查找指定值，返回下标（无则 -1），对应 indexOf 语义。 */
+    /** indexOf 的浮点形式参数（如 1e1）：精确比较，NaN/非整数值恒不匹配。 */
+    public int indexOf(double value) {
+        for (int i = 0; i < length; i++) {
+            if (get(i) == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /** indexOf 的 long 参数（超出 int 范围的整数值，恒不在数组中）。 */
+    public int indexOf(long value) {
+        return indexOf((int) value);
+    }
+
     public int indexOf(int value, int fromIndex) {
         int len = length;
         int from = fromIndex;
@@ -1026,6 +1022,21 @@ public class Uint8Array implements IntArrayView {
     }
 
     /** 是否包含指定值（SameValueZero 相等语义）。 */
+    /** includes 的浮点形式参数（如 1e0 / 2.55e2）：精确比较。 */
+    public boolean includes(double value) {
+        for (int i = 0; i < length; i++) {
+            if (get(i) == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** includes 的浮点 fromIndex（如 includes(20, 1.0)）。 */
+    public boolean includes(int value, double fromIndex) {
+        return includes(value, (int) fromIndex);
+    }
+
     public boolean includes(int value, int fromIndex) {
         return indexOf(value, fromIndex) != -1;
     }
@@ -1229,10 +1240,32 @@ public class Uint8Array implements IntArrayView {
 
     /** 从元素序列构造，对应 from(arrayLike) 语义。 */
     public static Uint8Array from(int[] values) {
+        if (values == null) {
+            throw new ClassCastError();   // null as FixedArray<int> 断言失败
+        }
         return new Uint8Array(values);
     }
 
     /** 从整型列表映射构造，对应 from(arrayLike, mapFn) 语义。 */
+    public static Uint8Array from(int[] values, Uint8ArrayMapper2 cb) {
+        int[] copy = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            copy[i] = toUint8(cb.apply(values[i], i));
+        }
+        return new Uint8Array(copy);
+    }
+
+    /** from(Set, cb)：迭代 set 元素映射填充。 */
+    public static Uint8Array from(java.util.Set<Integer> values, Uint8ArrayMapper2 cb) {
+        int[] copy = new int[values.size()];
+        int i = 0;
+        for (Integer v : values) {
+            copy[i] = toUint8(cb.apply(v, i));
+            i++;
+        }
+        return new Uint8Array(copy);
+    }
+
     public static Uint8Array from(java.util.List<Integer> values, Uint8ArrayMapper2 cb) {
         int[] copy = new int[values.size()];
         for (int i = 0; i < values.size(); i++) {
@@ -1276,6 +1309,23 @@ public class Uint8Array implements IntArrayView {
     }
 
     /** 从整型集合构造，对应 from(arrayLike) 语义。 */
+    public static Uint8Array from(java.util.Collection<Integer> values) {
+        int[] copy = new int[values.size()];
+        int i = 0;
+        for (Integer v : values) {
+            copy[i++] = v;
+        }
+        return new Uint8Array(copy);
+    }
+
+    public static Uint8Array from(Int32Array src) {
+        int[] copy = new int[src.length()];
+        for (int i = 0; i < src.length(); i++) {
+            copy[i] = toUint8(src.get(i));
+        }
+        return new Uint8Array(copy);
+    }
+
     public static Uint8Array from(java.util.Set<Integer> values) {
         int[] copy = new int[values.size()];
         int i = 0;
@@ -1286,6 +1336,33 @@ public class Uint8Array implements IntArrayView {
     }
 
     /** 从浮点数组构造（ToUint8 转换），对应 from(arrayLike) 语义。 */
+    /** from(double[], cb)：浮点源值映射填充（回调收到原始 double）。 */
+    @FunctionalInterface
+    public interface Uint8ArrayDoubleMapper1 {
+        double apply(double value);
+    }
+
+    @FunctionalInterface
+    public interface Uint8ArrayDoubleMapper2 {
+        double apply(double value, int index);
+    }
+
+    public static Uint8Array from(double[] values, Uint8ArrayDoubleMapper1 cb) {
+        int[] copy = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            copy[i] = toUint8(cb.apply(values[i]));
+        }
+        return new Uint8Array(copy);
+    }
+
+    public static Uint8Array from(double[] values, Uint8ArrayDoubleMapper2 cb) {
+        int[] copy = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            copy[i] = toUint8(cb.apply(values[i], i));
+        }
+        return new Uint8Array(copy);
+    }
+
     public static Uint8Array from(double[] values) {
         int[] copy = new int[values.length];
         for (int i = 0; i < values.length; i++) {
@@ -1314,6 +1391,11 @@ public class Uint8Array implements IntArrayView {
 
         KeyIterator(boolean keys) {
             this.keys = keys;
+        }
+
+        /** Symbol.iterator 语义：返回迭代器自身。 */
+        public KeyIterator $_iterator() {
+            return this;
         }
 
         /** 返回迭代结果（value + done），对应迭代器 next() 语义。 */
@@ -1356,6 +1438,11 @@ public class Uint8Array implements IntArrayView {
     public final class EntriesIterator implements Iterable<int[]> {
 
         private int cursor;
+
+        /** Symbol.iterator 语义：返回迭代器自身。 */
+        public EntriesIterator $_iterator() {
+            return this;
+        }
 
         /** 返回迭代结果（[index, value] + done），对应迭代器 next() 语义。 */
         public EntryResult next() {
@@ -1462,6 +1549,24 @@ public class Uint8Array implements IntArrayView {
     @FunctionalInterface
     public interface Int16BooleanReducer {
         boolean apply(boolean acc, int value, int index, Uint8Array array);
+    }
+
+    /** 泛型累积器的归约回调（自定义类型场景，如 reduceRight<SumCount>）。 */
+    @FunctionalInterface
+    public interface Uint8ArrayGenericReducer<T> {
+        T apply(T acc, int value, int index, Uint8Array array);
+    }
+
+    /** 泛型累积器的 reduceRight（从右向左；独立方法名避免重载歧义）。 */
+    public <T> T reduceRightGeneric(Uint8ArrayGenericReducer<T> cb, T initial) {
+        if (cb == null) {
+            throw new NullPointerError();
+        }
+        T acc = initial;
+        for (int i = length - 1; i >= 0; i--) {
+            acc = cb.apply(acc, get(i), i, this);
+        }
+        return acc;
     }
 
     /** 布尔累计的 reduceRight（从右向左；如 prev || curr > 0）。 */
@@ -1697,6 +1802,7 @@ public class Uint8Array implements IntArrayView {
         if (value == 0.0) {
             return 0;
         }
-        return (byte) (long) value & 0xFF;
+        double m = value % 256.0;   // 超大值先浮点取模（JS ToUint8 语义）
+        return (byte) (long) m & 0xFF;
     }
 }

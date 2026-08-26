@@ -20,6 +20,10 @@ package basetype.common;
  */
 public class TypeError extends RuntimeException {
 
+    public TypeError() {
+        super("");
+    }
+
     public TypeError(String message) {
         super(message);
     }
