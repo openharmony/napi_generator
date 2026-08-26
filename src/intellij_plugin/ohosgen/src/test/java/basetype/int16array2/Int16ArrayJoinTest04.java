@@ -17,21 +17,6 @@ package basetype.int16array2;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.Int16Array;
 
 import java.util.ArrayList;
@@ -44,6 +29,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Int16ArrayJoinTest04 —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Int16ArrayJoinTest04 extends BasTest {
 
@@ -52,16 +39,14 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.join();
     Integer actual1 = arr.get(1);
-    assertEqual(20, actual1);
-    }
+    assertEqual(20, actual1);}
 
     @Test
     void testInt16ArrayJoinTestFour002() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.join();
     Integer actual1 = arr.get(2);
-    assertEqual(30, actual1);
-    }
+    assertEqual(30, actual1);}
 
     @Test
     void testInt16ArrayJoinTestFour003() {
@@ -70,88 +55,77 @@ public class Int16ArrayJoinTest04 extends BasTest {
     String r2 = arr.join("|");
     String r3 = arr.join("|");
     assertEqual(r2, r1);
-    assertEqual(r3, r2);
-    }
+    assertEqual(r3, r2);}
 
     @Test
     void testInt16ArrayJoinTestFour004() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.join(",");
     String result = arr.join("|");
-    assertEqual("10|20|30", result);
-    }
+    assertEqual("10|20|30", result);}
 
     @Test
     void testInt16ArrayJoinTestFour005() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.set(0, 99);
     String result = arr.join();
-    assertEqual("99,20,30", result);
-    }
+    assertEqual("99,20,30", result);}
 
     @Test
     void testInt16ArrayJoinTestFour006() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.set(2, 88);
     String result = arr.join();
-    assertEqual("10,20,88", result);
-    }
+    assertEqual("10,20,88", result);}
 
     @Test
     void testInt16ArrayJoinTestFour007() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.set(1, 55);
     String result = arr.join("-");
-    assertEqual("10-55-30", result);
-    }
+    assertEqual("10-55-30", result);}
 
     @Test
     void testInt16ArrayJoinTestFour008() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.fill(-1);
     String result = arr.join("|");
-    assertEqual("-1|-1|-1", result);
-    }
+    assertEqual("-1|-1|-1", result);}
 
     @Test
     void testInt16ArrayJoinTestFour009() {
     Int16Array arr = Int16Array.of(10, 20, 30, 40, 50);
     arr.fill(99, 1, 3);
     String result = arr.join();
-    assertEqual("10,99,99,40,50", result);
-    }
+    assertEqual("10,99,99,40,50", result);}
 
     @Test
     void testInt16ArrayJoinTestFour010() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.fill(-32768);
     String result = arr.join(",");
-    assertEqual("-32768,-32768,-32768", result);
-    }
+    assertEqual("-32768,-32768,-32768", result);}
 
     @Test
     void testInt16ArrayJoinTestFour011() {
     Int16Array arr = Int16Array.of(-5, 100, -300, 50);
     arr.sort();
     String result = arr.join("|");
-    assertEqual("-300|-5|50|100", result);
-    }
+    assertEqual("-300|-5|50|100", result);}
 
     @Test
     void testInt16ArrayJoinTestFour012() {
     Int16Array arr = Int16Array.of(10, 20, 30, 40);
     arr.copyWithin(0, 2);
     String result = arr.join();
-    assertEqual("30,40,30,40", result);
-    }
+    assertEqual("30,40,30,40", result);}
 
     @Test
     void testInt16ArrayJoinTestFour013() {
     Int16Array arr = Int16Array.of(10, 20, 30, 40, 50);
     arr.copyWithin(-2, 0);
     String result = arr.join();
-    assertEqual("10,20,30,10,20", result);
-    }
+    assertEqual("10,20,30,10,20", result);}
 
     @Test
     void testInt16ArrayJoinTestFour014() {
@@ -159,8 +133,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array src = Int16Array.of(99, 88);
     arr.set(src, 1);
     String result = arr.join();
-    assertEqual("10,99,88,40", result);
-    }
+    assertEqual("10,99,88,40", result);}
 
     @Test
     void testInt16ArrayJoinTestFour015() {
@@ -169,8 +142,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     arr.set(2, 3);
     arr.set(3, 5);
     String result = arr.join();
-    assertEqual("1,20,3,5", result);
-    }
+    assertEqual("1,20,3,5", result);}
 
     @Test
     void testInt16ArrayJoinTestFour016() {
@@ -182,8 +154,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     view2.set(0, 11);
     view2.set(1, 22);
     String result = view2.join();
-    assertEqual("11,22", result);
-    }
+    assertEqual("11,22", result);}
 
     @Test
     void testInt16ArrayJoinTestFour017() {
@@ -193,8 +164,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     view1.set(0, 100);
     view1.set(1, 200);
     String secondResult = view2.join();
-    assertEqual("200,0", secondResult);
-    }
+    assertEqual("200,0", secondResult);}
 
     @Test
     void testInt16ArrayJoinTestFour018() {
@@ -203,8 +173,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array view2 = new Int16Array(buf, 2, 2);
     view2.set(0, 77);
     String firstResult = view1.join();
-    assertEqual("0,77,0,0", firstResult);
-    }
+    assertEqual("0,77,0,0", firstResult);}
 
     @Test
     void testInt16ArrayJoinTestFour019() {
@@ -212,8 +181,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array sub = parent.subarray(1, 3);
     sub.set(0, 99);
     String result = parent.join();
-    assertEqual("10,99,30,40", result);
-    }
+    assertEqual("10,99,30,40", result);}
 
     @Test
     void testInt16ArrayJoinTestFour020() {
@@ -221,8 +189,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array sub = parent.subarray(1, 3);
     parent.set(1, 55);
     String result = sub.join();
-    assertEqual("55,30", result);
-    }
+    assertEqual("55,30", result);}
 
     @Test
     void testInt16ArrayJoinTestFour021() {
@@ -230,8 +197,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array sub = parent.subarray(1, 3);
     parent.set(0, 999);
     String result = sub.join();
-    assertEqual("20,30", result);
-    }
+    assertEqual("20,30", result);}
 
     @Test
     void testInt16ArrayJoinTestFour022() {
@@ -240,8 +206,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array sub2 = parent.subarray(3, 5);
     sub1.set(0, 99);
     String result = sub2.join();
-    assertEqual("40,50", result);
-    }
+    assertEqual("40,50", result);}
 
     @Test
     void testInt16ArrayJoinTestFour023() {
@@ -250,8 +215,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array sub2 = parent.subarray(1, 4);
     sub1.set(1, 77);
     String result = sub2.join();
-    assertEqual("77,30,40", result);
-    }
+    assertEqual("77,30,40", result);}
 
     @Test
     void testInt16ArrayJoinTestFour024() {
@@ -259,8 +223,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array sub = parent.subarray(1, 4);
     parent.fill(88, 1, 4);
     String result = sub.join();
-    assertEqual("88,88,88", result);
-    }
+    assertEqual("88,88,88", result);}
 
     @Test
     void testInt16ArrayJoinTestFour025() {
@@ -268,8 +231,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array sub = parent.subarray(1, 3);
     parent.reverse();
     String result = sub.join();
-    assertEqual("30,20", result);
-    }
+    assertEqual("30,20", result);}
 
     @Test
     void testInt16ArrayJoinTestFour026() {
@@ -277,8 +239,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array sub = parent.subarray(1, 2);
     parent.set(1, 55);
     String result = sub.join();
-    assertEqual("55", result);
-    }
+    assertEqual("55", result);}
 
     @Test
     void testInt16ArrayJoinTestFour027() {
@@ -287,8 +248,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array view2 = new Int16Array(buf, 2, 2);
     view1.fill(5);
     String result = view2.join();
-    assertEqual("5,5", result);
-    }
+    assertEqual("5,5", result);}
 
     @Test
     void testInt16ArrayJoinTestFour028() {
@@ -302,8 +262,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     String mResult = mid.join();
     String rResult = right.join();
     assertEqual("2,2", mResult);
-    assertEqual("3,3", rResult);
-    }
+    assertEqual("3,3", rResult);}
 
     @Test
     void testInt16ArrayJoinTestFour029() {
@@ -312,8 +271,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array part = new Int16Array(buf, 4, 2);
     full.fill(7);
     String result = part.join(",");
-    assertEqual("7,7", result);
-    }
+    assertEqual("7,7", result);}
 
     @Test
     void testInt16ArrayJoinTestFour030() {
@@ -322,8 +280,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     view.set(0, 42);
     view.set(1, 84);
     String result = view.join();
-    assertEqual("42,84", result);
-    }
+    assertEqual("42,84", result);}
 
     @Test
     void testInt16ArrayJoinTestFour031() {
@@ -331,16 +288,14 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array sub = parent.subarray(1, 3);
     sub.fill(-32768);
     String result = parent.join();
-    assertEqual("10,-32768,-32768,40", result);
-    }
+    assertEqual("10,-32768,-32768,40", result);}
 
     @Test
     void testInt16ArrayJoinTestFour032() {
     Int16Array arr = new Int16Array(1);
     arr.set(0, -3.7);
     String result = arr.join();
-    assertEqual("-3", result);
-    }
+    assertEqual("-3", result);}
 
     @Test
     void testInt16ArrayJoinTestFour033() {
@@ -349,8 +304,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     arr.set(1, 32769);
     arr.set(2, -32769);
     String result = arr.join("|");
-    assertEqual("-32768|-32767|32767", result);
-    }
+    assertEqual("-32768|-32767|32767", result);}
 
     @Test
     void testInt16ArrayJoinTestFour034() {
@@ -362,58 +316,50 @@ public class Int16ArrayJoinTest04 extends BasTest {
     arr2.set(4, -32769);
     arr2.set(5, 32767);
     String result = arr2.join();
-    assertEqual("0,1,-1,-32768,32767,32767", result);
-    }
+    assertEqual("0,1,-1,-32768,32767,32767", result);}
 
     @Test
     void testInt16ArrayJoinTestFour035() {
     Int16Array arr = Int16Array.of(-32768, -1, 0, 1, 32767);
     String result = arr.join();
-    assertEqual("-32768,-1,0,1,32767", result);
-    }
+    assertEqual("-32768,-1,0,1,32767", result);}
 
     @Test
     void testInt16ArrayJoinTestFour036() {
     Int16Array arr = Int16Array.of(10, 20, 30, 40);
     String result = arr.reverse().join("|");
-    assertEqual("40|30|20|10", result);
-    }
+    assertEqual("40|30|20|10", result);}
 
     @Test
     void testInt16ArrayJoinTestFour037() {
     Int16Array arr = Int16Array.of(10, 20, 30, 40);
     String result = arr.fill(0, 2).reverse().join("-");
-    assertEqual("0-0-20-10", result);
-    }
+    assertEqual("0-0-20-10", result);}
 
     @Test
     void testInt16ArrayJoinTestFour038() {
     Int16Array arr = Int16Array.of(40, 10, 50, 20);
     String result = arr.sort().reverse().join();
-    assertEqual("50,40,20,10", result);
-    }
+    assertEqual("50,40,20,10", result);}
 
     @Test
     void testInt16ArrayJoinTestFour039() {
     Int16Array arr = Int16Array.of(10, 20, 30, 40);
     String result = arr.copyWithin(0, 2).reverse().join();
-    assertEqual("40,30,40,30", result);
-    }
+    assertEqual("40,30,40,30", result);}
 
     @Test
     void testInt16ArrayJoinTestFour040() {
     Int16Array arr = Int16Array.of(10, 20, 30, 40, 50);
     String result = arr.subarray(1, 4).fill(0).join("|");
-    assertEqual("0|0|0", result);
-    }
+    assertEqual("0|0|0", result);}
 
     @Test
     void testInt16ArrayJoinTestFour041() {
     Int16Array arr = Int16Array.of(10, 20, 30, 40, 50);
     arr.slice(1, 4);
     String result = arr.join();
-    assertEqual("10,20,30,40,50", result);
-    }
+    assertEqual("10,20,30,40,50", result);}
 
     @Test
     void testInt16ArrayJoinTestFour042() {
@@ -421,8 +367,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     String result = arr.toReversed().join();
     String origResult = arr.join();
     assertEqual("30,20,10", result);
-    assertEqual("10,20,30", origResult);
-    }
+    assertEqual("10,20,30", origResult);}
 
     @Test
     void testInt16ArrayJoinTestFour043() {
@@ -430,8 +375,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     String result = arr.toSorted().join();
     String origResult = arr.join();
     assertEqual("10,20,30", result);
-    assertEqual("30,10,20", origResult);
-    }
+    assertEqual("30,10,20", origResult);}
 
     @Test
     void testInt16ArrayJoinTestFour044() {
@@ -440,8 +384,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     String replacedResult = replaced.join();
     String origResult = arr.join();
     assertEqual("10,99,30", replacedResult);
-    assertEqual("10,20,30", origResult);
-    }
+    assertEqual("10,20,30", origResult);}
 
     @Test
     void testInt16ArrayJoinTestFour045() {
@@ -449,8 +392,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     String joined = arr.join();
     String[] parts = joined.split(java.util.regex.Pattern.quote(","));
     int actual1 = parts.length;
-    assertEqual(3, actual1);
-    }
+    assertEqual(3, actual1);}
 
     @Test
     void testInt16ArrayJoinTestFour046() {
@@ -464,16 +406,14 @@ public class Int16ArrayJoinTest04 extends BasTest {
     String actual3 = parts[1];
     assertEqual("20", actual3);
     String actual4 = parts[2];
-    assertEqual("30", actual4);
-    }
+    assertEqual("30", actual4);}
 
     @Test
     void testInt16ArrayJoinTestFour047() {
     Int16Array arr = Int16Array.of(10, 20);
     String joined = arr.join("");
     int length = joined.length();
-    assertEqual(4, length);
-    }
+    assertEqual(4, length);}
 
     @Test
     void testInt16ArrayJoinTestFour048() {
@@ -485,8 +425,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     int thirdPart = Integer.parseInt(parts[2]);
     Int16Array newArr = Int16Array.of(firstPart, secondPart, thirdPart);
     String result = newArr.join(",");
-    assertEqual("10,20,30", result);
-    }
+    assertEqual("10,20,30", result);}
 
     @Test
     void testInt16ArrayJoinTestFour049() {
@@ -497,42 +436,35 @@ public class Int16ArrayJoinTest04 extends BasTest {
     part.set(0, 99);
     part.set(1, 88);
     String result = part.join();
-    assertEqual("99,88", result);
-    }
+    assertEqual("99,88", result);}
 
     @Test
     void testInt16ArrayJoinTestFour050() {
     Int16Array arr = new Int16Array(5);
     for (int i = 0; i < 5; i++) {
-    arr.set(i, i * 10);
-    }
+    arr.set(i, i * 10);}
     String result = arr.join();
-    assertEqual("0,10,20,30,40", result);
-    }
+    assertEqual("0,10,20,30,40", result);}
 
     @Test
     void testInt16ArrayJoinTestFour051() {
     Int16Array arr = new Int16Array(4);
     for (int i = 0; i < 4; i++) {
-    arr.set(i, 40 - i * 10);
-    }
+    arr.set(i, 40 - i * 10);}
     String result = arr.join("-");
-    assertEqual("40-30-20-10", result);
-    }
+    assertEqual("40-30-20-10", result);}
 
     @Test
     void testInt16ArrayJoinTestFour052() {
     Int16Array arr = Int16Array.of(7, 7, 7, 7);
     String result = arr.join();
-    assertEqual("7,7,7,7", result);
-    }
+    assertEqual("7,7,7,7", result);}
 
     @Test
     void testInt16ArrayJoinTestFour053() {
     Int16Array arr = Int16Array.of(32767, -32768, 32767, -32768);
     String result = arr.join("|");
-    assertEqual("32767|-32768|32767|-32768", result);
-    }
+    assertEqual("32767|-32768|32767|-32768", result);}
 
     @Test
     void testInt16ArrayJoinTestFour054() {
@@ -540,15 +472,13 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array src = Int16Array.of(99, 88);
     arr.set(src, 2);
     String result = arr.join();
-    assertEqual("10,20,99,88,50", result);
-    }
+    assertEqual("10,20,99,88,50", result);}
 
     @Test
     void testInt16ArrayJoinTestFour055() {
     Int16Array arr = Int16Array.of(50, 40, 30, 20, 10);
     String result = arr.fill(0, 3).sort().join();
-    assertEqual("0,0,30,40,50", result);
-    }
+    assertEqual("0,0,30,40,50", result);}
 
     @Test
     void testInt16ArrayJoinTestFour056() {
@@ -557,8 +487,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     arr.fill(2, 2, 4);
     arr.fill(3, 4, 6);
     String result = arr.join();
-    assertEqual("1,1,2,2,3,3", result);
-    }
+    assertEqual("1,1,2,2,3,3", result);}
 
     @Test
     void testInt16ArrayJoinTestFour057() {
@@ -568,6 +497,5 @@ public class Int16ArrayJoinTest04 extends BasTest {
     String subResult = sub.join();
     String parentResult = parent.join();
     assertEqual("99,99", subResult);
-    assertEqual("10,99,99,40", parentResult);
-    }
+    assertEqual("10,99,99,40", parentResult);}
 }
