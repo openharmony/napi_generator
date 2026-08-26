@@ -17,24 +17,9 @@ package basetype.uint8array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
 import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
+import basetype.common.Uint8Array;
 import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
-import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
-import basetype.common.Uint8Array;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +31,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Uint8ArrayFindIndexTest —— Int16Array 方法族测试。
+ *
+ * @since 2026-08-26
  */
 public class Uint8ArrayFindIndexTest extends BasTest {
     /**
@@ -61,8 +48,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex001() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int result = arr.findIndex((value) -> value == 20);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     private static Uint8Array arr = Uint8Array.of(1, 2, 3);
     private static boolean extraParam = false;
     /**
@@ -86,8 +72,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex003() {
     Uint8Array arr = new Uint8Array();
     int result = arr.findIndex((value) -> true);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0040
      * @tc.name testUint8ArrayFindIndex004
@@ -101,8 +86,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex004() {
     Uint8Array arr = Uint8Array.of(0, 1, 2);
     int result = arr.findIndex((value) -> value == 0);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0050
      * @tc.name testUint8ArrayFindIndex005
@@ -116,8 +100,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex005() {
     Uint8Array arr = Uint8Array.of(0, 128, 255);
     int result = arr.findIndex((value) -> value == 255);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0060
      * @tc.name testUint8ArrayFindIndex006
@@ -131,8 +114,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex006() {
     Uint8Array arr = Uint8Array.of(0, 1, 2);
     int result = arr.findIndex((value) -> value > 0);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0070
      * @tc.name testUint8ArrayFindIndex007
@@ -146,8 +128,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex007() {
     Uint8Array arr = Uint8Array.of(50, 150, 250);
     int result = arr.findIndex((value) -> value > 200);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0080
      * @tc.name testUint8ArrayFindIndex008
@@ -161,8 +142,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex008() {
     Uint8Array arr = Uint8Array.of(0, 100, 0xFF);
     int result = arr.findIndex((value) -> value == 0xFF);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0090
      * @tc.name testUint8ArrayFindIndex009
@@ -176,8 +156,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex009() {
     Uint8Array arr = Uint8Array.of(0, 100, 200);
     int result = arr.findIndex((value) -> value > 127);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0100
      * @tc.name testUint8ArrayFindIndex010
@@ -191,8 +170,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex010() {
     Uint8Array arr = Uint8Array.of(127, 128, 129);
     int result = arr.findIndex((value) -> value >= 128);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0110
      * @tc.name testUint8ArrayFindIndex011
@@ -206,8 +184,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex011() {
     Uint8Array arr = Uint8Array.of(200, 50, 100);
     int result = arr.findIndex((value) -> value < 100);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0120
      * @tc.name testUint8ArrayFindIndex012
@@ -221,8 +198,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex012() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     int result = arr.findIndex((value) -> value % 2 == 0);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0130
      * @tc.name testUint8ArrayFindIndex013
@@ -236,8 +212,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex013() {
     Uint8Array arr = Uint8Array.of(2, 4, 5);
     int result = arr.findIndex((value) -> value % 2 == 1);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0140
      * @tc.name testUint8ArrayFindIndex014
@@ -251,8 +226,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex014() {
     Uint8Array arr = Uint8Array.of(0, 0, 3);
     int result = arr.findIndex((value) -> value != 0);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0150
      * @tc.name testUint8ArrayFindIndex015
@@ -266,8 +240,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex015() {
     Uint8Array arr = Uint8Array.of(0, 100, 150, 200);
     int result = arr.findIndex((value) -> value > 100 && value < 200);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0160
      * @tc.name testUint8ArrayFindIndex016
@@ -281,8 +254,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex016() {
     Uint8Array arr = Uint8Array.of(0, 0x80, 200);
     int result = arr.findIndex((value) -> value == 0x80);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0170
      * @tc.name testUint8ArrayFindIndex017
@@ -296,8 +268,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex017() {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
     int result = arr.findIndex((value) -> value == 127);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0180
      * @tc.name testUint8ArrayFindIndex018
@@ -311,8 +282,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex018() {
     Uint8Array arr = Uint8Array.of(0, 1, 2);
     int result = arr.findIndex((value) -> value <= 1);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0190
      * @tc.name testUint8ArrayFindIndex019
@@ -326,8 +296,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex019() {
     Uint8Array arr = Uint8Array.of(42, 7, 99);
     int result = arr.findIndex((value) -> value >= 0);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0200
      * @tc.name testUint8ArrayFindIndex020
@@ -341,8 +310,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex020() {
     Uint8Array arr = Uint8Array.of(100, 200, 300);
     int result = arr.findIndex((value, index) -> index == 0);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0210
      * @tc.name testUint8ArrayFindIndex021
@@ -356,8 +324,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex021() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int result = arr.findIndex((value, index, array) -> index == array.length() - 1);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0220
      * @tc.name testUint8ArrayFindIndex022
@@ -371,8 +338,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex022() {
     Uint8Array arr = Uint8Array.of(5, 10, 15, 20);
     int result = arr.findIndex((value, index) -> index == 2);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0230
      * @tc.name testUint8ArrayFindIndex023
@@ -386,8 +352,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex023() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4);
     int result = arr.findIndex((value, index) -> index % 2 == 0);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0240
      * @tc.name testUint8ArrayFindIndex024
@@ -401,8 +366,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex024() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40);
     int result = arr.findIndex((value, index) -> index % 2 == 1);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0250
      * @tc.name testUint8ArrayFindIndex025
@@ -416,8 +380,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex025() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     int result = arr.findIndex((value, index) -> index > 2);
-    assertEqual(3, result);
-    }
+    assertEqual(3, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0260
      * @tc.name testUint8ArrayFindIndex026
@@ -431,8 +394,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex026() {
     Uint8Array arr = Uint8Array.of(100, 200, 300, 400);
     int result = arr.findIndex((value, index) -> index < 2);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0270
      * @tc.name testUint8ArrayFindIndex027
@@ -446,8 +408,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex027() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     int result = arr.findIndex((value, index) -> index >= 2 && index <= 3);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0280
      * @tc.name testUint8ArrayFindIndex028
@@ -463,10 +424,8 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     boolean[] sameRef = {false};
     arr.findIndex((value, index, array) -> {
     sameRef[0] = array == arr;
-    return false;
-    });
-    assertTrue(sameRef[0]);
-    }
+    return false;});
+    assertTrue(sameRef[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0290
      * @tc.name testUint8ArrayFindIndex029
@@ -480,8 +439,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex029() {
     Uint8Array arr = Uint8Array.of(4, 5, 6);
     int result = arr.findIndex((value, index, array) -> array.length() == 3);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0300
      * @tc.name testUint8ArrayFindIndex030
@@ -495,8 +453,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex030() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int result = arr.findIndex((value, index, array) -> array.get(index) == value);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0310
      * @tc.name testUint8ArrayFindIndex031
@@ -512,10 +469,8 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     int[] byteLen = {0};
     arr.findIndex((value, index, array) -> {
     byteLen[0] = array.byteLength();
-    return false;
-    });
-    assertEqual(4, byteLen[0]);
-    }
+    return false;});
+    assertEqual(4, byteLen[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0320
      * @tc.name testUint8ArrayFindIndex032
@@ -528,9 +483,8 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     @Test
     void testUint8ArrayFindIndex032() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4);
-    int result = arr.findIndex((value, index, array) -> { if (index < array.length() - 1) { return value == array.get(index + 1) - 1; } return false; });
-    assertEqual(0, result);
-    }
+    int result = arr.findIndex((value, index, array) -> { if (index < array.length() - 1) { return value == array.get(index + 1) - 1;} return false;});
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0330
      * @tc.name testUint8ArrayFindIndex033
@@ -544,8 +498,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex033() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 52);
     int result = arr.findIndex((value, index) -> value + index > 55);
-    assertEqual(4, result);
-    }
+    assertEqual(4, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0340
      * @tc.name testUint8ArrayFindIndex034
@@ -559,8 +512,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex034() {
     Uint8Array arr = Uint8Array.of(20, 25, 30, 15);
     int result = arr.findIndex((value, index, array) -> value > array.get(0));
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0350
      * @tc.name testUint8ArrayFindIndex035
@@ -573,9 +525,8 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     @Test
     void testUint8ArrayFindIndex035() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    int result = arr.findIndex((value, index, array) -> { return value > 2 && index < 4 && array.length() == 5; });
-    assertEqual(2, result);
-    }
+    int result = arr.findIndex((value, index, array) -> { return value > 2 && index < 4 && array.length() == 5;});
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0360
      * @tc.name testUint8ArrayFindIndex036
@@ -589,8 +540,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex036() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
     int result = arr.findIndex((value, index) -> value * index > 100);
-    assertEqual(3, result);
-    }
+    assertEqual(3, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0370
      * @tc.name testUint8ArrayFindIndex037
@@ -604,8 +554,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex037() {
     Uint8Array arr = Uint8Array.of(0, 1, 3, 2);
     int result = arr.findIndex((value, index) -> value > index);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0380
      * @tc.name testUint8ArrayFindIndex038
@@ -619,8 +568,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex038() {
     Uint8Array arr = Uint8Array.of(5, 10, 15);
     int result = arr.findIndex((value) -> value == 10);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0390
      * @tc.name testUint8ArrayFindIndex039
@@ -634,8 +582,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex039() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     int result = arr.findIndex((value, index) -> value == 2 && index == 1);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0400
      * @tc.name testUint8ArrayFindIndex040
@@ -649,8 +596,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex040() {
     Uint8Array arr = Uint8Array.of(2, 4, 6);
     int result = arr.findIndex((value) -> value % 2 == 0);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0410
      * @tc.name testUint8ArrayFindIndex041
@@ -664,8 +610,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex041() {
     Uint8Array arr = Uint8Array.of(0, 100, 200, 255);
     int result = arr.findIndex((value) -> value > 255);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0420
      * @tc.name testUint8ArrayFindIndex042
@@ -679,8 +624,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex042() {
     Uint8Array arr = Uint8Array.of(0, 50, 100);
     int result = arr.findIndex((value) -> value < 0);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0430
      * @tc.name testUint8ArrayFindIndex043
@@ -694,8 +638,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex043() {
     Uint8Array arr = Uint8Array.of(0, 1, 255);
     int result = arr.findIndex((value) -> value == -1);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0440
      * @tc.name testUint8ArrayFindIndex044
@@ -709,8 +652,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex044() {
     Uint8Array arr = new Uint8Array();
     int result = arr.findIndex((value) -> value == 0);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0450
      * @tc.name testUint8ArrayFindIndex045
@@ -724,8 +666,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex045() {
     Uint8Array arr = Uint8Array.of(50);
     int result = arr.findIndex((value) -> value > 100);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0460
      * @tc.name testUint8ArrayFindIndex046
@@ -739,8 +680,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex046() {
     Uint8Array arr = Uint8Array.of(500);
     int result = arr.findIndex((value) -> value == 244);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0470
      * @tc.name testUint8ArrayFindIndex047
@@ -754,8 +694,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex047() {
     Uint8Array arr = new Uint8Array(0);
     int result = arr.findIndex((value) -> false);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0480
      * @tc.name testUint8ArrayFindIndex048
@@ -769,8 +708,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex048() {
     Uint8Array arr = Uint8Array.of(0, 0, 0);
     int result = arr.findIndex((value) -> value > 0);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0490
      * @tc.name testUint8ArrayFindIndex049
@@ -784,8 +722,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex049() {
     Uint8Array arr = Uint8Array.of(255, 255);
     int result = arr.findIndex((value) -> value < 0);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0500
      * @tc.name testUint8ArrayFindIndex050
@@ -799,8 +736,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex050() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     int result = arr.findIndex((value, index) -> index > 100);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0510
      * @tc.name testUint8ArrayFindIndex051
@@ -814,8 +750,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex051() {
     Uint8Array arr = Uint8Array.of(100, 150, 200);
     int result = arr.findIndex((value) -> value > 200 && value < 50);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0520
      * @tc.name testUint8ArrayFindIndex052
@@ -829,8 +764,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex052() {
     Uint8Array arr = Uint8Array.of(0, 10, 20);
     int result = arr.findIndex((value) -> value != value);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0530
      * @tc.name testUint8ArrayFindIndex053
@@ -845,8 +779,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(0);
     Uint8Array arr = new Uint8Array(buf);
     int result = arr.findIndex((value) -> true);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0540
      * @tc.name testUint8ArrayFindIndex054
@@ -860,8 +793,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex054() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int result = arr.findIndex((value, index) -> index == -1);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0550
      * @tc.name testUint8ArrayFindIndex055
@@ -877,15 +809,13 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     List<Integer> visitedIndices = new ArrayList<>();
     arr.findIndex((value, index) -> {
     visitedIndices.add(index);
-    return false;
-    });
+    return false;});
     assertEqual(5, visitedIndices.size());
     assertEqual(0, visitedIndices.get(0));
     assertEqual(1, visitedIndices.get(1));
     assertEqual(2, visitedIndices.get(2));
     assertEqual(3, visitedIndices.get(3));
-    assertEqual(4, visitedIndices.get(4));
-    }
+    assertEqual(4, visitedIndices.get(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0560
      * @tc.name testUint8ArrayFindIndex056
@@ -899,10 +829,9 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex056() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     int[] visitedCount = {0};
-    int result = arr.findIndex((value) -> { visitedCount[0]++; return value == 3; });
+    int result = arr.findIndex((value) -> { visitedCount[0]++; return value == 3;});
     assertEqual(2, result);
-    assertEqual(3, visitedCount[0]);
-    }
+    assertEqual(3, visitedCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0570
      * @tc.name testUint8ArrayFindIndex057
@@ -916,10 +845,9 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex057() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     int[] visitedCount = {0};
-    int result = arr.findIndex((value) -> { visitedCount[0]++; return false; });
+    int result = arr.findIndex((value) -> { visitedCount[0]++; return false;});
     assertEqual(-1, result);
-    assertEqual(5, visitedCount[0]);
-    }
+    assertEqual(5, visitedCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0580
      * @tc.name testUint8ArrayFindIndex058
@@ -933,10 +861,9 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex058() {
     Uint8Array arr = Uint8Array.of(42);
     int[] visitedCount = {0};
-    int result = arr.findIndex((value) -> { visitedCount[0]++; return value == 42; });
+    int result = arr.findIndex((value) -> { visitedCount[0]++; return value == 42;});
     assertEqual(0, result);
-    assertEqual(1, visitedCount[0]);
-    }
+    assertEqual(1, visitedCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0590
      * @tc.name testUint8ArrayFindIndex059
@@ -952,12 +879,10 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     List<Integer> visitedIndices = new ArrayList<>();
     arr.findIndex((value, index) -> {
     visitedIndices.add(index);
-    return false;
-    });
+    return false;});
     assertEqual(2, visitedIndices.size());
     assertEqual(0, visitedIndices.get(0));
-    assertEqual(1, visitedIndices.get(1));
-    }
+    assertEqual(1, visitedIndices.get(1));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0600
      * @tc.name testUint8ArrayFindIndex060
@@ -971,10 +896,9 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex060() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     int[] visitedCount = {0};
-    int result = arr.findIndex((value) -> { visitedCount[0]++; return value == 5; });
+    int result = arr.findIndex((value) -> { visitedCount[0]++; return value == 5;});
     assertEqual(4, result);
-    assertEqual(5, visitedCount[0]);
-    }
+    assertEqual(5, visitedCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0610
      * @tc.name testUint8ArrayFindIndex061
@@ -988,10 +912,9 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex061() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     int[] visitedCount = {0};
-    int result = arr.findIndex((value) -> { visitedCount[0]++; return false; });
+    int result = arr.findIndex((value) -> { visitedCount[0]++; return false;});
     assertEqual(-1, result);
-    assertEqual(10, visitedCount[0]);
-    }
+    assertEqual(10, visitedCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0620
      * @tc.name testUint8ArrayFindIndex062
@@ -1005,13 +928,11 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex062() {
     Uint8Array arr = new Uint8Array(100);
     for (int i = 0; i < 100; i++) {
-    arr.set(new Uint8Array(new int[] {i}), i);
-    };
+    arr.set(new Uint8Array(new int[] {i}), i);};
     int[] visitedCount = {0};
-    int result = arr.findIndex((value) -> { visitedCount[0]++; return value == 50; });
+    int result = arr.findIndex((value) -> { visitedCount[0]++; return value == 50;});
     assertEqual(50, result);
-    assertEqual(51, visitedCount[0]);
-    }
+    assertEqual(51, visitedCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0630
      * @tc.name testUint8ArrayFindIndex063
@@ -1025,13 +946,11 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex063() {
     Uint8Array arr = new Uint8Array(100);
     for (int i = 0; i < 100; i++) {
-    arr.set(new Uint8Array(new int[] {i}), i);
-    };
+    arr.set(new Uint8Array(new int[] {i}), i);};
     int[] visitedCount = {0};
-    int result = arr.findIndex((value) -> { visitedCount[0]++; return false; });
+    int result = arr.findIndex((value) -> { visitedCount[0]++; return false;});
     assertEqual(-1, result);
-    assertEqual(100, visitedCount[0]);
-    }
+    assertEqual(100, visitedCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0640
      * @tc.name testUint8ArrayFindIndex064
@@ -1045,8 +964,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex064() {
     Uint8Array arr = Uint8Array.of(5, 15, 25);
     int result = arr.findIndex((value) -> value == 15);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0650
      * @tc.name testUint8ArrayFindIndex065
@@ -1060,8 +978,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex065() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int result = arr.findIndex((value) -> value > 100);
-    assertEqual(-1, result);
-    }
+    assertEqual(-1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0660
      * @tc.name testUint8ArrayFindIndex066
@@ -1075,8 +992,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex066() {
     Uint8Array arr = Uint8Array.of(0, 10, 20);
     int result = arr.findIndex((value) -> value == 0x0A);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0670
      * @tc.name testUint8ArrayFindIndex067
@@ -1090,8 +1006,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex067() {
     Uint8Array arr = Uint8Array.of(0, 1, 2);
     int result = arr.findIndex((value) -> value > 0b0);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0680
      * @tc.name testUint8ArrayFindIndex068
@@ -1105,8 +1020,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex068() {
     Uint8Array arr = Uint8Array.of(0, 8, 16);
     int result = arr.findIndex((value) -> value == 010);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0690
      * @tc.name testUint8ArrayFindIndex069
@@ -1120,8 +1034,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex069() {
     Uint8Array arr = Uint8Array.of(0, 100, 200);
     int result = arr.findIndex((value) -> value == 1e2);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0700
      * @tc.name testUint8ArrayFindIndex070
@@ -1135,8 +1048,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex070() {
     Uint8Array arr = Uint8Array.of(0, 50, 100);
     int result = arr.findIndex((value) -> value > -1);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0710
      * @tc.name testUint8ArrayFindIndex071
@@ -1152,15 +1064,11 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     boolean[] caught = {false};
     try {
     arr.findIndex((value) -> {
-    throw new Error("test error");
-    });
-    } catch (RuntimeException e) {
+    throw new Error("test error");});} catch (RangeError e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
-    assertEqual("test error", e.getMessage());
-    };
-    assertTrue(caught[0]);
-    }
+    assertEqual("test error", e.getMessage());};
+    assertTrue(caught[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0720
      * @tc.name testUint8ArrayFindIndex072
@@ -1176,15 +1084,11 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     boolean[] caught = {false};
     try {
     arr.findIndex((value) -> {
-    throw new Error("string error");
-    });
-    } catch (RuntimeException e) {
+    throw new Error("string error");});} catch (RangeError e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
-    assertEqual("string error", e.getMessage());
-    };
-    assertTrue(caught[0]);
-    }
+    assertEqual("string error", e.getMessage());};
+    assertTrue(caught[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0730
      * @tc.name testUint8ArrayFindIndex073
@@ -1200,15 +1104,11 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     boolean[] caught = {false};
     try {
     arr.findIndex((value) -> {
-    throw new Error("42");
-    });
-    } catch (RuntimeException e) {
+    throw new Error("42");});} catch (RangeError e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
-    assertEqual("42", e.getMessage());
-    };
-    assertTrue(caught[0]);
-    }
+    assertEqual("42", e.getMessage());};
+    assertTrue(caught[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0740
      * @tc.name testUint8ArrayFindIndex074
@@ -1227,17 +1127,12 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     arr.findIndex((value) -> {
     visitedCount[0]++;
     if (visitedCount[0] == 1) {
-    throw new Error("error on first");
-    };
-    return false;
-    });
-    } catch (RuntimeException e) {
+    throw new Error("error on first");};
+    return false;});} catch (RangeError e) {
     caught[0] = true;
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
+    assertEqual("Error", e.getClass().getSimpleName());};
     assertTrue(caught[0]);
-    assertEqual(1, visitedCount[0]);
-    }
+    assertEqual(1, visitedCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0750
      * @tc.name testUint8ArrayFindIndex075
@@ -1256,17 +1151,12 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     arr.findIndex((value) -> {
     visitedCount[0]++;
     if (visitedCount[0] == 2) {
-    throw new Error("error on second");
-    };
-    return false;
-    });
-    } catch (RuntimeException e) {
+    throw new Error("error on second");};
+    return false;});} catch (RangeError e) {
     caught[0] = true;
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
+    assertEqual("Error", e.getClass().getSimpleName());};
     assertTrue(caught[0]);
-    assertEqual(2, visitedCount[0]);
-    }
+    assertEqual(2, visitedCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0760
      * @tc.name testUint8ArrayFindIndex076
@@ -1285,17 +1175,12 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     arr.findIndex((value) -> {
     visitedCount[0]++;
     if (visitedCount[0] == 3) {
-    throw new Error("error on last");
-    };
-    return false;
-    });
-    } catch (RuntimeException e) {
+    throw new Error("error on last");};
+    return false;});} catch (RangeError e) {
     caught[0] = true;
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
+    assertEqual("Error", e.getClass().getSimpleName());};
     assertTrue(caught[0]);
-    assertEqual(3, visitedCount[0]);
-    }
+    assertEqual(3, visitedCount[0]);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0770
      * @tc.name testUint8ArrayFindIndex077
@@ -1309,8 +1194,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex077() {
     Uint8Array arr = Uint8Array.of(42);
     int result = arr.findIndex((value) -> value == 42);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0780
      * @tc.name testUint8ArrayFindIndex078
@@ -1324,8 +1208,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex078() {
     Uint8Array arr = Uint8Array.of(10, 20);
     int result = arr.findIndex((value) -> value == 20);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0790
      * @tc.name testUint8ArrayFindIndex079
@@ -1339,11 +1222,9 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex079() {
     Uint8Array arr = new Uint8Array(100);
     for (int i = 0; i < 100; i++) {
-    arr.set(new Uint8Array(new int[] {i}), i);
-    };
+    arr.set(new Uint8Array(new int[] {i}), i);};
     int result = arr.findIndex((value) -> value == 99);
-    assertEqual(99, result);
-    }
+    assertEqual(99, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0800
      * @tc.name testUint8ArrayFindIndex080
@@ -1357,11 +1238,9 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex080() {
     Uint8Array arr = new Uint8Array(256);
     for (int i = 0; i < 256; i++) {
-    arr.set(new Uint8Array(new int[] {i % 256}), i);
-    };
+    arr.set(new Uint8Array(new int[] {i % 256}), i);};
     int result = arr.findIndex((value) -> value == 255);
-    assertEqual(255, result);
-    }
+    assertEqual(255, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0810
      * @tc.name testUint8ArrayFindIndex081
@@ -1375,11 +1254,9 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex081() {
     Uint8Array arr = new Uint8Array(1000);
     for (int i = 0; i < 1000; i++) {
-    arr.set(new Uint8Array(new int[] {i % 256}), i);
-    };
+    arr.set(new Uint8Array(new int[] {i % 256}), i);};
     int result = arr.findIndex((value) -> value == 100);
-    assertEqual(100, result);
-    }
+    assertEqual(100, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0820
      * @tc.name testUint8ArrayFindIndex082
@@ -1393,11 +1270,9 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex082() {
     Uint8Array arr = new Uint8Array(10000);
     for (int i = 0; i < 10000; i++) {
-    arr.set(new Uint8Array(new int[] {i % 256}), i);
-    };
+    arr.set(new Uint8Array(new int[] {i % 256}), i);};
     int result = arr.findIndex((value) -> value == 200);
-    assertEqual(200, result);
-    }
+    assertEqual(200, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0830
      * @tc.name testUint8ArrayFindIndex083
@@ -1411,8 +1286,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex083() {
     Uint8Array arr = Uint8Array.of(0, 10, 20);
     int result = arr.findIndex((value) -> value == 0);
-    assertEqual(0, result);
-    }
+    assertEqual(0, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0840
      * @tc.name testUint8ArrayFindIndex084
@@ -1426,8 +1300,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex084() {
     Uint8Array arr = Uint8Array.of(0, 10, 255);
     int result = arr.findIndex((value) -> value == 255);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0850
      * @tc.name testUint8ArrayFindIndex085
@@ -1441,8 +1314,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex085() {
     Uint8Array arr = Uint8Array.of(0, 128, 255);
     int result = arr.findIndex((value) -> value == 128);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0860
      * @tc.name testUint8ArrayFindIndex086
@@ -1456,8 +1328,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex086() {
     Uint8Array arr = Uint8Array.of(0, 1, 2);
     int result = arr.findIndex((value) -> value == 1);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0870
      * @tc.name testUint8ArrayFindIndex087
@@ -1471,8 +1342,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex087() {
     Uint8Array arr = Uint8Array.of(253, 254, 255);
     int result = arr.findIndex((value) -> value == 254);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0880
      * @tc.name testUint8ArrayFindIndex088
@@ -1486,8 +1356,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex088() {
     Uint8Array arr = Uint8Array.of(252, 253, 254);
     int result = arr.findIndex((value) -> value == 253);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0890
      * @tc.name testUint8ArrayFindIndex089
@@ -1501,8 +1370,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex089() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     int result = arr.findIndex((value) -> value == 2);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0900
      * @tc.name testUint8ArrayFindIndex090
@@ -1516,8 +1384,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex090() {
     Uint8Array arr = Uint8Array.of(251, 252, 253);
     int result = arr.findIndex((value) -> value == 252);
-    assertEqual(1, result);
-    }
+    assertEqual(1, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0910
      * @tc.name testUint8ArrayFindIndex091
@@ -1535,8 +1402,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     assertEqual(2, arr.at(1));
     assertEqual(3, arr.at(2));
     assertEqual(4, arr.at(3));
-    assertEqual(5, arr.at(4));
-    }
+    assertEqual(5, arr.at(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0920
      * @tc.name testUint8ArrayFindIndex092
@@ -1551,8 +1417,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int originalLength = arr.length();
     arr.findIndex((value) -> value == 20);
-    assertEqual(originalLength, arr.length());
-    }
+    assertEqual(originalLength, arr.length());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0930
      * @tc.name testUint8ArrayFindIndex093
@@ -1567,8 +1432,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4);
     int originalByteLength = arr.byteLength();
     arr.findIndex((value) -> value == 2);
-    assertEqual(originalByteLength, arr.byteLength());
-    }
+    assertEqual(originalByteLength, arr.byteLength());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0940
      * @tc.name testUint8ArrayFindIndex094
@@ -1583,8 +1447,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     Uint8Array arr = Uint8Array.of(100, 200, 150);
     ArrayBuffer originalBuffer = arr.buffer();
     arr.findIndex((value) -> value == 200);
-    assertEqual(originalBuffer, arr.buffer());
-    }
+    assertEqual(originalBuffer, arr.buffer());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0950
      * @tc.name testUint8ArrayFindIndex095
@@ -1599,8 +1462,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     int originalByteOffset = arr.byteOffset();
     arr.findIndex((value) -> value == 3);
-    assertEqual(originalByteOffset, arr.byteOffset());
-    }
+    assertEqual(originalByteOffset, arr.byteOffset());}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0960
      * @tc.name testUint8ArrayFindIndex096
@@ -1619,8 +1481,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     assertEqual(2, arr.at(1));
     assertEqual(3, arr.at(2));
     assertEqual(4, arr.at(3));
-    assertEqual(5, arr.at(4));
-    }
+    assertEqual(5, arr.at(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0970
      * @tc.name testUint8ArrayFindIndex097
@@ -1636,17 +1497,13 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     boolean[] caught = {false};
     try {
     arr.findIndex((value) -> {
-    throw new Error("test error");
-    });
-    } catch (RuntimeException e) {
+    throw new Error("test error");});} catch (RangeError e) {
     caught[0] = true;
-    assertEqual("Error", e.getClass().getSimpleName());
-    };
+    assertEqual("Error", e.getClass().getSimpleName());};
     assertTrue(caught[0]);
     assertEqual(10, arr.at(0));
     assertEqual(20, arr.at(1));
-    assertEqual(30, arr.at(2));
-    }
+    assertEqual(30, arr.at(2));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0980
      * @tc.name testUint8ArrayFindIndex098
@@ -1661,8 +1518,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     List<Integer> source = java.util.Arrays.asList(10, 20, 30, 40, 50);
     Uint8Array arr = Uint8Array.from(source);
     int result = arr.findIndex((value) -> value > 35);
-    assertEqual(3, result);
-    }
+    assertEqual(3, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0990
      * @tc.name testUint8ArrayFindIndex099
@@ -1679,8 +1535,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     arr.set(new Uint8Array(new int[] {100}), 2);
     arr.set(new Uint8Array(new int[] {100}), 4);
     int result = arr.findIndex((value) -> value == 100);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_1000
      * @tc.name testUint8ArrayFindIndex100
@@ -1695,8 +1550,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5, 6, 7, 8);
     Uint8Array sub = arr.subarray(2, 6);
     int result = sub.findIndex((value) -> value == 5);
-    assertEqual(2, result);
-    }
+    assertEqual(2, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_1010
      * @tc.name testUint8ArrayFindIndex101
@@ -1712,8 +1566,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     Uint8Array arr = new Uint8Array(buffer, 2, 4);
     arr.set(new Uint8Array(new int[] {99}), 3);
     int result = arr.findIndex((value) -> value == 99);
-    assertEqual(3, result);
-    }
+    assertEqual(3, result);}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_1020
      * @tc.name testUint8ArrayFindIndex102
@@ -1731,8 +1584,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     assertEqual(2, arr.at(1));
     assertEqual(3, arr.at(2));
     assertEqual(4, arr.at(3));
-    assertEqual(5, arr.at(4));
-    }
+    assertEqual(5, arr.at(4));}
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_1030
      * @tc.name testUint8ArrayFindIndex103
@@ -1746,8 +1598,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     void testUint8ArrayFindIndex103() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     int[] innerResult = {-1};
-    int result = arr.findIndex((value, index) -> { if (value == 3) { innerResult[0] = arr.findIndex((v) -> v == 5); } return value == 4; });
+    int result = arr.findIndex((value, index) -> { if (value == 3) { innerResult[0] = arr.findIndex((v) -> v == 5);} return value == 4;});
     assertEqual(4, innerResult[0]);
-    assertEqual(3, result);
-    }
+    assertEqual(3, result);}
 }
