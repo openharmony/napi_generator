@@ -1081,3 +1081,1085 @@ public class Uint8ArrayFrom03Test extends BasTest {
     List<Integer> src = java.util.Arrays.asList(1, 2);
     basetype.common.ClassCastError.raise();
     } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("ClassCastError", e.getClass().getSimpleName());
+    };
+    assertTrue(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0620
+     * @tc.name testUint8ArrayFrom062
+     * @tc.desc Verify from() with valid numeric source does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom062() {
+    boolean[] caught = {false};
+    try {
+    int[] src = new int[] {1, 2, 3};
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0630
+     * @tc.name testUint8ArrayFrom063
+     * @tc.desc Verify from() with empty source does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom063() {
+    boolean[] caught = {false};
+    try {
+    int[] src = new int[] {};
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0640
+     * @tc.name testUint8ArrayFrom064
+     * @tc.desc Verify from() with empty Array does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom064() {
+    boolean[] caught = {false};
+    try {
+    List<Integer> src = new ArrayList<>();
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0650
+     * @tc.name testUint8ArrayFrom065
+     * @tc.desc Verify from() with empty Set does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom065() {
+    boolean[] caught = {false};
+    try {
+    Set<Integer> src = new LinkedHashSet<>();
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0660
+     * @tc.name testUint8ArrayFrom066
+     * @tc.desc Verify from() with empty Uint8Array does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom066() {
+    boolean[] caught = {false};
+    try {
+    Uint8Array src = new Uint8Array();
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0670
+     * @tc.name testUint8ArrayFrom067
+     * @tc.desc Verify from() with valid Array does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom067() {
+    boolean[] caught = {false};
+    try {
+    double[] src = new double[] {1.0, 2.0, 3.0};
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0680
+     * @tc.name testUint8ArrayFrom068
+     * @tc.desc Verify from() with valid Set does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom068() {
+    boolean[] caught = {false};
+    try {
+    Set<Integer> src = new LinkedHashSet<>();
+    src.add(1);
+    src.add(2);
+    src.add(3);
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0690
+     * @tc.name testUint8ArrayFrom069
+     * @tc.desc Verify from() with valid Uint8Array does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom069() {
+    boolean[] caught = {false};
+    try {
+    Uint8Array src = Uint8Array.of(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0700
+     * @tc.name testUint8ArrayFrom070
+     * @tc.desc Verify from() with valid ArrayLike does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom070() {
+    boolean[] caught = {false};
+    try {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0710
+     * @tc.name testUint8ArrayFrom071
+     * @tc.desc Verify from() with valid Iterable does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom071() {
+    boolean[] caught = {false};
+    try {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0720
+     * @tc.name testUint8ArrayFrom072
+     * @tc.desc Verify from() with valid mapfn does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom072() {
+    boolean[] caught = {false};
+    try {
+    List<Integer> src = java.util.Arrays.asList(1, 2);
+    Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0730
+     * @tc.name testUint8ArrayFrom073
+     * @tc.desc Verify from() with valid Iterable mapfn does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom073() {
+    boolean[] caught = {false};
+    try {
+    List<Integer> src = java.util.Arrays.asList(1, 2);
+    Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0740
+     * @tc.name testUint8ArrayFrom074
+     * @tc.desc Verify from() with boundary values does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom074() {
+    boolean[] caught = {false};
+    try {
+    int[] src = new int[] {0, 128, 255};
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0750
+     * @tc.name testUint8ArrayFrom075
+     * @tc.desc Verify from() with overflow values does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom075() {
+    boolean[] caught = {false};
+    try {
+    int[] src = new int[] {256, 300, 400};
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0760
+     * @tc.name testUint8ArrayFrom076
+     * @tc.desc Verify from() with negative values does not throw
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom076() {
+    boolean[] caught = {false};
+    try {
+    int[] src = new int[] {-1, -128, -256};
+    Uint8Array result = Uint8Array.from(src);
+    } catch (RuntimeException e) {
+    caught[0] = true;
+    assertEqual("Error", e.getClass().getSimpleName());
+    };
+    assertFalse(caught[0]);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0770
+     * @tc.name testUint8ArrayFrom077
+     * @tc.desc Verify from(FixedArray) returns Uint8Array instance
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom077() {
+    int[] src = new int[] {1, 2, 3};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0780
+     * @tc.name testUint8ArrayFrom078
+     * @tc.desc Verify from(Array) returns Uint8Array instance
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom078() {
+    double[] src = new double[] {1.0, 2.0, 3.0};
+    Uint8Array result = Uint8Array.from(src);
+    assertTrue(result.length() >= 0);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0790
+     * @tc.name testUint8ArrayFrom079
+     * @tc.desc Verify from(Set) returns Uint8Array instance
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom079() {
+    Set<Integer> src = new LinkedHashSet<>();
+    src.add(1);
+    src.add(2);
+    src.add(3);
+    Uint8Array result = Uint8Array.from(src);
+    assertTrue(result.length() >= 0);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0800
+     * @tc.name testUint8ArrayFrom080
+     * @tc.desc Verify from(Uint8Array) returns Uint8Array instance
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom080() {
+    Uint8Array src = Uint8Array.of(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertTrue(result.length() >= 0);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0810
+     * @tc.name testUint8ArrayFrom081
+     * @tc.desc Verify from(ArrayLike) returns Uint8Array instance
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom081() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertTrue(result.length() >= 0);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0820
+     * @tc.name testUint8ArrayFrom082
+     * @tc.desc Verify from(Iterable) returns Uint8Array instance
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom082() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertTrue(result.length() >= 0);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0830
+     * @tc.name testUint8ArrayFrom083
+     * @tc.desc Verify from(FixedArray) result has correct length
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom083() {
+    int[] src = new int[] {1, 2, 3, 4, 5};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(5, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0840
+     * @tc.name testUint8ArrayFrom084
+     * @tc.desc Verify from(Array) result has correct length
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom084() {
+    double[] src = new double[] {1.0, 2.0, 3.0, 4.0, 5.0};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(5, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0850
+     * @tc.name testUint8ArrayFrom085
+     * @tc.desc Verify from(Set) result has correct length
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom085() {
+    Set<Integer> src = new LinkedHashSet<>();
+    src.add(1);
+    src.add(2);
+    src.add(3);
+    src.add(4);
+    src.add(5);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(5, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0860
+     * @tc.name testUint8ArrayFrom086
+     * @tc.desc Verify from(Uint8Array) result has correct length
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom086() {
+    Uint8Array src = Uint8Array.of(1, 2, 3, 4, 5);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(5, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0870
+     * @tc.name testUint8ArrayFrom087
+     * @tc.desc Verify from(ArrayLike) result has correct length
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom087() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3, 4, 5);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(5, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0880
+     * @tc.name testUint8ArrayFrom088
+     * @tc.desc Verify from(Iterable) result has correct length
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom088() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3, 4, 5);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(5, result.length());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0890
+     * @tc.name testUint8ArrayFrom089
+     * @tc.desc Verify from(FixedArray) result has correct values
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom089() {
+    int[] src = new int[] {10, 20, 30};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(10, result.get(0));
+    assertEqual(20, result.get(1));
+    assertEqual(30, result.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0900
+     * @tc.name testUint8ArrayFrom090
+     * @tc.desc Verify from(Array) result has correct values
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom090() {
+    double[] src = new double[] {10.0, 20.0, 30.0};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(10, result.get(0));
+    assertEqual(20, result.get(1));
+    assertEqual(30, result.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0910
+     * @tc.name testUint8ArrayFrom091
+     * @tc.desc Verify from(Set) result has correct values
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom091() {
+    Set<Integer> src = new LinkedHashSet<>();
+    src.add(10);
+    src.add(20);
+    src.add(30);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(10, result.get(0));
+    assertEqual(20, result.get(1));
+    assertEqual(30, result.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0920
+     * @tc.name testUint8ArrayFrom092
+     * @tc.desc Verify from(Uint8Array) result has correct values
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom092() {
+    Uint8Array src = Uint8Array.of(10, 20, 30);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(10, result.get(0));
+    assertEqual(20, result.get(1));
+    assertEqual(30, result.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0930
+     * @tc.name testUint8ArrayFrom093
+     * @tc.desc Verify from(ArrayLike) result has correct values
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom093() {
+    List<Integer> src = java.util.Arrays.asList(10, 20, 30);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(10, result.get(0));
+    assertEqual(20, result.get(1));
+    assertEqual(30, result.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0940
+     * @tc.name testUint8ArrayFrom094
+     * @tc.desc Verify from(Iterable) result has correct values
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom094() {
+    List<Integer> src = java.util.Arrays.asList(10, 20, 30);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(10, result.get(0));
+    assertEqual(20, result.get(1));
+    assertEqual(30, result.get(2));
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0950
+     * @tc.name testUint8ArrayFrom095
+     * @tc.desc Verify from(FixedArray) result has correct BYTES_PER_ELEMENT
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom095() {
+    int[] src = new int[] {1, 2, 3};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(1, result.BYTES_PER_ELEMENT);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0960
+     * @tc.name testUint8ArrayFrom096
+     * @tc.desc Verify from(Array) result has correct BYTES_PER_ELEMENT
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom096() {
+    double[] src = new double[] {1.0, 2.0, 3.0};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(1, result.BYTES_PER_ELEMENT);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0970
+     * @tc.name testUint8ArrayFrom097
+     * @tc.desc Verify from(Set) result has correct BYTES_PER_ELEMENT
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom097() {
+    Set<Integer> src = new LinkedHashSet<>();
+    src.add(1);
+    src.add(2);
+    src.add(3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(1, result.BYTES_PER_ELEMENT);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0980
+     * @tc.name testUint8ArrayFrom098
+     * @tc.desc Verify from(Uint8Array) result has correct BYTES_PER_ELEMENT
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom098() {
+    Uint8Array src = Uint8Array.of(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(1, result.BYTES_PER_ELEMENT);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0990
+     * @tc.name testUint8ArrayFrom099
+     * @tc.desc Verify from(ArrayLike) result has correct BYTES_PER_ELEMENT
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom099() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(1, result.BYTES_PER_ELEMENT);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1000
+     * @tc.name testUint8ArrayFrom100
+     * @tc.desc Verify from(Iterable) result has correct BYTES_PER_ELEMENT
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom100() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(1, result.BYTES_PER_ELEMENT);
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1010
+     * @tc.name testUint8ArrayFrom101
+     * @tc.desc Verify from(FixedArray) result has correct byteOffset
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom101() {
+    int[] src = new int[] {1, 2, 3};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(0, result.byteOffset());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1020
+     * @tc.name testUint8ArrayFrom102
+     * @tc.desc Verify from(Array) result has correct buffer
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom102() {
+    double[] src = new double[] {1.0, 2.0, 3.0};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1030
+     * @tc.name testUint8ArrayFrom103
+     * @tc.desc Verify from(Set) result has correct buffer
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom103() {
+    Set<Integer> src = new LinkedHashSet<>();
+    src.add(1);
+    src.add(2);
+    src.add(3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1040
+     * @tc.name testUint8ArrayFrom104
+     * @tc.desc Verify from(Uint8Array) result has correct buffer
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom104() {
+    Uint8Array src = Uint8Array.of(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1050
+     * @tc.name testUint8ArrayFrom105
+     * @tc.desc Verify from(ArrayLike) result has correct buffer
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom105() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1060
+     * @tc.name testUint8ArrayFrom106
+     * @tc.desc Verify from(Iterable) result has correct buffer
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom106() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1070
+     * @tc.name testUint8ArrayFrom107
+     * @tc.desc Verify from(FixedArray) result has correct byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom107() {
+    int[] src = new int[] {1, 2, 3};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1080
+     * @tc.name testUint8ArrayFrom108
+     * @tc.desc Verify from(Array) result has correct byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom108() {
+    double[] src = new double[] {1.0, 2.0, 3.0};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1090
+     * @tc.name testUint8ArrayFrom109
+     * @tc.desc Verify from(Set) result has correct byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom109() {
+    Set<Integer> src = new LinkedHashSet<>();
+    src.add(1);
+    src.add(2);
+    src.add(3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1100
+     * @tc.name testUint8ArrayFrom110
+     * @tc.desc Verify from(Uint8Array) result has correct byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom110() {
+    Uint8Array src = Uint8Array.of(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1110
+     * @tc.name testUint8ArrayFrom111
+     * @tc.desc Verify from(ArrayLike) result has correct byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom111() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1120
+     * @tc.name testUint8ArrayFrom112
+     * @tc.desc Verify from(Iterable) result has correct byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom112() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1130
+     * @tc.name testUint8ArrayFrom113
+     * @tc.desc Verify from(FixedArray) result has correct buffer byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom113() {
+    int[] src = new int[] {1, 2, 3};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1140
+     * @tc.name testUint8ArrayFrom114
+     * @tc.desc Verify from(Array) result has correct buffer byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom114() {
+    double[] src = new double[] {1.0, 2.0, 3.0};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1150
+     * @tc.name testUint8ArrayFrom115
+     * @tc.desc Verify from(Set) result has correct buffer byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom115() {
+    Set<Integer> src = new LinkedHashSet<>();
+    src.add(1);
+    src.add(2);
+    src.add(3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1160
+     * @tc.name testUint8ArrayFrom116
+     * @tc.desc Verify from(Uint8Array) result has correct buffer byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom116() {
+    Uint8Array src = Uint8Array.of(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1170
+     * @tc.name testUint8ArrayFrom117
+     * @tc.desc Verify from(ArrayLike) result has correct buffer byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom117() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1180
+     * @tc.name testUint8ArrayFrom118
+     * @tc.desc Verify from(Iterable) result has correct buffer byteLength
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom118() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1190
+     * @tc.name testUint8ArrayFrom119
+     * @tc.desc Verify from(Array) result has correct byteOffset
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom119() {
+    double[] src = new double[] {1.0, 2.0, 3.0};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(0, result.byteOffset());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1200
+     * @tc.name testUint8ArrayFrom120
+     * @tc.desc Verify from(Set) result has correct byteOffset
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom120() {
+    Set<Integer> src = new LinkedHashSet<>();
+    src.add(1);
+    src.add(2);
+    src.add(3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(0, result.byteOffset());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1210
+     * @tc.name testUint8ArrayFrom121
+     * @tc.desc Verify from(Uint8Array) result has correct byteOffset
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom121() {
+    Uint8Array src = Uint8Array.of(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(0, result.byteOffset());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1220
+     * @tc.name testUint8ArrayFrom122
+     * @tc.desc Verify from(ArrayLike) result has correct byteOffset
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom122() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(0, result.byteOffset());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1230
+     * @tc.name testUint8ArrayFrom123
+     * @tc.desc Verify from(Iterable) result has correct byteOffset
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom123() {
+    List<Integer> src = java.util.Arrays.asList(1, 2, 3);
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(0, result.byteOffset());
+    }
+    /**
+     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1240
+     * @tc.name testUint8ArrayFrom124
+     * @tc.desc Verify from(FixedArray) result has correct buffer
+     * @tc.type Function
+     * @tc.size MediumTest
+     * @tc.level LEVEL2
+     */
+
+    @Test
+    void testUint8ArrayFrom124() {
+    int[] src = new int[] {1, 2, 3};
+    Uint8Array result = Uint8Array.from(src);
+    assertEqual(3, result.buffer().byteLength());
+    }
+}
