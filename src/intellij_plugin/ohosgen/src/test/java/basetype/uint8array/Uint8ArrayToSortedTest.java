@@ -72,14 +72,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(0, r.byteLength());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_0400
-     * @tc.name testUint8ArrayToSorted004
-     * @tc.desc Verify toSorted returns empty array for new Uint8Array(0)
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_0400
+    * @tc.name testUint8ArrayToSorted004
+    * @tc.desc Verify toSorted returns empty array for new Uint8Array(0)
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted004() {
@@ -106,14 +106,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     }
     assertEqual(0, cnt);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_0600
-     * @tc.name testUint8ArrayToSorted006
-     * @tc.desc Verify toSorted keeps single element [0] as [0]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_0600
+    * @tc.name testUint8ArrayToSorted006
+    * @tc.desc Verify toSorted keeps single element [0] as [0]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted006() {
@@ -151,14 +151,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(128, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_0900
-     * @tc.name testUint8ArrayToSorted009
-     * @tc.desc Verify toSorted keeps single element [127] as [127]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_0900
+    * @tc.name testUint8ArrayToSorted009
+    * @tc.desc Verify toSorted keeps single element [127] as [127]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted009() {
@@ -196,14 +196,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertTrue(r != u);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_1200
-     * @tc.name testUint8ArrayToSorted012
-     * @tc.desc Verify toSorted result length is 1 for single element array
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_1200
+    * @tc.name testUint8ArrayToSorted012
+    * @tc.desc Verify toSorted result length is 1 for single element array
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted012() {
@@ -211,14 +211,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(1, r.length());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_1300
-     * @tc.name testUint8ArrayToSorted013
-     * @tc.desc Verify toSorted result[0] is 1 for already sorted [1, 2]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_1300
+    * @tc.name testUint8ArrayToSorted013
+    * @tc.desc Verify toSorted result[0] is 1 for already sorted [1, 2]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted013() {
@@ -256,14 +256,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(1, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_1600
-     * @tc.name testUint8ArrayToSorted016
-     * @tc.desc Verify toSorted result[1] is 2 for reversed [2, 1]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_1600
+    * @tc.name testUint8ArrayToSorted016
+    * @tc.desc Verify toSorted result[1] is 2 for reversed [2, 1]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted016() {
@@ -301,14 +301,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(0, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_1900
-     * @tc.name testUint8ArrayToSorted019
-     * @tc.desc Verify toSorted result[1] is 255 for boundary elements [0, 255]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_1900
+    * @tc.name testUint8ArrayToSorted019
+    * @tc.desc Verify toSorted result[1] is 255 for boundary elements [0, 255]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted019() {
@@ -346,14 +346,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(127, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_2200
-     * @tc.name testUint8ArrayToSorted022
-     * @tc.desc Verify toSorted result[1] is 128 for median values [127, 128]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_2200
+    * @tc.name testUint8ArrayToSorted022
+    * @tc.desc Verify toSorted result[1] is 128 for median values [127, 128]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted022() {
@@ -391,14 +391,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(0, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_2500
-     * @tc.name testUint8ArrayToSorted025
-     * @tc.desc Verify toSorted result[1] is 1 for min boundary [0, 1]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_2500
+    * @tc.name testUint8ArrayToSorted025
+    * @tc.desc Verify toSorted result[1] is 1 for min boundary [0, 1]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted025() {
@@ -436,14 +436,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(255, r.get(1));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_2800
-     * @tc.name testUint8ArrayToSorted028
-     * @tc.desc Verify toSorted result[0] is 10 for reversed max boundary [255, 254]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_2800
+    * @tc.name testUint8ArrayToSorted028
+    * @tc.desc Verify toSorted result[0] is 10 for reversed max boundary [255, 254]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted028() {
@@ -466,14 +466,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(10, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_3000
-     * @tc.name testUint8ArrayToSorted030
-     * @tc.desc Verify toSorted result length is 2 for two-element array
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_3000
+    * @tc.name testUint8ArrayToSorted030
+    * @tc.desc Verify toSorted result length is 2 for two-element array
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted030() {
@@ -511,14 +511,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(2, r.byteLength());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_3300
-     * @tc.name testUint8ArrayToSorted033
-     * @tc.desc Verify toSorted result type is Uint8Array for two-element array
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_3300
+    * @tc.name testUint8ArrayToSorted033
+    * @tc.desc Verify toSorted result type is Uint8Array for two-element array
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted033() {
@@ -556,14 +556,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(2, r.get(1));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_3600
-     * @tc.name testUint8ArrayToSorted036
-     * @tc.desc Verify toSorted result[2] is 3 for three-element [3, 1, 2]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_3600
+    * @tc.name testUint8ArrayToSorted036
+    * @tc.desc Verify toSorted result[2] is 3 for three-element [3, 1, 2]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted036() {
@@ -601,14 +601,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(3, r.get(2));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_3900
-     * @tc.name testUint8ArrayToSorted039
-     * @tc.desc Verify toSorted result[0] is 1 for three-element [3, 2, 1] fully reversed
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_3900
+    * @tc.name testUint8ArrayToSorted039
+    * @tc.desc Verify toSorted result[0] is 1 for three-element [3, 2, 1] fully reversed
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted039() {
@@ -646,14 +646,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(1, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_4200
-     * @tc.name testUint8ArrayToSorted042
-     * @tc.desc Verify toSorted result[2] is 3 for three-element [2, 3, 1] mid-max-min
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_4200
+    * @tc.name testUint8ArrayToSorted042
+    * @tc.desc Verify toSorted result[2] is 3 for three-element [2, 3, 1] mid-max-min
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted042() {
@@ -691,14 +691,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(3, r.get(2));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_4500
-     * @tc.name testUint8ArrayToSorted045
-     * @tc.desc Verify toSorted result[0] is 1 for three-element [2, 1, 3] mid-min-max
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_4500
+    * @tc.name testUint8ArrayToSorted045
+    * @tc.desc Verify toSorted result[0] is 1 for three-element [2, 1, 3] mid-min-max
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted045() {
@@ -736,14 +736,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(1, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_4800
-     * @tc.name testUint8ArrayToSorted048
-     * @tc.desc Verify toSorted result[2] is 2 for three-element [1, 1, 2] with duplicate min
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_4800
+    * @tc.name testUint8ArrayToSorted048
+    * @tc.desc Verify toSorted result[2] is 2 for three-element [1, 1, 2] with duplicate min
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted048() {
@@ -781,14 +781,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(2, r.get(2));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_5100
-     * @tc.name testUint8ArrayToSorted051
-     * @tc.desc Verify toSorted result[0] is 1 for five-element [5, 4, 3, 2, 1]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_5100
+    * @tc.name testUint8ArrayToSorted051
+    * @tc.desc Verify toSorted result[0] is 1 for five-element [5, 4, 3, 2, 1]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted051() {
@@ -826,14 +826,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(1, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_5400
-     * @tc.name testUint8ArrayToSorted054
-     * @tc.desc Verify toSorted result[4] is 5 for five-element [3, 5, 1, 4, 2]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_5400
+    * @tc.name testUint8ArrayToSorted054
+    * @tc.desc Verify toSorted result[4] is 5 for five-element [3, 5, 1, 4, 2]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted054() {
@@ -871,14 +871,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(100, r.get(9));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_5700
-     * @tc.name testUint8ArrayToSorted057
-     * @tc.desc Verify toSorted result[0] is 0 for ten-element [255, 0, ..., 200]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_5700
+    * @tc.name testUint8ArrayToSorted057
+    * @tc.desc Verify toSorted result[0] is 0 for ten-element [255, 0, ..., 200]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted057() {
@@ -916,14 +916,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(1, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_6000
-     * @tc.name testUint8ArrayToSorted060
-     * @tc.desc Verify toSorted returns new Uint8Array instance
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_6000
+    * @tc.name testUint8ArrayToSorted060
+    * @tc.desc Verify toSorted returns new Uint8Array instance
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted060() {
@@ -961,14 +961,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(u.byteLength(), r.byteLength());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_6300
-     * @tc.name testUint8ArrayToSorted063
-     * @tc.desc Verify toSorted result byteOffset is 0
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_6300
+    * @tc.name testUint8ArrayToSorted063
+    * @tc.desc Verify toSorted result byteOffset is 0
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted063() {
@@ -1006,14 +1006,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(1, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_6600
-     * @tc.name testUint8ArrayToSorted066
-     * @tc.desc Verify toSorted result[1] is 2 for [3, 1, 2]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_6600
+    * @tc.name testUint8ArrayToSorted066
+    * @tc.desc Verify toSorted result[1] is 2 for [3, 1, 2]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted066() {
@@ -1036,14 +1036,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(3, r.get(2));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_6800
-     * @tc.name testUint8ArrayToSorted068
-     * @tc.desc Verify original array is unchanged after toSorted
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_6800
+    * @tc.name testUint8ArrayToSorted068
+    * @tc.desc Verify original array is unchanged after toSorted
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted068() {
@@ -1081,14 +1081,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(2, u.get(2));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_7100
-     * @tc.name testUint8ArrayToSorted071
-     * @tc.desc Verify original array length unchanged after toSorted
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_7100
+    * @tc.name testUint8ArrayToSorted071
+    * @tc.desc Verify original array length unchanged after toSorted
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted071() {
@@ -1111,14 +1111,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(5, u.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_7300
-     * @tc.name testUint8ArrayToSorted073
-     * @tc.desc Verify original array unchanged for [9, 2, 5, 1, 8] after toSorted
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_7300
+    * @tc.name testUint8ArrayToSorted073
+    * @tc.desc Verify original array unchanged for [9, 2, 5, 1, 8] after toSorted
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted073() {
@@ -1126,14 +1126,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(9, u.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_7400
-     * @tc.name testUint8ArrayToSorted074
-     * @tc.desc Verify toSorted works with Uint8Array.from
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_7400
+    * @tc.name testUint8ArrayToSorted074
+    * @tc.desc Verify toSorted works with Uint8Array.from
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted074() {
@@ -1176,14 +1176,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(1, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_7700
-     * @tc.name testUint8ArrayToSorted077
-     * @tc.desc Verify toSorted works with new Uint8Array(buffer)
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_7700
+    * @tc.name testUint8ArrayToSorted077
+    * @tc.desc Verify toSorted works with new Uint8Array(buffer)
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted077() {
@@ -1230,14 +1230,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(1, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_8000
-     * @tc.name testUint8ArrayToSorted080
-     * @tc.desc Verify toSorted works with binary literal values
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_8000
+    * @tc.name testUint8ArrayToSorted080
+    * @tc.desc Verify toSorted works with binary literal values
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted080() {
@@ -1279,14 +1279,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     assertEqual(1, r.get(0));
     assertEqual(3, r.get(2));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_8300
-     * @tc.name testUint8ArrayToSorted083
-     * @tc.desc Verify toSorted handles large value 256 truncated to 0
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_8300
+    * @tc.name testUint8ArrayToSorted083
+    * @tc.desc Verify toSorted handles large value 256 truncated to 0
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted083() {
@@ -1326,14 +1326,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(0, r.get(2));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_8600
-     * @tc.name testUint8ArrayToSorted086
-     * @tc.desc Verify toSorted result[0] is 255 for [255, 255, 255] all max
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_8600
+    * @tc.name testUint8ArrayToSorted086
+    * @tc.desc Verify toSorted result[0] is 255 for [255, 255, 255] all max
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted086() {
@@ -1371,14 +1371,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(0, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_8900
-     * @tc.name testUint8ArrayToSorted089
-     * @tc.desc Verify toSorted result[2] is 255 for [0, 128, 255] full range
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_8900
+    * @tc.name testUint8ArrayToSorted089
+    * @tc.desc Verify toSorted result[2] is 255 for [0, 128, 255] full range
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted089() {
@@ -1416,14 +1416,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(255, r.get(2));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_9200
-     * @tc.name testUint8ArrayToSorted092
-     * @tc.desc Verify toSorted result[0] is 1 for [1, 2, 3, 4, 5] already sorted
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_9200
+    * @tc.name testUint8ArrayToSorted092
+    * @tc.desc Verify toSorted result[0] is 1 for [1, 2, 3, 4, 5] already sorted
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted092() {
@@ -1461,14 +1461,14 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array r = u.toSorted();
     assertEqual(1, r.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_9500
-     * @tc.name testUint8ArrayToSorted095
-     * @tc.desc Verify toSorted twice is idempotent
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_SORTED_9500
+    * @tc.name testUint8ArrayToSorted095
+    * @tc.desc Verify toSorted twice is idempotent
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToSorted095() {
