@@ -71,14 +71,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array result = arr.toReversed();
     assertEqual(0, result.length());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_0400
-     * @tc.name testUint8ArrayToReversed004
-     * @tc.desc Verify empty array toReversed returns instanceof Uint8Array
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_0400
+    * @tc.name testUint8ArrayToReversed004
+    * @tc.desc Verify empty array toReversed returns instanceof Uint8Array
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed004() {
@@ -116,14 +116,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     arr.toReversed();
     assertEqual(0, arr.length());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_0700
-     * @tc.name testUint8ArrayToReversed007
-     * @tc.desc Verify new Uint8Array(0) toReversed returns empty array
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_0700
+    * @tc.name testUint8ArrayToReversed007
+    * @tc.desc Verify new Uint8Array(0) toReversed returns empty array
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed007() {
@@ -161,14 +161,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(255, rev.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_1000
-     * @tc.name testUint8ArrayToReversed010
-     * @tc.desc Verify single element [127] toReversed first element is 127
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_1000
+    * @tc.name testUint8ArrayToReversed010
+    * @tc.desc Verify single element [127] toReversed first element is 127
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed010() {
@@ -206,14 +206,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(255, rev.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_1300
-     * @tc.name testUint8ArrayToReversed013
-     * @tc.desc Verify single element [0x00] toReversed first element is 0
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_1300
+    * @tc.name testUint8ArrayToReversed013
+    * @tc.desc Verify single element [0x00] toReversed first element is 0
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed013() {
@@ -251,14 +251,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(255, rev.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_1600
-     * @tc.name testUint8ArrayToReversed016
-     * @tc.desc Verify single element toReversed returns length 1
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_1600
+    * @tc.name testUint8ArrayToReversed016
+    * @tc.desc Verify single element toReversed returns length 1
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed016() {
@@ -296,14 +296,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(255, rev.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_1900
-     * @tc.name testUint8ArrayToReversed019
-     * @tc.desc Verify [0, 255] toReversed result[1] is 0
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_1900
+    * @tc.name testUint8ArrayToReversed019
+    * @tc.desc Verify [0, 255] toReversed result[1] is 0
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed019() {
@@ -341,14 +341,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(127, rev.get(1));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_2200
-     * @tc.name testUint8ArrayToReversed022
-     * @tc.desc Verify [255, 0] toReversed result[0] is 0
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_2200
+    * @tc.name testUint8ArrayToReversed022
+    * @tc.desc Verify [255, 0] toReversed result[0] is 0
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed022() {
@@ -386,14 +386,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(100, rev.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_2500
-     * @tc.name testUint8ArrayToReversed025
-     * @tc.desc Verify [100, 100] same elements toReversed result[1] is 100
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_2500
+    * @tc.name testUint8ArrayToReversed025
+    * @tc.desc Verify [100, 100] same elements toReversed result[1] is 100
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed025() {
@@ -431,14 +431,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     arr.toReversed();
     assertEqual(5, arr.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_2800
-     * @tc.name testUint8ArrayToReversed028
-     * @tc.desc Verify two elements toReversed original array[1] unchanged
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_2800
+    * @tc.name testUint8ArrayToReversed028
+    * @tc.desc Verify two elements toReversed original array[1] unchanged
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed028() {
@@ -476,14 +476,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(2, rev.get(1));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_3100
-     * @tc.name testUint8ArrayToReversed031
-     * @tc.desc Verify [1, 2, 3] toReversed result[2] is 1
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_3100
+    * @tc.name testUint8ArrayToReversed031
+    * @tc.desc Verify [1, 2, 3] toReversed result[2] is 1
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed031() {
@@ -521,14 +521,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(127, rev.get(1));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_3400
-     * @tc.name testUint8ArrayToReversed034
-     * @tc.desc Verify [0, 127, 255] toReversed result[2] is 0
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_3400
+    * @tc.name testUint8ArrayToReversed034
+    * @tc.desc Verify [0, 127, 255] toReversed result[2] is 0
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed034() {
@@ -566,14 +566,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     arr.toReversed();
     assertEqual(1, arr.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_3700
-     * @tc.name testUint8ArrayToReversed037
-     * @tc.desc Verify [1, 2, 3] toReversed original array[1] unchanged
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_3700
+    * @tc.name testUint8ArrayToReversed037
+    * @tc.desc Verify [1, 2, 3] toReversed original array[1] unchanged
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed037() {
@@ -611,14 +611,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     arr.toReversed();
     assertEqual(3, arr.length());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_4000
-     * @tc.name testUint8ArrayToReversed040
-     * @tc.desc Verify [1, 2, 3] double toReversed restores original order
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_4000
+    * @tc.name testUint8ArrayToReversed040
+    * @tc.desc Verify [1, 2, 3] double toReversed restores original order
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed040() {
@@ -657,14 +657,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(10, rev.get(3));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_4300
-     * @tc.name testUint8ArrayToReversed043
-     * @tc.desc Verify [10, 20, 30, 40] toReversed result[1] is 30
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_4300
+    * @tc.name testUint8ArrayToReversed043
+    * @tc.desc Verify [10, 20, 30, 40] toReversed result[1] is 30
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed043() {
@@ -702,14 +702,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array result = arr.toReversed();
     assertEqual(4, result.length());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_4600
-     * @tc.name testUint8ArrayToReversed046
-     * @tc.desc Verify [0, 1, 2, 3, 4] toReversed result[0] is 4
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_4600
+    * @tc.name testUint8ArrayToReversed046
+    * @tc.desc Verify [0, 1, 2, 3, 4] toReversed result[0] is 4
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed046() {
@@ -747,14 +747,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(3, rev.get(1));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_4900
-     * @tc.name testUint8ArrayToReversed049
-     * @tc.desc Verify [0, 1, 2, 3, 4] toReversed result[3] is 1
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_4900
+    * @tc.name testUint8ArrayToReversed049
+    * @tc.desc Verify [0, 1, 2, 3, 4] toReversed result[3] is 1
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed049() {
@@ -792,14 +792,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(255, rev.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_5200
-     * @tc.name testUint8ArrayToReversed052
-     * @tc.desc Verify [0, 255, 0, 255] alternating boundary toReversed result[3] is 0
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_5200
+    * @tc.name testUint8ArrayToReversed052
+    * @tc.desc Verify [0, 255, 0, 255] alternating boundary toReversed result[3] is 0
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed052() {
@@ -837,14 +837,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(255, rev.get(2));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_5500
-     * @tc.name testUint8ArrayToReversed055
-     * @tc.desc Verify [0, 255, 0, 255] alternating boundary toReversed returns length 4
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_5500
+    * @tc.name testUint8ArrayToReversed055
+    * @tc.desc Verify [0, 255, 0, 255] alternating boundary toReversed returns length 4
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed055() {
@@ -882,14 +882,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     arr.toReversed();
     assertEqual(255, arr.get(1));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_5800
-     * @tc.name testUint8ArrayToReversed058
-     * @tc.desc Verify [0, 255, 0, 255] alternating boundary toReversed original array[2] unchanged
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_5800
+    * @tc.name testUint8ArrayToReversed058
+    * @tc.desc Verify [0, 255, 0, 255] alternating boundary toReversed original array[2] unchanged
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed058() {
@@ -927,14 +927,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array result = arr.toReversed();
     assertEqual(3, result.length());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_6100
-     * @tc.name testUint8ArrayToReversed061
-     * @tc.desc Verify new Uint8Array([1, 2, 3]) toReversed result[0] is 3
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_6100
+    * @tc.name testUint8ArrayToReversed061
+    * @tc.desc Verify new Uint8Array([1, 2, 3]) toReversed result[0] is 3
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed061() {
@@ -975,14 +975,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(3, rev.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_6400
-     * @tc.name testUint8ArrayToReversed064
-     * @tc.desc Verify new Uint8Array(3) filled toReversed result[2] is 1
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_6400
+    * @tc.name testUint8ArrayToReversed064
+    * @tc.desc Verify new Uint8Array(3) filled toReversed result[2] is 1
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed064() {
@@ -1023,14 +1023,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertTrue(rev != arr);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_6700
-     * @tc.name testUint8ArrayToReversed067
-     * @tc.desc Verify toReversed returns array with same length
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_6700
+    * @tc.name testUint8ArrayToReversed067
+    * @tc.desc Verify toReversed returns array with same length
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed067() {
@@ -1072,14 +1072,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual("3,2,1", rev.join());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_7000
-     * @tc.name testUint8ArrayToReversed070
-     * @tc.desc Verify toReversed result toString is reversed
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_7000
+    * @tc.name testUint8ArrayToReversed070
+    * @tc.desc Verify toReversed result toString is reversed
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed070() {
@@ -1102,14 +1102,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array result = arr.toReversed();
     assertEqual(0, result.length());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_7200
-     * @tc.name testUint8ArrayToReversed072
-     * @tc.desc Verify toReversed on single element array does not throw error
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_7200
+    * @tc.name testUint8ArrayToReversed072
+    * @tc.desc Verify toReversed on single element array does not throw error
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed072() {
@@ -1177,14 +1177,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     arr.toReversed();
     assertEqual(0, arr.get(0));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_7700
-     * @tc.name testUint8ArrayToReversed077
-     * @tc.desc Verify toReversed original array[1] unchanged after call with boundary values
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_7700
+    * @tc.name testUint8ArrayToReversed077
+    * @tc.desc Verify toReversed original array[1] unchanged after call with boundary values
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed077() {
@@ -1222,14 +1222,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(3, rev.indexOf(10));
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_8000
-     * @tc.name testUint8ArrayToReversed080
-     * @tc.desc Verify toReversed returns result join string correct
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_8000
+    * @tc.name testUint8ArrayToReversed080
+    * @tc.desc Verify toReversed returns result join string correct
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed080() {
@@ -1269,14 +1269,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array filtered = rev.filter((v) -> v > 0);
     assertEqual(2, filtered.length());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_8300
-     * @tc.name testUint8ArrayToReversed083
-     * @tc.desc Verify toReversed returns result indexOf finds original first element
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_8300
+    * @tc.name testUint8ArrayToReversed083
+    * @tc.desc Verify toReversed returns result indexOf finds original first element
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed083() {
@@ -1317,14 +1317,14 @@ public class Uint8ArrayToReversedTest extends BasTest {
     Uint8Array rev = arr.toReversed();
     assertEqual(100, rev.length());
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_8600
-     * @tc.name testUint8ArrayToReversed086
-     * @tc.desc Verify 100 elements toReversed result[0] is 99
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_REVERSED_8600
+    * @tc.name testUint8ArrayToReversed086
+    * @tc.desc Verify 100 elements toReversed result[0] is 99
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToReversed086() {

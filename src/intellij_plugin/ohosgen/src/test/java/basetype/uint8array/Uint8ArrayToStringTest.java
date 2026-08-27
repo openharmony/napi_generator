@@ -122,14 +122,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0700
-     * @tc.name testUint8ArrayToString007
-     * @tc.desc Verify toString with element 0 returns '0'
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0700
+    * @tc.name testUint8ArrayToString007
+    * @tc.desc Verify toString with element 0 returns '0'
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString007() {
@@ -182,14 +182,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("128", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1100
-     * @tc.name testUint8ArrayToString011
-     * @tc.desc Verify toString with element 1 returns '1'
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1100
+    * @tc.name testUint8ArrayToString011
+    * @tc.desc Verify toString with element 1 returns '1'
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString011() {
@@ -242,14 +242,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("255", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1500
-     * @tc.name testUint8ArrayToString015
-     * @tc.desc Verify toString with hex literal 0x80 returns '128'
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1500
+    * @tc.name testUint8ArrayToString015
+    * @tc.desc Verify toString with hex literal 0x80 returns '128'
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString015() {
@@ -302,14 +302,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("100", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1900
-     * @tc.name testUint8ArrayToString019
-     * @tc.desc Verify toString with NaN converts to 0 returns '0'
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1900
+    * @tc.name testUint8ArrayToString019
+    * @tc.desc Verify toString with NaN converts to 0 returns '0'
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString019() {
@@ -362,14 +362,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("0", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2300
-     * @tc.name testUint8ArrayToString023
-     * @tc.desc Verify toString with binary literal 0b11111111 returns '255'
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2300
+    * @tc.name testUint8ArrayToString023
+    * @tc.desc Verify toString with binary literal 0b11111111 returns '255'
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString023() {
@@ -422,14 +422,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("1", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2700
-     * @tc.name testUint8ArrayToString027
-     * @tc.desc Verify toString with mixed boundary values [0,255,127,128]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2700
+    * @tc.name testUint8ArrayToString027
+    * @tc.desc Verify toString with mixed boundary values [0,255,127,128]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString027() {
@@ -482,14 +482,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("255,255,255", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3100
-     * @tc.name testUint8ArrayToString031
-     * @tc.desc Verify toString with ten consecutive elements [1..10]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3100
+    * @tc.name testUint8ArrayToString031
+    * @tc.desc Verify toString with ten consecutive elements [1..10]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString031() {
@@ -542,14 +542,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("3,2", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3500
-     * @tc.name testUint8ArrayToString035
-     * @tc.desc Verify toString with hex boundary combination [0x7F,0x80,0xFF]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3500
+    * @tc.name testUint8ArrayToString035
+    * @tc.desc Verify toString with hex boundary combination [0x7F,0x80,0xFF]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString035() {
@@ -602,14 +602,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("255,254,253", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3900
-     * @tc.name testUint8ArrayToString039
-     * @tc.desc Verify toString with NaN and float combination [NaN,3.5,2.7]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3900
+    * @tc.name testUint8ArrayToString039
+    * @tc.desc Verify toString with NaN and float combination [NaN,3.5,2.7]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString039() {
@@ -662,14 +662,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("0,0,0", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4300
-     * @tc.name testUint8ArrayToString043
-     * @tc.desc Verify toString with decimal precision combination [0.1,0.9,1.1]
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4300
+    * @tc.name testUint8ArrayToString043
+    * @tc.desc Verify toString with decimal precision combination [0.1,0.9,1.1]
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString043() {
@@ -696,14 +696,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(uint8);
     assertEqual("1,2,3", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4500
-     * @tc.name testUint8ArrayToString045
-     * @tc.desc Verify toString on Uint8Array from ArrayBuffer with byteOffset
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4500
+    * @tc.name testUint8ArrayToString045
+    * @tc.desc Verify toString on Uint8Array from ArrayBuffer with byteOffset
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString045() {
@@ -761,14 +761,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("10,20,30", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4900
-     * @tc.name testUint8ArrayToString049
-     * @tc.desc Verify toString on Uint8Array from TypedArray
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4900
+    * @tc.name testUint8ArrayToString049
+    * @tc.desc Verify toString on Uint8Array from TypedArray
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString049() {
@@ -822,14 +822,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("1,2,3", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5300
-     * @tc.name testUint8ArrayToString053
-     * @tc.desc Verify toString on Uint8Array from Array with NaN and Infinity
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5300
+    * @tc.name testUint8ArrayToString053
+    * @tc.desc Verify toString on Uint8Array from Array with NaN and Infinity
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString053() {
@@ -852,14 +852,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("0,0,0", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5500
-     * @tc.name testUint8ArrayToString055
-     * @tc.desc Verify toString after slice operation
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5500
+    * @tc.name testUint8ArrayToString055
+    * @tc.desc Verify toString after slice operation
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString055() {
@@ -884,14 +884,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(filtered);
     assertEqual("3,4,5", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5700
-     * @tc.name testUint8ArrayToString057
-     * @tc.desc Verify toString after map operation
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5700
+    * @tc.name testUint8ArrayToString057
+    * @tc.desc Verify toString after map operation
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString057() {
@@ -948,14 +948,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("7,7,7", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6100
-     * @tc.name testUint8ArrayToString061
-     * @tc.desc Verify toString after copyWithin operation
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6100
+    * @tc.name testUint8ArrayToString061
+    * @tc.desc Verify toString after copyWithin operation
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString061() {
@@ -1013,14 +1013,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(reversed);
     assertEqual("3,2,1", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6500
-     * @tc.name testUint8ArrayToString065
-     * @tc.desc Verify toString after toSorted operation
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6500
+    * @tc.name testUint8ArrayToString065
+    * @tc.desc Verify toString after toSorted operation
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString065() {
@@ -1077,22 +1077,22 @@ public class Uint8ArrayToStringTest extends BasTest {
     @Test
     void testUint8ArrayToString068() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    int sum = arr.reduce((acc, val, index, array) ->  acc + val, 0);
+    int sum = arr.reduce((acc, val, index, array) -> acc + val, 0);
     assertEqual(6, sum);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6900
-     * @tc.name testUint8ArrayToString069
-     * @tc.desc Verify toString after reduceRight operation
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6900
+    * @tc.name testUint8ArrayToString069
+    * @tc.desc Verify toString after reduceRight operation
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString069() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    int result = arr.reduceRight((acc, val, index, array) ->  acc + val, 0);
+    int result = arr.reduceRight((acc, val, index, array) -> acc + val, 0);
     assertEqual(6, result);
     }
     /**
@@ -1114,14 +1114,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     assertEqual(1, val[1]);
     }
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7100
-     * @tc.name testUint8ArrayToString071
-     * @tc.desc Verify toString returns string type
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7100
+    * @tc.name testUint8ArrayToString071
+    * @tc.desc Verify toString returns string type
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString071() {
@@ -1177,14 +1177,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     boolean endsWithComma = result.endsWith(",");
     assertFalse(endsWithComma);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7500
-     * @tc.name testUint8ArrayToString075
-     * @tc.desc Verify toString with large overflow 999 truncates to 231
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7500
+    * @tc.name testUint8ArrayToString075
+    * @tc.desc Verify toString with large overflow 999 truncates to 231
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString075() {
@@ -1237,14 +1237,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("0", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7900
-     * @tc.name testUint8ArrayToString079
-     * @tc.desc Verify toString with Infinity converts to 0
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7900
+    * @tc.name testUint8ArrayToString079
+    * @tc.desc Verify toString with Infinity converts to 0
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString079() {
@@ -1282,14 +1282,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("0", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8200
-     * @tc.name testUint8ArrayToString082
-     * @tc.desc Verify toString on view from same ArrayBuffer reflects changes
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8200
+    * @tc.name testUint8ArrayToString082
+    * @tc.desc Verify toString on view from same ArrayBuffer reflects changes
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString082() {
@@ -1356,14 +1356,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(offsetView);
     assertEqual("30,40", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8600
-     * @tc.name testUint8ArrayToString086
-     * @tc.desc Verify toString on multiple views of same buffer
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8600
+    * @tc.name testUint8ArrayToString086
+    * @tc.desc Verify toString on multiple views of same buffer
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString086() {
@@ -1376,14 +1376,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(secondView);
     assertEqual("5,10,15", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8700
-     * @tc.name testUint8ArrayToString087
-     * @tc.desc Verify toString with Number.MAX_VALUE truncates to 0
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8700
+    * @tc.name testUint8ArrayToString087
+    * @tc.desc Verify toString with Number.MAX_VALUE truncates to 0
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString087() {
@@ -1436,14 +1436,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("0", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9100
-     * @tc.name testUint8ArrayToString091
-     * @tc.desc Verify toString after index assignment with boundary value 255
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9100
+    * @tc.name testUint8ArrayToString091
+    * @tc.desc Verify toString after index assignment with boundary value 255
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString091() {
@@ -1519,14 +1519,14 @@ public class Uint8ArrayToStringTest extends BasTest {
     String result = String.valueOf(arr);
     assertEqual("255", result);
     }
-/**
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9600
-     * @tc.name testUint8ArrayToString096
-     * @tc.desc Verify toString on 100-element zero array has correct length
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
+    /**
+    * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9600
+    * @tc.name testUint8ArrayToString096
+    * @tc.desc Verify toString on 100-element zero array has correct length
+    * @tc.type Function
+    * @tc.size MediumTest
+    * @tc.level LEVEL2
+    */
 
     @Test
     void testUint8ArrayToString096() {
