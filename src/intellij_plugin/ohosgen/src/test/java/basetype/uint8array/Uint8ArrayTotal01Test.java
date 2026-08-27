@@ -2507,7 +2507,7 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal159() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    int result = arr.reduce((acc, v, index, array) ->  acc + v, 0);
+    int result = arr.reduce((acc, v, index, array) -> acc + v, 0);
     assertEqual(6, result);
     }
     /**
@@ -2522,7 +2522,7 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal160() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    int result = arr.reduce((acc, v, index, array) ->  acc + v);
+    int result = arr.reduce((acc, v, index, array) -> acc + v);
     assertEqual(6, result);
     }
     /**
@@ -2558,7 +2558,7 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal162() {
     Uint8Array arr = Uint8Array.of(1, 2);
-    int result = arr.reduce((acc, v, index, array) ->  acc + v, 10);
+    int result = arr.reduce((acc, v, index, array) -> acc + v, 10);
     assertEqual(13, result);
     }
     /**
@@ -2573,7 +2573,7 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal163() {
     Uint8Array arr = new Uint8Array();
-    int result = arr.reduce((acc, v, index, array) ->  acc + v, 0);
+    int result = arr.reduce((acc, v, index, array) -> acc + v, 0);
     assertEqual(0, result);
     }
     /**
@@ -2588,7 +2588,7 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal164() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    int result = arr.reduceRight((acc, v, index, array) ->  acc + v, 0);
+    int result = arr.reduceRight((acc, v, index, array) -> acc + v, 0);
     assertEqual(6, result);
     }
     /**
@@ -2645,7 +2645,7 @@ public class Uint8ArrayTotal01Test extends BasTest {
     @Test
     void testUint8ArrayTotal167() {
     Uint8Array arr = Uint8Array.of(1, 2);
-    int result = arr.reduceRight((acc, v, index, array) ->  acc + v, 0);
+    int result = arr.reduceRight((acc, v, index, array) -> acc + v, 0);
     assertEqual(3, result);
     }
     /**

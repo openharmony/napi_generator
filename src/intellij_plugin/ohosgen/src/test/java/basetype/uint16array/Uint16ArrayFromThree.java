@@ -17,7 +17,6 @@ package basetype.uint16array;
 
 import basetype.common.BasTest;
 
-
 /**
  * Uint16ArrayFromThree —— Int16Array 方法族测试。
  *

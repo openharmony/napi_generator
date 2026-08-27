@@ -775,7 +775,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     @Test
     void testUint8ArrayFind039() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
-    int sum = arr.reduce((acc, v, index, array) ->  acc + v, 0);
+    int sum = arr.reduce((acc, v, index, array) -> acc + v, 0);
     assertEqual(60, sum);
     }
     /**
@@ -791,7 +791,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     void testUint8ArrayFind040() {
     List<Integer> src = java.util.Arrays.asList(100, 200);
     Uint8Array arr = new Uint8Array(src);
-    int sum = arr.reduce((acc, v, index, array) ->  acc + v, 0);
+    int sum = arr.reduce((acc, v, index, array) -> acc + v, 0);
     assertEqual(300, sum);
     }
     /**
@@ -850,7 +850,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     void testUint8ArrayFind043() {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array arr = new Uint8Array(src);
-    int sum = arr.reduce((acc, v, index, array) ->  acc + v, 0);
+    int sum = arr.reduce((acc, v, index, array) -> acc + v, 0);
     assertEqual(60, sum);
     }
     /**
@@ -1304,7 +1304,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     @Test
     void testUint8ArrayFind066() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
-    int sum = arr.reduce((acc, v, index, array) ->  acc + v, 0);
+    int sum = arr.reduce((acc, v, index, array) -> acc + v, 0);
     assertEqual(100, sum);
     }
     /**

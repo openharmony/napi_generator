@@ -287,7 +287,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     void testUint16Arrayoverallthree027() {
     Uint16Array empty = new Uint16Array();
     try {
-    empty.reduce((acc, val, array, unused3) ->  acc + val);
+    empty.reduce((acc, val, array, unused3) -> acc + val);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -298,7 +298,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     void testUint16Arrayoverallthree028() {
     Uint16Array empty = new Uint16Array();
     try {
-    empty.reduceRight((acc, val, array, unused3) ->  acc + val);
+    empty.reduceRight((acc, val, array, unused3) -> acc + val);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -504,7 +504,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     void testUint16Arrayoverallthree046() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40);
     Uint16Array filtered = arr.filter((value) -> value > 20);
-    int result = filtered.reduce((acc, val, array, unused3) ->  acc + val, 0);
+    int result = filtered.reduce((acc, val, array, unused3) -> acc + val, 0);
     assertEqual(70, result);
     }
 

@@ -154,7 +154,7 @@ public class Uint16Arrayoveralltwo extends BasTest {
     @Test
     void testUint16Arrayoveralltwo018() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    int result = arr.reduceRight((a, b, array, unused3) ->  a - b);
+    int result = arr.reduceRight((a, b, array, unused3) -> a - b);
     assertEqual(0, result);
     }
 

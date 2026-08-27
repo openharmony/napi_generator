@@ -732,7 +732,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullThree047() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    arr.reduce((a, b, index, array) ->  a + b, 0);
+    arr.reduce((a, b, index, array) -> a + b, 0);
     assertEqual(1, arr.get(0));
     }
     /**

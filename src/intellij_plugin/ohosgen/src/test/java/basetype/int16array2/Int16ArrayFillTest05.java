@@ -1111,7 +1111,7 @@ public class Int16ArrayFillTest05 extends BasTest {
     void testInt16ArrayFillTestFive093() {
     Int16Array arr = Int16Array.of(0, 0, 0, 0, 0);
     arr.fill(2, 1, 4);
-    int sum = arr.reduce((acc, v, array, unused3) ->  acc + v);
+    int sum = arr.reduce((acc, v, array, unused3) -> acc + v);
     assertEqual(6, sum);
     }
 

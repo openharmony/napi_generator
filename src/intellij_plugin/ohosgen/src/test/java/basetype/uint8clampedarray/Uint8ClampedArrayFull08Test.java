@@ -41,7 +41,7 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     void testUint8ClampedArrayFullEight001() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 10, 15});
     int target = 10;
-    int idx = arr.findIndex((v, i, _a) -> v == target);
+    int idx = arr.findIndex((v, i, array) -> v == target);
     assertEqual(1, idx);
     }
     /**
@@ -89,7 +89,7 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     void testUint8ClampedArrayFullEight004() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int[] last = {0};
-    arr.forEach((v, i, _a) -> {
+    arr.forEach((v, i, array) -> {
         if (i == 0) { arr.set(2, 99);
         } last[0] = v;
     });
@@ -208,7 +208,7 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     void testUint8ClampedArrayFullEight011() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    arr.forEach((v, i, _a) -> {
+    arr.forEach((v, i, array) -> {
     throw new Error("cb");
         });
     fail();
@@ -229,7 +229,7 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     void testUint8ClampedArrayFullEight012() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    arr.map((v, i, _a) -> {
+    arr.map((v, i, array) -> {
     throw new Error("cb");
         });
     fail();
@@ -250,7 +250,7 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     void testUint8ClampedArrayFullEight013() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    arr.filter((v, i, _a) -> {
+    arr.filter((v, i, array) -> {
     throw new Error("cb");
         });
     fail();

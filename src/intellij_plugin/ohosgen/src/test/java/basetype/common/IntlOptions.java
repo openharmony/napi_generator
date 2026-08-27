@@ -23,38 +23,63 @@ package basetype.common;
  */
 public class IntlOptions {
 
-    /** 整数部分最小位数（0 表示未设置）。 */
+    /**
+     * 整数部分最小位数（0 表示未设置）。
+     */
     public int minimumIntegerDigits;
 
-    /** 小数部分最小位数（-1 表示未设置）。 */
+    /**
+     * 小数部分最小位数（-1 表示未设置）。
+     */
     public int minimumFractionDigits = -1;
 
-    /** 小数部分最大位数（-1 表示未设置）。 */
+    /**
+     * 小数部分最大位数（-1 表示未设置）。
+     */
     public int maximumFractionDigits = -1;
 
-    /** 有效数字位数（0 表示未设置）。 */
+    /**
+     * 有效数字位数（0 表示未设置）。
+     */
     public int minimumSignificantDigits;
 
-    /** 最大有效数字位数（0 表示未设置）。 */
+    /**
+     * 最大有效数字位数（0 表示未设置）。
+     */
     public int maximumSignificantDigits;
 
-    /** 数字表示法（"" / "scientific" / "engineering"）。 */
+    /**
+     * 数字表示法（"" / "scientific" / "engineering"）。
+     */
     public String notation = "";
 
-    /** 紧凑展示方式（"" / "short" / "long"）。 */
+    /**
+     * 紧凑展示方式（"" / "short" / "long"）。
+     */
     public String compactDisplay = "";
 
-    /** 是否使用千分位分组。 */
+    /**
+     * 是否使用千分位分组。
+     */
     public boolean useGrouping = true;
 
-    /** 格式风格（"" / "percent" / "currency"）。 */
+    /**
+     * 格式风格（"" / "percent" / "currency"）。
+     */
     public String style = "";
 
-    /** 货币代码（如 USD/EUR/GBP）。 */
+    /**
+     * 货币代码（如 USD/EUR/GBP）。
+     */
     public String currency = "";
 
-    /** 货币展示方式（"" / "symbol" / "code"）。 */
+    /**
+     * 货币展示方式（"" / "symbol" / "code"）。
+     */
     public String currencyDisplay = "";
 
-    /** 区域匹配策略（ArkTS ToLocaleStringOptions，不影响数值格式）。 */
-    public String localeMatcher = "";}
+    /**
+     * 区域匹配策略（ArkTS ToLocaleStringOptions，不影响数值格式）。
+     */
+    public String localeMatcher = "";
+    }

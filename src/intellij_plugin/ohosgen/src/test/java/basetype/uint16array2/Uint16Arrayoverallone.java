@@ -349,21 +349,21 @@ public class Uint16Arrayoverallone extends BasTest {
     @Test
     void testUint16Arrayoverallone045() {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
-    int result = arr.reduce((a, b, array, unused3) ->  a + b);
+    int result = arr.reduce((a, b, array, unused3) -> a + b);
     assertEqual(6, result);
     }
 
     @Test
     void testUint16Arrayoverallone046() {
     Uint16Array arr = Uint16Array.of(2, 3, 4);
-    int result = arr.reduceRight((a, b, array, unused3) ->  a + b);
+    int result = arr.reduceRight((a, b, array, unused3) -> a + b);
     assertEqual(9, result);
     }
 
     @Test
     void testUint16Arrayoverallone047() {
     Uint16Array arr = Uint16Array.of(4, 5, 6);
-    int result = arr.reduceRight((a, b, array, unused3) ->  a + b, 100);
+    int result = arr.reduceRight((a, b, array, unused3) -> a + b, 100);
     assertEqual(115, result);
     }
 

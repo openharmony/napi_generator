@@ -50,7 +50,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     int result = arr.findIndex((value) -> value == 20);
     assertEqual(1, result);
     }
-    private static Uint8Array arr = Uint8Array.of(1, 2, 3);
+    private static Uint8Array sharedArr = Uint8Array.of(1, 2, 3);
     private static boolean extraParam = false;
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0020

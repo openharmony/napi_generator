@@ -986,7 +986,7 @@ public class Uint8ArrayFind02Test extends BasTest {
     void testUint8ArrayFind061() {
     Uint8Array arr = new Uint8Array(new int[] {3, 6, 9});
     arr.findIndex((v, i, a) -> v == 6);
-    int sum = arr.reduce((acc, v, index, array) ->  acc + v, 0);
+    int sum = arr.reduce((acc, v, index, array) -> acc + v, 0);
     assertEqual(18, sum);
     }
     /**

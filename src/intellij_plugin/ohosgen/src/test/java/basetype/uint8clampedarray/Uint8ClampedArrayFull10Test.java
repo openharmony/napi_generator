@@ -240,7 +240,7 @@ public class Uint8ClampedArrayFull10Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullTen013() {
     Uint8ClampedArray a = new Uint8ClampedArray(0);
-    assertFalse(a.some((_v, _i, _a) -> true));
+    assertFalse(a.some((unusedVal, unusedIndex, array) -> true));
     }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TEN_1400
@@ -254,7 +254,7 @@ public class Uint8ClampedArrayFull10Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullTen014() {
     Uint8ClampedArray a = new Uint8ClampedArray(0);
-    assertNull(a.find((_v, _i, _a) -> true));
+    assertNull(a.find((unusedVal, unusedIndex, array) -> true));
     }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TEN_1500
@@ -268,7 +268,7 @@ public class Uint8ClampedArrayFull10Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullTen015() {
     Uint8ClampedArray a = new Uint8ClampedArray(0);
-    assertEqual(-1, a.findIndex((_v, _i, _a) -> true));
+    assertEqual(-1, a.findIndex((unusedVal, unusedIndex, array) -> true));
     }
     /**
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TEN_1600
@@ -325,7 +325,7 @@ public class Uint8ClampedArrayFull10Test extends BasTest {
     void testUint8ClampedArrayFullTen019() {
     Uint8ClampedArray a = new Uint8ClampedArray(0);
     try {
-    a.reduce((acc, cur, index, array) ->  acc + cur);
+    a.reduce((acc, cur, index, array) -> acc + cur);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -344,7 +344,7 @@ public class Uint8ClampedArrayFull10Test extends BasTest {
     void testUint8ClampedArrayFullTen020() {
     Uint8ClampedArray a = new Uint8ClampedArray(0);
     try {
-    a.reduceRight((acc, cur, index, array) ->  acc + cur);
+    a.reduceRight((acc, cur, index, array) -> acc + cur);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -383,7 +383,7 @@ public class Uint8ClampedArrayFull10Test extends BasTest {
     void testUint8ClampedArrayFullTen022() {
     Uint8ClampedArray a = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    a.forEach((_v, _i, _a) -> { throw new Error("fe");
+    a.forEach((unusedVal, unusedIndex, array) -> { throw new Error("fe");
         });
     fail();
     } catch (Error e) {

@@ -402,7 +402,7 @@ public class Uint16ArrayvalueOf extends BasTest {
     void testUint16ArrayValueOf042() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5);
     Uint16Array result = arr.valueOf();
-    int[] sum = {result.reduce((acc, v, array, unused3) ->  acc + v, 0)};
+    int[] sum = {result.reduce((acc, v, array, unused3) -> acc + v, 0)};
     assertEqual(15, sum[0]);
     }
 
@@ -700,7 +700,7 @@ public class Uint16ArrayvalueOf extends BasTest {
     @Test
     void testUint16ArrayValueOf076() {
     Uint16Array a = Uint16Array.of(2, 3, 4);
-    int[] sum = {a.valueOf().reduce((p, v, array, unused3) ->  p + v, 0)};
+    int[] sum = {a.valueOf().reduce((p, v, array, unused3) -> p + v, 0)};
     assertEqual(9, sum[0]);
     assertEqual("2,3,4", a.join(","));
     }

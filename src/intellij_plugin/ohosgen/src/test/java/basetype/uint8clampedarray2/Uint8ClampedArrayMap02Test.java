@@ -519,7 +519,7 @@ public class Uint8ClampedArrayMap02Test extends BasTest {
     @Test
     void testUint8ClampedArrayMapTwo056() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 10, 15});
-    Uint8ClampedArray m = arr.map((x, _i, a) -> {
+    Uint8ClampedArray m = arr.map((x, unusedIndex, a) -> {
         return a.get(0);
         });
     assertEqual(3, m.length());
@@ -531,7 +531,7 @@ public class Uint8ClampedArrayMap02Test extends BasTest {
     @Test
     void testUint8ClampedArrayMapTwo057() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 14, 21});
-    Uint8ClampedArray m = arr.map((_x, _i, a) -> {
+    Uint8ClampedArray m = arr.map((unusedX, unusedIndex, a) -> {
         return a.length();
         });
     assertEqual(3, m.length());

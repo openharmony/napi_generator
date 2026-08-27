@@ -1387,7 +1387,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
     arr.forEach((v, i) -> {
     arr.set(i, 0);
         });
-    int[] sum = {arr.reduce((a, b, index, array) ->  a + b, 0)};
+    int[] sum = {arr.reduce((a, b, index, array) -> a + b, 0)};
     assertEqual(0, sum[0]);
     }
     /**

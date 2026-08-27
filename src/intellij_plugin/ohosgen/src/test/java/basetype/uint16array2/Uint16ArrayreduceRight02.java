@@ -35,84 +35,84 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     @Test
     void testUint16ArrayReduceRightPart2001() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(0, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2002() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(60, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2003() {
     Uint16Array arr = Uint16Array.of(2, 3, 4);
-    double result = arr.reduceRightDouble((prev, curr, idx, a) ->  prev * curr);
+    double result = arr.reduceRightDouble((prev, curr, idx, a) -> prev * curr);
     assertEqual(24, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2004() {
     Uint16Array arr = Uint16Array.of(100, 10, 2);
-    double result = arr.reduceRightDouble((prev, curr, idx, a) ->  prev / curr);
+    double result = arr.reduceRightDouble((prev, curr, idx, a) -> prev / curr);
     assertEqual(0.002, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2005() {
     Uint16Array arr = Uint16Array.of(0x00, 0xF0, 0x0F);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev | curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev | curr);
     assertEqual(0xFF, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2006() {
     Uint16Array arr = Uint16Array.of(0xFFFF, 0xFF00, 0x0F0F);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev & curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev & curr);
     assertEqual(0x0F00, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2007() {
     Uint16Array arr = Uint16Array.of(0xAAAA, 0x5555, 0xFFFF);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev ^ curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev ^ curr);
     assertEqual(0, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2008() {
     Uint16Array arr = Uint16Array.of(100, 50, 200);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  Math.min(prev, curr));
+    int result = arr.reduceRight((prev, curr, idx, a) -> Math.min(prev, curr));
     assertEqual(50, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2009() {
     Uint16Array arr = Uint16Array.of(100, 50, 200);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  Math.max(prev, curr));
+    int result = arr.reduceRight((prev, curr, idx, a) -> Math.max(prev, curr));
     assertEqual(200, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2010() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev);
     assertEqual(30, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2011() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> curr);
     assertEqual(10, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2012() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    double result = arr.reduceRightDouble((prev, curr, idx, a) ->  prev + Double.NaN);
+    double result = arr.reduceRightDouble((prev, curr, idx, a) -> prev + Double.NaN);
     assertTrue(Double.isNaN(result));
     }
 
@@ -131,7 +131,7 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     void testUint16ArrayReduceRightPart2014() {
     int factor = 2;
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    double result = arr.reduceRightDouble((prev, curr, idx, a) ->  prev + curr * factor);
+    double result = arr.reduceRightDouble((prev, curr, idx, a) -> prev + curr * factor);
     assertEqual(90, result);
     }
 
@@ -139,154 +139,154 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     void testUint16ArrayReduceRightPart2015() {
     Uint16Array.Uint16ArrayMapper1 doubleVal = (val) -> val * 2;
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + doubleVal.apply(curr));
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + doubleVal.apply(curr));
     assertEqual(90, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2016() {
     Uint16Array arr = Uint16Array.of(0);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(0, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2017() {
     Uint16Array arr = Uint16Array.of(65535);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(65535, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2018() {
     Uint16Array arr = Uint16Array.of(0x10);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(16, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2019() {
     Uint16Array arr = Uint16Array.of(1, 2);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(1, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2020() {
     Uint16Array arr = Uint16Array.of(10, 20);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(30, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2021() {
     Uint16Array arr = Uint16Array.of(65535, 0);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(-65535, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2022() {
     Uint16Array arr = Uint16Array.of(0, 65535);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(65535, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2023() {
     Uint16Array arr = Uint16Array.of(0, 0);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(0, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2024() {
     Uint16Array arr = Uint16Array.of(65535, 65535);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(0, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2025() {
     Uint16Array arr = Uint16Array.of(100, 200);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(300, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2026() {
     Uint16Array arr = Uint16Array.of(2, 3);
-    double result = arr.reduceRightDouble((prev, curr, idx, a) ->  prev * curr);
+    double result = arr.reduceRightDouble((prev, curr, idx, a) -> prev * curr);
     assertEqual(6, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2027() {
     Uint16Array arr = Uint16Array.of(5, 10);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(5, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2028() {
     Uint16Array arr = Uint16Array.of(10, 5);
-    double result = arr.reduceRightDouble((prev, curr, idx, a) ->  prev / curr);
+    double result = arr.reduceRightDouble((prev, curr, idx, a) -> prev / curr);
     assertEqual(0.5, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2029() {
     Uint16Array arr = Uint16Array.of(7, 3);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(-4, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2030() {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(0, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2031() {
     Uint16Array arr = Uint16Array.of(0, 0, 0);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(0, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2032() {
     Uint16Array arr = Uint16Array.of(65535, 0, 65535);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(0, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2033() {
     Uint16Array arr = Uint16Array.of(100, 200, 300);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(600, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2034() {
     Uint16Array arr = Uint16Array.of(1, 1, 1);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(3, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2035() {
     Uint16Array arr = Uint16Array.of(1, 1, 1, 1, 1);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(5, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2036() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(-20, result);
     }
 
@@ -296,14 +296,14 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     for (int i = 0; i < 100; i = i + 1) {
     arr.set(i, 1);
     }
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(100, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2038() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5);
-    double result = arr.reduceRightDouble((prev, curr, idx, a) ->  prev * curr);
+    double result = arr.reduceRightDouble((prev, curr, idx, a) -> prev * curr);
     assertEqual(120, result);
     }
 
@@ -313,7 +313,7 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     arr.set(0, 5);
     arr.set(1, 10);
     arr.set(2, 15);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(30, result);
     }
 
@@ -325,7 +325,7 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     arr.set(1, 200);
     arr.set(2, 300);
     arr.set(3, 400);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(1000, result);
     }
 
@@ -399,21 +399,21 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     @Test
     void testUint16ArrayReduceRightPart2047() {
     Uint16Array arr = Uint16Array.of(100, 50);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(-50, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2048() {
     Uint16Array arr = Uint16Array.of(50, 100);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(150, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2049() {
     Uint16Array arr = Uint16Array.of(100, 200, 300, 400);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(1000, result);
     }
 
@@ -421,7 +421,7 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     void testUint16ArrayReduceRightPart2050() {
     Uint16Array arr = new Uint16Array();
     try {
-    arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -472,28 +472,28 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     @Test
     void testUint16ArrayReduceRightPart2054() {
     Uint16Array arr = Uint16Array.of(0, 65535);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev | curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev | curr);
     assertEqual(65535, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2055() {
     Uint16Array arr = Uint16Array.of(65535, 0);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev & curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev & curr);
     assertEqual(0, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2056() {
     Uint16Array arr = Uint16Array.of(0x0F, 0xF0);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev ^ curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev ^ curr);
     assertEqual(0xFF, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2057() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev | curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev | curr);
     assertEqual(7, result);
     }
 
@@ -524,70 +524,70 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     @Test
     void testUint16ArrayReduceRightPart2060() {
     Uint16Array arr = Uint16Array.of(40000, 40000);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(80000, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2061() {
     Uint16Array arr = Uint16Array.of(25000, 25000);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(50000, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2062() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev > curr ? prev : curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev > curr ? prev : curr);
     assertEqual(30, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2063() {
     Uint16Array arr = Uint16Array.of(50000, 50000, 50000);
-    double result = arr.reduceRightDouble((prev, curr, idx, a) ->  (prev + curr) % 65536);
+    double result = arr.reduceRightDouble((prev, curr, idx, a) -> (prev + curr) % 65536);
     assertEqual(18928, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2064() {
     Uint16Array arr = Uint16Array.of(100, 200, 300);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  (int) ((prev + curr) / 2));
+    int result = arr.reduceRight((prev, curr, idx, a) -> (int) ((prev + curr) / 2));
     assertEqual(175, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2065() {
     Uint16Array arr = Uint16Array.of(0xFFFF, 0x0000, 0xFFFF);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(0, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2066() {
     Uint16Array arr = Uint16Array.of(0x8000, 0x8000, 0x8000);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(0x18000, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2067() {
     Uint16Array arr = Uint16Array.of(8, 2);
-    double result = arr.reduceRightDouble((prev, curr, idx, a) ->  prev / curr);
+    double result = arr.reduceRightDouble((prev, curr, idx, a) -> prev / curr);
     assertEqual(0.25, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2068() {
     Uint16Array arr = Uint16Array.of(5, 10, 15);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev + curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev + curr);
     assertEqual(30, result);
     }
 
     @Test
     void testUint16ArrayReduceRightPart2069() {
     Uint16Array arr = Uint16Array.of(100, 50, 25);
-    int result = arr.reduceRight((prev, curr, idx, a) ->  prev - curr);
+    int result = arr.reduceRight((prev, curr, idx, a) -> prev - curr);
     assertEqual(-125, result);
     }
 

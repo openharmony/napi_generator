@@ -23,9 +23,13 @@ package basetype.common;
 public class SyntaxError extends RuntimeException {
 
     public SyntaxError(String message) {
-        super(message);}
+        super(message);
+        }
 
-    /** ECMAScript SyntaxError.name。 */
+    /**
+     * ECMAScript SyntaxError.name。
+     */
     public String name() {
-        return "SyntaxError";}
+        return "SyntaxError";
+        }
 }

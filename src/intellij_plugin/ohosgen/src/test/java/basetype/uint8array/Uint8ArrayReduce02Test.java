@@ -59,7 +59,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce001() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
     /**
@@ -90,7 +90,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce003() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(15, result);
     }
     /**
@@ -105,7 +105,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce004() {
     Uint8Array arr = Uint8Array.of(2, 3, 4);
-    double result = arr.reduceDouble((prev, curr, index, array) ->  prev * curr);
+    double result = arr.reduceDouble((prev, curr, index, array) -> prev * curr);
     assertEqual(24, result);
     }
     /**
@@ -120,7 +120,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce005() {
     Uint8Array arr = Uint8Array.of(100, 10, 20, 30);
-    int result = arr.reduce((prev, curr, index, array) ->  prev - curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev - curr);
     assertEqual(40, result);
     }
     /**
@@ -135,7 +135,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce006() {
     Uint8Array arr = Uint8Array.of(256, 2, 4);
-    double result = arr.reduceDouble((prev, curr, index, array) ->  prev / curr);
+    double result = arr.reduceDouble((prev, curr, index, array) -> prev / curr);
     assertEqual(0, result);
     }
     /**
@@ -150,7 +150,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce007() {
     Uint8Array arr = Uint8Array.of(3, 1, 4, 1, 5);
-    int result = arr.reduce((prev, curr, index, array) ->  Math.max(prev, curr));
+    int result = arr.reduce((prev, curr, index, array) -> Math.max(prev, curr));
     assertEqual(5, result);
     }
     /**
@@ -165,7 +165,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce008() {
     Uint8Array arr = Uint8Array.of(10, 2, 8, 4);
-    int result = arr.reduce((prev, curr, index, array) ->  Math.min(prev, curr));
+    int result = arr.reduce((prev, curr, index, array) -> Math.min(prev, curr));
     assertEqual(2, result);
     }
     /**
@@ -180,7 +180,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce009() {
     Uint8Array arr = Uint8Array.of(1, 9, 4, 7);
-    int result = arr.reduce((prev, curr, index, array) ->  prev > curr ? prev : curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev > curr ? prev : curr);
     assertEqual(9, result);
     }
     /**
@@ -195,7 +195,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce010() {
     Uint8Array arr = Uint8Array.of(8, 3, 6, 2);
-    int result = arr.reduce((prev, curr, index, array) ->  prev < curr ? prev : curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev < curr ? prev : curr);
     assertEqual(2, result);
     }
     /**
@@ -210,7 +210,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce011() {
     Uint8Array arr = Uint8Array.of(0x0F, 0xF0);
-    int result = arr.reduce((prev, curr, index, array) ->  prev | curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev | curr);
     assertEqual(255, result);
     }
     /**
@@ -225,7 +225,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce012() {
     Uint8Array arr = Uint8Array.of(0xFF, 0x0F, 0xF0);
-    int result = arr.reduce((prev, curr, index, array) ->  prev & curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev & curr);
     assertEqual(0, result);
     }
     /**
@@ -240,7 +240,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce013() {
     Uint8Array arr = Uint8Array.of(0b101, 0b011, 0b110);
-    int result = arr.reduce((prev, curr, index, array) ->  prev ^ curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev ^ curr);
     assertEqual(0, result);
     }
     /**
@@ -255,7 +255,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce014() {
     Uint8Array arr = Uint8Array.of(2, 3, 2);
-    double result = arr.reduceDouble((prev, curr, index, array) ->  (int) Math.pow(prev, curr));
+    double result = arr.reduceDouble((prev, curr, index, array) -> (int) Math.pow(prev, curr));
     assertEqual(64, result);
     }
     /**
@@ -270,7 +270,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce015() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4);
-    int result = arr.reduce((prev, curr, index, array) ->  prev * 10 + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev * 10 + curr);
     assertEqual(1234, result);
     }
     /**
@@ -285,7 +285,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce016() {
     Uint8Array arr = Uint8Array.of(150, 150, 150);
-    int result = arr.reduce((prev, curr, index, array) ->  (prev + curr) & 0xFF);
+    int result = arr.reduce((prev, curr, index, array) -> (prev + curr) & 0xFF);
     assertEqual(194, result);
     }
     /**
@@ -300,7 +300,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce017() {
     Uint8Array arr = Uint8Array.of(7, 1, 2, 3);
-    int result = arr.reduce((prev, curr, index, array) ->  prev);
+    int result = arr.reduce((prev, curr, index, array) -> prev);
     assertEqual(7, result);
     }
     /**
@@ -315,7 +315,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce018() {
     Uint8Array arr = Uint8Array.of(7, 1, 2, 3);
-    int result = arr.reduce((prev, curr, index, array) ->  curr);
+    int result = arr.reduce((prev, curr, index, array) -> curr);
     assertEqual(3, result);
     }
     /**
@@ -330,7 +330,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce019() {
     Uint8Array arr = Uint8Array.of(1, 3, 5);
-    double result = arr.reduceDouble((prev, curr, index, array) ->  prev + curr * curr);
+    double result = arr.reduceDouble((prev, curr, index, array) -> prev + curr * curr);
     assertEqual(35, result);
     }
     /**
@@ -345,7 +345,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce020() {
     Uint8Array arr = Uint8Array.of(100, 30, 20);
-    int result = arr.reduce((prev, curr, index, array) ->  Math.abs(prev - curr));
+    int result = arr.reduce((prev, curr, index, array) -> Math.abs(prev - curr));
     assertEqual(50, result);
     }
     /**
@@ -360,7 +360,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce021() {
     Uint8Array arr = Uint8Array.of(2, 3, 1);
-    double result = arr.reduceDouble((prev, curr, index, array) ->  prev * curr + prev);
+    double result = arr.reduceDouble((prev, curr, index, array) -> prev * curr + prev);
     assertEqual(16, result);
     }
     /**
@@ -375,7 +375,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce022() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr * 10);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr * 10);
     assertEqual(91, result);
     }
     /**
@@ -390,7 +390,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce023() {
     Uint8Array arr = Uint8Array.of(10, 50, 5, 100);
-    int result = arr.reduce((prev, curr, index, array) ->  curr > 20 ? prev + curr : prev);
+    int result = arr.reduce((prev, curr, index, array) -> curr > 20 ? prev + curr : prev);
     assertEqual(160, result);
     }
     /**
@@ -405,7 +405,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce024() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    int result = arr.reduce((prev, curr, index, array) ->  prev * (curr + 1));
+    int result = arr.reduce((prev, curr, index, array) -> prev * (curr + 1));
     assertEqual(12, result);
     }
     /**
@@ -420,7 +420,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce025() {
     Uint8Array arr = Uint8Array.of(1, 1, 1, 1);
-    int result = arr.reduce((prev, curr, index, array) ->  (prev << 1) + curr);
+    int result = arr.reduce((prev, curr, index, array) -> (prev << 1) + curr);
     assertEqual(15, result);
     }
     /**
@@ -435,7 +435,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce026() {
     Uint8Array arr = Uint8Array.of(0xAA, 0x55, 0xFF);
-    int result = arr.reduce((prev, curr, index, array) ->  prev | curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev | curr);
     assertEqual(255, result);
     }
     /**
@@ -450,7 +450,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce027() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    int result = arr.reduce((prev, curr, idx, a) ->  prev + curr + a.get(0));
+    int result = arr.reduce((prev, curr, idx, a) -> prev + curr + a.get(0));
     assertEqual(8, result);
     }
     /**
@@ -484,7 +484,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce029() {
     Uint8Array arr = Uint8Array.of(3, 6, 9);
-    double result = arr.reduceDouble((prev, curr, index, array) ->  prev + (int) (curr / 2));
+    double result = arr.reduceDouble((prev, curr, index, array) -> prev + (int) (curr / 2));
     assertEqual(10, result);
     }
     /**
@@ -499,7 +499,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce030() {
     Uint8Array arr = Uint8Array.of(100, 30, 200);
-    int result = arr.reduce((prev, curr, index, array) ->  prev - Math.abs(curr));
+    int result = arr.reduce((prev, curr, index, array) -> prev - Math.abs(curr));
     assertEqual(-130, result);
     }
     /**
@@ -514,7 +514,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce031() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    int result = arr.reduce((prev, curr, index, array) ->  prev ^ (curr << 1));
+    int result = arr.reduce((prev, curr, index, array) -> prev ^ (curr << 1));
     assertEqual(3, result);
     }
     /**
@@ -529,7 +529,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce032() {
     Uint8Array arr = Uint8Array.of(10, 30, 5);
-    int result = arr.reduce((prev, curr, index, array) ->  Math.abs(prev - curr));
+    int result = arr.reduce((prev, curr, index, array) -> Math.abs(prev - curr));
     assertEqual(15, result);
     }
     /**
@@ -744,7 +744,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce043() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     String resultType = BasTest.className(result);
     assertEqual("java.lang.Double", resultType);
     }
@@ -760,7 +760,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce044() {
     Uint8Array arr = Uint8Array.of(42);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(42, result);
     }
     /**
@@ -775,7 +775,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce045() {
     Uint8Array arr = Uint8Array.of(0);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(0, result);
     }
     /**
@@ -790,7 +790,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce046() {
     Uint8Array arr = Uint8Array.of(10, 20);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(30, result);
     }
     /**
@@ -805,7 +805,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce047() {
     Uint8Array arr = Uint8Array.of(0, 0, 0, 0);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(0, result);
     }
     /**
@@ -820,7 +820,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce048() {
     Uint8Array arr = Uint8Array.of(1.5, 2.7);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(3, result);
     }
     /**
@@ -835,7 +835,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce049() {
     Uint8Array arr = Uint8Array.of(-1);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(255, result);
     }
     /**
@@ -850,7 +850,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce050() {
     Uint8Array arr = Uint8Array.of(256, 257);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(1, result);
     }
     /**
@@ -865,7 +865,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce051() {
     Uint8Array arr = Uint8Array.of(255, 255, 255, 255);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(1020, result);
     }
     /**
@@ -880,7 +880,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce052() {
     Uint8Array arr = Uint8Array.of(128, 127);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(255, result);
     }
     /**
@@ -915,7 +915,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce054() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual("60", String.valueOf(result));
     }
     /**
@@ -931,7 +931,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     void testUint8ArrayReduce055() {
     Uint8Array arr = new Uint8Array();
     try {
-    arr.reduce((prev, curr, index, array) ->  prev + curr);
+    arr.reduce((prev, curr, index, array) -> prev + curr);
     fail();
     } catch (TypeError e) { assertEqual("basetype.common.TypeError", BasTest.className(e));
     }
@@ -949,7 +949,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     void testUint8ArrayReduce056() {
     Uint8Array arr = new Uint8Array(new ArrayBuffer(0));
     try {
-    arr.reduce((prev, curr, index, array) ->  prev + curr);
+    arr.reduce((prev, curr, index, array) -> prev + curr);
     fail();
     } catch (TypeError e) { assertEqual("basetype.common.TypeError", BasTest.className(e));
     }
@@ -968,7 +968,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     Uint8Array empty = src.filter((x) -> x > 100);
     try {
-    empty.reduce((prev, curr, index, array) ->  prev + curr);
+    empty.reduce((prev, curr, index, array) -> prev + curr);
     fail();
     } catch (TypeError e) { assertEqual("basetype.common.TypeError", BasTest.className(e));
     }
@@ -1073,7 +1073,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     void testUint8ArrayReduce062() {
     Uint8Array src = Uint8Array.of(1, 2, 3, 4, 5);
     Uint8Array sub = src.slice(1, 4);
-    int result = sub.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = sub.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(9, result);
     }
     /**
@@ -1092,7 +1092,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     arr.set(new Uint8Array(new int[] {10}), 0);
     arr.set(new Uint8Array(new int[] {20}), 1);
     arr.set(new Uint8Array(new int[] {30}), 2);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
     /**
@@ -1108,7 +1108,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     void testUint8ArrayReduce064() {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     Uint8Array doubled = src.map((x) -> x * 2);
-    int result = doubled.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = doubled.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(12, result);
     }
     /**
@@ -1124,7 +1124,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     void testUint8ArrayReduce065() {
     Uint8Array src = Uint8Array.of(1, 2, 3, 4, 5);
     Uint8Array filtered = src.filter((x) -> x > 2);
-    int result = filtered.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = filtered.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(12, result);
     }
     /**
@@ -1147,7 +1147,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     secondView.set(new Uint8Array(new int[] {10}), 0);
     secondView.set(new Uint8Array(new int[] {20}), 1);
     secondView.set(new Uint8Array(new int[] {30}), 2);
-    int result = firstView.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = firstView.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(6, result);
     }
     /**
@@ -1166,7 +1166,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     arr.set(new Uint8Array(new int[] {10}), 1);
     arr.set(new Uint8Array(new int[] {15}), 2);
     arr.set(new Uint8Array(new int[] {20}), 3);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(50, result);
     }
     /**
@@ -1181,7 +1181,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce068() {
     Uint8Array arr = Uint8Array.from(new int[] {10, 20, 30});
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
     /**
@@ -1196,7 +1196,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce069() {
     Uint8Array arr = Uint8Array.from(new double[] {1.0, 2.0, 3.0}, (x, index) -> x * 10);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
     /**
@@ -1212,7 +1212,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     void testUint8ArrayReduce070() {
     int multiplier = 5;
     Uint8Array arr = Uint8Array.from(new double[] {1.0, 2.0, 3.0}, (x, index) -> x * multiplier);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(30, result);
     }
     /**
@@ -1227,7 +1227,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce071() {
     Uint8Array arr = Uint8Array.from(new double[] {1.0, 2.0, 3.0});
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(6, result);
     }
     /**
@@ -1246,7 +1246,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     s.add(20);
     s.add(30);
     Uint8Array arr = Uint8Array.from(s);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
     /**
@@ -1265,7 +1265,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     m.put("b", 20);
     m.put("c", 30);
     Uint8Array arr = Uint8Array.from(m.values());
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
     /**
@@ -1281,7 +1281,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     void testUint8ArrayReduce074() {
     Int32Array src = new Int32Array(new int[] {10, 20, 30});
     Uint8Array arr = Uint8Array.from(src);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
     /**
@@ -1297,7 +1297,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     void testUint8ArrayReduce075() {
     Uint8Array arr = Uint8Array.from(new int[] {});
     try {
-    arr.reduce((prev, curr, index, array) ->  prev + curr);
+    arr.reduce((prev, curr, index, array) -> prev + curr);
     fail();
     } catch (TypeError e) { assertEqual("basetype.common.TypeError", BasTest.className(e));
     }
@@ -1314,7 +1314,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     @Test
     void testUint8ArrayReduce076() {
     Uint8Array arr = Uint8Array.from(new double[] {256.0, 257.0, 258.0}, (x, index) -> x);
-    int result = arr.reduce((prev, curr, index, array) ->  prev + curr);
+    int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(3, result);
     }
 }

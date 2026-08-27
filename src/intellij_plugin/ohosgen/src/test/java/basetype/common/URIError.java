@@ -23,9 +23,13 @@ package basetype.common;
 public class URIError extends RuntimeException {
 
     public URIError(String message) {
-        super(message);}
+        super(message);
+        }
 
-    /** ECMAScript URIError.name。 */
+    /**
+     * ECMAScript URIError.name。
+     */
     public String name() {
-        return "URIError";}
+        return "URIError";
+        }
 }

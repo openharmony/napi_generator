@@ -23,12 +23,17 @@ package basetype.common;
 public class ClassCastError extends RuntimeException {
 
     public ClassCastError() {
-        super();}
+        super();
+        }
 
     public ClassCastError(String message) {
-        super(message);}
+        super(message);
+        }
 
-    /** 语句级抛错辅助（编译器不会将其视为不可达，便于后续 fail() 共存）。 */
+    /**
+     * 语句级抛错辅助（编译器不会将其视为不可达，便于后续 fail() 共存）。
+     */
     public static ClassCastError raise() {
-        throw new ClassCastError();}
+        throw new ClassCastError();
+        }
 }

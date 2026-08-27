@@ -23,12 +23,17 @@ package basetype.common;
 public class RangeError extends RuntimeException {
 
     public RangeError() {
-        super("");}
+        super("");
+        }
 
     public RangeError(String message) {
-        super(message);}
+        super(message);
+        }
 
-    /** ECMAScript RangeError.name。 */
+    /**
+     * ECMAScript RangeError.name。
+     */
     public String name() {
-        return "RangeError";}
+        return "RangeError";
+        }
 }

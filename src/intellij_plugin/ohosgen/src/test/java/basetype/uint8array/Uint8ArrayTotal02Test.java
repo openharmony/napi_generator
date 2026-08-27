@@ -304,7 +304,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
     @Test
     void testUint8ArrayTotal019() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    int result = arr.reduce((acc, x, index, array) ->  acc + x, 0);
+    int result = arr.reduce((acc, x, index, array) -> acc + x, 0);
     assertTrue(BasTest.isInteger(result));
     }
     /**
@@ -1350,7 +1350,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
     @Test
     void testUint8ArrayTotal089() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    int result = arr.reduce((acc, x, index, array) ->  acc + x, 0);
+    int result = arr.reduce((acc, x, index, array) -> acc + x, 0);
     assertEqual(6, result);
     }
     /**

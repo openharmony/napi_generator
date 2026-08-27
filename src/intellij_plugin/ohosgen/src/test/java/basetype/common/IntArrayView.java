@@ -22,6 +22,9 @@ package basetype.common;
  */
 public interface IntArrayView {
 
+    /** 按索引读取元素。 */
     Integer get(int index);
 
-    int length();}
+    /** 返回元素个数。 */
+    int length();
+    }

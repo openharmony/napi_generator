@@ -23,12 +23,17 @@ package basetype.common;
 public class Error extends RuntimeException {
 
     public Error() {
-        super("");}
+        super("");
+        }
 
     public Error(String message) {
-        super(message);}
+        super(message);
+        }
 
-    /** ECMAScript Error.name。 */
+    /**
+     * ECMAScript Error.name。
+     */
     public String name() {
-        return "Error";}
+        return "Error";
+        }
 }

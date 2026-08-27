@@ -23,9 +23,13 @@ package basetype.common;
 public class NullPointerError extends RuntimeException {
 
     public NullPointerError() {
-        super("null callback");}
+        super("null callback");
+        }
 
-    /** ETS NullPointerError.name。 */
+    /**
+     * ETS NullPointerError.name。
+     */
     public String name() {
-        return "NullPointerError";}
+        return "NullPointerError";
+        }
 }

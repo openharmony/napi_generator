@@ -293,7 +293,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
     void testUint8ClampedArrayFullFour017() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     try {
-    arr.reduce((a, b, index, array) ->  a + b);
+    arr.reduce((a, b, index, array) -> a + b);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -312,7 +312,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
     void testUint8ClampedArrayFullFour018() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     try {
-    arr.reduceRight((a, b, index, array) ->  a + b);
+    arr.reduceRight((a, b, index, array) -> a + b);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());

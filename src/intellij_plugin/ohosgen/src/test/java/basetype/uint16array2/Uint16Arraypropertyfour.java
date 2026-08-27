@@ -474,7 +474,7 @@ public class Uint16Arraypropertyfour extends BasTest {
     void testUint16Arraypropertyfour058() {
     Uint16Array a = Uint16Array.of(1, 2, 3);
     ArrayBuffer b = a.buffer();
-    int sum = a.reduce((p, v, array, unused3) ->  p + v, 0);
+    int sum = a.reduce((p, v, array, unused3) -> p + v, 0);
     assertEqual(6, sum);
     assertEqual("1,2,3", a.join(","));
     assertEqual(b, a.buffer());
@@ -586,7 +586,7 @@ public class Uint16Arraypropertyfour extends BasTest {
     void testUint16Arraypropertyfour071() {
     Uint16Array a = Uint16Array.of(1, 2, 3);
     ArrayBuffer b = a.buffer();
-    int r = a.reduceRight((p, v, array, unused3) ->  p + v, 0);
+    int r = a.reduceRight((p, v, array, unused3) -> p + v, 0);
     assertEqual(6, r);
     assertEqual(b, a.buffer());
     }

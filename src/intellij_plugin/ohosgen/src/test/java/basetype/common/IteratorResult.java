@@ -27,5 +27,6 @@ public class IteratorResult {
 
     public IteratorResult(Integer value, boolean done) {
         this.value = value;
-        this.done = done;}
+        this.done = done;
+        }
 }

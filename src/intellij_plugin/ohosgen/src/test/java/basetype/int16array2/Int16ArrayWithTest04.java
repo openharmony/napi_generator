@@ -321,7 +321,7 @@ public class Int16ArrayWithTest04 extends BasTest {
     int sv = (int) 99;
     Int16Array result = arr.with(0, sv);
     int[] count = {0};
-    result.forEach((_v, _i, _a) -> {
+    result.forEach((unusedVal, unusedIndex, array) -> {
     count[0] = count[0] + 1;
         });
     assertEqual(3, count[0]);
@@ -332,7 +332,7 @@ public class Int16ArrayWithTest04 extends BasTest {
     Int16Array arr = Int16Array.of(10, 20, 30);
     int sv = (int) 5;
     Int16Array result = arr.with(0, sv);
-    Int16Array mapped = result.map((v, _i, _a) -> { return v + 1;
+    Int16Array mapped = result.map((v, unusedIndex, array) -> { return v + 1;
         });
     Integer actual1 = mapped.get(0);
     assertEqual(6, actual1);
@@ -342,7 +342,7 @@ public class Int16ArrayWithTest04 extends BasTest {
     void testInt16ArrayWithTestFour031() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     Int16Array result = arr.with(0, 5);
-    Int16Array mapped = result.map((v, _i, _a) -> { return v + 1;
+    Int16Array mapped = result.map((v, unusedIndex, array) -> { return v + 1;
         });
     Integer actual1 = mapped.get(0);
     assertEqual(6, actual1);
@@ -353,7 +353,7 @@ public class Int16ArrayWithTest04 extends BasTest {
     Int16Array arr = Int16Array.of(10, 20, 30);
     int sv = (int) 99;
     Int16Array result = arr.with(0, sv);
-    Int16Array filtered = result.filter((v, _i, _a) -> { return v > 50;
+    Int16Array filtered = result.filter((v, unusedIndex, array) -> { return v > 50;
         });
     int actual1 = filtered.length();
     assertEqual(1, actual1);
@@ -365,7 +365,7 @@ public class Int16ArrayWithTest04 extends BasTest {
     void testInt16ArrayWithTestFour033() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     Int16Array result = arr.with(0, 15);
-    boolean allPositive = result.every((v, _i, _a) -> { return v > 0;
+    boolean allPositive = result.every((v, unusedIndex, array) -> { return v > 0;
         });
     assertTrue(allPositive);
     }
@@ -374,7 +374,7 @@ public class Int16ArrayWithTest04 extends BasTest {
     void testInt16ArrayWithTestFour034() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     Int16Array result = arr.with(0, 5);
-    boolean hasValue = result.some((v, _i, _a) -> { return v == 5;
+    boolean hasValue = result.some((v, unusedIndex, array) -> { return v == 5;
         });
     assertTrue(hasValue);
     }
@@ -384,7 +384,7 @@ public class Int16ArrayWithTest04 extends BasTest {
     Int16Array arr = Int16Array.of(10, 20, 30);
     int sv = (int) 99;
     Int16Array result = arr.with(0, sv);
-    Integer found = result.find((v, _i, _a) -> { return v == 99;
+    Integer found = result.find((v, unusedIndex, array) -> { return v == 99;
         });
     assertEqual(99, found);
     }
@@ -393,7 +393,7 @@ public class Int16ArrayWithTest04 extends BasTest {
     void testInt16ArrayWithTestFour036() {
     Int16Array arr = Int16Array.of(10, 20, 30);
     Int16Array result = arr.with(0, 5);
-    int sum = result.reduce((acc, v, _i, _a) -> {
+    int sum = result.reduce((acc, v, unusedIndex, array) -> {
         return acc + v;
         }, 0);
     assertEqual(55, sum);

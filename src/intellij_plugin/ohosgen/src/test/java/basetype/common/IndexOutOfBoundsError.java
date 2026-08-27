@@ -23,9 +23,13 @@ package basetype.common;
 public class IndexOutOfBoundsError extends RuntimeException {
 
     public IndexOutOfBoundsError(String message) {
-        super(message);}
+        super(message);
+        }
 
-    /** ECMAScript IndexOutOfBoundsError.name。 */
+    /**
+     * ECMAScript IndexOutOfBoundsError.name。
+     */
     public String name() {
-        return "IndexOutOfBoundsError";}
+        return "IndexOutOfBoundsError";
+        }
 }

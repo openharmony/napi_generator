@@ -437,7 +437,7 @@ public class Uint8ClampedArrayFull05Test extends BasTest {
     void testUint8ClampedArrayFullFive021() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     try {
-    arr.reduce((a, b, index, array) ->  a + b);
+    arr.reduce((a, b, index, array) -> a + b);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -456,7 +456,7 @@ public class Uint8ClampedArrayFull05Test extends BasTest {
     void testUint8ClampedArrayFullFive022() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     try {
-    arr.reduceRight((a, b, index, array) ->  a + b);
+    arr.reduceRight((a, b, index, array) -> a + b);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -514,7 +514,7 @@ public class Uint8ClampedArrayFull05Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullFive025() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
-    int result = arr.reduce((a, b, index, array) ->  a + b, 255);
+    int result = arr.reduce((a, b, index, array) -> a + b, 255);
     assertEqual(255, result);
     }
     /**
@@ -529,7 +529,7 @@ public class Uint8ClampedArrayFull05Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullFive026() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
-    int result = arr.reduce((a, b, index, array) ->  a + b, -1);
+    int result = arr.reduce((a, b, index, array) -> a + b, -1);
     assertEqual(-1, result);
     }
     /**
@@ -767,7 +767,7 @@ public class Uint8ClampedArrayFull05Test extends BasTest {
     void testUint8ClampedArrayFullFive038() {
     List<Number> src = java.util.Arrays.asList(1, 2, 3);
     try {
-    Uint8ClampedArray.from(src, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, _i) -> { throw new Error("map fail");
+    Uint8ClampedArray.from(src, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, unusedIndex) -> { throw new Error("map fail");
         });
     fail();
     } catch (Error e) {
@@ -1425,7 +1425,7 @@ public class Uint8ClampedArrayFull05Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullFive080() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 10, 10, 10});
-    int r = arr.reduce((a, b, index, array) ->  a + b, 0);
+    int r = arr.reduce((a, b, index, array) -> a + b, 0);
     assertEqual(40, r);
     }
     /**

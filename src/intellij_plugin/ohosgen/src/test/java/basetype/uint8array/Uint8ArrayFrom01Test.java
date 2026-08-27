@@ -47,9 +47,9 @@ public class Uint8ArrayFrom01Test extends BasTest {
     }
     return result;
     }
-/**
- * Helper to create an Array<number> filled with zeros
- */
+    /**
+    * Helper to create an Array<number> filled with zeros
+    */
 /**
  * Helper to create an Array<BigInt> filled with zeros
  */

@@ -40,7 +40,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceTwo001() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    arr.reduce((p, c, index, array) ->  p + c, 0);
+    arr.reduce((p, c, index, array) -> p + c, 0);
     assertEqual(3, arr.length());
     assertEqual(1, arr.get(0));
     assertEqual(2, arr.get(1));
@@ -50,21 +50,21 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceTwo002() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {0.5});
-    int r = arr.reduce((p, c, index, array) ->  p + c, 0);
+    int r = arr.reduce((p, c, index, array) -> p + c, 0);
     assertEqual(0, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo003() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {0.9});
-    int r = arr.reduce((p, c, index, array) ->  p + c, 0);
+    int r = arr.reduce((p, c, index, array) -> p + c, 0);
     assertEqual(1, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo004() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {1.5});
-    int r = arr.reduce((p, c, index, array) ->  p + c, 0);
+    int r = arr.reduce((p, c, index, array) -> p + c, 0);
     assertEqual(2, r);
     }
 
@@ -95,49 +95,49 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceTwo007() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(15, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo008() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 200, 50, 255, 30});
-    int r = arr.reduce((p, c, i, a) ->  p > c ? p : c);
+    int r = arr.reduce((p, c, i, a) -> p > c ? p : c);
     assertEqual(255, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo009() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 5, 200, 1, 30});
-    int r = arr.reduce((p, c, i, a) ->  p < c ? p : c);
+    int r = arr.reduce((p, c, i, a) -> p < c ? p : c);
     assertEqual(1, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo010() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
-    int r = arr.reduce((p, c, i, a) ->  99);
+    int r = arr.reduce((p, c, i, a) -> 99);
     assertEqual(99, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo011() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 1, 2, 3});
-    int r = arr.reduce((p, c, i, a) ->  p);
+    int r = arr.reduce((p, c, i, a) -> p);
     assertEqual(7, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo012() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 1, 2, 3});
-    int r = arr.reduce((p, c, i, a) ->  c);
+    int r = arr.reduce((p, c, i, a) -> c);
     assertEqual(3, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo013() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
-    int r = arr.reduce((p, c, i, a) ->  i );
+    int r = arr.reduce((p, c, i, a) -> i );
     assertEqual(3, r);
     }
 
@@ -195,14 +195,14 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceTwo018() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {2, 3, 4});
-    double r = arr.reduceDouble((p, c, i, a) ->  p * c);
+    double r = arr.reduceDouble((p, c, i, a) -> p * c);
     assertEqual(24, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo019() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {100, 10, 20, 30});
-    int r = arr.reduce((p, c, i, a) ->  p - c);
+    int r = arr.reduce((p, c, i, a) -> p - c);
     assertEqual(40, r);
     }
 
@@ -210,7 +210,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     void testUint8ClampedArrayReduceTwo020() {
     int factor = 2;
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    double r = arr.reduceDouble((p, c, i, a) ->  p + c * factor);
+    double r = arr.reduceDouble((p, c, i, a) -> p + c * factor);
     assertEqual(11, r);
     }
 
@@ -228,16 +228,16 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceTwo022() {
     Uint8ClampedArray sub = new Uint8ClampedArray(new int[] {1, 2, 3});
-    int subSum = sub.reduce((p, c, i, a) ->  p + c);
+    int subSum = sub.reduce((p, c, i, a) -> p + c);
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20});
-    int r = arr.reduce((p, c, i, a) ->  p + c + subSum);
+    int r = arr.reduce((p, c, i, a) -> p + c + subSum);
     assertEqual(36, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo023() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 128, 255});
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(383, r);
     }
 
@@ -247,7 +247,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     for (int k = 0; k < 256; k = k + 1) { buf.add(k);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(32640, r);
     }
 
@@ -257,7 +257,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     for (int k = 0; k < 1024; k = k + 1) { buf.add(1);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(1024, r);
     }
 
@@ -267,7 +267,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     arr.set(0, 256);
     arr.set(1, 256);
     arr.set(2, 256);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(765, r);
     }
 
@@ -278,7 +278,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     arr.set(1, -100);
     arr.set(2, -1e9);
     arr.set(3, 5);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(5, r);
     }
 
@@ -288,7 +288,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     arr.set(0, Double.NaN);
     arr.set(1, 10);
     arr.set(2, Double.NaN);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(10, r);
     }
 
@@ -297,7 +297,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(2);
     arr.set(0, Double.POSITIVE_INFINITY);
     arr.set(1, Double.POSITIVE_INFINITY);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(510, r);
     }
 
@@ -307,7 +307,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     arr.set(0, -Double.POSITIVE_INFINITY);
     arr.set(1, -Double.POSITIVE_INFINITY);
     arr.set(2, 42);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(42, r);
     }
 
@@ -316,7 +316,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(2);
     arr.set(0, 0.5);
     arr.set(1, 0.5);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(0, r);
     }
 
@@ -325,35 +325,35 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(2);
     arr.set(0, 127.5);
     arr.set(1, 127.5);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(256, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo033() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0xFF, 0x10, 0x01});
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(272, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo034() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0b1111, 0b1010, 0b0001});
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(26, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo035() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {017, 020, 07});
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(38, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo036() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {1e2, 1e1, 1e0});
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(111, r);
     }
 
@@ -365,7 +365,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     arr.set(1, 20);
     arr.set(2, 30);
     arr.set(3, 40);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(100, r);
     }
 
@@ -380,7 +380,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     full.set(4, 5);
     full.set(5, 6);
     Uint8ClampedArray sub = new Uint8ClampedArray(buf, 2, 3);
-    int r = sub.reduce((p, c, i, a) ->  p + c);
+    int r = sub.reduce((p, c, i, a) -> p + c);
     assertEqual(12, r);
     }
 
@@ -388,14 +388,14 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     void testUint8ClampedArrayReduceTwo039() {
     List<Integer> src = java.util.Arrays.asList(10, 20, 30);
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(60, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo040() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(5, 15, 25, 35);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(80, r);
     }
 
@@ -432,35 +432,35 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceTwo043() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {2, 3, 4});
-    double r = arr.reduceDouble((p, c, i, a) ->  p + c + 0.5);
+    double r = arr.reduceDouble((p, c, i, a) -> p + c + 0.5);
     assertEqual(10, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo044() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 50, 60});
-    int r = arr.reduce((p, c, i, a) ->  p - c);
+    int r = arr.reduce((p, c, i, a) -> p - c);
     assertEqual(-100, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo045() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    int r = arr.reduce((p, c, i, a) ->  0);
+    int r = arr.reduce((p, c, i, a) -> 0);
     assertEqual(0, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo046() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0});
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(0, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo047() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {255});
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(255, r);
     }
 
@@ -468,7 +468,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     void testUint8ClampedArrayReduceTwo048() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 1e9);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(255, r);
     }
 
@@ -476,7 +476,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     void testUint8ClampedArrayReduceTwo049() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, -50);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(0, r);
     }
 
@@ -484,28 +484,28 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     void testUint8ClampedArrayReduceTwo050() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, Double.NaN);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(0, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo051() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    double r = arr.reduceDouble((p, c, i, a) ->  Double.NaN);
+    double r = arr.reduceDouble((p, c, i, a) -> Double.NaN);
     assertTrue(true);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo052() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    double r = arr.reduceDouble((p, c, i, a) ->  Double.POSITIVE_INFINITY);
+    double r = arr.reduceDouble((p, c, i, a) -> Double.POSITIVE_INFINITY);
     assertEqual(Double.POSITIVE_INFINITY, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo053() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    double r = arr.reduceDouble((p, c, i, a) ->  -Double.POSITIVE_INFINITY);
+    double r = arr.reduceDouble((p, c, i, a) -> -Double.POSITIVE_INFINITY);
     assertEqual(-Double.POSITIVE_INFINITY, r);
     }
 
@@ -517,7 +517,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     arr.set(1, 20);
     arr.set(2, 30);
     arr.set(3, 40);
-    arr.reduce((p, c, i, a) ->  p + c);
+    arr.reduce((p, c, i, a) -> p + c);
     assertEqual(buf, arr.buffer());
     }
 
@@ -525,7 +525,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     void testUint8ClampedArrayReduceTwo055() {
     Uint8ClampedArray arr = new Uint8ClampedArray(0);
     try {
-    arr.reduce((p, c, i, a) ->  p + c);
+    arr.reduce((p, c, i, a) -> p + c);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -537,7 +537,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(0);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
     try {
-    arr.reduce((p, c, i, a) ->  p + c);
+    arr.reduce((p, c, i, a) -> p + c);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -549,7 +549,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     List<Integer> src = new ArrayList<>();
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     try {
-    arr.reduce((p, c, i, a) ->  p + c);
+    arr.reduce((p, c, i, a) -> p + c);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -561,7 +561,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     Uint8ClampedArray parent = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray empty = parent.subarray(2, 2);
     try {
-    empty.reduce((p, c, i, a) ->  p + c);
+    empty.reduce((p, c, i, a) -> p + c);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -574,7 +574,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 0, 0);
     try {
-    arr.reduce((p, c, i, a) ->  p + c);
+    arr.reduce((p, c, i, a) -> p + c);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
@@ -670,7 +670,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     arr.set(0, 10);
     arr.set(1, Double.NaN);
     arr.set(2, 20);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(30, r);
     }
 
@@ -680,7 +680,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     arr.set(0, 0.4);
     arr.set(1, 0.4);
     arr.set(2, 0.4);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(0, r);
     }
 
@@ -690,7 +690,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     arr.set(0, 0.9);
     arr.set(1, 0.9);
     arr.set(2, 0.9);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(3, r);
     }
 
@@ -699,7 +699,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(2);
     arr.set(0, 128.5);
     arr.set(1, 128.5);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(256, r);
     }
 
@@ -708,7 +708,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(2);
     arr.set(0, Double.MAX_VALUE);
     arr.set(1, Double.MAX_VALUE);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(510, r);
     }
 
@@ -717,21 +717,21 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(2);
     arr.set(0, Double.MIN_VALUE);
     arr.set(1, Double.MIN_VALUE);
-    int r = arr.reduce((p, c, i, a) ->  p + c);
+    int r = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(0, r);
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo072() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
-    arr.reduce((p, c, i, a) ->  p + c);
+    arr.reduce((p, c, i, a) -> p + c);
     assertEqual(4, arr.length());
     }
 
     @Test
     void testUint8ClampedArrayReduceTwo073() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
-    arr.reduce((p, c, i, a) ->  p + c);
+    arr.reduce((p, c, i, a) -> p + c);
     assertEqual(10, arr.get(0));
     assertEqual(20, arr.get(1));
     assertEqual(30, arr.get(2));
@@ -740,8 +740,8 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceTwo074() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
-    int r1 = arr.reduce((p, c, i, a) ->  p + c);
-    int r2 = arr.reduce((p, c, i, a) ->  p + c);
+    int r1 = arr.reduce((p, c, i, a) -> p + c);
+    int r2 = arr.reduce((p, c, i, a) -> p + c);
     assertEqual(10, r1);
     assertEqual(10, r2);
     }
@@ -750,12 +750,12 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     void testUint8ClampedArrayReduceTwo075() {
     Uint8ClampedArray parent = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    parent.subarray(0, 0).reduce((p, c, i, a) ->  p + c);
+    parent.subarray(0, 0).reduce((p, c, i, a) -> p + c);
     fail();
     } catch (TypeError e) {
     assertEqual("TypeError", e.getClass().getSimpleName());
     }
-    int r = parent.reduce((p, c, i, a) ->  p + c);
+    int r = parent.reduce((p, c, i, a) -> p + c);
     assertEqual(6, r);
     }
 }

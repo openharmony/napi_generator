@@ -834,7 +834,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullSeven054() {
     Uint8ClampedArray parent = new Uint8ClampedArray(new int[] {1, 2, 3});
-    Uint8ClampedArray m = parent.map((v, i, _a) -> v + 1);
+    Uint8ClampedArray m = parent.map((v, i, array) -> v + 1);
     assertNotEqual(parent.buffer(), m.buffer());
     }
     /**
@@ -849,7 +849,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullSeven055() {
     Uint8ClampedArray parent = new Uint8ClampedArray(new int[] {1, 2, 3});
-    Uint8ClampedArray f = parent.filter((v, i, _a) -> v > 1);
+    Uint8ClampedArray f = parent.filter((v, i, array) -> v > 1);
     assertNotEqual(parent.buffer(), f.buffer());
     }
     /**
@@ -1065,7 +1065,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullSeven068() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    Uint8ClampedArray mapped = arr.map((v, i, _a) -> v + 1);
+    Uint8ClampedArray mapped = arr.map((v, i, array) -> v + 1);
     assertEqual(3, mapped.length());
     assertEqual(2, mapped.get(0));
     assertEqual(3, mapped.get(1));
@@ -1084,7 +1084,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullSeven069() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    Uint8ClampedArray filtered = arr.filter((v, i, _a) -> v > 1);
+    Uint8ClampedArray filtered = arr.filter((v, i, array) -> v > 1);
     assertEqual(2, filtered.length());
     assertEqual(2, filtered.get(0));
     assertEqual(3, filtered.get(1));
@@ -1264,7 +1264,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullSeven080() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    Uint8ClampedArray r = arr.map((v, i, _a) -> v + 1).map((v, i, _a) -> v * 2);
+    Uint8ClampedArray r = arr.map((v, i, array) -> v + 1).map((v, i, array) -> v * 2);
     assertEqual(4, r.get(0));
     }
     /**
@@ -1279,7 +1279,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullSeven081() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
-    Uint8ClampedArray r = arr.filter((v, i, _a) -> v > 1).filter((v, i, _a) -> v < 4);
+    Uint8ClampedArray r = arr.filter((v, i, array) -> v > 1).filter((v, i, array) -> v < 4);
     assertEqual(2, r.length());
     }
     /**
@@ -1340,7 +1340,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     void testUint8ClampedArrayFullSeven085() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int[] sum = {0};
-    arr.forEach((v, i, _a) -> { sum[0] += v;
+    arr.forEach((v, i, array) -> { sum[0] += v;
         });
     assertEqual(6, sum[0]);
     }
@@ -1358,7 +1358,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int factor = 10;
     int[] acc = {0};
-    arr.forEach((v, i, _a) -> { acc[0] += v * factor;
+    arr.forEach((v, i, array) -> { acc[0] += v * factor;
         });
     assertEqual(60, acc[0]);
     }
@@ -1375,7 +1375,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     void testUint8ClampedArrayFullSeven087() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int offset = 100;
-    Uint8ClampedArray r = arr.map((v, i, _a) -> v + offset);
+    Uint8ClampedArray r = arr.map((v, i, array) -> v + offset);
     assertEqual(101, r.get(0));
     }
     /**
@@ -1391,7 +1391,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     void testUint8ClampedArrayFullSeven088() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     int threshold = 2;
-    Uint8ClampedArray r = arr.filter((v, i, _a) -> v > threshold);
+    Uint8ClampedArray r = arr.filter((v, i, array) -> v > threshold);
     assertEqual(2, r.length());
     }
     /**
@@ -1406,7 +1406,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullSeven089() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    double r = arr.reduceDouble((acc, v, i, _a) ->  acc + v, 0.0);
+    double r = arr.reduceDouble((acc, v, i, array) -> acc + v, 0.0);
     assertEqual(6, r);
     }
     /**
@@ -1422,7 +1422,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     void testUint8ClampedArrayFullSeven090() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     int[] hitIdx = {-1};
-    arr.find((v, i, _a) -> {
+    arr.find((v, i, array) -> {
         if (v == 20) { hitIdx[0] = i;
         return true;
         } return false;
@@ -1442,7 +1442,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     void testUint8ClampedArrayFullSeven091() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     double[] collected = new double[] {0.0, 0.0, 0.0};
-    arr.forEach((v, i, _a) -> { collected[i] = v;
+    arr.forEach((v, i, array) -> { collected[i] = v;
         });
     assertEqual(3, collected[2]);
     }
@@ -1459,7 +1459,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     void testUint8ClampedArrayFullSeven092() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int[] count = {0};
-    arr.some((v, i, _a) -> {
+    arr.some((v, i, array) -> {
         count[0]++;
         return v > 100;
     });
@@ -1478,7 +1478,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     void testUint8ClampedArrayFullSeven093() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int[] calls = {0};
-    arr.every((v, i, _a) -> {
+    arr.every((v, i, array) -> {
         calls[0]++;
         return v < 2;
     });

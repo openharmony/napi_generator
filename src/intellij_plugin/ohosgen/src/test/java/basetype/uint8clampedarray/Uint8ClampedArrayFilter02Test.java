@@ -161,7 +161,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     void testUint8ClampedArrayFilterTwo008() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 3);
-    int[] sum = {r.reduce((acc, v, index, array) ->  acc + v, 0)};
+    int[] sum = {r.reduce((acc, v, index, array) -> acc + v, 0)};
     assertEqual(12, sum[0]);
     }
     /**

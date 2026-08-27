@@ -17,7 +17,6 @@ package basetype.uint8array2;
 
 import basetype.common.BasTest;
 
-
 /**
  * Uint8ArraySet02Test —— Int16Array 方法族测试。
  *

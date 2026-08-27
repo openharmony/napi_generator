@@ -24,8 +24,10 @@ package basetype.common;
 public class OutOfMemoryError extends RuntimeException {
 
     public OutOfMemoryError() {
-        super();}
+        super();
+        }
 
     public OutOfMemoryError(String message) {
-        super(message);}
+        super(message);
+        }
 }

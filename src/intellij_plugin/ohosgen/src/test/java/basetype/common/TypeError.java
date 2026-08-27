@@ -23,12 +23,17 @@ package basetype.common;
 public class TypeError extends RuntimeException {
 
     public TypeError() {
-        super("");}
+        super("");
+        }
 
     public TypeError(String message) {
-        super(message);}
+        super(message);
+        }
 
-    /** ECMAScript TypeError.name。 */
+    /**
+     * ECMAScript TypeError.name。
+     */
     public String name() {
-        return "TypeError";}
+        return "TypeError";
+        }
 }
