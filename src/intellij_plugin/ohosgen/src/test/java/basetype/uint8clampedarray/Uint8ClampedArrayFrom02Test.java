@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFrom02Test extends BasTest {
     /**
      * Verify Uint8ClampedArray.from yields byteOffset 0 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_0100
      * @tc.name testUint8ClampedArrayFromTwo001
      * @tc.desc Verify Uint8ClampedArray.from yields byteOffset 0 for from(src)
@@ -52,6 +53,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from yields byteLength 5 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_0200
      * @tc.name testUint8ClampedArrayFromTwo002
      * @tc.desc Verify Uint8ClampedArray.from yields byteLength 5 for from(src)
@@ -69,6 +71,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from([1,2,3]) produces correct length, byteLength and elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_0300
      * @tc.name testUint8ClampedArrayFromTwo003
      * @tc.desc Verify Uint8ClampedArray.from([1,2,3]) produces correct length, byteLength and elements
@@ -90,6 +93,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at src[0] equals 1 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_0400
      * @tc.name testUint8ClampedArrayFromTwo004
      * @tc.desc Verify Uint8ClampedArray.from element at src[0] equals 1 for from(src)
@@ -108,6 +112,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at src[0] equals 10.0 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_0500
      * @tc.name testUint8ClampedArrayFromTwo005
      * @tc.desc Verify Uint8ClampedArray.from element at src[0] equals 10.0 for from(src)
@@ -126,6 +131,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from yields length set.size for from(set)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_0600
      * @tc.name testUint8ClampedArrayFromTwo006
      * @tc.desc Verify Uint8ClampedArray.from yields length set.size for from(set)
@@ -146,6 +152,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify two from(src) calls produce distinct array objects
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_0700
      * @tc.name testUint8ClampedArrayFromTwo007
      * @tc.desc Verify two from(src) calls produce distinct array objects
@@ -164,6 +171,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at a1[0] equals a2[0] for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_0800
      * @tc.name testUint8ClampedArrayFromTwo008
      * @tc.desc Verify Uint8ClampedArray.from element at a1[0] equals a2[0] for from(src)
@@ -183,6 +191,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from propagates Error thrown by mapfn on second call for Set input
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_0900
      * @tc.name testUint8ClampedArrayFromTwo009
      * @tc.desc Verify Uint8ClampedArray.from propagates Error thrown by mapfn on second call for Set input
@@ -211,6 +220,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from propagates Error thrown by mapfn on first call for Set input
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1000
      * @tc.name testUint8ClampedArrayFromTwo010
      * @tc.desc Verify Uint8ClampedArray.from propagates Error thrown by mapfn on first call for Set input
@@ -239,6 +249,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1100
      * @tc.name testUint8ClampedArrayFromTwo011
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
@@ -256,6 +267,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1200
      * @tc.name testUint8ClampedArrayFromTwo012
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
@@ -273,6 +285,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1300
      * @tc.name testUint8ClampedArrayFromTwo013
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
@@ -290,6 +303,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Iterable<number> NaN clamp 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1400
      * @tc.name testUint8ClampedArrayFromTwo014
      * @tc.desc Verify Iterable<number> NaN clamp 0
@@ -310,6 +324,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k: )
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1500
      * @tc.name testUint8ClampedArrayFromTwo015
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k: )
@@ -330,6 +345,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1600
      * @tc.name testUint8ClampedArrayFromTwo016
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
@@ -350,6 +366,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from(Set{1,2}) produces correct length, byteLength and elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1700
      * @tc.name testUint8ClampedArrayFromTwo017
      * @tc.desc Verify Uint8ClampedArray.from(Set{1,2}) produces correct length, byteLength and elements
@@ -372,6 +389,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify from(ArrayLike<number> [10,20]) produces correct length, byteLength and elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1800
      * @tc.name testUint8ClampedArrayFromTwo018
      * @tc.desc Verify from(ArrayLike<number> [10,20]) produces correct length, byteLength and elements
@@ -392,6 +410,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from yields byteOffset 0 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1900
      * @tc.name testUint8ClampedArrayFromTwo019
      * @tc.desc Verify Uint8ClampedArray.from yields byteOffset 0 for array [1, 2, 3]
@@ -409,6 +428,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from yields byteLength parent.byteLength for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_2000
      * @tc.name testUint8ClampedArrayFromTwo020
      * @tc.desc Verify Uint8ClampedArray.from yields byteLength parent.byteLength for array [1, 2, 3, 4]
@@ -426,6 +446,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify from(subarray) produces independent buffer from parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_2100
      * @tc.name testUint8ClampedArrayFromTwo021
      * @tc.desc Verify from(subarray) produces independent buffer from parent
@@ -444,6 +465,7 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
 
     /**
      * Verify from Uint8ClampedArray buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_2200
      * @tc.name testUint8ClampedArrayFromTwo022
      * @tc.desc Verify from Uint8ClampedArray buffer

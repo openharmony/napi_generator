@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFull04Test extends BasTest {
     /**
      * Verify constructor element [0] equals 255 for array [0xFF]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_0100
      * @tc.name testUint8ClampedArrayFullFour001
      * @tc.desc Verify constructor element [0] equals 255 for array [0xFF]
@@ -47,6 +48,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify subarray yields length 0 for length-5 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_0200
      * @tc.name testUint8ClampedArrayFullFour002
      * @tc.desc Verify subarray yields length 0 for length-5 array
@@ -64,6 +66,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify subarray yields length 3 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_0300
      * @tc.name testUint8ClampedArrayFullFour003
      * @tc.desc Verify subarray yields length 3 for array [1, 2, 3]
@@ -81,6 +84,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify indexOf arr.indexOf(5) equals 0 for array [5, 10, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_0400
      * @tc.name testUint8ClampedArrayFullFour004
      * @tc.desc Verify indexOf arr.indexOf(5) equals 0 for array [5, 10, 5]
@@ -97,6 +101,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify indexOf arr.indexOf(99) equals -1 for array [5, 10]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_0500
      * @tc.name testUint8ClampedArrayFullFour005
      * @tc.desc Verify indexOf arr.indexOf(99) equals -1 for array [5, 10]
@@ -113,6 +118,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify lastIndexOf last key equals 2 for array [5, 10, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_0600
      * @tc.name testUint8ClampedArrayFullFour006
      * @tc.desc Verify lastIndexOf last key equals 2 for array [5, 10, 5]
@@ -129,6 +135,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify includes result is true for array [5, 10]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_0700
      * @tc.name testUint8ClampedArrayFullFour007
      * @tc.desc Verify includes result is true for array [5, 10]
@@ -145,6 +152,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify includes result is false for array [5, 10]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_0800
      * @tc.name testUint8ClampedArrayFullFour008
      * @tc.desc Verify includes result is false for array [5, 10]
@@ -161,6 +169,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify find returns the first value greater than 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_0900
      * @tc.name testUint8ClampedArrayFullFour009
      * @tc.desc Verify find returns the first value greater than 1
@@ -177,6 +186,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify find returns undefined when no value satisfies the predicate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1000
      * @tc.name testUint8ClampedArrayFullFour010
      * @tc.desc Verify find returns undefined when no value satisfies the predicate
@@ -193,6 +203,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify findIndex returns -1 when no value satisfies the predicate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1100
      * @tc.name testUint8ClampedArrayFullFour011
      * @tc.desc Verify findIndex returns -1 when no value satisfies the predicate
@@ -209,6 +220,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify with( length) RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1200
      * @tc.name testUint8ClampedArrayFullFour012
      * @tc.desc Verify with( length) RangeError
@@ -230,6 +242,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify with( -length-1) RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1300
      * @tc.name testUint8ClampedArrayFullFour013
      * @tc.desc Verify with( -length-1) RangeError
@@ -251,6 +264,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify .set behavior for length-3 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1400
      * @tc.name testUint8ClampedArrayFullFour014
      * @tc.desc Verify .set behavior for length-3 array
@@ -272,6 +286,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify byteOffset>byteLength RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1500
      * @tc.name testUint8ClampedArrayFullFour015
      * @tc.desc Verify byteOffset>byteLength RangeError
@@ -293,6 +308,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify byteOffset+length>byteLength RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1600
      * @tc.name testUint8ClampedArrayFullFour016
      * @tc.desc Verify byteOffset+length>byteLength RangeError
@@ -314,6 +330,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify reduce initialValue TypeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1700
      * @tc.name testUint8ClampedArrayFullFour017
      * @tc.desc Verify reduce initialValue TypeError
@@ -335,6 +352,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify reduceRight initialValue TypeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1800
      * @tc.name testUint8ClampedArrayFullFour018
      * @tc.desc Verify reduceRight initialValue TypeError
@@ -356,6 +374,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify fill element at arr[2] equals 255 for length-3 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1900
      * @tc.name testUint8ClampedArrayFullFour019
      * @tc.desc Verify fill element at arr[2] equals 255 for length-3 array
@@ -373,6 +392,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 128 for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_2000
      * @tc.name testUint8ClampedArrayFullFour020
      * @tc.desc Verify constructor element [0] equals 128 for length-1 array
@@ -390,6 +410,7 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 128 for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_2100
      * @tc.name testUint8ClampedArrayFullFour021
      * @tc.desc Verify constructor element [0] equals 128 for length-1 array

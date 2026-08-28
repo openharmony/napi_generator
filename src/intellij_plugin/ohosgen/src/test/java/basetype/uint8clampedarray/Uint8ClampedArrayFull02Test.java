@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFull02Test extends BasTest {
     /**
      * Verify constructor element [0] equals 4 for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_0100
      * @tc.name testUint8ClampedArrayFullTwo001
      * @tc.desc Verify constructor element [0] equals 4 for length-1 array
@@ -46,6 +47,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 200 for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_0200
      * @tc.name testUint8ClampedArrayFullTwo002
      * @tc.desc Verify constructor element [0] equals 200 for length-1 array
@@ -63,6 +65,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 202 for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_0300
      * @tc.name testUint8ClampedArrayFullTwo003
      * @tc.desc Verify constructor element [0] equals 202 for length-1 array
@@ -80,6 +83,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructor buffer reference matches for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_0400
      * @tc.name testUint8ClampedArrayFullTwo004
      * @tc.desc Verify constructor buffer reference matches for ArrayBuffer-backed array
@@ -98,6 +102,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 99 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_0500
      * @tc.name testUint8ClampedArrayFullTwo005
      * @tc.desc Verify constructor element [0] equals 99 for ArrayBuffer-backed array
@@ -117,6 +122,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 11 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_0600
      * @tc.name testUint8ClampedArrayFullTwo006
      * @tc.desc Verify constructor element [0] equals 11 for ArrayBuffer-backed array
@@ -138,6 +144,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructor buffer reference matches for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_0700
      * @tc.name testUint8ClampedArrayFullTwo007
      * @tc.desc Verify constructor buffer reference matches for ArrayBuffer-backed array
@@ -155,6 +162,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_0800
      * @tc.name testUint8ClampedArrayFullTwo008
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 0
@@ -172,6 +180,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_0900
      * @tc.name testUint8ClampedArrayFullTwo009
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 2
@@ -189,6 +198,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteLength 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_1000
      * @tc.name testUint8ClampedArrayFullTwo010
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteLength 5
@@ -206,6 +216,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 50 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_1100
      * @tc.name testUint8ClampedArrayFullTwo011
      * @tc.desc Verify constructor element [0] equals 50 for ArrayBuffer-backed array
@@ -226,6 +237,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructing array [1, 2, 3] yields byteLength 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_1200
      * @tc.name testUint8ClampedArrayFullTwo012
      * @tc.desc Verify constructing array [1, 2, 3] yields byteLength 3
@@ -242,6 +254,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructing array [1, 2, 3] yields BYTES_PER_ELEMENT 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_1300
      * @tc.name testUint8ClampedArrayFullTwo013
      * @tc.desc Verify constructing array [1, 2, 3] yields BYTES_PER_ELEMENT 1
@@ -258,6 +271,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify buffer byteLength of array constructed from [1,2,3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_1400
      * @tc.name testUint8ClampedArrayFullTwo014
      * @tc.desc Verify buffer byteLength of array constructed from [1,2,3]
@@ -274,6 +288,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify constructing array [1, 2, 3] yields byteOffset 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_1500
      * @tc.name testUint8ClampedArrayFullTwo015
      * @tc.desc Verify constructing array [1, 2, 3] yields byteOffset 0
@@ -290,6 +305,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify from(src) produces independent buffer from source
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_1600
      * @tc.name testUint8ClampedArrayFullTwo016
      * @tc.desc Verify from(src) produces independent buffer from source
@@ -307,6 +323,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.of(1,2,3) yields length 3 with arr[0]=1 and arr[2]=3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_1700
      * @tc.name testUint8ClampedArrayFullTwo017
      * @tc.desc Verify Uint8ClampedArray.of(1,2,3) yields length 3 with arr[0]=1 and arr[2]=3

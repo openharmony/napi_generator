@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFull03Test extends BasTest {
     /**
      * Verify new Uint8ClampedArray(7) length=7
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_0100
      * @tc.name testUint8ClampedArrayFullThree001
      * @tc.desc Verify new Uint8ClampedArray(7) length=7
@@ -47,6 +48,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify new Uint8ClampedArray(buffer, offset, length)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_0200
      * @tc.name testUint8ClampedArrayFullThree002
      * @tc.desc Verify new Uint8ClampedArray(buffer, offset, length)
@@ -64,6 +66,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructing length-2 array yields length 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_0300
      * @tc.name testUint8ClampedArrayFullThree003
      * @tc.desc Verify constructing length-2 array yields length 2
@@ -80,6 +83,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructing length-3 array yields length 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_0400
      * @tc.name testUint8ClampedArrayFullThree004
      * @tc.desc Verify constructing length-3 array yields length 3
@@ -96,6 +100,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructing length-3 array yields byteLength 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_0500
      * @tc.name testUint8ClampedArrayFullThree005
      * @tc.desc Verify constructing length-3 array yields byteLength 3
@@ -112,6 +117,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 5 for array [5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_0600
      * @tc.name testUint8ClampedArrayFullThree006
      * @tc.desc Verify constructor element [0] equals 5 for array [5]
@@ -128,6 +134,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify arr.buffer.byteLength equals 4
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_0700
      * @tc.name testUint8ClampedArrayFullThree007
      * @tc.desc Verify arr.buffer.byteLength equals 4
@@ -144,13 +151,14 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructing empty array yields BYTES_PER_ELEMENT 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_0800
      * @tc.name testUint8ClampedArrayFullThree008
      * @tc.desc Verify constructing empty array yields BYTES_PER_ELEMENT 1
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
-    */
+     */
 
     @Test
     void testUint8ClampedArrayFullThree008() {
@@ -160,6 +168,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify at arr.at(0) equals 100 for array [100]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_0900
      * @tc.name testUint8ClampedArrayFullThree009
      * @tc.desc Verify at arr.at(0) equals 100 for array [100]
@@ -176,6 +185,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify indexOf arr.indexOf(99) equals -1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1000
      * @tc.name testUint8ClampedArrayFullThree010
      * @tc.desc Verify indexOf arr.indexOf(99) equals -1 for array [1, 2, 3]
@@ -192,6 +202,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify join arr.join(',') equals '1,2' for array [1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1100
      * @tc.name testUint8ClampedArrayFullThree011
      * @tc.desc Verify join arr.join(',') equals '1,2' for array [1, 2]
@@ -208,6 +219,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify toString arr.toString() equals '1,2' for array [1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1200
      * @tc.name testUint8ClampedArrayFullThree012
      * @tc.desc Verify toString arr.toString() equals '1,2' for array [1, 2]
@@ -224,6 +236,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify includes result is true for array [1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1300
      * @tc.name testUint8ClampedArrayFullThree013
      * @tc.desc Verify includes result is true for array [1, 2]
@@ -240,6 +253,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify every returns true when all values are positive
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1400
      * @tc.name testUint8ClampedArrayFullThree014
      * @tc.desc Verify every returns true when all values are positive
@@ -256,6 +270,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify some returns false when no value exceeds 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1500
      * @tc.name testUint8ClampedArrayFullThree015
      * @tc.desc Verify some returns false when no value exceeds 100
@@ -272,6 +287,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify the length constructor allocates four zero-filled bytes
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1600
      * @tc.name testUint8ClampedArrayFullThree016
      * @tc.desc Verify the length constructor allocates four zero-filled bytes
@@ -289,6 +305,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify array construction preserves length and boundary values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1700
      * @tc.name testUint8ClampedArrayFullThree017
      * @tc.desc Verify array construction preserves length and boundary values
@@ -307,6 +324,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify ArrayBuffer construction shares the supplied four-byte buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1800
      * @tc.name testUint8ClampedArrayFullThree018
      * @tc.desc Verify ArrayBuffer construction shares the supplied four-byte buffer
@@ -325,6 +343,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.of preserves values [5, 6, 7]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1900
      * @tc.name testUint8ClampedArrayFullThree019
      * @tc.desc Verify Uint8ClampedArray.of preserves values [5, 6, 7]
@@ -343,6 +362,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from preserves iterable ordering
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_2000
      * @tc.name testUint8ClampedArrayFullThree020
      * @tc.desc Verify Uint8ClampedArray.from preserves iterable ordering
@@ -361,6 +381,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify slice copies values into storage independent from the source
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_2100
      * @tc.name testUint8ClampedArrayFullThree021
      * @tc.desc Verify slice copies values into storage independent from the source
@@ -380,6 +401,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify subarray selects the requested range and shares source storage
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_2200
      * @tc.name testUint8ClampedArrayFullThree022
      * @tc.desc Verify subarray selects the requested range and shares source storage
@@ -400,6 +422,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify map transforms each value without mutating the source
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_2300
      * @tc.name testUint8ClampedArrayFullThree023
      * @tc.desc Verify map transforms each value without mutating the source
@@ -419,6 +442,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify filter retains values greater than one in source order
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_2400
      * @tc.name testUint8ClampedArrayFullThree024
      * @tc.desc Verify filter retains values greater than one in source order
@@ -438,6 +462,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify toReversed reverses values without mutating the source
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_2500
      * @tc.name testUint8ClampedArrayFullThree025
      * @tc.desc Verify toReversed reverses values without mutating the source
@@ -457,6 +482,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify toSorted orders values without mutating the source
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_2600
      * @tc.name testUint8ClampedArrayFullThree026
      * @tc.desc Verify toSorted orders values without mutating the source
@@ -476,6 +502,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify with replaces one value without mutating the source
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_2700
      * @tc.name testUint8ClampedArrayFullThree027
      * @tc.desc Verify with replaces one value without mutating the source
@@ -495,6 +522,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructor result is an instance of ArrayBuffer for length-4 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_2800
      * @tc.name testUint8ClampedArrayFullThree028
      * @tc.desc Verify constructor result is an instance of ArrayBuffer for length-4 array
@@ -511,6 +539,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructing array [10, 20, 30, 40] yields length 4
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_2900
      * @tc.name testUint8ClampedArrayFullThree029
      * @tc.desc Verify constructing array [10, 20, 30, 40] yields length 4
@@ -527,6 +556,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify byteLength length BYTES_PER_ELEMENT=1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_3000
      * @tc.name testUint8ClampedArrayFullThree030
      * @tc.desc Verify byteLength length BYTES_PER_ELEMENT=1
@@ -543,6 +573,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructing empty array yields byteLength 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_3100
      * @tc.name testUint8ClampedArrayFullThree031
      * @tc.desc Verify constructing empty array yields byteLength 0
@@ -559,6 +590,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from yields length 0 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_3200
      * @tc.name testUint8ClampedArrayFullThree032
      * @tc.desc Verify Uint8ClampedArray.from yields length 0 for from(src)
@@ -576,6 +608,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.of yields length 1 for of(99)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_3300
      * @tc.name testUint8ClampedArrayFullThree033
      * @tc.desc Verify Uint8ClampedArray.of yields length 1 for of(99)
@@ -592,6 +625,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructing 8-element array yields byteOffset 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_3400
      * @tc.name testUint8ClampedArrayFullThree034
      * @tc.desc Verify constructing 8-element array yields byteOffset 0
@@ -608,6 +642,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify buffer offset=7 byteOffset=7
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_3500
      * @tc.name testUint8ClampedArrayFullThree035
      * @tc.desc Verify buffer offset=7 byteOffset=7
@@ -625,6 +660,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify subarray yields byteOffset 5 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_3600
      * @tc.name testUint8ClampedArrayFullThree036
      * @tc.desc Verify subarray yields byteOffset 5 for ArrayBuffer-backed array
@@ -643,6 +679,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify slice yields byteOffset 0 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_3700
      * @tc.name testUint8ClampedArrayFullThree037
      * @tc.desc Verify slice yields byteOffset 0 for ArrayBuffer-backed array
@@ -661,6 +698,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify slice() does not mutate original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_3800
      * @tc.name testUint8ClampedArrayFullThree038
      * @tc.desc Verify slice() does not mutate original array
@@ -678,6 +716,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify slice() does not mutate original array length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_3900
      * @tc.name testUint8ClampedArrayFullThree039
      * @tc.desc Verify slice() does not mutate original array length
@@ -695,6 +734,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify toReversed() does not mutate original array last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4000
      * @tc.name testUint8ClampedArrayFullThree040
      * @tc.desc Verify toReversed() does not mutate original array last element
@@ -712,6 +752,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify map() does not mutate original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4100
      * @tc.name testUint8ClampedArrayFullThree041
      * @tc.desc Verify map() does not mutate original array
@@ -729,6 +770,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify filter() does not mutate original array length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4200
      * @tc.name testUint8ClampedArrayFullThree042
      * @tc.desc Verify filter() does not mutate original array length
@@ -746,6 +788,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify subarray() does not mutate original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4300
      * @tc.name testUint8ClampedArrayFullThree043
      * @tc.desc Verify subarray() does not mutate original array
@@ -763,6 +806,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify every() does not mutate original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4400
      * @tc.name testUint8ClampedArrayFullThree044
      * @tc.desc Verify every() does not mutate original array
@@ -780,6 +824,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify some() does not mutate original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4500
      * @tc.name testUint8ClampedArrayFullThree045
      * @tc.desc Verify some() does not mutate original array
@@ -797,6 +842,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify find() does not mutate original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4600
      * @tc.name testUint8ClampedArrayFullThree046
      * @tc.desc Verify find() does not mutate original array
@@ -814,6 +860,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify reduce() does not mutate original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4700
      * @tc.name testUint8ClampedArrayFullThree047
      * @tc.desc Verify reduce() does not mutate original array
@@ -831,6 +878,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify .set ret equals undefined for length-4 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4800
      * @tc.name testUint8ClampedArrayFullThree048
      * @tc.desc Verify .set ret equals undefined for length-4 array
@@ -848,6 +896,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructor ret equals arr for array [1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4900
      * @tc.name testUint8ClampedArrayFullThree049
      * @tc.desc Verify constructor ret equals arr for array [1, 2]
@@ -865,6 +914,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify sort yields length 3 for array [3, 1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_5000
      * @tc.name testUint8ClampedArrayFullThree050
      * @tc.desc Verify sort yields length 3 for array [3, 1, 2]
@@ -885,6 +935,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify fill yields length 5 for length-5 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_5100
      * @tc.name testUint8ClampedArrayFullThree051
      * @tc.desc Verify fill yields length 5 for length-5 array
@@ -907,6 +958,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify subarray buffer reference matches for length-8 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_5200
      * @tc.name testUint8ClampedArrayFullThree052
      * @tc.desc Verify subarray buffer reference matches for length-8 array
@@ -924,6 +976,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify subarray element at sub[1] equals 77 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_5300
      * @tc.name testUint8ClampedArrayFullThree053
      * @tc.desc Verify subarray element at sub[1] equals 77 for array [1, 2, 3, 4]
@@ -942,6 +995,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify slice result shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_5400
      * @tc.name testUint8ClampedArrayFullThree054
      * @tc.desc Verify slice result shares no buffer with parent
@@ -959,6 +1013,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify slice element at parent[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_5500
      * @tc.name testUint8ClampedArrayFullThree055
      * @tc.desc Verify slice element at parent[0] equals 1 for array [1, 2, 3]
@@ -977,6 +1032,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify map result shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_5600
      * @tc.name testUint8ClampedArrayFullThree056
      * @tc.desc Verify map result shares no buffer with parent
@@ -994,6 +1050,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify filter result shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_5700
      * @tc.name testUint8ClampedArrayFullThree057
      * @tc.desc Verify filter result shares no buffer with parent
@@ -1011,6 +1068,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify toSorted result shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_5800
      * @tc.name testUint8ClampedArrayFullThree058
      * @tc.desc Verify toSorted result shares no buffer with parent
@@ -1028,6 +1086,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify with result shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_5900
      * @tc.name testUint8ClampedArrayFullThree059
      * @tc.desc Verify with result shares no buffer with parent
@@ -1045,6 +1104,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructor buffer reference matches for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_6000
      * @tc.name testUint8ClampedArrayFullThree060
      * @tc.desc Verify constructor buffer reference matches for ArrayBuffer-backed array
@@ -1063,6 +1123,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 88 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_6100
      * @tc.name testUint8ClampedArrayFullThree061
      * @tc.desc Verify constructor element [0] equals 88 for ArrayBuffer-backed array
@@ -1082,6 +1143,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify from(Uint8ClampedArray) buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_6200
      * @tc.name testUint8ClampedArrayFullThree062
      * @tc.desc Verify from(Uint8ClampedArray) buffer
@@ -1099,6 +1161,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from result is an instance of ArrayBuffer for from([1, 2, 3])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_6300
      * @tc.name testUint8ClampedArrayFullThree063
      * @tc.desc Verify Uint8ClampedArray.from result is an instance of ArrayBuffer for from([1, 2, 3])
@@ -1115,6 +1178,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify subarray yields byteLength 4 for length-10 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_6400
      * @tc.name testUint8ClampedArrayFullThree064
      * @tc.desc Verify subarray yields byteLength 4 for length-10 array
@@ -1132,6 +1196,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_6500
      * @tc.name testUint8ClampedArrayFullThree065
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
@@ -1149,6 +1214,7 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_6600
      * @tc.name testUint8ClampedArrayFullThree066
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)

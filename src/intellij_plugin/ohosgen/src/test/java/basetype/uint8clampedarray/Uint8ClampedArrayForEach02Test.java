@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayForEach02Test extends BasTest {
     /**
      * Verify forEach callback receives the receiver and matching indexed values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_0100
      * @tc.name testUint8ClampedArrayForEachTwo001
      * @tc.desc Verify forEach callback receives the receiver and matching indexed values
@@ -58,6 +59,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify callback value NaN clamps to 0 (not NaN)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_0200
      * @tc.name testUint8ClampedArrayForEachTwo002
      * @tc.desc Verify callback value NaN clamps to 0 (not NaN)
@@ -82,6 +84,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify callback value Infinity clamps to finite (255/0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_0300
      * @tc.name testUint8ClampedArrayForEachTwo003
      * @tc.desc Verify callback value Infinity clamps to finite (255/0)
@@ -106,6 +109,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify all clamped values are within 0-255 range for array [0, 100, 200, 255]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_0400
      * @tc.name testUint8ClampedArrayForEachTwo004
      * @tc.desc Verify all clamped values are within 0-255 range for array [0, 100, 200, 255]
@@ -130,6 +134,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify all callback indices are non-negative for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_0500
      * @tc.name testUint8ClampedArrayForEachTwo005
      * @tc.desc Verify all callback indices are non-negative for array [1, 2, 3]
@@ -154,6 +159,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify all callback indices are less than array length for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_0600
      * @tc.name testUint8ClampedArrayForEachTwo006
      * @tc.desc Verify all callback indices are less than array length for array [1, 2, 3, 4]
@@ -178,6 +184,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach capturedValue equals arr[0] for array [7, 14, 21]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_0700
      * @tc.name testUint8ClampedArrayForEachTwo007
      * @tc.desc Verify forEach capturedValue equals arr[0] for array [7, 14, 21]
@@ -199,6 +206,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach last key equals arr[2] for array [7, 14, 21]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_0800
      * @tc.name testUint8ClampedArrayForEachTwo008
      * @tc.desc Verify forEach last key equals arr[2] for array [7, 14, 21]
@@ -220,6 +228,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify each callback value equals arr[i] for array [7, 14, 21, 28]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_0900
      * @tc.name testUint8ClampedArrayForEachTwo009
      * @tc.desc Verify each callback value equals arr[i] for array [7, 14, 21, 28]
@@ -244,6 +253,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify each callback value matches $_get(i) for array [100, 150, 200]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_1000
      * @tc.name testUint8ClampedArrayForEachTwo010
      * @tc.desc Verify each callback value matches $_get(i) for array [100, 150, 200]
@@ -268,6 +278,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach cnt equals 4 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_1100
      * @tc.name testUint8ClampedArrayForEachTwo011
      * @tc.desc Verify forEach cnt equals 4 for array [1, 2, 3, 4]
@@ -288,6 +299,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach cnt equals 3 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_1200
      * @tc.name testUint8ClampedArrayForEachTwo012
      * @tc.desc Verify forEach cnt equals 3 for array [1, 2, 3]
@@ -308,6 +320,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach visits all 4 elements of array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_1300
      * @tc.name testUint8ClampedArrayForEachTwo013
      * @tc.desc Verify forEach visits all 4 elements of array [1, 2, 3, 4]
@@ -328,6 +341,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify at crossVal equals 30 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_1400
      * @tc.name testUint8ClampedArrayForEachTwo014
      * @tc.desc Verify at crossVal equals 30 for array [10, 20, 30]
@@ -349,6 +363,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach yields length 4 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_1500
      * @tc.name testUint8ClampedArrayForEachTwo015
      * @tc.desc Verify forEach yields length 4 for array [1, 2, 3, 4]
@@ -371,6 +386,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach zeroCnt equals 3 for array [0, 1, 0, 2, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_1600
      * @tc.name testUint8ClampedArrayForEachTwo016
      * @tc.desc Verify forEach zeroCnt equals 3 for array [0, 1, 0, 2, 0]
@@ -392,6 +408,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach maxCnt equals 3 for array [255, 1, 255, 2, 255]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_1700
      * @tc.name testUint8ClampedArrayForEachTwo017
      * @tc.desc Verify forEach maxCnt equals 3 for array [255, 1, 255, 2, 255]
@@ -413,6 +430,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach accumulates odd and even sums as 4 and 6
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_1800
      * @tc.name testUint8ClampedArrayForEachTwo018
      * @tc.desc Verify forEach accumulates odd and even sums as 4 and 6
@@ -439,6 +457,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach accumulated sum equals 255 for array [0xFF, 0x00]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_1900
      * @tc.name testUint8ClampedArrayForEachTwo019
      * @tc.desc Verify forEach accumulated sum equals 255 for array [0xFF, 0x00]
@@ -459,6 +478,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach accumulated sum equals 192 for array [0o100, 0o200]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_2000
      * @tc.name testUint8ClampedArrayForEachTwo020
      * @tc.desc Verify forEach accumulated sum equals 192 for array [0o100, 0o200]
@@ -479,6 +499,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach accumulated sum equals 300 for array [1e2, 2e2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_2100
      * @tc.name testUint8ClampedArrayForEachTwo021
      * @tc.desc Verify forEach accumulated sum equals 300 for array [1e2, 2e2]
@@ -499,6 +520,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach sum arithmetic expr values 55
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_2200
      * @tc.name testUint8ClampedArrayForEachTwo022
      * @tc.desc Verify forEach sum arithmetic expr values 55
@@ -519,6 +541,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach yields byteLength before for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_2300
      * @tc.name testUint8ClampedArrayForEachTwo023
      * @tc.desc Verify forEach yields byteLength before for ArrayBuffer-backed array
@@ -542,6 +565,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach element at reader[0] equals 100 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_2400
      * @tc.name testUint8ClampedArrayForEachTwo024
      * @tc.desc Verify forEach element at reader[0] equals 100 for ArrayBuffer-backed array
@@ -566,6 +590,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach element at secondView[0] equals 50 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_2500
      * @tc.name testUint8ClampedArrayForEachTwo025
      * @tc.desc Verify forEach element at secondView[0] equals 50 for ArrayBuffer-backed array
@@ -588,6 +613,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify new Uint8ClampedArray(0) forEach
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_2600
      * @tc.name testUint8ClampedArrayForEachTwo026
      * @tc.desc Verify new Uint8ClampedArray(0) forEach
@@ -609,6 +635,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach cnt equals 0 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_2700
      * @tc.name testUint8ClampedArrayForEachTwo027
      * @tc.desc Verify forEach cnt equals 0 for ArrayBuffer-backed array
@@ -630,6 +657,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from cnt equals 0 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_2800
      * @tc.name testUint8ClampedArrayForEachTwo028
      * @tc.desc Verify Uint8ClampedArray.from cnt equals 0 for from(src)
@@ -651,6 +679,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach continues after the callback returns at index 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_2900
      * @tc.name testUint8ClampedArrayForEachTwo029
      * @tc.desc Verify forEach continues after the callback returns at index 1
@@ -674,6 +703,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach minV equals 1 for array [3, 1, 4, 1, 5, 9, 2, 6]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_3000
      * @tc.name testUint8ClampedArrayForEachTwo030
      * @tc.desc Verify forEach minV equals 1 for array [3, 1, 4, 1, 5, 9, 2, 6]
@@ -695,6 +725,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach avg equals 25 for array [10, 20, 30, 40]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_3100
      * @tc.name testUint8ClampedArrayForEachTwo031
      * @tc.desc Verify forEach avg equals 25 for array [10, 20, 30, 40]
@@ -716,6 +747,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify callback (index, value) Map<int,number>
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_3200
      * @tc.name testUint8ClampedArrayForEachTwo032
      * @tc.desc Verify callback (index, value) Map<int,number>
@@ -736,6 +768,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach s.size equals 3 for array [1, 2, 2, 3, 3, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_3300
      * @tc.name testUint8ClampedArrayForEachTwo033
      * @tc.desc Verify forEach s.size equals 3 for array [1, 2, 2, 3, 3, 3]
@@ -756,6 +789,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
 
     /**
      * Verify forEach s equals '0:1;
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_3400
      * @tc.name testUint8ClampedArrayForEachTwo034
      * @tc.desc Verify forEach s equals '0:1;

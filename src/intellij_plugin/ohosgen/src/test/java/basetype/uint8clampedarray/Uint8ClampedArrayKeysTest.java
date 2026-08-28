@@ -36,6 +36,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayKeysTest extends BasTest {
     /**
      * Verify keys() yields sequence 0,1,2 for a 3-element array via next()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0100
      * @tc.name testUint8ClampedArrayKeys001
      * @tc.desc Verify keys() yields sequence 0,1,2 for a 3-element array via next()
@@ -55,6 +56,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() next().done is true for an empty array (length 0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0200
      * @tc.name testUint8ClampedArrayKeys002
      * @tc.desc Verify keys() next().done is true for an empty array (length 0)
@@ -72,6 +74,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first key is 0 for a single-element array [42]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0300
      * @tc.name testUint8ClampedArrayKeys003
      * @tc.desc Verify keys() first key is 0 for a single-element array [42]
@@ -89,6 +92,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() IteratorResult.done is true for an empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0400
      * @tc.name testUint8ClampedArrayKeys004
      * @tc.desc Verify keys() IteratorResult.done is true for an empty array
@@ -107,6 +111,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() IteratorResult.value is undefined for an empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0500
      * @tc.name testUint8ClampedArrayKeys005
      * @tc.desc Verify keys() IteratorResult.value is undefined for an empty array
@@ -125,6 +130,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first key is 0 for a single-element array [10]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0600
      * @tc.name testUint8ClampedArrayKeys006
      * @tc.desc Verify keys() first key is 0 for a single-element array [10]
@@ -142,6 +148,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() second next().done is true after consuming single key
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0700
      * @tc.name testUint8ClampedArrayKeys007
      * @tc.desc Verify keys() second next().done is true after consuming single key
@@ -160,6 +167,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first key is 0 for a 2-element array [10,20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0800
      * @tc.name testUint8ClampedArrayKeys008
      * @tc.desc Verify keys() first key is 0 for a 2-element array [10,20]
@@ -177,6 +185,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() second key is 1 for a 2-element array [10,20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0900
      * @tc.name testUint8ClampedArrayKeys009
      * @tc.desc Verify keys() second key is 1 for a 2-element array [10,20]
@@ -195,6 +204,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() third next().done is true after consuming both keys
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1000
      * @tc.name testUint8ClampedArrayKeys010
      * @tc.desc Verify keys() third next().done is true after consuming both keys
@@ -214,6 +224,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of yields [0,1,2] for a 3-element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1100
      * @tc.name testUint8ClampedArrayKeys011
      * @tc.desc Verify keys() for..of yields [0,1,2] for a 3-element array
@@ -237,6 +248,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first key is 0 for a 3-element array [1,2,3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1200
      * @tc.name testUint8ClampedArrayKeys012
      * @tc.desc Verify keys() first key is 0 for a 3-element array [1,2,3]
@@ -254,6 +266,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() third key is 2 after consuming first two for [1,2,3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1300
      * @tc.name testUint8ClampedArrayKeys013
      * @tc.desc Verify keys() third key is 2 after consuming first two for [1,2,3]
@@ -273,6 +286,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() fourth next().done is true after consuming all 3 keys
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1400
      * @tc.name testUint8ClampedArrayKeys014
      * @tc.desc Verify keys() fourth next().done is true after consuming all 3 keys
@@ -293,6 +307,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of yields exactly 10 keys for a length-10 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1500
      * @tc.name testUint8ClampedArrayKeys015
      * @tc.desc Verify keys() for..of yields exactly 10 keys for a length-10 array
@@ -313,6 +328,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first key is 0 for a length-10 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1600
      * @tc.name testUint8ClampedArrayKeys016
      * @tc.desc Verify keys() first key is 0 for a length-10 array
@@ -330,6 +346,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() last key is 9 for a length-10 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1700
      * @tc.name testUint8ClampedArrayKeys017
      * @tc.desc Verify keys() last key is 9 for a length-10 array
@@ -350,6 +367,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of yields exactly 255 keys for a length-255 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1800
      * @tc.name testUint8ClampedArrayKeys018
      * @tc.desc Verify keys() for..of yields exactly 255 keys for a length-255 array
@@ -370,6 +388,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() last key is 254 for a length-255 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1900
      * @tc.name testUint8ClampedArrayKeys019
      * @tc.desc Verify keys() last key is 254 for a length-255 array
@@ -390,6 +409,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of yields exactly 256 keys for a length-256 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2000
      * @tc.name testUint8ClampedArrayKeys020
      * @tc.desc Verify keys() for..of yields exactly 256 keys for a length-256 array
@@ -410,6 +430,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() last key is 255 for a length-256 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2100
      * @tc.name testUint8ClampedArrayKeys021
      * @tc.desc Verify keys() last key is 255 for a length-256 array
@@ -430,6 +451,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of yields exactly 1024 keys for a length-1024 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2200
      * @tc.name testUint8ClampedArrayKeys022
      * @tc.desc Verify keys() for..of yields exactly 1024 keys for a length-1024 array
@@ -450,6 +472,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() last key is 1023 for a length-1024 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2300
      * @tc.name testUint8ClampedArrayKeys023
      * @tc.desc Verify keys() last key is 1023 for a length-1024 array
@@ -470,6 +493,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first key is 0 on an array created via Uint8ClampedArray.from()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2400
      * @tc.name testUint8ClampedArrayKeys024
      * @tc.desc Verify keys() first key is 0 on an array created via Uint8ClampedArray.from()
@@ -488,6 +512,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() last key is 3 on an array created via Uint8ClampedArray.of()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2500
      * @tc.name testUint8ClampedArrayKeys025
      * @tc.desc Verify keys() last key is 3 on an array created via Uint8ClampedArray.of()
@@ -508,6 +533,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() yields 4 keys on an ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2600
      * @tc.name testUint8ClampedArrayKeys026
      * @tc.desc Verify keys() yields 4 keys on an ArrayBuffer-backed array
@@ -529,6 +555,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first key is 0 on an ArrayBuffer view with byteOffset=2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2700
      * @tc.name testUint8ClampedArrayKeys027
      * @tc.desc Verify keys() first key is 0 on an ArrayBuffer view with byteOffset=2
@@ -547,6 +574,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() yields 4 keys on an ArrayBuffer view with byteOffset=2 length=4
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2800
      * @tc.name testUint8ClampedArrayKeys028
      * @tc.desc Verify keys() yields 4 keys on an ArrayBuffer view with byteOffset=2 length=4
@@ -568,6 +596,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() next().done is true for a zero-length ArrayBuffer view
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_2900
      * @tc.name testUint8ClampedArrayKeys029
      * @tc.desc Verify keys() next().done is true for a zero-length ArrayBuffer view
@@ -586,6 +615,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() yields 3 keys on a subarray(1,4) view
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3000
      * @tc.name testUint8ClampedArrayKeys030
      * @tc.desc Verify keys() yields 3 keys on a subarray(1,4) view
@@ -607,6 +637,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() last key is 2 on a slice(0,3) copy
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3100
      * @tc.name testUint8ClampedArrayKeys031
      * @tc.desc Verify keys() last key is 2 on a slice(0,3) copy
@@ -628,6 +659,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() yields sequence 0,1 for a 2-element array via next()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3200
      * @tc.name testUint8ClampedArrayKeys032
      * @tc.desc Verify keys() yields sequence 0,1 for a 2-element array via next()
@@ -646,6 +678,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() IteratorResult.value is 0 for a single-element array [1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3300
      * @tc.name testUint8ClampedArrayKeys033
      * @tc.desc Verify keys() IteratorResult.value is 0 for a single-element array [1]
@@ -664,6 +697,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first next().value is 0 for a 2-element array [1,2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3400
      * @tc.name testUint8ClampedArrayKeys034
      * @tc.desc Verify keys() first next().value is 0 for a 2-element array [1,2]
@@ -682,6 +716,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first next().done is false for a non-empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3500
      * @tc.name testUint8ClampedArrayKeys035
      * @tc.desc Verify keys() first next().done is false for a non-empty array
@@ -699,6 +734,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of loop sums keys to 3 for [1,2,3] (0+1+2)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3600
      * @tc.name testUint8ClampedArrayKeys036
      * @tc.desc Verify keys() for..of loop sums keys to 3 for [1,2,3] (0+1+2)
@@ -719,6 +755,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of sum of keys equals triangular number 10 for length 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3700
      * @tc.name testUint8ClampedArrayKeys037
      * @tc.desc Verify keys() for..of sum of keys equals triangular number 10 for length 5
@@ -739,6 +776,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify calling keys() does not mutate the array length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3800
      * @tc.name testUint8ClampedArrayKeys038
      * @tc.desc Verify calling keys() does not mutate the array length
@@ -761,6 +799,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify calling keys() does not mutate array element arr[0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3900
      * @tc.name testUint8ClampedArrayKeys039
      * @tc.desc Verify calling keys() does not mutate array element arr[0]
@@ -782,6 +821,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify calling keys() does not mutate array element arr[2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4000
      * @tc.name testUint8ClampedArrayKeys040
      * @tc.desc Verify calling keys() does not mutate array element arr[2]
@@ -803,6 +843,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() stays done after consuming all keys and calling next() again
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4100
      * @tc.name testUint8ClampedArrayKeys041
      * @tc.desc Verify keys() stays done after consuming all keys and calling next() again
@@ -823,6 +864,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() value is undefined past the last key for a 2-element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4200
      * @tc.name testUint8ClampedArrayKeys042
      * @tc.desc Verify keys() value is undefined past the last key for a 2-element array
@@ -843,6 +885,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify two independent keys() iterators do not interfere with each other
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4300
      * @tc.name testUint8ClampedArrayKeys043
      * @tc.desc Verify two independent keys() iterators do not interfere with each other
@@ -862,6 +905,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() next().value with nullish coalescing yields 0,1 for length-4 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4400
      * @tc.name testUint8ClampedArrayKeys044
      * @tc.desc Verify keys() next().value with nullish coalescing yields 0,1 for length-4 array
@@ -882,6 +926,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() consecutive keys differ by 1 (b-a===1) for length-3 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4500
      * @tc.name testUint8ClampedArrayKeys045
      * @tc.desc Verify keys() consecutive keys differ by 1 (b-a===1) for length-3 array
@@ -901,6 +946,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of collects exactly 3 keys into an array for [1,2,3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4600
      * @tc.name testUint8ClampedArrayKeys046
      * @tc.desc Verify keys() for..of collects exactly 3 keys into an array for [1,2,3]
@@ -921,6 +967,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of collected first element is 0 for [5,6,7]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4700
      * @tc.name testUint8ClampedArrayKeys047
      * @tc.desc Verify keys() for..of collected first element is 0 for [5,6,7]
@@ -941,6 +988,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of collected last element is length-1 for [5,6,7,8]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4800
      * @tc.name testUint8ClampedArrayKeys048
      * @tc.desc Verify keys() for..of collected last element is length-1 for [5,6,7,8]
@@ -961,6 +1009,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first key is 0 for a length-65535 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4900
      * @tc.name testUint8ClampedArrayKeys049
      * @tc.desc Verify keys() first key is 0 for a length-65535 array
@@ -978,6 +1027,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify three independent keys() iterators all start at key 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5000
      * @tc.name testUint8ClampedArrayKeys050
      * @tc.desc Verify three independent keys() iterators all start at key 0
@@ -999,6 +1049,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() next().done is true on a zero-length ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5100
      * @tc.name testUint8ClampedArrayKeys051
      * @tc.desc Verify keys() next().done is true on a zero-length ArrayBuffer-backed array
@@ -1017,6 +1068,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of with in-loop mutation sets all elements to 99
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5200
      * @tc.name testUint8ClampedArrayKeys052
      * @tc.desc Verify keys() for..of with in-loop mutation sets all elements to 99
@@ -1041,6 +1093,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of with in-loop assignment clamps 300 to 255 for all elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5300
      * @tc.name testUint8ClampedArrayKeys053
      * @tc.desc Verify keys() for..of with in-loop assignment clamps 300 to 255 for all elements
@@ -1062,6 +1115,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() last key is 3 on a fill(7)-initialized length-4 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5400
      * @tc.name testUint8ClampedArrayKeys054
      * @tc.desc Verify keys() last key is 3 on a fill(7)-initialized length-4 array
@@ -1083,6 +1137,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first key is still 0 after reverse() (keys are index-based)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5500
      * @tc.name testUint8ClampedArrayKeys055
      * @tc.desc Verify keys() first key is still 0 after reverse() (keys are index-based)
@@ -1101,6 +1156,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() last key is 2 on a sorted [3,1,2] array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5600
      * @tc.name testUint8ClampedArrayKeys056
      * @tc.desc Verify keys() last key is 2 on a sorted [3,1,2] array
@@ -1122,6 +1178,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify advancing one iterator does not affect another independent iterator
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5700
      * @tc.name testUint8ClampedArrayKeys057
      * @tc.desc Verify advancing one iterator does not affect another independent iterator
@@ -1142,6 +1199,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of collected first element is 0 matching expected[0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5800
      * @tc.name testUint8ClampedArrayKeys058
      * @tc.desc Verify keys() for..of collected first element is 0 matching expected[0]
@@ -1163,6 +1221,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of collected second element is 1 for [10,20,30,40]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5900
      * @tc.name testUint8ClampedArrayKeys059
      * @tc.desc Verify keys() for..of collected second element is 1 for [10,20,30,40]
@@ -1183,6 +1242,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of collected third element is 2 for [10,20,30,40]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6000
      * @tc.name testUint8ClampedArrayKeys060
      * @tc.desc Verify keys() for..of collected third element is 2 for [10,20,30,40]
@@ -1203,6 +1263,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() for..of collected fourth element is 3 for [10,20,30,40]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6100
      * @tc.name testUint8ClampedArrayKeys061
      * @tc.desc Verify keys() for..of collected fourth element is 3 for [10,20,30,40]
@@ -1223,6 +1284,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() fourth next().value is 3 after consuming first three for length-6 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6200
      * @tc.name testUint8ClampedArrayKeys062
      * @tc.desc Verify keys() fourth next().value is 3 after consuming first three for length-6 array
@@ -1243,6 +1305,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() iteration stops after exactly length steps for length-3 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6300
      * @tc.name testUint8ClampedArrayKeys063
      * @tc.desc Verify keys() iteration stops after exactly length steps for length-3 array
@@ -1264,6 +1327,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() loop still yields 3 keys and NaN assignment clamps to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6400
      * @tc.name testUint8ClampedArrayKeys064
      * @tc.desc Verify keys() loop still yields 3 keys and NaN assignment clamps to 0
@@ -1286,6 +1350,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() first key is 0 after assigning -1 to arr[0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6500
      * @tc.name testUint8ClampedArrayKeys065
      * @tc.desc Verify keys() first key is 0 after assigning -1 to arr[0]
@@ -1304,6 +1369,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() loop yields 3 keys and Infinity assignment clamps to 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6600
      * @tc.name testUint8ClampedArrayKeys066
      * @tc.desc Verify keys() loop yields 3 keys and Infinity assignment clamps to 255
@@ -1326,6 +1392,7 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
 
     /**
      * Verify keys() last key is 3 after copyWithin(0,2) on a 4-element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6700
      * @tc.name testUint8ClampedArrayKeys067
      * @tc.desc Verify keys() last key is 3 after copyWithin(0,2) on a 4-element array

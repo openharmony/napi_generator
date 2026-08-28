@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFull07Test extends BasTest {
     /**
      * Verify fill element at arr[0] equals 9 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_0100
      * @tc.name testUint8ClampedArrayFullSeven001
      * @tc.desc Verify fill element at arr[0] equals 9 for array [1, 2, 3, 4]
@@ -47,6 +48,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify fill element at arr[2] equals 7 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_0200
      * @tc.name testUint8ClampedArrayFullSeven002
      * @tc.desc Verify fill element at arr[2] equals 7 for array [1, 2, 3, 4]
@@ -64,6 +66,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify fill element at arr[1] equals 5 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_0300
      * @tc.name testUint8ClampedArrayFullSeven003
      * @tc.desc Verify fill element at arr[1] equals 5 for array [1, 2, 3, 4]
@@ -81,6 +84,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify copyWithin element at arr[2] equals 10 for array [10, 20, 30, 40]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_0400
      * @tc.name testUint8ClampedArrayFullSeven004
      * @tc.desc Verify copyWithin element at arr[2] equals 10 for array [10, 20, 30, 40]
@@ -98,6 +102,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify copyWithin element at arr[0] equals 30 for array [10, 20, 30, 40]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_0500
      * @tc.name testUint8ClampedArrayFullSeven005
      * @tc.desc Verify copyWithin element at arr[0] equals 30 for array [10, 20, 30, 40]
@@ -115,6 +120,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 255 for array [256]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_0600
      * @tc.name testUint8ClampedArrayFullSeven006
      * @tc.desc Verify constructor element [0] equals 255 for array [256]
@@ -131,6 +137,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 255 for array [257]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_0700
      * @tc.name testUint8ClampedArrayFullSeven007
      * @tc.desc Verify constructor element [0] equals 255 for array [257]
@@ -147,6 +154,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 255 for array [1000]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_0800
      * @tc.name testUint8ClampedArrayFullSeven008
      * @tc.desc Verify constructor element [0] equals 255 for array [1000]
@@ -163,6 +171,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 255 for array [1e9]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_0900
      * @tc.name testUint8ClampedArrayFullSeven009
      * @tc.desc Verify constructor element [0] equals 255 for array [1e9]
@@ -179,6 +188,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [-1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_1000
      * @tc.name testUint8ClampedArrayFullSeven010
      * @tc.desc Verify constructor element [0] equals 0 for array [-1]
@@ -195,6 +205,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [-100]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_1100
      * @tc.name testUint8ClampedArrayFullSeven011
      * @tc.desc Verify constructor element [0] equals 0 for array [-100]
@@ -211,6 +222,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [-1e9]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_1200
      * @tc.name testUint8ClampedArrayFullSeven012
      * @tc.desc Verify constructor element [0] equals 0 for array [-1e9]
@@ -227,6 +239,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [Number.NaN]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_1300
      * @tc.name testUint8ClampedArrayFullSeven013
      * @tc.desc Verify constructor element [0] equals 0 for array [Number.NaN]
@@ -243,6 +256,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 255 for array [Number.POSITIVE_INFINITY]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_1400
      * @tc.name testUint8ClampedArrayFullSeven014
      * @tc.desc Verify constructor element [0] equals 255 for array [Number.POSITIVE_INFINITY]
@@ -259,6 +273,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [-Number.POSITIVE_INFINITY]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_1500
      * @tc.name testUint8ClampedArrayFullSeven015
      * @tc.desc Verify constructor element [0] equals 0 for array [-Number.POSITIVE_INFINITY]
@@ -275,6 +290,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [0.4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_1600
      * @tc.name testUint8ClampedArrayFullSeven016
      * @tc.desc Verify constructor element [0] equals 0 for array [0.4]
@@ -291,6 +307,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [0.5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_1700
      * @tc.name testUint8ClampedArrayFullSeven017
      * @tc.desc Verify constructor element [0] equals 0 for array [0.5]
@@ -307,6 +324,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 1 for array [0.9]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_1800
      * @tc.name testUint8ClampedArrayFullSeven018
      * @tc.desc Verify constructor element [0] equals 1 for array [0.9]
@@ -323,6 +341,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 128 for array [127.5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_1900
      * @tc.name testUint8ClampedArrayFullSeven019
      * @tc.desc Verify constructor element [0] equals 128 for array [127.5]
@@ -339,6 +358,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 128 for array [128.5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_2000
      * @tc.name testUint8ClampedArrayFullSeven020
      * @tc.desc Verify constructor element [0] equals 128 for array [128.5]
@@ -355,6 +375,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [-0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_2100
      * @tc.name testUint8ClampedArrayFullSeven021
      * @tc.desc Verify constructor element [0] equals 0 for array [-0]
@@ -371,6 +392,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 255 for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_2200
      * @tc.name testUint8ClampedArrayFullSeven022
      * @tc.desc Verify constructor element [0] equals 255 for length-1 array
@@ -388,6 +410,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [100]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_2300
      * @tc.name testUint8ClampedArrayFullSeven023
      * @tc.desc Verify constructor element [0] equals 0 for array [100]
@@ -405,6 +428,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [100]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_2400
      * @tc.name testUint8ClampedArrayFullSeven024
      * @tc.desc Verify constructor element [0] equals 0 for array [100]
@@ -422,6 +446,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 255 for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_2500
      * @tc.name testUint8ClampedArrayFullSeven025
      * @tc.desc Verify constructor element [0] equals 255 for length-1 array
@@ -439,6 +464,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array [100]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_2600
      * @tc.name testUint8ClampedArrayFullSeven026
      * @tc.desc Verify constructor element [0] equals 0 for array [100]
@@ -456,6 +482,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 200 for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_2700
      * @tc.name testUint8ClampedArrayFullSeven027
      * @tc.desc Verify constructor element [0] equals 200 for length-1 array
@@ -473,6 +500,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 202 for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_2800
      * @tc.name testUint8ClampedArrayFullSeven028
      * @tc.desc Verify constructor element [0] equals 202 for length-1 array
@@ -490,6 +518,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify fill element at arr[1] equals 255 for length-3 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_2900
      * @tc.name testUint8ClampedArrayFullSeven029
      * @tc.desc Verify fill element at arr[1] equals 255 for length-3 array
@@ -507,6 +536,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_3000
      * @tc.name testUint8ClampedArrayFullSeven030
      * @tc.desc Verify fill element at arr[0] equals 0 for array [10, 20, 30]
@@ -524,6 +554,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify fill element at arr[2] equals 0 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_3100
      * @tc.name testUint8ClampedArrayFullSeven031
      * @tc.desc Verify fill element at arr[2] equals 0 for array [10, 20, 30]
@@ -541,6 +572,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify fill element at arr[1] equals 255 for length-3 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_3200
      * @tc.name testUint8ClampedArrayFullSeven032
      * @tc.desc Verify fill element at arr[1] equals 255 for length-3 array
@@ -558,6 +590,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 100 for length-3 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_3300
      * @tc.name testUint8ClampedArrayFullSeven033
      * @tc.desc Verify fill element at arr[0] equals 100 for length-3 array
@@ -575,6 +608,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 100 for length-3 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_3400
      * @tc.name testUint8ClampedArrayFullSeven034
      * @tc.desc Verify fill element at arr[0] equals 100 for length-3 array
@@ -592,6 +626,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify with index RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_3500
      * @tc.name testUint8ClampedArrayFullSeven035
      * @tc.desc Verify with index RangeError
@@ -613,6 +648,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify with element at r[1] equals 255 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_3600
      * @tc.name testUint8ClampedArrayFullSeven036
      * @tc.desc Verify with element at r[1] equals 255 for array [1, 2, 3]
@@ -630,6 +666,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify with element at r[0] equals 0 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_3700
      * @tc.name testUint8ClampedArrayFullSeven037
      * @tc.desc Verify with element at r[0] equals 0 for array [1, 2, 3]
@@ -647,6 +684,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify with element at r[2] equals 0 for array [5, 6, 7]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_3800
      * @tc.name testUint8ClampedArrayFullSeven038
      * @tc.desc Verify with element at r[2] equals 0 for array [5, 6, 7]
@@ -664,6 +702,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.of element at arr[0] equals 255 for of(500)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_3900
      * @tc.name testUint8ClampedArrayFullSeven039
      * @tc.desc Verify Uint8ClampedArray.of element at arr[0] equals 255 for of(500)
@@ -680,6 +719,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify of with mixed values: -5 clamp 0, 100 keep, 300 clamp 255, NaN clamp 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4000
      * @tc.name testUint8ClampedArrayFullSeven040
      * @tc.desc Verify of with mixed values: -5 clamp 0, 100 keep, 300 clamp 255, NaN clamp 0
@@ -699,6 +739,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify from with boundary values: 256 clamp 255, -1 clamp 0, 128 keep
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4100
      * @tc.name testUint8ClampedArrayFullSeven041
      * @tc.desc Verify from with boundary values: 256 clamp 255, -1 clamp 0, 128 keep
@@ -718,6 +759,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, i: )
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4200
      * @tc.name testUint8ClampedArrayFullSeven042
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, i: )
@@ -737,6 +779,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, i: )
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4300
      * @tc.name testUint8ClampedArrayFullSeven043
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, i: )
@@ -756,6 +799,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify .set element at arr[2] equals 255 for length-3 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4400
      * @tc.name testUint8ClampedArrayFullSeven044
      * @tc.desc Verify .set element at arr[2] equals 255 for length-3 array
@@ -774,6 +818,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify subarray buffer reference matches for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4500
      * @tc.name testUint8ClampedArrayFullSeven045
      * @tc.desc Verify subarray buffer reference matches for array [1, 2, 3, 4]
@@ -791,6 +836,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify subarray element at parent[1] equals 99 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4600
      * @tc.name testUint8ClampedArrayFullSeven046
      * @tc.desc Verify subarray element at parent[1] equals 99 for array [1, 2, 3, 4]
@@ -809,6 +855,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify subarray element at sub[1] equals 88 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4700
      * @tc.name testUint8ClampedArrayFullSeven047
      * @tc.desc Verify subarray element at sub[1] equals 88 for array [1, 2, 3, 4]
@@ -827,6 +874,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify subarray element at b[0] equals 77 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4800
      * @tc.name testUint8ClampedArrayFullSeven048
      * @tc.desc Verify subarray element at b[0] equals 77 for array [1, 2, 3, 4, 5]
@@ -846,6 +894,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify subarray buffer reference matches for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4900
      * @tc.name testUint8ClampedArrayFullSeven049
      * @tc.desc Verify subarray buffer reference matches for array [1, 2, 3, 4]
@@ -864,6 +913,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify subarray yields byteOffset 2 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_5000
      * @tc.name testUint8ClampedArrayFullSeven050
      * @tc.desc Verify subarray yields byteOffset 2 for array [1, 2, 3, 4]
@@ -881,6 +931,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify slice result shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_5100
      * @tc.name testUint8ClampedArrayFullSeven051
      * @tc.desc Verify slice result shares no buffer with parent
@@ -898,6 +949,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify slice element at parent[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_5200
      * @tc.name testUint8ClampedArrayFullSeven052
      * @tc.desc Verify slice element at parent[0] equals 1 for array [1, 2, 3]
@@ -916,6 +968,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify slice element at s[0] equals 10 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_5300
      * @tc.name testUint8ClampedArrayFullSeven053
      * @tc.desc Verify slice element at s[0] equals 10 for array [10, 20, 30]
@@ -934,6 +987,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify map result shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_5400
      * @tc.name testUint8ClampedArrayFullSeven054
      * @tc.desc Verify map result shares no buffer with parent
@@ -951,6 +1005,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify filter result shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_5500
      * @tc.name testUint8ClampedArrayFullSeven055
      * @tc.desc Verify filter result shares no buffer with parent
@@ -968,6 +1023,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify toReversed result shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_5600
      * @tc.name testUint8ClampedArrayFullSeven056
      * @tc.desc Verify toReversed result shares no buffer with parent
@@ -985,6 +1041,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify toSorted result shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_5700
      * @tc.name testUint8ClampedArrayFullSeven057
      * @tc.desc Verify toSorted result shares no buffer with parent
@@ -1002,6 +1059,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify from(Uint8ClampedArray) buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_5800
      * @tc.name testUint8ClampedArrayFullSeven058
      * @tc.desc Verify from(Uint8ClampedArray) buffer
@@ -1019,6 +1077,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 99 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_5900
      * @tc.name testUint8ClampedArrayFullSeven059
      * @tc.desc Verify constructor element [0] equals 99 for ArrayBuffer-backed array
@@ -1038,6 +1097,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields length secondView.length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_6000
      * @tc.name testUint8ClampedArrayFullSeven060
      * @tc.desc Verify constructing ArrayBuffer-backed array yields length secondView.length
@@ -1057,6 +1117,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 11 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_6100
      * @tc.name testUint8ClampedArrayFullSeven061
      * @tc.desc Verify constructor element [0] equals 11 for ArrayBuffer-backed array
@@ -1078,6 +1139,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 50 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_6200
      * @tc.name testUint8ClampedArrayFullSeven062
      * @tc.desc Verify constructor element [0] equals 50 for ArrayBuffer-backed array
@@ -1097,6 +1159,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify subarray buffer reference matches for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_6300
      * @tc.name testUint8ClampedArrayFullSeven063
      * @tc.desc Verify subarray buffer reference matches for array [1, 2, 3]
@@ -1114,6 +1177,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify subarray yields byteLength 3 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_6400
      * @tc.name testUint8ClampedArrayFullSeven064
      * @tc.desc Verify subarray yields byteLength 3 for array [1, 2, 3, 4, 5]
@@ -1131,6 +1195,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify reverse yields length before for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_6500
      * @tc.name testUint8ClampedArrayFullSeven065
      * @tc.desc Verify reverse yields length before for array [1, 2, 3]
@@ -1151,6 +1216,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify toReversed element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_6600
      * @tc.name testUint8ClampedArrayFullSeven066
      * @tc.desc Verify toReversed element at arr[0] equals 1 for array [1, 2, 3]
@@ -1172,6 +1238,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify toSorted element at arr[0] equals 3 for array [3, 1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_6700
      * @tc.name testUint8ClampedArrayFullSeven067
      * @tc.desc Verify toSorted element at arr[0] equals 3 for array [3, 1, 2]
@@ -1193,6 +1260,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify map element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_6800
      * @tc.name testUint8ClampedArrayFullSeven068
      * @tc.desc Verify map element at arr[0] equals 1 for array [1, 2, 3]
@@ -1214,6 +1282,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify filter yields length 3 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_6900
      * @tc.name testUint8ClampedArrayFullSeven069
      * @tc.desc Verify filter yields length 3 for array [1, 2, 3]
@@ -1234,6 +1303,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify slice yields length 3 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7000
      * @tc.name testUint8ClampedArrayFullSeven070
      * @tc.desc Verify slice yields length 3 for array [1, 2, 3]
@@ -1254,6 +1324,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify with element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7100
      * @tc.name testUint8ClampedArrayFullSeven071
      * @tc.desc Verify with element at arr[0] equals 1 for array [1, 2, 3]
@@ -1275,6 +1346,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify subarray element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7200
      * @tc.name testUint8ClampedArrayFullSeven072
      * @tc.desc Verify subarray element at arr[0] equals 1 for array [1, 2, 3]
@@ -1295,6 +1367,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify join returns '1,2,3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7300
      * @tc.name testUint8ClampedArrayFullSeven073
      * @tc.desc Verify join returns '1,2,3' for array [1, 2, 3]
@@ -1312,6 +1385,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify indexOf element at arr[1] equals 2 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7400
      * @tc.name testUint8ClampedArrayFullSeven074
      * @tc.desc Verify indexOf element at arr[1] equals 2 for array [1, 2, 3]
@@ -1329,6 +1403,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify reverse element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7500
      * @tc.name testUint8ClampedArrayFullSeven075
      * @tc.desc Verify reverse element at arr[0] equals 1 for array [1, 2, 3]
@@ -1348,6 +1423,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify toReversed element at r[0] equals arr[0] for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7600
      * @tc.name testUint8ClampedArrayFullSeven076
      * @tc.desc Verify toReversed element at r[0] equals arr[0] for array [1, 2, 3]
@@ -1365,6 +1441,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify toReversed element at r[0] equals 3 for array [3, 1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7700
      * @tc.name testUint8ClampedArrayFullSeven077
      * @tc.desc Verify toReversed element at r[0] equals 3 for array [3, 1, 2]
@@ -1382,6 +1459,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify slice yields length 2 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7800
      * @tc.name testUint8ClampedArrayFullSeven078
      * @tc.desc Verify slice yields length 2 for array [1, 2, 3, 4, 5]
@@ -1399,6 +1477,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify subarray yields length 2 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7900
      * @tc.name testUint8ClampedArrayFullSeven079
      * @tc.desc Verify subarray yields length 2 for array [1, 2, 3, 4, 5]
@@ -1416,6 +1495,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify map element at r[0] equals 4 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_8000
      * @tc.name testUint8ClampedArrayFullSeven080
      * @tc.desc Verify map element at r[0] equals 4 for array [1, 2, 3]
@@ -1433,6 +1513,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify filter yields length 2 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_8100
      * @tc.name testUint8ClampedArrayFullSeven081
      * @tc.desc Verify filter yields length 2 for array [1, 2, 3, 4]
@@ -1450,6 +1531,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify with element at r[1] equals 20 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_8200
      * @tc.name testUint8ClampedArrayFullSeven082
      * @tc.desc Verify with element at r[1] equals 20 for array [1, 2, 3]
@@ -1467,6 +1549,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 5 for length-4 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_8300
      * @tc.name testUint8ClampedArrayFullSeven083
      * @tc.desc Verify fill element at arr[0] equals 5 for length-4 array
@@ -1484,6 +1567,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify copyWithin element at arr[0] equals 4 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_8400
      * @tc.name testUint8ClampedArrayFullSeven084
      * @tc.desc Verify copyWithin element at arr[0] equals 4 for array [1, 2, 3, 4]
@@ -1501,6 +1585,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify forEach accumulated sum equals 6 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_8500
      * @tc.name testUint8ClampedArrayFullSeven085
      * @tc.desc Verify forEach accumulated sum equals 6 for array [1, 2, 3]
@@ -1521,6 +1606,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify forEach acc equals 60 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_8600
      * @tc.name testUint8ClampedArrayFullSeven086
      * @tc.desc Verify forEach acc equals 60 for array [1, 2, 3]
@@ -1542,6 +1628,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify map element at r[0] equals 101 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_8700
      * @tc.name testUint8ClampedArrayFullSeven087
      * @tc.desc Verify map element at r[0] equals 101 for array [1, 2, 3]
@@ -1560,6 +1647,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify filter yields length 2 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_8800
      * @tc.name testUint8ClampedArrayFullSeven088
      * @tc.desc Verify filter yields length 2 for array [1, 2, 3, 4]
@@ -1578,6 +1666,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify reduce r equals 6 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_8900
      * @tc.name testUint8ClampedArrayFullSeven089
      * @tc.desc Verify reduce r equals 6 for array [1, 2, 3]
@@ -1595,6 +1684,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify find hitIdx equals 1 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_9000
      * @tc.name testUint8ClampedArrayFullSeven090
      * @tc.desc Verify find hitIdx equals 1 for array [10, 20, 30]
@@ -1619,6 +1709,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify forEach element at collected[2] equals 3 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_9100
      * @tc.name testUint8ClampedArrayFullSeven091
      * @tc.desc Verify forEach element at collected[2] equals 3 for array [1, 2, 3]
@@ -1639,6 +1730,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify some iteration count equals 3 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_9200
      * @tc.name testUint8ClampedArrayFullSeven092
      * @tc.desc Verify some iteration count equals 3 for array [1, 2, 3]
@@ -1660,6 +1752,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
 
     /**
      * Verify every calls equals 2 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_9300
      * @tc.name testUint8ClampedArrayFullSeven093
      * @tc.desc Verify every calls equals 2 for array [1, 2, 3]

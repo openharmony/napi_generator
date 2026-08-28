@@ -37,6 +37,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFull06Test extends BasTest {
     /**
      * Verify values() iterator is done for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0100
      * @tc.name testUint8ClampedArrayFullSix001
      * @tc.desc Verify values() iterator is done for empty array
@@ -55,6 +56,7 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
 
     /**
      * Verify entries() iterator is done for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0200
      * @tc.name testUint8ClampedArrayFullSix002
      * @tc.desc Verify entries() iterator is done for empty array
@@ -73,6 +75,7 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
 
     /**
      * Verify keys() iterator is done after consuming element for array [42]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0300
      * @tc.name testUint8ClampedArrayFullSix003
      * @tc.desc Verify keys() iterator is done after consuming element for array [42]
@@ -95,6 +98,7 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
 
     /**
      * Verify values() iterator value is 99 for array [99]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0400
      * @tc.name testUint8ClampedArrayFullSix004
      * @tc.desc Verify values() iterator value is 99 for array [99]
@@ -114,6 +118,7 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for length-3 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0500
      * @tc.name testUint8ClampedArrayFullSix005
      * @tc.desc Verify fill element at arr[0] equals 0 for length-3 array
@@ -133,6 +138,7 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
 
     /**
      * Verify with throws RangeError for index 10
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0600
      * @tc.name testUint8ClampedArrayFullSix006
      * @tc.desc Verify with throws RangeError for index 10
@@ -154,6 +160,7 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
 
     /**
      * Verify .set behavior for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0700
      * @tc.name testUint8ClampedArrayFullSix007
      * @tc.desc Verify .set behavior for array [10, 20, 30]

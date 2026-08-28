@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFrom05Test extends BasTest {
     /**
      * Verify Uint8ClampedArray.from element at r[0] equals 2 for from([1, 2, 3] as Array<n)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0100
      * @tc.name testUint8ClampedArrayFromFive001
      * @tc.desc Verify Uint8ClampedArray.from element at r[0] equals 2 for from([1, 2, 3] as Array<n)
@@ -48,6 +49,7 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
 
     /**
      * Verify -from(Uint8ClampedArray, mapfn) k
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0200
      * @tc.name testUint8ClampedArrayFromFive002
      * @tc.desc Verify -from(Uint8ClampedArray, mapfn) k
@@ -68,6 +70,7 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from yields length 2 for from([1, 2, 3, 4] as Arra)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0300
      * @tc.name testUint8ClampedArrayFromFive003
      * @tc.desc Verify Uint8ClampedArray.from yields length 2 for from([1, 2, 3, 4] as Arra)
@@ -85,6 +88,7 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from element at r[0] equals 123 for from([0, 0, 0] as Array<n)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0400
      * @tc.name testUint8ClampedArrayFromFive004
      * @tc.desc Verify Uint8ClampedArray.from element at r[0] equals 123 for from([0, 0, 0] as Array<n)
@@ -103,6 +107,7 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
 
     /**
      * Verify -from byteLength length BYTES_PER_ELEMENT
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0500
      * @tc.name testUint8ClampedArrayFromFive005
      * @tc.desc Verify -from byteLength length BYTES_PER_ELEMENT
@@ -119,6 +124,7 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from yields byteLength r.length for from([1, 2, 3] as Array<n)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FIVE_0600
      * @tc.name testUint8ClampedArrayFromFive006
      * @tc.desc Verify Uint8ClampedArray.from yields byteLength r.length for from([1, 2, 3] as Array<n)

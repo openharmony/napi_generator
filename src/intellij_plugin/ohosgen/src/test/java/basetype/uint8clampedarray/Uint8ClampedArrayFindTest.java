@@ -38,6 +38,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFindTest extends BasTest {
     /**
      * Verify find r equals 3 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_0100
      * @tc.name testUint8ClampedArrayFind001
      * @tc.desc Verify find r equals 3 for array [1, 2, 3, 4]
@@ -55,6 +56,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 10 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_0200
      * @tc.name testUint8ClampedArrayFind002
      * @tc.desc Verify find r equals 10 for array [10, 20, 30]
@@ -72,6 +74,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals undefined for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_0300
      * @tc.name testUint8ClampedArrayFind003
      * @tc.desc Verify find r equals undefined for array [10, 20, 30]
@@ -89,6 +92,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 15 for array [5, 10, 15, 20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_0400
      * @tc.name testUint8ClampedArrayFind004
      * @tc.desc Verify find r equals 15 for array [5, 10, 15, 20]
@@ -106,6 +110,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 7 for array [2, 4, 7, 8]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_0500
      * @tc.name testUint8ClampedArrayFind005
      * @tc.desc Verify find r equals 7 for array [2, 4, 7, 8]
@@ -123,6 +128,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 102 for array [100, 101, 102, 103]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_0600
      * @tc.name testUint8ClampedArrayFind006
      * @tc.desc Verify find r equals 102 for array [100, 101, 102, 103]
@@ -140,6 +146,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 20 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_0700
      * @tc.name testUint8ClampedArrayFind007
      * @tc.desc Verify find r equals 20 for array [10, 20, 30]
@@ -157,6 +164,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 4 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_0800
      * @tc.name testUint8ClampedArrayFind008
      * @tc.desc Verify find r equals 4 for array [1, 2, 3, 4, 5]
@@ -174,6 +182,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify predicate truthy/falsy boolean
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_0900
      * @tc.name testUint8ClampedArrayFind009
      * @tc.desc Verify predicate truthy/falsy boolean
@@ -191,6 +200,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 4 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_1000
      * @tc.name testUint8ClampedArrayFind010
      * @tc.desc Verify find r equals 4 for array [1, 2, 3, 4]
@@ -213,6 +223,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 2 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_1100
      * @tc.name testUint8ClampedArrayFind011
      * @tc.desc Verify find r equals 2 for array [1, 2, 3, 4]
@@ -235,6 +246,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 10 for array [5, 10, 15, 20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_1200
      * @tc.name testUint8ClampedArrayFind012
      * @tc.desc Verify find r equals 10 for array [5, 10, 15, 20]
@@ -252,6 +264,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 15 for array [5, 10, 15, 20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_1300
      * @tc.name testUint8ClampedArrayFind013
      * @tc.desc Verify find r equals 15 for array [5, 10, 15, 20]
@@ -269,6 +282,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find returns the first even value 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_1400
      * @tc.name testUint8ClampedArrayFind014
      * @tc.desc Verify find returns the first even value 2
@@ -289,6 +303,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 0 for array [0, 1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_1500
      * @tc.name testUint8ClampedArrayFind015
      * @tc.desc Verify find r equals 0 for array [0, 1, 2]
@@ -306,6 +321,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 255 for array [1, 256, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_1600
      * @tc.name testUint8ClampedArrayFind016
      * @tc.desc Verify find r equals 255 for array [1, 256, 3]
@@ -323,6 +339,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 0 for array [-1, 5, 10]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_1700
      * @tc.name testUint8ClampedArrayFind017
      * @tc.desc Verify find r equals 0 for array [-1, 5, 10]
@@ -340,6 +357,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 0 for array [Number.NaN, 1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_1800
      * @tc.name testUint8ClampedArrayFind018
      * @tc.desc Verify find r equals 0 for array [Number.NaN, 1, 2]
@@ -357,6 +375,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 255 for array [Number.POSITIVE_INFINITY, 1,
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_1900
      * @tc.name testUint8ClampedArrayFind019
      * @tc.desc Verify find r equals 255 for array [Number.POSITIVE_INFINITY, 1,
@@ -374,6 +393,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 0 for array [-Number.POSITIVE_INFINITY, 1,
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_2000
      * @tc.name testUint8ClampedArrayFind020
      * @tc.desc Verify find r equals 0 for array [-Number.POSITIVE_INFINITY, 1,
@@ -391,6 +411,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 128 for array [127.5, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_2100
      * @tc.name testUint8ClampedArrayFind021
      * @tc.desc Verify find r equals 128 for array [127.5, 0, 0]
@@ -408,6 +429,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 128 for array [128.5, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_2200
      * @tc.name testUint8ClampedArrayFind022
      * @tc.desc Verify find r equals 128 for array [128.5, 0, 0]
@@ -425,6 +447,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 0 for array [0.5, 10, 20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_2300
      * @tc.name testUint8ClampedArrayFind023
      * @tc.desc Verify find r equals 0 for array [0.5, 10, 20]
@@ -442,6 +465,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 1 for array [0.9, 10, 20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_2400
      * @tc.name testUint8ClampedArrayFind024
      * @tc.desc Verify find r equals 1 for array [0.9, 10, 20]
@@ -459,6 +483,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 0 for array [0.4, 10, 20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_2500
      * @tc.name testUint8ClampedArrayFind025
      * @tc.desc Verify find r equals 0 for array [0.4, 10, 20]
@@ -476,6 +501,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 32 for array [0x10, 0x20, 0x30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_2600
      * @tc.name testUint8ClampedArrayFind026
      * @tc.desc Verify find r equals 32 for array [0x10, 0x20, 0x30]
@@ -493,6 +519,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 16 for array [0o10, 0o20, 0o30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_2700
      * @tc.name testUint8ClampedArrayFind027
      * @tc.desc Verify find r equals 16 for array [0o10, 0o20, 0o30]
@@ -510,6 +537,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 12 for array [0b1010, 0b1100, 0b1110]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_2800
      * @tc.name testUint8ClampedArrayFind028
      * @tc.desc Verify find r equals 12 for array [0b1010, 0b1100, 0b1110]
@@ -527,6 +555,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 255 for array [Number.MAX_VALUE, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_2900
      * @tc.name testUint8ClampedArrayFind029
      * @tc.desc Verify find r equals 255 for array [Number.MAX_VALUE, 0, 0]
@@ -544,6 +573,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 0 for array [Number.MIN_VALUE, 10, 20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_3000
      * @tc.name testUint8ClampedArrayFind030
      * @tc.desc Verify find r equals 0 for array [Number.MIN_VALUE, 10, 20]
@@ -561,6 +591,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 255 for array [2147483648, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_3100
      * @tc.name testUint8ClampedArrayFind031
      * @tc.desc Verify find r equals 255 for array [2147483648, 0, 0]
@@ -578,6 +609,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find returns 2 when searching for exact value 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_3200
      * @tc.name testUint8ClampedArrayFind032
      * @tc.desc Verify find returns 2 when searching for exact value 2
@@ -595,6 +627,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find returns undefined for array [1, 2, 3] with no matching element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_3300
      * @tc.name testUint8ClampedArrayFind033
      * @tc.desc Verify find returns undefined for array [1, 2, 3] with no matching element
@@ -612,6 +645,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find first matching value 5 in array with duplicates
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_3400
      * @tc.name testUint8ClampedArrayFind034
      * @tc.desc Verify find first matching value 5 in array with duplicates
@@ -637,6 +671,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find yields length 4 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_3500
      * @tc.name testUint8ClampedArrayFind035
      * @tc.desc Verify find yields length 4 for array [1, 2, 3, 4]
@@ -654,6 +689,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find does not mutate arr[0] for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_3600
      * @tc.name testUint8ClampedArrayFind036
      * @tc.desc Verify find does not mutate arr[0] for array [1, 2, 3, 4]
@@ -671,6 +707,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find buffer reference matches for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_3700
      * @tc.name testUint8ClampedArrayFind037
      * @tc.desc Verify find buffer reference matches for array [1, 2, 3]
@@ -689,6 +726,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals undefined for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_3800
      * @tc.name testUint8ClampedArrayFind038
      * @tc.desc Verify find r equals undefined for empty array
@@ -706,6 +744,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find calls equals 0 for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_3900
      * @tc.name testUint8ClampedArrayFind039
      * @tc.desc Verify find calls equals 0 for empty array
@@ -727,6 +766,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find value 33 at index 65534 in 65535-length buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_4000
      * @tc.name testUint8ClampedArrayFind040
      * @tc.desc Verify find value 33 at index 65534 in 65535-length buffer
@@ -746,6 +786,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.of r equals 30 for of(10, 20, 30, 40)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_4100
      * @tc.name testUint8ClampedArrayFind041
      * @tc.desc Verify Uint8ClampedArray.of r equals 30 for of(10, 20, 30, 40)
@@ -763,6 +804,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from r equals 2 for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_4200
      * @tc.name testUint8ClampedArrayFind042
      * @tc.desc Verify Uint8ClampedArray.from r equals 2 for from(src)
@@ -781,6 +823,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 66 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_4300
      * @tc.name testUint8ClampedArrayFind043
      * @tc.desc Verify find r equals 66 for ArrayBuffer-backed array
@@ -800,6 +843,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify subarray r equals 3 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_4400
      * @tc.name testUint8ClampedArrayFind044
      * @tc.desc Verify subarray r equals 3 for array [1, 2, 3, 4, 5]
@@ -818,6 +862,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify subarray r equals undefined for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_4500
      * @tc.name testUint8ClampedArrayFind045
      * @tc.desc Verify subarray r equals undefined for array [1, 2, 3, 4, 5]
@@ -836,6 +881,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find propagates Error thrown by the predicate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_4600
      * @tc.name testUint8ClampedArrayFind046
      * @tc.desc Verify find propagates Error thrown by the predicate
@@ -859,6 +905,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find propagates RangeError thrown by the predicate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_4700
      * @tc.name testUint8ClampedArrayFind047
      * @tc.desc Verify find propagates RangeError thrown by the predicate
@@ -882,6 +929,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find propagates TypeError thrown by the predicate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_4800
      * @tc.name testUint8ClampedArrayFind048
      * @tc.desc Verify find propagates TypeError thrown by the predicate
@@ -905,6 +953,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find propagates Error thrown during the first predicate call
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_4900
      * @tc.name testUint8ClampedArrayFind049
      * @tc.desc Verify find propagates Error thrown during the first predicate call
@@ -931,6 +980,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find propagates Error thrown during the second predicate call
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_5000
      * @tc.name testUint8ClampedArrayFind050
      * @tc.desc Verify find propagates Error thrown during the second predicate call
@@ -957,6 +1007,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find propagates Error thrown after callback evaluation begins
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_5100
      * @tc.name testUint8ClampedArrayFind051
      * @tc.desc Verify find propagates Error thrown after callback evaluation begins
@@ -986,6 +1037,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find passes the searched array as the callback third argument
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_5200
      * @tc.name testUint8ClampedArrayFind052
      * @tc.desc Verify find passes the searched array as the callback third argument
@@ -1007,6 +1059,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find invokes the predicate in ascending index order
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_5300
      * @tc.name testUint8ClampedArrayFind053
      * @tc.desc Verify find invokes the predicate in ascending index order
@@ -1032,6 +1085,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find supplies the original first value to the predicate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_5400
      * @tc.name testUint8ClampedArrayFind054
      * @tc.desc Verify find supplies the original first value to the predicate
@@ -1055,6 +1109,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find supplies consistent value index and array callback arguments
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_5500
      * @tc.name testUint8ClampedArrayFind055
      * @tc.desc Verify find supplies consistent value index and array callback arguments
@@ -1078,6 +1133,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r2 equals 2 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_5600
      * @tc.name testUint8ClampedArrayFind056
      * @tc.desc Verify find r2 equals 2 for array [1, 2, 3, 4]
@@ -1097,6 +1153,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r1 equals 2 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_5700
      * @tc.name testUint8ClampedArrayFind057
      * @tc.desc Verify find r1 equals 2 for array [1, 2, 3, 4]
@@ -1116,6 +1173,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify slice r equals 20 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_5800
      * @tc.name testUint8ClampedArrayFind058
      * @tc.desc Verify slice r equals 20 for array [10, 20, 30]
@@ -1135,6 +1193,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify reverse r equals 4 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_5900
      * @tc.name testUint8ClampedArrayFind059
      * @tc.desc Verify reverse r equals 4 for array [1, 2, 3, 4]
@@ -1153,6 +1212,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify with r equals undefined for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_6000
      * @tc.name testUint8ClampedArrayFind060
      * @tc.desc Verify with r equals undefined for array [1, 2, 3]
@@ -1171,6 +1231,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 4 for array [2, 4, 6, 8]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_6100
      * @tc.name testUint8ClampedArrayFind061
      * @tc.desc Verify find r equals 4 for array [2, 4, 6, 8]
@@ -1188,6 +1249,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 4 for array [1, 2, 4, 8]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_6200
      * @tc.name testUint8ClampedArrayFind062
      * @tc.desc Verify find r equals 4 for array [1, 2, 4, 8]
@@ -1205,6 +1267,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
 
     /**
      * Verify find r equals 11 for array [10, 11, 12, 13]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_6300
      * @tc.name testUint8ClampedArrayFind063
      * @tc.desc Verify find r equals 11 for array [10, 11, 12, 13]

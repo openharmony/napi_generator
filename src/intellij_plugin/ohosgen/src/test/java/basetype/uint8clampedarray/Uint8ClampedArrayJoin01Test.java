@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayJoin01Test extends BasTest {
     /**
      * Verify join r equals '1,2,3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0100
      * @tc.name testUint8ClampedArrayJoinOne001
      * @tc.desc Verify join r equals '1,2,3' for array [1, 2, 3]
@@ -52,6 +53,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1,2,3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0200
      * @tc.name testUint8ClampedArrayJoinOne002
      * @tc.desc Verify join r equals '1,2,3' for array [1, 2, 3]
@@ -69,6 +71,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '123' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0300
      * @tc.name testUint8ClampedArrayJoinOne003
      * @tc.desc Verify join r equals '123' for array [1, 2, 3]
@@ -86,6 +89,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join yields length 5 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0400
      * @tc.name testUint8ClampedArrayJoinOne004
      * @tc.desc Verify join yields length 5 for array [1, 2, 3]
@@ -103,6 +107,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1|2|3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0500
      * @tc.name testUint8ClampedArrayJoinOne005
      * @tc.desc Verify join r equals '1|2|3' for array [1, 2, 3]
@@ -120,6 +125,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1;
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0600
      * @tc.name testUint8ClampedArrayJoinOne006
      * @tc.desc Verify join r equals '1;
@@ -139,6 +145,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '10:20:30' for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0700
      * @tc.name testUint8ClampedArrayJoinOne007
      * @tc.desc Verify join r equals '10:20:30' for array [10, 20, 30]
@@ -156,6 +163,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1-2-3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0800
      * @tc.name testUint8ClampedArrayJoinOne008
      * @tc.desc Verify join r equals '1-2-3' for array [1, 2, 3]
@@ -173,6 +181,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1_2_3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0900
      * @tc.name testUint8ClampedArrayJoinOne009
      * @tc.desc Verify join r equals '1_2_3' for array [1, 2, 3]
@@ -190,6 +199,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1/2/3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_1000
      * @tc.name testUint8ClampedArrayJoinOne010
      * @tc.desc Verify join r equals '1/2/3' for array [1, 2, 3]
@@ -207,6 +217,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1\\2\\3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_1100
      * @tc.name testUint8ClampedArrayJoinOne011
      * @tc.desc Verify join r equals '1\\2\\3' for array [1, 2, 3]
@@ -224,6 +235,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1\n2\n3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_1200
      * @tc.name testUint8ClampedArrayJoinOne012
      * @tc.desc Verify join r equals '1\n2\n3' for array [1, 2, 3]
@@ -241,6 +253,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1\t2\t3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_1300
      * @tc.name testUint8ClampedArrayJoinOne013
      * @tc.desc Verify join r equals '1\t2\t3' for array [1, 2, 3]
@@ -258,6 +271,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1\r2\r3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_1400
      * @tc.name testUint8ClampedArrayJoinOne014
      * @tc.desc Verify join r equals '1\r2\r3' for array [1, 2, 3]
@@ -275,6 +289,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join yields length 7 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_1500
      * @tc.name testUint8ClampedArrayJoinOne015
      * @tc.desc Verify join yields length 7 for array [1, 2, 3]
@@ -292,6 +307,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '10 - 20 - 30' for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_1600
      * @tc.name testUint8ClampedArrayJoinOne016
      * @tc.desc Verify join r equals '10 - 20 - 30' for array [10, 20, 30]
@@ -309,6 +325,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1<>2<>3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_1700
      * @tc.name testUint8ClampedArrayJoinOne017
      * @tc.desc Verify join r equals '1<>2<>3' for array [1, 2, 3]
@@ -326,6 +343,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1===2===3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_1800
      * @tc.name testUint8ClampedArrayJoinOne018
      * @tc.desc Verify join r equals '1===2===3' for array [1, 2, 3]
@@ -343,6 +361,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '10203' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_1900
      * @tc.name testUint8ClampedArrayJoinOne019
      * @tc.desc Verify join r equals '10203' for array [1, 2, 3]
@@ -360,6 +379,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1a2a3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_2000
      * @tc.name testUint8ClampedArrayJoinOne020
      * @tc.desc Verify join r equals '1a2a3' for array [1, 2, 3]
@@ -377,6 +397,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1Z2Z3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_2100
      * @tc.name testUint8ClampedArrayJoinOne021
      * @tc.desc Verify join r equals '1Z2Z3' for array [1, 2, 3]
@@ -394,6 +415,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with zero-width space separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_2200
      * @tc.name testUint8ClampedArrayJoinOne022
      * @tc.desc Verify join with zero-width space separator for array [1, 2, 3]
@@ -411,6 +433,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with zero-width joiner separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_2300
      * @tc.name testUint8ClampedArrayJoinOne023
      * @tc.desc Verify join with zero-width joiner separator for array [1, 2, 3]
@@ -428,6 +451,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join yields length 8 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_2400
      * @tc.name testUint8ClampedArrayJoinOne024
      * @tc.desc Verify join yields length 8 for array [10, 20, 30]
@@ -445,6 +469,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with BOM separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_2500
      * @tc.name testUint8ClampedArrayJoinOne025
      * @tc.desc Verify join with BOM separator for array [1, 2, 3]
@@ -462,6 +487,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with fullwidth comma separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_2600
      * @tc.name testUint8ClampedArrayJoinOne026
      * @tc.desc Verify join with fullwidth comma separator for array [1, 2, 3]
@@ -479,6 +505,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with ideographic comma separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_2700
      * @tc.name testUint8ClampedArrayJoinOne027
      * @tc.desc Verify join with ideographic comma separator for array [1, 2, 3]
@@ -496,6 +523,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with CJK character separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_2800
      * @tc.name testUint8ClampedArrayJoinOne028
      * @tc.desc Verify join with CJK character separator for array [1, 2, 3]
@@ -513,6 +541,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with multi-byte CJK separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_2900
      * @tc.name testUint8ClampedArrayJoinOne029
      * @tc.desc Verify join with multi-byte CJK separator for array [1, 2, 3]
@@ -530,6 +559,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with Hiragana separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_3000
      * @tc.name testUint8ClampedArrayJoinOne030
      * @tc.desc Verify join with Hiragana separator for array [1, 2, 3]
@@ -547,6 +577,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with Arabic comma separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_3100
      * @tc.name testUint8ClampedArrayJoinOne031
      * @tc.desc Verify join with Arabic comma separator for array [1, 2, 3]
@@ -564,6 +595,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with Hangul separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_3200
      * @tc.name testUint8ClampedArrayJoinOne032
      * @tc.desc Verify join with Hangul separator for array [1, 2, 3]
@@ -581,6 +613,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with emoji separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_3300
      * @tc.name testUint8ClampedArrayJoinOne033
      * @tc.desc Verify join with emoji separator for array [1, 2, 3]
@@ -598,6 +631,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with pictograph separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_3400
      * @tc.name testUint8ClampedArrayJoinOne034
      * @tc.desc Verify join with pictograph separator for array [1, 2, 3]
@@ -615,6 +649,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with ZWJ emoji sequence separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_3500
      * @tc.name testUint8ClampedArrayJoinOne035
      * @tc.desc Verify join with ZWJ emoji sequence separator for array [1, 2, 3]
@@ -632,6 +667,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with skin-tone modifier emoji separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_3600
      * @tc.name testUint8ClampedArrayJoinOne036
      * @tc.desc Verify join with skin-tone modifier emoji separator for array [1, 2, 3]
@@ -649,6 +685,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with star symbol separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_3700
      * @tc.name testUint8ClampedArrayJoinOne037
      * @tc.desc Verify join with star symbol separator for array [1, 2, 3]
@@ -666,6 +703,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1$2$3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_3800
      * @tc.name testUint8ClampedArrayJoinOne038
      * @tc.desc Verify join r equals '1$2$3' for array [1, 2, 3]
@@ -683,6 +721,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with euro sign separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_3900
      * @tc.name testUint8ClampedArrayJoinOne039
      * @tc.desc Verify join with euro sign separator for array [1, 2, 3]
@@ -700,6 +739,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with yen sign separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_4000
      * @tc.name testUint8ClampedArrayJoinOne040
      * @tc.desc Verify join with yen sign separator for array [1, 2, 3]
@@ -717,6 +757,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1"2"3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_4100
      * @tc.name testUint8ClampedArrayJoinOne041
      * @tc.desc Verify join r equals '1"2"3' for array [1, 2, 3]
@@ -734,6 +775,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals "1'2'3" for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_4200
      * @tc.name testUint8ClampedArrayJoinOne042
      * @tc.desc Verify join r equals "1'2'3" for array [1, 2, 3]
@@ -751,6 +793,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1`2`3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_4300
      * @tc.name testUint8ClampedArrayJoinOne043
      * @tc.desc Verify join r equals '1`2`3' for array [1, 2, 3]
@@ -768,6 +811,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1A2A3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_4400
      * @tc.name testUint8ClampedArrayJoinOne044
      * @tc.desc Verify join r equals '1A2A3' for array [1, 2, 3]
@@ -785,6 +829,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1\u00002\u00003' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_4500
      * @tc.name testUint8ClampedArrayJoinOne045
      * @tc.desc Verify join r equals '1\u00002\u00003' for array [1, 2, 3]
@@ -802,6 +847,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with CJK ext-B character separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_4600
      * @tc.name testUint8ClampedArrayJoinOne046
      * @tc.desc Verify join with CJK ext-B character separator for array [1, 2, 3]
@@ -819,6 +865,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1##########2##########3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_4700
      * @tc.name testUint8ClampedArrayJoinOne047
      * @tc.desc Verify join r equals '1##########2##########3' for array [1, 2, 3]
@@ -836,6 +883,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1' + sep + '2' for array [1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_4800
      * @tc.name testUint8ClampedArrayJoinOne048
      * @tc.desc Verify join r equals '1' + sep + '2' for array [1, 2]
@@ -854,6 +902,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join yields length 1 + 100 + 1 for array [1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_4900
      * @tc.name testUint8ClampedArrayJoinOne049
      * @tc.desc Verify join yields length 1 + 100 + 1 for array [1, 2]
@@ -875,6 +924,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join yields length 1002 for array [1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_5000
      * @tc.name testUint8ClampedArrayJoinOne050
      * @tc.desc Verify join yields length 1002 for array [1, 2]
@@ -896,6 +946,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify separator ASCII+Unicode '< >'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_5100
      * @tc.name testUint8ClampedArrayJoinOne051
      * @tc.desc Verify separator ASCII+Unicode '< >'
@@ -913,6 +964,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with mixed ASCII-emoji separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_5200
      * @tc.name testUint8ClampedArrayJoinOne052
      * @tc.desc Verify join with mixed ASCII-emoji separator for array [1, 2, 3]
@@ -930,6 +982,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1\\\\2' for array [1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_5300
      * @tc.name testUint8ClampedArrayJoinOne053
      * @tc.desc Verify join r equals '1\\\\2' for array [1, 2]
@@ -947,6 +1000,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join with CJK bracket pair separator for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_5400
      * @tc.name testUint8ClampedArrayJoinOne054
      * @tc.desc Verify join with CJK bracket pair separator for array [1, 2, 3]
@@ -964,6 +1018,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1()2()3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_5500
      * @tc.name testUint8ClampedArrayJoinOne055
      * @tc.desc Verify join r equals '1()2()3' for array [1, 2, 3]
@@ -981,6 +1036,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1<br>2<br>3' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_5600
      * @tc.name testUint8ClampedArrayJoinOne056
      * @tc.desc Verify join r equals '1<br>2<br>3' for array [1, 2, 3]
@@ -998,6 +1054,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '412351236' for array [4, 5, 6]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_5700
      * @tc.name testUint8ClampedArrayJoinOne057
      * @tc.desc Verify join r equals '412351236' for array [4, 5, 6]
@@ -1015,6 +1072,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '' for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_5800
      * @tc.name testUint8ClampedArrayJoinOne058
      * @tc.desc Verify join r equals '' for empty array
@@ -1032,6 +1090,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '' for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_5900
      * @tc.name testUint8ClampedArrayJoinOne059
      * @tc.desc Verify join r equals '' for empty array
@@ -1049,6 +1108,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '0' for array [0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6000
      * @tc.name testUint8ClampedArrayJoinOne060
      * @tc.desc Verify join r equals '0' for array [0]
@@ -1066,6 +1126,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '10,20' for array [10, 20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6100
      * @tc.name testUint8ClampedArrayJoinOne061
      * @tc.desc Verify join r equals '10,20' for array [10, 20]
@@ -1083,6 +1144,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1020' for array [10, 20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6200
      * @tc.name testUint8ClampedArrayJoinOne062
      * @tc.desc Verify join r equals '1020' for array [10, 20]
@@ -1100,6 +1162,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '0,0,0' for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6300
      * @tc.name testUint8ClampedArrayJoinOne063
      * @tc.desc Verify join r equals '0,0,0' for array [0, 0, 0]
@@ -1117,6 +1180,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '255,255,255' for array [255, 255, 255]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6400
      * @tc.name testUint8ClampedArrayJoinOne064
      * @tc.desc Verify join r equals '255,255,255' for array [255, 255, 255]
@@ -1134,6 +1198,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '7-7-7-7' for array [7, 7, 7, 7]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6500
      * @tc.name testUint8ClampedArrayJoinOne065
      * @tc.desc Verify join r equals '7-7-7-7' for array [7, 7, 7, 7]
@@ -1151,6 +1216,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '0,255' for array [0, 255]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6600
      * @tc.name testUint8ClampedArrayJoinOne066
      * @tc.desc Verify join r equals '0,255' for array [0, 255]
@@ -1168,6 +1234,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '127,128' for array [127, 128]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6700
      * @tc.name testUint8ClampedArrayJoinOne067
      * @tc.desc Verify join r equals '127,128' for array [127, 128]
@@ -1185,6 +1252,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '255,100' for length-2 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6800
      * @tc.name testUint8ClampedArrayJoinOne068
      * @tc.desc Verify join r equals '255,100' for length-2 array
@@ -1204,6 +1272,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '0,5' for length-2 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6900
      * @tc.name testUint8ClampedArrayJoinOne069
      * @tc.desc Verify join r equals '0,5' for length-2 array
@@ -1223,6 +1292,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '0' for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_7000
      * @tc.name testUint8ClampedArrayJoinOne070
      * @tc.desc Verify join r equals '0' for length-1 array
@@ -1241,6 +1311,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '255' for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_7100
      * @tc.name testUint8ClampedArrayJoinOne071
      * @tc.desc Verify join r equals '255' for length-1 array
@@ -1259,6 +1330,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '0' for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_7200
      * @tc.name testUint8ClampedArrayJoinOne072
      * @tc.desc Verify join r equals '0' for length-1 array
@@ -1277,6 +1349,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '128' for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_7300
      * @tc.name testUint8ClampedArrayJoinOne073
      * @tc.desc Verify join r equals '128' for length-1 array
@@ -1295,6 +1368,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '128' for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_7400
      * @tc.name testUint8ClampedArrayJoinOne074
      * @tc.desc Verify join r equals '128' for length-1 array
@@ -1313,6 +1387,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '0' for length-1 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_7500
      * @tc.name testUint8ClampedArrayJoinOne075
      * @tc.desc Verify join r equals '0' for length-1 array
@@ -1331,6 +1406,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '1-2-3-4-5-6-7-8-9-10' for array [1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_7600
      * @tc.name testUint8ClampedArrayJoinOne076
      * @tc.desc Verify join r equals '1-2-3-4-5-6-7-8-9-10' for array [1, 2, 3, 4, 5, 6, 7, 8, 9, 10
@@ -1348,6 +1424,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join yields length expectedLen for length-100 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_7700
      * @tc.name testUint8ClampedArrayJoinOne077
      * @tc.desc Verify join yields length expectedLen for length-100 array
@@ -1371,6 +1448,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join yields length 1024 for length-1024 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_7800
      * @tc.name testUint8ClampedArrayJoinOne078
      * @tc.desc Verify join yields length 1024 for length-1024 array
@@ -1391,6 +1469,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '10|20|30|40' for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_7900
      * @tc.name testUint8ClampedArrayJoinOne079
      * @tc.desc Verify join r equals '10|20|30|40' for ArrayBuffer-backed array
@@ -1413,6 +1492,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '7-9' for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8000
      * @tc.name testUint8ClampedArrayJoinOne080
      * @tc.desc Verify join r equals '7-9' for ArrayBuffer-backed array
@@ -1433,6 +1513,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.of r equals '10,20,30' for of(10, 20, 30)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8100
      * @tc.name testUint8ClampedArrayJoinOne081
      * @tc.desc Verify Uint8ClampedArray.of r equals '10,20,30' for of(10, 20, 30)
@@ -1450,6 +1531,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify Uint8ClampedArray.from r equals '1,2,3' for from(src)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8200
      * @tc.name testUint8ClampedArrayJoinOne082
      * @tc.desc Verify Uint8ClampedArray.from r equals '1,2,3' for from(src)
@@ -1468,6 +1550,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify subarray r equals '2,3,4' for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8300
      * @tc.name testUint8ClampedArrayJoinOne083
      * @tc.desc Verify subarray r equals '2,3,4' for array [1, 2, 3, 4, 5]
@@ -1486,6 +1569,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify slice r equals '1-2-3' for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8400
      * @tc.name testUint8ClampedArrayJoinOne084
      * @tc.desc Verify slice r equals '1-2-3' for array [1, 2, 3, 4, 5]
@@ -1504,6 +1588,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join yields length 1 for array [9]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8500
      * @tc.name testUint8ClampedArrayJoinOne085
      * @tc.desc Verify join yields length 1 for array [9]
@@ -1521,6 +1606,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join yields length 2 for array [99]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8600
      * @tc.name testUint8ClampedArrayJoinOne086
      * @tc.desc Verify join yields length 2 for array [99]
@@ -1538,6 +1624,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join yields length 3 for array [200]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8700
      * @tc.name testUint8ClampedArrayJoinOne087
      * @tc.desc Verify join yields length 3 for array [200]
@@ -1555,6 +1642,7 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
 
     /**
      * Verify join r equals '0,1' for array [0, 1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8800
      * @tc.name testUint8ClampedArrayJoinOne088
      * @tc.desc Verify join r equals '0,1' for array [0, 1]

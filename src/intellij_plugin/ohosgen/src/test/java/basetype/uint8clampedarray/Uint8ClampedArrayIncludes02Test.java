@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayIncludes02Test extends BasTest {
     /**
      * Verify includes result is true for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_0100
      * @tc.name testUint8ClampedArrayIncludesTwo001
      * @tc.desc Verify includes result is true for array [1, 2, 3]
@@ -46,6 +47,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes result is false for array [0, 1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_0200
      * @tc.name testUint8ClampedArrayIncludesTwo002
      * @tc.desc Verify includes result is false for array [0, 1]
@@ -63,6 +65,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes(byte 5) returns true
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_0300
      * @tc.name testUint8ClampedArrayIncludesTwo003
      * @tc.desc Verify includes(byte 5) returns true
@@ -81,6 +84,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes result is true for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_0400
      * @tc.name testUint8ClampedArrayIncludesTwo004
      * @tc.desc Verify includes result is true for array [1, 2, 3]
@@ -98,6 +102,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes(10) true for present element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_0500
      * @tc.name testUint8ClampedArrayIncludesTwo005
      * @tc.desc Verify includes(10) true for present element
@@ -114,6 +119,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes(99) false for absent element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_0600
      * @tc.name testUint8ClampedArrayIncludesTwo006
      * @tc.desc Verify includes(99) false for absent element
@@ -130,6 +136,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes result is false for array [100, 200, 255]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_0700
      * @tc.name testUint8ClampedArrayIncludesTwo007
      * @tc.desc Verify includes result is false for array [100, 200, 255]
@@ -146,6 +153,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes(50) true for single-element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_0800
      * @tc.name testUint8ClampedArrayIncludesTwo008
      * @tc.desc Verify includes(50) true for single-element array
@@ -163,6 +171,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes(51) false for absent element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_0900
      * @tc.name testUint8ClampedArrayIncludesTwo009
      * @tc.desc Verify includes(51) false for absent element
@@ -180,6 +189,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes yields length before for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_1000
      * @tc.name testUint8ClampedArrayIncludesTwo010
      * @tc.desc Verify includes yields length before for array [1, 2, 3, 4]
@@ -198,6 +208,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes yields byteLength before for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_1100
      * @tc.name testUint8ClampedArrayIncludesTwo011
      * @tc.desc Verify includes yields byteLength before for array [1, 2, 3, 4, 5]
@@ -216,6 +227,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes byteLength length BYTES_PER_ELEMENT=1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_1200
      * @tc.name testUint8ClampedArrayIncludesTwo012
      * @tc.desc Verify includes byteLength length BYTES_PER_ELEMENT=1
@@ -233,6 +245,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes yields length 0 for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_1300
      * @tc.name testUint8ClampedArrayIncludesTwo013
      * @tc.desc Verify includes yields length 0 for empty array
@@ -250,6 +263,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes yields byteLength 0 for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_1400
      * @tc.name testUint8ClampedArrayIncludesTwo014
      * @tc.desc Verify includes yields byteLength 0 for empty array
@@ -267,6 +281,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes yields byteOffset before for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_1500
      * @tc.name testUint8ClampedArrayIncludesTwo015
      * @tc.desc Verify includes yields byteOffset before for ArrayBuffer-backed array
@@ -286,6 +301,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes yields byteOffset 2 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_1600
      * @tc.name testUint8ClampedArrayIncludesTwo016
      * @tc.desc Verify includes yields byteOffset 2 for ArrayBuffer-backed array
@@ -304,6 +320,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes value in length 1024 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_1700
      * @tc.name testUint8ClampedArrayIncludesTwo017
      * @tc.desc Verify includes value in length 1024 array
@@ -321,6 +338,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes BYTES_PER_ELEMENT 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_1800
      * @tc.name testUint8ClampedArrayIncludesTwo018
      * @tc.desc Verify includes BYTES_PER_ELEMENT 1
@@ -338,6 +356,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes does not mutate first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_1900
      * @tc.name testUint8ClampedArrayIncludesTwo019
      * @tc.desc Verify includes does not mutate first element
@@ -355,6 +374,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes does not mutate all elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_2000
      * @tc.name testUint8ClampedArrayIncludesTwo020
      * @tc.desc Verify includes does not mutate all elements
@@ -375,6 +395,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify join arr.join(',') equals before for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_2100
      * @tc.name testUint8ClampedArrayIncludesTwo021
      * @tc.desc Verify join arr.join(',') equals before for array [1, 2, 3, 4]
@@ -393,6 +414,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify toString arr.toString() equals before for array [7, 8, 9]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_2200
      * @tc.name testUint8ClampedArrayIncludesTwo022
      * @tc.desc Verify toString arr.toString() equals before for array [7, 8, 9]
@@ -411,6 +433,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes(2, 1) returns true and array element at index 1 remains unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_2300
      * @tc.name testUint8ClampedArrayIncludesTwo023
      * @tc.desc Verify includes(2, 1) returns true and array element at index 1 remains unchanged
@@ -429,9 +452,10 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes(10, -2) returns false with negative fromIndex and array element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_2400
      * @tc.name testUint8ClampedArrayIncludesTwo024
-          * @tc.desc Verify includes(10, -2) returns false with negative fromIndex and array element
+     * @tc.desc Verify includes(10, -2) returns false with negative fromIndex and array element
      * at index 0 remains unchanged
      * @tc.size MediumTest
      * @tc.type Function
@@ -448,6 +472,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes element at arr[0] equals 0 for array [0, 1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_2500
      * @tc.name testUint8ClampedArrayIncludesTwo025
      * @tc.desc Verify includes element at arr[0] equals 0 for array [0, 1, 2]
@@ -467,6 +492,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes buffer reference matches for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_2600
      * @tc.name testUint8ClampedArrayIncludesTwo026
      * @tc.desc Verify includes buffer reference matches for array [1, 2, 3]
@@ -485,6 +511,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes yields byteLength before for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_2700
      * @tc.name testUint8ClampedArrayIncludesTwo027
      * @tc.desc Verify includes yields byteLength before for array [1, 2, 3, 4]
@@ -503,6 +530,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes buffer.byteLength 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_2800
      * @tc.name testUint8ClampedArrayIncludesTwo028
      * @tc.desc Verify includes buffer.byteLength 5
@@ -520,6 +548,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify two includes(2) calls return equal results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_2900
      * @tc.name testUint8ClampedArrayIncludesTwo029
      * @tc.desc Verify two includes(2) calls return equal results
@@ -538,6 +567,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes returns true for present and false for absent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_3000
      * @tc.name testUint8ClampedArrayIncludesTwo030
      * @tc.desc Verify includes returns true for present and false for absent
@@ -557,6 +587,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify subarray buffer reference matches for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_3100
      * @tc.name testUint8ClampedArrayIncludesTwo031
      * @tc.desc Verify subarray buffer reference matches for array [1, 2, 3, 4]
@@ -575,6 +606,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes returns true for element in subarray(1, 3)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_3200
      * @tc.name testUint8ClampedArrayIncludesTwo032
      * @tc.desc Verify includes returns true for element in subarray(1, 3)
@@ -592,6 +624,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify subarray includes byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_3300
      * @tc.name testUint8ClampedArrayIncludesTwo033
      * @tc.desc Verify subarray includes byteOffset
@@ -611,6 +644,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify subarray yields length 2 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_3400
      * @tc.name testUint8ClampedArrayIncludesTwo034
      * @tc.desc Verify subarray yields length 2 for array [1, 2, 3, 4]
@@ -629,6 +663,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes returns true for slice element and slice shares no buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_3500
      * @tc.name testUint8ClampedArrayIncludesTwo035
      * @tc.desc Verify includes returns true for slice element and slice shares no buffer with parent
@@ -647,6 +682,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes returns true for element in slice(0, 2)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_3600
      * @tc.name testUint8ClampedArrayIncludesTwo036
      * @tc.desc Verify includes returns true for element in slice(0, 2)
@@ -664,6 +700,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes returns true for slice element after parent mutation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_3700
      * @tc.name testUint8ClampedArrayIncludesTwo037
      * @tc.desc Verify includes returns true for slice element after parent mutation
@@ -682,6 +719,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes result is true for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_3800
      * @tc.name testUint8ClampedArrayIncludesTwo038
      * @tc.desc Verify includes result is true for ArrayBuffer-backed array
@@ -701,6 +739,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes buffer reference matches for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_3900
      * @tc.name testUint8ClampedArrayIncludesTwo039
      * @tc.desc Verify includes buffer reference matches for ArrayBuffer-backed array
@@ -720,6 +759,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes returns false for empty subarray(1, 1)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_4000
      * @tc.name testUint8ClampedArrayIncludesTwo040
      * @tc.desc Verify includes returns false for empty subarray(1, 1)
@@ -737,6 +777,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify subarray yields length 0 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_4100
      * @tc.name testUint8ClampedArrayIncludesTwo041
      * @tc.desc Verify subarray yields length 0 for array [1, 2, 3]
@@ -755,6 +796,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify subarray includes parent.buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_4200
      * @tc.name testUint8ClampedArrayIncludesTwo042
      * @tc.desc Verify subarray includes parent.buffer
@@ -773,6 +815,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes result is false for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_4300
      * @tc.name testUint8ClampedArrayIncludesTwo043
      * @tc.desc Verify includes result is false for ArrayBuffer-backed array
@@ -793,6 +836,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes result is true for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_4400
      * @tc.name testUint8ClampedArrayIncludesTwo044
      * @tc.desc Verify includes result is true for ArrayBuffer-backed array
@@ -812,6 +856,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes yields byteOffset 3 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_4500
      * @tc.name testUint8ClampedArrayIncludesTwo045
      * @tc.desc Verify includes yields byteOffset 3 for ArrayBuffer-backed array
@@ -830,6 +875,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes yields length 4 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_4600
      * @tc.name testUint8ClampedArrayIncludesTwo046
      * @tc.desc Verify includes yields length 4 for ArrayBuffer-backed array
@@ -848,6 +894,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes yields byteLength 10 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_4700
      * @tc.name testUint8ClampedArrayIncludesTwo047
      * @tc.desc Verify includes yields byteLength 10 for ArrayBuffer-backed array
@@ -866,6 +913,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes result is true for array [1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_4800
      * @tc.name testUint8ClampedArrayIncludesTwo048
      * @tc.desc Verify includes result is true for array [1]
@@ -883,6 +931,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes(2) result === false
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_4900
      * @tc.name testUint8ClampedArrayIncludesTwo049
      * @tc.desc Verify includes(2) result === false
@@ -900,6 +949,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes r1 equals r2 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_5000
      * @tc.name testUint8ClampedArrayIncludesTwo050
      * @tc.desc Verify includes r1 equals r2 for array [1, 2, 3]
@@ -918,6 +968,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes NaN false and zero true
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_5100
      * @tc.name testUint8ClampedArrayIncludesTwo051
      * @tc.desc Verify includes NaN false and zero true
@@ -937,6 +988,7 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
 
     /**
      * Verify includes(byte) includes(number )
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_5200
      * @tc.name testUint8ClampedArrayIncludesTwo052
      * @tc.desc Verify includes(byte) includes(number )
