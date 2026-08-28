@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayMapTest extends BasTest {
     /**
+     * Verify map with single required parameter fn for basic execution
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0100
      * @tc.name testUint8ArrayMap001
      * @tc.desc Verify map with single required parameter fn for basic execution
@@ -41,7 +42,9 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v + 1);
     assertEqual(3, result.length());
     }
+
     /**
+     * Verify val parameter receives source array element value 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0200
      * @tc.name testUint8ArrayMap002
      * @tc.desc Verify val parameter receives source array element value 0
@@ -60,7 +63,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(0, captured[0]);
     }
+
     /**
+     * Verify val parameter receives source array element value 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0300
      * @tc.name testUint8ArrayMap003
      * @tc.desc Verify val parameter receives source array element value 1
@@ -79,7 +84,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(1, captured[0]);
     }
+
     /**
+     * Verify val parameter receives source array element value 127
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0400
      * @tc.name testUint8ArrayMap004
      * @tc.desc Verify val parameter receives source array element value 127
@@ -98,7 +105,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(127, captured[0]);
     }
+
     /**
+     * Verify val parameter receives source array element value 128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0500
      * @tc.name testUint8ArrayMap005
      * @tc.desc Verify val parameter receives source array element value 128
@@ -117,7 +126,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(128, captured[0]);
     }
+
     /**
+     * Verify val parameter receives source array element value 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0600
      * @tc.name testUint8ArrayMap006
      * @tc.desc Verify val parameter receives source array element value 255
@@ -136,7 +147,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(255, captured[0]);
     }
+
     /**
+     * Verify val parameter receives hexadecimal 0x80 source value 128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0700
      * @tc.name testUint8ArrayMap007
      * @tc.desc Verify val parameter receives hexadecimal 0x80 source value 128
@@ -155,7 +168,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(128, captured[0]);
     }
+
     /**
+     * Verify val parameter receives hexadecimal 0xFF source value 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0800
      * @tc.name testUint8ArrayMap008
      * @tc.desc Verify val parameter receives hexadecimal 0xFF source value 255
@@ -174,7 +189,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(255, captured[0]);
     }
+
     /**
+     * Verify val parameter receives overflow value 256 truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_0900
      * @tc.name testUint8ArrayMap009
      * @tc.desc Verify val parameter receives overflow value 256 truncated to 0
@@ -193,7 +210,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(0, captured[0]);
     }
+
     /**
+     * Verify val parameter receives negative value -1 wrapped to 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1000
      * @tc.name testUint8ArrayMap010
      * @tc.desc Verify val parameter receives negative value -1 wrapped to 255
@@ -212,7 +231,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(255, captured[0]);
     }
+
     /**
+     * Verify val parameter receives default zero value from new Uint8Array(3)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1100
      * @tc.name testUint8ArrayMap011
      * @tc.desc Verify val parameter receives default zero value from new Uint8Array(3)
@@ -231,7 +252,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(0, captured[0]);
     }
+
     /**
+     * Verify index parameter for first element is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1200
      * @tc.name testUint8ArrayMap012
      * @tc.desc Verify index parameter for first element is 0
@@ -245,13 +268,16 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {10, 20});
     int[] captured = {-1};
     src.map((v, i, a) -> {
-    if (captured[0] == -1) { captured[0] = i;
+    if (captured[0] == -1) {
+        captured[0] = i;
     }
     return v;
         });
     assertEqual(0, captured[0]);
     }
+
     /**
+     * Verify index parameter for second element is 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1300
      * @tc.name testUint8ArrayMap013
      * @tc.desc Verify index parameter for second element is 1
@@ -266,14 +292,17 @@ public class Uint8ArrayMapTest extends BasTest {
     int[] captured = {-1};
     int[] callCount = {0};
     src.map((v, i, a) -> {
-    if (callCount[0] == 1) { captured[0] = i;
+    if (callCount[0] == 1) {
+        captured[0] = i;
     }
     callCount[0]++;
     return v;
         });
     assertEqual(1, captured[0]);
     }
+
     /**
+     * Verify index increments from 0 to length-1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1400
      * @tc.name testUint8ArrayMap014
      * @tc.desc Verify index increments from 0 to length-1
@@ -292,7 +321,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual("012", indices[0]);
     }
+
     /**
+     * Verify index parameter value used as calculation result
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1500
      * @tc.name testUint8ArrayMap015
      * @tc.desc Verify index parameter value used as calculation result
@@ -310,7 +341,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(2, result.get(2));
     assertEqual(3, result.get(3));
     }
+
     /**
+     * Verify index is 0 for single element array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1600
      * @tc.name testUint8ArrayMap016
      * @tc.desc Verify index is 0 for single element array
@@ -329,7 +362,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(0, captured[0]);
     }
+
     /**
+     * Verify index participates in calculation returning i*64
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1700
      * @tc.name testUint8ArrayMap017
      * @tc.desc Verify index participates in calculation returning i*64
@@ -347,7 +382,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(128, result.get(2));
     assertEqual(192, result.get(3));
     }
+
     /**
+     * Verify array parameter is same reference as calling object
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1800
      * @tc.name testUint8ArrayMap018
      * @tc.desc Verify array parameter is same reference as calling object
@@ -366,7 +403,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertTrue(sameRef[0]);
     }
+
     /**
+     * Verify array parameter length equals source array length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_1900
      * @tc.name testUint8ArrayMap019
      * @tc.desc Verify array parameter length equals source array length
@@ -385,7 +424,9 @@ public class Uint8ArrayMapTest extends BasTest {
     });
     assertEqual(3, arrLen[0]);
     }
+
     /**
+     * Verify reading element value through array parameter matches val
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2000
      * @tc.name testUint8ArrayMap020
      * @tc.desc Verify reading element value through array parameter matches val
@@ -399,13 +440,16 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {77, 88});
     boolean[] match = {true};
     src.map((v, i, a) -> {
-    if (a.get(i) != v) { match[0] = false;
+    if (a.get(i) != v) {
+        match[0] = false;
     }
     return v;
         });
     assertTrue(match[0]);
     }
+
     /**
+     * Verify reading non-current index element through array parameter
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2100
      * @tc.name testUint8ArrayMap021
      * @tc.desc Verify reading non-current index element through array parameter
@@ -419,13 +463,16 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     int[] sum = {0};
     src.map((v, i, a) -> {
-    if (i == 1) { sum[0] = a.get(0) + a.get(2);
+    if (i == 1) {
+        sum[0] = a.get(0) + a.get(2);
     }
     return v;
         });
     assertEqual(40, sum[0]);
     }
+
     /**
+     * Verify reading last element through array parameter
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2200
      * @tc.name testUint8ArrayMap022
      * @tc.desc Verify reading last element through array parameter
@@ -439,13 +486,16 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {5, 10, 15});
     int[] lastVal = {0};
     src.map((v, i, a) -> {
-    if (i == 0) { lastVal[0] = a.get(a.length() - 1);
+    if (i == 0) {
+        lastVal[0] = a.get(a.length() - 1);
     }
     return v;
         });
     assertEqual(15, lastVal[0]);
     }
+
     /**
+     * Verify callback returns 0, result array all zeros
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2300
      * @tc.name testUint8ArrayMap023
      * @tc.desc Verify callback returns 0, result array all zeros
@@ -462,7 +512,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns 1, result array all ones
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2400
      * @tc.name testUint8ArrayMap024
      * @tc.desc Verify callback returns 1, result array all ones
@@ -479,7 +531,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(1, result.get(1));
     assertEqual(1, result.get(2));
     }
+
     /**
+     * Verify callback returns 127, result array all 127
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2500
      * @tc.name testUint8ArrayMap025
      * @tc.desc Verify callback returns 127, result array all 127
@@ -496,7 +550,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(127, result.get(1));
     assertEqual(127, result.get(2));
     }
+
     /**
+     * Verify callback returns 128, result array all 128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2600
      * @tc.name testUint8ArrayMap026
      * @tc.desc Verify callback returns 128, result array all 128
@@ -513,7 +569,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(128, result.get(1));
     assertEqual(128, result.get(2));
     }
+
     /**
+     * Verify callback returns 255, result array all 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2700
      * @tc.name testUint8ArrayMap027
      * @tc.desc Verify callback returns 255, result array all 255
@@ -530,7 +588,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(255, result.get(2));
     }
+
     /**
+     * Verify callback returns 256, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2800
      * @tc.name testUint8ArrayMap028
      * @tc.desc Verify callback returns 256, truncated to 0
@@ -547,7 +607,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns -1, wrapped to 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_2900
      * @tc.name testUint8ArrayMap029
      * @tc.desc Verify callback returns -1, wrapped to 255
@@ -564,7 +626,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(255, result.get(2));
     }
+
     /**
+     * Verify callback returns -256, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3000
      * @tc.name testUint8ArrayMap030
      * @tc.desc Verify callback returns -256, truncated to 0
@@ -581,7 +645,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns -257, wrapped to 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3100
      * @tc.name testUint8ArrayMap031
      * @tc.desc Verify callback returns -257, wrapped to 255
@@ -598,7 +664,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(255, result.get(2));
     }
+
     /**
+     * Verify callback returns 1.0, truncated to 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3200
      * @tc.name testUint8ArrayMap032
      * @tc.desc Verify callback returns 1.0, truncated to 1
@@ -615,7 +683,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(1, result.get(1));
     assertEqual(1, result.get(2));
     }
+
     /**
+     * Verify callback returns 1.9, truncated to 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3300
      * @tc.name testUint8ArrayMap033
      * @tc.desc Verify callback returns 1.9, truncated to 1
@@ -632,7 +702,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(1, result.get(1));
     assertEqual(1, result.get(2));
     }
+
     /**
+     * Verify callback returns 255.9, truncated to 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3400
      * @tc.name testUint8ArrayMap034
      * @tc.desc Verify callback returns 255.9, truncated to 255
@@ -649,7 +721,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(255, result.get(2));
     }
+
     /**
+     * Verify callback returns -0.5, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3500
      * @tc.name testUint8ArrayMap035
      * @tc.desc Verify callback returns -0.5, truncated to 0
@@ -666,7 +740,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns -1.5, wrapped to 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3600
      * @tc.name testUint8ArrayMap036
      * @tc.desc Verify callback returns -1.5, wrapped to 255
@@ -683,7 +759,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(255, result.get(2));
     }
+
     /**
+     * Verify callback returns NaN, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3700
      * @tc.name testUint8ArrayMap037
      * @tc.desc Verify callback returns NaN, truncated to 0
@@ -700,7 +778,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns Infinity, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3800
      * @tc.name testUint8ArrayMap038
      * @tc.desc Verify callback returns Infinity, truncated to 0
@@ -717,7 +797,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns -Infinity, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_3900
      * @tc.name testUint8ArrayMap039
      * @tc.desc Verify callback returns -Infinity, truncated to 0
@@ -734,7 +816,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns Number.MAX_VALUE, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4000
      * @tc.name testUint8ArrayMap040
      * @tc.desc Verify callback returns Number.MAX_VALUE, truncated to 0
@@ -751,7 +835,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns 257, truncated to 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4100
      * @tc.name testUint8ArrayMap041
      * @tc.desc Verify callback returns 257, truncated to 1
@@ -768,7 +854,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(1, result.get(1));
     assertEqual(1, result.get(2));
     }
+
     /**
+     * Verify callback returns 512, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4200
      * @tc.name testUint8ArrayMap042
      * @tc.desc Verify callback returns 512, truncated to 0
@@ -785,7 +873,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns 1000, truncated to 232
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4300
      * @tc.name testUint8ArrayMap043
      * @tc.desc Verify callback returns 1000, truncated to 232
@@ -802,7 +892,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(232, result.get(1));
     assertEqual(232, result.get(2));
     }
+
     /**
+     * Verify callback returns -512, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4400
      * @tc.name testUint8ArrayMap044
      * @tc.desc Verify callback returns -512, truncated to 0
@@ -819,7 +911,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns -1000, truncated to 24
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4500
      * @tc.name testUint8ArrayMap045
      * @tc.desc Verify callback returns -1000, truncated to 24
@@ -836,7 +930,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(24, result.get(1));
     assertEqual(24, result.get(2));
     }
+
     /**
+     * Verify callback returns 65536, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4600
      * @tc.name testUint8ArrayMap046
      * @tc.desc Verify callback returns 65536, truncated to 0
@@ -853,7 +949,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns -65536, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4700
      * @tc.name testUint8ArrayMap047
      * @tc.desc Verify callback returns -65536, truncated to 0
@@ -870,7 +968,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns 0x100, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4800
      * @tc.name testUint8ArrayMap048
      * @tc.desc Verify callback returns 0x100, truncated to 0
@@ -887,7 +987,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns 0xFF, truncated to 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_4900
      * @tc.name testUint8ArrayMap049
      * @tc.desc Verify callback returns 0xFF, truncated to 255
@@ -904,7 +1006,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(255, result.get(2));
     }
+
     /**
+     * Verify callback returns 0x1FF, truncated to 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5000
      * @tc.name testUint8ArrayMap050
      * @tc.desc Verify callback returns 0x1FF, truncated to 255
@@ -921,7 +1025,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(255, result.get(2));
     }
+
     /**
+     * Verify callback returns 0o400, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5100
      * @tc.name testUint8ArrayMap051
      * @tc.desc Verify callback returns 0o400, truncated to 0
@@ -938,7 +1044,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify callback returns 0o377, truncated to 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5200
      * @tc.name testUint8ArrayMap052
      * @tc.desc Verify callback returns 0o377, truncated to 255
@@ -955,7 +1063,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(255, result.get(2));
     }
+
     /**
+     * Verify callback returns 0b100000000, truncated to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5300
      * @tc.name testUint8ArrayMap053
      * @tc.desc Verify callback returns 0b100000000, truncated to 0
@@ -972,7 +1082,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(0, result.get(2));
     }
+
     /**
+     * Verify map returns new array without modifying original
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5400
      * @tc.name testUint8ArrayMap054
      * @tc.desc Verify map returns new array without modifying original
@@ -992,7 +1104,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(4, result.get(1));
     assertEqual(6, result.get(2));
     }
+
     /**
+     * Verify map returns array with same length as source
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5500
      * @tc.name testUint8ArrayMap055
      * @tc.desc Verify map returns array with same length as source
@@ -1007,7 +1121,9 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v);
     assertEqual(5, result.length());
     }
+
     /**
+     * Verify map returns Uint8Array type
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5600
      * @tc.name testUint8ArrayMap056
      * @tc.desc Verify map returns Uint8Array type
@@ -1022,7 +1138,9 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v);
     assertEqual(3, result.length());
     }
+
     /**
+     * Verify map returns array does not share memory with source
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5700
      * @tc.name testUint8ArrayMap057
      * @tc.desc Verify map returns array does not share memory with source
@@ -1038,7 +1156,9 @@ public class Uint8ArrayMapTest extends BasTest {
     result.set(new Uint8Array(new int[] {99}), 0);
     assertEqual(1, src.at(0));
     }
+
     /**
+     * Verify map returns array has newly allocated buffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5800
      * @tc.name testUint8ArrayMap058
      * @tc.desc Verify map returns array has newly allocated buffer
@@ -1053,7 +1173,9 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v);
     assertTrue(result.buffer() != src.buffer());
     }
+
     /**
+     * Verify map returns array byteLength equals source
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_5900
      * @tc.name testUint8ArrayMap059
      * @tc.desc Verify map returns array byteLength equals source
@@ -1068,7 +1190,9 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v);
     assertEqual(5, result.byteLength());
     }
+
     /**
+     * Verify map returns array byteOffset is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6000
      * @tc.name testUint8ArrayMap060
      * @tc.desc Verify map returns array byteOffset is 0
@@ -1083,7 +1207,9 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array result = src.map((v, i, a) -> v);
     assertEqual(0, result.byteOffset());
     }
+
     /**
+     * Verify callback returns v + 100
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6100
      * @tc.name testUint8ArrayMap061
      * @tc.desc Verify callback returns v + 100
@@ -1100,7 +1226,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(102, result.get(1));
     assertEqual(103, result.get(2));
     }
+
     /**
+     * Verify callback returns v * 2
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6200
      * @tc.name testUint8ArrayMap062
      * @tc.desc Verify callback returns v * 2
@@ -1117,7 +1245,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(4, result.get(1));
     assertEqual(6, result.get(2));
     }
+
     /**
+     * Verify callback returns v - 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6300
      * @tc.name testUint8ArrayMap063
      * @tc.desc Verify callback returns v - 1
@@ -1134,7 +1264,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(1, result.get(1));
     assertEqual(2, result.get(2));
     }
+
     /**
+     * Verify callback returns v / 2
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6400
      * @tc.name testUint8ArrayMap064
      * @tc.desc Verify callback returns v / 2
@@ -1151,7 +1283,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(2, result.get(1));
     assertEqual(3, result.get(2));
     }
+
     /**
+     * Verify callback returns v % 2
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6500
      * @tc.name testUint8ArrayMap065
      * @tc.desc Verify callback returns v % 2
@@ -1170,7 +1304,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(0, result.get(3));
     assertEqual(1, result.get(4));
     }
+
     /**
+     * Verify callback returns v & 0x0F
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6600
      * @tc.name testUint8ArrayMap066
      * @tc.desc Verify callback returns v & 0x0F
@@ -1189,7 +1325,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(15, result.get(3));
     assertEqual(0, result.get(4));
     }
+
     /**
+     * Verify callback returns v | 0x80
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6700
      * @tc.name testUint8ArrayMap067
      * @tc.desc Verify callback returns v | 0x80
@@ -1207,7 +1345,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(130, result.get(2));
     assertEqual(131, result.get(3));
     }
+
     /**
+     * Verify callback returns v ^ 0xFF
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6800
      * @tc.name testUint8ArrayMap068
      * @tc.desc Verify callback returns v ^ 0xFF
@@ -1226,7 +1366,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(127, result.get(3));
     assertEqual(0, result.get(4));
     }
+
     /**
+     * Verify callback returns v << 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_6900
      * @tc.name testUint8ArrayMap069
      * @tc.desc Verify callback returns v << 1
@@ -1245,7 +1387,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(16, result.get(3));
     assertEqual(32, result.get(4));
     }
+
     /**
+     * Verify callback returns v >> 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7000
      * @tc.name testUint8ArrayMap070
      * @tc.desc Verify callback returns v >> 1
@@ -1264,7 +1408,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(8, result.get(3));
     assertEqual(16, result.get(4));
     }
+
     /**
+     * Verify callback returns ~v
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7100
      * @tc.name testUint8ArrayMap071
      * @tc.desc Verify callback returns ~v
@@ -1283,7 +1429,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(127, result.get(3));
     assertEqual(0, result.get(4));
     }
+
     /**
+     * Verify callback returns v ** 2
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7200
      * @tc.name testUint8ArrayMap072
      * @tc.desc Verify callback returns v ** 2
@@ -1302,7 +1450,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(16, result.get(3));
     assertEqual(25, result.get(4));
     }
+
     /**
+     * Verify callback returns Math.abs(v - 128)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7300
      * @tc.name testUint8ArrayMap073
      * @tc.desc Verify callback returns Math.abs(v - 128)
@@ -1321,7 +1471,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(64, result.get(3));
     assertEqual(127, result.get(4));
     }
+
     /**
+     * Verify callback returns v > 128 ? 255 : 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7400
      * @tc.name testUint8ArrayMap074
      * @tc.desc Verify callback returns v > 128 ? 255 : 0
@@ -1340,7 +1492,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(255, result.get(3));
     assertEqual(255, result.get(4));
     }
+
     /**
+     * Verify callback returns v === 0 ? 255 : v
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7500
      * @tc.name testUint8ArrayMap075
      * @tc.desc Verify callback returns v === 0 ? 255 : v
@@ -1358,7 +1512,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(128, result.get(2));
     assertEqual(255, result.get(3));
     }
+
     /**
+     * Verify callback returns v & 1 ? v : 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7600
      * @tc.name testUint8ArrayMap076
      * @tc.desc Verify callback returns v & 1 ? v : 0
@@ -1377,7 +1533,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(3, result.get(3));
     assertEqual(0, result.get(4));
     }
+
     /**
+     * Verify callback returns v + i
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7700
      * @tc.name testUint8ArrayMap077
      * @tc.desc Verify callback returns v + i
@@ -1394,7 +1552,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(21, result.get(1));
     assertEqual(32, result.get(2));
     }
+
     /**
+     * Verify callback returns v * i
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7800
      * @tc.name testUint8ArrayMap078
      * @tc.desc Verify callback returns v * i
@@ -1411,7 +1571,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(20, result.get(1));
     assertEqual(60, result.get(2));
     }
+
     /**
+     * Verify callback returns v + a[i]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_7900
      * @tc.name testUint8ArrayMap079
      * @tc.desc Verify callback returns v + a[i]
@@ -1428,7 +1590,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(40, result.get(1));
     assertEqual(60, result.get(2));
     }
+
     /**
+     * Verify callback returns v + a[(i+1)%length]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_8000
      * @tc.name testUint8ArrayMap080
      * @tc.desc Verify callback returns v + a[(i+1)%length]
@@ -1445,7 +1609,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(50, result.get(1));
     assertEqual(40, result.get(2));
     }
+
     /**
+     * Verify callback returns v + a[(i-1+length)%length]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_8100
      * @tc.name testUint8ArrayMap081
      * @tc.desc Verify callback returns v + a[(i-1+length)%length]
@@ -1462,7 +1628,9 @@ public class Uint8ArrayMapTest extends BasTest {
     assertEqual(30, result.get(1));
     assertEqual(50, result.get(2));
     }
+
     /**
+     * Verify modifying source array element in callback
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_8200
      * @tc.name testUint8ArrayMap082
      * @tc.desc Verify modifying source array element in callback
@@ -1476,13 +1644,16 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> {
         if (i == 0) { a.set(new Uint8Array(new int[] {255}), 1);
-        } return v;
+        }
+        return v;
     });
     assertEqual(1, result.get(0));
     assertEqual(255, result.get(1));
     assertEqual(3, result.get(2));
     }
+
     /**
+     * Verify map callback can compute sum of all elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_8300
      * @tc.name testUint8ArrayMap083
      * @tc.desc Verify map callback can compute sum of all elements
@@ -1498,14 +1669,18 @@ public class Uint8ArrayMapTest extends BasTest {
         int[] sum = {0};
         for (int j = 0;
         j < a.length();
-        j++) { sum[0] += a.get(j);
-        } return v + sum[0];
+        j++) {
+            sum[0] += a.get(j);
+        }
+        return v + sum[0];
     });
     assertEqual(7, result.get(0));
     assertEqual(8, result.get(1));
     assertEqual(9, result.get(2));
     }
+
     /**
+     * Verify map callback can find maximum of all elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_MAP_8400
      * @tc.name testUint8ArrayMap084
      * @tc.desc Verify map callback can find maximum of all elements
@@ -1521,8 +1696,11 @@ public class Uint8ArrayMapTest extends BasTest {
         int max = 0;
         for (int j = 0;
         j < a.length();
-        j++) { if (a.get(j) > max) { max = a.get(j);
-        } } return v + max;
+        j++) {
+        if (a.get(j) > max) {
+            max = a.get(j);
+        } }
+        return v + max;
     });
     assertEqual(4, result.get(0));
     assertEqual(5, result.get(1));
