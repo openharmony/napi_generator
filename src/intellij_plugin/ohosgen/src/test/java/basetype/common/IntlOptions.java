@@ -26,60 +26,277 @@ public class IntlOptions {
     /**
      * 整数部分最小位数（0 表示未设置）。
      */
-    public int minimumIntegerDigits;
+    private int minimumIntegerDigits = 0;
+
+    /**
+     * 获取整数部分最小位数（0 表示未设置）。
+     *
+     * @return minimumIntegerDigits 当前值。
+     */
+    public int getMinimumIntegerDigits() {
+        return minimumIntegerDigits;
+        }
+
+    /**
+     * 设置整数部分最小位数（0 表示未设置）。
+     *
+     * @param minimumIntegerDigits minimumIntegerDigits 新值。
+     */
+    public void setMinimumIntegerDigits(int minimumIntegerDigits) {
+        this.minimumIntegerDigits = minimumIntegerDigits;
+        }
 
     /**
      * 小数部分最小位数（-1 表示未设置）。
      */
-    public int minimumFractionDigits = -1;
+    private int minimumFractionDigits = -1;
+
+    /**
+     * 获取小数部分最小位数（-1 表示未设置）。
+     *
+     * @return minimumFractionDigits 当前值。
+     */
+    public int getMinimumFractionDigits() {
+        return minimumFractionDigits;
+        }
+
+    /**
+     * 设置小数部分最小位数（-1 表示未设置）。
+     *
+     * @param minimumFractionDigits minimumFractionDigits 新值。
+     */
+    public void setMinimumFractionDigits(int minimumFractionDigits) {
+        this.minimumFractionDigits = minimumFractionDigits;
+        }
 
     /**
      * 小数部分最大位数（-1 表示未设置）。
      */
-    public int maximumFractionDigits = -1;
+    private int maximumFractionDigits = -1;
+
+    /**
+     * 获取小数部分最大位数（-1 表示未设置）。
+     *
+     * @return maximumFractionDigits 当前值。
+     */
+    public int getMaximumFractionDigits() {
+        return maximumFractionDigits;
+        }
+
+    /**
+     * 设置小数部分最大位数（-1 表示未设置）。
+     *
+     * @param maximumFractionDigits maximumFractionDigits 新值。
+     */
+    public void setMaximumFractionDigits(int maximumFractionDigits) {
+        this.maximumFractionDigits = maximumFractionDigits;
+        }
 
     /**
      * 有效数字位数（0 表示未设置）。
      */
-    public int minimumSignificantDigits;
+    private int minimumSignificantDigits = 0;
+
+    /**
+     * 获取有效数字最小位数（0 表示未设置）。
+     *
+     * @return minimumSignificantDigits 当前值。
+     */
+    public int getMinimumSignificantDigits() {
+        return minimumSignificantDigits;
+        }
+
+    /**
+     * 设置有效数字最小位数（0 表示未设置）。
+     *
+     * @param minimumSignificantDigits minimumSignificantDigits 新值。
+     */
+    public void setMinimumSignificantDigits(int minimumSignificantDigits) {
+        this.minimumSignificantDigits = minimumSignificantDigits;
+        }
 
     /**
      * 最大有效数字位数（0 表示未设置）。
      */
-    public int maximumSignificantDigits;
+    private int maximumSignificantDigits = 0;
+
+    /**
+     * 获取有效数字最大位数（0 表示未设置）。
+     *
+     * @return maximumSignificantDigits 当前值。
+     */
+    public int getMaximumSignificantDigits() {
+        return maximumSignificantDigits;
+        }
+
+    /**
+     * 设置有效数字最大位数（0 表示未设置）。
+     *
+     * @param maximumSignificantDigits maximumSignificantDigits 新值。
+     */
+    public void setMaximumSignificantDigits(int maximumSignificantDigits) {
+        this.maximumSignificantDigits = maximumSignificantDigits;
+        }
 
     /**
      * 数字表示法（"" / "scientific" / "engineering"）。
      */
-    public String notation = "";
+    private String notation = "";
+
+    /**
+     * 获取记数法（standard/scientific/compact 等）。
+     *
+     * @return notation 当前值。
+     */
+    public String getNotation() {
+        return notation;
+        }
+
+    /**
+     * 设置记数法（standard/scientific/compact 等）。
+     *
+     * @param notation notation 新值。
+     */
+    public void setNotation(String notation) {
+        this.notation = notation;
+        }
 
     /**
      * 紧凑展示方式（"" / "short" / "long"）。
      */
-    public String compactDisplay = "";
+    private String compactDisplay = "";
+
+    /**
+     * 获取compact 记数法的显示风格。
+     *
+     * @return compactDisplay 当前值。
+     */
+    public String getCompactDisplay() {
+        return compactDisplay;
+        }
+
+    /**
+     * 设置compact 记数法的显示风格。
+     *
+     * @param compactDisplay compactDisplay 新值。
+     */
+    public void setCompactDisplay(String compactDisplay) {
+        this.compactDisplay = compactDisplay;
+        }
 
     /**
      * 是否使用千分位分组。
      */
-    public boolean useGrouping = true;
+    private boolean useGrouping = true;
+
+    /**
+     * 获取是否启用千分位分组。
+     *
+     * @return useGrouping 当前值。
+     */
+    public boolean getUseGrouping() {
+        return useGrouping;
+        }
+
+    /**
+     * 设置是否启用千分位分组。
+     *
+     * @param useGrouping useGrouping 新值。
+     */
+    public void setUseGrouping(boolean useGrouping) {
+        this.useGrouping = useGrouping;
+        }
 
     /**
      * 格式风格（"" / "percent" / "currency"）。
      */
-    public String style = "";
+    private String style = "";
+
+    /**
+     * 获取格式样式（currency/percent/unit 等）。
+     *
+     * @return style 当前值。
+     */
+    public String getStyle() {
+        return style;
+        }
+
+    /**
+     * 设置格式样式（currency/percent/unit 等）。
+     *
+     * @param style style 新值。
+     */
+    public void setStyle(String style) {
+        this.style = style;
+        }
 
     /**
      * 货币代码（如 USD/EUR/GBP）。
      */
-    public String currency = "";
+    private String currency = "";
+
+    /**
+     * 获取货币代码（ISO 4217）。
+     *
+     * @return currency 当前值。
+     */
+    public String getCurrency() {
+        return currency;
+        }
+
+    /**
+     * 设置货币代码（ISO 4217）。
+     *
+     * @param currency currency 新值。
+     */
+    public void setCurrency(String currency) {
+        this.currency = currency;
+        }
 
     /**
      * 货币展示方式（"" / "symbol" / "code"）。
      */
-    public String currencyDisplay = "";
+    private String currencyDisplay = "";
+
+    /**
+     * 获取货币显示方式。
+     *
+     * @return currencyDisplay 当前值。
+     */
+    public String getCurrencyDisplay() {
+        return currencyDisplay;
+        }
+
+    /**
+     * 设置货币显示方式。
+     *
+     * @param currencyDisplay currencyDisplay 新值。
+     */
+    public void setCurrencyDisplay(String currencyDisplay) {
+        this.currencyDisplay = currencyDisplay;
+        }
 
     /**
      * 区域匹配策略（ArkTS ToLocaleStringOptions，不影响数值格式）。
      */
-    public String localeMatcher = "";
+    private String localeMatcher = "";
+
+    /**
+     * 获取区域匹配策略（不影响数值格式）。
+     *
+     * @return localeMatcher 当前值。
+     */
+    public String getLocaleMatcher() {
+        return localeMatcher;
+        }
+
+    /**
+     * 设置区域匹配策略（不影响数值格式）。
+     *
+     * @param localeMatcher localeMatcher 新值。
+     */
+    public void setLocaleMatcher(String localeMatcher) {
+        this.localeMatcher = localeMatcher;
+        }
+
     }

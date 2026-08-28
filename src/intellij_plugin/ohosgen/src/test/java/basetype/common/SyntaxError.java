@@ -28,6 +28,8 @@ public class SyntaxError extends RuntimeException {
 
     /**
      * ECMAScript SyntaxError.name。
+     *
+     * @return 返回值说明。
      */
     public String name() {
         return "SyntaxError";

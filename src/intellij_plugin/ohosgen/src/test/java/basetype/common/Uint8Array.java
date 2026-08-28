@@ -33,41 +33,23 @@ public class Uint8Array implements IntArrayView {
      */
     public static final int BYTES_PER_ELEMENT = 1;
 
-    private final ArrayBuffer buffer;
-    private final int byteOffset;
-    private final int length;
-
     /**
      * 模拟设备端分配上限（超过即抛 OutOfMemoryError，避免 JVM 真实 OOM 崩溃）。
      */
     private static final int MAX_ARRAY_LENGTH = 0x3FFFFFFF;
 
+    private final ArrayBuffer buffer;
+
+    private final int byteOffset;
+
+    private final int length;
+
     public Uint8Array(int length) {
         this(length < 0 ? new ArrayBuffer(0) : allocBuffer(length), 0, length);
         }
 
-    private static ArrayBuffer allocBuffer(int length) {
-        if (length > MAX_ARRAY_LENGTH) {
-            throw new OutOfMemoryError("Requested array size exceeds VM limit");
-            }
-        return new ArrayBuffer(length * BYTES_PER_ELEMENT);
-        }
-
     public Uint8Array(double length) {
         this(toLength(length));
-        }
-
-    /**
-     * ToLength 语义：NaN 归 0，负数/超 2^31 抛 RangeError，小数向零截断。
-     */
-    private static int toLength(double length) {
-        if (Double.isNaN(length)) {
-            return 0;
-            }
-        if (length < 0 || length >= 2147483648.0) {
-            throw new RangeError("Invalid array length");
-            }
-        return (int) length;
         }
 
     public Uint8Array() {
@@ -88,14 +70,14 @@ public class Uint8Array implements IntArrayView {
             }
     }
 
-    public Uint8Array(int... values) {
+    public Uint8Array(int...values) {
         this(values.length);
         for (int i = 0; i < values.length; i++) {
             set(i, values[i]);
             }
     }
 
-    public Uint8Array(double... values) {
+    public Uint8Array(double...values) {
         this(values.length);
         for (int i = 0; i < values.length; i++) {
             set(i, values[i]);
@@ -130,8 +112,34 @@ public class Uint8Array implements IntArrayView {
         this.length = length;
         }
 
+    private static ArrayBuffer allocBuffer(int length) {
+        if (length > MAX_ARRAY_LENGTH) {
+            throw new OutOfMemoryError("Requested array size exceeds VM limit");
+            }
+        return new ArrayBuffer(length * BYTES_PER_ELEMENT);
+        }
+
+    /**
+     * ToLength 语义：NaN 归 0，负数/超 2^31 抛 RangeError，小数向零截断。
+     *
+     * @param length 参数说明。
+     * @return 返回值说明。
+     */
+    private static int toLength(double length) {
+        if (Double.isNaN(length)) {
+            return 0;
+            }
+        if (length < 0 || length >= 2147483648.0) {
+            throw new RangeError("Invalid array length");
+            }
+        return (int) length;
+        }
+
     /**
      * 底层缓冲字节数须为元素字节数的整数倍，否则抛 RangeError。
+     *
+     * @param buf 参数说明。
+     * @return 返回值说明。
      */
     private static int checkedElements(ArrayBuffer buf) {
         if (buf.byteLength() % BYTES_PER_ELEMENT != 0) {
@@ -142,6 +150,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 元素个数。
+     *
+     * @return 返回值说明。
      */
     public int length() {
         return length;
@@ -149,6 +159,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 元素区间占用的字节数（奇数底层缓冲时按 ArkTS 行为补 1 字节）。
+     *
+     * @return 返回值说明。
      */
     public int byteLength() {
         return length * BYTES_PER_ELEMENT + (buffer.byteLength() % BYTES_PER_ELEMENT);
@@ -156,6 +168,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 首元素相对底层 ArrayBuffer 的字节偏移。
+     *
+     * @return 返回值说明。
      */
     public int byteOffset() {
         return byteOffset;
@@ -163,6 +177,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 底层 ArrayBuffer（视图共享同一对象，可作身份比较）。
+     *
+     * @return 返回值说明。
      */
     public ArrayBuffer buffer() {
         return buffer;
@@ -171,6 +187,9 @@ public class Uint8Array implements IntArrayView {
     /**
      * 读取指定索引元素（越界返回 null，对应越界读为 undefined 的语义）。
      * 对应 $index 属性访问语义。
+     *
+     * @param index 参数说明。
+     * @return 返回值说明。
      */
     public Integer get(int index) {
         if (index < 0 || index >= length) {
@@ -181,6 +200,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 相对索引读取（负数从末尾倒数；越界返回 null），对应 at 语义。
+     *
+     * @param index 参数说明。
+     * @return 返回值说明。
      */
     public Integer at(int index) {
         int i = index;
@@ -196,6 +218,10 @@ public class Uint8Array implements IntArrayView {
     /**
      * 写入指定索引元素（ToUint8 转换；越界抛 RangeError）。
      * 对应 $index 属性赋值语义（ArkTS 越界赋值抛 RangeError）。
+     *
+     * @param index 参数说明。
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public Integer set(int index, double value) {
         if (index < 0 || index >= length) {
@@ -207,8 +233,12 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 装箱 Double 写入（$_set 内部 API：null 类型断言失败抛 ClassCastError）。
+     *
+     * @param index 参数说明。
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
-    public Integer set(int index, Double value) {
+    public Integer setBoxed(int index, Double value) {
         if (value == null) {
             throw new ClassCastError();
             }
@@ -217,6 +247,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 使用另一数组的元素填充本数组。
+     *
+     * @param src 参数说明。
+     * @return 返回值说明。
      */
     public Integer set(Uint8Array src) {
         return set(src, 0);
@@ -224,6 +257,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 使用另一数组的元素填充本数组（从 offset 起，越界抛 RangeError）。
+     *
+     * @param src 参数说明。
+     * @param offset 参数说明。
+     * @return 返回值说明。
      */
     public Integer set(Uint8Array src, int offset) {
         if (src == null) {
@@ -250,6 +287,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 使用整型数组的元素填充本数组。
+     *
+     * @param src 参数说明。
+     * @return 返回值说明。
      */
     public Integer set(int[] src) {
         return set(src, 0);
@@ -257,6 +297,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 使用整型数组的元素填充本数组（从 offset 起，越界抛 RangeError）。
+     *
+     * @param src 参数说明。
+     * @param offset 参数说明。
+     * @return 返回值说明。
      */
     public Integer set(int[] src, int offset) {
         if (src == null) {
@@ -279,6 +323,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 使用浮点数组的元素填充本数组（ToUint8 转换）。
+     *
+     * @param src 参数说明。
+     * @param offset 参数说明。
+     * @return 返回值说明。
      */
     public Integer set(double[] src, int offset) {
         if (src == null) {
@@ -301,6 +349,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 写入元素或批量填充，对应 set 语义。
+     *
+     * @param src 参数说明。
+     * @return 返回值说明。
      */
     public Integer set(double[] src) {
         return set(src, 0);
@@ -309,6 +360,11 @@ public class Uint8Array implements IntArrayView {
     /**
      * 用 value 填充 [start, end) 区间（含负数索引换算与区间收敛），
      * 返回数组本身以支持链式调用。
+     *
+     * @param value 参数说明。
+     * @param start 参数说明。
+     * @param end 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array fill(double value, double start, double end) {
         return fill(value, toIndexD(start, length), toIndexD(end, length));
@@ -316,6 +372,11 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 填充数组元素，对应 fill 语义。
+     *
+     * @param value 参数说明。
+     * @param start 参数说明。
+     * @param end 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array fill(double value, int start, int end) {
         int len = length;
@@ -329,6 +390,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 填充数组元素，对应 fill 语义。
+     *
+     * @param value 参数说明。
+     * @param start 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array fill(double value, int start) {
         return fill(value, start, length);
@@ -336,6 +401,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 填充数组元素，对应 fill 语义。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array fill(double value) {
         return fill(value, 0, length);
@@ -343,6 +411,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回首个满足谓词的元素（无则 null），对应 find 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Integer find(Uint8ArrayFinder cb) {
         if (cb == null) {
@@ -359,6 +430,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 查找首个匹配元素，对应 find 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Integer find(Uint8ArrayFinder0 cb) {
         return find((v, i, a) -> cb.test());
@@ -366,6 +440,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 查找首个匹配元素，对应 find 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Integer find(Uint8ArrayFinder1 cb) {
         return find((v, i, a) -> cb.test(v));
@@ -373,6 +450,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 查找首个匹配元素，对应 find 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Integer find(Uint8ArrayFinder2 cb) {
         return find((v, i, a) -> cb.test(v, i));
@@ -380,6 +460,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从后向前返回首个满足谓词的元素（无则 null），对应 findLast 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Integer findLast(Uint8ArrayFinder cb) {
         if (cb == null) {
@@ -396,6 +479,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * findLast 方法。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Integer findLast(Uint8ArrayFinder0 cb) {
         return findLast((v, i, a) -> cb.test());
@@ -403,6 +489,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * findLast 方法。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Integer findLast(Uint8ArrayFinder1 cb) {
         return findLast((v, i, a) -> cb.test(v));
@@ -410,6 +499,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * findLast 方法。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Integer findLast(Uint8ArrayFinder2 cb) {
         return findLast((v, i, a) -> cb.test(v, i));
@@ -417,6 +509,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从后向前返回首个满足谓词的元素下标（无则 -1），对应 findLastIndex 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int findLastIndex(Uint8ArrayFinder cb) {
         if (cb == null) {
@@ -432,6 +527,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * findLastIndex 方法。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int findLastIndex(Uint8ArrayFinder0 cb) {
         return findLastIndex((v, i, a) -> cb.test());
@@ -439,6 +537,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * findLastIndex 方法。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int findLastIndex(Uint8ArrayFinder1 cb) {
         return findLastIndex((v, i, a) -> cb.test(v));
@@ -446,6 +547,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * findLastIndex 方法。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int findLastIndex(Uint8ArrayFinder2 cb) {
         return findLastIndex((v, i, a) -> cb.test(v, i));
@@ -453,6 +557,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回首个满足谓词的元素下标（无则 -1），对应 findIndex 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int findIndex(Uint8ArrayFinder cb) {
         if (cb == null) {
@@ -468,6 +575,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 查找首个匹配下标，对应 findIndex 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int findIndex(Uint8ArrayFinder1 cb) {
         return findIndex((v, i, a) -> cb.test(v));
@@ -475,6 +585,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 查找首个匹配下标，对应 findIndex 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int findIndex(Uint8ArrayFinder2 cb) {
         return findIndex((v, i, a) -> cb.test(v, i));
@@ -482,6 +595,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回满足谓词的全部元素构成的新数组，对应 filter 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array filter(Uint8ArrayFinder cb) {
         if (cb == null) {
@@ -505,6 +621,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 过滤为新数组，对应 filter 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array filter(Uint8ArrayFinder0 cb) {
         return filter((v, i, a) -> cb.test());
@@ -512,6 +631,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 过滤为新数组，对应 filter 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array filter(Uint8ArrayFinder1 cb) {
         return filter((v, i, a) -> cb.test(v));
@@ -519,6 +641,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 过滤为新数组，对应 filter 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array filter(Uint8ArrayFinder2 cb) {
         return filter((v, i, a) -> cb.test(v, i));
@@ -526,6 +651,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 对每个元素应用回调（返回值构成新数组），对应 map 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array map(Uint8ArrayMapper cb) {
         if (cb == null) {
@@ -540,6 +668,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 映射为新数组，对应 map 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array map(Uint8ArrayMapper1 cb) {
         return map((v, i, a) -> cb.apply(v));
@@ -547,6 +678,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 映射为新数组，对应 map 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array map(Uint8ArrayMapper2 cb) {
         return map((v, i, a) -> cb.apply(v, i));
@@ -554,6 +688,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从左到右归约，返回最终累计值，对应 reduce 语义（含无初始值形式）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public int reduce(Uint8ArrayReducer cb, int initial) {
         if (cb == null) {
@@ -568,6 +706,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int reduce(Uint8ArrayReducer cb) {
         if (length == 0) {
@@ -582,6 +723,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public int reduce(Uint8ArrayReducer2 cb, int initial) {
         if (cb == null) {
@@ -596,6 +741,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int reduce(Uint8ArrayReducer2 cb) {
         if (cb == null) {
@@ -613,6 +761,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public int reduce(Uint8ArrayReducer3 cb, int initial) {
         if (cb == null) {
@@ -627,6 +779,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int reduce(Uint8ArrayReducer3 cb) {
         if (cb == null) {
@@ -644,6 +799,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从右向左归约，返回最终累计值，对应 reduceRight 语义（含无初始值形式）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public int reduceRight(Uint8ArrayReducer cb, int initial) {
         if (cb == null) {
@@ -658,6 +817,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int reduceRight(Uint8ArrayReducer cb) {
         if (length == 0) {
@@ -672,6 +834,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public int reduceRight(Uint8ArrayReducer2 cb, int initial) {
         if (cb == null) {
@@ -686,6 +852,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int reduceRight(Uint8ArrayReducer2 cb) {
         if (cb == null) {
@@ -703,6 +872,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public int reduceRight(Uint8ArrayReducer3 cb, int initial) {
         if (cb == null) {
@@ -717,6 +890,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public int reduceRight(Uint8ArrayReducer3 cb) {
         if (cb == null) {
@@ -734,6 +910,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 是否存在元素满足谓词。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public boolean some(Uint8ArrayFinder cb) {
         if (cb == null) {
@@ -749,6 +928,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 是否存在满足谓词，对应 some 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public boolean some(Uint8ArrayFinder0 cb) {
         if (cb == null) {
@@ -759,6 +941,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 是否存在满足谓词，对应 some 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public boolean some(Uint8ArrayFinder1 cb) {
         if (cb == null) {
@@ -769,6 +954,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 是否存在满足谓词，对应 some 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public boolean some(Uint8ArrayFinder2 cb) {
         if (cb == null) {
@@ -779,6 +967,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 是否所有元素都满足谓词。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public boolean every(Uint8ArrayFinder cb) {
         if (cb == null) {
@@ -794,6 +985,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 是否全部满足谓词，对应 every 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public boolean every(Uint8ArrayFinder0 cb) {
         return every((v, i, a) -> cb.test());
@@ -801,6 +995,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 是否全部满足谓词，对应 every 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public boolean every(Uint8ArrayFinder1 cb) {
         return every((v, i, a) -> cb.test(v));
@@ -808,6 +1005,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 是否全部满足谓词，对应 every 语义。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public boolean every(Uint8ArrayFinder2 cb) {
         return every((v, i, a) -> cb.test(v, i));
@@ -842,6 +1042,9 @@ public class Uint8Array implements IntArrayView {
     /**
      * 用分隔符连接全部元素（元素按十进制字符串），
      * 无分隔符时默认逗号，对应 join 语义。
+     *
+     * @param separator 参数说明。
+     * @return 返回值说明。
      */
     public String join(String separator) {
         StringBuilder sb = new StringBuilder();
@@ -856,6 +1059,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 元素连接为字符串，对应 join 语义。
+     *
+     * @return 返回值说明。
      */
     public String join() {
         return join(",");
@@ -867,6 +1072,8 @@ public class Uint8Array implements IntArrayView {
     @Override
     /**
      * 字符串形式，对应 toString 语义。
+     *
+     * @return 返回值说明。
      */
     public String toString() {
         return join();
@@ -874,6 +1081,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 区域设置字符串（默认 en-US 分组格式），对应 toLocaleString 语义。
+     *
+     * @return 返回值说明。
      */
     public String toLocaleString() {
         return toLocaleString("en-US", null);
@@ -881,6 +1090,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 区域设置字符串，对应 toLocaleString 语义。
+     *
+     * @param locales 参数说明。
+     * @return 返回值说明。
      */
     public String toLocaleString(String locales) {
         return toLocaleString(locales, null);
@@ -888,6 +1100,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 区域设置字符串，对应 toLocaleString 语义。
+     *
+     * @param locales 参数说明。
+     * @return 返回值说明。
      */
     public String toLocaleString(java.util.List<String> locales) {
         return toLocaleString(locales == null || locales.isEmpty() ? "en-US" : locales.get(0), null);
@@ -895,6 +1110,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 区域设置字符串，对应 toLocaleString 语义。
+     *
+     * @param locales 参数说明。
+     * @param opts 参数说明。
+     * @return 返回值说明。
      */
     public String toLocaleString(String locales, IntlOptions opts) {
         StringBuilder sb = new StringBuilder();
@@ -909,6 +1128,11 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 按 locale 与选项格式化单个元素（分组/补零/小数/有效数字/科学计数/compact/百分比/货币）。
+     *
+     * @param value 参数说明。
+     * @param locales 参数说明。
+     * @param opts 参数说明。
+     * @return 返回值说明。
      */
     private static String formatIntl(int value, String locales, IntlOptions opts) {
         String lc = locales == null ? "en-US" : locales.trim().toLowerCase(java.util.Locale.ROOT);
@@ -917,7 +1141,7 @@ public class Uint8Array implements IntArrayView {
             }
         String lang = lc.split("[-_]")[0];
         // ArkTS typed array toLocaleString 忽略全部 Intl 选项，仅 locale 分组与数字系统生效
-        boolean grouped = opts == null || opts.useGrouping;
+        boolean grouped = opts == null || opts.getUseGrouping();
         String groupSep = groupSeparator(lang);
         String body = Integer.toString(value);
         if (grouped && groupSep != null && body.length() > 3) {
@@ -932,6 +1156,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 解析 locale 扩展 -u-nu-XXX 的数字系统（无扩展时按语言默认）。
+     *
+     * @param lc 参数说明。
+     * @return 返回值说明。
      */
     private static String numberSystemDigits(String lc) {
         java.util.regex.Matcher m = java.util.regex.Pattern.compile("-u-nu-([a-z]+)").matcher(lc);
@@ -958,6 +1185,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 把数字字符按数字系统映射（其余字符原样保留）。
+     *
+     * @param body 参数说明。
+     * @param digits 参数说明。
+     * @return 返回值说明。
      */
     private static String mapDigits(String body, String digits) {
         StringBuilder sb = new StringBuilder();
@@ -987,6 +1218,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * compact 短/长格式（K/M/B/T、thousand/million/billion/trillion）。
+     *
+     * @param v 参数说明。
+     * @param display 参数说明。
+     * @return 返回值说明。
      */
     private static String compact(long v, String display) {
         if (v == 0) {
@@ -1007,6 +1242,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 10 的 n 次幂。
+     *
+     * @param n 参数说明。
+     * @return 返回值说明。
      */
     private static long pow10(int n) {
         long r = 1L;
@@ -1018,6 +1256,12 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 货币前后缀/展示方式（symbol 前置或 de 后缀、code 与数字间 NBSP、name 后缀）。
+     *
+     * @param body 参数说明。
+     * @param cur 参数说明。
+     * @param display 参数说明。
+     * @param lang 参数说明。
+     * @return 返回值说明。
      */
     private static String attachCurrency(String body, String cur, String display, String lang) {
         if ("code".equals(display)) {
@@ -1058,6 +1302,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * BCP47 简式校验（语言 2-3 字母 + 可选 2-8 位子标记）。
+     *
+     * @param lc 参数说明。
+     * @return 返回值说明。
      */
     private static boolean isValidLocale(String lc) {
         String localeKey = lc.toLowerCase(java.util.Locale.ROOT);
@@ -1095,6 +1342,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 按语言选千分位分隔符（es/pl 不使用分组）。
+     *
+     * @param lang 参数说明。
+     * @return 返回值说明。
      */
     private static String groupSeparator(String lang) {
         if ("de".equals(lang) || "it".equals(lang) || "pt".equals(lang) || "da".equals(lang)) {
@@ -1117,6 +1367,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 按语言选小数点分隔符。
+     *
+     * @param lang 参数说明。
+     * @return 返回值说明。
      */
     private static String decimalSeparator(String lang) {
         if ("de".equals(lang) || "it".equals(lang) || "pt".equals(lang) || "fr".equals(lang)
@@ -1129,6 +1382,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 千分位分组（每 3 位插入指定分隔符）。
+     *
+     * @param digits 参数说明。
+     * @param sep 参数说明。
+     * @return 返回值说明。
      */
     private static String groupDigits(String digits, String sep) {
         StringBuilder sb = new StringBuilder();
@@ -1147,6 +1404,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 数字字符替换为阿拉伯-印度数字（ar-SA）。
+     *
+     * @param body 参数说明。
+     * @return 返回值说明。
      */
     private static String toArabicDigits(String body) {
         char[] ar = {'\u0660', '\u0661', '\u0662', '\u0663', '\u0664',
@@ -1165,6 +1425,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回数组本身，对应 valueOf 语义。
+     *
+     * @return 返回值说明。
      */
     public Uint8Array valueOf() {
         return this;
@@ -1172,13 +1434,17 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * Symbol.iterator 语义：数组迭代器（等价 values）。
+     *
+     * @return 返回值说明。
      */
-    public KeyIterator $_iterator() {
+    public KeyIterator iteratorSymbol() {
         return new KeyIterator(false);
         }
 
     /**
      * keys 方法。
+     *
+     * @return 返回值说明。
      */
     public KeyIterator keys() {
         return new KeyIterator(true);
@@ -1186,6 +1452,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回元素值迭代器，对应 values 语义。
+     *
+     * @return 返回值说明。
      */
     public KeyIterator values() {
         return new KeyIterator(false);
@@ -1193,6 +1461,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回 [index, value] 二元组迭代器，对应 entries 语义。
+     *
+     * @return 返回值说明。
      */
     public EntriesIterator entries() {
         return new EntriesIterator();
@@ -1200,6 +1470,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从后向前查找指定值，返回下标（无则 -1），对应 lastIndexOf 语义。
+     *
+     * @param value 参数说明。
+     * @param fromIndex 参数说明。
+     * @return 返回值说明。
      */
     public int lastIndexOf(int value, int fromIndex) {
         int len = length;
@@ -1220,6 +1494,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从后往前查找下标，对应 lastIndexOf 语义。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public int lastIndexOf(int value) {
         return lastIndexOf(value, length - 1);
@@ -1227,6 +1504,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从后向前查找（double 值：精确比较，NaN/非整数值恒不匹配）。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public int lastIndexOf(double value) {
         for (int i = length - 1; i >= 0; i--) {
@@ -1239,6 +1519,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * indexOf 的浮点形式参数（如 1e1）：精确比较，NaN/非整数值恒不匹配。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public int indexOf(double value) {
         for (int i = 0; i < length; i++) {
@@ -1251,6 +1534,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * indexOf 的 long 参数（超出 int 范围的整数值，恒不在数组中）。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public int indexOf(long value) {
         return indexOf((int) value);
@@ -1258,6 +1544,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从前往后查找下标，对应 indexOf 语义。
+     *
+     * @param value 参数说明。
+     * @param fromIndex 参数说明。
+     * @return 返回值说明。
      */
     public int indexOf(int value, int fromIndex) {
         int len = length;
@@ -1278,6 +1568,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从前往后查找下标，对应 indexOf 语义。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public int indexOf(int value) {
         return indexOf(value, 0);
@@ -1285,6 +1578,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * includes 的浮点形式参数（如 1e0 / 2.55e2）：精确比较。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public boolean includes(double value) {
         for (int i = 0; i < length; i++) {
@@ -1297,6 +1593,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * includes 的浮点 fromIndex（如 includes(20, 1.0)）。
+     *
+     * @param value 参数说明。
+     * @param fromIndex 参数说明。
+     * @return 返回值说明。
      */
     public boolean includes(int value, double fromIndex) {
         return includes(value, (int) fromIndex);
@@ -1304,6 +1604,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 是否包含指定值，对应 includes 语义。
+     *
+     * @param value 参数说明。
+     * @param fromIndex 参数说明。
+     * @return 返回值说明。
      */
     public boolean includes(int value, int fromIndex) {
         return indexOf(value, fromIndex) != -1;
@@ -1311,6 +1615,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 是否包含指定值，对应 includes 语义。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public boolean includes(int value) {
         return indexOf(value) != -1;
@@ -1319,6 +1626,10 @@ public class Uint8Array implements IntArrayView {
     /**
      * 用 value 替换指定下标元素并返回新数组（原数组不变），
      * 对应 with 语义；负下标从末尾倒数。
+     *
+     * @param index 参数说明。
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array with(double index, double value) {
         return with(toIndexD(index, length), value);
@@ -1326,6 +1637,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * with 方法。
+     *
+     * @param index 参数说明。
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array with(int index, double value) {
         int len = length;
@@ -1347,6 +1662,10 @@ public class Uint8Array implements IntArrayView {
     /**
      * 返回 [begin, end) 区间的新视图（与宿主共享底层缓冲区），
      * 负数索引从末尾倒数、越界收敛，对应 subarray 语义。
+     *
+     * @param start 参数说明。
+     * @param end 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array slice(double start, double end) {
         return slice(toIndexD(start, length), toIndexD(end, length));
@@ -1354,6 +1673,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回从 start 到末尾的 slice 拷贝，对应 slice 语义。
+     *
+     * @param start 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array slice(double start) {
         return slice(start, length);
@@ -1361,6 +1683,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回从 begin 到 end（不含）的子数组视图，对应 subarray 语义。
+     *
+     * @param begin 参数说明。
+     * @param end 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array subarray(double begin, double end) {
         return subarray(toIndexD(begin, length), toIndexD(end, length));
@@ -1368,6 +1694,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回从 begin 到末尾的子数组视图，对应 subarray 语义。
+     *
+     * @param begin 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array subarray(double begin) {
         return subarray(begin, length);
@@ -1375,6 +1704,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回从 begin 到 end（不含）的子数组视图，对应 subarray 语义。
+     *
+     * @param begin 参数说明。
+     * @param end 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array subarray(int begin, int end) {
         int len = length;
@@ -1389,6 +1722,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回从 begin 到末尾的子数组视图，对应 subarray 语义。
+     *
+     * @param begin 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array subarray(int begin) {
         return subarray(begin, length);
@@ -1396,6 +1732,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回完整数组的子数组视图，对应 subarray 语义。
+     *
+     * @return 返回值说明。
      */
     public Uint8Array subarray() {
         return subarray(0, length);
@@ -1403,6 +1741,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回 [start, end) 区间的新数组（拷贝，不共享缓冲区），对应 slice 语义。
+     *
+     * @param start 参数说明。
+     * @param end 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array slice(int start, int end) {
         int len = length;
@@ -1420,6 +1762,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回从 start 到末尾的 slice 拷贝，对应 slice 语义。
+     *
+     * @param start 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array slice(int start) {
         return slice(start, length);
@@ -1427,6 +1772,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回完整数组的 slice 拷贝，对应 slice 语义。
+     *
+     * @return 返回值说明。
      */
     public Uint8Array slice() {
         return slice(0, length);
@@ -1434,6 +1781,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 原地反转元素顺序，返回数组本身，对应 reverse 语义。
+     *
+     * @return 返回值说明。
      */
     public Uint8Array reverse() {
         for (int i = 0, j = length - 1; i < j; i++, j--) {
@@ -1447,6 +1796,11 @@ public class Uint8Array implements IntArrayView {
     /**
      * 将 [start, end) 区间的元素复制到 target 起始处（覆盖式），
      * 负数索引从末尾倒数，对应 copyWithin 语义。
+     *
+     * @param target 参数说明。
+     * @param start 参数说明。
+     * @param end 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array copyWithin(double target, double start, double end) {
         return copyWithin(toIndexD(target, length), toIndexD(start, length), toIndexD(end, length));
@@ -1454,6 +1808,11 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 区间内复制元素，对应 copyWithin 语义。
+     *
+     * @param target 参数说明。
+     * @param start 参数说明。
+     * @param end 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array copyWithin(int target, int start, int end) {
         int len = length;
@@ -1478,6 +1837,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 区间内复制元素，对应 copyWithin 语义。
+     *
+     * @param target 参数说明。
+     * @param start 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array copyWithin(int target, int start) {
         return copyWithin(target, start, length);
@@ -1485,6 +1848,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 按给定比较器排序（原地修改并返回数组本身），对应 sort(compareFn) 语义。
+     *
+     * @param cmp 参数说明。
+     * @return 返回值说明。
      */
     public Uint8Array sort(Uint8ArrayComparator cmp) {
         Integer[] boxed = new Integer[length];
@@ -1501,6 +1867,8 @@ public class Uint8Array implements IntArrayView {
     /**
      * 按 ECMAScript 默认比较器（元素数字升序）排序，
      * 原地修改并返回数组本身，对应 sort 语义。
+     *
+     * @return 返回值说明。
      */
     public Uint8Array sort() {
         Integer[] boxed = new Integer[length];
@@ -1516,6 +1884,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回排序后的新数组（原数组不变），对应 toSorted 语义。
+     *
+     * @return 返回值说明。
      */
     public Uint8Array toSorted() {
         int[] copy = new int[length];
@@ -1529,6 +1899,8 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 返回反转后的新数组（原数组不变），对应 toReversed 语义。
+     *
+     * @return 返回值说明。
      */
     public Uint8Array toReversed() {
         int[] copy = new int[length];
@@ -1540,13 +1912,19 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 构造 Uint8Array（元素逐一 ToUint8 转换），对应 of 语义。
+     *
+     * @param values 参数说明。
+     * @return 返回值说明。
      */
-    public static Uint8Array of(int... values) {
+    public static Uint8Array of(int...values) {
         return new Uint8Array(values);
         }
 
     /**
      * 从既有 Uint8Array 拷贝构造，对应 from 语义。
+     *
+     * @param src 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(Uint8Array src) {
         int[] copy = new int[src.length];
@@ -1558,6 +1936,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从元素序列构造，对应 from(arrayLike) 语义。
+     *
+     * @param values 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(int[] values) {
         if (values == null) {
@@ -1568,6 +1949,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从整型列表映射构造，对应 from(arrayLike, mapFn) 语义。
+     *
+     * @param values 参数说明。
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(int[] values, Uint8ArrayMapper2 cb) {
         int[] copy = new int[values.length];
@@ -1579,6 +1964,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * from(Set, cb)：迭代 set 元素映射填充。
+     *
+     * @param values 参数说明。
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(java.util.Set<Integer> values, Uint8ArrayMapper2 cb) {
         int[] copy = new int[values.size()];
@@ -1592,6 +1981,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从数组或集合构造，对应 from 语义。
+     *
+     * @param values 参数说明。
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(java.util.List<Integer> values, Uint8ArrayMapper2 cb) {
         int[] copy = new int[values.size()];
@@ -1603,6 +1996,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 使用整型列表的元素填充本数组（从 offset 起，越界抛 RangeError）。
+     *
+     * @param src 参数说明。
+     * @param offset 参数说明。
+     * @return 返回值说明。
      */
     public Integer set(java.util.List<Integer> src, int offset) {
         if (src == null) {
@@ -1625,6 +2022,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 写入元素或批量填充，对应 set 语义。
+     *
+     * @param src 参数说明。
+     * @return 返回值说明。
      */
     public Integer set(java.util.List<Integer> src) {
         return set(src, 0);
@@ -1632,6 +2032,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从整型列表构造，对应 from(arrayLike) 语义。
+     *
+     * @param values 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(java.util.List<Integer> values) {
         int[] copy = new int[values.size()];
@@ -1643,6 +2046,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从整型集合构造，对应 from(arrayLike) 语义。
+     *
+     * @param values 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(java.util.Collection<Integer> values) {
         int[] copy = new int[values.size()];
@@ -1655,6 +2061,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从数组或集合构造，对应 from 语义。
+     *
+     * @param src 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(Int32Array src) {
         int[] copy = new int[src.length()];
@@ -1666,6 +2075,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从数组或集合构造，对应 from 语义。
+     *
+     * @param values 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(java.util.Set<Integer> values) {
         int[] copy = new int[values.size()];
@@ -1697,6 +2109,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从数组或集合构造，对应 from 语义。
+     *
+     * @param values 参数说明。
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(double[] values, Uint8ArrayDoubleMapper1 cb) {
         int[] copy = new int[values.length];
@@ -1708,6 +2124,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从数组或集合构造，对应 from 语义。
+     *
+     * @param values 参数说明。
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(double[] values, Uint8ArrayDoubleMapper2 cb) {
         int[] copy = new int[values.length];
@@ -1719,6 +2139,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从数组或集合构造，对应 from 语义。
+     *
+     * @param values 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8Array from(double[] values) {
         int[] copy = new int[values.length];
@@ -1730,8 +2153,11 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 从浮点元素序列构造（ToUint8 转换），对应 of 语义的 NaN/Infinity 场景。
+     *
+     * @param values 参数说明。
+     * @return 返回值说明。
      */
-    public static Uint8Array of(double... values) {
+    public static Uint8Array of(double...values) {
         int[] copy = new int[values.length];
         for (int i = 0; i < values.length; i++) {
             copy[i] = toUint8(values[i]);
@@ -1754,13 +2180,17 @@ public class Uint8Array implements IntArrayView {
 
         /**
          * Symbol.iterator 语义：返回迭代器自身。
+         *
+         * @return 返回值说明。
          */
-        public KeyIterator $_iterator() {
+        public KeyIterator iteratorSymbol() {
             return this;
             }
 
         /**
          * 返回迭代结果（value + done），对应迭代器 next() 语义。
+         *
+         * @return 返回值说明。
          */
         public IteratorResult next() {
             if (cursor >= length) {
@@ -1773,6 +2203,8 @@ public class Uint8Array implements IntArrayView {
         @Override
         /**
          * iterator 方法。
+         *
+         * @return 返回值说明。
          */
         public Iterator<Integer> iterator() {
             return new KeyCursor();
@@ -1786,6 +2218,8 @@ public class Uint8Array implements IntArrayView {
             @Override
             /**
              * hasNext 方法。
+             *
+             * @return 返回值说明。
              */
             public boolean hasNext() {
                 return cursor < length;
@@ -1794,6 +2228,8 @@ public class Uint8Array implements IntArrayView {
             @Override
             /**
              * next 方法。
+             *
+             * @return 返回值说明。
              */
             public Integer next() {
                 if (!hasNext()) {
@@ -1815,13 +2251,17 @@ public class Uint8Array implements IntArrayView {
 
         /**
          * Symbol.iterator 语义：返回迭代器自身。
+         *
+         * @return 返回值说明。
          */
-        public EntriesIterator $_iterator() {
+        public EntriesIterator iteratorSymbol() {
             return this;
             }
 
         /**
          * 返回迭代结果（[index, value] + done），对应迭代器 next() 语义。
+         *
+         * @return 返回值说明。
          */
         public EntryResult next() {
             if (cursor >= length) {
@@ -1834,6 +2274,8 @@ public class Uint8Array implements IntArrayView {
         @Override
         /**
          * iterator 方法。
+         *
+         * @return 返回值说明。
          */
         public Iterator<int[]> iterator() {
             return new EntryCursor();
@@ -1849,6 +2291,8 @@ public class Uint8Array implements IntArrayView {
             @Override
             /**
              * hasNext 方法。
+             *
+             * @return 返回值说明。
              */
             public boolean hasNext() {
                 return pos < length;
@@ -1857,6 +2301,8 @@ public class Uint8Array implements IntArrayView {
             @Override
             /**
              * next 方法。
+             *
+             * @return 返回值说明。
              */
             public int[] next() {
                 if (!hasNext()) {
@@ -2013,6 +2459,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 泛型累积器的 reduceRight（从右向左；独立方法名避免重载歧义）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public <T> T reduceRightGeneric(Uint8ArrayGenericReducer<T> cb, T initial) {
         if (cb == null) {
@@ -2027,6 +2477,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 布尔累计的 reduceRight（从右向左；如 prev || curr > 0）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public boolean reduceRight(Int16BooleanReducer cb, boolean initial) {
         if (cb == null) {
@@ -2041,6 +2495,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 布尔累计的 reduce（如 prev && curr > 0）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public boolean reduce(Int16BooleanReducer cb, boolean initial) {
         if (cb == null) {
@@ -2077,6 +2535,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * long 累计的 reduce（大数 seed 不截断；独立方法名避免重载歧义）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public long reduceLong(Int16LongReducer cb, long initial) {
         if (cb == null) {
@@ -2091,6 +2553,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * reduceLong 方法。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public long reduceLong(Int16LongReducer cb) {
         if (length == 0) {
@@ -2105,6 +2570,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * reduceRightLong 方法。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public long reduceRightLong(Int16LongReducer cb, long initial) {
         if (cb == null) {
@@ -2130,6 +2599,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * List 累计的 reduceRight（从右向左收集元素；独立方法名避免重载歧义）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public java.util.List<Integer> reduceRightList(Int16ListReducer cb, java.util.List<Integer> initial) {
         if (cb == null) {
@@ -2144,6 +2617,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * List 累计的 reduce（从左向右收集元素）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public java.util.List<Integer> reduceList(Int16ListReducer cb, java.util.List<Integer> initial) {
         if (cb == null) {
@@ -2169,6 +2646,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * double 累计的 reduce（小数/Infinity/NaN seed 不截断；独立方法名避免重载歧义）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public double reduceDouble(Int16DoubleReducer cb, double initial) {
         if (cb == null) {
@@ -2183,6 +2664,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * reduceDouble 方法。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public double reduceDouble(Int16DoubleReducer cb) {
         if (length == 0) {
@@ -2197,6 +2681,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * reduceRightDouble 方法。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public double reduceRightDouble(Int16DoubleReducer cb, double initial) {
         if (cb == null) {
@@ -2211,6 +2699,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * reduceRightDouble 方法。
+     *
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public double reduceRightDouble(Int16DoubleReducer cb) {
         if (length == 0) {
@@ -2225,6 +2716,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 字符串累计的 reduce（如 join 式拼接）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public String reduce(Int16StringReducer cb, String initial) {
         if (cb == null) {
@@ -2239,6 +2734,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 字符串累计的 reduceRight（如 join 式拼接）。
+     *
+     * @param cb 参数说明。
+     * @param initial 参数说明。
+     * @return 返回值说明。
      */
     public String reduceRight(Int16StringReducer cb, String initial) {
         if (cb == null) {
@@ -2286,6 +2785,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 下标换算（double 版）：NaN 归 0、±Infinity 收敛到端点。
+     *
+     * @param index 参数说明。
+     * @param len 参数说明。
+     * @return 返回值说明。
      */
     private static int toIndexD(double index, int len) {
         if (Double.isNaN(index)) {
@@ -2302,6 +2805,10 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * 下标换算：负数从末尾倒数、越界收敛到 [0, len]，NaN 归 0。
+     *
+     * @param index 参数说明。
+     * @param len 参数说明。
+     * @return 返回值说明。
      */
     private static int toIndex(int index, int len) {
         int i = index;
@@ -2319,6 +2826,9 @@ public class Uint8Array implements IntArrayView {
 
     /**
      * ToUint8：NaN/Infinity 归 0，小数向零截断，越界 8 位环绕。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     static int toUint8(double value) {
         if (Double.isNaN(value)) {
@@ -2327,7 +2837,7 @@ public class Uint8Array implements IntArrayView {
         if (Double.isInfinite(value)) {
             return 0;
             }
-        if (value == 0.0) {
+        if (Double.compare(value, 0.0) == 0) {
             return 0;
             }
         double m = value % 256.0;   // 超大值先浮点取模（JS ToUint8 语义）

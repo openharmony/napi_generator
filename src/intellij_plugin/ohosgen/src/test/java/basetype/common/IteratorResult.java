@@ -22,7 +22,14 @@ package basetype.common;
  */
 public class IteratorResult {
 
+    /**
+     * value 字段。
+     */
     public final Integer value;
+
+    /**
+     * done 字段。
+     */
     public final boolean done;
 
     public IteratorResult(Integer value, boolean done) {

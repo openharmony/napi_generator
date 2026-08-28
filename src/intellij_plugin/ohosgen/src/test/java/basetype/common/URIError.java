@@ -28,6 +28,8 @@ public class URIError extends RuntimeException {
 
     /**
      * ECMAScript URIError.name。
+     *
+     * @return 返回值说明。
      */
     public String name() {
         return "URIError";

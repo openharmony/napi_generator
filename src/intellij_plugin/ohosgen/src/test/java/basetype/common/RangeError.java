@@ -32,6 +32,8 @@ public class RangeError extends RuntimeException {
 
     /**
      * ECMAScript RangeError.name。
+     *
+     * @return 返回值说明。
      */
     public String name() {
         return "RangeError";

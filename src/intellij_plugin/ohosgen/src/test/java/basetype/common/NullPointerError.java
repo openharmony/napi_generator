@@ -28,6 +28,8 @@ public class NullPointerError extends RuntimeException {
 
     /**
      * ETS NullPointerError.name。
+     *
+     * @return 返回值说明。
      */
     public String name() {
         return "NullPointerError";

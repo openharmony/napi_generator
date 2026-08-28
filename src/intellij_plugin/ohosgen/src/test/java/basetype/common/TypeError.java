@@ -32,6 +32,8 @@ public class TypeError extends RuntimeException {
 
     /**
      * ECMAScript TypeError.name。
+     *
+     * @return 返回值说明。
      */
     public String name() {
         return "TypeError";
