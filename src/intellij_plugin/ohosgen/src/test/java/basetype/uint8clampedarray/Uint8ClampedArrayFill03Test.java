@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayFill03Test extends BasTest {
     /**
+     * Verify fill element at arr[0] equals 10 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_0100
      * @tc.name testUint8ClampedArrayFillThree001
      * @tc.desc Verify fill element at arr[0] equals 10 for array [1, 2, 3, 4]
@@ -44,7 +45,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(10, arr.get(0));
     assertEqual(10, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 50 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_0200
      * @tc.name testUint8ClampedArrayFillThree002
      * @tc.desc Verify fill element at arr[0] equals 50 for array [1, 2, 3, 4]
@@ -60,7 +63,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(50, arr.get(0));
     assertEqual(50, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_0300
      * @tc.name testUint8ClampedArrayFillThree003
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -78,7 +83,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(7, arr.get(1));
     assertEqual(7, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_0400
      * @tc.name testUint8ClampedArrayFillThree004
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -95,7 +102,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(77, arr.get(1));
     assertEqual(77, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_0500
      * @tc.name testUint8ClampedArrayFillThree005
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -114,7 +123,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(9, arr.get(2));
     assertEqual(4, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_0600
      * @tc.name testUint8ClampedArrayFillThree006
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -132,7 +143,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(88, arr.get(2));
     assertEqual(4, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 100 for length-3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_0700
      * @tc.name testUint8ClampedArrayFillThree007
      * @tc.desc Verify fill element at arr[0] equals 100 for length-3 array
@@ -150,7 +163,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(100, arr.get(1));
     assertEqual(100, arr.get(2));
     }
+
     /**
+     * Verify fill element at a[0] equals b[0] for length-3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_0800
      * @tc.name testUint8ClampedArrayFillThree008
      * @tc.desc Verify fill element at a[0] equals b[0] for length-3 array
@@ -173,7 +188,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(42, a.get(1));
     assertEqual(42, a.get(2));
     }
+
     /**
+     * Verify fill element at a[0] equals b[0] for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_0900
      * @tc.name testUint8ClampedArrayFillThree009
      * @tc.desc Verify fill element at a[0] equals b[0] for array [1, 2, 3]
@@ -196,7 +213,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(0, a.get(1));
     assertEqual(0, a.get(2));
     }
+
     /**
+     * Verify fill element at a[0] equals b[0] for length-2 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_1000
      * @tc.name testUint8ClampedArrayFillThree010
      * @tc.desc Verify fill element at a[0] equals b[0] for length-2 array
@@ -215,7 +234,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(b.get(0), a.get(0));
     assertEqual(b.get(1), a.get(1));
     }
+
     /**
+     * Verify number byte fill round (5.7 -> 6)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_1100
      * @tc.name testUint8ClampedArrayFillThree011
      * @tc.desc Verify number byte fill round (5.7 -> 6)
@@ -234,7 +255,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(5, a.get(0));
     assertEqual(6, b.get(0));
     }
+
     /**
+     * Verify fill element at a[1] equals b[1] for array [10, 20, 30, 40]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_1200
      * @tc.name testUint8ClampedArrayFillThree012
      * @tc.desc Verify fill element at a[1] equals b[1] for array [10, 20, 30, 40]
@@ -254,7 +277,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(b.get(2), a.get(2));
     assertEqual(b.get(3), a.get(3));
     }
+
     /**
+     * Verify fill element at a[0] equals b[0] for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_1300
      * @tc.name testUint8ClampedArrayFillThree013
      * @tc.desc Verify fill element at a[0] equals b[0] for array [1, 2, 3, 4]
@@ -273,7 +298,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(b.get(0), a.get(0));
     assertEqual(b.get(3), a.get(3));
     }
+
     /**
+     * Verify fill(byte) on length-3 array fills all elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_1400
      * @tc.name testUint8ClampedArrayFillThree014
      * @tc.desc Verify fill(byte) on length-3 array fills all elements
@@ -290,7 +317,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(8, arr.get(0));
     assertEqual(8, arr.get(2));
     }
+
     /**
+     * Verify fill(number) on length-3 array fills all elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_1500
      * @tc.name testUint8ClampedArrayFillThree015
      * @tc.desc Verify fill(number) on length-3 array fills all elements
@@ -306,7 +335,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(80, arr.get(0));
     assertEqual(80, arr.get(2));
     }
+
     /**
+     * Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_1600
      * @tc.name testUint8ClampedArrayFillThree016
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -325,7 +356,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(6, arr.get(2));
     assertEqual(6, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_1700
      * @tc.name testUint8ClampedArrayFillThree017
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -342,7 +375,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(66, arr.get(2));
     assertEqual(66, arr.get(3));
     }
+
     /**
+     * Verify fill element at a[0] equals b[0] for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_1800
      * @tc.name testUint8ClampedArrayFillThree018
      * @tc.desc Verify fill element at a[0] equals b[0] for array [1, 2, 3]
@@ -362,7 +397,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(b.get(1), a.get(1));
     assertEqual(b.get(2), a.get(2));
     }
+
     /**
+     * Verify fill yields length before for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_1900
      * @tc.name testUint8ClampedArrayFillThree019
      * @tc.desc Verify fill yields length before for array [1, 2, 3, 4]
@@ -378,7 +415,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(99, 1, 3);
     assertEqual(before, arr.length());
     }
+
     /**
+     * Verify fill yields byteLength before for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_2000
      * @tc.name testUint8ClampedArrayFillThree020
      * @tc.desc Verify fill yields byteLength before for array [1, 2, 3, 4]
@@ -394,7 +433,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(50);
     assertEqual(before, arr.byteLength());
     }
+
     /**
+     * Verify fill buffer reference matches for array new ArrayBuffer(4)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_2100
      * @tc.name testUint8ClampedArrayFillThree021
      * @tc.desc Verify fill buffer reference matches for array new ArrayBuffer(4)
@@ -410,7 +451,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(7);
     assertEqual(bufBefore, arr.buffer());
     }
+
     /**
+     * Verify fill yields byteOffset offsetBefore for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_2200
      * @tc.name testUint8ClampedArrayFillThree022
      * @tc.desc Verify fill yields byteOffset offsetBefore for ArrayBuffer-backed array
@@ -427,7 +470,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(11);
     assertEqual(offsetBefore, arr.byteOffset());
     }
+
     /**
+     * Verify fill yields BYTES_PER_ELEMENT 1 for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_2300
      * @tc.name testUint8ClampedArrayFillThree023
      * @tc.desc Verify fill yields BYTES_PER_ELEMENT 1 for array [1, 2, 3]
@@ -442,7 +487,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(5);
     assertEqual(1, arr.BYTES_PER_ELEMENT);
     }
+
     /**
+     * Verify fill ref1 equals ref2 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_2400
      * @tc.name testUint8ClampedArrayFillThree024
      * @tc.desc Verify fill ref1 equals ref2 for array [1, 2, 3, 4]
@@ -459,7 +506,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(ref2, ref1);
     assertEqual(arr, ref2);
     }
+
     /**
+     * Verify fill element at arr[0] equals 20 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_2500
      * @tc.name testUint8ClampedArrayFillThree025
      * @tc.desc Verify fill element at arr[0] equals 20 for array [1, 2, 3, 4]
@@ -476,7 +525,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(20, arr.get(0));
     assertEqual(20, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 5 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_2600
      * @tc.name testUint8ClampedArrayFillThree026
      * @tc.desc Verify fill element at arr[0] equals 5 for array [1, 2, 3, 4]
@@ -495,7 +546,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(5, arr.get(2));
     assertEqual(5, arr.get(3));
     }
+
     /**
+     * Verify fill ret equals arr for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_2700
      * @tc.name testUint8ClampedArrayFillThree027
      * @tc.desc Verify fill ret equals arr for array [1, 2, 3]
@@ -511,7 +564,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     Uint8ClampedArray ret = arr.fill(v);
     assertEqual(arr, ret);
     }
+
     /**
+     * Verify fill ret equals arr for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_2800
      * @tc.name testUint8ClampedArrayFillThree028
      * @tc.desc Verify fill ret equals arr for array [1, 2, 3]
@@ -526,7 +581,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     Uint8ClampedArray ret = arr.fill(50);
     assertEqual(arr, ret);
     }
+
     /**
+     * Verify fill retA equals a for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_2900
      * @tc.name testUint8ClampedArrayFillThree029
      * @tc.desc Verify fill retA equals a for array [1, 2, 3]
@@ -545,7 +602,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(a, retA);
     assertEqual(b, retB);
     }
+
     /**
+     * Verify fill yields length 4 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3000
      * @tc.name testUint8ClampedArrayFillThree030
      * @tc.desc Verify fill yields length 4 for array [1, 2, 3, 4]
@@ -561,7 +620,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     Uint8ClampedArray ret = arr.fill(v).fill(v, 1).fill(v, 2, 3);
     assertEqual(4, ret.length());
     }
+
     /**
+     * Verify fill yields length 4 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3100
      * @tc.name testUint8ClampedArrayFillThree031
      * @tc.desc Verify fill yields length 4 for array [1, 2, 3, 4]
@@ -576,7 +637,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     Uint8ClampedArray ret = arr.fill(70).fill(71, 1).fill(72, 2, 3);
     assertEqual(4, ret.length());
     }
+
     /**
+     * Verify fill byte then number returns this
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3200
      * @tc.name testUint8ClampedArrayFillThree032
      * @tc.desc Verify fill byte then number returns this
@@ -592,7 +655,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     Uint8ClampedArray ret = arr.fill(v).fill(99);
     assertEqual(arr, ret);
     }
+
     /**
+     * Verify fill byte then number overwrites all elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3300
      * @tc.name testUint8ClampedArrayFillThree033
      * @tc.desc Verify fill byte then number overwrites all elements
@@ -609,7 +674,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(99, arr.get(0));
     assertEqual(99, arr.get(3));
     }
+
     /**
+     * Verify fill arr.toString() equals '8,8,8' for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3400
      * @tc.name testUint8ClampedArrayFillThree034
      * @tc.desc Verify fill arr.toString() equals '8,8,8' for array [1, 2, 3]
@@ -624,7 +691,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(8);
     assertEqual("8,8,8", String.valueOf(arr));
     }
+
     /**
+     * Verify fill a.toString() equals b.toString() for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3500
      * @tc.name testUint8ClampedArrayFillThree035
      * @tc.desc Verify fill a.toString() equals b.toString() for array [1, 2, 3]
@@ -642,7 +711,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     b.fill(8);
     assertEqual(String.valueOf(b), String.valueOf(a));
     }
+
     /**
+     * Verify fill arr.join('|') equals '5|5|5' for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3600
      * @tc.name testUint8ClampedArrayFillThree036
      * @tc.desc Verify fill arr.join('|') equals '5|5|5' for array [1, 2, 3]
@@ -658,7 +729,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(v);
     assertEqual("5|5|5", arr.join("|"));
     }
+
     /**
+     * Verify fill a.join(',') equals b.join(',') for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3700
      * @tc.name testUint8ClampedArrayFillThree037
      * @tc.desc Verify fill a.join(',') equals b.join(',') for array [1, 2, 3]
@@ -676,7 +749,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     b.fill(5);
     assertEqual(b.join(","), a.join(","));
     }
+
     /**
+     * Verify fill element at arr[0] equals arr.$_get(0) for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3800
      * @tc.name testUint8ClampedArrayFillThree038
      * @tc.desc Verify fill element at arr[0] equals arr.$_get(0) for array [1, 2, 3]
@@ -694,7 +769,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(arr.get(1), arr.get(1));
     assertEqual(arr.get(2), arr.get(2));
     }
+
     /**
+     * Verify subarray element at sub[0] equals 9 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3900
      * @tc.name testUint8ClampedArrayFillThree039
      * @tc.desc Verify subarray element at sub[0] equals 9 for array [1, 2, 3, 4]
@@ -711,7 +788,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(9, sub.get(0));
     assertEqual(9, sub.get(1));
     }
+
     /**
+     * Verify subarray element at parent[1] equals 7 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_4000
      * @tc.name testUint8ClampedArrayFillThree040
      * @tc.desc Verify subarray element at parent[1] equals 7 for array [1, 2, 3, 4]
@@ -730,7 +809,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(1, parent.get(0));
     assertEqual(4, parent.get(3));
     }
+
     /**
+     * Verify fill element at secondView[0] equals 5 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_4100
      * @tc.name testUint8ClampedArrayFillThree041
      * @tc.desc Verify fill element at secondView[0] equals 5 for ArrayBuffer-backed array
@@ -748,7 +829,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(5, secondView.get(0));
     assertEqual(5, secondView.get(3));
     }
+
     /**
+     * Verify fill buffer reference matches for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_4200
      * @tc.name testUint8ClampedArrayFillThree042
      * @tc.desc Verify fill buffer reference matches for ArrayBuffer-backed array
@@ -765,7 +848,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     firstView.fill(5);
     assertEqual(secondView.buffer(), firstView.buffer());
     }
+
     /**
+     * Verify subarray buffer reference matches for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_4300
      * @tc.name testUint8ClampedArrayFillThree043
      * @tc.desc Verify subarray buffer reference matches for array [1, 2, 3, 4]
@@ -781,7 +866,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     parent.fill(8);
     assertEqual(parent.buffer(), sub.buffer());
     }
+
     /**
+     * Verify slice element at cp[0] equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_4400
      * @tc.name testUint8ClampedArrayFillThree044
      * @tc.desc Verify slice element at cp[0] equals 1 for array [1, 2, 3, 4]
@@ -798,7 +885,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(1, cp.get(0));
     assertEqual(2, cp.get(1));
     }
+
     /**
+     * Verify slice result shares no buffer with parent after fill
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_4500
      * @tc.name testUint8ClampedArrayFillThree045
      * @tc.desc Verify slice result shares no buffer with parent after fill
@@ -814,7 +903,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     parent.fill(99);
     assertNotEqual(parent.buffer(), cp.buffer());
     }
+
     /**
+     * Verify fill element at full[0] equals 0 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_4600
      * @tc.name testUint8ClampedArrayFillThree046
      * @tc.desc Verify fill element at full[0] equals 0 for ArrayBuffer-backed array
@@ -836,7 +927,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(0, full.get(4));
     assertEqual(0, full.get(5));
     }
+
     /**
+     * Verify slice yields byteOffset offBefore for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_4700
      * @tc.name testUint8ClampedArrayFillThree047
      * @tc.desc Verify slice yields byteOffset offBefore for array [1, 2, 3, 4]
@@ -853,7 +946,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     parent.fill(1);
     assertEqual(offBefore, cp.byteOffset());
     }
+
     /**
+     * Verify fill element at a[0] equals 127 for length-2 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_4800
      * @tc.name testUint8ClampedArrayFillThree048
      * @tc.desc Verify fill element at a[0] equals 127 for length-2 array
@@ -872,7 +967,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(127, a.get(0));
     assertEqual(255, b.get(0));
     }
+
     /**
+     * Verify fill element at arr[0] equals 0 for array [10, 20, 30]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_4900
      * @tc.name testUint8ClampedArrayFillThree049
      * @tc.desc Verify fill element at arr[0] equals 0 for array [10, 20, 30]
@@ -889,7 +986,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(0, arr.get(1));
     assertEqual(0, arr.get(2));
     }
+
     /**
+     * Verify number fill(POSITIVE_INFINITY) 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_5000
      * @tc.name testUint8ClampedArrayFillThree050
      * @tc.desc Verify number fill(POSITIVE_INFINITY) 255
@@ -905,7 +1004,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(255, arr.get(0));
     assertEqual(255, arr.get(2));
     }
+
     /**
+     * Verify number fill(-POSITIVE_INFINITY) 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_5100
      * @tc.name testUint8ClampedArrayFillThree051
      * @tc.desc Verify number fill(-POSITIVE_INFINITY) 0
@@ -921,7 +1022,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(0, arr.get(0));
     assertEqual(0, arr.get(2));
     }
+
     /**
+     * Verify number fill(0.5) 0 (half-even)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_5200
      * @tc.name testUint8ClampedArrayFillThree052
      * @tc.desc Verify number fill(0.5) 0 (half-even)
@@ -937,7 +1040,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(0, arr.get(0));
     assertEqual(0, arr.get(1));
     }
+
     /**
+     * Verify number fill(1.5) 2 (half-even)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_5300
      * @tc.name testUint8ClampedArrayFillThree053
      * @tc.desc Verify number fill(1.5) 2 (half-even)
@@ -953,7 +1058,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(2, arr.get(0));
     assertEqual(2, arr.get(1));
     }
+
     /**
+     * Verify number fill(2.5) 2 (half-even)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_5400
      * @tc.name testUint8ClampedArrayFillThree054
      * @tc.desc Verify number fill(2.5) 2 (half-even)
@@ -969,7 +1076,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(2, arr.get(0));
     assertEqual(2, arr.get(1));
     }
+
     /**
+     * Verify fill element at arr[0] equals 0 for length-3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_5500
      * @tc.name testUint8ClampedArrayFillThree055
      * @tc.desc Verify fill element at arr[0] equals 0 for length-3 array
@@ -985,7 +1094,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(0, arr.get(0));
     assertEqual(0, arr.get(2));
     }
+
     /**
+     * Verify fill element at arr[0] equals 0 for array [5, 5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_5600
      * @tc.name testUint8ClampedArrayFillThree056
      * @tc.desc Verify fill element at arr[0] equals 0 for array [5, 5]
@@ -1001,7 +1112,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(0, arr.get(0));
     assertEqual(0, arr.get(1));
     }
+
     /**
+     * Verify fill element at arr[0] equals 255 for length-2 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_5700
      * @tc.name testUint8ClampedArrayFillThree057
      * @tc.desc Verify fill element at arr[0] equals 255 for length-2 array
@@ -1017,7 +1130,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(255, arr.get(0));
     assertEqual(255, arr.get(1));
     }
+
     /**
+     * Verify fill element at arr[0] equals 0 for length-2 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_5800
      * @tc.name testUint8ClampedArrayFillThree058
      * @tc.desc Verify fill element at arr[0] equals 0 for length-2 array
@@ -1033,7 +1148,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(0, arr.get(0));
     assertEqual(0, arr.get(1));
     }
+
     /**
+     * Verify number fill(256, 1, 3) clamp
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_5900
      * @tc.name testUint8ClampedArrayFillThree059
      * @tc.desc Verify number fill(256, 1, 3) clamp
@@ -1051,7 +1168,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(255, arr.get(2));
     assertEqual(40, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 0 for array [10, 20, 30, 40]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_6000
      * @tc.name testUint8ClampedArrayFillThree060
      * @tc.desc Verify fill element at arr[0] equals 0 for array [10, 20, 30, 40]
@@ -1069,7 +1188,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(30, arr.get(2));
     assertEqual(40, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 10 for array [10, 20, 30, 40]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_6100
      * @tc.name testUint8ClampedArrayFillThree061
      * @tc.desc Verify fill element at arr[0] equals 10 for array [10, 20, 30, 40]
@@ -1086,7 +1207,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(0, arr.get(1));
     assertEqual(0, arr.get(3));
     }
+
     /**
+     * Verify number fill(255.4) 255 clamp
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_6200
      * @tc.name testUint8ClampedArrayFillThree062
      * @tc.desc Verify number fill(255.4) 255 clamp
@@ -1102,7 +1225,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(255, arr.get(0));
     assertEqual(255, arr.get(1));
     }
+
     /**
+     * Verify number fill(255.6) 255 clamp
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_6300
      * @tc.name testUint8ClampedArrayFillThree063
      * @tc.desc Verify number fill(255.6) 255 clamp
@@ -1118,7 +1243,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(255, arr.get(0));
     assertEqual(255, arr.get(1));
     }
+
     /**
+     * Verify number fill(254.5) 254 (half-even)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_6400
      * @tc.name testUint8ClampedArrayFillThree064
      * @tc.desc Verify number fill(254.5) 254 (half-even)
@@ -1134,7 +1261,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(254, arr.get(0));
     assertEqual(254, arr.get(1));
     }
+
     /**
+     * Verify fill element at a[0] equals b[0] for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_6500
      * @tc.name testUint8ClampedArrayFillThree065
      * @tc.desc Verify fill element at a[0] equals b[0] for array [1, 2, 3, 4]
@@ -1155,7 +1284,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(b.get(2), a.get(2));
     assertEqual(b.get(3), a.get(3));
     }
+
     /**
+     * Verify fill element at a[0] equals b[0] for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_6600
      * @tc.name testUint8ClampedArrayFillThree066
      * @tc.desc Verify fill element at a[0] equals b[0] for array [1, 2, 3, 4]
@@ -1173,7 +1304,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(b.get(0), a.get(0));
     assertEqual(b.get(3), a.get(3));
     }
+
     /**
+     * Verify fill element at a[0] equals b[0] for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_6700
      * @tc.name testUint8ClampedArrayFillThree067
      * @tc.desc Verify fill element at a[0] equals b[0] for array [1, 2, 3, 4]
@@ -1193,7 +1326,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(b.get(2), a.get(2));
     assertEqual(b.get(3), a.get(3));
     }
+
     /**
+     * Verify fill element at a[0] equals b[0] for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_6800
      * @tc.name testUint8ClampedArrayFillThree068
      * @tc.desc Verify fill element at a[0] equals b[0] for array [1, 2, 3, 4]
@@ -1211,7 +1346,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(b.get(0), a.get(0));
     assertEqual(b.get(3), a.get(3));
     }
+
     /**
+     * Verify byte and number fill with negative start end equal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_6900
      * @tc.name testUint8ClampedArrayFillThree069
      * @tc.desc Verify byte and number fill with negative start end equal
@@ -1232,7 +1369,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(b.get(2), a.get(2));
     assertEqual(b.get(3), a.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_7000
      * @tc.name testUint8ClampedArrayFillThree070
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -1251,7 +1390,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(3, arr.get(2));
     assertEqual(4, arr.get(3));
     }
+
     /**
+     * Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_7100
      * @tc.name testUint8ClampedArrayFillThree071
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -1270,7 +1411,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(3, arr.get(2));
     assertEqual(4, arr.get(3));
     }
+
     /**
+     * Verify fill ret equals arr for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_7200
      * @tc.name testUint8ClampedArrayFillThree072
      * @tc.desc Verify fill ret equals arr for array [1, 2, 3]
@@ -1286,7 +1429,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     Uint8ClampedArray ret = arr.fill(v, 2, 1);
     assertEqual(arr, ret);
     }
+
     /**
+     * Verify fill element at a[0] equals b[0] for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_7300
      * @tc.name testUint8ClampedArrayFillThree073
      * @tc.desc Verify fill element at a[0] equals b[0] for array [1, 2, 3]
@@ -1306,7 +1451,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(b.get(1), a.get(1));
     assertEqual(b.get(2), a.get(2));
     }
+
     /**
+     * Verify fill ret equals arr for empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_7400
      * @tc.name testUint8ClampedArrayFillThree074
      * @tc.desc Verify fill ret equals arr for empty array
@@ -1322,7 +1469,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     Uint8ClampedArray ret = arr.fill(v);
     assertEqual(arr, ret);
     }
+
     /**
+     * Verify fill yields length 0 for empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_7500
      * @tc.name testUint8ClampedArrayFillThree075
      * @tc.desc Verify fill yields length 0 for empty array
@@ -1338,7 +1487,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(v);
     assertEqual(0, arr.length());
     }
+
     /**
+     * Verify fill yields length retB.length for empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_7600
      * @tc.name testUint8ClampedArrayFillThree076
      * @tc.desc Verify fill yields length retB.length for empty array
@@ -1358,7 +1509,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(a, retA);
     assertEqual(b, retB);
     }
+
     /**
+     * Verify fill ret equals arr for empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_7700
      * @tc.name testUint8ClampedArrayFillThree077
      * @tc.desc Verify fill ret equals arr for empty array
@@ -1374,7 +1527,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(arr, ret);
     assertEqual(0, ret.length());
     }
+
     /**
+     * Verify fill ret equals arr for empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_7800
      * @tc.name testUint8ClampedArrayFillThree078
      * @tc.desc Verify fill ret equals arr for empty array
@@ -1391,7 +1546,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(arr, ret);
     assertEqual(0, ret.length());
     }
+
     /**
+     * Verify fill element at full[0] equals 100 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_7900
      * @tc.name testUint8ClampedArrayFillThree079
      * @tc.desc Verify fill element at full[0] equals 100 for ArrayBuffer-backed array
@@ -1412,7 +1569,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(100, full.get(0));
     assertEqual(200, full.get(5));
     }
+
     /**
+     * Verify slice element at cp[0] equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_8000
      * @tc.name testUint8ClampedArrayFillThree080
      * @tc.desc Verify slice element at cp[0] equals 1 for array [1, 2, 3, 4]
@@ -1432,7 +1591,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(3, cp.get(2));
     assertEqual(4, cp.get(3));
     }
+
     /**
+     * Verify fill element at arr[50] equals 127 for length-100 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_8100
      * @tc.name testUint8ClampedArrayFillThree081
      * @tc.desc Verify fill element at arr[50] equals 127 for length-100 array
@@ -1448,7 +1609,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(v);
     assertEqual(127, arr.get(50));
     }
+
     /**
+     * Verify fill element at arr[50] equals 0 for length-100 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_8200
      * @tc.name testUint8ClampedArrayFillThree082
      * @tc.desc Verify fill element at arr[50] equals 0 for length-100 array
@@ -1464,7 +1627,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(v);
     assertEqual(0, arr.get(50));
     }
+
     /**
+     * Verify fill element at arr[3] equals 6 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_8300
      * @tc.name testUint8ClampedArrayFillThree083
      * @tc.desc Verify fill element at arr[3] equals 6 for ArrayBuffer-backed array
@@ -1481,7 +1646,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(v);
     assertEqual(6, arr.get(3));
     }
+
     /**
+     * Verify fill element at all[2] equals 0 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_8400
      * @tc.name testUint8ClampedArrayFillThree084
      * @tc.desc Verify fill element at all[2] equals 0 for ArrayBuffer-backed array
@@ -1499,7 +1666,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     Uint8ClampedArray all = new Uint8ClampedArray(buf);
     assertEqual(0, all.get(2));
     }
+
     /**
+     * Verify fill arr.$_get(0) equals 42 for array [0, 0]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_8500
      * @tc.name testUint8ClampedArrayFillThree085
      * @tc.desc Verify fill arr.$_get(0) equals 42 for array [0, 0]
@@ -1515,7 +1684,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(42, arr.get(0));
     assertEqual(42, arr.get(1));
     }
+
     /**
+     * Verify fill element at arr[0] equals 123 for length-1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_8600
      * @tc.name testUint8ClampedArrayFillThree086
      * @tc.desc Verify fill element at arr[0] equals 123 for length-1 array
@@ -1530,7 +1701,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     arr.fill(123.0);
     assertEqual(123, arr.get(0));
     }
+
     /**
+     * Verify fill element at arr[0] equals 77 for length-2 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_8700
      * @tc.name testUint8ClampedArrayFillThree087
      * @tc.desc Verify fill element at arr[0] equals 77 for length-2 array
@@ -1546,7 +1719,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(77, arr.get(0));
     assertEqual(77, arr.get(1));
     }
+
     /**
+     * Verify fill element at arr[0] equals 5 for length-10 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_8800
      * @tc.name testUint8ClampedArrayFillThree088
      * @tc.desc Verify fill element at arr[0] equals 5 for length-10 array
@@ -1562,7 +1737,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(5, arr.get(0));
     assertEqual(5, arr.get(9));
     }
+
     /**
+     * Verify fill element at arr[0] equals 200 for length-256 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_8900
      * @tc.name testUint8ClampedArrayFillThree089
      * @tc.desc Verify fill element at arr[0] equals 200 for length-256 array
@@ -1579,7 +1756,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(200, arr.get(255));
     assertEqual(256, arr.length());
     }
+
     /**
+     * Verify fill element at arr[0] equals 150 for length-1024 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_9000
      * @tc.name testUint8ClampedArrayFillThree090
      * @tc.desc Verify fill element at arr[0] equals 150 for length-1024 array
@@ -1595,7 +1774,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(150, arr.get(0));
     assertEqual(150, arr.get(1023));
     }
+
     /**
+     * Verify fill element at arr[0] equals 255 for length-65535 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_9100
      * @tc.name testUint8ClampedArrayFillThree091
      * @tc.desc Verify fill element at arr[0] equals 255 for length-65535 array
@@ -1611,7 +1792,9 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     assertEqual(255, arr.get(0));
     assertEqual(255, arr.get(65534));
     }
+
     /**
+     * Verify fill number in range 100..200 of length-1000 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_9200
      * @tc.name testUint8ClampedArrayFillThree092
      * @tc.desc Verify fill number in range 100..200 of length-1000 array
