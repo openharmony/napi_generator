@@ -34,6 +34,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayConstructor06Test extends BasTest {
     /**
+     * Verify constructing empty array yields length b.length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_0100
      * @tc.name testUint8ClampedArrayConstructorSix001
      * @tc.desc Verify constructing empty array yields length b.length
@@ -49,7 +50,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(0, a.length());
     assertEqual(0, b.length());
     }
+
     /**
+     * Verify constructing empty array yields byteLength b.byteLength
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_0200
      * @tc.name testUint8ClampedArrayConstructorSix002
      * @tc.desc Verify constructing empty array yields byteLength b.byteLength
@@ -65,7 +68,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(0, a.byteLength());
     assertEqual(0, b.byteLength());
     }
+
     /**
+     * Verify constructing empty array yields byteOffset b.byteOffset
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_0300
      * @tc.name testUint8ClampedArrayConstructorSix003
      * @tc.desc Verify constructing empty array yields byteOffset b.byteOffset
@@ -81,7 +86,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(0, a.byteOffset());
     assertEqual(0, b.byteOffset());
     }
+
     /**
+     * Verify constructing empty array yields length b.length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_0400
      * @tc.name testUint8ClampedArrayConstructorSix004
      * @tc.desc Verify constructing empty array yields length b.length
@@ -98,7 +105,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(0, a.length());
     assertEqual(0, b.length());
     }
+
     /**
+     * Verify constructing empty array yields length b.length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_0500
      * @tc.name testUint8ClampedArrayConstructorSix005
      * @tc.desc Verify constructing empty array yields length b.length
@@ -114,7 +123,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(0, a.length());
     assertEqual(0, b.length());
     }
+
     /**
+     * Verify length(int)=3 vs ArrayBuffer+offset length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_0600
      * @tc.name testUint8ClampedArrayConstructorSix006
      * @tc.desc Verify length(int)=3 vs ArrayBuffer+offset length
@@ -131,7 +142,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(3, a.length());
     assertEqual(3, b.length());
     }
+
     /**
+     * Verify constructing ArrayBuffer-backed array yields length b.length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_0700
      * @tc.name testUint8ClampedArrayConstructorSix007
      * @tc.desc Verify constructing ArrayBuffer-backed array yields length b.length
@@ -148,7 +161,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(3, a.length());
     assertEqual(3, b.length());
     }
+
     /**
+     * Verify length=0 vs byteOffset=byteLength
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_0800
      * @tc.name testUint8ClampedArrayConstructorSix008
      * @tc.desc Verify length=0 vs byteOffset=byteLength
@@ -165,7 +180,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(0, a.length());
     assertEqual(0, b.length());
     }
+
     /**
+     * Verify constructor element [0] equals 0 for length-5 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_0900
      * @tc.name testUint8ClampedArrayConstructorSix009
      * @tc.desc Verify constructor element [0] equals 0 for length-5 array
@@ -179,7 +196,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(5);
     assertEqual(0, a.get(0));
     }
+
     /**
+     * Verify constructor element [4] equals 0 for length-5 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_1000
      * @tc.name testUint8ClampedArrayConstructorSix010
      * @tc.desc Verify constructor element [4] equals 0 for length-5 array
@@ -193,7 +212,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(5);
     assertEqual(0, a.get(4));
     }
+
     /**
+     * Verify constructing array from 3.0 yields length 3
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_1100
      * @tc.name testUint8ClampedArrayConstructorSix011
      * @tc.desc Verify constructing array from 3.0 yields length 3
@@ -207,7 +228,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(3.0);
     assertEqual(3, a.length());
     }
+
     /**
+     * Verify constructing array from 3.7 yields length 3
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_1200
      * @tc.name testUint8ClampedArrayConstructorSix012
      * @tc.desc Verify constructing array from 3.7 yields length 3
@@ -221,7 +244,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(3.7);
     assertEqual(3, a.length());
     }
+
     /**
+     * Verify Array<number> vs Array<int> length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_1300
      * @tc.name testUint8ClampedArrayConstructorSix013
      * @tc.desc Verify Array<number> vs Array<int> length
@@ -239,7 +264,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(3, a.length());
     assertEqual(3, b.length());
     }
+
     /**
+     * Verify Array<number> vs Array<int> element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_1400
      * @tc.name testUint8ClampedArrayConstructorSix014
      * @tc.desc Verify Array<number> vs Array<int> element
@@ -257,7 +284,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(10, a.get(0));
     assertEqual(10, b.get(0));
     }
+
     /**
+     * Verify Array<number> vs Array<number> clamp
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_1500
      * @tc.name testUint8ClampedArrayConstructorSix015
      * @tc.desc Verify Array<number> vs Array<number> clamp
@@ -275,7 +304,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(255, a.get(0));
     assertEqual(255, b.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray copy length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_1600
      * @tc.name testUint8ClampedArrayConstructorSix016
      * @tc.desc Verify Uint8ClampedArray copy length
@@ -290,7 +321,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray dst = new Uint8ClampedArray(src);
     assertEqual(src.length(), dst.length());
     }
+
     /**
+     * Verify Uint8ClampedArray copy element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_1700
      * @tc.name testUint8ClampedArrayConstructorSix017
      * @tc.desc Verify Uint8ClampedArray copy element
@@ -305,7 +338,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray dst = new Uint8ClampedArray(src);
     assertEqual(src.get(0), dst.get(0));
     }
+
     /**
+     * Verify Set<Number> Iterable Iterable<Number>
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_1800
      * @tc.name testUint8ClampedArrayConstructorSix018
      * @tc.desc Verify Set<Number> Iterable Iterable<Number>
@@ -322,7 +357,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(s);
     assertEqual(2, a.length());
     }
+
     /**
+     * Verify Set<Number> Iterable FixedArray
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_1900
      * @tc.name testUint8ClampedArrayConstructorSix019
      * @tc.desc Verify Set<Number> Iterable FixedArray
@@ -342,7 +379,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(2, a.length());
     assertEqual(2, b.length());
     }
+
     /**
+     * Verify ArrayBuffer length byteLength
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_2000
      * @tc.name testUint8ClampedArrayConstructorSix020
      * @tc.desc Verify ArrayBuffer length byteLength
@@ -357,7 +396,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(buf);
     assertEqual(6, a.length());
     }
+
     /**
+     * Verify constructor element [0] equals 1 for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_2100
      * @tc.name testUint8ClampedArrayConstructorSix021
      * @tc.desc Verify constructor element [0] equals 1 for array [1, 2]
@@ -373,7 +414,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     dst.set(0, 200);
     assertEqual(1, src.get(0));
     }
+
     /**
+     * Verify constructor element [0] equals 77 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_2200
      * @tc.name testUint8ClampedArrayConstructorSix022
      * @tc.desc Verify constructor element [0] equals 77 for ArrayBuffer-backed array
@@ -390,7 +433,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     firstView.set(0, 77);
     assertEqual(77, secondView.get(0));
     }
+
     /**
+     * Verify constructor element [2] equals 3 for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_2300
      * @tc.name testUint8ClampedArrayConstructorSix023
      * @tc.desc Verify constructor element [2] equals 3 for array [1, 2, 3]
@@ -406,7 +451,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     src.set(2, 99);
     assertEqual(3, dst.get(2));
     }
+
     /**
+     * Verify constructing array [1, 2, 3, 4] yields length src.length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_2400
      * @tc.name testUint8ClampedArrayConstructorSix024
      * @tc.desc Verify constructing array [1, 2, 3, 4] yields length src.length
@@ -421,7 +468,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray dst = new Uint8ClampedArray(src);
     assertEqual(src.length(), dst.length());
     }
+
     /**
+     * Verify constructing array [1, 2] yields byteOffset 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_2500
      * @tc.name testUint8ClampedArrayConstructorSix025
      * @tc.desc Verify constructing array [1, 2] yields byteOffset 0
@@ -436,7 +485,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray dst = new Uint8ClampedArray(src);
     assertEqual(0, dst.byteOffset());
     }
+
     /**
+     * Verify constructor element [0] equals 1 for array from f
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_2600
      * @tc.name testUint8ClampedArrayConstructorSix026
      * @tc.desc Verify constructor element [0] equals 1 for array from f
@@ -452,7 +503,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     f.set(0, 99);
     assertEqual(1, a.get(0));
     }
+
     /**
+     * Verify constructor element [0] equals 1 for array from arr
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_2700
      * @tc.name testUint8ClampedArrayConstructorSix027
      * @tc.desc Verify constructor element [0] equals 1 for array from arr
@@ -468,7 +521,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     arr.set(0, 99);
     assertEqual(1, a.get(0));
     }
+
     /**
+     * Verify constructor buffer reference matches for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_2800
      * @tc.name testUint8ClampedArrayConstructorSix028
      * @tc.desc Verify constructor buffer reference matches for ArrayBuffer-backed array
@@ -483,7 +538,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf, 0);
     assertEqual(buf, v.buffer());
     }
+
     /**
+     * Verify ArrayBuffer buffer identity (with offset)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_2900
      * @tc.name testUint8ClampedArrayConstructorSix029
      * @tc.desc Verify ArrayBuffer buffer identity (with offset)
@@ -498,7 +555,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf, 1, 2);
     assertEqual(buf, v.buffer());
     }
+
     /**
+     * Verify constructing ArrayBuffer-backed array yields byteOffset 2
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3000
      * @tc.name testUint8ClampedArrayConstructorSix030
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 2
@@ -513,7 +572,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf, 2);
     assertEqual(2, v.byteOffset());
     }
+
     /**
+     * Verify ArrayBuffer byteOffset buffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3100
      * @tc.name testUint8ClampedArrayConstructorSix031
      * @tc.desc Verify ArrayBuffer byteOffset buffer
@@ -529,7 +590,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray b = new Uint8ClampedArray(buf, 2);
     assertEqual(b.buffer(), a.buffer());
     }
+
     /**
+     * Verify constructor element [0] equals 0xAB for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3200
      * @tc.name testUint8ClampedArrayConstructorSix032
      * @tc.desc Verify constructor element [0] equals 0xAB for ArrayBuffer-backed array
@@ -546,7 +609,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray secondView = new Uint8ClampedArray(buf, 0);
     assertEqual(0xAB, secondView.get(0));
     }
+
     /**
+     * Verify constructor element [0] equals 50 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3300
      * @tc.name testUint8ClampedArrayConstructorSix033
      * @tc.desc Verify constructor element [0] equals 50 for ArrayBuffer-backed array
@@ -563,7 +628,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     a.set(0, 50);
     assertEqual(50, b.get(0));
     }
+
     /**
+     * Verify constructor element [0] equals 0 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3400
      * @tc.name testUint8ClampedArrayConstructorSix034
      * @tc.desc Verify constructor element [0] equals 0 for ArrayBuffer-backed array
@@ -580,7 +647,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     a.set(0, 7);
     assertEqual(0, b.get(0));
     }
+
     /**
+     * Verify constructor element [0] equals 88 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3500
      * @tc.name testUint8ClampedArrayConstructorSix035
      * @tc.desc Verify constructor element [0] equals 88 for ArrayBuffer-backed array
@@ -597,7 +666,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     a.set(2, 88);
     assertEqual(88, b.get(0));
     }
+
     /**
+     * Verify constructing array from src yields byteOffset 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3600
      * @tc.name testUint8ClampedArrayConstructorSix036
      * @tc.desc Verify constructing array from src yields byteOffset 0
@@ -612,7 +683,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(src);
     assertEqual(0, a.byteOffset());
     }
+
     /**
+     * Verify ArrayBuffer byteOffset=0 byteOffset=0,length=byteLength
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3700
      * @tc.name testUint8ClampedArrayConstructorSix037
      * @tc.desc Verify ArrayBuffer byteOffset=0 byteOffset=0,length=byteLength
@@ -628,7 +701,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray b = new Uint8ClampedArray(buf, 0, 4);
     assertEqual(b.length(), a.length());
     }
+
     /**
+     * Verify ArrayBuffer byteOffset=0 length buffer.byteLength
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3800
      * @tc.name testUint8ClampedArrayConstructorSix038
      * @tc.desc Verify ArrayBuffer byteOffset=0 length buffer.byteLength
@@ -643,7 +718,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf, 0);
     assertEqual(7, v.length());
     }
+
     /**
+     * Verify ArrayBuffer byteOffset=2 length byteLength-byteOffset
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3900
      * @tc.name testUint8ClampedArrayConstructorSix039
      * @tc.desc Verify ArrayBuffer byteOffset=2 length byteLength-byteOffset
@@ -658,7 +735,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf, 2);
     assertEqual(3, v.length());
     }
+
     /**
+     * Verify ArrayBuffer Number|undefined byteOffset=undefined 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_4000
      * @tc.name testUint8ClampedArrayConstructorSix040
      * @tc.desc Verify ArrayBuffer Number|undefined byteOffset=undefined 0
@@ -673,7 +752,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf);
     assertEqual(0, v.byteOffset());
     }
+
     /**
+     * Verify ArrayBuffer Number|undefined length=undefined byteLength
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_4100
      * @tc.name testUint8ClampedArrayConstructorSix041
      * @tc.desc Verify ArrayBuffer Number|undefined length=undefined byteLength
@@ -688,7 +769,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf);
     assertEqual(6, v.length());
     }
+
     /**
+     * Verify ArrayBuffer Number|undefined byteOffset length=undefined
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_4200
      * @tc.name testUint8ClampedArrayConstructorSix042
      * @tc.desc Verify ArrayBuffer Number|undefined byteOffset length=undefined
@@ -703,7 +786,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf, 2);
     assertEqual(4, v.length());
     }
+
     /**
+     * Verify ArrayBuffer Number|undefined byteOffset=undefined length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_4300
      * @tc.name testUint8ClampedArrayConstructorSix043
      * @tc.desc Verify ArrayBuffer Number|undefined byteOffset=undefined length
@@ -718,7 +803,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf, 0, 3);
     assertEqual(3, v.length());
     }
+
     /**
+     * Verify empty constructor creates buffer with byteLength 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_4400
      * @tc.name testUint8ClampedArrayConstructorSix044
      * @tc.desc Verify empty constructor creates buffer with byteLength 0
@@ -732,7 +819,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray();
     assertEqual(0, a.buffer().byteLength());
     }
+
     /**
+     * Verify length constructor creates byteLength 3 and element [2] equals 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_4500
      * @tc.name testUint8ClampedArrayConstructorSix045
      * @tc.desc Verify length constructor creates byteLength 3 and element [2] equals 0
@@ -747,7 +836,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(3, a.byteLength());
     assertEqual(0, a.get(2));
     }
+
     /**
+     * Verify Array<number> construction preserves both source values
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_4600
      * @tc.name testUint8ClampedArrayConstructorSix046
      * @tc.desc Verify Array<number> construction preserves both source values
@@ -764,7 +855,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(1, a.get(0));
     assertEqual(2, a.get(1));
     }
+
     /**
+     * Verify omitted length consumes the remaining supplied ArrayBuffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_4700
      * @tc.name testUint8ClampedArrayConstructorSix047
      * @tc.desc Verify omitted length consumes the remaining supplied ArrayBuffer
@@ -780,7 +873,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(buf, a.buffer());
     assertEqual(4, a.byteLength());
     }
+
     /**
+     * Verify explicit length creates a four-element view over the supplied ArrayBuffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_4800
      * @tc.name testUint8ClampedArrayConstructorSix048
      * @tc.desc Verify explicit length creates a four-element view over the supplied ArrayBuffer
@@ -796,7 +891,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(buf, a.buffer());
     assertEqual(4, a.length());
     }
+
     /**
+     * Verify constructing length-2 array yields BYTES_PER_ELEMENT 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_4900
      * @tc.name testUint8ClampedArrayConstructorSix049
      * @tc.desc Verify constructing length-2 array yields BYTES_PER_ELEMENT 1
@@ -810,7 +907,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(2);
     assertEqual(1, a.BYTES_PER_ELEMENT);
     }
+
     /**
+     * Verify constructing array [1, 2, 3] yields byteLength a.length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5000
      * @tc.name testUint8ClampedArrayConstructorSix050
      * @tc.desc Verify constructing array [1, 2, 3] yields byteLength a.length
@@ -824,7 +923,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(new int[] {1, 2, 3});
     assertEqual(a.length(), a.byteLength());
     }
+
     /**
+     * Verify constructing length-5 array yields byteLength 5
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5100
      * @tc.name testUint8ClampedArrayConstructorSix051
      * @tc.desc Verify constructing length-5 array yields byteLength 5
@@ -838,7 +939,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(5);
     assertEqual(5, a.byteLength());
     }
+
     /**
+     * Verify constructing ArrayBuffer-backed array yields byteLength 3
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5200
      * @tc.name testUint8ClampedArrayConstructorSix052
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteLength 3
@@ -853,7 +956,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(buf, 2, 3);
     assertEqual(3, a.byteLength());
     }
+
     /**
+     * Verify constructing empty array yields length 0, byteLength 0 and byteOffset 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5300
      * @tc.name testUint8ClampedArrayConstructorSix053
      * @tc.desc Verify constructing empty array yields length 0, byteLength 0 and byteOffset 0
@@ -869,7 +974,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(0, a.byteLength());
     assertEqual(0, a.byteOffset());
     }
+
     /**
+     * Verify constructed view has correct length, byteLength and element value
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5400
      * @tc.name testUint8ClampedArrayConstructorSix054
      * @tc.desc Verify constructed view has correct length, byteLength and element value
@@ -886,7 +993,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(1, a.byteLength());
     assertEqual(0, a.byteOffset());
     }
+
     /**
+     * Verify ArrayLike ArrayBuffer buffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5500
      * @tc.name testUint8ClampedArrayConstructorSix055
      * @tc.desc Verify ArrayLike ArrayBuffer buffer
@@ -903,7 +1012,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray b = new Uint8ClampedArray(src);
     assertNotEqual(b.buffer(), a.buffer());
     }
+
     /**
+     * Verify toString a equals b for empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5600
      * @tc.name testUint8ClampedArrayConstructorSix056
      * @tc.desc Verify toString a equals b for empty array
@@ -919,7 +1030,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(0, a);
     assertEqual(0, b);
     }
+
     /**
+     * Verify join a.join() equals b.join( for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5700
      * @tc.name testUint8ClampedArrayConstructorSix057
      * @tc.desc Verify join a.join() equals b.join( for array [1, 2]
@@ -936,7 +1049,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual("1,2", a.join());
     assertEqual("1,2", b.join());
     }
+
     /**
+     * Verify toString a equals b for array(f)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5800
      * @tc.name testUint8ClampedArrayConstructorSix058
      * @tc.desc Verify toString a equals b for array(f)
@@ -954,7 +1069,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual("3,4", a);
     assertEqual("3,4", b);
     }
+
     /**
+     * Verify ArrayBuffer length=0 toString
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5900
      * @tc.name testUint8ClampedArrayConstructorSix059
      * @tc.desc Verify ArrayBuffer length=0 toString
@@ -971,7 +1088,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual("", a);
     assertEqual("", b);
     }
+
     /**
+     * Verify join a.join('|') equals b.join('|' for array [5, 6]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_6000
      * @tc.name testUint8ClampedArrayConstructorSix060
      * @tc.desc Verify join a.join('|') equals b.join('|' for array [5, 6]
@@ -988,7 +1107,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual("5|6", a.join("|"));
     assertEqual("5|6", b.join("|"));
     }
+
     /**
+     * Verify constructor buffer reference matches for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_6100
      * @tc.name testUint8ClampedArrayConstructorSix061
      * @tc.desc Verify constructor buffer reference matches for ArrayBuffer-backed array
@@ -1003,7 +1124,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf, 0);
     assertEqual(buf, v.buffer());
     }
+
     /**
+     * Verify constructor result is false for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_6200
      * @tc.name testUint8ClampedArrayConstructorSix062
      * @tc.desc Verify constructor result is false for array [1, 2]
@@ -1018,7 +1141,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray dst = new Uint8ClampedArray(src);
     assertNotEqual(src, dst);
     }
+
     /**
+     * Verify constructor element [1] equals 11 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_6300
      * @tc.name testUint8ClampedArrayConstructorSix063
      * @tc.desc Verify constructor element [1] equals 11 for ArrayBuffer-backed array
@@ -1035,7 +1160,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     p.set(1, 11);
     assertEqual(11, c.get(1));
     }
+
     /**
+     * Verify constructor element [0] equals 22 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_6400
      * @tc.name testUint8ClampedArrayConstructorSix064
      * @tc.desc Verify constructor element [0] equals 22 for ArrayBuffer-backed array
@@ -1052,7 +1179,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     c.set(0, 22);
     assertEqual(22, p.get(0));
     }
+
     /**
+     * Verify constructor result is false for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_6500
      * @tc.name testUint8ClampedArrayConstructorSix065
      * @tc.desc Verify constructor result is false for array [1, 2]
@@ -1068,7 +1197,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray b = new Uint8ClampedArray(src);
     assertNotEqual(b.buffer(), a.buffer());
     }
+
     /**
+     * Verify constructor element [0] equals 1 for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_6600
      * @tc.name testUint8ClampedArrayConstructorSix066
      * @tc.desc Verify constructor element [0] equals 1 for array [1, 2]
@@ -1085,7 +1216,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     a.set(0, 88);
     assertEqual(1, b.get(0));
     }
+
     /**
+     * Verify ArrayBuffer from(Uint8ClampedArray) buffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_6700
      * @tc.name testUint8ClampedArrayConstructorSix067
      * @tc.desc Verify ArrayBuffer from(Uint8ClampedArray) buffer
@@ -1101,7 +1234,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray copy = new Uint8ClampedArray(v);
     assertNotEqual(v.buffer(), copy.buffer());
     }
+
     /**
+     * Verify constructor element [0] equals 5 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_6800
      * @tc.name testUint8ClampedArrayConstructorSix068
      * @tc.desc Verify constructor element [0] equals 5 for ArrayBuffer-backed array
@@ -1119,7 +1254,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     copy.set(0, 100);
     assertEqual(5, v.get(0));
     }
+
     /**
+     * Verify ArrayBuffer byteOffset=2 buffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_6900
      * @tc.name testUint8ClampedArrayConstructorSix069
      * @tc.desc Verify ArrayBuffer byteOffset=2 buffer
@@ -1134,7 +1271,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf, 2);
     assertEqual(buf, v.buffer());
     }
+
     /**
+     * Verify constructor result is false for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_7000
      * @tc.name testUint8ClampedArrayConstructorSix070
      * @tc.desc Verify constructor result is false for ArrayBuffer-backed array
@@ -1150,7 +1289,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray cp = new Uint8ClampedArray(v);
     assertNotEqual(buf, cp.buffer());
     }
+
     /**
+     * Verify constructor element [0] equals 0 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_7100
      * @tc.name testUint8ClampedArrayConstructorSix071
      * @tc.desc Verify constructor element [0] equals 0 for ArrayBuffer-backed array
@@ -1168,7 +1309,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray secondView = new Uint8ClampedArray(buf, 0);
     assertEqual(0, secondView.get(0));
     }
+
     /**
+     * Verify copy constructor produces correct length, elements and distinct buffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_7200
      * @tc.name testUint8ClampedArrayConstructorSix072
      * @tc.desc Verify copy constructor produces correct length, elements and distinct buffer
@@ -1186,7 +1329,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     assertEqual(2, dst.get(1));
     assertNotEqual(src.buffer(), dst.buffer());
     }
+
     /**
+     * Verify constructor element [0] equals 0 for array from s
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_7300
      * @tc.name testUint8ClampedArrayConstructorSix073
      * @tc.desc Verify constructor element [0] equals 0 for array from s
@@ -1202,7 +1347,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(s);
     assertEqual(0, a.get(0));
     }
+
     /**
+     * Verify constructor element [0] equals 0 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_7400
      * @tc.name testUint8ClampedArrayConstructorSix074
      * @tc.desc Verify constructor element [0] equals 0 for ArrayBuffer-backed array
@@ -1217,7 +1364,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray v = new Uint8ClampedArray(buf, 0);
     assertEqual(0, v.get(0));
     }
+
     /**
+     * Verify copy from Uint8ClampedArray source preserves the already-clamped value 255 in dst[0]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_7500
      * @tc.name testUint8ClampedArrayConstructorSix075
      * @tc.desc Verify copy from Uint8ClampedArray source preserves the already-clamped value 255 in dst[0]
@@ -1232,7 +1381,9 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     Uint8ClampedArray dst = new Uint8ClampedArray(src);
     assertEqual(255, dst.get(0));
     }
+
     /**
+     * Verify constructor element [0] equals 0 for array from s
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_7600
      * @tc.name testUint8ClampedArrayConstructorSix076
      * @tc.desc Verify constructor element [0] equals 0 for array from s

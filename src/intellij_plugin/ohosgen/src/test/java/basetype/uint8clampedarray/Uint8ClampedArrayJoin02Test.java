@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayJoin02Test extends BasTest {
     /**
+     * Verify join r equals '1,100' for array [1, 100]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0100
      * @tc.name testUint8ClampedArrayJoinTwo001
      * @tc.desc Verify join r equals '1,100' for array [1, 100]
@@ -42,7 +43,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join(",");
     assertEqual("1,100", r);
     }
+
     /**
+     * Verify join r equals '10' for array [0x0A]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0200
      * @tc.name testUint8ClampedArrayJoinTwo002
      * @tc.desc Verify join r equals '10' for array [0x0A]
@@ -57,7 +60,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("10", r);
     }
+
     /**
+     * Verify join r equals '15' for array [0b1111]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0300
      * @tc.name testUint8ClampedArrayJoinTwo003
      * @tc.desc Verify join r equals '15' for array [0b1111]
@@ -72,7 +77,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("15", r);
     }
+
     /**
+     * Verify join r equals '15' for array [0o17]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0400
      * @tc.name testUint8ClampedArrayJoinTwo004
      * @tc.desc Verify join r equals '15' for array [0o17]
@@ -87,7 +94,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("15", r);
     }
+
     /**
+     * Verify join r equals '100' for array [1e2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0500
      * @tc.name testUint8ClampedArrayJoinTwo005
      * @tc.desc Verify join r equals '100' for array [1e2]
@@ -102,7 +111,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("100", r);
     }
+
     /**
+     * Verify join r equals '1,2' for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0600
      * @tc.name testUint8ClampedArrayJoinTwo006
      * @tc.desc Verify join r equals '1,2' for array [1, 2]
@@ -117,7 +128,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("1,2", r);
     }
+
     /**
+     * Verify join() of length-0 array returns empty string
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0700
      * @tc.name testUint8ClampedArrayJoinTwo007
      * @tc.desc Verify join() of length-0 array returns empty string
@@ -132,7 +145,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual(0, r.length());
     }
+
     /**
+     * Verify join() of single-element [42] returns 2-char string
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0800
      * @tc.name testUint8ClampedArrayJoinTwo008
      * @tc.desc Verify join() of single-element [42] returns 2-char string
@@ -147,7 +162,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual(2, r.length());
     }
+
     /**
+     * Verify join(',') of 3 elements yields length 5 (3 digits + 2 separators)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0900
      * @tc.name testUint8ClampedArrayJoinTwo009
      * @tc.desc Verify join(',') of 3 elements yields length 5 (3 digits + 2 separators)
@@ -162,7 +179,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join(",");
     assertEqual(5, r.length());
     }
+
     /**
+     * Verify join('') of 3 two-digit elements yields length 6 (no separator)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1000
      * @tc.name testUint8ClampedArrayJoinTwo010
      * @tc.desc Verify join('') of 3 two-digit elements yields length 6 (no separator)
@@ -177,7 +196,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join("");
     assertEqual(6, r.length());
     }
+
     /**
+     * Verify join() does not change array length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1100
      * @tc.name testUint8ClampedArrayJoinTwo011
      * @tc.desc Verify join() does not change array length
@@ -193,7 +214,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     assertEqual("1,2,3", arr.join(","));
     assertEqual(oldLen, arr.length());
     }
+
     /**
+     * Verify join() does not change element values
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1200
      * @tc.name testUint8ClampedArrayJoinTwo012
      * @tc.desc Verify join() does not change element values
@@ -210,7 +233,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     assertEqual(2, arr.get(1));
     assertEqual(3, arr.get(2));
     }
+
     /**
+     * Verify join() returns same result on repeated calls
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1300
      * @tc.name testUint8ClampedArrayJoinTwo013
      * @tc.desc Verify join() returns same result on repeated calls
@@ -226,7 +251,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r2 = arr.join(",");
     assertEqual(r2, r1);
     }
+
     /**
+     * Verify join results differ when using different separators
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1400
      * @tc.name testUint8ClampedArrayJoinTwo014
      * @tc.desc Verify join results differ when using different separators
@@ -242,7 +269,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r2 = arr.join("|");
     assertNotEqual(r2, r1);
     }
+
     /**
+     * Verify join r1 equals '1#2' for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1500
      * @tc.name testUint8ClampedArrayJoinTwo015
      * @tc.desc Verify join r1 equals '1#2' for array [1, 2]
@@ -261,7 +290,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     assertEqual("1#2", r1);
     assertEqual("1@2", r2);
     }
+
     /**
+     * Verify join yields byteLength old for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1600
      * @tc.name testUint8ClampedArrayJoinTwo016
      * @tc.desc Verify join yields byteLength old for array [1, 2, 3, 4]
@@ -277,7 +308,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     assertEqual("1,2,3,4", arr.join(","));
     assertEqual(old, arr.buffer().byteLength() );
     }
+
     /**
+     * Verify join yields byteOffset old for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1700
      * @tc.name testUint8ClampedArrayJoinTwo017
      * @tc.desc Verify join yields byteOffset old for ArrayBuffer-backed array
@@ -294,7 +327,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     assertEqual("0,0,0,0", arr.join(","));
     assertEqual(old, arr.byteOffset() );
     }
+
     /**
+     * Verify nested join where separator is itself a join result
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1800
      * @tc.name testUint8ClampedArrayJoinTwo018
      * @tc.desc Verify nested join where separator is itself a join result
@@ -309,7 +344,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join(arr.join(","));
     assertEqual("11,22", r);
     }
+
     /**
+     * Verify subarray element at arr[1] equals 2 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_1900
      * @tc.name testUint8ClampedArrayJoinTwo019
      * @tc.desc Verify subarray element at arr[1] equals 2 for array [1, 2, 3, 4]
@@ -326,7 +363,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     assertEqual(2, arr.get(1));
     assertEqual(3, arr.get(2));
     }
+
     /**
+     * Verify join(',') of [10,20,30] returns '10,20,30'
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2000
      * @tc.name testUint8ClampedArrayJoinTwo020
      * @tc.desc Verify join(',') of [10,20,30] returns '10,20,30'
@@ -341,7 +380,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join(",");
     assertEqual("10,20,30", r);
     }
+
     /**
+     * Verify join() with long multi-char separator inserts it between each element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2100
      * @tc.name testUint8ClampedArrayJoinTwo021
      * @tc.desc Verify join() with long multi-char separator inserts it between each element
@@ -355,7 +396,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     assertEqual("1xxxxxxxxxxxxxxxx2xxxxxxxxxxxxxxxx3xxxxxxxxxxxxxxxx4xxxxxxxxxxxxxxxx5", arr.join("xxxxxxxxxxxxxxxx"));
     }
+
     /**
+     * Verify join() of single-element array ignores separator and returns the element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2200
      * @tc.name testUint8ClampedArrayJoinTwo022
      * @tc.desc Verify join() of single-element array ignores separator and returns the element
@@ -373,7 +416,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     }
     assertEqual("1", arr.join(s));
     }
+
     /**
+     * Verify join r equals '255' for length-1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2300
      * @tc.name testUint8ClampedArrayJoinTwo023
      * @tc.desc Verify join r equals '255' for length-1 array
@@ -389,7 +434,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("255", r);
     }
+
     /**
+     * Verify join r equals '0' for length-1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2400
      * @tc.name testUint8ClampedArrayJoinTwo024
      * @tc.desc Verify join r equals '0' for length-1 array
@@ -405,7 +452,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("0", r);
     }
+
     /**
+     * Verify Number.MAX_VALUE clamp 255 join
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2500
      * @tc.name testUint8ClampedArrayJoinTwo025
      * @tc.desc Verify Number.MAX_VALUE clamp 255 join
@@ -421,7 +470,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("255", r);
     }
+
     /**
+     * Verify Number.MIN_VALUE clamp 0 join
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2600
      * @tc.name testUint8ClampedArrayJoinTwo026
      * @tc.desc Verify Number.MIN_VALUE clamp 0 join
@@ -437,7 +488,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("0", r);
     }
+
     /**
+     * Verify join r equals '255,0,0,128' for length-4 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2700
      * @tc.name testUint8ClampedArrayJoinTwo027
      * @tc.desc Verify join r equals '255,0,0,128' for length-4 array
@@ -456,7 +509,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join(",");
     assertEqual("255,0,0,128", r);
     }
+
     /**
+     * Verify join r equals '1' for length-1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2800
      * @tc.name testUint8ClampedArrayJoinTwo028
      * @tc.desc Verify join r equals '1' for length-1 array
@@ -472,7 +527,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("1", r);
     }
+
     /**
+     * Verify join r equals '0' for length-1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2900
      * @tc.name testUint8ClampedArrayJoinTwo029
      * @tc.desc Verify join r equals '0' for length-1 array
@@ -488,7 +545,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("0", r);
     }
+
     /**
+     * Verify join r equals '254' for length-1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3000
      * @tc.name testUint8ClampedArrayJoinTwo030
      * @tc.desc Verify join r equals '254' for length-1 array
@@ -504,7 +563,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("254", r);
     }
+
     /**
+     * Verify join r equals '255' for length-1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3100
      * @tc.name testUint8ClampedArrayJoinTwo031
      * @tc.desc Verify join r equals '255' for length-1 array
@@ -520,7 +581,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("255", r);
     }
+
     /**
+     * Verify join r equals '0' for length-1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3200
      * @tc.name testUint8ClampedArrayJoinTwo032
      * @tc.desc Verify join r equals '0' for length-1 array
@@ -536,7 +599,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = arr.join();
     assertEqual("0", r);
     }
+
     /**
+     * Verify subarray r equals '2,99,4' for array [1, 2, 3, 4, 5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3300
      * @tc.name testUint8ClampedArrayJoinTwo033
      * @tc.desc Verify subarray r equals '2,99,4' for array [1, 2, 3, 4, 5]
@@ -553,7 +618,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = sub.join(",");
     assertEqual("2,99,4", r);
     }
+
     /**
+     * Verify subarray r equals '1,88,3,4,5' for array [1, 2, 3, 4, 5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3400
      * @tc.name testUint8ClampedArrayJoinTwo034
      * @tc.desc Verify subarray r equals '1,88,3,4,5' for array [1, 2, 3, 4, 5]
@@ -570,7 +637,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = parent.join(",");
     assertEqual("1,88,3,4,5", r);
     }
+
     /**
+     * Verify slice r equals '1,2,3' for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3500
      * @tc.name testUint8ClampedArrayJoinTwo035
      * @tc.desc Verify slice r equals '1,2,3' for array [1, 2, 3]
@@ -587,7 +656,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     String r = s.join(",");
     assertEqual("1,2,3", r);
     }
+
     /**
+     * Verify join firstView.join(',') equals '10,20' for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3600
      * @tc.name testUint8ClampedArrayJoinTwo036
      * @tc.desc Verify join firstView.join(',') equals '10,20' for ArrayBuffer-backed array
@@ -608,7 +679,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     assertEqual("10,20", firstView.join(","));
     assertEqual("30,40", secondView.join(","));
     }
+
     /**
+     * Verify join secondView.join(',') equals '50,60' for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3700
      * @tc.name testUint8ClampedArrayJoinTwo037
      * @tc.desc Verify join secondView.join(',') equals '50,60' for ArrayBuffer-backed array

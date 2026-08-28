@@ -36,6 +36,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayEntriesTest extends BasTest {
     /**
+     * Verify entries() iteration count equals 3 for array [5, 6, 7]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_0100
      * @tc.name testUint8ClampedArrayEntries001
      * @tc.desc Verify entries() iteration count equals 3 for array [5, 6, 7]
@@ -53,7 +54,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(3, count);
     }
+
     /**
+     * Verify entries() is exhausted for an empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_0200
      * @tc.name testUint8ClampedArrayEntries002
      * @tc.desc Verify entries() is exhausted for an empty array
@@ -70,7 +73,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     assertNull(r.value);
     assertTrue(r.done);
     }
+
     /**
+     * Verify entries() entered equals false for empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_0300
      * @tc.name testUint8ClampedArrayEntries003
      * @tc.desc Verify entries() entered equals false for empty array
@@ -88,7 +93,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(false, entered);
     }
+
     /**
+     * Verify entries() iterator is exhausted for array [42]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_0400
      * @tc.name testUint8ClampedArrayEntries004
      * @tc.desc Verify entries() iterator is exhausted for array [42]
@@ -105,7 +112,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(true, r.done);
     }
+
     /**
+     * Verify entries() next().value [0, 42]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_0500
      * @tc.name testUint8ClampedArrayEntries005
      * @tc.desc Verify entries() next().value [0, 42]
@@ -122,7 +131,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     assertEqual(0, r.value[0]);
     assertEqual(42, r.value[1]);
     }
+
     /**
+     * Verify entries() iteration count equals 2 for array [11, 22]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_0600
      * @tc.name testUint8ClampedArrayEntries006
      * @tc.desc Verify entries() iteration count equals 2 for array [11, 22]
@@ -140,7 +151,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(2, count);
     }
+
     /**
+     * Verify entries() iteration count equals 10 for array [1, 2, 3, 4, 5, 6, 7, 8, 9, 10
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_0700
      * @tc.name testUint8ClampedArrayEntries007
      * @tc.desc Verify entries() iteration count equals 10 for array [1, 2, 3, 4, 5, 6, 7, 8, 9, 10
@@ -158,7 +171,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(10, count);
     }
+
     /**
+     * Verify entries() iteration count equals 255 for array(new ArrayBuffer(255)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_0800
      * @tc.name testUint8ClampedArrayEntries008
      * @tc.desc Verify entries() iteration count equals 255 for array(new ArrayBuffer(255)
@@ -176,7 +191,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(255, count);
     }
+
     /**
+     * Verify entries() iteration count equals 256 for array(new ArrayBuffer(256)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_0900
      * @tc.name testUint8ClampedArrayEntries009
      * @tc.desc Verify entries() iteration count equals 256 for array(new ArrayBuffer(256)
@@ -194,7 +211,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(256, count);
     }
+
     /**
+     * Verify entries() iteration count equals 1024 for array(new ArrayBuffer(1024)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_1000
      * @tc.name testUint8ClampedArrayEntries010
      * @tc.desc Verify entries() iteration count equals 1024 for array(new ArrayBuffer(1024)
@@ -212,7 +231,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(1024, count);
     }
+
     /**
+     * Verify entries() iterator value is 0 for array [0, 0, 0]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_1100
      * @tc.name testUint8ClampedArrayEntries011
      * @tc.desc Verify entries() iterator value is 0 for array [0, 0, 0]
@@ -228,7 +249,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(0, r.value[1]);
     }
+
     /**
+     * Verify entries() [index, 255] clamp max value
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_1200
      * @tc.name testUint8ClampedArrayEntries012
      * @tc.desc Verify entries() [index, 255] clamp max value
@@ -244,7 +267,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(255, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 127 for array [127]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_1300
      * @tc.name testUint8ClampedArrayEntries013
      * @tc.desc Verify entries() iterator value is 127 for array [127]
@@ -260,7 +285,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(127, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 128 for array [128]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_1400
      * @tc.name testUint8ClampedArrayEntries014
      * @tc.desc Verify entries() iterator value is 128 for array [128]
@@ -276,7 +303,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(128, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 255 for array [256]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_1500
      * @tc.name testUint8ClampedArrayEntries015
      * @tc.desc Verify entries() iterator value is 255 for array [256]
@@ -292,7 +321,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(255, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 0 for array [-1]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_1600
      * @tc.name testUint8ClampedArrayEntries016
      * @tc.desc Verify entries() iterator value is 0 for array [-1]
@@ -308,7 +339,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(0, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 0 for array [Number.NaN]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_1700
      * @tc.name testUint8ClampedArrayEntries017
      * @tc.desc Verify entries() iterator value is 0 for array [Number.NaN]
@@ -324,7 +357,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(0, r.value[1]);
     }
+
     /**
+     * Verify Infinity clamp 255 entries() 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_1800
      * @tc.name testUint8ClampedArrayEntries018
      * @tc.desc Verify Infinity clamp 255 entries() 255
@@ -340,7 +375,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(255, r.value[1]);
     }
+
     /**
+     * Verify -Infinity clamp 0 entries() 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_1900
      * @tc.name testUint8ClampedArrayEntries019
      * @tc.desc Verify -Infinity clamp 0 entries() 0
@@ -356,7 +393,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(0, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 0 for array [0.5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_2000
      * @tc.name testUint8ClampedArrayEntries020
      * @tc.desc Verify entries() iterator value is 0 for array [0.5]
@@ -372,7 +411,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(0, r.value[1]);
     }
+
     /**
+     * Verify 127.5 half-even 128 entries() 128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_2100
      * @tc.name testUint8ClampedArrayEntries021
      * @tc.desc Verify 127.5 half-even 128 entries() 128
@@ -388,7 +429,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(128, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 255 for array [1e9]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_2200
      * @tc.name testUint8ClampedArrayEntries022
      * @tc.desc Verify entries() iterator value is 255 for array [1e9]
@@ -404,7 +447,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(255, r.value[1]);
     }
+
     /**
+     * Verify entries() iteration count equals 4 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_2300
      * @tc.name testUint8ClampedArrayEntries023
      * @tc.desc Verify entries() iteration count equals 4 for ArrayBuffer-backed array
@@ -423,7 +468,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(4, count);
     }
+
     /**
+     * Verify ArrayBuffer + byteOffset entries()
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_2400
      * @tc.name testUint8ClampedArrayEntries024
      * @tc.desc Verify ArrayBuffer + byteOffset entries()
@@ -442,7 +489,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(4, count);
     }
+
     /**
+     * Verify Uint8ClampedArray.of() entries()
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_2500
      * @tc.name testUint8ClampedArrayEntries025
      * @tc.desc Verify Uint8ClampedArray.of() entries()
@@ -458,7 +507,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(10, r.value[1]);
     }
+
     /**
+     * Verify subarray iteration count equals 3 for array [1, 2, 3, 4, 5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_2600
      * @tc.name testUint8ClampedArrayEntries026
      * @tc.desc Verify subarray iteration count equals 3 for array [1, 2, 3, 4, 5]
@@ -477,7 +528,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(3, count);
     }
+
     /**
+     * Verify entries() next().value [index, value]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_2700
      * @tc.name testUint8ClampedArrayEntries027
      * @tc.desc Verify entries() next().value [index, value]
@@ -494,7 +547,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     assertEqual(0, r.value[0]);
     assertEqual(100, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 1 for array [100, 200]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_2800
      * @tc.name testUint8ClampedArrayEntries028
      * @tc.desc Verify entries() iterator value is 1 for array [100, 200]
@@ -512,7 +567,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     assertEqual(1, r.value[0]);
     assertEqual(200, r.value[1]);
     }
+
     /**
+     * Verify entries() element at pair[0] equals expectedIdx for array [7, 8, 9]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_2900
      * @tc.name testUint8ClampedArrayEntries029
      * @tc.desc Verify entries() element at pair[0] equals expectedIdx for array [7, 8, 9]
@@ -531,7 +588,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(3, expectedIdx);
     }
+
     /**
+     * Verify entries() last key equals 3 for array [10, 20, 30, 40]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_3000
      * @tc.name testUint8ClampedArrayEntries030
      * @tc.desc Verify entries() last key equals 3 for array [10, 20, 30, 40]
@@ -549,7 +608,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(3, lastIdx);
     }
+
     /**
+     * Verify entries() next().value undefined
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_3100
      * @tc.name testUint8ClampedArrayEntries031
      * @tc.desc Verify entries() next().value undefined
@@ -566,7 +627,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertNull(r.value);
     }
+
     /**
+     * Verify entries() iterator is exhausted for array [1]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_3200
      * @tc.name testUint8ClampedArrayEntries032
      * @tc.desc Verify entries() iterator is exhausted for array [1]
@@ -584,7 +647,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(true, r.done);
     }
+
     /**
+     * Verify entries() v equals 99 for array [99]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_3300
      * @tc.name testUint8ClampedArrayEntries033
      * @tc.desc Verify entries() v equals 99 for array [99]
@@ -601,7 +666,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     Number v = r.value[1];
     assertEqual(99, v);
     }
+
     /**
+     * Verify entries() i equals 0 for array [99]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_3400
      * @tc.name testUint8ClampedArrayEntries034
      * @tc.desc Verify entries() i equals 0 for array [99]
@@ -618,7 +685,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     int i = r.value[0];
     assertEqual(0, i);
     }
+
     /**
+     * Verify entries() index matches array element access
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_3500
      * @tc.name testUint8ClampedArrayEntries035
      * @tc.desc Verify entries() index matches array element access
@@ -635,7 +704,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     int idx = r.value[0];
     assertEqual(r.value[1], arr.get(idx));
     }
+
     /**
+     * Verify entries() iteration does not mutate array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_3600
      * @tc.name testUint8ClampedArrayEntries036
      * @tc.desc Verify entries() iteration does not mutate array
@@ -654,7 +725,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     assertEqual(2, arr.get(1));
     assertEqual(3, arr.get(2));
     }
+
     /**
+     * Verify entries() iterators are independent
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_3700
      * @tc.name testUint8ClampedArrayEntries037
      * @tc.desc Verify entries() iterators are independent
@@ -672,7 +745,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r2 = it2.next();
     assertEqual(0, r2.value[0]);
     }
+
     /**
+     * Verify entries() reflects mid-iteration array mutation
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_3800
      * @tc.name testUint8ClampedArrayEntries038
      * @tc.desc Verify entries() reflects mid-iteration array mutation
@@ -690,7 +765,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(99, r.value[1]);
     }
+
     /**
+     * Verify entries() reflects pre-iteration mutation at later index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_3900
      * @tc.name testUint8ClampedArrayEntries039
      * @tc.desc Verify entries() reflects pre-iteration mutation at later index
@@ -709,7 +786,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(77, r.value[1]);
     }
+
     /**
+     * Verify entries() next() value snapshot before mutation
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_4000
      * @tc.name testUint8ClampedArrayEntries040
      * @tc.desc Verify entries() next() value snapshot before mutation
@@ -726,7 +805,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     arr.set(0, 99);
     assertEqual(5, r1.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 255 for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_4100
      * @tc.name testUint8ClampedArrayEntries041
      * @tc.desc Verify entries() iterator value is 255 for array [1, 2]
@@ -744,7 +825,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(255, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 0 for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_4200
      * @tc.name testUint8ClampedArrayEntries042
      * @tc.desc Verify entries() iterator value is 0 for array [1, 2]
@@ -762,7 +845,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(0, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 0 for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_4300
      * @tc.name testUint8ClampedArrayEntries043
      * @tc.desc Verify entries() iterator value is 0 for array [1, 2]
@@ -780,7 +865,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(0, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 50 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_4400
      * @tc.name testUint8ClampedArrayEntries044
      * @tc.desc Verify entries() iterator value is 50 for array [1, 2, 3, 4]
@@ -798,7 +885,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(50, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator value is 80 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_4500
      * @tc.name testUint8ClampedArrayEntries045
      * @tc.desc Verify entries() iterator value is 80 for array [1, 2, 3, 4]
@@ -817,7 +906,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(80, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator after reverse
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_4600
      * @tc.name testUint8ClampedArrayEntries046
      * @tc.desc Verify entries() iterator after reverse
@@ -837,7 +928,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     assertEqual(2, r.value[1]);
     assertEqual(3, arr.get(0));
     }
+
     /**
+     * Verify entries() iterator value is 88 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_4700
      * @tc.name testUint8ClampedArrayEntries047
      * @tc.desc Verify entries() iterator value is 88 for ArrayBuffer-backed array
@@ -860,7 +953,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(88, r.value[1]);
     }
+
     /**
+     * Verify entries() iterator is exhausted for empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_4800
      * @tc.name testUint8ClampedArrayEntries048
      * @tc.desc Verify entries() iterator is exhausted for empty array
@@ -877,7 +972,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(true, r.done);
     }
+
     /**
+     * Verify entries() iteration count equals 2 for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_4900
      * @tc.name testUint8ClampedArrayEntries049
      * @tc.desc Verify entries() iteration count equals 2 for array [1, 2]
@@ -896,7 +993,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(2, count);
     }
+
     /**
+     * Verify entries() iteration count equals 0 for array [1, 2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_5000
      * @tc.name testUint8ClampedArrayEntries050
      * @tc.desc Verify entries() iteration count equals 0 for array [1, 2]
@@ -918,7 +1017,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(0, count);
     }
+
     /**
+     * Verify entries() next() done=false value
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_5100
      * @tc.name testUint8ClampedArrayEntries051
      * @tc.desc Verify entries() next() done=false value
@@ -936,7 +1037,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     assertEqual(0, r.value[0]);
     assertEqual(7, r.value[1]);
     }
+
     /**
+     * Verify keys() iterator value is k.value for array [10, 20]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_5200
      * @tc.name testUint8ClampedArrayEntries052
      * @tc.desc Verify keys() iterator value is k.value for array [10, 20]
@@ -954,7 +1057,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     IteratorResult k = keyIt.next();
     assertEqual(k.value, e.value[0]);
     }
+
     /**
+     * Verify entries() iterator value is v.value for array [10, 20]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_5300
      * @tc.name testUint8ClampedArrayEntries053
      * @tc.desc Verify entries() iterator value is v.value for array [10, 20]
@@ -972,7 +1077,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     IteratorResult v = valIt.next();
     assertEqual(v.value, e.value[1]);
     }
+
     /**
+     * Verify entries() iteration count equals 65535 for array(new ArrayBuffer(65535)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_5400
      * @tc.name testUint8ClampedArrayEntries054
      * @tc.desc Verify entries() iteration count equals 65535 for array(new ArrayBuffer(65535)
@@ -990,7 +1097,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(65535, count);
     }
+
     /**
+     * Verify Uint8ClampedArray.from accumulated sum equals 66 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_5500
      * @tc.name testUint8ClampedArrayEntries055
      * @tc.desc Verify Uint8ClampedArray.from accumulated sum equals 66 for from(src)
@@ -1009,7 +1118,9 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     }
     assertEqual(66, sum);
     }
+
     /**
+     * Verify slice iteration count equals 2 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_ENTRIES_5600
      * @tc.name testUint8ClampedArrayEntries056
      * @tc.desc Verify slice iteration count equals 2 for array [1, 2, 3, 4]

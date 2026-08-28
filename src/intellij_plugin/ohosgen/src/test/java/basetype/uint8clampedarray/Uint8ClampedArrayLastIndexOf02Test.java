@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     /**
+     * Verify lastIndexOf r equals 1 for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_0100
      * @tc.name testUint8ClampedArrayLastIndexOfTwo001
      * @tc.desc Verify lastIndexOf r equals 1 for array [1, 2, 3]
@@ -42,7 +43,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     int r = arr.lastIndexOf(2);
     assertEqual(1, r);
     }
+
     /**
+     * Verify lastIndexOf last key equals 1 for array [0, 7, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_0200
      * @tc.name testUint8ClampedArrayLastIndexOfTwo002
      * @tc.desc Verify lastIndexOf last key equals 1 for array [0, 7, 2, 3]
@@ -56,7 +59,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 7, 2, 3});
     assertEqual(1, arr.lastIndexOf(7));
     }
+
     /**
+     * Verify lastIndexOf last key equals 2 for array [0, 1, 7, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_0300
      * @tc.name testUint8ClampedArrayLastIndexOfTwo003
      * @tc.desc Verify lastIndexOf last key equals 2 for array [0, 1, 7, 3]
@@ -70,7 +75,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 1, 7, 3});
     assertEqual(2, arr.lastIndexOf(7));
     }
+
     /**
+     * Verify lastIndexOf last key equals 3 for array [5, 5, 5, 5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_0400
      * @tc.name testUint8ClampedArrayLastIndexOfTwo004
      * @tc.desc Verify lastIndexOf last key equals 3 for array [5, 5, 5, 5]
@@ -84,7 +91,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 5, 5, 5});
     assertEqual(3, arr.lastIndexOf(5));
     }
+
     /**
+     * Verify lastIndexOf last key equals 3 for array [8, 1, 2, 8]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_0500
      * @tc.name testUint8ClampedArrayLastIndexOfTwo005
      * @tc.desc Verify lastIndexOf last key equals 3 for array [8, 1, 2, 8]
@@ -98,7 +107,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {8, 1, 2, 8});
     assertEqual(3, arr.lastIndexOf(8));
     }
+
     /**
+     * Verify lastIndexOf returns -1 for not-found element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_0600
      * @tc.name testUint8ClampedArrayLastIndexOfTwo006
      * @tc.desc Verify lastIndexOf returns -1 for not-found element
@@ -113,7 +124,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     int r = arr.lastIndexOf(250);
     assertEqual(-1, r);
     }
+
     /**
+     * Verify lastIndexOf yields length lenBefore for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_0700
      * @tc.name testUint8ClampedArrayLastIndexOfTwo007
      * @tc.desc Verify lastIndexOf yields length lenBefore for array [1, 2, 3, 4]
@@ -129,7 +142,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     arr.lastIndexOf(2);
     assertEqual(lenBefore, arr.length());
     }
+
     /**
+     * Verify lastIndexOf yields byteLength beforeBL for array [1, 2, 3, 4, 5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_0800
      * @tc.name testUint8ClampedArrayLastIndexOfTwo008
      * @tc.desc Verify lastIndexOf yields byteLength beforeBL for array [1, 2, 3, 4, 5]
@@ -145,7 +160,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     arr.lastIndexOf(3);
     assertEqual(beforeBL, arr.byteLength());
     }
+
     /**
+     * Verify lastIndexOf fromIndex length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_0900
      * @tc.name testUint8ClampedArrayLastIndexOfTwo009
      * @tc.desc Verify lastIndexOf fromIndex length
@@ -160,7 +177,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     arr.lastIndexOf(3, 2);
     assertEqual(4, arr.length());
     }
+
     /**
+     * Verify lastIndexOf r equals 2 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_1000
      * @tc.name testUint8ClampedArrayLastIndexOfTwo010
      * @tc.desc Verify lastIndexOf r equals 2 for array [1, 2, 3, 4]
@@ -176,7 +195,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     assertEqual(2, r);
     assertEqual(3, arr.get(2));
     }
+
     /**
+     * Verify lastIndexOf r equals 0 for array [9, 8, 7]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_1100
      * @tc.name testUint8ClampedArrayLastIndexOfTwo011
      * @tc.desc Verify lastIndexOf r equals 0 for array [9, 8, 7]
@@ -192,7 +213,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     assertEqual(0, r);
     assertEqual(9, arr.get(0));
     }
+
     /**
+     * Verify lastIndexOf yields length 5 for array [1, 2, 3, 4, 5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_1200
      * @tc.name testUint8ClampedArrayLastIndexOfTwo012
      * @tc.desc Verify lastIndexOf yields length 5 for array [1, 2, 3, 4, 5]
@@ -207,7 +230,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     arr.lastIndexOf(3);
     assertEqual(5, arr.length());
     }
+
     /**
+     * Verify lastIndexOf byteLength length 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_1300
      * @tc.name testUint8ClampedArrayLastIndexOfTwo013
      * @tc.desc Verify lastIndexOf byteLength length 1
@@ -222,7 +247,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     arr.lastIndexOf(2);
     assertEqual(4, arr.byteLength());
     }
+
     /**
+     * Verify lastIndexOf yields byteOffset 0 for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_1400
      * @tc.name testUint8ClampedArrayLastIndexOfTwo014
      * @tc.desc Verify lastIndexOf yields byteOffset 0 for array [1, 2, 3]
@@ -237,7 +264,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     arr.lastIndexOf(2);
     assertEqual(0, arr.byteOffset());
     }
+
     /**
+     * Verify lastIndexOf buffer reference matches for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_1500
      * @tc.name testUint8ClampedArrayLastIndexOfTwo015
      * @tc.desc Verify lastIndexOf buffer reference matches for ArrayBuffer-backed array
@@ -254,7 +283,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     a.lastIndexOf(0);
     assertEqual(b.buffer(), a.buffer());
     }
+
     /**
+     * Verify lastIndexOf buffer.byteLength
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_1600
      * @tc.name testUint8ClampedArrayLastIndexOfTwo016
      * @tc.desc Verify lastIndexOf buffer.byteLength
@@ -270,7 +301,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     arr.lastIndexOf(0);
     assertEqual(16, arr.buffer().byteLength());
     }
+
     /**
+     * Verify subarray buffer reference matches for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_1700
      * @tc.name testUint8ClampedArrayLastIndexOfTwo017
      * @tc.desc Verify subarray buffer reference matches for array [1, 2, 3, 4]
@@ -287,7 +320,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     assertEqual(arr.buffer(), sub.buffer());
     assertEqual(0, sub.lastIndexOf(2));
     }
+
     /**
+     * Verify subarray last key equals 2 for array [5, 6, 7, 6, 5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_1800
      * @tc.name testUint8ClampedArrayLastIndexOfTwo018
      * @tc.desc Verify subarray last key equals 2 for array [5, 6, 7, 6, 5]
@@ -302,7 +337,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 4);
     assertEqual(2, sub.lastIndexOf(6));
     }
+
     /**
+     * Verify subarray last key equals -1 for array [5, 6, 7, 8, 9]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_1900
      * @tc.name testUint8ClampedArrayLastIndexOfTwo019
      * @tc.desc Verify subarray last key equals -1 for array [5, 6, 7, 8, 9]
@@ -317,7 +354,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray(0, 3);
     assertEqual(-1, sub.lastIndexOf(99));
     }
+
     /**
+     * Verify lastIndexOf(5) equals indexOf(5) for single-match array [0, 5, 0, 0]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_2000
      * @tc.name testUint8ClampedArrayLastIndexOfTwo020
      * @tc.desc Verify lastIndexOf(5) equals indexOf(5) for single-match array [0, 5, 0, 0]
@@ -331,7 +370,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 5, 0, 0});
     assertEqual(arr.indexOf(5), arr.lastIndexOf(5));
     }
+
     /**
+     * Verify lastIndexOf(3) returns 4 and indexOf(3) returns 0 for array [3, 1, 3, 1, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_2100
      * @tc.name testUint8ClampedArrayLastIndexOfTwo021
      * @tc.desc Verify lastIndexOf(3) returns 4 and indexOf(3) returns 0 for array [3, 1, 3, 1, 3]
@@ -346,7 +387,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     assertEqual(4, arr.lastIndexOf(3));
     assertEqual(0, arr.indexOf(3));
     }
+
     /**
+     * Verify lastIndexOf(99) equals indexOf(99) for absent value array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_2200
      * @tc.name testUint8ClampedArrayLastIndexOfTwo022
      * @tc.desc Verify lastIndexOf(99) equals indexOf(99) for absent value array [1, 2, 3]
@@ -360,7 +403,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     assertEqual(arr.indexOf(99), arr.lastIndexOf(99));
     }
+
     /**
+     * Verify lastIndexOf(42) equals indexOf(42) for singleton array [42]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_2300
      * @tc.name testUint8ClampedArrayLastIndexOfTwo023
      * @tc.desc Verify lastIndexOf(42) equals indexOf(42) for singleton array [42]
@@ -374,7 +419,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42});
     assertEqual(arr.indexOf(42), arr.lastIndexOf(42));
     }
+
     /**
+     * Verify lastIndexOf Math.floor(r) equals r for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_2400
      * @tc.name testUint8ClampedArrayLastIndexOfTwo024
      * @tc.desc Verify lastIndexOf Math.floor(r) equals r for array [1, 2, 3]
@@ -389,7 +436,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     int r = arr.lastIndexOf(2);
     assertEqual(r, (int) (r));
     }
+
     /**
+     * Verify lastIndexOf -1 Math.floor -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_2500
      * @tc.name testUint8ClampedArrayLastIndexOfTwo025
      * @tc.desc Verify lastIndexOf -1 Math.floor -1
@@ -404,7 +453,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     int r = arr.lastIndexOf(99);
     assertEqual(-1, (int) (r));
     }
+
     /**
+     * Verify lastIndexOf returns index 1 for element 2 in array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_2600
      * @tc.name testUint8ClampedArrayLastIndexOfTwo026
      * @tc.desc Verify lastIndexOf returns index 1 for element 2 in array [1, 2, 3]
@@ -419,7 +470,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     int r = arr.lastIndexOf(2);
     assertEqual(1, r);
     }
+
     /**
+     * Verify subarray r equals 1 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_2700
      * @tc.name testUint8ClampedArrayLastIndexOfTwo027
      * @tc.desc Verify subarray r equals 1 for array [1, 2, 3, 4]
@@ -436,7 +489,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     assertEqual(1, r);
     assertEqual(2, parent.get(1));
     }
+
     /**
+     * Verify subarray r equals 0 for array [1, 2, 3, 4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_2800
      * @tc.name testUint8ClampedArrayLastIndexOfTwo028
      * @tc.desc Verify subarray r equals 0 for array [1, 2, 3, 4]
@@ -453,7 +508,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     assertEqual(0, r);
     assertEqual(4, parent.length());
     }
+
     /**
+     * Verify lastIndexOf r equals 0 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_2900
      * @tc.name testUint8ClampedArrayLastIndexOfTwo029
      * @tc.desc Verify lastIndexOf r equals 0 for ArrayBuffer-backed array
@@ -473,7 +530,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     assertEqual(0, r);
     assertEqual(99, b.get(0));
     }
+
     /**
+     * Verify lastIndexOf r equals 3 for ArrayBuffer-backed array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_3000
      * @tc.name testUint8ClampedArrayLastIndexOfTwo030
      * @tc.desc Verify lastIndexOf r equals 3 for ArrayBuffer-backed array
@@ -491,7 +550,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     assertEqual(3, r);
     assertEqual(4, b.length());
     }
+
     /**
+     * Verify lastIndexOf last key equals -1 for array [10, 20, 30]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_3100
      * @tc.name testUint8ClampedArrayLastIndexOfTwo031
      * @tc.desc Verify lastIndexOf last key equals -1 for array [10, 20, 30]
@@ -506,7 +567,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     int v = 99;
     assertEqual(-1, arr.lastIndexOf(v));
     }
+
     /**
+     * Verify lastIndexOf r equals 2 for array [10, 20, 30]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_3200
      * @tc.name testUint8ClampedArrayLastIndexOfTwo032
      * @tc.desc Verify lastIndexOf r equals 2 for array [10, 20, 30]
@@ -523,7 +586,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     assertEqual(2, r);
     assertEqual(3, arr.length());
     }
+
     /**
+     * Verify lastIndexOf r equals 1 for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_3300
      * @tc.name testUint8ClampedArrayLastIndexOfTwo033
      * @tc.desc Verify lastIndexOf r equals 1 for array [1, 2, 3]
@@ -541,7 +606,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     assertEqual(1, r);
     assertEqual(bufBefore, arr.buffer());
     }
+
     /**
+     * Verify lastIndexOf r1 equals r2 for array [5, 5, 5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_3400
      * @tc.name testUint8ClampedArrayLastIndexOfTwo034
      * @tc.desc Verify lastIndexOf r1 equals r2 for array [5, 5, 5]
@@ -558,7 +625,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     int r2 = arr.lastIndexOf(v);
     assertEqual(r2, r1);
     }
+
     /**
+     * Verify lastIndexOf last key equals 1023 for length-1024 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_3500
      * @tc.name testUint8ClampedArrayLastIndexOfTwo035
      * @tc.desc Verify lastIndexOf last key equals 1023 for length-1024 array
@@ -573,7 +642,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     arr.set(1023, 7);
     assertEqual(1023, arr.lastIndexOf(7));
     }
+
     /**
+     * Verify lastIndexOf last key equals -1 for length-1024 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_3600
      * @tc.name testUint8ClampedArrayLastIndexOfTwo036
      * @tc.desc Verify lastIndexOf last key equals -1 for length-1024 array
@@ -587,7 +658,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
     assertEqual(-1, arr.lastIndexOf(200));
     }
+
     /**
+     * Verify lastIndexOf last key equals 255 for length-256 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_3700
      * @tc.name testUint8ClampedArrayLastIndexOfTwo037
      * @tc.desc Verify lastIndexOf last key equals 255 for length-256 array
@@ -602,7 +675,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     arr.set(255, 88);
     assertEqual(255, arr.lastIndexOf(88));
     }
+
     /**
+     * Verify lastIndexOf last key equals 4 for length-5 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_3800
      * @tc.name testUint8ClampedArrayLastIndexOfTwo038
      * @tc.desc Verify lastIndexOf last key equals 4 for length-5 array
@@ -616,7 +691,9 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(5);
     assertEqual(4, arr.lastIndexOf(0));
     }
+
     /**
+     * Verify lastIndexOf last key equals 0 for array [255, 0, 0]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_LAST_INDEX_OF_TWO_3900
      * @tc.name testUint8ClampedArrayLastIndexOfTwo039
      * @tc.desc Verify lastIndexOf last key equals 0 for array [255, 0, 0]
