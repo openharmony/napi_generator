@@ -91,27 +91,33 @@ public class Uint16ArrayConstructorFour extends BasTest {
     @Test
     void testUint16ArrayConstructorFour027() {
     ArrayBuffer buffer = new ArrayBuffer(8);
-    try { new Uint16Array(buffer, 1);
+    try {
+        new Uint16Array(buffer, 1);
     fail();
-    } catch (RangeError e) { assertEqual("RangeError", e.getClass().getSimpleName());
+    } catch (RangeError e) {
+        assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
 
     @Test
     void testUint16ArrayConstructorFour028() {
     ArrayBuffer buffer = new ArrayBuffer(8);
-    try { new Uint16Array(buffer, 10);
+    try {
+        new Uint16Array(buffer, 10);
     fail();
-    } catch (RangeError e) { assertEqual("RangeError", e.getClass().getSimpleName());
+    } catch (RangeError e) {
+        assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
 
     @Test
     void testUint16ArrayConstructorFour029() {
     ArrayBuffer buffer = new ArrayBuffer(8);
-    try { new Uint16Array(buffer, 4, 3);
+    try {
+        new Uint16Array(buffer, 4, 3);
     fail();
-    } catch (RangeError e) { assertEqual("RangeError", e.getClass().getSimpleName());
+    } catch (RangeError e) {
+        assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
 

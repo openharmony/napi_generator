@@ -49,8 +49,10 @@ public class Uint16ArrayFindLastTwo extends BasTest {
     void testUint16ArrayFindLastTwo016() {
     Uint16Array source = Uint16Array.of(1, 2, 3);
     Number result = source.findLast((value, index, array) -> {
-        if (index == 2) { array.set(1, 20);
-        } return value > 10;
+        if (index == 2) {
+            array.set(1, 20);
+        }
+        return value > 10;
     });
     assertEqual(20, result);
     }
@@ -62,8 +64,10 @@ public class Uint16ArrayFindLastTwo extends BasTest {
     source.set(new Uint16Array(new int[] {1, 2, 3}));
     Uint16Array alias = new Uint16Array(buffer);
     Number result = source.findLast((value, index) -> {
-        if (index == 2) { alias.set(1, 40);
-        } return value > 10;
+        if (index == 2) {
+            alias.set(1, 40);
+        }
+        return value > 10;
     });
     assertEqual(40, result);
     }
@@ -78,10 +82,11 @@ public class Uint16ArrayFindLastTwo extends BasTest {
     @Test
     void testUint16ArrayFindLastTwo019() {
     try { Uint16Array.of(1).findLast((value) -> {
-        throw new Error("findLast marker");
+        return BasTest.throwTestError("findLast marker");
         });
         fail();
-        } catch (Error e) { assertEqual("Error", e.getClass().getSimpleName());
+        } catch (Error e) {
+            assertEqual("Error", e.getClass().getSimpleName());
         assertEqual("findLast marker", e.getMessage());
     }
     }

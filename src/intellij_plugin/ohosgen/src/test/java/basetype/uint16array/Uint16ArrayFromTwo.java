@@ -97,8 +97,10 @@ public class Uint16ArrayFromTwo extends BasTest {
     int[] count = {0};
     Uint16Array result = Uint16Array.from(source, (value, index) -> {
         count[0]++;
-        if (index == 0.0) { source.add((int) (3.0));
-        } return value;
+        if (index == 0.0) {
+            source.add((int) (3.0));
+        }
+        return value;
         });
     assertEqual(3, count[0]);
     assertEqual(3, result.length());

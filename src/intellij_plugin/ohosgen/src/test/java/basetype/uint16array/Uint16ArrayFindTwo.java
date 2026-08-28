@@ -43,8 +43,10 @@ public class Uint16ArrayFindTwo extends BasTest {
     void testUint16ArrayFindTwo021() {
     Uint16Array source = Uint16Array.of(1, 2, 3);
     Number result = source.find((value, index, array) -> {
-        if (index == 0) { array.set(1, 20);
-        } return value > 10;
+        if (index == 0) {
+            array.set(1, 20);
+        }
+        return value > 10;
     });
     assertEqual(20, result);
     }
@@ -59,10 +61,11 @@ public class Uint16ArrayFindTwo extends BasTest {
     @Test
     void testUint16ArrayFindTwo023() {
     try { Uint16Array.of(1).find((value) -> {
-        throw new Error("find marker");
+        return BasTest.throwTestError("find marker");
         });
         fail();
-        } catch (Error e) { assertEqual("find marker", e.getMessage());
+        } catch (Error e) {
+            assertEqual("find marker", e.getMessage());
     }
     }
 }

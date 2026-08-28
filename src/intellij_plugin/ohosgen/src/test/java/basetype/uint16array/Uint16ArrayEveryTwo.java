@@ -63,8 +63,10 @@ public class Uint16ArrayEveryTwo extends BasTest {
     int[] count = {0};
     boolean result = source.every((value, index, array) -> {
         count[0]++;
-        if (index == 1) { array.set(0, 0);
-        } return value > 0;
+        if (index == 1) {
+            array.set(0, 0);
+        }
+        return value > 0;
         });
     assertTrue(result);
     assertEqual(2, count[0]);
@@ -77,8 +79,10 @@ public class Uint16ArrayEveryTwo extends BasTest {
     source.set(new Uint16Array(new int[] {1, 2, 3}));
     Uint16Array alias = new Uint16Array(buffer);
     boolean result = source.every((value, index) -> {
-        if (index == 0) { alias.set(1, 0);
-        } return value > 0;
+        if (index == 0) {
+            alias.set(1, 0);
+        }
+        return value > 0;
         });
     assertFalse(result);
     }
@@ -93,10 +97,11 @@ public class Uint16ArrayEveryTwo extends BasTest {
     @Test
     void testUint16ArrayEveryTwo021() {
     try { Uint16Array.of(1).every((value) -> {
-        throw new Error("every marker");
+        return BasTest.throwTestError("every marker");
         });
         fail();
-        } catch (Error e) { assertEqual("every marker", e.getMessage());
+        } catch (Error e) {
+            assertEqual("every marker", e.getMessage());
     }
     }
 

@@ -76,8 +76,10 @@ public class Uint16ArrayFindLastIndexTwo extends BasTest {
     void testUint16ArrayFindLastIndexTwo023() {
     Uint16Array source = Uint16Array.of(1, 2, 3);
     int result = source.findLastIndex((value, index, array) -> {
-        if (index == 2) { array.set(1, 20);
-        } return value > 10;
+        if (index == 2) {
+            array.set(1, 20);
+        }
+        return value > 10;
     });
     assertEqual(1, result);
     }
@@ -88,8 +90,10 @@ public class Uint16ArrayFindLastIndexTwo extends BasTest {
     int[] count = {0};
     int result = source.findLastIndex((value, index, array) -> {
         count[0]++;
-        if (index == 1) { array.set(2, 30);
-        } return false;
+        if (index == 1) {
+            array.set(2, 30);
+        }
+        return false;
     });
     assertEqual(-1, result);
     assertEqual(3, count[0]);
@@ -102,8 +106,10 @@ public class Uint16ArrayFindLastIndexTwo extends BasTest {
     source.set(new Uint16Array(new int[] {1, 2, 3}));
     Uint16Array alias = new Uint16Array(buffer);
     int result = source.findLastIndex((value, index) -> {
-        if (index == 2) { alias.set(1, 40);
-        } return value > 10;
+        if (index == 2) {
+            alias.set(1, 40);
+        }
+        return value > 10;
     });
     assertEqual(1, result);
     }
@@ -121,7 +127,8 @@ public class Uint16ArrayFindLastIndexTwo extends BasTest {
         throw new RangeError("findLastIndex range");
         });
         fail();
-        } catch (RangeError e) { assertEqual("RangeError", e.getClass().getSimpleName());
+        } catch (RangeError e) {
+            assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
 

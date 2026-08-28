@@ -100,8 +100,10 @@ public class Uint16ArrayFilterTwo extends BasTest {
     void testUint16ArrayFilterTwo021() {
     Uint16Array source = Uint16Array.of(1, 2, 3);
     Uint16Array result = source.filter((value, index, array) -> {
-        if (index == 0) { array.set(1, 20);
-        } return value > 10;
+        if (index == 0) {
+            array.set(1, 20);
+        }
+        return value > 10;
     });
     assertEqual(20, result.at(0));
     }
@@ -113,8 +115,10 @@ public class Uint16ArrayFilterTwo extends BasTest {
     source.set(new Uint16Array(new int[] {1, 2, 3}));
     Uint16Array alias = new Uint16Array(buffer);
     Uint16Array result = source.filter((value, index) -> {
-        if (index == 0) { alias.set(1, 40);
-        } return value > 10;
+        if (index == 0) {
+            alias.set(1, 40);
+        }
+        return value > 10;
     });
     assertEqual(40, result.at(0));
     }
@@ -134,7 +138,8 @@ public class Uint16ArrayFilterTwo extends BasTest {
         throw new RangeError("filter range");
         });
         fail();
-        } catch (RangeError e) { assertEqual("RangeError", e.getClass().getSimpleName());
+        } catch (RangeError e) {
+            assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
 

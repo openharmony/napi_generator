@@ -92,7 +92,8 @@ public class Uint16ArrayIterator extends BasTest {
     void testUint16ArrayIterator054() {
     Uint16Array arr = Uint16Array.of(0, 32768, 65535);
     List<Integer> values = new ArrayList<>();
-    for (Integer value : arr.values()) { values.add(value);
+    for (Integer value : arr.values()) {
+        values.add(value);
     }
     assertEqual(0, values.get(0));
     assertEqual(32768, values.get(1));

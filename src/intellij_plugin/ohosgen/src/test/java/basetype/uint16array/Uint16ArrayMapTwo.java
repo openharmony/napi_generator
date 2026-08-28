@@ -99,8 +99,10 @@ public class Uint16ArrayMapTwo extends BasTest {
     void testUint16ArrayMapTwo028() {
     Uint16Array source = Uint16Array.of(1, 2, 3);
     Uint16Array result = source.map((value, index, array) -> {
-        if (index == 0) { array.set(1, 20);
-        } return value;
+        if (index == 0) {
+            array.set(1, 20);
+        }
+        return value;
     });
     assertEqual(20, result.at(1));
     }
@@ -109,8 +111,10 @@ public class Uint16ArrayMapTwo extends BasTest {
     void testUint16ArrayMapTwo029() {
     Uint16Array source = Uint16Array.of(1, 2);
     Uint16Array result = source.map((value, index, array) -> {
-        if (index == 1) { array.set(0, 90);
-        } return value;
+        if (index == 1) {
+            array.set(0, 90);
+        }
+        return value;
     });
     assertEqual(1, result.at(0));
     assertEqual(90, source.at(0));
@@ -123,8 +127,10 @@ public class Uint16ArrayMapTwo extends BasTest {
     source.set(new Uint16Array(new int[] {1, 2, 3}));
     Uint16Array alias = new Uint16Array(buffer);
     Uint16Array result = source.map((value, index) -> {
-        if (index == 0) { alias.set(1, 44);
-        } return value;
+        if (index == 0) {
+            alias.set(1, 44);
+        }
+        return value;
     });
     assertEqual(44, result.at(1));
     }
@@ -146,7 +152,8 @@ public class Uint16ArrayMapTwo extends BasTest {
         throw new RangeError("map range");
         });
         fail();
-        } catch (RangeError e) { assertEqual("RangeError", e.getClass().getSimpleName());
+        } catch (RangeError e) {
+            assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
 

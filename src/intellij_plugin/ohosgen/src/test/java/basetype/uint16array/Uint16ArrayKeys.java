@@ -83,7 +83,8 @@ public class Uint16ArrayKeys extends BasTest {
     void testUint16ArrayKeys051() {
     Uint16Array arr = new Uint16Array(3);
     int count = 0;
-    for (Integer key : arr.keys()) { count++;
+    for (Integer key : arr.keys()) {
+        count++;
     }
     assertEqual(3, count);
     }
@@ -93,7 +94,8 @@ public class Uint16ArrayKeys extends BasTest {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     arr.copyWithin(1, 0, 2);
     List<Integer> keys = new ArrayList<>();
-    for (Integer key : arr.keys()) { keys.add(key);
+    for (Integer key : arr.keys()) {
+        keys.add(key);
     }
     assertEqual(3, keys.size());
     assertEqual(0, keys.get(0));

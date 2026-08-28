@@ -58,8 +58,10 @@ public class Uint16ArrayFindIndexTwo extends BasTest {
     void testUint16ArrayFindIndexTwo037() {
     Uint16Array source = Uint16Array.of(1, 2, 3);
     int result = source.findIndex((value, index, array) -> {
-        if (index == 0) { array.set(1, 20);
-        } return value > 10;
+        if (index == 0) {
+            array.set(1, 20);
+        }
+        return value > 10;
         });
     assertEqual(1, result);
     }

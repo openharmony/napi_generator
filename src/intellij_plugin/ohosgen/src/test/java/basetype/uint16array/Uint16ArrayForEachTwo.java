@@ -34,7 +34,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
     @Test
     void testUint16ArrayForEachTwo012() {
     int[] count = {0};
-    new Uint16Array().forEach((value) -> { count[0]++;
+    new Uint16Array().forEach((value) -> {
+        count[0]++;
         });
     assertEqual(0, count[0]);
     }
@@ -67,8 +68,10 @@ public class Uint16ArrayForEachTwo extends BasTest {
     void testUint16ArrayForEachTwo015() {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     List<Integer> seen = new ArrayList<>();
-    arr.forEach((value, index, array) -> { seen.add(value);
-    if (index == 0) { array.set(1, 20);
+    arr.forEach((value, index, array) -> {
+        seen.add(value);
+    if (index == 0) {
+        array.set(1, 20);
     } });
     assertEqual(20, seen.get(1));
     }
@@ -77,8 +80,10 @@ public class Uint16ArrayForEachTwo extends BasTest {
     void testUint16ArrayForEachTwo016() {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     int[] count = {0};
-    arr.forEach((value, index, array) -> { count[0]++;
-    if (index == 1) { array.set(0, 99);
+    arr.forEach((value, index, array) -> {
+        count[0]++;
+    if (index == 1) {
+        array.set(0, 99);
     } });
     assertEqual(3, count[0]);
     assertEqual(99, arr.at(0));
@@ -91,8 +96,11 @@ public class Uint16ArrayForEachTwo extends BasTest {
     arr.set(new Uint16Array(new int[] {1, 2, 3}));
     Uint16Array alias = new Uint16Array(buffer);
     int[] seen = {0};
-    arr.forEach((value, index) -> { if (index == 0) { alias.set(1, 44);
-    } if (index == 1) { seen[0] = value;
+    arr.forEach((value, index) -> {
+        if (index == 0) {
+            alias.set(1, 44);
+    } if (index == 1) {
+        seen[0] = value;
     } });
     assertEqual(44, seen[0]);
     }
@@ -104,7 +112,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
     all.set(new Uint16Array(new int[] {1, 2, 3, 4, 5}));
     Uint16Array view = new Uint16Array(buffer, 4, 2);
     int[] sum = {0};
-    view.forEach((value) -> { sum[0] += value;
+    view.forEach((value) -> {
+        sum[0] += value;
         });
     assertEqual(7, sum[0]);
     }
@@ -113,10 +122,11 @@ public class Uint16ArrayForEachTwo extends BasTest {
     void testUint16ArrayForEachTwo019() {
     Uint16Array arr = Uint16Array.of(1);
     try { arr.forEach((value) -> {
-        throw new Error("forEach marker");
+        BasTest.throwTestError("forEach marker");
         });
         fail();
-        } catch (Error e) { assertEqual("Error", e.getClass().getSimpleName());
+        } catch (Error e) {
+            assertEqual("Error", e.getClass().getSimpleName());
         assertEqual("forEach marker", e.getMessage());
     }
     }
@@ -125,7 +135,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
     void testUint16ArrayForEachTwo020() {
     Uint16Array arr = Uint16Array.of(65535, 65535);
     int[] sum = {0};
-    arr.forEach((value) -> { sum[0] += value;
+    arr.forEach((value) -> {
+        sum[0] += value;
         });
     assertEqual(131070, sum[0]);
     }
@@ -134,7 +145,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
     void testUint16ArrayForEachTwo021() {
     Uint16Array arr = Uint16Array.of(2, 4, 8);
     int[] total = {0};
-    arr.forEach((value, index, array) -> { total[0] += array.get(array.length() - 1);
+    arr.forEach((value, index, array) -> {
+        total[0] += array.get(array.length() - 1);
         });
     assertEqual(24, total[0]);
     }
@@ -144,7 +156,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
     Uint16Array arr = new Uint16Array(3);
     arr.fill(7);
     int[] sum = {0};
-    arr.forEach((value) -> { sum[0] += value;
+    arr.forEach((value) -> {
+        sum[0] += value;
         });
     assertEqual(21, sum[0]);
     }
@@ -154,7 +167,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
     arr.copyWithin(1, 2);
     int[] count = {0};
-    arr.forEach((value) -> { count[0]++;
+    arr.forEach((value) -> {
+        count[0]++;
         });
     assertEqual(4, count[0]);
     }
@@ -163,7 +177,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
     void testUint16ArrayForEachTwo024() {
     Uint16Array arr = Uint16Array.of(2, 3, 4);
     int[] total = {0};
-    arr.forEach((value, index, array) -> { total[0] += value * array.get(index);
+    arr.forEach((value, index, array) -> {
+        total[0] += value * array.get(index);
         });
     assertEqual(29, total[0]);
     }
@@ -172,7 +187,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
     void testUint16ArrayForEachTwo025() {
     Uint16Array arr = Uint16Array.of(9);
     int[] indexSum = {-1};
-    arr.forEach((value, index) -> { indexSum[0] = index;
+    arr.forEach((value, index) -> {
+        indexSum[0] = index;
         });
     assertEqual(0, indexSum[0]);
     }
@@ -185,7 +201,7 @@ public class Uint16ArrayForEachTwo extends BasTest {
     source.forEach((value, index) -> {
     count[0]++;
     if (index == 1) {
-    throw new Error("forEach middle");
+    BasTest.throwTestError("forEach middle");
     }
     });
     fail();
