@@ -695,7 +695,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
 
     @Test
     void testUint8ClampedArrayFilterOne036() {
-    Uint8ClampedArray arr = 
+    Uint8ClampedArray arr =
         new Uint8ClampedArray(new double[] {Double.POSITIVE_INFINITY, 100, Double.POSITIVE_INFINITY});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 255);
     assertEqual(2, r.length());
@@ -714,7 +714,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
 
     @Test
     void testUint8ClampedArrayFilterOne037() {
-    Uint8ClampedArray arr = 
+    Uint8ClampedArray arr =
         new Uint8ClampedArray(new double[] {-Double.POSITIVE_INFINITY, 100, -Double.POSITIVE_INFINITY});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 0);
     assertEqual(2, r.length());

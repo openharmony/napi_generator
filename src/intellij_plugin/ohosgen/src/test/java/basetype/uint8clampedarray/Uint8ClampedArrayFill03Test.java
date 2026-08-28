@@ -709,11 +709,11 @@ public class Uint8ClampedArrayFill03Test extends BasTest {
     }
 
     /**
-     * Verify fill arr.toString() equals '8,8,8' for array [1, 2, 3]
+     * Verify fill arr.toString() equals '8, 8, 8' for array [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_THREE_3400
      * @tc.name testUint8ClampedArrayFillThree034
-     * @tc.desc Verify fill arr.toString() equals '8,8,8' for array [1, 2, 3]
+     * @tc.desc Verify fill arr.toString() equals '8, 8, 8' for array [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

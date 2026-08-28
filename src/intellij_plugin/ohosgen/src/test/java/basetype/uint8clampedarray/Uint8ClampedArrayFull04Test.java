@@ -219,11 +219,11 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
     }
 
     /**
-     * Verify with( length) RangeError
+     * Verify with(length) RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1200
      * @tc.name testUint8ClampedArrayFullFour012
-     * @tc.desc Verify with( length) RangeError
+     * @tc.desc Verify with(length) RangeError
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -241,11 +241,11 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
     }
 
     /**
-     * Verify with( -length-1) RangeError
+     * Verify with(-length-1) RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1300
      * @tc.name testUint8ClampedArrayFullFour013
-     * @tc.desc Verify with( -length-1) RangeError
+     * @tc.desc Verify with(-length-1) RangeError
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -263,11 +263,11 @@ public class Uint8ClampedArrayFull04Test extends BasTest {
     }
 
     /**
-     * Verify .set behavior for length-3 array
+     * Verify.set behavior for length-3 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FOUR_1400
      * @tc.name testUint8ClampedArrayFullFour014
-     * @tc.desc Verify .set behavior for length-3 array
+     * @tc.desc Verify.set behavior for length-3 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

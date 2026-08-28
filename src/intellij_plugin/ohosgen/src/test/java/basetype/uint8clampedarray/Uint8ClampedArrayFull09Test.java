@@ -21,10 +21,8 @@ import basetype.common.RangeError;
 import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
@@ -232,11 +230,11 @@ public class Uint8ClampedArrayFull09Test extends BasTest {
     }
 
     /**
-     * Verify .set element at a[0] equals 10 for length-4 array
+     * Verify.set element at a[0] equals 10 for length-4 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_NINE_1200
      * @tc.name testUint8ClampedArrayFullNine012
-     * @tc.desc Verify .set element at a[0] equals 10 for length-4 array
+     * @tc.desc Verify.set element at a[0] equals 10 for length-4 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -251,11 +249,11 @@ public class Uint8ClampedArrayFull09Test extends BasTest {
     }
 
     /**
-     * Verify .set element at a[1] equals 50 for length-4 array
+     * Verify.set element at a[1] equals 50 for length-4 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_NINE_1300
      * @tc.name testUint8ClampedArrayFullNine013
-     * @tc.desc Verify .set element at a[1] equals 50 for length-4 array
+     * @tc.desc Verify.set element at a[1] equals 50 for length-4 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -394,11 +392,11 @@ public class Uint8ClampedArrayFull09Test extends BasTest {
     }
 
     /**
-     * Verify join a.join() equals '1,2,3' for array [1, 2, 3]
+     * Verify join a.join() equals '1, 2, 3' for array [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_NINE_2100
      * @tc.name testUint8ClampedArrayFullNine021
-     * @tc.desc Verify join a.join() equals '1,2,3' for array [1, 2, 3]
+     * @tc.desc Verify join a.join() equals '1, 2, 3' for array [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1724,11 +1722,11 @@ public class Uint8ClampedArrayFull09Test extends BasTest {
     }
 
     /**
-     * Verify .set element at a[0] equals 255 for length-3 array
+     * Verify.set element at a[0] equals 255 for length-3 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_NINE_9000
      * @tc.name testUint8ClampedArrayFullNine090
-     * @tc.desc Verify .set element at a[0] equals 255 for length-3 array
+     * @tc.desc Verify.set element at a[0] equals 255 for length-3 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1737,7 +1735,7 @@ public class Uint8ClampedArrayFull09Test extends BasTest {
     @Test
     void testUint8ClampedArrayFullNine090() {
     Uint8ClampedArray a = new Uint8ClampedArray(3);
-    List<Number> src = java.util.Arrays.asList(300 , -5 , 128);
+    List<Number> src = java.util.Arrays.asList(300, -5, 128);
     a.set(src);
     assertEqual(255, a.get(0));
     assertEqual(0, a.get(1));

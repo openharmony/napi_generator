@@ -980,11 +980,11 @@ public class Uint8ClampedArrayFull01Test extends BasTest {
     }
 
     /**
-     * Verify of(-1,0,127,255,256) clamps first (-1) to 0 and last (256) to 255
+     * Verify of(-1, 0, 127, 255, 256) clamps first (-1) to 0 and last (256) to 255
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_ONE_5300
      * @tc.name testUint8ClampedArrayFullOne053
-     * @tc.desc Verify of(-1,0,127,255,256) clamps first (-1) to 0 and last (256) to 255
+     * @tc.desc Verify of(-1, 0, 127, 255, 256) clamps first (-1) to 0 and last (256) to 255
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

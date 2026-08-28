@@ -29,11 +29,11 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayCopyWithin01Test extends BasTest {
     /**
-     * Verify copyWithin(0,1) copies arr[1] to arr[0]
+     * Verify copyWithin(0, 1) copies arr[1] to arr[0]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_ONE_0100
      * @tc.name testUint8ClampedArrayCopyWithinOne001
-     * @tc.desc Verify copyWithin(0,1) copies arr[1] to arr[0]
+     * @tc.desc Verify copyWithin(0, 1) copies arr[1] to arr[0]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1770,11 +1770,11 @@ public class Uint8ClampedArrayCopyWithin01Test extends BasTest {
     }
 
     /**
-     * Verify length=100 copyWithin(50,0,50)
+     * Verify length=100 copyWithin(50, 0, 50)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_ONE_9700
      * @tc.name testUint8ClampedArrayCopyWithinOne097
-     * @tc.desc Verify length=100 copyWithin(50,0,50)
+     * @tc.desc Verify length=100 copyWithin(50, 0, 50)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

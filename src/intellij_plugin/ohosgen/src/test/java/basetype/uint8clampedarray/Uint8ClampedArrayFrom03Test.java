@@ -54,11 +54,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from yields length 2 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from yields length 2 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_0200
      * @tc.name testUint8ClampedArrayFromThree002
-     * @tc.desc Verify Uint8ClampedArray.from yields length 2 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from yields length 2 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -377,7 +377,7 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     void testUint8ClampedArrayFromThree017() {
     List<Number> src = new ArrayList<>();
     for (int i = 0; i < 256; i++) {
-    src.add(i );
+    src.add(i);
     }
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(256, arr.length());
@@ -609,11 +609,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_2900
      * @tc.name testUint8ClampedArrayFromThree029
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -630,11 +630,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 2 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 2 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_3000
      * @tc.name testUint8ClampedArrayFromThree030
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 2 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 2 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -651,11 +651,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_3100
      * @tc.name testUint8ClampedArrayFromThree031
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -776,11 +776,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_3600
      * @tc.name testUint8ClampedArrayFromThree036
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -799,11 +799,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_3700
      * @tc.name testUint8ClampedArrayFromThree037
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -822,11 +822,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 10 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 10 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_3800
      * @tc.name testUint8ClampedArrayFromThree038
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 10 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 10 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -847,11 +847,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_3900
      * @tc.name testUint8ClampedArrayFromThree039
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -870,11 +870,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_4000
      * @tc.name testUint8ClampedArrayFromThree040
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -893,11 +893,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[3] equals 30 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[3] equals 30 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_4100
      * @tc.name testUint8ClampedArrayFromThree041
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[3] equals 30 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[3] equals 30 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -917,11 +917,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 51 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 51 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_4200
      * @tc.name testUint8ClampedArrayFromThree042
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 51 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 51 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -959,7 +959,7 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     src.add(3.0);
     double[] sum = {0.0};
     Uint8ClampedArray.from(src, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> {
-    sum[0] = sum[0] + (v );
+    sum[0] = sum[0] + (v);
     return v;
         });
     assertEqual(6, sum[0]);
@@ -1018,11 +1018,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from yields length 5 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from yields length 5 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_4600
      * @tc.name testUint8ClampedArrayFromThree046
-     * @tc.desc Verify Uint8ClampedArray.from yields length 5 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from yields length 5 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1100,11 +1100,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from yields byteLength 2 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from yields byteLength 2 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_5000
      * @tc.name testUint8ClampedArrayFromThree050
-     * @tc.desc Verify Uint8ClampedArray.from yields byteLength 2 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from yields byteLength 2 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1120,11 +1120,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from yields length 2 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from yields length 2 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_5100
      * @tc.name testUint8ClampedArrayFromThree051
-     * @tc.desc Verify Uint8ClampedArray.from yields length 2 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from yields length 2 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1141,11 +1141,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at src[0] equals 1.0 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at src[0] equals 1.0 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_5200
      * @tc.name testUint8ClampedArrayFromThree052
-     * @tc.desc Verify Uint8ClampedArray.from element at src[0] equals 1.0 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at src[0] equals 1.0 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1164,11 +1164,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at a[0] equals 1 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at a[0] equals 1 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_5300
      * @tc.name testUint8ClampedArrayFromThree053
-     * @tc.desc Verify Uint8ClampedArray.from element at a[0] equals 1 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at a[0] equals 1 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1188,11 +1188,11 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_THREE_5400
      * @tc.name testUint8ClampedArrayFromThree054
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

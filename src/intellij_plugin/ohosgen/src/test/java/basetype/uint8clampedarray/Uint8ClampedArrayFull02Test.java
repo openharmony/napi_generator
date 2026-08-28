@@ -270,11 +270,11 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
     }
 
     /**
-     * Verify buffer byteLength of array constructed from [1,2,3]
+     * Verify buffer byteLength of array constructed from [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_1400
      * @tc.name testUint8ClampedArrayFullTwo014
-     * @tc.desc Verify buffer byteLength of array constructed from [1,2,3]
+     * @tc.desc Verify buffer byteLength of array constructed from [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -322,11 +322,11 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.of(1,2,3) yields length 3 with arr[0]=1 and arr[2]=3
+     * Verify Uint8ClampedArray.of(1, 2, 3) yields length 3 with arr[0]=1 and arr[2]=3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_TWO_1700
      * @tc.name testUint8ClampedArrayFullTwo017
-     * @tc.desc Verify Uint8ClampedArray.of(1,2,3) yields length 3 with arr[0]=1 and arr[2]=3
+     * @tc.desc Verify Uint8ClampedArray.of(1, 2, 3) yields length 3 with arr[0]=1 and arr[2]=3
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

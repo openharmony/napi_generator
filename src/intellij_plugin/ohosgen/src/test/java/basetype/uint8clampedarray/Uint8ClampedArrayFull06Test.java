@@ -21,12 +21,7 @@ import basetype.common.IteratorResult;
 import basetype.common.RangeError;
 import basetype.common.Uint8ClampedArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -159,11 +154,11 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     }
 
     /**
-     * Verify .set behavior for array [10, 20, 30]
+     * Verify.set behavior for array [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SIX_0700
      * @tc.name testUint8ClampedArrayFullSix007
-     * @tc.desc Verify .set behavior for array [10, 20, 30]
+     * @tc.desc Verify.set behavior for array [10, 20, 30]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

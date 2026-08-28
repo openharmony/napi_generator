@@ -758,11 +758,11 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, i: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, i:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4200
      * @tc.name testUint8ClampedArrayFullSeven042
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, i: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src, (v: number, i:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -778,11 +778,11 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, i: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, i:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4300
      * @tc.name testUint8ClampedArrayFullSeven043
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, i: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src, (v: number, i:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -798,11 +798,11 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     }
 
     /**
-     * Verify .set element at arr[2] equals 255 for length-3 array
+     * Verify.set element at arr[2] equals 255 for length-3 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_4400
      * @tc.name testUint8ClampedArrayFullSeven044
-     * @tc.desc Verify .set element at arr[2] equals 255 for length-3 array
+     * @tc.desc Verify.set element at arr[2] equals 255 for length-3 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1366,11 +1366,11 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     }
 
     /**
-     * Verify join returns '1,2,3' for array [1, 2, 3]
+     * Verify join returns '1, 2, 3' for array [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_SEVEN_7300
      * @tc.name testUint8ClampedArrayFullSeven073
-     * @tc.desc Verify join returns '1,2,3' for array [1, 2, 3]
+     * @tc.desc Verify join returns '1, 2, 3' for array [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

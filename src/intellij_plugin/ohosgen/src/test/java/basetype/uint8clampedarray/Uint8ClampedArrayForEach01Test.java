@@ -113,7 +113,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (i == 0) {
             first[0] = v;
-    } });
+    }
+        });
     assertEqual(100, first[0]);
     }
 
@@ -135,7 +136,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (i == 1) {
             mid[0] = v;
-    } });
+    }
+        });
     assertEqual(200, mid[0]);
     }
 
@@ -157,7 +159,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (i == 2) {
             last[0] = v;
-    } });
+    }
+        });
     assertEqual(50, last[0]);
     }
 
@@ -578,7 +581,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (firstIdx[0] == -1) {
             firstIdx[0] = i;
-    } });
+    }
+        });
     assertEqual(0, firstIdx[0]);
     }
 
@@ -646,7 +650,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (i == 0) {
             alen[0] = a.length();
-    } });
+    }
+        });
     assertEqual(4, alen[0]);
     }
 
@@ -669,7 +674,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (a != arr) {
             allSame[0] = false;
-        } calls[0]++;
+        }
+            calls[0]++;
     });
     assertTrue(allSame[0]);
     assertEqual(3, calls[0]);
@@ -873,7 +879,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (v != 0) {
             allZero[0] = false;
-        } calls[0]++;
+        }
+            calls[0]++;
     });
     assertTrue(allZero[0]);
     assertEqual(4, calls[0]);
@@ -898,7 +905,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (v != 255) {
             all255[0] = false;
-        } calls[0]++;
+        }
+            calls[0]++;
     });
     assertTrue(all255[0]);
     assertEqual(4, calls[0]);
@@ -922,7 +930,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (v != (i)) {
             match[0] = false;
-    } });
+    }
+        });
     assertTrue(match[0]);
     }
 
@@ -1298,7 +1307,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (v > maxVal[0]) {
             maxVal[0] = v;
-    } });
+    }
+        });
     assertEqual(15, maxVal[0]);
     }
 
@@ -1319,7 +1329,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (i == 0) {
             arr.set(1, 99);
-    } });
+    }
+        });
     assertEqual(99, arr.get(1));
     }
 
@@ -1417,7 +1428,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (i == 0) {
             arr.set(1, 256);
-    } });
+    }
+        });
     assertEqual(255, arr.get(1));
     }
 
@@ -1438,7 +1450,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (i == 0) {
             arr.set(1, -1);
-    } });
+    }
+        });
     assertEqual(0, arr.get(1));
     }
 
@@ -1693,7 +1706,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     parent.forEach((v, i, a) -> {
         if (i == 1) {
             parent.set(1, 88);
-    } });
+    }
+        });
     assertEqual(88, sub.get(0));
     }
 

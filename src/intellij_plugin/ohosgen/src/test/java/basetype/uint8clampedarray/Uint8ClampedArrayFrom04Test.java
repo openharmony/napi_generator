@@ -23,10 +23,8 @@ import basetype.common.TypeError;
 import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
@@ -94,11 +92,11 @@ public class Uint8ClampedArrayFrom04Test extends BasTest {
     }
 
     /**
-     * Verify -Array<number> vs Array<number> [1,2,3]
+     * Verify -Array<number> vs Array<number> [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FOUR_0400
      * @tc.name testUint8ClampedArrayFromFour004
-     * @tc.desc Verify -Array<number> vs Array<number> [1,2,3]
+     * @tc.desc Verify -Array<number> vs Array<number> [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -240,11 +238,11 @@ public class Uint8ClampedArrayFrom04Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from yields length 3 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from yields length 3 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FOUR_1100
      * @tc.name testUint8ClampedArrayFromFour011
-     * @tc.desc Verify Uint8ClampedArray.from yields length 3 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from yields length 3 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -376,11 +374,11 @@ public class Uint8ClampedArrayFrom04Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from behavior for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from behavior for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FOUR_1800
      * @tc.name testUint8ClampedArrayFromFour018
-     * @tc.desc Verify Uint8ClampedArray.from behavior for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from behavior for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -428,11 +426,11 @@ public class Uint8ClampedArrayFrom04Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from behavior for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from behavior for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FOUR_2000
      * @tc.name testUint8ClampedArrayFromFour020
-     * @tc.desc Verify Uint8ClampedArray.from behavior for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from behavior for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -456,11 +454,11 @@ public class Uint8ClampedArrayFrom04Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from behavior for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from behavior for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FOUR_2100
      * @tc.name testUint8ClampedArrayFromFour021
-     * @tc.desc Verify Uint8ClampedArray.from behavior for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from behavior for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -729,11 +727,11 @@ public class Uint8ClampedArrayFrom04Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from a.toString() equals b.toString( for from(src)
+     * Verify Uint8ClampedArray.from a.toString() equals b.toString(for from(src)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FOUR_3300
      * @tc.name testUint8ClampedArrayFromFour033
-     * @tc.desc Verify Uint8ClampedArray.from a.toString() equals b.toString( for from(src)
+     * @tc.desc Verify Uint8ClampedArray.from a.toString() equals b.toString(for from(src)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1038,11 +1036,11 @@ public class Uint8ClampedArrayFrom04Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at src[0] equals 10 for from(src, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at src[0] equals 10 for from(src, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FOUR_4900
      * @tc.name testUint8ClampedArrayFromFour049
-     * @tc.desc Verify Uint8ClampedArray.from element at src[0] equals 10 for from(src, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at src[0] equals 10 for from(src, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1326,11 +1324,11 @@ public class Uint8ClampedArrayFrom04Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from called equals 0 for from([] as Array<number>,)
+     * Verify Uint8ClampedArray.from called equals 0 for from([] as Array<number>, )
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FOUR_6400
      * @tc.name testUint8ClampedArrayFromFour064
-     * @tc.desc Verify Uint8ClampedArray.from called equals 0 for from([] as Array<number>,)
+     * @tc.desc Verify Uint8ClampedArray.from called equals 0 for from([] as Array<number>, )
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1911,11 +1909,11 @@ public class Uint8ClampedArrayFrom04Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from behavior for from([1, 2, 3, 4] as Array<number>,)
+     * Verify Uint8ClampedArray.from behavior for from([1, 2, 3, 4] as Array<number>, )
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_FOUR_9100
      * @tc.name testUint8ClampedArrayFromFour091
-     * @tc.desc Verify Uint8ClampedArray.from behavior for from([1, 2, 3, 4] as Array<number>,)
+     * @tc.desc Verify Uint8ClampedArray.from behavior for from([1, 2, 3, 4] as Array<number>, )
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

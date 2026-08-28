@@ -987,11 +987,11 @@ public class Uint8ClampedArrayIncludes02Test extends BasTest {
     }
 
     /**
-     * Verify includes(byte) includes(number )
+     * Verify includes(byte) includes(number)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INCLUDES_TWO_5200
      * @tc.name testUint8ClampedArrayIncludesTwo052
-     * @tc.desc Verify includes(byte) includes(number )
+     * @tc.desc Verify includes(byte) includes(number)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

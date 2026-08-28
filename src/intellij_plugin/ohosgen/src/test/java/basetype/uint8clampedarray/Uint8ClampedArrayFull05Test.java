@@ -22,12 +22,7 @@ import basetype.common.RangeError;
 import basetype.common.TypeError;
 import basetype.common.Uint8ClampedArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -303,11 +298,11 @@ public class Uint8ClampedArrayFull05Test extends BasTest {
     }
 
     /**
-     * Verify .set behavior for length-2 array
+     * Verify.set behavior for length-2 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FIVE_1300
      * @tc.name testUint8ClampedArrayFullFive013
-     * @tc.desc Verify .set behavior for length-2 array
+     * @tc.desc Verify.set behavior for length-2 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -326,11 +321,11 @@ public class Uint8ClampedArrayFull05Test extends BasTest {
     }
 
     /**
-     * Verify .set behavior for length-4 array
+     * Verify.set behavior for length-4 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FIVE_1400
      * @tc.name testUint8ClampedArrayFullFive014
-     * @tc.desc Verify .set behavior for length-4 array
+     * @tc.desc Verify.set behavior for length-4 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -395,11 +390,11 @@ public class Uint8ClampedArrayFull05Test extends BasTest {
     }
 
     /**
-     * Verify .set behavior for empty array
+     * Verify.set behavior for empty array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_FIVE_1700
      * @tc.name testUint8ClampedArrayFullFive017
-     * @tc.desc Verify .set behavior for empty array
+     * @tc.desc Verify.set behavior for empty array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

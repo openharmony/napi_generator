@@ -103,7 +103,8 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     arr.forEach((v, i, array) -> {
         if (i == 0) {
             arr.set(2, 99);
-        } last[0] = v;
+        }
+            last[0] = v;
     });
     assertEqual(99, last[0]);
     }
@@ -208,11 +209,11 @@ public class Uint8ClampedArrayFull08Test extends BasTest {
     }
 
     /**
-     * Verify slice(2) on [1,2,3,4] returns [3,4] with correct length and content
+     * Verify slice(2) on [1, 2, 3, 4] returns [3, 4] with correct length and content
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_EIGHT_1000
      * @tc.name testUint8ClampedArrayFullEight010
-     * @tc.desc Verify slice(2) on [1,2,3,4] returns [3,4] with correct length and content
+     * @tc.desc Verify slice(2) on [1, 2, 3, 4] returns [3, 4] with correct length and content
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

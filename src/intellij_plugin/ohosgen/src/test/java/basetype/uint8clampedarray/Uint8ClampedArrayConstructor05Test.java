@@ -20,12 +20,7 @@ import basetype.common.BasTest;
 import basetype.common.RangeError;
 import basetype.common.Uint8ClampedArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -678,11 +673,11 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
     }
 
     /**
-     * Verify FixedArray<E> length from Array<number> [1,2]
+     * Verify FixedArray<E> length from Array<number> [1, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3500
      * @tc.name testUint8ClampedArrayConstructorFive035
-     * @tc.desc Verify FixedArray<E> length from Array<number> [1,2]
+     * @tc.desc Verify FixedArray<E> length from Array<number> [1, 2]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -732,11 +727,11 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
     }
 
     /**
-     * Verify ArrayBuffer byteLength=1,byteOffset=0
+     * Verify ArrayBuffer byteLength=1, byteOffset=0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3800
      * @tc.name testUint8ClampedArrayConstructorFive038
-     * @tc.desc Verify ArrayBuffer byteLength=1,byteOffset=0
+     * @tc.desc Verify ArrayBuffer byteLength=1, byteOffset=0
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -750,11 +745,11 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
     }
 
     /**
-     * Verify ArrayBuffer byteLength=256,byteOffset=0
+     * Verify ArrayBuffer byteLength=256, byteOffset=0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3900
      * @tc.name testUint8ClampedArrayConstructorFive039
-     * @tc.desc Verify ArrayBuffer byteLength=256,byteOffset=0
+     * @tc.desc Verify ArrayBuffer byteLength=256, byteOffset=0
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -768,11 +763,11 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
     }
 
     /**
-     * Verify ArrayBuffer byteLength=1024,byteOffset=0
+     * Verify ArrayBuffer byteLength=1024, byteOffset=0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4000
      * @tc.name testUint8ClampedArrayConstructorFive040
-     * @tc.desc Verify ArrayBuffer byteLength=1024,byteOffset=0
+     * @tc.desc Verify ArrayBuffer byteLength=1024, byteOffset=0
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

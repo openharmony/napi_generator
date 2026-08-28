@@ -21,12 +21,7 @@ import basetype.common.RangeError;
 import basetype.common.Uint8Array;
 import basetype.common.Uint8ClampedArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -162,11 +157,11 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     }
 
     /**
-     * Verify element 0=0 from src=[0,0,0]
+     * Verify element 0=0 from src=[0, 0, 0]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_0800
      * @tc.name testUint8ClampedArrayConstructorFour008
-     * @tc.desc Verify element 0=0 from src=[0,0,0]
+     * @tc.desc Verify element 0=0 from src=[0, 0, 0]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -180,11 +175,11 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     }
 
     /**
-     * Verify element 0=255 from src=[255,255,255]
+     * Verify element 0=255 from src=[255, 255, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_0900
      * @tc.name testUint8ClampedArrayConstructorFour009
-     * @tc.desc Verify element 0=255 from src=[255,255,255]
+     * @tc.desc Verify element 0=255 from src=[255, 255, 255]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -378,11 +373,11 @@ public class Uint8ClampedArrayConstructor04Test extends BasTest {
     }
 
     /**
-     * Verify element 1=20 from src=[10,20,30]
+     * Verify element 1=20 from src=[10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FOUR_2000
      * @tc.name testUint8ClampedArrayConstructorFour020
-     * @tc.desc Verify element 1=20 from src=[10,20,30]
+     * @tc.desc Verify element 1=20 from src=[10, 20, 30]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

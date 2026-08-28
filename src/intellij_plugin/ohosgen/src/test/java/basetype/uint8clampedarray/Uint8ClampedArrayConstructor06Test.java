@@ -20,10 +20,8 @@ import basetype.common.BasTest;
 import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
@@ -721,11 +719,11 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     }
 
     /**
-     * Verify ArrayBuffer byteOffset=0 byteOffset=0,length=byteLength
+     * Verify ArrayBuffer byteOffset=0 byteOffset=0, length=byteLength
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_3700
      * @tc.name testUint8ClampedArrayConstructorSix037
-     * @tc.desc Verify ArrayBuffer byteOffset=0 byteOffset=0,length=byteLength
+     * @tc.desc Verify ArrayBuffer byteOffset=0 byteOffset=0, length=byteLength
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1088,11 +1086,11 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     }
 
     /**
-     * Verify join a.join() equals b.join( for array [1, 2]
+     * Verify join a.join() equals b.join(for array [1, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SIX_5700
      * @tc.name testUint8ClampedArrayConstructorSix057
-     * @tc.desc Verify join a.join() equals b.join( for array [1, 2]
+     * @tc.desc Verify join a.join() equals b.join(for array [1, 2]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

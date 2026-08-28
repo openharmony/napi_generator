@@ -28,11 +28,11 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayJoin02Test extends BasTest {
     /**
-     * Verify join r equals '1,100' for array [1, 100]
+     * Verify join r equals '1, 100' for array [1, 100]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0100
      * @tc.name testUint8ClampedArrayJoinTwo001
-     * @tc.desc Verify join r equals '1,100' for array [1, 100]
+     * @tc.desc Verify join r equals '1, 100' for array [1, 100]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -118,11 +118,11 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '1,2' for array [1, 2]
+     * Verify join r equals '1, 2' for array [1, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_0600
      * @tc.name testUint8ClampedArrayJoinTwo006
-     * @tc.desc Verify join r equals '1,2' for array [1, 2]
+     * @tc.desc Verify join r equals '1, 2' for array [1, 2]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -322,7 +322,7 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     int old = arr.buffer().byteLength();
     assertEqual("1,2,3,4", arr.join(","));
-    assertEqual(old, arr.buffer().byteLength() );
+    assertEqual(old, arr.buffer().byteLength());
     }
 
     /**
@@ -342,7 +342,7 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2, 4);
     int old = arr.byteOffset();
     assertEqual("0,0,0,0", arr.join(","));
-    assertEqual(old, arr.byteOffset() );
+    assertEqual(old, arr.byteOffset());
     }
 
     /**
@@ -384,11 +384,11 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     }
 
     /**
-     * Verify join(',') of [10,20,30] returns '10,20,30'
+     * Verify join(',') of [10, 20, 30] returns '10, 20, 30'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2000
      * @tc.name testUint8ClampedArrayJoinTwo020
-     * @tc.desc Verify join(',') of [10,20,30] returns '10,20,30'
+     * @tc.desc Verify join(',') of [10, 20, 30] returns '10, 20, 30'
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -516,11 +516,11 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '255,0,0,128' for length-4 array
+     * Verify join r equals '255, 0, 0, 128' for length-4 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_2700
      * @tc.name testUint8ClampedArrayJoinTwo027
-     * @tc.desc Verify join r equals '255,0,0,128' for length-4 array
+     * @tc.desc Verify join r equals '255, 0, 0, 128' for length-4 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -633,11 +633,11 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     }
 
     /**
-     * Verify subarray r equals '2,99,4' for array [1, 2, 3, 4, 5]
+     * Verify subarray r equals '2, 99, 4' for array [1, 2, 3, 4, 5]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3300
      * @tc.name testUint8ClampedArrayJoinTwo033
-     * @tc.desc Verify subarray r equals '2,99,4' for array [1, 2, 3, 4, 5]
+     * @tc.desc Verify subarray r equals '2, 99, 4' for array [1, 2, 3, 4, 5]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -653,11 +653,11 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     }
 
     /**
-     * Verify subarray r equals '1,88,3,4,5' for array [1, 2, 3, 4, 5]
+     * Verify subarray r equals '1, 88, 3, 4, 5' for array [1, 2, 3, 4, 5]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3400
      * @tc.name testUint8ClampedArrayJoinTwo034
-     * @tc.desc Verify subarray r equals '1,88,3,4,5' for array [1, 2, 3, 4, 5]
+     * @tc.desc Verify subarray r equals '1, 88, 3, 4, 5' for array [1, 2, 3, 4, 5]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -673,11 +673,11 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     }
 
     /**
-     * Verify slice r equals '1,2,3' for array [1, 2, 3]
+     * Verify slice r equals '1, 2, 3' for array [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3500
      * @tc.name testUint8ClampedArrayJoinTwo035
-     * @tc.desc Verify slice r equals '1,2,3' for array [1, 2, 3]
+     * @tc.desc Verify slice r equals '1, 2, 3' for array [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -693,11 +693,11 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     }
 
     /**
-     * Verify join firstView.join(',') equals '10,20' for ArrayBuffer-backed array
+     * Verify join firstView.join(',') equals '10, 20' for ArrayBuffer-backed array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3600
      * @tc.name testUint8ClampedArrayJoinTwo036
-     * @tc.desc Verify join firstView.join(',') equals '10,20' for ArrayBuffer-backed array
+     * @tc.desc Verify join firstView.join(',') equals '10, 20' for ArrayBuffer-backed array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -717,11 +717,11 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     }
 
     /**
-     * Verify join secondView.join(',') equals '50,60' for ArrayBuffer-backed array
+     * Verify join secondView.join(',') equals '50, 60' for ArrayBuffer-backed array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_TWO_3700
      * @tc.name testUint8ClampedArrayJoinTwo037
-     * @tc.desc Verify join secondView.join(',') equals '50,60' for ArrayBuffer-backed array
+     * @tc.desc Verify join secondView.join(',') equals '50, 60' for ArrayBuffer-backed array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

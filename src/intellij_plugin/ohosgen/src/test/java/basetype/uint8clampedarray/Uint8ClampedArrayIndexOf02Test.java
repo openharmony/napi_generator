@@ -226,11 +226,11 @@ public class Uint8ClampedArrayIndexOf02Test extends BasTest {
     }
 
     /**
-     * Verify indexOf(3) returns 2 in [1,2,3,4]
+     * Verify indexOf(3) returns 2 in [1, 2, 3, 4]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_INDEX_OF_TWO_1200
      * @tc.name testUint8ClampedArrayIndexOfTwo012
-     * @tc.desc Verify indexOf(3) returns 2 in [1,2,3,4]
+     * @tc.desc Verify indexOf(3) returns 2 in [1, 2, 3, 4]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

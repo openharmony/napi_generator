@@ -77,7 +77,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
         cnt[0]++;
     if (BasTest.isNaN(v)) {
         anyNaN[0] = true;
-    } });
+    }
+        });
     assertEqual(3, cnt[0]);
     assertFalse(anyNaN[0]);
     }
@@ -102,7 +103,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
         cnt[0]++;
     if (!BasTest.isFinite(v)) {
         anyInf[0] = true;
-    } });
+    }
+        });
     assertEqual(2, cnt[0]);
     assertFalse(anyInf[0]);
     }
@@ -127,7 +129,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
         cnt[0]++;
     if (v < 0 || v > 255) {
         inRange[0] = false;
-    } });
+    }
+        });
     assertEqual(4, cnt[0]);
     assertTrue(inRange[0]);
     }
@@ -152,7 +155,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
         cnt[0]++;
     if (i < 0) {
         allNonNeg[0] = false;
-    } });
+    }
+        });
     assertEqual(3, cnt[0]);
     assertTrue(allNonNeg[0]);
     }
@@ -177,7 +181,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
         cnt[0]++;
     if (i >= arr.length()) {
         allLtLen[0] = false;
-    } });
+    }
+        });
     assertEqual(4, cnt[0]);
     assertTrue(allLtLen[0]);
     }
@@ -200,7 +205,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (i == 0) {
             capturedValue[0] = v;
-    } });
+    }
+        });
     assertEqual(arr.get(0), capturedValue[0]);
     }
 
@@ -222,7 +228,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (i == a.length() - 1) {
             vLast[0] = v;
-    } });
+    }
+        });
     assertEqual(arr.get(2), vLast[0]);
     }
 
@@ -246,7 +253,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
         cnt[0]++;
     if (v != arr.get(i)) {
         matchAll[0] = false;
-    } });
+    }
+        });
     assertEqual(4, cnt[0]);
     assertTrue(matchAll[0]);
     }
@@ -271,7 +279,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
         cnt[0]++;
     if (v != arr.get(i)) {
         allMatch[0] = false;
-    } });
+    }
+        });
     assertEqual(3, cnt[0]);
     assertTrue(allMatch[0]);
     }
@@ -357,7 +366,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (i == 0) {
             crossVal[0] = BasTest.coalesce(a.at(2), 0);
-    } });
+    }
+        });
     assertEqual(30, crossVal[0]);
     }
 
@@ -402,7 +412,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (v == 0) {
             zeroCnt[0] = zeroCnt[0] + 1;
-    } });
+    }
+        });
     assertEqual(3, zeroCnt[0]);
     }
 
@@ -424,7 +435,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (v == 255) {
             maxCnt[0] = maxCnt[0] + 1;
-    } });
+    }
+        });
     assertEqual(3, maxCnt[0]);
     }
 
@@ -445,7 +457,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
     int[] oddSum = {0};
     int[] evenSum = {0};
     arr.forEach((v, i, a) -> {
-    if ((v ) % 2 == 0) {
+    if ((v) % 2 == 0) {
         evenSum[0] = evenSum[0] + v;
     } else {
         oddSum[0] = oddSum[0] + v;
@@ -719,7 +731,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
     arr.forEach((v, i, a) -> {
         if (v < minV[0]) {
             minV[0] = v;
-    } });
+    }
+        });
     assertEqual(1, minV[0]);
     }
 
@@ -746,11 +759,11 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
     }
 
     /**
-     * Verify callback (index, value) Map<int,number>
+     * Verify callback (index, value) Map<int, number>
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_3200
      * @tc.name testUint8ClampedArrayForEachTwo032
-     * @tc.desc Verify callback (index, value) Map<int,number>
+     * @tc.desc Verify callback (index, value) Map<int, number>
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -793,9 +806,9 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FOR_EACH_TWO_3400
      * @tc.name testUint8ClampedArrayForEachTwo034
      * @tc.desc Verify forEach s equals '0:1;
-     1:2;
-     2:3;
-     ' for array [1, 2, 3];
+     * 1:2;
+     * 2:3;
+     * ' for array [1, 2, 3];
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

@@ -20,11 +20,7 @@ import basetype.common.BasTest;
 import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -533,7 +529,8 @@ public class Uint8ClampedArrayEvery01Test extends BasTest {
             return true;
     } else {
         return false;
-    } });
+    }
+        });
     assertTrue(r);
     }
 
@@ -1635,11 +1632,11 @@ public class Uint8ClampedArrayEvery01Test extends BasTest {
     }
 
     /**
-     * Verify new(buf,offset,length) every
+     * Verify new(buf, offset, length) every
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_ONE_8400
      * @tc.name testUint8ClampedArrayEveryOne084
-     * @tc.desc Verify new(buf,offset,length) every
+     * @tc.desc Verify new(buf, offset, length) every
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1763,11 +1760,11 @@ public class Uint8ClampedArrayEvery01Test extends BasTest {
     }
 
     /**
-     * Verify every callback index sequence is 0,1,2 and values are positive for array [1, 2, 3]
+     * Verify every callback index sequence is 0, 1, 2 and values are positive for array [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_ONE_9000
      * @tc.name testUint8ClampedArrayEveryOne090
-     * @tc.desc Verify every callback index sequence is 0,1,2 and values are positive for array [1, 2, 3]
+     * @tc.desc Verify every callback index sequence is 0, 1, 2 and values are positive for array [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

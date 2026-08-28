@@ -201,11 +201,11 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
     }
 
     /**
-     * Verify join arr.join(',') equals '1,2' for array [1, 2]
+     * Verify join arr.join(',') equals '1, 2' for array [1, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1100
      * @tc.name testUint8ClampedArrayFullThree011
-     * @tc.desc Verify join arr.join(',') equals '1,2' for array [1, 2]
+     * @tc.desc Verify join arr.join(',') equals '1, 2' for array [1, 2]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -218,11 +218,11 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
     }
 
     /**
-     * Verify toString arr.toString() equals '1,2' for array [1, 2]
+     * Verify toString arr.toString() equals '1, 2' for array [1, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_1200
      * @tc.name testUint8ClampedArrayFullThree012
-     * @tc.desc Verify toString arr.toString() equals '1,2' for array [1, 2]
+     * @tc.desc Verify toString arr.toString() equals '1, 2' for array [1, 2]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -877,11 +877,11 @@ public class Uint8ClampedArrayFull03Test extends BasTest {
     }
 
     /**
-     * Verify .set ret equals undefined for length-4 array
+     * Verify.set ret equals undefined for length-4 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FULL_THREE_4800
      * @tc.name testUint8ClampedArrayFullThree048
-     * @tc.desc Verify .set ret equals undefined for length-4 array
+     * @tc.desc Verify.set ret equals undefined for length-4 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

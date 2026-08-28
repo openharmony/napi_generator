@@ -132,7 +132,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     @Test
     void testUint8ClampedArrayFilterTwo005() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
-    Uint8ClampedArray r = arr.filter((v, i, a) -> v > 1) .filter((v, i, a) -> v < 5);
+    Uint8ClampedArray r = arr.filter((v, i, a) -> v > 1).filter((v, i, a) -> v < 5);
     assertEqual(3, r.length());
     }
 
@@ -150,7 +150,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     @Test
     void testUint8ClampedArrayFilterTwo006() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
-    Uint8ClampedArray r = arr.filter((v, i, a) -> v > 1) .filter((v, i, a) -> v > 10);
+    Uint8ClampedArray r = arr.filter((v, i, a) -> v > 1).filter((v, i, a) -> v > 10);
     assertEqual(0, r.length());
     }
 
@@ -215,11 +215,11 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     }
 
     /**
-     * Verify filter r.join(',') equals '2,3,4' for array [1, 2, 3, 4]
+     * Verify filter r.join(',') equals '2, 3, 4' for array [1, 2, 3, 4]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1000
      * @tc.name testUint8ClampedArrayFilterTwo010
-     * @tc.desc Verify filter r.join(',') equals '2,3,4' for array [1, 2, 3, 4]
+     * @tc.desc Verify filter r.join(',') equals '2, 3, 4' for array [1, 2, 3, 4]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

@@ -19,12 +19,7 @@ import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.Uint8ClampedArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -34,11 +29,11 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayJoin01Test extends BasTest {
     /**
-     * Verify join r equals '1,2,3' for array [1, 2, 3]
+     * Verify join r equals '1, 2, 3' for array [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0100
      * @tc.name testUint8ClampedArrayJoinOne001
-     * @tc.desc Verify join r equals '1,2,3' for array [1, 2, 3]
+     * @tc.desc Verify join r equals '1, 2, 3' for array [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -52,11 +47,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '1,2,3' for array [1, 2, 3]
+     * Verify join r equals '1, 2, 3' for array [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0200
      * @tc.name testUint8ClampedArrayJoinOne002
-     * @tc.desc Verify join r equals '1,2,3' for array [1, 2, 3]
+     * @tc.desc Verify join r equals '1, 2, 3' for array [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -129,8 +124,8 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_0600
      * @tc.name testUint8ClampedArrayJoinOne006
      * @tc.desc Verify join r equals '1;
-     2;
-     3' for array [1, 2, 3];
+     * 2;
+     * 3' for array [1, 2, 3];
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1125,11 +1120,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '10,20' for array [10, 20]
+     * Verify join r equals '10, 20' for array [10, 20]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6100
      * @tc.name testUint8ClampedArrayJoinOne061
-     * @tc.desc Verify join r equals '10,20' for array [10, 20]
+     * @tc.desc Verify join r equals '10, 20' for array [10, 20]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1161,11 +1156,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '0,0,0' for array [0, 0, 0]
+     * Verify join r equals '0, 0, 0' for array [0, 0, 0]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6300
      * @tc.name testUint8ClampedArrayJoinOne063
-     * @tc.desc Verify join r equals '0,0,0' for array [0, 0, 0]
+     * @tc.desc Verify join r equals '0, 0, 0' for array [0, 0, 0]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1179,11 +1174,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '255,255,255' for array [255, 255, 255]
+     * Verify join r equals '255, 255, 255' for array [255, 255, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6400
      * @tc.name testUint8ClampedArrayJoinOne064
-     * @tc.desc Verify join r equals '255,255,255' for array [255, 255, 255]
+     * @tc.desc Verify join r equals '255, 255, 255' for array [255, 255, 255]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1215,11 +1210,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '0,255' for array [0, 255]
+     * Verify join r equals '0, 255' for array [0, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6600
      * @tc.name testUint8ClampedArrayJoinOne066
-     * @tc.desc Verify join r equals '0,255' for array [0, 255]
+     * @tc.desc Verify join r equals '0, 255' for array [0, 255]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1233,11 +1228,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '127,128' for array [127, 128]
+     * Verify join r equals '127, 128' for array [127, 128]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6700
      * @tc.name testUint8ClampedArrayJoinOne067
-     * @tc.desc Verify join r equals '127,128' for array [127, 128]
+     * @tc.desc Verify join r equals '127, 128' for array [127, 128]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1251,11 +1246,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '255,100' for length-2 array
+     * Verify join r equals '255, 100' for length-2 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6800
      * @tc.name testUint8ClampedArrayJoinOne068
-     * @tc.desc Verify join r equals '255,100' for length-2 array
+     * @tc.desc Verify join r equals '255, 100' for length-2 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1271,11 +1266,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '0,5' for length-2 array
+     * Verify join r equals '0, 5' for length-2 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_6900
      * @tc.name testUint8ClampedArrayJoinOne069
-     * @tc.desc Verify join r equals '0,5' for length-2 array
+     * @tc.desc Verify join r equals '0, 5' for length-2 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1512,11 +1507,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.of r equals '10,20,30' for of(10, 20, 30)
+     * Verify Uint8ClampedArray.of r equals '10, 20, 30' for of(10, 20, 30)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8100
      * @tc.name testUint8ClampedArrayJoinOne081
-     * @tc.desc Verify Uint8ClampedArray.of r equals '10,20,30' for of(10, 20, 30)
+     * @tc.desc Verify Uint8ClampedArray.of r equals '10, 20, 30' for of(10, 20, 30)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1530,11 +1525,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from r equals '1,2,3' for from(src)
+     * Verify Uint8ClampedArray.from r equals '1, 2, 3' for from(src)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8200
      * @tc.name testUint8ClampedArrayJoinOne082
-     * @tc.desc Verify Uint8ClampedArray.from r equals '1,2,3' for from(src)
+     * @tc.desc Verify Uint8ClampedArray.from r equals '1, 2, 3' for from(src)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1549,11 +1544,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify subarray r equals '2,3,4' for array [1, 2, 3, 4, 5]
+     * Verify subarray r equals '2, 3, 4' for array [1, 2, 3, 4, 5]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8300
      * @tc.name testUint8ClampedArrayJoinOne083
-     * @tc.desc Verify subarray r equals '2,3,4' for array [1, 2, 3, 4, 5]
+     * @tc.desc Verify subarray r equals '2, 3, 4' for array [1, 2, 3, 4, 5]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1641,11 +1636,11 @@ public class Uint8ClampedArrayJoin01Test extends BasTest {
     }
 
     /**
-     * Verify join r equals '0,1' for array [0, 1]
+     * Verify join r equals '0, 1' for array [0, 1]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_JOIN_ONE_8800
      * @tc.name testUint8ClampedArrayJoinOne088
-     * @tc.desc Verify join r equals '0,1' for array [0, 1]
+     * @tc.desc Verify join r equals '0, 1' for array [0, 1]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

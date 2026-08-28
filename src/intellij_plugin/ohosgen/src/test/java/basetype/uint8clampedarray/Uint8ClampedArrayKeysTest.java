@@ -21,11 +21,7 @@ import basetype.common.IteratorResult;
 import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,11 +31,11 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayKeysTest extends BasTest {
     /**
-     * Verify keys() yields sequence 0,1,2 for a 3-element array via next()
+     * Verify keys() yields sequence 0, 1, 2 for a 3-element array via next()
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0100
      * @tc.name testUint8ClampedArrayKeys001
-     * @tc.desc Verify keys() yields sequence 0,1,2 for a 3-element array via next()
+     * @tc.desc Verify keys() yields sequence 0, 1, 2 for a 3-element array via next()
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -166,11 +162,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() first key is 0 for a 2-element array [10,20]
+     * Verify keys() first key is 0 for a 2-element array [10, 20]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0800
      * @tc.name testUint8ClampedArrayKeys008
-     * @tc.desc Verify keys() first key is 0 for a 2-element array [10,20]
+     * @tc.desc Verify keys() first key is 0 for a 2-element array [10, 20]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -184,11 +180,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() second key is 1 for a 2-element array [10,20]
+     * Verify keys() second key is 1 for a 2-element array [10, 20]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_0900
      * @tc.name testUint8ClampedArrayKeys009
-     * @tc.desc Verify keys() second key is 1 for a 2-element array [10,20]
+     * @tc.desc Verify keys() second key is 1 for a 2-element array [10, 20]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -223,11 +219,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() for..of yields [0,1,2] for a 3-element array
+     * Verify keys() for..of yields [0, 1, 2] for a 3-element array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1100
      * @tc.name testUint8ClampedArrayKeys011
-     * @tc.desc Verify keys() for..of yields [0,1,2] for a 3-element array
+     * @tc.desc Verify keys() for..of yields [0, 1, 2] for a 3-element array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -247,11 +243,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() first key is 0 for a 3-element array [1,2,3]
+     * Verify keys() first key is 0 for a 3-element array [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1200
      * @tc.name testUint8ClampedArrayKeys012
-     * @tc.desc Verify keys() first key is 0 for a 3-element array [1,2,3]
+     * @tc.desc Verify keys() first key is 0 for a 3-element array [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -265,11 +261,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() third key is 2 after consuming first two for [1,2,3]
+     * Verify keys() third key is 2 after consuming first two for [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_1300
      * @tc.name testUint8ClampedArrayKeys013
-     * @tc.desc Verify keys() third key is 2 after consuming first two for [1,2,3]
+     * @tc.desc Verify keys() third key is 2 after consuming first two for [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -614,11 +610,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() yields 3 keys on a subarray(1,4) view
+     * Verify keys() yields 3 keys on a subarray(1, 4) view
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3000
      * @tc.name testUint8ClampedArrayKeys030
-     * @tc.desc Verify keys() yields 3 keys on a subarray(1,4) view
+     * @tc.desc Verify keys() yields 3 keys on a subarray(1, 4) view
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -636,11 +632,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() last key is 2 on a slice(0,3) copy
+     * Verify keys() last key is 2 on a slice(0, 3) copy
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3100
      * @tc.name testUint8ClampedArrayKeys031
-     * @tc.desc Verify keys() last key is 2 on a slice(0,3) copy
+     * @tc.desc Verify keys() last key is 2 on a slice(0, 3) copy
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -658,11 +654,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() yields sequence 0,1 for a 2-element array via next()
+     * Verify keys() yields sequence 0, 1 for a 2-element array via next()
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3200
      * @tc.name testUint8ClampedArrayKeys032
-     * @tc.desc Verify keys() yields sequence 0,1 for a 2-element array via next()
+     * @tc.desc Verify keys() yields sequence 0, 1 for a 2-element array via next()
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -696,11 +692,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() first next().value is 0 for a 2-element array [1,2]
+     * Verify keys() first next().value is 0 for a 2-element array [1, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3400
      * @tc.name testUint8ClampedArrayKeys034
-     * @tc.desc Verify keys() first next().value is 0 for a 2-element array [1,2]
+     * @tc.desc Verify keys() first next().value is 0 for a 2-element array [1, 2]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -733,11 +729,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() for..of loop sums keys to 3 for [1,2,3] (0+1+2)
+     * Verify keys() for..of loop sums keys to 3 for [1, 2, 3] (0+1+2)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_3600
      * @tc.name testUint8ClampedArrayKeys036
-     * @tc.desc Verify keys() for..of loop sums keys to 3 for [1,2,3] (0+1+2)
+     * @tc.desc Verify keys() for..of loop sums keys to 3 for [1, 2, 3] (0+1+2)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -904,11 +900,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() next().value with nullish coalescing yields 0,1 for length-4 array
+     * Verify keys() next().value with nullish coalescing yields 0, 1 for length-4 array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4400
      * @tc.name testUint8ClampedArrayKeys044
-     * @tc.desc Verify keys() next().value with nullish coalescing yields 0,1 for length-4 array
+     * @tc.desc Verify keys() next().value with nullish coalescing yields 0, 1 for length-4 array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -945,11 +941,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() for..of collects exactly 3 keys into an array for [1,2,3]
+     * Verify keys() for..of collects exactly 3 keys into an array for [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4600
      * @tc.name testUint8ClampedArrayKeys046
-     * @tc.desc Verify keys() for..of collects exactly 3 keys into an array for [1,2,3]
+     * @tc.desc Verify keys() for..of collects exactly 3 keys into an array for [1, 2, 3]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -966,11 +962,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() for..of collected first element is 0 for [5,6,7]
+     * Verify keys() for..of collected first element is 0 for [5, 6, 7]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4700
      * @tc.name testUint8ClampedArrayKeys047
-     * @tc.desc Verify keys() for..of collected first element is 0 for [5,6,7]
+     * @tc.desc Verify keys() for..of collected first element is 0 for [5, 6, 7]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -987,11 +983,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() for..of collected last element is length-1 for [5,6,7,8]
+     * Verify keys() for..of collected last element is length-1 for [5, 6, 7, 8]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_4800
      * @tc.name testUint8ClampedArrayKeys048
-     * @tc.desc Verify keys() for..of collected last element is length-1 for [5,6,7,8]
+     * @tc.desc Verify keys() for..of collected last element is length-1 for [5, 6, 7, 8]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1155,11 +1151,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() last key is 2 on a sorted [3,1,2] array
+     * Verify keys() last key is 2 on a sorted [3, 1, 2] array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5600
      * @tc.name testUint8ClampedArrayKeys056
-     * @tc.desc Verify keys() last key is 2 on a sorted [3,1,2] array
+     * @tc.desc Verify keys() last key is 2 on a sorted [3, 1, 2] array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1220,11 +1216,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() for..of collected second element is 1 for [10,20,30,40]
+     * Verify keys() for..of collected second element is 1 for [10, 20, 30, 40]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_5900
      * @tc.name testUint8ClampedArrayKeys059
-     * @tc.desc Verify keys() for..of collected second element is 1 for [10,20,30,40]
+     * @tc.desc Verify keys() for..of collected second element is 1 for [10, 20, 30, 40]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1241,11 +1237,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() for..of collected third element is 2 for [10,20,30,40]
+     * Verify keys() for..of collected third element is 2 for [10, 20, 30, 40]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6000
      * @tc.name testUint8ClampedArrayKeys060
-     * @tc.desc Verify keys() for..of collected third element is 2 for [10,20,30,40]
+     * @tc.desc Verify keys() for..of collected third element is 2 for [10, 20, 30, 40]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1262,11 +1258,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() for..of collected fourth element is 3 for [10,20,30,40]
+     * Verify keys() for..of collected fourth element is 3 for [10, 20, 30, 40]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6100
      * @tc.name testUint8ClampedArrayKeys061
-     * @tc.desc Verify keys() for..of collected fourth element is 3 for [10,20,30,40]
+     * @tc.desc Verify keys() for..of collected fourth element is 3 for [10, 20, 30, 40]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -1391,11 +1387,11 @@ public class Uint8ClampedArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify keys() last key is 3 after copyWithin(0,2) on a 4-element array
+     * Verify keys() last key is 3 after copyWithin(0, 2) on a 4-element array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_KEYS_6700
      * @tc.name testUint8ClampedArrayKeys067
-     * @tc.desc Verify keys() last key is 3 after copyWithin(0,2) on a 4-element array
+     * @tc.desc Verify keys() last key is 3 after copyWithin(0, 2) on a 4-element array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

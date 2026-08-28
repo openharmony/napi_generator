@@ -19,11 +19,8 @@ import basetype.common.BasTest;
 import basetype.common.Error;
 import basetype.common.Uint8ClampedArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
@@ -70,11 +67,11 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from([1,2,3]) produces correct length, byteLength and elements
+     * Verify Uint8ClampedArray.from([1, 2, 3]) produces correct length, byteLength and elements
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_0300
      * @tc.name testUint8ClampedArrayFromTwo003
-     * @tc.desc Verify Uint8ClampedArray.from([1,2,3]) produces correct length, byteLength and elements
+     * @tc.desc Verify Uint8ClampedArray.from([1, 2, 3]) produces correct length, byteLength and elements
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -323,11 +320,11 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1500
      * @tc.name testUint8ClampedArrayFromTwo015
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -344,11 +341,11 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k:)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1600
      * @tc.name testUint8ClampedArrayFromTwo016
-     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
+     * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k:)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -365,11 +362,11 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
     }
 
     /**
-     * Verify Uint8ClampedArray.from(Set{1,2}) produces correct length, byteLength and elements
+     * Verify Uint8ClampedArray.from(Set{1, 2}) produces correct length, byteLength and elements
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1700
      * @tc.name testUint8ClampedArrayFromTwo017
-     * @tc.desc Verify Uint8ClampedArray.from(Set{1,2}) produces correct length, byteLength and elements
+     * @tc.desc Verify Uint8ClampedArray.from(Set{1, 2}) produces correct length, byteLength and elements
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -388,11 +385,11 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
     }
 
     /**
-     * Verify from(ArrayLike<number> [10,20]) produces correct length, byteLength and elements
+     * Verify from(ArrayLike<number> [10, 20]) produces correct length, byteLength and elements
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_TWO_1800
      * @tc.name testUint8ClampedArrayFromTwo018
-     * @tc.desc Verify from(ArrayLike<number> [10,20]) produces correct length, byteLength and elements
+     * @tc.desc Verify from(ArrayLike<number> [10, 20]) produces correct length, byteLength and elements
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2

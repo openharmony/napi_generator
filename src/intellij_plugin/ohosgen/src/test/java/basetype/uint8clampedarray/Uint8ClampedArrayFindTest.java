@@ -23,11 +23,7 @@ import basetype.common.TypeError;
 import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -1073,7 +1069,7 @@ public class Uint8ClampedArrayFindTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     List<Integer> order = new ArrayList<>();
     arr.find((v, i, a) -> {
-    order.add(i );
+    order.add(i);
     return false;
         });
     assertEqual(4, order.size());

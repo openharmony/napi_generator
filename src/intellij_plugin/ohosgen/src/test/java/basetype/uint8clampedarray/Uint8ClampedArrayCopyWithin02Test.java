@@ -28,11 +28,11 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     /**
-     * Verify copyWithin(0,3) returns the receiver and copies the trailing values
+     * Verify copyWithin(0, 3) returns the receiver and copies the trailing values
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0100
      * @tc.name testUint8ClampedArrayCopyWithinTwo001
-     * @tc.desc Verify copyWithin(0,3) returns the receiver and copies the trailing values
+     * @tc.desc Verify copyWithin(0, 3) returns the receiver and copies the trailing values
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -48,11 +48,11 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     }
 
     /**
-     * Verify copyWithin(0,1) result arr[0] equals 20
+     * Verify copyWithin(0, 1) result arr[0] equals 20
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0200
      * @tc.name testUint8ClampedArrayCopyWithinTwo002
-     * @tc.desc Verify copyWithin(0,1) result arr[0] equals 20
+     * @tc.desc Verify copyWithin(0, 1) result arr[0] equals 20
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -66,11 +66,11 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     }
 
     /**
-     * Verify copyWithin(0,2,5) returns the receiver and respects the end bound
+     * Verify copyWithin(0, 2, 5) returns the receiver and respects the end bound
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0300
      * @tc.name testUint8ClampedArrayCopyWithinTwo003
-     * @tc.desc Verify copyWithin(0,2,5) returns the receiver and respects the end bound
+     * @tc.desc Verify copyWithin(0, 2, 5) returns the receiver and respects the end bound
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -106,11 +106,11 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     }
 
     /**
-     * Verify copyWithin(0,0) returns the receiver without changing its only value
+     * Verify copyWithin(0, 0) returns the receiver without changing its only value
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0500
      * @tc.name testUint8ClampedArrayCopyWithinTwo005
-     * @tc.desc Verify copyWithin(0,0) returns the receiver without changing its only value
+     * @tc.desc Verify copyWithin(0, 0) returns the receiver without changing its only value
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
@@ -165,11 +165,11 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     }
 
     /**
-     * Verify copyWithin(0,-2) result arr[0] equals 7
+     * Verify copyWithin(0, -2) result arr[0] equals 7
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0800
      * @tc.name testUint8ClampedArrayCopyWithinTwo008
-     * @tc.desc Verify copyWithin(0,-2) result arr[0] equals 7
+     * @tc.desc Verify copyWithin(0, -2) result arr[0] equals 7
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level Level 2
