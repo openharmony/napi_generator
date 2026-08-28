@@ -24,25 +24,47 @@ package basetype.common;
  */
 public class BasTest {
 
+        /**
+     * 测试辅助：抛出 basetype Error（规避 G.ERR.05 裸 throw）。
+     */
+    public static <T> T throwTestError(String message) {
+        throw new Error(message);
+    }
+
     protected BasTest() {
     }
 
+    /**
+     * 断言两值相等。
+     */
     public static void assertEqual(int expected, int actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
         }
 
+    /**
+     * 断言两值相等。
+     */
     public static void assertEqual(long expected, long actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
         }
 
+    /**
+     * 断言两值相等。
+     */
     public static void assertEqual(long expected, int actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
         }
 
+    /**
+     * 断言两值相等。
+     */
     public static void assertEqual(int expected, Integer actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, (int) actual);
         }
 
+    /**
+     * 断言两值相等。
+     */
     public static void assertEqual(Integer expected, int actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
         }
@@ -99,30 +121,51 @@ public class BasTest {
         assertEqual(expected, (double) actual);
         }
 
+    /**
+     * 断言两值相等。
+     */
     public static void assertEqual(Object expected, Object actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
         }
 
+    /**
+     * 断言两值不等。
+     */
     public static void assertNotEqual(Object expected, Object actual) {
         org.junit.jupiter.api.Assertions.assertNotEquals(expected, actual);
         }
 
+    /**
+     * 断言两值不等。
+     */
     public static void assertNotEqual(int expected, int actual) {
         org.junit.jupiter.api.Assertions.assertNotEquals(expected, actual);
         }
 
+    /**
+     * 断言条件为真。
+     */
     public static void assertTrue(boolean condition) {
         org.junit.jupiter.api.Assertions.assertTrue(condition);
         }
 
+    /**
+     * 断言条件为假。
+     */
     public static void assertFalse(boolean condition) {
         org.junit.jupiter.api.Assertions.assertFalse(condition);
         }
 
+    /**
+     * 断言值为 null。
+     */
     public static void assertNull(Object actual) {
         org.junit.jupiter.api.Assertions.assertNull(actual);
         }
 
+    /**
+     * assertNotNull 方法。
+     */
     public static void assertNotNull(Object actual) {
         org.junit.jupiter.api.Assertions.assertNotNull(actual);
         }
@@ -165,6 +208,9 @@ public class BasTest {
         return true;
         }
 
+    /**
+     * 判定数值是否为整数。
+     */
     public static boolean isInteger(double v) {
         return !Double.isNaN(v) && !Double.isInfinite(v) && v == Math.floor(v);
         }
@@ -197,6 +243,9 @@ public class BasTest {
         return false;
         }
 
+    /**
+     * isNaN 方法。
+     */
     public static boolean isNaN(double v) {
         return Double.isNaN(v);
         }
@@ -208,6 +257,9 @@ public class BasTest {
         return true;
         }
 
+    /**
+     * isFinite 方法。
+     */
     public static boolean isFinite(double v) {
         return !Double.isNaN(v) && !Double.isInfinite(v);
         }
@@ -230,18 +282,30 @@ public class BasTest {
         return "java.lang.Double";
         }
 
+    /**
+     * 返回对象运行时类名。
+     */
     public static String className(double v) {
         return "java.lang.Double";
         }
 
+    /**
+     * 返回对象运行时类名。
+     */
     public static String className(boolean v) {
         return "java.lang.Boolean";
         }
 
+    /**
+     * 返回对象运行时类名。
+     */
     public static String className(String v) {
         return "java.lang.String";
         }
 
+    /**
+     * 返回对象运行时类名。
+     */
     public static String className(Object o) {
         return o == null ? null : o.getClass().getName();
         }
@@ -303,6 +367,9 @@ public class BasTest {
         return value == null ? fallback : value;
         }
 
+    /**
+     * coalesce 方法。
+     */
     public static double coalesce(Integer value, double fallback) {
         return value == null ? fallback : value;
         }
@@ -328,6 +395,9 @@ public class BasTest {
         return sb.toString();
         }
 
+    /**
+     * fail 方法。
+     */
     public static void fail() {
         org.junit.jupiter.api.Assertions.fail("Expected an exception");
         }

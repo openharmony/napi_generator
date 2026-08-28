@@ -22,8 +22,8 @@ package basetype.common;
  */
 public class EntryResult {
 
-    public int[] value;
-    public boolean done;
+    public final int[] value;
+    public final boolean done;
 
     public EntryResult(int[] value, boolean done) {
         this.value = value;

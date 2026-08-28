@@ -299,6 +299,9 @@ public class Int32Array implements IntArrayView {
         return null;
         }
 
+    /**
+     * 写入元素或批量填充，对应 set 语义。
+     */
     public Integer set(double[] src) {
         return set(src, 0);
         }
@@ -311,6 +314,9 @@ public class Int32Array implements IntArrayView {
         return fill(value, toIndexD(start, length), toIndexD(end, length));
         }
 
+    /**
+     * 填充数组元素，对应 fill 语义。
+     */
     public Int32Array fill(double value, int start, int end) {
         int len = length;
         int from = toIndex(start, len);
@@ -321,10 +327,16 @@ public class Int32Array implements IntArrayView {
         return this;
         }
 
+    /**
+     * 填充数组元素，对应 fill 语义。
+     */
     public Int32Array fill(double value, int start) {
         return fill(value, start, length);
         }
 
+    /**
+     * 填充数组元素，对应 fill 语义。
+     */
     public Int32Array fill(double value) {
         return fill(value, 0, length);
         }
@@ -333,7 +345,8 @@ public class Int32Array implements IntArrayView {
      * 返回首个满足谓词的元素（无则 null），对应 find 语义。
      */
     public Integer find(Int32ArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = 0; i < length; i++) {
             int v = get(i);
@@ -344,14 +357,23 @@ public class Int32Array implements IntArrayView {
         return null;
         }
 
+    /**
+     * 查找首个匹配元素，对应 find 语义。
+     */
     public Integer find(Int32ArrayFinder0 cb) {
         return find((v, i, a) -> cb.test());
         }
 
+    /**
+     * 查找首个匹配元素，对应 find 语义。
+     */
     public Integer find(Int32ArrayFinder1 cb) {
         return find((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * 查找首个匹配元素，对应 find 语义。
+     */
     public Integer find(Int32ArrayFinder2 cb) {
         return find((v, i, a) -> cb.test(v, i));
         }
@@ -360,7 +382,8 @@ public class Int32Array implements IntArrayView {
      * 从后向前返回首个满足谓词的元素（无则 null），对应 findLast 语义。
      */
     public Integer findLast(Int32ArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = length - 1; i >= 0; i--) {
             int v = get(i);
@@ -371,14 +394,23 @@ public class Int32Array implements IntArrayView {
         return null;
         }
 
+    /**
+     * findLast 方法。
+     */
     public Integer findLast(Int32ArrayFinder0 cb) {
         return findLast((v, i, a) -> cb.test());
         }
 
+    /**
+     * findLast 方法。
+     */
     public Integer findLast(Int32ArrayFinder1 cb) {
         return findLast((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * findLast 方法。
+     */
     public Integer findLast(Int32ArrayFinder2 cb) {
         return findLast((v, i, a) -> cb.test(v, i));
         }
@@ -387,7 +419,8 @@ public class Int32Array implements IntArrayView {
      * 从后向前返回首个满足谓词的元素下标（无则 -1），对应 findLastIndex 语义。
      */
     public int findLastIndex(Int32ArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = length - 1; i >= 0; i--) {
             if (cb.test(get(i), i, this)) {
@@ -397,14 +430,23 @@ public class Int32Array implements IntArrayView {
         return -1;
         }
 
+    /**
+     * findLastIndex 方法。
+     */
     public int findLastIndex(Int32ArrayFinder0 cb) {
         return findLastIndex((v, i, a) -> cb.test());
         }
 
+    /**
+     * findLastIndex 方法。
+     */
     public int findLastIndex(Int32ArrayFinder1 cb) {
         return findLastIndex((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * findLastIndex 方法。
+     */
     public int findLastIndex(Int32ArrayFinder2 cb) {
         return findLastIndex((v, i, a) -> cb.test(v, i));
         }
@@ -413,7 +455,8 @@ public class Int32Array implements IntArrayView {
      * 返回首个满足谓词的元素下标（无则 -1），对应 findIndex 语义。
      */
     public int findIndex(Int32ArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = 0; i < length; i++) {
             if (cb.test(get(i), i, this)) {
@@ -423,10 +466,16 @@ public class Int32Array implements IntArrayView {
         return -1;
         }
 
+    /**
+     * 查找首个匹配下标，对应 findIndex 语义。
+     */
     public int findIndex(Int32ArrayFinder1 cb) {
         return findIndex((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * 查找首个匹配下标，对应 findIndex 语义。
+     */
     public int findIndex(Int32ArrayFinder2 cb) {
         return findIndex((v, i, a) -> cb.test(v, i));
         }
@@ -435,7 +484,8 @@ public class Int32Array implements IntArrayView {
      * 返回满足谓词的全部元素构成的新数组，对应 filter 语义。
      */
     public Int32Array filter(Int32ArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         int count = 0;
         for (int i = 0; i < length; i++) {
@@ -453,14 +503,23 @@ public class Int32Array implements IntArrayView {
         return new Int32Array(picked);
         }
 
+    /**
+     * 过滤为新数组，对应 filter 语义。
+     */
     public Int32Array filter(Int32ArrayFinder0 cb) {
         return filter((v, i, a) -> cb.test());
         }
 
+    /**
+     * 过滤为新数组，对应 filter 语义。
+     */
     public Int32Array filter(Int32ArrayFinder1 cb) {
         return filter((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * 过滤为新数组，对应 filter 语义。
+     */
     public Int32Array filter(Int32ArrayFinder2 cb) {
         return filter((v, i, a) -> cb.test(v, i));
         }
@@ -469,7 +528,8 @@ public class Int32Array implements IntArrayView {
      * 对每个元素应用回调（返回值构成新数组），对应 map 语义。
      */
     public Int32Array map(Int32ArrayMapper cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         int[] mapped = new int[length];
         for (int i = 0; i < length; i++) {
@@ -478,10 +538,16 @@ public class Int32Array implements IntArrayView {
         return new Int32Array(mapped);
         }
 
+    /**
+     * 映射为新数组，对应 map 语义。
+     */
     public Int32Array map(Int32ArrayMapper1 cb) {
         return map((v, i, a) -> cb.apply(v));
         }
 
+    /**
+     * 映射为新数组，对应 map 语义。
+     */
     public Int32Array map(Int32ArrayMapper2 cb) {
         return map((v, i, a) -> cb.apply(v, i));
         }
@@ -490,7 +556,8 @@ public class Int32Array implements IntArrayView {
      * 从左到右归约，返回最终累计值，对应 reduce 语义（含无初始值形式）。
      */
     public int reduce(Int32ArrayReducer cb, int initial) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         int acc = initial;
         for (int i = 0; i < length; i++) {
@@ -499,6 +566,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     */
     public int reduce(Int32ArrayReducer cb) {
         if (length == 0) {
             throw new TypeError("Reduce of empty array with no initial value");
@@ -510,6 +580,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     */
     public int reduce(Int32ArrayReducer2 cb, int initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -521,6 +594,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     */
     public int reduce(Int32ArrayReducer2 cb) {
         if (cb == null) {
             throw new NullPointerError();
@@ -535,6 +611,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     */
     public int reduce(Int32ArrayReducer3 cb, int initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -546,6 +625,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     */
     public int reduce(Int32ArrayReducer3 cb) {
         if (cb == null) {
             throw new NullPointerError();
@@ -564,7 +646,8 @@ public class Int32Array implements IntArrayView {
      * 从右向左归约，返回最终累计值，对应 reduceRight 语义（含无初始值形式）。
      */
     public int reduceRight(Int32ArrayReducer cb, int initial) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         int acc = initial;
         for (int i = length - 1; i >= 0; i--) {
@@ -573,6 +656,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     */
     public int reduceRight(Int32ArrayReducer cb) {
         if (length == 0) {
             throw new TypeError("Reduce of empty array with no initial value");
@@ -584,6 +670,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     */
     public int reduceRight(Int32ArrayReducer2 cb, int initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -595,6 +684,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     */
     public int reduceRight(Int32ArrayReducer2 cb) {
         if (cb == null) {
             throw new NullPointerError();
@@ -609,6 +701,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     */
     public int reduceRight(Int32ArrayReducer3 cb, int initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -620,6 +715,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     */
     public int reduceRight(Int32ArrayReducer3 cb) {
         if (cb == null) {
             throw new NullPointerError();
@@ -638,7 +736,8 @@ public class Int32Array implements IntArrayView {
      * 是否存在元素满足谓词。
      */
     public boolean some(Int32ArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = 0; i < length; i++) {
             if (cb.test(get(i), i, this)) {
@@ -648,20 +747,32 @@ public class Int32Array implements IntArrayView {
         return false;
         }
 
+    /**
+     * 是否存在满足谓词，对应 some 语义。
+     */
     public boolean some(Int32ArrayFinder0 cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         return some((v, i, a) -> cb.test());
         }
 
+    /**
+     * 是否存在满足谓词，对应 some 语义。
+     */
     public boolean some(Int32ArrayFinder1 cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         return some((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * 是否存在满足谓词，对应 some 语义。
+     */
     public boolean some(Int32ArrayFinder2 cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         return some((v, i, a) -> cb.test(v, i));
         }
@@ -670,7 +781,8 @@ public class Int32Array implements IntArrayView {
      * 是否所有元素都满足谓词。
      */
     public boolean every(Int32ArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = 0; i < length; i++) {
             if (!cb.test(get(i), i, this)) {
@@ -680,14 +792,23 @@ public class Int32Array implements IntArrayView {
         return true;
         }
 
+    /**
+     * 是否全部满足谓词，对应 every 语义。
+     */
     public boolean every(Int32ArrayFinder0 cb) {
         return every((v, i, a) -> cb.test());
         }
 
+    /**
+     * 是否全部满足谓词，对应 every 语义。
+     */
     public boolean every(Int32ArrayFinder1 cb) {
         return every((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * 是否全部满足谓词，对应 every 语义。
+     */
     public boolean every(Int32ArrayFinder2 cb) {
         return every((v, i, a) -> cb.test(v, i));
         }
@@ -696,17 +817,24 @@ public class Int32Array implements IntArrayView {
      * 对每个元素执行回调，对应 forEach 语义。
      */
     public void forEach(Int32ArrayConsumer cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = 0; i < length; i++) {
             cb.accept(get(i), i, this);
             }
     }
 
+    /**
+     * 遍历执行回调，对应 forEach 语义。
+     */
     public void forEach(Int32ArrayConsumer1 cb) {
         forEach((v, i, a) -> cb.accept(v));
         }
 
+    /**
+     * 遍历执行回调，对应 forEach 语义。
+     */
     public void forEach(Int32ArrayConsumer2 cb) {
         forEach((v, i, a) -> cb.accept(v, i));
         }
@@ -726,12 +854,18 @@ public class Int32Array implements IntArrayView {
         return sb.toString();
         }
 
+    /**
+     * 元素连接为字符串，对应 join 语义。
+     */
     public String join() {
         return join(",");
         }
 
     /** 字符串形式（同 join()），对应 toString 语义。 */
     @Override
+    /**
+     * 字符串形式，对应 toString 语义。
+     */
     public String toString() {
         return join();
         }
@@ -743,14 +877,23 @@ public class Int32Array implements IntArrayView {
         return toLocaleString("en-US", null);
         }
 
+    /**
+     * 区域设置字符串，对应 toLocaleString 语义。
+     */
     public String toLocaleString(String locales) {
         return toLocaleString(locales, null);
         }
 
+    /**
+     * 区域设置字符串，对应 toLocaleString 语义。
+     */
     public String toLocaleString(java.util.List<String> locales) {
         return toLocaleString(locales == null || locales.isEmpty() ? "en-US" : locales.get(0), null);
         }
 
+    /**
+     * 区域设置字符串，对应 toLocaleString 语义。
+     */
     public String toLocaleString(String locales, IntlOptions opts) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
@@ -766,7 +909,7 @@ public class Int32Array implements IntArrayView {
      * 按 locale 与选项格式化单个元素（分组/补零/小数/有效数字/科学计数/compact/百分比/货币）。
      */
     private static String formatIntl(int value, String locales, IntlOptions opts) {
-        String lc = locales == null ? "en-US" : locales.trim().toLowerCase();
+        String lc = locales == null ? "en-US" : locales.trim().toLowerCase(java.util.Locale.ROOT);
         if (lc.isEmpty() || !isValidLocale(lc)) {
             throw new RangeError("Invalid locale: " + locales);
             }
@@ -806,7 +949,7 @@ public class Int32Array implements IntArrayView {
                     amount = Math.round(amount / (double) factor) * factor;
                     }
             }
-            boolean currency = opts != null && "currency".equals(opts.style);
+                                    boolean currency = opts != null && "currency".equals(opts.style);
             if (currency) {
                 int curFrac = "JPY".equals(opts.currency) ? 0 : 2;
                 if (minFrac < 0) {
@@ -936,11 +1079,11 @@ public class Int32Array implements IntArrayView {
      * BCP47 简式校验（语言 2-3 字母 + 可选 2-8 位子标记）。
      */
     private static boolean isValidLocale(String lc) {
-        lc = lc.toLowerCase();
-        if (lc.length() < 2) {
+        String localeKey = lc.toLowerCase(java.util.Locale.ROOT);
+        if (localeKey.length() < 2) {
             return false;
             }
-        String[] parts = lc.split("-");
+        String[] parts = localeKey.split("-");
         String lang = parts[0];
         if (lang.length() < 2 || lang.length() > 3) {
             return false;
@@ -1087,6 +1230,9 @@ public class Int32Array implements IntArrayView {
         return -1;
         }
 
+    /**
+     * 从后往前查找下标，对应 lastIndexOf 语义。
+     */
     public int lastIndexOf(int value) {
         return lastIndexOf(value, length - 1);
         }
@@ -1098,6 +1244,9 @@ public class Int32Array implements IntArrayView {
         return lastIndexOf(value, length - 1);
         }
 
+    /**
+     * 从后往前查找下标，对应 lastIndexOf 语义。
+     */
     public int lastIndexOf(double value, int fromIndex) {
         if (Double.isNaN(value) || Double.isInfinite(value) || value != Math.rint(value)) {
             return -1;
@@ -1125,6 +1274,9 @@ public class Int32Array implements IntArrayView {
         return -1;
         }
 
+    /**
+     * 从前往后查找下标，对应 indexOf 语义。
+     */
     public int indexOf(int value) {
         return indexOf(value, 0);
         }
@@ -1136,6 +1288,9 @@ public class Int32Array implements IntArrayView {
         return indexOf(value, fromIndex) != -1;
         }
 
+    /**
+     * 是否包含指定值，对应 includes 语义。
+     */
     public boolean includes(int value) {
         return indexOf(value) != -1;
         }
@@ -1148,6 +1303,9 @@ public class Int32Array implements IntArrayView {
         return with(toIndexD(index, length), value);
         }
 
+    /**
+     * with 方法。
+     */
     public Int32Array with(int index, double value) {
         int len = length;
         int i = index;
@@ -1273,6 +1431,9 @@ public class Int32Array implements IntArrayView {
         return copyWithin(toIndexD(target, length), toIndexD(start, length), toIndexD(end, length));
         }
 
+    /**
+     * 区间内复制元素，对应 copyWithin 语义。
+     */
     public Int32Array copyWithin(int target, int start, int end) {
         int len = length;
         int to = toIndex(target, len);
@@ -1294,6 +1455,9 @@ public class Int32Array implements IntArrayView {
         return this;
         }
 
+    /**
+     * 区间内复制元素，对应 copyWithin 语义。
+     */
     public Int32Array copyWithin(int target, int start) {
         return copyWithin(target, start, length);
         }
@@ -1412,6 +1576,9 @@ public class Int32Array implements IntArrayView {
         return null;
         }
 
+    /**
+     * 写入元素或批量填充，对应 set 语义。
+     */
     public Integer set(java.util.List<Integer> src) {
         return set(src, 0);
         }
@@ -1486,6 +1653,9 @@ public class Int32Array implements IntArrayView {
             }
 
         @Override
+        /**
+         * iterator 方法。
+         */
         public Iterator<Integer> iterator() {
             return new KeyCursor();
             }
@@ -1496,11 +1666,17 @@ public class Int32Array implements IntArrayView {
         private final class KeyCursor implements Iterator<Integer> {
 
             @Override
+            /**
+             * hasNext 方法。
+             */
             public boolean hasNext() {
                 return cursor < length;
                 }
 
             @Override
+            /**
+             * next 方法。
+             */
             public Integer next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
@@ -1531,6 +1707,9 @@ public class Int32Array implements IntArrayView {
             }
 
         @Override
+        /**
+         * iterator 方法。
+         */
         public Iterator<int[]> iterator() {
             return new EntryCursor();
             }
@@ -1543,11 +1722,17 @@ public class Int32Array implements IntArrayView {
             private int pos;
 
             @Override
+            /**
+             * hasNext 方法。
+             */
             public boolean hasNext() {
                 return pos < length;
                 }
 
             @Override
+            /**
+             * next 方法。
+             */
             public int[] next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
@@ -1698,6 +1883,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * reduceLong 方法。
+     */
     public long reduceLong(Int16LongReducer cb) {
         if (length == 0) {
             throw new TypeError("Reduce of empty array with no initial value");
@@ -1709,6 +1897,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * reduceRightLong 方法。
+     */
     public long reduceRightLong(Int16LongReducer cb, long initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -1776,6 +1967,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * reduceDouble 方法。
+     */
     public double reduceDouble(Int16DoubleReducer cb) {
         if (length == 0) {
             throw new TypeError("Reduce of empty array with no initial value");
@@ -1787,6 +1981,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * reduceRightDouble 方法。
+     */
     public double reduceRightDouble(Int16DoubleReducer cb, double initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -1798,6 +1995,9 @@ public class Int32Array implements IntArrayView {
         return acc;
         }
 
+    /**
+     * reduceRightDouble 方法。
+     */
     public double reduceRightDouble(Int16DoubleReducer cb) {
         if (length == 0) {
             throw new TypeError("Reduce of empty array with no initial value");
@@ -1865,10 +2065,10 @@ public class Int32Array implements IntArrayView {
         if (Double.isNaN(index)) {
             return 0;
             }
-        if (index == Double.POSITIVE_INFINITY) {
+        if (Double.isInfinite(index) && index > 0) {
             return len;
             }
-        if (index == Double.NEGATIVE_INFINITY) {
+        if (Double.isInfinite(index) && index < 0) {
             return 0;
             }
         return toIndex((int) index, len);
@@ -1898,7 +2098,7 @@ public class Int32Array implements IntArrayView {
         if (Double.isNaN(value)) {
             return 0;
             }
-        if (value == Double.POSITIVE_INFINITY || value == Double.NEGATIVE_INFINITY) {
+        if (Double.isInfinite(value)) {
             return 0;
             }
         if (value == 0.0) {

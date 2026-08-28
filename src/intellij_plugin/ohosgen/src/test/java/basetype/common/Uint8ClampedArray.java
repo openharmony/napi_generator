@@ -300,6 +300,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return null;
         }
 
+    /**
+     * 写入元素或批量填充，对应 set 语义。
+     */
     public Integer set(double[] src) {
         return set(src, 0);
         }
@@ -312,6 +315,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return fill(value, toIndexD(start, length), toIndexD(end, length));
         }
 
+    /**
+     * 填充数组元素，对应 fill 语义。
+     */
     public Uint8ClampedArray fill(double value, int start, int end) {
         int len = length;
         int from = toIndex(start, len);
@@ -322,10 +328,16 @@ public class Uint8ClampedArray implements IntArrayView {
         return this;
         }
 
+    /**
+     * 填充数组元素，对应 fill 语义。
+     */
     public Uint8ClampedArray fill(double value, int start) {
         return fill(value, start, length);
         }
 
+    /**
+     * 填充数组元素，对应 fill 语义。
+     */
     public Uint8ClampedArray fill(double value) {
         return fill(value, 0, length);
         }
@@ -334,7 +346,8 @@ public class Uint8ClampedArray implements IntArrayView {
      * 返回首个满足谓词的元素（无则 null），对应 find 语义。
      */
     public Integer find(Uint8ClampedArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = 0; i < length; i++) {
             int v = get(i);
@@ -345,14 +358,23 @@ public class Uint8ClampedArray implements IntArrayView {
         return null;
         }
 
+    /**
+     * 查找首个匹配元素，对应 find 语义。
+     */
     public Integer find(Uint8ClampedArrayFinder0 cb) {
         return find((v, i, a) -> cb.test());
         }
 
+    /**
+     * 查找首个匹配元素，对应 find 语义。
+     */
     public Integer find(Uint8ClampedArrayFinder1 cb) {
         return find((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * 查找首个匹配元素，对应 find 语义。
+     */
     public Integer find(Uint8ClampedArrayFinder2 cb) {
         return find((v, i, a) -> cb.test(v, i));
         }
@@ -361,7 +383,8 @@ public class Uint8ClampedArray implements IntArrayView {
      * 从后向前返回首个满足谓词的元素（无则 null），对应 findLast 语义。
      */
     public Integer findLast(Uint8ClampedArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = length - 1; i >= 0; i--) {
             int v = get(i);
@@ -372,14 +395,23 @@ public class Uint8ClampedArray implements IntArrayView {
         return null;
         }
 
+    /**
+     * findLast 方法。
+     */
     public Integer findLast(Uint8ClampedArrayFinder0 cb) {
         return findLast((v, i, a) -> cb.test());
         }
 
+    /**
+     * findLast 方法。
+     */
     public Integer findLast(Uint8ClampedArrayFinder1 cb) {
         return findLast((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * findLast 方法。
+     */
     public Integer findLast(Uint8ClampedArrayFinder2 cb) {
         return findLast((v, i, a) -> cb.test(v, i));
         }
@@ -388,7 +420,8 @@ public class Uint8ClampedArray implements IntArrayView {
      * 从后向前返回首个满足谓词的元素下标（无则 -1），对应 findLastIndex 语义。
      */
     public int findLastIndex(Uint8ClampedArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = length - 1; i >= 0; i--) {
             if (cb.test(get(i), i, this)) {
@@ -398,14 +431,23 @@ public class Uint8ClampedArray implements IntArrayView {
         return -1;
         }
 
+    /**
+     * findLastIndex 方法。
+     */
     public int findLastIndex(Uint8ClampedArrayFinder0 cb) {
         return findLastIndex((v, i, a) -> cb.test());
         }
 
+    /**
+     * findLastIndex 方法。
+     */
     public int findLastIndex(Uint8ClampedArrayFinder1 cb) {
         return findLastIndex((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * findLastIndex 方法。
+     */
     public int findLastIndex(Uint8ClampedArrayFinder2 cb) {
         return findLastIndex((v, i, a) -> cb.test(v, i));
         }
@@ -414,7 +456,8 @@ public class Uint8ClampedArray implements IntArrayView {
      * 返回首个满足谓词的元素下标（无则 -1），对应 findIndex 语义。
      */
     public int findIndex(Uint8ClampedArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = 0; i < length; i++) {
             if (cb.test(get(i), i, this)) {
@@ -424,10 +467,16 @@ public class Uint8ClampedArray implements IntArrayView {
         return -1;
         }
 
+    /**
+     * 查找首个匹配下标，对应 findIndex 语义。
+     */
     public int findIndex(Uint8ClampedArrayFinder1 cb) {
         return findIndex((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * 查找首个匹配下标，对应 findIndex 语义。
+     */
     public int findIndex(Uint8ClampedArrayFinder2 cb) {
         return findIndex((v, i, a) -> cb.test(v, i));
         }
@@ -436,7 +485,8 @@ public class Uint8ClampedArray implements IntArrayView {
      * 返回满足谓词的全部元素构成的新数组，对应 filter 语义。
      */
     public Uint8ClampedArray filter(Uint8ClampedArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         java.util.List<Integer> picked = new java.util.ArrayList<>();
         for (int i = 0; i < length; i++) {
@@ -451,14 +501,23 @@ public class Uint8ClampedArray implements IntArrayView {
         return new Uint8ClampedArray(out);
         }
 
+    /**
+     * 过滤为新数组，对应 filter 语义。
+     */
     public Uint8ClampedArray filter(Uint8ClampedArrayFinder0 cb) {
         return filter((v, i, a) -> cb.test());
         }
 
+    /**
+     * 过滤为新数组，对应 filter 语义。
+     */
     public Uint8ClampedArray filter(Uint8ClampedArrayFinder1 cb) {
         return filter((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * 过滤为新数组，对应 filter 语义。
+     */
     public Uint8ClampedArray filter(Uint8ClampedArrayFinder2 cb) {
         return filter((v, i, a) -> cb.test(v, i));
         }
@@ -467,7 +526,8 @@ public class Uint8ClampedArray implements IntArrayView {
      * 对每个元素应用回调（返回值构成新数组），对应 map 语义。
      */
     public Uint8ClampedArray map(Uint8ClampedArrayMapper cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         int[] mapped = new int[length];
         for (int i = 0; i < length; i++) {
@@ -476,10 +536,16 @@ public class Uint8ClampedArray implements IntArrayView {
         return new Uint8ClampedArray(mapped);
         }
 
+    /**
+     * 映射为新数组，对应 map 语义。
+     */
     public Uint8ClampedArray map(Uint8ClampedArrayMapper1 cb) {
         return map((v, i, a) -> cb.apply(v));
         }
 
+    /**
+     * 映射为新数组，对应 map 语义。
+     */
     public Uint8ClampedArray map(Uint8ClampedArrayMapper2 cb) {
         return map((v, i, a) -> cb.apply(v, i));
         }
@@ -488,7 +554,8 @@ public class Uint8ClampedArray implements IntArrayView {
      * 从左到右归约，返回最终累计值，对应 reduce 语义（含无初始值形式）。
      */
     public int reduce(Uint8ClampedArrayReducer cb, int initial) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         int acc = initial;
         for (int i = 0; i < length; i++) {
@@ -497,6 +564,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     */
     public int reduce(Uint8ClampedArrayReducer cb) {
         if (length == 0) {
             throw new TypeError("Reduce of empty array with no initial value");
@@ -508,6 +578,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     */
     public int reduce(Uint8ClampedArrayReducer2 cb, int initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -519,6 +592,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     */
     public int reduce(Uint8ClampedArrayReducer2 cb) {
         if (cb == null) {
             throw new NullPointerError();
@@ -533,6 +609,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     */
     public int reduce(Uint8ClampedArrayReducer3 cb, int initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -544,6 +623,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从左到右归约，返回最终累计值，对应 reduce 语义。
+     */
     public int reduce(Uint8ClampedArrayReducer3 cb) {
         if (cb == null) {
             throw new NullPointerError();
@@ -562,7 +644,8 @@ public class Uint8ClampedArray implements IntArrayView {
      * 从右向左归约，返回最终累计值，对应 reduceRight 语义（含无初始值形式）。
      */
     public int reduceRight(Uint8ClampedArrayReducer cb, int initial) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         int acc = initial;
         for (int i = length - 1; i >= 0; i--) {
@@ -571,6 +654,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     */
     public int reduceRight(Uint8ClampedArrayReducer cb) {
         if (length == 0) {
             throw new TypeError("Reduce of empty array with no initial value");
@@ -582,6 +668,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     */
     public int reduceRight(Uint8ClampedArrayReducer2 cb, int initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -593,6 +682,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     */
     public int reduceRight(Uint8ClampedArrayReducer2 cb) {
         if (cb == null) {
             throw new NullPointerError();
@@ -607,6 +699,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     */
     public int reduceRight(Uint8ClampedArrayReducer3 cb, int initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -618,6 +713,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return acc;
         }
 
+    /**
+     * 从右向左归约，返回最终累计值，对应 reduceRight 语义。
+     */
     public int reduceRight(Uint8ClampedArrayReducer3 cb) {
         if (cb == null) {
             throw new NullPointerError();
@@ -636,7 +734,8 @@ public class Uint8ClampedArray implements IntArrayView {
      * 是否存在元素满足谓词。
      */
     public boolean some(Uint8ClampedArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = 0; i < length; i++) {
             if (cb.test(get(i), i, this)) {
@@ -646,20 +745,32 @@ public class Uint8ClampedArray implements IntArrayView {
         return false;
         }
 
+    /**
+     * 是否存在满足谓词，对应 some 语义。
+     */
     public boolean some(Uint8ClampedArrayFinder0 cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         return some((v, i, a) -> cb.test());
         }
 
+    /**
+     * 是否存在满足谓词，对应 some 语义。
+     */
     public boolean some(Uint8ClampedArrayFinder1 cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         return some((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * 是否存在满足谓词，对应 some 语义。
+     */
     public boolean some(Uint8ClampedArrayFinder2 cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         return some((v, i, a) -> cb.test(v, i));
         }
@@ -668,7 +779,8 @@ public class Uint8ClampedArray implements IntArrayView {
      * 是否所有元素都满足谓词。
      */
     public boolean every(Uint8ClampedArrayFinder cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = 0; i < length; i++) {
             if (!cb.test(get(i), i, this)) {
@@ -678,14 +790,23 @@ public class Uint8ClampedArray implements IntArrayView {
         return true;
         }
 
+    /**
+     * 是否全部满足谓词，对应 every 语义。
+     */
     public boolean every(Uint8ClampedArrayFinder0 cb) {
         return every((v, i, a) -> cb.test());
         }
 
+    /**
+     * 是否全部满足谓词，对应 every 语义。
+     */
     public boolean every(Uint8ClampedArrayFinder1 cb) {
         return every((v, i, a) -> cb.test(v));
         }
 
+    /**
+     * 是否全部满足谓词，对应 every 语义。
+     */
     public boolean every(Uint8ClampedArrayFinder2 cb) {
         return every((v, i, a) -> cb.test(v, i));
         }
@@ -694,17 +815,24 @@ public class Uint8ClampedArray implements IntArrayView {
      * 对每个元素执行回调，对应 forEach 语义。
      */
     public void forEach(Uint8ClampedArrayConsumer cb) {
-        if (cb == null) { throw new NullPointerError();
+        if (cb == null) {
+            throw new NullPointerError();
         }
         for (int i = 0; i < length; i++) {
             cb.accept(get(i), i, this);
             }
     }
 
+    /**
+     * 遍历执行回调，对应 forEach 语义。
+     */
     public void forEach(Uint8ClampedArrayConsumer1 cb) {
         forEach((v, i, a) -> cb.accept(v));
         }
 
+    /**
+     * 遍历执行回调，对应 forEach 语义。
+     */
     public void forEach(Uint8ClampedArrayConsumer2 cb) {
         forEach((v, i, a) -> cb.accept(v, i));
         }
@@ -724,12 +852,18 @@ public class Uint8ClampedArray implements IntArrayView {
         return sb.toString();
         }
 
+    /**
+     * 元素连接为字符串，对应 join 语义。
+     */
     public String join() {
         return join(",");
         }
 
     /** 字符串形式（同 join()），对应 toString 语义。 */
     @Override
+    /**
+     * 字符串形式，对应 toString 语义。
+     */
     public String toString() {
         return join();
         }
@@ -741,14 +875,23 @@ public class Uint8ClampedArray implements IntArrayView {
         return toLocaleString("en-US", null);
         }
 
+    /**
+     * 区域设置字符串，对应 toLocaleString 语义。
+     */
     public String toLocaleString(String locales) {
         return toLocaleString(locales, null);
         }
 
+    /**
+     * 区域设置字符串，对应 toLocaleString 语义。
+     */
     public String toLocaleString(java.util.List<String> locales) {
         return toLocaleString(locales == null || locales.isEmpty() ? "en-US" : locales.get(0), null);
         }
 
+    /**
+     * 区域设置字符串，对应 toLocaleString 语义。
+     */
     public String toLocaleString(String locales, IntlOptions opts) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
@@ -764,7 +907,7 @@ public class Uint8ClampedArray implements IntArrayView {
      * 按 locale 与选项格式化单个元素（分组/补零/小数/有效数字/科学计数/compact/百分比/货币）。
      */
     private static String formatIntl(int value, String locales, IntlOptions opts) {
-        String lc = locales == null ? "en-US" : locales.trim().toLowerCase();
+        String lc = locales == null ? "en-US" : locales.trim().toLowerCase(java.util.Locale.ROOT);
         if (lc.isEmpty() || !isValidLocale(lc)) {
             throw new RangeError("Invalid locale: " + locales);
             }
@@ -804,7 +947,7 @@ public class Uint8ClampedArray implements IntArrayView {
                     amount = Math.round(amount / (double) factor) * factor;
                     }
             }
-            boolean currency = opts != null && "currency".equals(opts.style);
+                                    boolean currency = opts != null && "currency".equals(opts.style);
             if (currency) {
                 int curFrac = "JPY".equals(opts.currency) ? 0 : 2;
                 if (minFrac < 0) {
@@ -934,11 +1077,11 @@ public class Uint8ClampedArray implements IntArrayView {
      * BCP47 简式校验（语言 2-3 字母 + 可选 2-8 位子标记）。
      */
     private static boolean isValidLocale(String lc) {
-        lc = lc.toLowerCase();
-        if (lc.length() < 2) {
+        String localeKey = lc.toLowerCase(java.util.Locale.ROOT);
+        if (localeKey.length() < 2) {
             return false;
             }
-        String[] parts = lc.split("-");
+        String[] parts = localeKey.split("-");
         String lang = parts[0];
         if (lang.length() < 2 || lang.length() > 3) {
             return false;
@@ -1085,6 +1228,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return -1;
         }
 
+    /**
+     * 从后往前查找下标，对应 lastIndexOf 语义。
+     */
     public int lastIndexOf(int value) {
         return lastIndexOf(value, length - 1);
         }
@@ -1096,6 +1242,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return lastIndexOf(value, length - 1);
         }
 
+    /**
+     * 从后往前查找下标，对应 lastIndexOf 语义。
+     */
     public int lastIndexOf(double value, int fromIndex) {
         if (Double.isNaN(value)) {
             return -1;
@@ -1129,14 +1278,23 @@ public class Uint8ClampedArray implements IntArrayView {
         return -1;
         }
 
+    /**
+     * 从前往后查找下标，对应 indexOf 语义。
+     */
     public int indexOf(long value) {
         return indexOf((int) value);
         }
 
+    /**
+     * 从前往后查找下标，对应 indexOf 语义。
+     */
     public int indexOf(int value, double fromIndex) {
         return indexOf(value, (int) fromIndex);
         }
 
+    /**
+     * 从前往后查找下标，对应 indexOf 语义。
+     */
     public int indexOf(double value, int fromIndex) {
         for (int i = fromIndex < 0 ? 0 : fromIndex; i < length; i++) {
             if (get(i) == value) {
@@ -1146,6 +1304,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return -1;
         }
 
+    /**
+     * 从前往后查找下标，对应 indexOf 语义。
+     */
     public int indexOf(int value, int fromIndex) {
         int len = length;
         int from = fromIndex;
@@ -1163,6 +1324,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return -1;
         }
 
+    /**
+     * 从前往后查找下标，对应 indexOf 语义。
+     */
     public int indexOf(int value) {
         return indexOf(value, 0);
         }
@@ -1180,18 +1344,30 @@ public class Uint8ClampedArray implements IntArrayView {
         return false;
         }
 
+    /**
+     * 是否包含指定值，对应 includes 语义。
+     */
     public boolean includes(int value, double fromIndex) {
         return includes(value, (int) fromIndex);
         }
 
+    /**
+     * 是否包含指定值，对应 includes 语义。
+     */
     public boolean includes(double value, int fromIndex) {
         return includes((int) value, fromIndex);
         }
 
+    /**
+     * 是否包含指定值，对应 includes 语义。
+     */
     public boolean includes(int value, int fromIndex) {
         return indexOf(value, fromIndex) != -1;
         }
 
+    /**
+     * 是否包含指定值，对应 includes 语义。
+     */
     public boolean includes(int value) {
         return indexOf(value) != -1;
         }
@@ -1204,6 +1380,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return with(toIndexD(index, length), value);
         }
 
+    /**
+     * with 方法。
+     */
     public Uint8ClampedArray with(int index, double value) {
         int len = length;
         int i = index;
@@ -1332,14 +1511,23 @@ public class Uint8ClampedArray implements IntArrayView {
         return copyWithin(target, 0, length);
         }
 
+    /**
+     * 区间内复制元素，对应 copyWithin 语义。
+     */
     public Uint8ClampedArray copyWithin(int target, int start) {
         return copyWithin(target, start, length);
         }
 
+    /**
+     * 区间内复制元素，对应 copyWithin 语义。
+     */
 public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return copyWithin(toIndexD(target, length), toIndexD(start, length), toIndexD(end, length));
         }
 
+    /**
+     * 区间内复制元素，对应 copyWithin 语义。
+     */
     public Uint8ClampedArray copyWithin(int target, int start, int end) {
         int len = length;
         int to = toIndex(target, len);
@@ -1469,6 +1657,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return new Uint8ClampedArray(copy);
         }
 
+    /**
+     * 从数组或集合构造，对应 from 语义。
+     */
     public static Uint8ClampedArray from(Uint8ClampedArray src, Uint8ClampedArrayDoubleMapper2 cb) {
         if (cb == null) {
             return from(src);
@@ -1480,6 +1671,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return new Uint8ClampedArray(copy);
         }
 
+    /**
+     * 从数组或集合构造，对应 from 语义。
+     */
     public static Uint8ClampedArray from(int[] values, Uint8ClampedArrayMapper2 cb) {
         int[] copy = new int[values.length];
         for (int i = 0; i < values.length; i++) {
@@ -1488,6 +1682,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return new Uint8ClampedArray(copy);
         }
 
+    /**
+     * 从数组或集合构造，对应 from 语义。
+     */
     public static Uint8ClampedArray from(int[] values, Uint8ClampedArrayDoubleMapper2 cb) {
         if (cb == null) {
             return from(values);
@@ -1499,6 +1696,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return new Uint8ClampedArray(copy);
         }
 
+    /**
+     * 从数组或集合构造，对应 from 语义。
+     */
     public static Uint8ClampedArray from(java.util.List<? extends Number> values, Uint8ClampedArrayDoubleMapper2 cb) {
         return from((java.util.Collection<? extends Number>) values, cb);
         }
@@ -1528,10 +1728,16 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return null;
         }
 
+    /**
+     * 写入元素或批量填充，对应 set 语义。
+     */
     public Integer set(java.util.Collection<? extends Number> src) {
         return set(src, 0);
         }
 
+    /**
+     * 写入元素或批量填充，对应 set 语义。
+     */
     public Integer set(java.util.List<Integer> src, int offset) {
         if (src == null) {
             throw new NullPointerError();
@@ -1551,6 +1757,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return null;
         }
 
+    /**
+     * 写入元素或批量填充，对应 set 语义。
+     */
     public Integer set(java.util.List<Integer> src) {
         return set(src, 0);
         }
@@ -1588,6 +1797,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         double apply(double value, int index);
         }
 
+    /**
+     * 从数组或集合构造，对应 from 语义。
+     */
     public static Uint8ClampedArray from(double[] values, Uint8ClampedArrayDoubleMapper1 cb) {
         int[] copy = new int[values.length];
         for (int i = 0; i < values.length; i++) {
@@ -1596,6 +1808,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return new Uint8ClampedArray(copy);
         }
 
+    /**
+     * 从数组或集合构造，对应 from 语义。
+     */
     public static Uint8ClampedArray from(double[] values, Uint8ClampedArrayDoubleMapper2 cb) {
         int[] copy = new int[values.length];
         for (int i = 0; i < values.length; i++) {
@@ -1604,6 +1819,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return new Uint8ClampedArray(copy);
         }
 
+    /**
+     * 从数组或集合构造，对应 from 语义。
+     */
     public static Uint8ClampedArray from(double[] values) {
         int[] copy = new int[values.length];
         for (int i = 0; i < values.length; i++) {
@@ -1648,6 +1866,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
             }
 
         @Override
+        /**
+         * iterator 方法。
+         */
         public Iterator<Integer> iterator() {
             return new KeyCursor();
             }
@@ -1658,11 +1879,17 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         private final class KeyCursor implements Iterator<Integer> {
 
             @Override
+            /**
+             * hasNext 方法。
+             */
             public boolean hasNext() {
                 return cursor < length;
                 }
 
             @Override
+            /**
+             * next 方法。
+             */
             public Integer next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
@@ -1693,14 +1920,23 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
             }
 
         @Override
+        /**
+         * iterator 方法。
+         */
         public Iterator<int[]> iterator() {
             return new Iterator<int[]>() {
                 @Override
+                /**
+                 * hasNext 方法。
+                 */
                 public boolean hasNext() {
                     return cursor < length;
                     }
 
                 @Override
+                /**
+                 * next 方法。
+                 */
                 public int[] next() {
                     EntryResult er = EntriesIterator.this.next();
                     if (er.done) {
@@ -1852,6 +2088,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return acc;
         }
 
+    /**
+     * reduceLong 方法。
+     */
     public long reduceLong(Int16LongReducer cb) {
         if (length == 0) {
             throw new TypeError("Reduce of empty array with no initial value");
@@ -1863,6 +2102,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return acc;
         }
 
+    /**
+     * reduceRightLong 方法。
+     */
     public long reduceRightLong(Int16LongReducer cb, long initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -1930,6 +2172,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return acc;
         }
 
+    /**
+     * reduceDouble 方法。
+     */
     public double reduceDouble(Int16DoubleReducer cb) {
         if (length == 0) {
             throw new TypeError("Reduce of empty array with no initial value");
@@ -1941,6 +2186,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return acc;
         }
 
+    /**
+     * reduceRightDouble 方法。
+     */
     public double reduceRightDouble(Int16DoubleReducer cb, double initial) {
         if (cb == null) {
             throw new NullPointerError();
@@ -1952,6 +2200,9 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return acc;
         }
 
+    /**
+     * reduceRightDouble 方法。
+     */
     public double reduceRightDouble(Int16DoubleReducer cb) {
         if (length == 0) {
             throw new TypeError("Reduce of empty array with no initial value");
@@ -2019,10 +2270,10 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         if (Double.isNaN(index)) {
             return 0;
             }
-        if (index == Double.POSITIVE_INFINITY) {
+        if (Double.isInfinite(index) && index > 0) {
             return len;
             }
-        if (index == Double.NEGATIVE_INFINITY) {
+        if (Double.isInfinite(index) && index < 0) {
             return 0;
             }
         return toIndex((int) index, len);

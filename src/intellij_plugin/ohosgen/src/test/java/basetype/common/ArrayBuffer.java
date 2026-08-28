@@ -36,6 +36,9 @@ public class ArrayBuffer {
         bytes = new byte[byteLength];
         }
 
+    /**
+     * byteLength 方法。
+     */
     public int byteLength() {
         return bytes.length;
         }

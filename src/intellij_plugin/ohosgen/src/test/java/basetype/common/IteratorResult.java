@@ -22,8 +22,8 @@ package basetype.common;
  */
 public class IteratorResult {
 
-    public Integer value;
-    public boolean done;
+    public final Integer value;
+    public final boolean done;
 
     public IteratorResult(Integer value, boolean done) {
         this.value = value;
