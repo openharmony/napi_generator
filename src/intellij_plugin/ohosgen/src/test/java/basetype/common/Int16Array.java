@@ -743,7 +743,9 @@ public class Int16Array implements IntArrayView {
         return join(",");
         }
 
-    /** 字符串形式（同 join()），对应 toString 语义。 */
+    /**
+     * 字符串形式（同 join()），对应 toString 语义。
+     */
     @Override
     /**
      * 字符串形式，对应 toString 语义。
@@ -791,8 +793,6 @@ public class Int16Array implements IntArrayView {
      * 按 locale 与选项格式化单个元素（千分位/补零/小数/百分比/货币）。
      */
     private static String formatIntl(int value, String locales, IntlOptions opts) {
-        boolean grouped = opts == null || opts.useGrouping;
-        boolean currency = opts != null && "currency".equals(opts.style);
         long amount = value;
         boolean percent = opts != null && "percent".equals(opts.style);
         if (percent) {
@@ -803,9 +803,11 @@ public class Int16Array implements IntArrayView {
         while (intPart.length() < minInt) {
             intPart = "0" + intPart;
             }
+boolean grouped = opts == null || opts.useGrouping;
         if (grouped) {
             intPart = groupDigits(intPart, locales);
             }
+boolean currency = opts != null && "currency".equals(opts.style);
         int minFrac = opts != null ? opts.minimumFractionDigits : (currency ? 2 : -1);
         if (currency && minFrac < 0) {
             minFrac = 2;
@@ -1135,7 +1137,6 @@ public class Int16Array implements IntArrayView {
      */
     public Int16Array copyWithin(int target, int start, int end) {
         int len = length;
-        int to = toIndex(target, len);
         int from = toIndex(start, len);
         int last = toIndex(end, len);
         if (from > last) {
@@ -1146,6 +1147,7 @@ public class Int16Array implements IntArrayView {
         for (int i = 0; i < count; i++) {
             tmp[i] = get(from + i);
             }
+        int to = toIndex(target, len);
         for (int i = 0; i < count; i++) {
             if (to + i < len) {
                 set(to + i, tmp[i]);
@@ -1429,87 +1431,135 @@ public class Int16Array implements IntArrayView {
         }
     }
 
-    /** 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。 */
+    /**
+     * 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。
+     */
     @FunctionalInterface
     public interface Int16Comparator {
-        /** 比较两元素大小（sort 比较器）。 */
+        /**
+         * 比较两元素大小（sort 比较器）。
+         */
         double compare(int a, int b);
         }
 
-    /** 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。 */
+    /**
+     * 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Int16Finder {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value, int index, Int16Array array);
         }
 
-    /** 回调接口：谓词的无参数形式。 */
+    /**
+     * 回调接口：谓词的无参数形式。
+     */
     @FunctionalInterface
     public interface Int16Finder0 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test();
         }
 
-    /** 回调接口：谓词的 (value) 单参数形式。 */
+    /**
+     * 回调接口：谓词的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Int16Finder1 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value);
         }
 
-    /** 回调接口：谓词的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：谓词的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Int16Finder2 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value, int index);
         }
 
-    /** 回调接口：forEach 的处理器 (value, index, array)。 */
+    /**
+     * 回调接口：forEach 的处理器 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Int16Consumer {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value, int index, Int16Array array);
         }
 
-    /** 回调接口：处理器的 (value) 单参数形式。 */
+    /**
+     * 回调接口：处理器的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Int16Consumer1 {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value);
         }
 
-    /** 回调接口：处理器的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：处理器的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Int16Consumer2 {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value, int index);
         }
 
-    /** 回调接口：map 的映射器 (value, index, array)。 */
+    /**
+     * 回调接口：map 的映射器 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Int16Mapper {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value, int index, Int16Array array);
         }
 
-    /** 回调接口：映射器的 (value) 单参数形式。 */
+    /**
+     * 回调接口：映射器的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Int16Mapper1 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value);
         }
 
-    /** 回调接口：映射器的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：映射器的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Int16Mapper2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value, int index);
         }
 
-    /** 回调接口：布尔累计归约器（every 式归约场景）。 */
+    /**
+     * 回调接口：布尔累计归约器（every 式归约场景）。
+     */
     @FunctionalInterface
     public interface Int16BooleanReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         boolean apply(boolean acc, int value, int index, Int16Array array);
         }
 
@@ -1527,17 +1577,25 @@ public class Int16Array implements IntArrayView {
         return acc;
         }
 
-    /** 回调接口：字符串归约器（reduceRight 字符串累计场景）。 */
+    /**
+     * 回调接口：字符串归约器（reduceRight 字符串累计场景）。
+     */
     @FunctionalInterface
     public interface Int16StringReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         String apply(String acc, int value, int index, Int16Array array);
         }
 
-    /** 回调接口：long 累计归约器（大数 seed 场景）。 */
+    /**
+     * 回调接口：long 累计归约器（大数 seed 场景）。
+     */
     @FunctionalInterface
     public interface Int16LongReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         long apply(long acc, int value, int index, Int16Array array);
         }
 
@@ -1608,24 +1666,36 @@ public class Int16Array implements IntArrayView {
         return acc;
         }
 
-    /** 回调接口：reduce 的归约器 (acc, value, index, array)。 */
+    /**
+     * 回调接口：reduce 的归约器 (acc, value, index, array)。
+     */
     @FunctionalInterface
     public interface Int16Reducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value, int index, Int16Array array);
         }
 
-    /** 回调接口：归约器的 (acc, value) 双参数形式。 */
+    /**
+     * 回调接口：归约器的 (acc, value) 双参数形式。
+     */
     @FunctionalInterface
     public interface Int16Reducer2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value);
         }
 
-    /** 回调接口：归约器的 (acc, value, index) 三参数形式。 */
+    /**
+     * 回调接口：归约器的 (acc, value, index) 三参数形式。
+     */
     @FunctionalInterface
     public interface Int16Reducer3 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value, int index);
         }
 

@@ -861,7 +861,9 @@ public class Uint8Array implements IntArrayView {
         return join(",");
         }
 
-    /** 字符串形式（同 join()），对应 toString 语义。 */
+    /**
+     * 字符串形式（同 join()），对应 toString 语义。
+     */
     @Override
     /**
      * 字符串形式，对应 toString 语义。
@@ -1007,9 +1009,9 @@ public class Uint8Array implements IntArrayView {
      * 10 的 n 次幂。
      */
     private static long pow10(int n) {
-        long r = 1;
+        long r = 1L;
         for (int i = 0; i < n; i++) {
-            r *= 10;
+            r *= 10L;
             }
         return r;
         }
@@ -1168,7 +1170,6 @@ public class Uint8Array implements IntArrayView {
         return this;
         }
 
-    /** 返回下标迭代器，对应 keys 语义。 */
     /**
      * Symbol.iterator 语义：数组迭代器（等价 values）。
      */
@@ -1236,7 +1237,6 @@ public class Uint8Array implements IntArrayView {
         return -1;
         }
 
-    /** 从前往后查找指定值，返回下标（无则 -1），对应 indexOf 语义。 */
     /**
      * indexOf 的浮点形式参数（如 1e1）：精确比较，NaN/非整数值恒不匹配。
      */
@@ -1283,7 +1283,6 @@ public class Uint8Array implements IntArrayView {
         return indexOf(value, 0);
         }
 
-    /** 是否包含指定值（SameValueZero 相等语义）。 */
     /**
      * includes 的浮点形式参数（如 1e0 / 2.55e2）：精确比较。
      */
@@ -1458,7 +1457,6 @@ public class Uint8Array implements IntArrayView {
      */
     public Uint8Array copyWithin(int target, int start, int end) {
         int len = length;
-        int to = toIndex(target, len);
         int from = toIndex(start, len);
         int last = toIndex(end, len);
         if (from > last) {
@@ -1469,6 +1467,7 @@ public class Uint8Array implements IntArrayView {
         for (int i = 0; i < count; i++) {
             tmp[i] = get(from + i);
             }
+        int to = toIndex(target, len);
         for (int i = 0; i < count; i++) {
             if (to + i < len) {
                 set(to + i, tmp[i]);
@@ -1602,7 +1601,6 @@ public class Uint8Array implements IntArrayView {
         return new Uint8Array(copy);
         }
 
-    /** 使用整型列表的元素填充本数组。 */
     /**
      * 使用整型列表的元素填充本数组（从 offset 起，越界抛 RangeError）。
      */
@@ -1678,17 +1676,22 @@ public class Uint8Array implements IntArrayView {
         return new Uint8Array(copy);
         }
 
-    /** 从浮点数组构造（ToUint8 转换），对应 from(arrayLike) 语义。 */
-    /** from(double[], cb)：浮点源值映射填充（回调收到原始 double）。 */
+    /**
+     * from(double[], cb)：浮点源值映射填充（回调收到原始 double）。
+     */
     @FunctionalInterface
     public interface Uint8ArrayDoubleMapper1 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         double apply(double value);
         }
 
     @FunctionalInterface
     public interface Uint8ArrayDoubleMapper2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         double apply(double value, int index);
         }
 
@@ -1865,94 +1868,146 @@ public class Uint8Array implements IntArrayView {
         }
     }
 
-    /** 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。 */
+    /**
+     * 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。
+     */
     @FunctionalInterface
     public interface Uint8ArrayComparator {
-        /** 比较两元素大小（sort 比较器）。 */
+        /**
+         * 比较两元素大小（sort 比较器）。
+         */
         double compare(int a, int b);
         }
 
-    /** 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。 */
+    /**
+     * 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint8ArrayFinder {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value, int index, Uint8Array array);
         }
 
-    /** 回调接口：谓词的无参数形式。 */
+    /**
+     * 回调接口：谓词的无参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ArrayFinder0 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test();
         }
 
-    /** 回调接口：谓词的 (value) 单参数形式。 */
+    /**
+     * 回调接口：谓词的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ArrayFinder1 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value);
         }
 
-    /** 回调接口：谓词的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：谓词的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ArrayFinder2 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value, int index);
         }
 
-    /** 回调接口：forEach 的处理器 (value, index, array)。 */
+    /**
+     * 回调接口：forEach 的处理器 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint8ArrayConsumer {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value, int index, Uint8Array array);
         }
 
-    /** 回调接口：处理器的 (value) 单参数形式。 */
+    /**
+     * 回调接口：处理器的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ArrayConsumer1 {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value);
         }
 
-    /** 回调接口：处理器的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：处理器的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ArrayConsumer2 {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value, int index);
         }
 
-    /** 回调接口：map 的映射器 (value, index, array)。 */
+    /**
+     * 回调接口：map 的映射器 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint8ArrayMapper {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value, int index, Uint8Array array);
         }
 
-    /** 回调接口：映射器的 (value) 单参数形式。 */
+    /**
+     * 回调接口：映射器的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ArrayMapper1 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value);
         }
 
-    /** 回调接口：映射器的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：映射器的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ArrayMapper2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value, int index);
         }
 
-    /** 回调接口：布尔累计归约器（every 式归约场景）。 */
+    /**
+     * 回调接口：布尔累计归约器（every 式归约场景）。
+     */
     @FunctionalInterface
     public interface Int16BooleanReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         boolean apply(boolean acc, int value, int index, Uint8Array array);
         }
 
-    /** 泛型累积器的归约回调（自定义类型场景，如 reduceRight<SumCount>）。 */
+    /**
+     * 泛型累积器的归约回调（自定义类型场景，如 reduceRight<SumCount>）。
+     */
     @FunctionalInterface
     public interface Uint8ArrayGenericReducer<T> {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         T apply(T acc, int value, int index, Uint8Array array);
         }
 
@@ -1998,17 +2053,25 @@ public class Uint8Array implements IntArrayView {
         return acc;
         }
 
-    /** 回调接口：字符串归约器（reduceRight 字符串累计场景）。 */
+    /**
+     * 回调接口：字符串归约器（reduceRight 字符串累计场景）。
+     */
     @FunctionalInterface
     public interface Int16StringReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         String apply(String acc, int value, int index, Uint8Array array);
         }
 
-    /** 回调接口：long 累计归约器（大数 seed 场景）。 */
+    /**
+     * 回调接口：long 累计归约器（大数 seed 场景）。
+     */
     @FunctionalInterface
     public interface Int16LongReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         long apply(long acc, int value, int index, Uint8Array array);
         }
 
@@ -2054,10 +2117,14 @@ public class Uint8Array implements IntArrayView {
         return acc;
         }
 
-    /** List 累计的归约回调（数组归约场景，如 reduceRight<number[]>）。 */
+    /**
+     * List 累计的归约回调（数组归约场景，如 reduceRight<number[]>）。
+     */
     @FunctionalInterface
     public interface Int16ListReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         java.util.List<Integer> apply(java.util.List<Integer> acc, int value, int index, Uint8Array array);
         }
 
@@ -2089,10 +2156,14 @@ public class Uint8Array implements IntArrayView {
         return acc;
         }
 
-    /** 双精度累计的归约回调（prev 可含小数/Infinity/NaN）。 */
+    /**
+     * 双精度累计的归约回调（prev 可含小数/Infinity/NaN）。
+     */
     @FunctionalInterface
     public interface Int16DoubleReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         double apply(double prev, double curr, int index, Uint8Array array);
         }
 
@@ -2180,24 +2251,36 @@ public class Uint8Array implements IntArrayView {
         return acc;
         }
 
-    /** 回调接口：reduce 的归约器 (acc, value, index, array)。 */
+    /**
+     * 回调接口：reduce 的归约器 (acc, value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint8ArrayReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value, int index, Uint8Array array);
         }
 
-    /** 回调接口：归约器的 (acc, value) 双参数形式。 */
+    /**
+     * 回调接口：归约器的 (acc, value) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ArrayReducer2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value);
         }
 
-    /** 回调接口：归约器的 (acc, value, index) 三参数形式。 */
+    /**
+     * 回调接口：归约器的 (acc, value, index) 三参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ArrayReducer3 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value, int index);
         }
 

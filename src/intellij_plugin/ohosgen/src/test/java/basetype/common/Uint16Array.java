@@ -805,7 +805,9 @@ public class Uint16Array implements IntArrayView {
         return join(",");
         }
 
-    /** 字符串形式（同 join()），对应 toString 语义。 */
+    /**
+     * 字符串形式（同 join()），对应 toString 语义。
+     */
     @Override
     /**
      * 字符串形式，对应 toString 语义。
@@ -857,28 +859,22 @@ public class Uint16Array implements IntArrayView {
         if (lc.isEmpty() || !isValidLocale(lc)) {
             throw new RangeError("Invalid locale: " + locales);
             }
-        String lang = lc.split("[-_]")[0];
-        boolean grouped = opts == null || opts.useGrouping;
-        String notation = opts == null || opts.notation == null ? "" : opts.notation;
-        String compactDisplay = opts == null || opts.compactDisplay == null ? "short" : opts.compactDisplay;
-        String curDisplay = opts == null || opts.currencyDisplay == null ? "" : opts.currencyDisplay;
-        int minFrac = opts == null ? -1 : opts.minimumFractionDigits;
-        int maxFrac = opts == null ? -1 : opts.maximumFractionDigits;
-        int minSig = opts == null ? 0 : opts.minimumSignificantDigits;
-        int maxSig = opts == null ? 0 : opts.maximumSignificantDigits;
-        int minInt = opts == null ? 0 : opts.minimumIntegerDigits;
 
         long amount = value;
         boolean percent = opts != null && "percent".equals(opts.style);
         if (percent) {
             amount = (long) value * 100;
             }
+        String notation = opts == null || opts.notation == null ? "" : opts.notation;
         String body;
+        String compactDisplay = opts == null || opts.compactDisplay == null ? "short" : opts.compactDisplay;
         if ("scientific".equals(notation) || "engineering".equals(notation)) {
             body = scientific(amount, "engineering".equals(notation));
             } else if ("compact".equals(notation)) {
             body = compact(amount, compactDisplay);
             } else {
+            int minSig = opts == null ? 0 : opts.minimumSignificantDigits;
+            int maxSig = opts == null ? 0 : opts.maximumSignificantDigits;
             int fracDigits = 0;
             if (minSig > 0) {
                 int digits = Long.toString(Math.abs(amount)).length();
@@ -893,7 +889,9 @@ public class Uint16Array implements IntArrayView {
                     amount = Math.round(amount / (double) factor) * factor;
                     }
             }
-                                    boolean currency = opts != null && "currency".equals(opts.style);
+            int minFrac = opts == null ? -1 : opts.minimumFractionDigits;
+            int maxFrac = opts == null ? -1 : opts.maximumFractionDigits;
+            boolean currency = opts != null && "currency".equals(opts.style);
             if (currency) {
                 int curFrac = "JPY".equals(opts.currency) ? 0 : 2;
                 if (minFrac < 0) {
@@ -907,11 +905,14 @@ public class Uint16Array implements IntArrayView {
                 fracDigits = minFrac;
                 }
             String intPart = Long.toString(Math.abs(amount));
+            int minInt = opts == null ? 0 : opts.minimumIntegerDigits;
             while (intPart.length() < minInt) {
                 intPart = "0" + intPart;
                 }
+        String lang = lc.split("[-_]")[0];
         String groupSep = groupSeparator(lang);
         String decSep = decimalSeparator(lang);
+            boolean grouped = opts == null || opts.useGrouping;
             if (grouped && groupSep != null) {
                 intPart = groupDigits(intPart, groupSep);
                 }
@@ -923,10 +924,11 @@ public class Uint16Array implements IntArrayView {
                 body = body + "%";
                 }
             if (currency) {
+                String curDisplay = opts == null || opts.currencyDisplay == null ? "" : opts.currencyDisplay;
                 body = attachCurrency(body, opts.currency, curDisplay, lang);
                 }
         }
-        if (lang.startsWith("ar")) {
+        if (lc.split("[-_]")[0].startsWith("ar")) {
             body = toArabicDigits(body);
             }
         return body;
@@ -972,9 +974,9 @@ public class Uint16Array implements IntArrayView {
      * 10 的 n 次幂。
      */
     private static long pow10(int n) {
-        long r = 1;
+        long r = 1L;
         for (int i = 0; i < n; i++) {
-            r *= 10;
+            r *= 10L;
             }
         return r;
         }
@@ -1371,7 +1373,6 @@ public class Uint16Array implements IntArrayView {
      */
     public Uint16Array copyWithin(int target, int start, int end) {
         int len = length;
-        int to = toIndex(target, len);
         int from = toIndex(start, len);
         int last = toIndex(end, len);
         if (from > last) {
@@ -1382,6 +1383,7 @@ public class Uint16Array implements IntArrayView {
         for (int i = 0; i < count; i++) {
             tmp[i] = get(from + i);
             }
+        int to = toIndex(target, len);
         for (int i = 0; i < count; i++) {
             if (to + i < len) {
                 set(to + i, tmp[i]);
@@ -1510,7 +1512,6 @@ public class Uint16Array implements IntArrayView {
         return new Uint16Array(copy);
         }
 
-    /** 使用整型列表的元素填充本数组。 */
     /**
      * 使用整型列表的元素填充本数组（从 offset 起，越界抛 RangeError）。
      */
@@ -1753,101 +1754,157 @@ public class Uint16Array implements IntArrayView {
         }
     }
 
-    /** 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。 */
+    /**
+     * 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。
+     */
     @FunctionalInterface
     public interface Uint16ArrayComparator {
-        /** 比较两元素大小（sort 比较器）。 */
+        /**
+         * 比较两元素大小（sort 比较器）。
+         */
         double compare(int a, int b);
         }
 
-    /** 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。 */
+    /**
+     * 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint16ArrayFinder {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value, int index, Uint16Array array);
         }
 
-    /** 回调接口：谓词的无参数形式。 */
+    /**
+     * 回调接口：谓词的无参数形式。
+     */
     @FunctionalInterface
     public interface Uint16ArrayFinder0 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test();
         }
 
-    /** 回调接口：谓词的 (value) 单参数形式。 */
+    /**
+     * 回调接口：谓词的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Uint16ArrayFinder1 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value);
         }
 
-    /** 回调接口：谓词的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：谓词的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint16ArrayFinder2 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value, int index);
         }
 
-    /** 回调接口：forEach 的处理器 (value, index, array)。 */
+    /**
+     * 回调接口：forEach 的处理器 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint16ArrayConsumer {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value, int index, Uint16Array array);
         }
 
-    /** 回调接口：处理器的 (value) 单参数形式。 */
+    /**
+     * 回调接口：处理器的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Uint16ArrayConsumer1 {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value);
         }
 
-    /** 回调接口：处理器的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：处理器的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint16ArrayConsumer2 {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value, int index);
         }
 
-    /** 回调接口：map 的映射器 (value, index, array)。 */
+    /**
+     * 回调接口：map 的映射器 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint16ArrayMapper {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value, int index, Uint16Array array);
         }
 
-    /** 回调接口：double 源值映射器（from(double[], cb) 回调接收转换前值）。 */
+    /**
+     * 回调接口：double 源值映射器（from(double[], cb) 回调接收转换前值）。
+     */
     @FunctionalInterface
     public interface Uint16ArrayDoubleMapper1 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         double apply(double value);
         }
 
-    /** 回调接口：double 源值映射器的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：double 源值映射器的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint16ArrayDoubleMapper2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         double apply(double value, int index);
         }
 
-    /** 回调接口：映射器的 (value) 单参数形式。 */
+    /**
+     * 回调接口：映射器的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Uint16ArrayMapper1 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value);
         }
 
-    /** 回调接口：映射器的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：映射器的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint16ArrayMapper2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value, int index);
         }
 
-    /** 回调接口：布尔累计归约器（every 式归约场景）。 */
+    /**
+     * 回调接口：布尔累计归约器（every 式归约场景）。
+     */
     @FunctionalInterface
     public interface Int16BooleanReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         boolean apply(boolean acc, int value, int index, Uint16Array array);
         }
 
@@ -1865,17 +1922,25 @@ public class Uint16Array implements IntArrayView {
         return acc;
         }
 
-    /** 回调接口：字符串归约器（reduceRight 字符串累计场景）。 */
+    /**
+     * 回调接口：字符串归约器（reduceRight 字符串累计场景）。
+     */
     @FunctionalInterface
     public interface Int16StringReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         String apply(String acc, int value, int index, Uint16Array array);
         }
 
-    /** 回调接口：long 累计归约器（大数 seed 场景）。 */
+    /**
+     * 回调接口：long 累计归约器（大数 seed 场景）。
+     */
     @FunctionalInterface
     public interface Int16LongReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         long apply(long acc, int value, int index, Uint16Array array);
         }
 
@@ -1921,10 +1986,14 @@ public class Uint16Array implements IntArrayView {
         return acc;
         }
 
-    /** 双精度累计的归约回调（prev 可含小数/Infinity/NaN）。 */
+    /**
+     * 双精度累计的归约回调（prev 可含小数/Infinity/NaN）。
+     */
     @FunctionalInterface
     public interface Int16DoubleReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         double apply(double prev, double curr, int index, Uint16Array array);
         }
 
@@ -2012,24 +2081,36 @@ public class Uint16Array implements IntArrayView {
         return acc;
         }
 
-    /** 回调接口：reduce 的归约器 (acc, value, index, array)。 */
+    /**
+     * 回调接口：reduce 的归约器 (acc, value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint16ArrayReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value, int index, Uint16Array array);
         }
 
-    /** 回调接口：归约器的 (acc, value) 双参数形式。 */
+    /**
+     * 回调接口：归约器的 (acc, value) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint16ArrayReducer2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value);
         }
 
-    /** 回调接口：归约器的 (acc, value, index) 三参数形式。 */
+    /**
+     * 回调接口：归约器的 (acc, value, index) 三参数形式。
+     */
     @FunctionalInterface
     public interface Uint16ArrayReducer3 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value, int index);
         }
 

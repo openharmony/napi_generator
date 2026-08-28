@@ -25,8 +25,8 @@ package basetype.common;
 public class BasTest {
 
         /**
-     * 测试辅助：抛出 basetype Error（规避 G.ERR.05 裸 throw）。
-     */
+         * 测试辅助：抛出 basetype Error（规避 G.ERR.05 裸 throw）。
+         */
     public static <T> T throwTestError(String message) {
         throw new Error(message);
     }

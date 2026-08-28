@@ -859,7 +859,9 @@ public class Uint8ClampedArray implements IntArrayView {
         return join(",");
         }
 
-    /** 字符串形式（同 join()），对应 toString 语义。 */
+    /**
+     * 字符串形式（同 join()），对应 toString 语义。
+     */
     @Override
     /**
      * 字符串形式，对应 toString 语义。
@@ -911,28 +913,22 @@ public class Uint8ClampedArray implements IntArrayView {
         if (lc.isEmpty() || !isValidLocale(lc)) {
             throw new RangeError("Invalid locale: " + locales);
             }
-        String lang = lc.split("[-_]")[0];
-        boolean grouped = opts == null || opts.useGrouping;
-        String notation = opts == null || opts.notation == null ? "" : opts.notation;
-        String compactDisplay = opts == null || opts.compactDisplay == null ? "short" : opts.compactDisplay;
-        String curDisplay = opts == null || opts.currencyDisplay == null ? "" : opts.currencyDisplay;
-        int minFrac = opts == null ? -1 : opts.minimumFractionDigits;
-        int maxFrac = opts == null ? -1 : opts.maximumFractionDigits;
-        int minSig = opts == null ? 0 : opts.minimumSignificantDigits;
-        int maxSig = opts == null ? 0 : opts.maximumSignificantDigits;
-        int minInt = opts == null ? 0 : opts.minimumIntegerDigits;
 
         long amount = value;
         boolean percent = opts != null && "percent".equals(opts.style);
         if (percent) {
             amount = (long) value * 100;
             }
+        String notation = opts == null || opts.notation == null ? "" : opts.notation;
         String body;
+        String compactDisplay = opts == null || opts.compactDisplay == null ? "short" : opts.compactDisplay;
         if ("scientific".equals(notation) || "engineering".equals(notation)) {
             body = scientific(amount, "engineering".equals(notation));
             } else if ("compact".equals(notation)) {
             body = compact(amount, compactDisplay);
             } else {
+            int minSig = opts == null ? 0 : opts.minimumSignificantDigits;
+            int maxSig = opts == null ? 0 : opts.maximumSignificantDigits;
             int fracDigits = 0;
             if (minSig > 0) {
                 int digits = Long.toString(Math.abs(amount)).length();
@@ -947,7 +943,9 @@ public class Uint8ClampedArray implements IntArrayView {
                     amount = Math.round(amount / (double) factor) * factor;
                     }
             }
-                                    boolean currency = opts != null && "currency".equals(opts.style);
+            int minFrac = opts == null ? -1 : opts.minimumFractionDigits;
+            int maxFrac = opts == null ? -1 : opts.maximumFractionDigits;
+            boolean currency = opts != null && "currency".equals(opts.style);
             if (currency) {
                 int curFrac = "JPY".equals(opts.currency) ? 0 : 2;
                 if (minFrac < 0) {
@@ -961,11 +959,14 @@ public class Uint8ClampedArray implements IntArrayView {
                 fracDigits = minFrac;
                 }
             String intPart = Long.toString(Math.abs(amount));
+            int minInt = opts == null ? 0 : opts.minimumIntegerDigits;
             while (intPart.length() < minInt) {
                 intPart = "0" + intPart;
                 }
+        String lang = lc.split("[-_]")[0];
         String groupSep = groupSeparator(lang);
         String decSep = decimalSeparator(lang);
+            boolean grouped = opts == null || opts.useGrouping;
             if (grouped && groupSep != null) {
                 intPart = groupDigits(intPart, groupSep);
                 }
@@ -977,10 +978,11 @@ public class Uint8ClampedArray implements IntArrayView {
                 body = body + "%";
                 }
             if (currency) {
+                String curDisplay = opts == null || opts.currencyDisplay == null ? "" : opts.currencyDisplay;
                 body = attachCurrency(body, opts.currency, curDisplay, lang);
                 }
         }
-        if (lang.startsWith("ar")) {
+        if (lc.split("[-_]")[0].startsWith("ar")) {
             body = toArabicDigits(body);
             }
         return body;
@@ -1026,9 +1028,9 @@ public class Uint8ClampedArray implements IntArrayView {
      * 10 的 n 次幂。
      */
     private static long pow10(int n) {
-        long r = 1;
+        long r = 1L;
         for (int i = 0; i < n; i++) {
-            r *= 10;
+            r *= 10L;
             }
         return r;
         }
@@ -1265,7 +1267,6 @@ public class Uint8ClampedArray implements IntArrayView {
         return -1;
         }
 
-    /** 从前往后查找指定值，返回下标（无则 -1），对应 indexOf 语义。 */
     /**
      * indexOf 的浮点形式参数：精确比较，NaN/非整数值恒不匹配。
      */
@@ -1331,7 +1332,6 @@ public class Uint8ClampedArray implements IntArrayView {
         return indexOf(value, 0);
         }
 
-    /** 是否包含指定值（SameValueZero 相等语义）。 */
     /**
      * includes 的浮点形式参数（如 1e9）：精确比较，NaN/非整数值恒不匹配。
      */
@@ -1530,7 +1530,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
      */
     public Uint8ClampedArray copyWithin(int target, int start, int end) {
         int len = length;
-        int to = toIndex(target, len);
         int from = toIndex(start, len);
         int last = toIndex(end, len);
         if (from > last) {
@@ -1541,6 +1540,7 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         for (int i = 0; i < count; i++) {
             tmp[i] = get(from + i);
             }
+        int to = toIndex(target, len);
         for (int i = 0; i < count; i++) {
             if (to + i < len) {
                 set(to + i, tmp[i]);
@@ -1703,7 +1703,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return from((java.util.Collection<? extends Number>) values, cb);
         }
 
-    /** 使用整型列表的元素填充本数组。 */
     /**
      * 使用整型列表的元素填充本数组（从 offset 起，越界抛 RangeError）。
      */
@@ -1783,17 +1782,22 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return new Uint8ClampedArray(copy);
         }
 
-    /** 从浮点数组构造（ToUint8 转换），对应 from(arrayLike) 语义。 */
-    /** 回调接口：double 源值映射器（from(double[], cb) 回调接收转换前值）。 */
+    /**
+     * 回调接口：double 源值映射器（from(double[], cb) 回调接收转换前值）。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayDoubleMapper1 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         double apply(double value);
         }
 
     @FunctionalInterface
     public interface Uint8ClampedArrayDoubleMapper2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         double apply(double value, int index);
         }
 
@@ -1948,87 +1952,135 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
             }
     }
 
-    /** 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。 */
+    /**
+     * 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayComparator {
-        /** 比较两元素大小（sort 比较器）。 */
+        /**
+         * 比较两元素大小（sort 比较器）。
+         */
         double compare(int a, int b);
         }
 
-    /** 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。 */
+    /**
+     * 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayFinder {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value, int index, Uint8ClampedArray array);
         }
 
-    /** 回调接口：谓词的无参数形式。 */
+    /**
+     * 回调接口：谓词的无参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayFinder0 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test();
         }
 
-    /** 回调接口：谓词的 (value) 单参数形式。 */
+    /**
+     * 回调接口：谓词的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayFinder1 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value);
         }
 
-    /** 回调接口：谓词的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：谓词的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayFinder2 {
-        /** 谓词测试（value, index, array）。 */
+        /**
+         * 谓词测试（value, index, array）。
+         */
         boolean test(int value, int index);
         }
 
-    /** 回调接口：forEach 的处理器 (value, index, array)。 */
+    /**
+     * 回调接口：forEach 的处理器 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayConsumer {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value, int index, Uint8ClampedArray array);
         }
 
-    /** 回调接口：处理器的 (value) 单参数形式。 */
+    /**
+     * 回调接口：处理器的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayConsumer1 {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value);
         }
 
-    /** 回调接口：处理器的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：处理器的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayConsumer2 {
-        /** forEach 消费回调方法。 */
+        /**
+         * forEach 消费回调方法。
+         */
         void accept(int value, int index);
         }
 
-    /** 回调接口：map 的映射器 (value, index, array)。 */
+    /**
+     * 回调接口：map 的映射器 (value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayMapper {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value, int index, Uint8ClampedArray array);
         }
 
-    /** 回调接口：映射器的 (value) 单参数形式。 */
+    /**
+     * 回调接口：映射器的 (value) 单参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayMapper1 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value);
         }
 
-    /** 回调接口：映射器的 (value, index) 双参数形式。 */
+    /**
+     * 回调接口：映射器的 (value, index) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayMapper2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int value, int index);
         }
 
-    /** 回调接口：布尔累计归约器（every 式归约场景）。 */
+    /**
+     * 回调接口：布尔累计归约器（every 式归约场景）。
+     */
     @FunctionalInterface
     public interface Int16BooleanReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         boolean apply(boolean acc, int value, int index, Uint8ClampedArray array);
         }
 
@@ -2060,17 +2112,25 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return acc;
         }
 
-    /** 回调接口：字符串归约器（reduceRight 字符串累计场景）。 */
+    /**
+     * 回调接口：字符串归约器（reduceRight 字符串累计场景）。
+     */
     @FunctionalInterface
     public interface Int16StringReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         String apply(String acc, int value, int index, Uint8ClampedArray array);
         }
 
-    /** 回调接口：long 累计归约器（大数 seed 场景）。 */
+    /**
+     * 回调接口：long 累计归约器（大数 seed 场景）。
+     */
     @FunctionalInterface
     public interface Int16LongReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         long apply(long acc, int value, int index, Uint8ClampedArray array);
         }
 
@@ -2116,10 +2176,14 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return acc;
         }
 
-    /** List 累计的归约回调（数组归约场景，如 reduceRight<number[]>）。 */
+    /**
+     * List 累计的归约回调（数组归约场景，如 reduceRight<number[]>）。
+     */
     @FunctionalInterface
     public interface Int16ListReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         java.util.List<Integer> apply(java.util.List<Integer> acc, int value, int index, Uint8ClampedArray array);
         }
 
@@ -2151,10 +2215,14 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return acc;
         }
 
-    /** 双精度累计的归约回调（prev 可含小数/Infinity/NaN）。 */
+    /**
+     * 双精度累计的归约回调（prev 可含小数/Infinity/NaN）。
+     */
     @FunctionalInterface
     public interface Int16DoubleReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         double apply(double prev, double curr, int index, Uint8ClampedArray array);
         }
 
@@ -2242,24 +2310,36 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return acc;
         }
 
-    /** 回调接口：reduce 的归约器 (acc, value, index, array)。 */
+    /**
+     * 回调接口：reduce 的归约器 (acc, value, index, array)。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayReducer {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value, int index, Uint8ClampedArray array);
         }
 
-    /** 回调接口：归约器的 (acc, value) 双参数形式。 */
+    /**
+     * 回调接口：归约器的 (acc, value) 双参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayReducer2 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value);
         }
 
-    /** 回调接口：归约器的 (acc, value, index) 三参数形式。 */
+    /**
+     * 回调接口：归约器的 (acc, value, index) 三参数形式。
+     */
     @FunctionalInterface
     public interface Uint8ClampedArrayReducer3 {
-        /** 函数式接口回调方法。 */
+        /**
+         * 函数式接口回调方法。
+         */
         int apply(int acc, int value, int index);
         }
 

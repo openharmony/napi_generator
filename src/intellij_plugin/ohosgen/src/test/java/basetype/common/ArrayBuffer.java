@@ -43,7 +43,9 @@ public class ArrayBuffer {
         return bytes.length;
         }
 
-    /** 读取指定字节偏移处的 int16 小端值（越界按 0 处理）。 */
+    /**
+     * 读取指定字节偏移处的 int16 小端值（越界按 0 处理）。
+     */
     int getInt16(int byteOffset) {
         if (byteOffset < 0 || byteOffset + 2 > bytes.length) {
             return 0;
@@ -53,7 +55,9 @@ public class ArrayBuffer {
         return (short) ((hi << 8) | lo);
         }
 
-    /** 读取指定字节偏移处的 int32 小端值（越界按 0 处理）。 */
+    /**
+     * 读取指定字节偏移处的 int32 小端值（越界按 0 处理）。
+     */
     int getInt32(int byteOffset) {
         if (byteOffset < 0 || byteOffset + 4 > bytes.length) {
             return 0;
@@ -65,7 +69,9 @@ public class ArrayBuffer {
         return (b3 << 24) | (b2 << 16) | (b1 << 8) | b0;
         }
 
-    /** 写入指定字节偏移处的 int32 小端值（越界忽略）。 */
+    /**
+     * 写入指定字节偏移处的 int32 小端值（越界忽略）。
+     */
     void setInt32(int byteOffset, int value) {
         if (byteOffset < 0 || byteOffset + 4 > bytes.length) {
             return;
@@ -76,7 +82,9 @@ public class ArrayBuffer {
         bytes[byteOffset + 3] = (byte) ((value >> 24) & 0xFF);
         }
 
-    /** 读取指定字节偏移处的 int8 值（越界按 0 处理）。 */
+    /**
+     * 读取指定字节偏移处的 int8 值（越界按 0 处理）。
+     */
     int getInt8(int byteOffset) {
         if (byteOffset < 0 || byteOffset >= bytes.length) {
             return 0;
@@ -84,7 +92,9 @@ public class ArrayBuffer {
         return bytes[byteOffset];
         }
 
-    /** 写入指定字节偏移处的 int8 值（越界忽略）。 */
+    /**
+     * 写入指定字节偏移处的 int8 值（越界忽略）。
+     */
     void setInt8(int byteOffset, int value) {
         if (byteOffset < 0 || byteOffset >= bytes.length) {
             return;
@@ -92,7 +102,9 @@ public class ArrayBuffer {
         bytes[byteOffset] = (byte) value;
         }
 
-    /** 写入指定字节偏移处的 int16 小端值（越界忽略）。 */
+    /**
+     * 写入指定字节偏移处的 int16 小端值（越界忽略）。
+     */
     void setInt16(int byteOffset, int value) {
         if (byteOffset < 0 || byteOffset + 2 > bytes.length) {
             return;
