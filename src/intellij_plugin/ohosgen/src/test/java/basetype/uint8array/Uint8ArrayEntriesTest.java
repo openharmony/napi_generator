@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayEntriesTest extends BasTest {
     /**
+     * Verify entries() with zero parameters for normal call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_0100
      * @tc.name testUint8ArrayEntries001
      * @tc.desc Verify entries() with zero parameters for normal call
@@ -45,7 +46,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     Uint8Array.EntriesIterator iter = arr.entries();
     assertNotNull(iter);
     }
+
     /**
+     * Verify entries() returns non-null object
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_0200
      * @tc.name testUint8ArrayEntries002
      * @tc.desc Verify entries() returns non-null object
@@ -60,7 +63,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     Uint8Array.EntriesIterator iter = arr.entries();
     assertNotNull(iter);
     }
+
     /**
+     * Verify entries() returns object with next method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_0300
      * @tc.name testUint8ArrayEntries003
      * @tc.desc Verify entries() returns object with next method
@@ -75,7 +80,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     Uint8Array.EntriesIterator iter = arr.entries();
     assertNotNull(true);
     }
+
     /**
+     * Verify entries() returns object with Symbol.iterator returning self
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_0400
      * @tc.name testUint8ArrayEntries004
      * @tc.desc Verify entries() returns object with Symbol.iterator returning self
@@ -91,7 +98,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     Uint8Array.EntriesIterator same = iter.$_iterator();
     assertEqual(iter, same);
     }
+
     /**
+     * Verify multiple calls to entries() return different iterator instances
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_0500
      * @tc.name testUint8ArrayEntries005
      * @tc.desc Verify multiple calls to entries() return different iterator instances
@@ -107,7 +116,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     Uint8Array.EntriesIterator iter2 = arr.entries();
     assertNotEqual(iter2, iter1);
     }
+
     /**
+     * Verify empty array entries().next().done is true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_0600
      * @tc.name testUint8ArrayEntries006
      * @tc.desc Verify empty array entries().next().done is true
@@ -123,7 +134,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertTrue(e.done);
     }
+
     /**
+     * Verify empty array for..of loop iterates 0 times
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_0700
      * @tc.name testUint8ArrayEntries007
      * @tc.desc Verify empty array for..of loop iterates 0 times
@@ -144,7 +157,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     }
     assertEqual(0, count);
     }
+
     /**
+     * Verify empty array consecutive next() calls return done true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_0800
      * @tc.name testUint8ArrayEntries008
      * @tc.desc Verify empty array consecutive next() calls return done true
@@ -162,7 +177,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertTrue(e1.done);
     assertTrue(e2.done);
     }
+
     /**
+     * Verify empty array new iterator after consuming next() is still done
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_0900
      * @tc.name testUint8ArrayEntries009
      * @tc.desc Verify empty array new iterator after consuming next() is still done
@@ -180,7 +197,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter2.next();
     assertTrue(e.done);
     }
+
     /**
+     * Verify single element entries first entry index is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_1000
      * @tc.name testUint8ArrayEntries010
      * @tc.desc Verify single element entries first entry index is 0
@@ -197,7 +216,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertFalse(e.done);
     assertEqual(0, e.value[0]);
     }
+
     /**
+     * Verify single element entries first entry value matches element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_1100
      * @tc.name testUint8ArrayEntries011
      * @tc.desc Verify single element entries first entry value matches element
@@ -213,7 +234,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(42, e.value[1]);
     }
+
     /**
+     * Verify single element entries next().done is true after consumption
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_1200
      * @tc.name testUint8ArrayEntries012
      * @tc.desc Verify single element entries next().done is true after consumption
@@ -230,7 +253,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertTrue(e.done);
     }
+
     /**
+     * Verify single element value 255 (MAX) entries value correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_1300
      * @tc.name testUint8ArrayEntries013
      * @tc.desc Verify single element value 255 (MAX) entries value correct
@@ -246,7 +271,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(255, e.value[1]);
     }
+
     /**
+     * Verify three element array entries traversal count is 3
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_1400
      * @tc.name testUint8ArrayEntries014
      * @tc.desc Verify three element array entries traversal count is 3
@@ -267,7 +294,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     }
     assertEqual(3, count);
     }
+
     /**
+     * Verify three element array entries first entry index is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_1500
      * @tc.name testUint8ArrayEntries015
      * @tc.desc Verify three element array entries first entry index is 0
@@ -283,7 +312,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(0, e.value[0]);
     }
+
     /**
+     * Verify three element array entries first entry value is 10
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_1600
      * @tc.name testUint8ArrayEntries016
      * @tc.desc Verify three element array entries first entry value is 10
@@ -299,7 +330,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(10, e.value[1]);
     }
+
     /**
+     * Verify three element array entries second entry index is 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_1700
      * @tc.name testUint8ArrayEntries017
      * @tc.desc Verify three element array entries second entry index is 1
@@ -316,7 +349,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(1, e.value[0]);
     }
+
     /**
+     * Verify three element array entries second entry value is 20
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_1800
      * @tc.name testUint8ArrayEntries018
      * @tc.desc Verify three element array entries second entry value is 20
@@ -333,7 +368,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(20, e.value[1]);
     }
+
     /**
+     * Verify three element array entries third entry index is 2
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_1900
      * @tc.name testUint8ArrayEntries019
      * @tc.desc Verify three element array entries third entry index is 2
@@ -351,7 +388,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(2, e.value[0]);
     }
+
     /**
+     * Verify three element array entries third entry value is 30
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_2000
      * @tc.name testUint8ArrayEntries020
      * @tc.desc Verify three element array entries third entry value is 30
@@ -369,7 +408,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(30, e.value[1]);
     }
+
     /**
+     * Verify five element array entries traversal count is 5
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_2100
      * @tc.name testUint8ArrayEntries021
      * @tc.desc Verify five element array entries traversal count is 5
@@ -390,7 +431,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     }
     assertEqual(5, count);
     }
+
     /**
+     * Verify 100 element array entries traversal count is 100
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_2200
      * @tc.name testUint8ArrayEntries022
      * @tc.desc Verify 100 element array entries traversal count is 100
@@ -414,7 +457,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     }
     assertEqual(100, count);
     }
+
     /**
+     * Verify 100 element array entries 61st entry index is 60
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_2300
      * @tc.name testUint8ArrayEntries023
      * @tc.desc Verify 100 element array entries 61st entry index is 60
@@ -436,7 +481,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(60, e.value[0]);
     }
+
     /**
+     * Verify element value 0 (MIN) entries value correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_2400
      * @tc.name testUint8ArrayEntries024
      * @tc.desc Verify element value 0 (MIN) entries value correct
@@ -452,7 +499,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(0, e.value[1]);
     }
+
     /**
+     * Verify element value 256 (overflow truncated to 0) entries value is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_2500
      * @tc.name testUint8ArrayEntries025
      * @tc.desc Verify element value 256 (overflow truncated to 0) entries value is 0
@@ -468,7 +517,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(0, e.value[1]);
     }
+
     /**
+     * Verify element value -1 (wrapped to 255) entries value is 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_2600
      * @tc.name testUint8ArrayEntries026
      * @tc.desc Verify element value -1 (wrapped to 255) entries value is 255
@@ -484,7 +535,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(255, e.value[1]);
     }
+
     /**
+     * Verify element value 127 (midpoint) entries value correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_2700
      * @tc.name testUint8ArrayEntries027
      * @tc.desc Verify element value 127 (midpoint) entries value correct
@@ -500,7 +553,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(127, e.value[1]);
     }
+
     /**
+     * Verify element value 128 (midpoint+1) entries value correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_2800
      * @tc.name testUint8ArrayEntries028
      * @tc.desc Verify element value 128 (midpoint+1) entries value correct
@@ -516,7 +571,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(128, e.value[1]);
     }
+
     /**
+     * Verify element value 0x80 (128 hexadecimal) entries value correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_2900
      * @tc.name testUint8ArrayEntries029
      * @tc.desc Verify element value 0x80 (128 hexadecimal) entries value correct
@@ -532,7 +589,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(128, e.value[1]);
     }
+
     /**
+     * Verify element value 0xFF (255 hexadecimal) entries value correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_3000
      * @tc.name testUint8ArrayEntries030
      * @tc.desc Verify element value 0xFF (255 hexadecimal) entries value correct
@@ -548,7 +607,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(255, e.value[1]);
     }
+
     /**
+     * Verify Uint8Array constructed from ArrayBuffer entries normal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_3100
      * @tc.name testUint8ArrayEntries031
      * @tc.desc Verify Uint8Array constructed from ArrayBuffer entries normal
@@ -568,7 +629,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertEqual(0, e.value[0]);
     assertEqual(10, e.value[1]);
     }
+
     /**
+     * Verify subarray view entries first entry index starts from 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_3200
      * @tc.name testUint8ArrayEntries032
      * @tc.desc Verify subarray view entries first entry index starts from 0
@@ -586,7 +649,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertEqual(0, e.value[0]);
     assertEqual(3, e.value[1]);
     }
+
     /**
+     * Verify subarray view entries traversal count is view length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_3300
      * @tc.name testUint8ArrayEntries033
      * @tc.desc Verify subarray view entries traversal count is view length
@@ -608,7 +673,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     }
     assertEqual(3, count);
     }
+
     /**
+     * Verify shared buffer view entries reflects buffer modification
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_3400
      * @tc.name testUint8ArrayEntries034
      * @tc.desc Verify shared buffer view entries reflects buffer modification
@@ -627,7 +694,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(200, e.value[1]);
     }
+
     /**
+     * Verify Uint8Array constructed from FixedArray<int> entries normal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_3500
      * @tc.name testUint8ArrayEntries035
      * @tc.desc Verify Uint8Array constructed from FixedArray<int> entries normal
@@ -644,7 +713,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(1, e.value[1]);
     }
+
     /**
+     * Verify Uint8Array constructed from FixedArray<number> entries normal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_3600
      * @tc.name testUint8ArrayEntries036
      * @tc.desc Verify Uint8Array constructed from FixedArray<number> entries normal
@@ -661,7 +732,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(1, e.value[1]);
     }
+
     /**
+     * Verify for...of traversal entries index increments in order
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_3700
      * @tc.name testUint8ArrayEntries037
      * @tc.desc Verify for...of traversal entries index increments in order
@@ -684,7 +757,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     }
     assertEqual(3, idx);
     }
+
     /**
+     * Verify for...of traversal entries values match array elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_3800
      * @tc.name testUint8ArrayEntries038
      * @tc.desc Verify for...of traversal entries values match array elements
@@ -708,7 +783,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     }
     assertEqual(3, idx);
     }
+
     /**
+     * Verify complete traversal next().done is true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_3900
      * @tc.name testUint8ArrayEntries039
      * @tc.desc Verify complete traversal next().done is true
@@ -726,7 +803,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertTrue(e.done);
     }
+
     /**
+     * Verify exhausted iterator consecutive next() calls return done
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_4000
      * @tc.name testUint8ArrayEntries040
      * @tc.desc Verify exhausted iterator consecutive next() calls return done
@@ -747,7 +826,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertTrue(e2.done);
     assertTrue(e3.done);
     }
+
     /**
+     * Verify modifying untraversed element during entries traversal reflects new value
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_4100
      * @tc.name testUint8ArrayEntries041
      * @tc.desc Verify modifying untraversed element during entries traversal reflects new value
@@ -767,7 +848,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(99, e.value[1]);
     }
+
     /**
+     * Verify modifying traversed element does not affect subsequent entry
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_4200
      * @tc.name testUint8ArrayEntries042
      * @tc.desc Verify modifying traversed element does not affect subsequent entry
@@ -785,7 +868,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(20, e.value[1]);
     }
+
     /**
+     * Verify fill during entries traversal fills untraversed region with new value
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_4300
      * @tc.name testUint8ArrayEntries043
      * @tc.desc Verify fill during entries traversal fills untraversed region with new value
@@ -804,7 +889,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(255, e.value[1]);
     }
+
     /**
+     * Verify set during entries traversal writes to untraversed position
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_4400
      * @tc.name testUint8ArrayEntries044
      * @tc.desc Verify set during entries traversal writes to untraversed position
@@ -825,7 +912,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e2 = iter.next();
     assertEqual(99, e2.value[1]);
     }
+
     /**
+     * Verify new entries iterator after array modification sees latest values
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_4500
      * @tc.name testUint8ArrayEntries045
      * @tc.desc Verify new entries iterator after array modification sees latest values
@@ -843,7 +932,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     assertEqual(100, e.value[1]);
     }
+
     /**
+     * Verify modification via $_set during entries traversal correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_4600
      * @tc.name testUint8ArrayEntries046
      * @tc.desc Verify modification via $_set during entries traversal correct
@@ -863,7 +954,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertEqual(2, e3.value[0]);
     assertEqual(88, e3.value[1]);
     }
+
     /**
+     * Verify two entries iterators from same array step independently
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_4700
      * @tc.name testUint8ArrayEntries047
      * @tc.desc Verify two entries iterators from same array step independently
@@ -883,7 +976,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertEqual(0, e.value[0]);
     assertEqual(1, e.value[1]);
     }
+
     /**
+     * Verify two entries iterators interleaved stepping do not affect each other
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_4800
      * @tc.name testUint8ArrayEntries048
      * @tc.desc Verify two entries iterators interleaved stepping do not affect each other
@@ -906,7 +1001,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertEqual(1, c.value[0]);
     assertEqual(1, d.value[0]);
     }
+
     /**
+     * Verify one iterator exhausted does not affect another iterator
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_4900
      * @tc.name testUint8ArrayEntries049
      * @tc.desc Verify one iterator exhausted does not affect another iterator
@@ -928,7 +1025,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertEqual(0, e2.value[0]);
     assertEqual(1, e2.value[1]);
     }
+
     /**
+     * Verify empty array entries does not throw exception
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_5000
      * @tc.name testUint8ArrayEntries050
      * @tc.desc Verify empty array entries does not throw exception
@@ -950,7 +1049,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     }
     assertFalse(threw);
     }
+
     /**
+     * Verify non-empty array entries does not throw exception
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_5100
      * @tc.name testUint8ArrayEntries051
      * @tc.desc Verify non-empty array entries does not throw exception
@@ -972,7 +1073,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     }
     assertFalse(threw);
     }
+
     /**
+     * Verify for...of traversal entries with throw does not affect array structure
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_5200
      * @tc.name testUint8ArrayEntries052
      * @tc.desc Verify for...of traversal entries with throw does not affect array structure
@@ -989,7 +1092,7 @@ public class Uint8ArrayEntriesTest extends BasTest {
     Uint8Array.EntriesIterator iter = arr.entries();
     EntryResult e = iter.next();
     while (!e.done) {
-    throw new Error();
+    BasTest.throwTestError("");
     }
     } catch (RangeError e) {
     threw = true;
@@ -998,7 +1101,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertTrue(threw);
     assertEqual(3, arr.length());
     }
+
     /**
+     * Verify Uint8Array with byteOffset constructed entries index starts from 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_5300
      * @tc.name testUint8ArrayEntries053
      * @tc.desc Verify Uint8Array with byteOffset constructed entries index starts from 0
@@ -1018,7 +1123,9 @@ public class Uint8ArrayEntriesTest extends BasTest {
     assertEqual(0, e.value[0]);
     assertEqual(100, e.value[1]);
     }
+
     /**
+     * Verify array with all equal elements (128) entries index correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ENTRIES_5400
      * @tc.name testUint8ArrayEntries054
      * @tc.desc Verify array with all equal elements (128) entries index correct

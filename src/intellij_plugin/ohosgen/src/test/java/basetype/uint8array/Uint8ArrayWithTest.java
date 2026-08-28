@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayWithTest extends BasTest {
     /**
+     * Verify with with two parameters index and value for normal call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_0100
      * @tc.name testUint8ArrayWith001
      * @tc.desc Verify with with two parameters index and value for normal call
@@ -44,7 +45,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(0, val);
     assertEqual(100, result.get(0));
     }
+
     /**
+     * Verify with with index=-5 wraps to valid index for negative index on length 5 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_0200
      * @tc.name testUint8ArrayWith002
      * @tc.desc Verify with with index=-5 wraps to valid index for negative index on length 5 array
@@ -60,7 +63,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array arr2 = arr.with(-5, val);
     assertEqual(100, arr2.get(0));
     }
+
     /**
+     * Verify with with index=0 replacing only element of length 1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_0300
      * @tc.name testUint8ArrayWith003
      * @tc.desc Verify with with index=0 replacing only element of length 1 array
@@ -76,7 +81,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(0, val);
     assertEqual(99, result.get(0));
     }
+
     /**
+     * Verify with with index=0 replacing first element of length 3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_0400
      * @tc.name testUint8ArrayWith004
      * @tc.desc Verify with with index=0 replacing first element of length 3 array
@@ -92,7 +99,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(0, val);
     assertEqual(100, result.get(0));
     }
+
     /**
+     * Verify with with index=2 replacing last element of length 3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_0500
      * @tc.name testUint8ArrayWith005
      * @tc.desc Verify with with index=2 replacing last element of length 3 array
@@ -108,7 +117,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(2, val);
     assertEqual(200, result.get(2));
     }
+
     /**
+     * Verify with with index=-1 wraps to valid index for negative index on length 3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_0600
      * @tc.name testUint8ArrayWith006
      * @tc.desc Verify with with index=-1 wraps to valid index for negative index on length 3 array
@@ -124,7 +135,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array arr2 = arr.with(-1, val);
     assertEqual(150, arr2.get(2));
     }
+
     /**
+     * Verify with with index=-3 wraps to valid index for negative index on length 3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_0700
      * @tc.name testUint8ArrayWith007
      * @tc.desc Verify with with index=-3 wraps to valid index for negative index on length 3 array
@@ -140,7 +153,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array arr2 = arr.with(-3, val);
     assertEqual(50, arr2.get(0));
     }
+
     /**
+     * Verify with with index=0 replacing first element of length 100 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_0800
      * @tc.name testUint8ArrayWith008
      * @tc.desc Verify with with index=0 replacing first element of length 100 array
@@ -156,7 +171,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(0, val);
     assertEqual(1, result.get(0));
     }
+
     /**
+     * Verify with with index=99 replacing last element of length 100 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_0900
      * @tc.name testUint8ArrayWith009
      * @tc.desc Verify with with index=99 replacing last element of length 100 array
@@ -173,7 +190,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(99, val);
     assertEqual(255, result.get(99));
     }
+
     /**
+     * Verify with with index=-1 wraps to valid index for negative index on length 100 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_1000
      * @tc.name testUint8ArrayWith010
      * @tc.desc Verify with with index=-1 wraps to valid index for negative index on length 100 array
@@ -189,7 +208,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array arr2 = arr.with(-1, val);
     assertEqual(127, arr2.get(99));
     }
+
     /**
+     * Verify with with index=-100 wraps to valid index for negative index on length 100 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_1100
      * @tc.name testUint8ArrayWith011
      * @tc.desc Verify with with index=-100 wraps to valid index for negative index on length 100 array
@@ -205,7 +226,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array arr2 = arr.with(-1, val);
     assertEqual(128, arr2.get(99));
     }
+
     /**
+     * Verify with with index=0 on subarray view replacing first element of view
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_1200
      * @tc.name testUint8ArrayWith012
      * @tc.desc Verify with with index=0 on subarray view replacing first element of view
@@ -222,7 +245,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = view.with(0, val);
     assertEqual(99, result.get(0));
     }
+
     /**
+     * Verify with with index=2 on subarray view replacing last element of view
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_1300
      * @tc.name testUint8ArrayWith013
      * @tc.desc Verify with with index=2 on subarray view replacing last element of view
@@ -239,7 +264,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = view.with(2, val);
     assertEqual(88, result.get(2));
     }
+
     /**
+     * Verify with with index=0 on buffer+offset view replacing first element of view
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_1400
      * @tc.name testUint8ArrayWith014
      * @tc.desc Verify with with index=0 on buffer+offset view replacing first element of view
@@ -256,7 +283,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(0, val);
     assertEqual(77, result.get(0));
     }
+
     /**
+     * Verify with with expression index 1*0+0 for index parameter
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_1500
      * @tc.name testUint8ArrayWith015
      * @tc.desc Verify with with expression index 1*0+0 for index parameter
@@ -272,7 +301,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1 * 0, val);
     assertEqual(99, result.get(0));
     }
+
     /**
+     * Verify with with expression index 4/2 for index parameter
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_1600
      * @tc.name testUint8ArrayWith016
      * @tc.desc Verify with with expression index 4/2 for index parameter
@@ -288,7 +319,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(4 / 2, val);
     assertEqual(77, result.get(2));
     }
+
     /**
+     * Verify with with value=0 minimum value replacing element to 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_1700
      * @tc.name testUint8ArrayWith017
      * @tc.desc Verify with with value=0 minimum value replacing element to 0
@@ -304,7 +337,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(0, result.get(1));
     }
+
     /**
+     * Verify with with value=255 maximum value replacing element to 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_1800
      * @tc.name testUint8ArrayWith018
      * @tc.desc Verify with with value=255 maximum value replacing element to 255
@@ -320,7 +355,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(255, result.get(1));
     }
+
     /**
+     * Verify with with value=1 minimum positive boundary for correct replacement
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_1900
      * @tc.name testUint8ArrayWith019
      * @tc.desc Verify with with value=1 minimum positive boundary for correct replacement
@@ -336,7 +373,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(1, result.get(1));
     }
+
     /**
+     * Verify with with value=127 middle value for correct replacement
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_2000
      * @tc.name testUint8ArrayWith020
      * @tc.desc Verify with with value=127 middle value for correct replacement
@@ -352,7 +391,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(127, result.get(1));
     }
+
     /**
+     * Verify with with value=128 middle+1 value for correct replacement
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_2100
      * @tc.name testUint8ArrayWith021
      * @tc.desc Verify with with value=128 middle+1 value for correct replacement
@@ -368,7 +409,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(128, result.get(1));
     }
+
     /**
+     * Verify with with value=254 max-1 value for correct replacement
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_2200
      * @tc.name testUint8ArrayWith022
      * @tc.desc Verify with with value=254 max-1 value for correct replacement
@@ -384,7 +427,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(254, result.get(1));
     }
+
     /**
+     * Verify with with value=0x00 hex minimum value for hex literal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_2300
      * @tc.name testUint8ArrayWith023
      * @tc.desc Verify with with value=0x00 hex minimum value for hex literal
@@ -400,7 +445,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(0, result.get(1));
     }
+
     /**
+     * Verify with with value=0xFF hex maximum value for hex literal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_2400
      * @tc.name testUint8ArrayWith024
      * @tc.desc Verify with with value=0xFF hex maximum value for hex literal
@@ -416,7 +463,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(255, result.get(1));
     }
+
     /**
+     * Verify with with value=0x80 hex 128 for hex literal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_2500
      * @tc.name testUint8ArrayWith025
      * @tc.desc Verify with with value=0x80 hex 128 for hex literal
@@ -432,7 +481,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(128, result.get(1));
     }
+
     /**
+     * Verify with with value=0x7F hex 127 for hex literal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_2600
      * @tc.name testUint8ArrayWith026
      * @tc.desc Verify with with value=0x7F hex 127 for hex literal
@@ -448,7 +499,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(127, result.get(1));
     }
+
     /**
+     * Verify with with value=0x0F hex 15 for hex literal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_2700
      * @tc.name testUint8ArrayWith027
      * @tc.desc Verify with with value=0x0F hex 15 for hex literal
@@ -464,7 +517,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(15, result.get(1));
     }
+
     /**
+     * Verify with with value=0xF0 hex 240 for hex literal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_2800
      * @tc.name testUint8ArrayWith028
      * @tc.desc Verify with with value=0xF0 hex 240 for hex literal
@@ -480,7 +535,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(240, result.get(1));
     }
+
     /**
+     * Verify with with value=0b00000000 binary minimum for binary literal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_2900
      * @tc.name testUint8ArrayWith029
      * @tc.desc Verify with with value=0b00000000 binary minimum for binary literal
@@ -496,7 +553,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(0, result.get(1));
     }
+
     /**
+     * Verify with with value=0b11111111 binary maximum for binary literal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_3000
      * @tc.name testUint8ArrayWith030
      * @tc.desc Verify with with value=0b11111111 binary maximum for binary literal
@@ -512,7 +571,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(255, result.get(1));
     }
+
     /**
+     * Verify with with value=0b10101010 binary 170 for binary literal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_3100
      * @tc.name testUint8ArrayWith031
      * @tc.desc Verify with with value=0b10101010 binary 170 for binary literal
@@ -528,7 +589,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(170, result.get(1));
     }
+
     /**
+     * Verify with returns a new Uint8Array not the same object
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_3200
      * @tc.name testUint8ArrayWith032
      * @tc.desc Verify with returns a new Uint8Array not the same object
@@ -544,7 +607,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertTrue(result != arr);
     }
+
     /**
+     * Verify with returns Uint8Array type
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_3300
      * @tc.name testUint8ArrayWith033
      * @tc.desc Verify with returns Uint8Array type
@@ -560,7 +625,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(BasTest.className(arr), BasTest.className(result));
     }
+
     /**
+     * Verify with returns new array with same length as original
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_3400
      * @tc.name testUint8ArrayWith034
      * @tc.desc Verify with returns new array with same length as original
@@ -576,7 +643,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(1, val);
     assertEqual(arr.length(), result.length());
     }
+
     /**
+     * Verify with returns new array with unchanged elements at other positions
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_3500
      * @tc.name testUint8ArrayWith035
      * @tc.desc Verify with returns new array with unchanged elements at other positions
@@ -593,7 +662,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(10, result.get(0));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify original array is not modified after calling with
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_3600
      * @tc.name testUint8ArrayWith036
      * @tc.desc Verify original array is not modified after calling with
@@ -611,7 +682,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(20, arr.get(1));
     assertEqual(30, arr.get(2));
     }
+
     /**
+     * Verify with returns new array with replaced element at index 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_3700
      * @tc.name testUint8ArrayWith037
      * @tc.desc Verify with returns new array with replaced element at index 0
@@ -629,7 +702,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(20, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns new array with replaced element at last index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_3800
      * @tc.name testUint8ArrayWith038
      * @tc.desc Verify with returns new array with replaced element at last index
@@ -647,7 +722,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(20, result.get(1));
     assertEqual(99, result.get(2));
     }
+
     /**
+     * Verify with with index=-1 wraps to valid index for negative index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_3900
      * @tc.name testUint8ArrayWith039
      * @tc.desc Verify with with index=-1 wraps to valid index for negative index
@@ -663,7 +740,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array arr2 = arr.with(-1, val);
     assertEqual(99, arr2.get(2));
     }
+
     /**
+     * Verify with with index=-3 wraps to valid index for negative index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_4000
      * @tc.name testUint8ArrayWith040
      * @tc.desc Verify with with index=-3 wraps to valid index for negative index
@@ -679,7 +758,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array arr2 = arr.with(-3, val);
     assertEqual(99, arr2.get(0));
     }
+
     /**
+     * Verify with returns new array with replaced element on subarray view
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_4100
      * @tc.name testUint8ArrayWith041
      * @tc.desc Verify with returns new array with replaced element on subarray view
@@ -698,7 +779,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(30, result.get(1));
     assertEqual(40, result.get(2));
     }
+
     /**
+     * Verify with returns new array with replaced element using expression index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_4200
      * @tc.name testUint8ArrayWith042
      * @tc.desc Verify with returns new array with replaced element using expression index
@@ -716,7 +799,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(20, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns new array with replaced element using expression index 4/2
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_4300
      * @tc.name testUint8ArrayWith043
      * @tc.desc Verify with returns new array with replaced element using expression index 4/2
@@ -736,7 +821,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(40, result.get(3));
     assertEqual(50, result.get(4));
     }
+
     /**
+     * Verify with returns array with replaced element value=0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_4400
      * @tc.name testUint8ArrayWith044
      * @tc.desc Verify with returns array with replaced element value=0
@@ -754,7 +841,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns array with replaced element value=255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_4500
      * @tc.name testUint8ArrayWith045
      * @tc.desc Verify with returns array with replaced element value=255
@@ -772,7 +861,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns array with replaced element value=127
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_4600
      * @tc.name testUint8ArrayWith046
      * @tc.desc Verify with returns array with replaced element value=127
@@ -790,7 +881,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(127, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns array with replaced element value=128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_4700
      * @tc.name testUint8ArrayWith047
      * @tc.desc Verify with returns array with replaced element value=128
@@ -808,7 +901,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(128, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns array with replaced element value=0xFF hex
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_4800
      * @tc.name testUint8ArrayWith048
      * @tc.desc Verify with returns array with replaced element value=0xFF hex
@@ -826,7 +921,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns array with replaced element value=0x00 hex
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_4900
      * @tc.name testUint8ArrayWith049
      * @tc.desc Verify with returns array with replaced element value=0x00 hex
@@ -844,7 +941,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns array with replaced element value=0x80 hex
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_5000
      * @tc.name testUint8ArrayWith050
      * @tc.desc Verify with returns array with replaced element value=0x80 hex
@@ -862,7 +961,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(128, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns array with replaced element value=0x7F hex
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_5100
      * @tc.name testUint8ArrayWith051
      * @tc.desc Verify with returns array with replaced element value=0x7F hex
@@ -880,7 +981,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(127, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns array with replaced element value=0b11111111 binary
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_5200
      * @tc.name testUint8ArrayWith052
      * @tc.desc Verify with returns array with replaced element value=0b11111111 binary
@@ -898,7 +1001,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(255, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns array with replaced element value=0b00000000 binary
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_5300
      * @tc.name testUint8ArrayWith053
      * @tc.desc Verify with returns array with replaced element value=0b00000000 binary
@@ -916,7 +1021,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(0, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with returns array with replaced element value=0b10101010 binary
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_5400
      * @tc.name testUint8ArrayWith054
      * @tc.desc Verify with returns array with replaced element value=0b10101010 binary
@@ -934,7 +1041,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual(170, result.get(1));
     assertEqual(30, result.get(2));
     }
+
     /**
+     * Verify with index=length throws RangeError for length 3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_5500
      * @tc.name testUint8ArrayWith055
      * @tc.desc Verify with index=length throws RangeError for length 3 array
@@ -954,7 +1063,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=length+1 throws RangeError for length 3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_5600
      * @tc.name testUint8ArrayWith056
      * @tc.desc Verify with index=length+1 throws RangeError for length 3 array
@@ -974,7 +1085,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index negative beyond range throws RangeError for length 3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_5700
      * @tc.name testUint8ArrayWith057
      * @tc.desc Verify with index negative beyond range throws RangeError for length 3 array
@@ -994,7 +1107,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index negative beyond range for length 5 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_5800
      * @tc.name testUint8ArrayWith058
      * @tc.desc Verify with index negative beyond range for length 5 array
@@ -1014,7 +1129,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=5 throws RangeError for length 3 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_5900
      * @tc.name testUint8ArrayWith059
      * @tc.desc Verify with index=5 throws RangeError for length 3 array
@@ -1034,7 +1151,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=6 throws RangeError for length 4 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_6000
      * @tc.name testUint8ArrayWith060
      * @tc.desc Verify with index=6 throws RangeError for length 4 array
@@ -1054,7 +1173,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=1 throws RangeError for length 1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_6100
      * @tc.name testUint8ArrayWith061
      * @tc.desc Verify with index=1 throws RangeError for length 1 array
@@ -1074,7 +1195,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=-2 throws RangeError for length 1 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_6200
      * @tc.name testUint8ArrayWith062
      * @tc.desc Verify with index=-2 throws RangeError for length 1 array
@@ -1094,7 +1217,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=100 throws RangeError for length 100 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_6300
      * @tc.name testUint8ArrayWith063
      * @tc.desc Verify with index=100 throws RangeError for length 100 array
@@ -1114,7 +1239,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=101 throws RangeError for length 100 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_6400
      * @tc.name testUint8ArrayWith064
      * @tc.desc Verify with index=101 throws RangeError for length 100 array
@@ -1134,7 +1261,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=-101 throws RangeError for length 100 array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_6500
      * @tc.name testUint8ArrayWith065
      * @tc.desc Verify with index=-101 throws RangeError for length 100 array
@@ -1154,7 +1283,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=view.length throws RangeError on subarray view
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_6600
      * @tc.name testUint8ArrayWith066
      * @tc.desc Verify with index=view.length throws RangeError on subarray view
@@ -1175,7 +1306,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=view.length+1 throws RangeError on subarray view
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_6700
      * @tc.name testUint8ArrayWith067
      * @tc.desc Verify with index=view.length+1 throws RangeError on subarray view
@@ -1196,7 +1329,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=view.length throws RangeError on buffer+offset view
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_6800
      * @tc.name testUint8ArrayWith068
      * @tc.desc Verify with index=view.length throws RangeError on buffer+offset view
@@ -1217,7 +1352,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index large positive throws RangeError on buffer+offset view
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_6900
      * @tc.name testUint8ArrayWith069
      * @tc.desc Verify with index large positive throws RangeError on buffer+offset view
@@ -1238,7 +1375,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index large negative -9999 throws RangeError
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_7000
      * @tc.name testUint8ArrayWith070
      * @tc.desc Verify with index large negative -9999 throws RangeError
@@ -1258,7 +1397,9 @@ public class Uint8ArrayWithTest extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify with index=0 value=0 on length 1 array returns new array with 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_7100
      * @tc.name testUint8ArrayWith071
      * @tc.desc Verify with index=0 value=0 on length 1 array returns new array with 0
@@ -1274,7 +1415,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(0, val);
     assertEqual(0, result.get(0));
     }
+
     /**
+     * Verify with index=0 value=255 on length 1 array returns new array with 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_7200
      * @tc.name testUint8ArrayWith072
      * @tc.desc Verify with index=0 value=255 on length 1 array returns new array with 255
@@ -1290,7 +1433,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(0, val);
     assertEqual(255, result.get(0));
     }
+
     /**
+     * Verify with index=0 value=0xFF hex on length 1 array returns new array with 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_7300
      * @tc.name testUint8ArrayWith073
      * @tc.desc Verify with index=0 value=0xFF hex on length 1 array returns new array with 255
@@ -1306,7 +1451,9 @@ public class Uint8ArrayWithTest extends BasTest {
     Uint8Array result = arr.with(0, val);
     assertEqual(255, result.get(0));
     }
+
     /**
+     * Verify with index=0 value=0b11111111 binary on length 1 array returns new array with 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_WITH01_7400
      * @tc.name testUint8ArrayWith074
      * @tc.desc Verify with index=0 value=0b11111111 binary on length 1 array returns new array with 255

@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayIteratorTest extends BasTest {
     /**
+     * Verify calling $_iterator() without parameters returns non-null iterator object
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0100
      * @tc.name testUint8ArrayIterator001
      * @tc.desc Verify calling $_iterator() without parameters returns non-null iterator object
@@ -44,7 +45,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertNotNull(iter);
     }
+
     /**
+     * Verify $_iterator() returns object type as 'object'
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0200
      * @tc.name testUint8ArrayIterator002
      * @tc.desc Verify $_iterator() returns object type as 'object'
@@ -61,7 +64,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     assertFalse(result.done);
     assertEqual(10, result.value);
     }
+
     /**
+     * Verify returned iterator object contains next method and is function type
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0300
      * @tc.name testUint8ArrayIterator003
      * @tc.desc Verify returned iterator object contains next method and is function type
@@ -78,7 +83,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     assertFalse(result.done);
     assertEqual(10, result.value);
     }
+
     /**
+     * Verify next() returns object with done property of boolean type
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0400
      * @tc.name testUint8ArrayIterator004
      * @tc.desc Verify next() returns object with done property of boolean type
@@ -94,7 +101,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult result = iter.next();
     assertFalse(result.done);
     }
+
     /**
+     * Verify next() returns object with value property of number type when not done
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0500
      * @tc.name testUint8ArrayIterator005
      * @tc.desc Verify next() returns object with value property of number type when not done
@@ -110,7 +119,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult result = iter.next();
     assertEqual(10, result.value);
     }
+
     /**
+     * Verify returned iterator itself can be consumed by for-of loop
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0600
      * @tc.name testUint8ArrayIterator006
      * @tc.desc Verify returned iterator itself can be consumed by for-of loop
@@ -131,7 +142,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(2, count);
     }
+
     /**
+     * Verify empty array for-of loop body does not execute
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0700
      * @tc.name testUint8ArrayIterator007
      * @tc.desc Verify empty array for-of loop body does not execute
@@ -152,7 +165,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(0, count);
     }
+
     /**
+     * Verify empty array $_iterator().next().done is true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0800
      * @tc.name testUint8ArrayIterator008
      * @tc.desc Verify empty array $_iterator().next().done is true
@@ -168,7 +183,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult result = iter.next();
     assertEqual(true, result.done);
     }
+
     /**
+     * Verify empty array $_iterator().next().value is undefined
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_0900
      * @tc.name testUint8ArrayIterator009
      * @tc.desc Verify empty array $_iterator().next().value is undefined
@@ -184,7 +201,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult result = iter.next();
     assertNull(result.value);
     }
+
     /**
+     * Verify empty array iterator second next() done is still true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1000
      * @tc.name testUint8ArrayIterator010
      * @tc.desc Verify empty array iterator second next() done is still true
@@ -201,7 +220,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult result = iter.next();
     assertEqual(true, result.done);
     }
+
     /**
+     * Verify empty array length remains 0 after iteration
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1100
      * @tc.name testUint8ArrayIterator011
      * @tc.desc Verify empty array length remains 0 after iteration
@@ -220,7 +241,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(0, arr.length());
     }
+
     /**
+     * Verify [0] for-of collects 1 element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1200
      * @tc.name testUint8ArrayIterator012
      * @tc.desc Verify [0] for-of collects 1 element
@@ -241,7 +264,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(1, count);
     }
+
     /**
+     * Verify [0] manual iteration .next().value is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1300
      * @tc.name testUint8ArrayIterator013
      * @tc.desc Verify [0] manual iteration .next().value is 0
@@ -256,7 +281,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(0, iter.next().value);
     }
+
     /**
+     * Verify [0] first .next().done is false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1400
      * @tc.name testUint8ArrayIterator014
      * @tc.desc Verify [0] first .next().done is false
@@ -271,7 +298,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(false, iter.next().done);
     }
+
     /**
+     * Verify [0] second .next().done is true (iteration exhausted)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1500
      * @tc.name testUint8ArrayIterator015
      * @tc.desc Verify [0] second .next().done is true (iteration exhausted)
@@ -287,7 +316,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     iter.next();
     assertEqual(true, iter.next().done);
     }
+
     /**
+     * Verify [255] manual iteration .next().value is 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1600
      * @tc.name testUint8ArrayIterator016
      * @tc.desc Verify [255] manual iteration .next().value is 255
@@ -302,7 +333,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(255, iter.next().value);
     }
+
     /**
+     * Verify [128] manual iteration .next().value is 128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1700
      * @tc.name testUint8ArrayIterator017
      * @tc.desc Verify [128] manual iteration .next().value is 128
@@ -317,7 +350,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(128, iter.next().value);
     }
+
     /**
+     * Verify [127] for-of iteration value matches index read arr[0]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1800
      * @tc.name testUint8ArrayIterator018
      * @tc.desc Verify [127] for-of iteration value matches index read arr[0]
@@ -332,7 +367,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(arr.at(0), iter.next().value);
     }
+
     /**
+     * Verify [0, 127, 255] for-of collects 3 elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_1900
      * @tc.name testUint8ArrayIterator019
      * @tc.desc Verify [0, 127, 255] for-of collects 3 elements
@@ -353,7 +390,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(3, count);
     }
+
     /**
+     * Verify [0, 127, 255] first iteration value is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2000
      * @tc.name testUint8ArrayIterator020
      * @tc.desc Verify [0, 127, 255] first iteration value is 0
@@ -368,7 +407,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(0, iter.next().value);
     }
+
     /**
+     * Verify [0, 127, 255] second iteration value is 127
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2100
      * @tc.name testUint8ArrayIterator021
      * @tc.desc Verify [0, 127, 255] second iteration value is 127
@@ -384,7 +425,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     iter.next();
     assertEqual(127, iter.next().value);
     }
+
     /**
+     * Verify [0, 127, 255] third iteration value is 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2200
      * @tc.name testUint8ArrayIterator022
      * @tc.desc Verify [0, 127, 255] third iteration value is 255
@@ -401,7 +444,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     iter.next();
     assertEqual(255, iter.next().value);
     }
+
     /**
+     * Verify [0, 127, 255] iteration completed .next().done is true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2300
      * @tc.name testUint8ArrayIterator023
      * @tc.desc Verify [0, 127, 255] iteration completed .next().done is true
@@ -420,7 +465,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(true, iter.next().done);
     }
+
     /**
+     * Verify [1, 2, 3, 4, 5] five elements all iterated in order
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2400
      * @tc.name testUint8ArrayIterator024
      * @tc.desc Verify [1, 2, 3, 4, 5] five elements all iterated in order
@@ -441,7 +488,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(5, collected.size());
     }
+
     /**
+     * Verify [1, 2, 3, 4, 5] iteration order matches index order
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2500
      * @tc.name testUint8ArrayIterator025
      * @tc.desc Verify [1, 2, 3, 4, 5] iteration order matches index order
@@ -462,7 +511,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertTrue(ok);
     }
+
     /**
+     * Verify 100 elements all iteration values match index values
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2600
      * @tc.name testUint8ArrayIterator026
      * @tc.desc Verify 100 elements all iteration values match index values
@@ -486,7 +537,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertTrue(ok);
     }
+
     /**
+     * Verify element 256 truncated to 0, iteration value is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2700
      * @tc.name testUint8ArrayIterator027
      * @tc.desc Verify element 256 truncated to 0, iteration value is 0
@@ -501,7 +554,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(0, iter.next().value);
     }
+
     /**
+     * Verify element -1 wraps to 255, iteration value is 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2800
      * @tc.name testUint8ArrayIterator028
      * @tc.desc Verify element -1 wraps to 255, iteration value is 255
@@ -516,7 +571,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(255, iter.next().value);
     }
+
     /**
+     * Verify element 0xFF (hex 255) iteration value is 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_2900
      * @tc.name testUint8ArrayIterator029
      * @tc.desc Verify element 0xFF (hex 255) iteration value is 255
@@ -531,7 +588,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(255, iter.next().value);
     }
+
     /**
+     * Verify element 0x100 (hex 256) truncated to 0, iteration value is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3000
      * @tc.name testUint8ArrayIterator030
      * @tc.desc Verify element 0x100 (hex 256) truncated to 0, iteration value is 0
@@ -546,7 +605,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(0, iter.next().value);
     }
+
     /**
+     * Verify element 0x80 (hex 128) iteration value is 128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3100
      * @tc.name testUint8ArrayIterator031
      * @tc.desc Verify element 0x80 (hex 128) iteration value is 128
@@ -561,7 +622,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.$_iterator();
     assertEqual(128, iter.next().value);
     }
+
     /**
+     * Verify all-zero array [0, 0, 0, 0] iteration all values are 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3200
      * @tc.name testUint8ArrayIterator032
      * @tc.desc Verify all-zero array [0, 0, 0, 0] iteration all values are 0
@@ -582,7 +645,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(4, count);
     }
+
     /**
+     * Verify for-of loop break terminates iteration early
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3300
      * @tc.name testUint8ArrayIterator033
      * @tc.desc Verify for-of loop break terminates iteration early
@@ -606,7 +671,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(2, count);
     }
+
     /**
+     * Verify for-of loop continue skips current iteration
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3400
      * @tc.name testUint8ArrayIterator034
      * @tc.desc Verify for-of loop continue skips current iteration
@@ -632,7 +699,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(4, sum);
     }
+
     /**
+     * Verify nested for-of two traversals of same array do not interfere
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3500
      * @tc.name testUint8ArrayIterator035
      * @tc.desc Verify nested for-of two traversals of same array do not interfere
@@ -658,7 +727,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(4, outer);
     }
+
     /**
+     * Verify for-of iteration values match ordinary for loop index reads
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3600
      * @tc.name testUint8ArrayIterator036
      * @tc.desc Verify for-of iteration values match ordinary for loop index reads
@@ -679,7 +750,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertTrue(match);
     }
+
     /**
+     * Verify for-of const variable scope is correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3700
      * @tc.name testUint8ArrayIterator037
      * @tc.desc Verify for-of const variable scope is correct
@@ -700,7 +773,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(5, values.get(0));
     }
+
     /**
+     * Verify empty array $_iterator and values() both produce no values
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3800
      * @tc.name testUint8ArrayIterator038
      * @tc.desc Verify empty array $_iterator and values() both produce no values
@@ -716,7 +791,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iterB = arr.values();
     assertEqual(iterB.next().done, iterA.next().done);
     }
+
     /**
+     * Verify [0, 128] $_iterator and values() first element are same
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_3900
      * @tc.name testUint8ArrayIterator039
      * @tc.desc Verify [0, 128] $_iterator and values() first element are same
@@ -730,7 +807,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = Uint8Array.of(0, 128);
     assertEqual(arr.values().next().value, arr.$_iterator().next().value);
     }
+
     /**
+     * Verify [255, 0, 127] $_iterator and values() second element are same
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4000
      * @tc.name testUint8ArrayIterator040
      * @tc.desc Verify [255, 0, 127] $_iterator and values() second element are same
@@ -748,7 +827,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     b.next();
     assertEqual(b.next().value, a.next().value);
     }
+
     /**
+     * Verify large array $_iterator and values() traverse same element count
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4100
      * @tc.name testUint8ArrayIterator041
      * @tc.desc Verify large array $_iterator and values() traverse same element count
@@ -776,7 +857,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(countB, countA);
     }
+
     /**
+     * Verify [0, 0xFF, 128, 256, -1] two iterators equivalent to respective sequential reads
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4200
      * @tc.name testUint8ArrayIterator042
      * @tc.desc Verify [0, 0xFF, 128, 256, -1] two iterators equivalent to respective sequential reads
@@ -798,7 +881,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertTrue(equal);
     }
+
     /**
+     * Verify same array two for-of produce same value sequence
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4300
      * @tc.name testUint8ArrayIterator043
      * @tc.desc Verify same array two for-of produce same value sequence
@@ -826,7 +911,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(second.get(0), first.get(0));
     }
+
     /**
+     * Verify two independent $_iterator calls produce independent iterators
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4400
      * @tc.name testUint8ArrayIterator044
      * @tc.desc Verify two independent $_iterator calls produce independent iterators
@@ -844,7 +931,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     iter1.next();
     assertEqual(1, iter2.next().value);
     }
+
     /**
+     * Verify array element content not modified after iteration
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4500
      * @tc.name testUint8ArrayIterator045
      * @tc.desc Verify array element content not modified after iteration
@@ -863,7 +952,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(5, arr.at(0));
     }
+
     /**
+     * Verify array length remains unchanged after iteration
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4600
      * @tc.name testUint8ArrayIterator046
      * @tc.desc Verify array length remains unchanged after iteration
@@ -883,7 +974,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(before, arr.length());
     }
+
     /**
+     * Verify iterator exhausted then re-create iterator to traverse again
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4700
      * @tc.name testUint8ArrayIterator047
      * @tc.desc Verify iterator exhausted then re-create iterator to traverse again
@@ -901,7 +994,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter2 = arr.$_iterator();
     assertEqual(7, iter2.next().value);
     }
+
     /**
+     * Verify modifying current element during iteration reflects new value in subsequent iteration
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4800
      * @tc.name testUint8ArrayIterator048
      * @tc.desc Verify modifying current element during iteration reflects new value in subsequent iteration
@@ -919,7 +1014,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     arr.set(new Uint8Array(new int[] {99}), 2);
     assertEqual(99, iter.next().value);
     }
+
     /**
+     * Verify modifying array element before iteration, iteration reads modified value
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_4900
      * @tc.name testUint8ArrayIterator049
      * @tc.desc Verify modifying array element before iteration, iteration reads modified value
@@ -936,7 +1033,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     iter.next();
     assertEqual(200, iter.next().value);
     }
+
     /**
+     * Verify modifying array by index after iteration completes, array usable normally
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_5000
      * @tc.name testUint8ArrayIterator050
      * @tc.desc Verify modifying array by index after iteration completes, array usable normally
@@ -956,7 +1055,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     arr.set(new Uint8Array(new int[] {100}), 0);
     assertEqual(100, arr.at(0));
     }
+
     /**
+     * Verify fill during iteration, subsequent iteration values reflect fill
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_5100
      * @tc.name testUint8ArrayIterator051
      * @tc.desc Verify fill during iteration, subsequent iteration values reflect fill
@@ -980,7 +1081,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     }
     assertEqual(5, count);
     }
+
     /**
+     * Verify calling next() after iterator exhausted does not throw exception
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_5200
      * @tc.name testUint8ArrayIterator052
      * @tc.desc Verify calling next() after iterator exhausted does not throw exception
@@ -997,7 +1100,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     IteratorResult result = iter.next();
     assertNotNull(result);
     }
+
     /**
+     * Verify calling next() after iterator exhausted, done is true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_5300
      * @tc.name testUint8ArrayIterator053
      * @tc.desc Verify calling next() after iterator exhausted, done is true
@@ -1013,7 +1118,9 @@ public class Uint8ArrayIteratorTest extends BasTest {
     iter.next();
     assertEqual(true, iter.next().done);
     }
+
     /**
+     * Verify calling next() after iterator exhausted, value is undefined
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ITERATOR_5400
      * @tc.name testUint8ArrayIterator054
      * @tc.desc Verify calling next() after iterator exhausted, value is undefined

@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayValueOfTest extends BasTest {
     /**
+     * Verify valueOf() no-arg call returns self reference
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_0100
      * @tc.name testUint8ArrayValueOf001
      * @tc.desc Verify valueOf() no-arg call returns self reference
@@ -42,7 +43,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array r = a.valueOf();
     assertEqual(a, r);
     }
+
     /**
+     * Verify valueOf returns self reference for empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_0200
      * @tc.name testUint8ArrayValueOf002
      * @tc.desc Verify valueOf returns self reference for empty array
@@ -56,7 +59,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(0);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference for single-element array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_0300
      * @tc.name testUint8ArrayValueOf003
      * @tc.desc Verify valueOf returns self reference for single-element array
@@ -70,7 +75,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(1);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference for multi-element array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_0400
      * @tc.name testUint8ArrayValueOf004
      * @tc.desc Verify valueOf returns self reference for multi-element array
@@ -84,7 +91,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {1, 2, 3});
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference for array created by Uint8Array.of
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_0500
      * @tc.name testUint8ArrayValueOf005
      * @tc.desc Verify valueOf returns self reference for array created by Uint8Array.of
@@ -98,7 +107,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = Uint8Array.of(1, 2, 3);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference for array created by Uint8Array.from
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_0600
      * @tc.name testUint8ArrayValueOf006
      * @tc.desc Verify valueOf returns self reference for array created by Uint8Array.from
@@ -112,7 +123,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = Uint8Array.from(new int[] {1, 2, 3});
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference for array constructed from ArrayBuffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_0700
      * @tc.name testUint8ArrayValueOf007
      * @tc.desc Verify valueOf returns self reference for array constructed from ArrayBuffer
@@ -127,7 +140,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(buf);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference for array constructed from ArrayBuffer with offset
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_0800
      * @tc.name testUint8ArrayValueOf008
      * @tc.desc Verify valueOf returns self reference for array constructed from ArrayBuffer with offset
@@ -142,7 +157,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(buf, 4);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference for array constructed from ArrayBuffer with offset and length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_0900
      * @tc.name testUint8ArrayValueOf009
      * @tc.desc Verify valueOf returns self reference for array constructed from ArrayBuffer with offset and length
@@ -157,7 +174,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(buf, 2, 3);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference after fill(0)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_1000
      * @tc.name testUint8ArrayValueOf010
      * @tc.desc Verify valueOf returns self reference after fill(0)
@@ -172,7 +191,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     a.fill(0);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference after fill(255)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_1100
      * @tc.name testUint8ArrayValueOf011
      * @tc.desc Verify valueOf returns self reference after fill(255)
@@ -187,7 +208,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     a.fill(255);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference after set
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_1200
      * @tc.name testUint8ArrayValueOf012
      * @tc.desc Verify valueOf returns self reference after set
@@ -202,7 +225,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     a.set(new Uint8Array(new int[] {1, 2}), 1);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference after copyWithin
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_1300
      * @tc.name testUint8ArrayValueOf013
      * @tc.desc Verify valueOf returns self reference after copyWithin
@@ -217,7 +242,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     a.copyWithin(0, 2);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference after reverse
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_1400
      * @tc.name testUint8ArrayValueOf014
      * @tc.desc Verify valueOf returns self reference after reverse
@@ -232,7 +259,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     a.reverse();
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference after sort
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_1500
      * @tc.name testUint8ArrayValueOf015
      * @tc.desc Verify valueOf returns self reference after sort
@@ -247,7 +276,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     a.sort();
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference after index assignment
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_1600
      * @tc.name testUint8ArrayValueOf016
      * @tc.desc Verify valueOf returns self reference after index assignment
@@ -262,7 +293,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     a.set(0, 10);
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify two consecutive valueOf calls return the same reference
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_1700
      * @tc.name testUint8ArrayValueOf017
      * @tc.desc Verify two consecutive valueOf calls return the same reference
@@ -276,7 +309,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(3);
     assertEqual(a.valueOf(), a.valueOf());
     }
+
     /**
+     * Verify valueOf returns self reference after multi-operation chain
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_1800
      * @tc.name testUint8ArrayValueOf018
      * @tc.desc Verify valueOf returns self reference after multi-operation chain
@@ -292,7 +327,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     a.reverse();
     assertEqual(a, a.valueOf());
     }
+
     /**
+     * Verify valueOf preserves element value 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_1900
      * @tc.name testUint8ArrayValueOf019
      * @tc.desc Verify valueOf preserves element value 0
@@ -306,7 +343,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {0});
     assertEqual(0, a.valueOf().get(0));
     }
+
     /**
+     * Verify valueOf preserves element value 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_2000
      * @tc.name testUint8ArrayValueOf020
      * @tc.desc Verify valueOf preserves element value 255
@@ -320,7 +359,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {255});
     assertEqual(255, a.valueOf().get(0));
     }
+
     /**
+     * Verify valueOf preserves element value 127
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_2100
      * @tc.name testUint8ArrayValueOf021
      * @tc.desc Verify valueOf preserves element value 127
@@ -334,7 +375,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {127});
     assertEqual(127, a.valueOf().get(0));
     }
+
     /**
+     * Verify valueOf preserves element value 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_2200
      * @tc.name testUint8ArrayValueOf022
      * @tc.desc Verify valueOf preserves element value 1
@@ -348,7 +391,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {1});
     assertEqual(1, a.valueOf().get(0));
     }
+
     /**
+     * Verify valueOf preserves element value 128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_2300
      * @tc.name testUint8ArrayValueOf023
      * @tc.desc Verify valueOf preserves element value 128
@@ -362,7 +407,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {128});
     assertEqual(128, a.valueOf().get(0));
     }
+
     /**
+     * Verify valueOf preserves element value 254
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_2400
      * @tc.name testUint8ArrayValueOf024
      * @tc.desc Verify valueOf preserves element value 254
@@ -376,7 +423,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {254});
     assertEqual(254, a.valueOf().get(0));
     }
+
     /**
+     * Verify valueOf preserves elements of multi-element array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_2500
      * @tc.name testUint8ArrayValueOf025
      * @tc.desc Verify valueOf preserves elements of multi-element array
@@ -393,7 +442,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(20, r.get(1));
     assertEqual(30, r.get(2));
     }
+
     /**
+     * Verify valueOf preserves elements after fill(42)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_2600
      * @tc.name testUint8ArrayValueOf026
      * @tc.desc Verify valueOf preserves elements after fill(42)
@@ -411,7 +462,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(42, r.get(1));
     assertEqual(42, r.get(2));
     }
+
     /**
+     * Verify valueOf preserves elements after set
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_2700
      * @tc.name testUint8ArrayValueOf027
      * @tc.desc Verify valueOf preserves elements after set
@@ -429,7 +482,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(1, r.get(1));
     assertEqual(2, r.get(2));
     }
+
     /**
+     * Verify valueOf preserves elements after copyWithin
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_2800
      * @tc.name testUint8ArrayValueOf028
      * @tc.desc Verify valueOf preserves elements after copyWithin
@@ -446,7 +501,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(3, r.get(0));
     assertEqual(4, r.get(1));
     }
+
     /**
+     * Verify valueOf preserves elements after reverse
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_2900
      * @tc.name testUint8ArrayValueOf029
      * @tc.desc Verify valueOf preserves elements after reverse
@@ -464,7 +521,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(2, r.get(1));
     assertEqual(1, r.get(2));
     }
+
     /**
+     * Verify valueOf preserves elements after sort
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_3000
      * @tc.name testUint8ArrayValueOf030
      * @tc.desc Verify valueOf preserves elements after sort
@@ -482,7 +541,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(2, r.get(1));
     assertEqual(3, r.get(2));
     }
+
     /**
+     * Verify valueOf preserves elements after index assignment
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_3100
      * @tc.name testUint8ArrayValueOf031
      * @tc.desc Verify valueOf preserves elements after index assignment
@@ -500,7 +561,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(10, r.get(0));
     assertEqual(20, r.get(1));
     }
+
     /**
+     * Verify valueOf preserves elements from Uint8Array.from
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_3200
      * @tc.name testUint8ArrayValueOf032
      * @tc.desc Verify valueOf preserves elements from Uint8Array.from
@@ -517,7 +580,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(10, r.get(1));
     assertEqual(15, r.get(2));
     }
+
     /**
+     * Verify valueOf preserves elements from Uint8Array.of
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_3300
      * @tc.name testUint8ArrayValueOf033
      * @tc.desc Verify valueOf preserves elements from Uint8Array.of
@@ -534,7 +599,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(14, r.get(1));
     assertEqual(21, r.get(2));
     }
+
     /**
+     * Verify valueOf result has same length property
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_3400
      * @tc.name testUint8ArrayValueOf034
      * @tc.desc Verify valueOf result has same length property
@@ -549,7 +616,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array r = a.valueOf();
     assertEqual(a.length(), r.length());
     }
+
     /**
+     * Verify valueOf result has same buffer property
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_3500
      * @tc.name testUint8ArrayValueOf035
      * @tc.desc Verify valueOf result has same buffer property
@@ -564,7 +633,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array r = a.valueOf();
     assertEqual(a.buffer(), r.buffer());
     }
+
     /**
+     * Verify valueOf result has same constructor property
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_3600
      * @tc.name testUint8ArrayValueOf036
      * @tc.desc Verify valueOf result has same constructor property
@@ -580,7 +651,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(3, r.length());
     assertEqual(3, a.length());
     }
+
     /**
+     * Verify valueOf result shares the same ArrayBuffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_3700
      * @tc.name testUint8ArrayValueOf037
      * @tc.desc Verify valueOf result shares the same ArrayBuffer
@@ -595,7 +668,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array r = a.valueOf();
     assertEqual(a.buffer(), r.buffer());
     }
+
     /**
+     * Verify modifying valueOf result element affects original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_3800
      * @tc.name testUint8ArrayValueOf038
      * @tc.desc Verify modifying valueOf result element affects original array
@@ -611,7 +686,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     r.set(0, 100);
     assertEqual(100, a.get(0));
     }
+
     /**
+     * Verify modifying original array affects valueOf result
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_3900
      * @tc.name testUint8ArrayValueOf039
      * @tc.desc Verify modifying original array affects valueOf result
@@ -627,7 +704,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     a.set(0, 200);
     assertEqual(200, r.get(0));
     }
+
     /**
+     * Verify valueOf result supports fill method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_4000
      * @tc.name testUint8ArrayValueOf040
      * @tc.desc Verify valueOf result supports fill method
@@ -645,7 +724,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(5, a.get(1));
     assertEqual(5, a.get(2));
     }
+
     /**
+     * Verify valueOf result supports reverse method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_4100
      * @tc.name testUint8ArrayValueOf041
      * @tc.desc Verify valueOf result supports reverse method
@@ -662,7 +743,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(3, a.get(0));
     assertEqual(1, a.get(2));
     }
+
     /**
+     * Verify valueOf result supports sort method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_4200
      * @tc.name testUint8ArrayValueOf042
      * @tc.desc Verify valueOf result supports sort method
@@ -680,7 +763,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(2, a.get(1));
     assertEqual(3, a.get(2));
     }
+
     /**
+     * Verify valueOf result supports set method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_4300
      * @tc.name testUint8ArrayValueOf043
      * @tc.desc Verify valueOf result supports set method
@@ -697,7 +782,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(1, a.get(1));
     assertEqual(2, a.get(2));
     }
+
     /**
+     * Verify valueOf result supports copyWithin method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_4400
      * @tc.name testUint8ArrayValueOf044
      * @tc.desc Verify valueOf result supports copyWithin method
@@ -714,7 +801,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(3, a.get(0));
     assertEqual(4, a.get(1));
     }
+
     /**
+     * Verify valueOf result supports subarray method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_4500
      * @tc.name testUint8ArrayValueOf045
      * @tc.desc Verify valueOf result supports subarray method
@@ -731,7 +820,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(2, sub.get(0));
     assertEqual(3, sub.get(1));
     }
+
     /**
+     * Verify valueOf result supports slice method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_4600
      * @tc.name testUint8ArrayValueOf046
      * @tc.desc Verify valueOf result supports slice method
@@ -748,7 +839,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(2, sliced.get(0));
     assertEqual(3, sliced.get(1));
     }
+
     /**
+     * Verify valueOf result supports map method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_4700
      * @tc.name testUint8ArrayValueOf047
      * @tc.desc Verify valueOf result supports map method
@@ -766,7 +859,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(4, mapped.get(1));
     assertEqual(6, mapped.get(2));
     }
+
     /**
+     * Verify valueOf result supports filter method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_4800
      * @tc.name testUint8ArrayValueOf048
      * @tc.desc Verify valueOf result supports filter method
@@ -782,7 +877,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array filtered = r.filter((v) -> v >= 2);
     assertEqual(2, filtered.get(0));
     }
+
     /**
+     * Verify modifying valueOf result via fill affects original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_4900
      * @tc.name testUint8ArrayValueOf049
      * @tc.desc Verify modifying valueOf result via fill affects original array
@@ -800,7 +897,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(10, a.get(1));
     assertEqual(10, a.get(2));
     }
+
     /**
+     * Verify modifying valueOf result via copyWithin affects original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_5000
      * @tc.name testUint8ArrayValueOf050
      * @tc.desc Verify modifying valueOf result via copyWithin affects original array
@@ -817,7 +916,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(3, a.get(0));
     assertEqual(4, a.get(1));
     }
+
     /**
+     * Verify modifying valueOf result via index assignment affects original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_5100
      * @tc.name testUint8ArrayValueOf051
      * @tc.desc Verify modifying valueOf result via index assignment affects original array
@@ -833,7 +934,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     r.set(1, 50);
     assertEqual(50, a.get(1));
     }
+
     /**
+     * Verify original array reverse causes valueOf result to change synchronously
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_5200
      * @tc.name testUint8ArrayValueOf052
      * @tc.desc Verify original array reverse causes valueOf result to change synchronously
@@ -850,7 +953,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(3, r.get(0));
     assertEqual(1, r.get(2));
     }
+
     /**
+     * Verify original array set causes valueOf result to change synchronously
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_5300
      * @tc.name testUint8ArrayValueOf053
      * @tc.desc Verify original array set causes valueOf result to change synchronously
@@ -867,7 +972,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(11, r.get(1));
     assertEqual(22, r.get(2));
     }
+
     /**
+     * Verify original array index assignment causes valueOf result to change synchronously
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_5400
      * @tc.name testUint8ArrayValueOf054
      * @tc.desc Verify original array index assignment causes valueOf result to change synchronously
@@ -883,7 +990,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     a.set(0, 99);
     assertEqual(99, r.get(0));
     }
+
     /**
+     * Verify subarray of valueOf result shares buffer with original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_5500
      * @tc.name testUint8ArrayValueOf055
      * @tc.desc Verify subarray of valueOf result shares buffer with original array
@@ -899,7 +1008,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array sub = r.subarray(1, 3);
     assertEqual(a.buffer(), sub.buffer());
     }
+
     /**
+     * Verify modifying subarray of valueOf result affects original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_5600
      * @tc.name testUint8ArrayValueOf056
      * @tc.desc Verify modifying subarray of valueOf result affects original array
@@ -916,7 +1027,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     sub.set(0, 99);
     assertEqual(99, a.get(1));
     }
+
     /**
+     * Verify slice of valueOf result is independent from original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_5700
      * @tc.name testUint8ArrayValueOf057
      * @tc.desc Verify slice of valueOf result is independent from original array
@@ -933,7 +1046,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     assertEqual(2, sliced.get(0));
     assertEqual(3, sliced.get(1));
     }
+
     /**
+     * Verify modifying slice of valueOf result does not affect original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_5800
      * @tc.name testUint8ArrayValueOf058
      * @tc.desc Verify modifying slice of valueOf result does not affect original array
@@ -950,7 +1065,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     sliced.set(0, 99);
     assertEqual(2, a.get(1));
     }
+
     /**
+     * Verify valueOf result unchanged after original array slice
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_5900
      * @tc.name testUint8ArrayValueOf059
      * @tc.desc Verify valueOf result unchanged after original array slice
@@ -967,7 +1084,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array r = a.valueOf();
     assertEqual(2, r.get(1));
     }
+
     /**
+     * Verify valueOf preserves element constructed from float (3.14 becomes 3)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_6000
      * @tc.name testUint8ArrayValueOf060
      * @tc.desc Verify valueOf preserves element constructed from float (3.14 becomes 3)
@@ -981,7 +1100,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new double[] {3.14});
     assertEqual(3, a.valueOf().get(0));
     }
+
     /**
+     * Verify valueOf preserves element constructed from negative (-1 becomes 255)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_6100
      * @tc.name testUint8ArrayValueOf061
      * @tc.desc Verify valueOf preserves element constructed from negative (-1 becomes 255)
@@ -995,7 +1116,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {-1});
     assertEqual(255, a.valueOf().get(0));
     }
+
     /**
+     * Verify valueOf preserves element constructed from scientific notation (1e2 becomes 100)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_6200
      * @tc.name testUint8ArrayValueOf062
      * @tc.desc Verify valueOf preserves element constructed from scientific notation (1e2 becomes 100)
@@ -1009,7 +1132,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new double[] {1e2});
     assertEqual(100, a.valueOf().get(0));
     }
+
     /**
+     * Verify valueOf result toString equals original array toString
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_6300
      * @tc.name testUint8ArrayValueOf063
      * @tc.desc Verify valueOf result toString equals original array toString
@@ -1023,7 +1148,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {1, 2, 3});
     assertEqual(String.valueOf(a), a.valueOf().toString());
     }
+
     /**
+     * Verify valueOf result serializes correctly
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_6400
      * @tc.name testUint8ArrayValueOf064
      * @tc.desc Verify valueOf result serializes correctly
@@ -1037,7 +1164,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {1, 2, 3});
     assertEqual("{\"0\":1,\"1\":2,\"2\":3}", BasTest.stringify(a.valueOf()));
     }
+
     /**
+     * Verify valueOf result supports includes method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_6500
      * @tc.name testUint8ArrayValueOf065
      * @tc.desc Verify valueOf result supports includes method
@@ -1051,7 +1180,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {1, 2, 3});
     assertTrue(a.valueOf().includes(2));
     }
+
     /**
+     * Verify valueOf result supports indexOf method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_6600
      * @tc.name testUint8ArrayValueOf066
      * @tc.desc Verify valueOf result supports indexOf method
@@ -1065,7 +1196,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {1, 2, 3});
     assertEqual(1, a.valueOf().indexOf(2));
     }
+
     /**
+     * Verify valueOf result supports some method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_6700
      * @tc.name testUint8ArrayValueOf067
      * @tc.desc Verify valueOf result supports some method
@@ -1079,7 +1212,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {1, 2, 3});
     assertTrue(a.valueOf().some((v) -> v > 2));
     }
+
     /**
+     * Verify valueOf result supports every method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_6800
      * @tc.name testUint8ArrayValueOf068
      * @tc.desc Verify valueOf result supports every method
@@ -1093,7 +1228,9 @@ public class Uint8ArrayValueOfTest extends BasTest {
     Uint8Array a = new Uint8Array(new int[] {1, 2, 3});
     assertTrue(a.valueOf().every((v) -> v > 0));
     }
+
     /**
+     * Verify valueOf result supports find method
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_VALUE_OF_6900
      * @tc.name testUint8ArrayValueOf069
      * @tc.desc Verify valueOf result supports find method

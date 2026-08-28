@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayKeysTest extends BasTest {
     /**
+     * Verify keys() with zero parameters returns non-null iterator object
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0100
      * @tc.name testUint8ArrayKeys001
      * @tc.desc Verify keys() with zero parameters returns non-null iterator object
@@ -45,7 +46,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.keys();
     assertNotNull(iter);
     }
+
     /**
+     * Verify keys() with zero parameters can iterate all elements normally
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0200
      * @tc.name testUint8ArrayKeys002
      * @tc.desc Verify keys() with zero parameters can iterate all elements normally
@@ -63,7 +66,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(3, count);
     }
+
     /**
+     * Verify empty array (constructor()) keys() first next().done is true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0300
      * @tc.name testUint8ArrayKeys003
      * @tc.desc Verify empty array (constructor()) keys() first next().done is true
@@ -78,7 +83,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.keys();
     assertEqual(true, iter.next().done);
     }
+
     /**
+     * Verify empty array (new Uint8Array(0)) keys() first next().done is true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0400
      * @tc.name testUint8ArrayKeys004
      * @tc.desc Verify empty array (new Uint8Array(0)) keys() first next().done is true
@@ -93,7 +100,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.keys();
     assertEqual(true, iter.next().done);
     }
+
     /**
+     * Verify empty array keys() consecutive next() always done
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0500
      * @tc.name testUint8ArrayKeys005
      * @tc.desc Verify empty array keys() consecutive next() always done
@@ -110,7 +119,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(true, iter.next().done);
     assertEqual(true, iter.next().done);
     }
+
     /**
+     * Verify empty array keys() for...of loop body does not execute
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0600
      * @tc.name testUint8ArrayKeys006
      * @tc.desc Verify empty array keys() for...of loop body does not execute
@@ -128,7 +139,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(false, executed);
     }
+
     /**
+     * Verify empty array keys() spread operator yields empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0700
      * @tc.name testUint8ArrayKeys007
      * @tc.desc Verify empty array keys() spread operator yields empty array
@@ -143,7 +156,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(0, result.size());
     }
+
     /**
+     * Verify single element array keys() first next().value is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0800
      * @tc.name testUint8ArrayKeys008
      * @tc.desc Verify single element array keys() first next().value is 0
@@ -158,7 +173,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.keys();
     assertEqual(0, iter.next().value);
     }
+
     /**
+     * Verify single element array keys() second next().done is true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_0900
      * @tc.name testUint8ArrayKeys009
      * @tc.desc Verify single element array keys() second next().done is true
@@ -174,7 +191,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     iter.next();
     assertEqual(true, iter.next().done);
     }
+
     /**
+     * Verify single element array keys() for...of iterates once with value 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1000
      * @tc.name testUint8ArrayKeys010
      * @tc.desc Verify single element array keys() for...of iterates once with value 0
@@ -192,7 +211,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(0, key);
     }
+
     /**
+     * Verify single element array keys() spread yields [0]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1100
      * @tc.name testUint8ArrayKeys011
      * @tc.desc Verify single element array keys() spread yields [0]
@@ -208,7 +229,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(1, result.size());
     assertEqual(0, result.get(0));
     }
+
     /**
+     * Verify three element array keys() yields 0,1,2 in order
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1200
      * @tc.name testUint8ArrayKeys012
      * @tc.desc Verify three element array keys() yields 0,1,2 in order
@@ -225,7 +248,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(1, iter.next().value);
     assertEqual(2, iter.next().value);
     }
+
     /**
+     * Verify three element array keys() iteration completes after third next()
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1300
      * @tc.name testUint8ArrayKeys013
      * @tc.desc Verify three element array keys() iteration completes after third next()
@@ -243,7 +268,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     iter.next();
     assertEqual(true, iter.next().done);
     }
+
     /**
+     * Verify five element array keys() index sum is 10
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1400
      * @tc.name testUint8ArrayKeys014
      * @tc.desc Verify five element array keys() index sum is 10
@@ -261,7 +288,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(10, sum);
     }
+
     /**
+     * Verify ten element array keys() spread length is correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1500
      * @tc.name testUint8ArrayKeys015
      * @tc.desc Verify ten element array keys() spread length is correct
@@ -276,7 +305,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(10, result.size());
     }
+
     /**
+     * Verify ten element array keys() spread first and last values are correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1600
      * @tc.name testUint8ArrayKeys016
      * @tc.desc Verify ten element array keys() spread first and last values are correct
@@ -292,7 +323,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(9, result.get(9));
     }
+
     /**
+     * Verify length=100 array keys() complete iteration count
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1700
      * @tc.name testUint8ArrayKeys017
      * @tc.desc Verify length=100 array keys() complete iteration count
@@ -310,7 +343,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(100, count);
     }
+
     /**
+     * Verify length=255 array keys() complete iteration count
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1800
      * @tc.name testUint8ArrayKeys018
      * @tc.desc Verify length=255 array keys() complete iteration count
@@ -328,7 +363,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(255, count);
     }
+
     /**
+     * Verify length=256 array keys() complete iteration count
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1900
      * @tc.name testUint8ArrayKeys019
      * @tc.desc Verify length=256 array keys() complete iteration count
@@ -346,7 +383,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(256, count);
     }
+
     /**
+     * Verify length=1000 array keys() complete iteration count
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2000
      * @tc.name testUint8ArrayKeys020
      * @tc.desc Verify length=1000 array keys() complete iteration count
@@ -364,7 +403,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(1000, count);
     }
+
     /**
+     * Verify length=2 array keys() produces indices 0,1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2100
      * @tc.name testUint8ArrayKeys021
      * @tc.desc Verify length=2 array keys() produces indices 0,1
@@ -380,7 +421,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(1, result.get(1));
     }
+
     /**
+     * Verify length=127 array keys() first and last indices are correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2200
      * @tc.name testUint8ArrayKeys022
      * @tc.desc Verify length=127 array keys() first and last indices are correct
@@ -396,7 +439,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(126, result.get(126));
     }
+
     /**
+     * Verify length=128 array keys() first and last indices are correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2300
      * @tc.name testUint8ArrayKeys023
      * @tc.desc Verify length=128 array keys() first and last indices are correct
@@ -412,7 +457,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(127, result.get(127));
     }
+
     /**
+     * Verify Uint8Array.of() empty array keys() immediately done
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2400
      * @tc.name testUint8ArrayKeys024
      * @tc.desc Verify Uint8Array.of() empty array keys() immediately done
@@ -427,7 +474,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.keys();
     assertEqual(true, iter.next().done);
     }
+
     /**
+     * Verify Uint8Array.of(1,2,3) array keys() iterates three times
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2500
      * @tc.name testUint8ArrayKeys025
      * @tc.desc Verify Uint8Array.of(1,2,3) array keys() iterates three times
@@ -445,7 +494,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(3, count);
     }
+
     /**
+     * Verify Uint8Array.from(FixedArray) array keys() is correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2600
      * @tc.name testUint8ArrayKeys026
      * @tc.desc Verify Uint8Array.from(FixedArray) array keys() is correct
@@ -463,7 +514,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(1, result.get(1));
     }
+
     /**
+     * Verify FixedArray<int> constructor array keys() is correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2700
      * @tc.name testUint8ArrayKeys027
      * @tc.desc Verify FixedArray<int> constructor array keys() is correct
@@ -479,7 +532,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(3, result.size());
     }
+
     /**
+     * Verify copy constructor array keys() is correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2800
      * @tc.name testUint8ArrayKeys028
      * @tc.desc Verify copy constructor array keys() is correct
@@ -498,7 +553,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(4, count);
     }
+
     /**
+     * Verify ArrayBuffer offset 0 view keys() is correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2900
      * @tc.name testUint8ArrayKeys029
      * @tc.desc Verify ArrayBuffer offset 0 view keys() is correct
@@ -516,7 +573,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(3, result.get(3));
     }
+
     /**
+     * Verify ArrayBuffer offset 1 view keys() starts from 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3000
      * @tc.name testUint8ArrayKeys030
      * @tc.desc Verify ArrayBuffer offset 1 view keys() starts from 0
@@ -533,7 +592,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(3, result.size());
     }
+
     /**
+     * Verify ArrayBuffer offset 2 view keys() starts from 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3100
      * @tc.name testUint8ArrayKeys031
      * @tc.desc Verify ArrayBuffer offset 2 view keys() starts from 0
@@ -550,7 +611,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(3, result.size());
     }
+
     /**
+     * Verify subarray() subview keys() starts from 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3200
      * @tc.name testUint8ArrayKeys032
      * @tc.desc Verify subarray() subview keys() starts from 0
@@ -569,7 +632,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(1, result.get(1));
     assertEqual(2, result.get(2));
     }
+
     /**
+     * Verify two independent keys() iterators advance independently
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3300
      * @tc.name testUint8ArrayKeys033
      * @tc.desc Verify two independent keys() iterators advance independently
@@ -592,7 +657,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(true, iter1.next().done);
     assertEqual(true, iter2.next().done);
     }
+
     /**
+     * Verify nested for...of uses independent keys() iterators
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3400
      * @tc.name testUint8ArrayKeys034
      * @tc.desc Verify nested for...of uses independent keys() iterators
@@ -612,7 +679,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(4, sum);
     }
+
     /**
+     * Verify for...of with break exits early consuming only partial indices
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3500
      * @tc.name testUint8ArrayKeys035
      * @tc.desc Verify for...of with break exits early consuming only partial indices
@@ -633,7 +702,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(2, count);
     }
+
     /**
+     * Verify break then new keys() iterator restarts from beginning
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3600
      * @tc.name testUint8ArrayKeys036
      * @tc.desc Verify break then new keys() iterator restarts from beginning
@@ -654,7 +725,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(5, result.size());
     assertEqual(0, result.get(0));
     }
+
     /**
+     * Verify after iteration completes, consecutive next() calls always done
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3700
      * @tc.name testUint8ArrayKeys037
      * @tc.desc Verify after iteration completes, consecutive next() calls always done
@@ -673,7 +746,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(true, iter.next().done);
     assertEqual(true, iter.next().done);
     }
+
     /**
+     * Verify all zero element array keys() indices are correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3800
      * @tc.name testUint8ArrayKeys038
      * @tc.desc Verify all zero element array keys() indices are correct
@@ -690,7 +765,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(2, result.get(2));
     }
+
     /**
+     * Verify all 255 element array keys() indices are correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_3900
      * @tc.name testUint8ArrayKeys039
      * @tc.desc Verify all 255 element array keys() indices are correct
@@ -706,7 +783,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(3, result.size());
     assertEqual(1, result.get(1));
     }
+
     /**
+     * Verify mixed value element array keys() indices are correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4000
      * @tc.name testUint8ArrayKeys040
      * @tc.desc Verify mixed value element array keys() indices are correct
@@ -722,7 +801,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(4, result.size());
     assertEqual(3, result.get(3));
     }
+
     /**
+     * Verify array with overflow truncated values (256) keys() indices are correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4100
      * @tc.name testUint8ArrayKeys041
      * @tc.desc Verify array with overflow truncated values (256) keys() indices are correct
@@ -739,7 +820,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(0, result.get(0));
     assertEqual(2, result.get(2));
     }
+
     /**
+     * Verify array with wrap-around values (-1) keys() indices are correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4200
      * @tc.name testUint8ArrayKeys042
      * @tc.desc Verify array with wrap-around values (-1) keys() indices are correct
@@ -755,7 +838,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     assertEqual(2, result.size());
     assertEqual(1, result.get(1));
     }
+
     /**
+     * Verify array with floating point truncated values keys() indices are correct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4300
      * @tc.name testUint8ArrayKeys043
      * @tc.desc Verify array with floating point truncated values keys() indices are correct
@@ -770,7 +855,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     List<Integer> result = BasTest.collect(arr.keys());
     assertEqual(3, result.size());
     }
+
     /**
+     * Verify keys() iteration does not modify original array element content
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4400
      * @tc.name testUint8ArrayKeys044
      * @tc.desc Verify keys() iteration does not modify original array element content
@@ -790,7 +877,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     String after = arr.join(",");
     assertEqual(before, after);
     }
+
     /**
+     * Verify keys() iteration does not affect array length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4500
      * @tc.name testUint8ArrayKeys045
      * @tc.desc Verify keys() iteration does not affect array length
@@ -807,7 +896,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     };
     assertEqual(before, arr.length());
     }
+
     /**
+     * Verify empty array keys() does not throw exception
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4600
      * @tc.name testUint8ArrayKeys046
      * @tc.desc Verify empty array keys() does not throw exception
@@ -829,7 +920,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
     assertEqual(false, caught);
     }
+
     /**
+     * Verify large array keys() complete iteration does not throw exception
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_4700
      * @tc.name testUint8ArrayKeys047
      * @tc.desc Verify large array keys() complete iteration does not throw exception
