@@ -82,6 +82,9 @@ public class ArrayBuffer {
 
     /**
      * 写入指定字节偏移处的 int32 小端值（越界忽略）。
+     *
+     * @param byteOffset 参数说明。
+     * @param value 参数说明。
      */
     void setInt32(int byteOffset, int value) {
         if (byteOffset < 0 || byteOffset + 4 > bytes.length) {
@@ -108,6 +111,9 @@ public class ArrayBuffer {
 
     /**
      * 写入指定字节偏移处的 int8 值（越界忽略）。
+     *
+     * @param byteOffset 参数说明。
+     * @param value 参数说明。
      */
     void setInt8(int byteOffset, int value) {
         if (byteOffset < 0 || byteOffset >= bytes.length) {
@@ -118,6 +124,9 @@ public class ArrayBuffer {
 
     /**
      * 写入指定字节偏移处的 int16 小端值（越界忽略）。
+     *
+     * @param byteOffset 参数说明。
+     * @param value 参数说明。
      */
     void setInt16(int byteOffset, int value) {
         if (byteOffset < 0 || byteOffset + 2 > bytes.length) {

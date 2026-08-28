@@ -27,12 +27,12 @@ public class BasTest {
     protected BasTest() {
     }
 
-        /**
-         * 测试辅助：抛出 basetype Error（规避 G.ERR.05 裸 throw）。
-         *
-         * @param message 参数说明。
-         * @return 返回值说明。
-         */
+    /**
+     * 测试辅助：抛出 basetype Error（规避 G.ERR.05 裸 throw）。
+     *
+     * @param message 参数说明。
+     * @return 返回值说明。
+     */
     public static <T> T throwTestError(String message) {
         throw newTestError(message);
     }
@@ -43,6 +43,9 @@ public class BasTest {
 
     /**
      * 断言两值相等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
      */
     public static void assertEqual(int expected, int actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
@@ -50,6 +53,9 @@ public class BasTest {
 
     /**
      * 断言两值相等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
      */
     public static void assertEqual(long expected, long actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
@@ -57,6 +63,9 @@ public class BasTest {
 
     /**
      * 断言两值相等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
      */
     public static void assertEqual(long expected, int actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
@@ -64,55 +73,19 @@ public class BasTest {
 
     /**
      * 断言两值相等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
      */
     public static void assertEqual(int expected, Integer actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, (int) actual);
         }
 
     /**
-     * 断言两值相等。
-     */
-    public static void assertEqual(Integer expected, int actual) {
-        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
-        }
-
-    /**
-     * 浮点期望值与装箱整型实际值按数值相等比较（219.0 == 219）。
-     */
-    public static void assertEqual(double expected, Integer actual) {
-        assertEqual(expected, actual.doubleValue());
-        }
-
-    /**
-     * 装箱浮点期望值与浮点实际值按数值相等比较（含 NaN==NaN）。
-     */
-    public static void assertEqual(Double expected, double actual) {
-        assertEqual(expected.doubleValue(), actual);
-        }
-
-    /**
-     * 装箱整型期望值与浮点实际值按数值相等比较（Double.compare(200, 200.0) == 0）。
-     */
-    public static void assertEqual(Integer expected, double actual) {
-        assertEqual(expected.doubleValue(), actual);
-        }
-
-    /**
-     * 整型期望值与装箱浮点实际值按数值相等比较（-1 == -1.0）。
-     */
-    public static void assertEqual(int expected, Double actual) {
-        assertEqual((double) expected, actual.doubleValue());
-        }
-
-    /**
-     * 浮点期望值与装箱浮点实际值按数值相等比较。
-     */
-    public static void assertEqual(double expected, Double actual) {
-        assertEqual(expected, actual.doubleValue());
-        }
-
-    /**
      * 浮点精确相等（NaN 视为相等）。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
      */
     public static void assertEqual(double expected, double actual) {
         if (Double.isNaN(expected) && Double.isNaN(actual)) {
@@ -123,6 +96,9 @@ public class BasTest {
 
     /**
      * 浮点期望值与整型实际值按数值相等比较（1.0 == 1）。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
      */
     public static void assertEqual(double expected, int actual) {
         assertEqual(expected, (double) actual);
@@ -130,6 +106,9 @@ public class BasTest {
 
     /**
      * 断言两值相等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
      */
     public static void assertEqual(Object expected, Object actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
@@ -137,6 +116,9 @@ public class BasTest {
 
     /**
      * 断言两值不等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
      */
     public static void assertNotEqual(Object expected, Object actual) {
         org.junit.jupiter.api.Assertions.assertNotEquals(expected, actual);
@@ -144,6 +126,9 @@ public class BasTest {
 
     /**
      * 断言两值不等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
      */
     public static void assertNotEqual(int expected, int actual) {
         org.junit.jupiter.api.Assertions.assertNotEquals(expected, actual);
@@ -151,6 +136,8 @@ public class BasTest {
 
     /**
      * 断言条件为真。
+     *
+     * @param condition 参数说明。
      */
     public static void assertTrue(boolean condition) {
         org.junit.jupiter.api.Assertions.assertTrue(condition);
@@ -158,6 +145,8 @@ public class BasTest {
 
     /**
      * 断言条件为假。
+     *
+     * @param condition 参数说明。
      */
     public static void assertFalse(boolean condition) {
         org.junit.jupiter.api.Assertions.assertFalse(condition);
@@ -165,6 +154,8 @@ public class BasTest {
 
     /**
      * 断言值为 null。
+     *
+     * @param actual 参数说明。
      */
     public static void assertNull(Object actual) {
         org.junit.jupiter.api.Assertions.assertNull(actual);
@@ -172,6 +163,8 @@ public class BasTest {
 
     /**
      * assertNotNull 方法。
+     *
+     * @param actual 参数说明。
      */
     public static void assertNotNull(Object actual) {
         org.junit.jupiter.api.Assertions.assertNotNull(actual);
@@ -439,7 +432,7 @@ public class BasTest {
      * @return 返回值说明。
      */
     public static int coalesce(Integer value, int fallback) {
-        return value == null ? fallback : value;
+        return value == null ? fallback : value.intValue();
         }
 
     /**

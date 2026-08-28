@@ -29,6 +29,61 @@ public class IntlOptions {
     private int minimumIntegerDigits = 0;
 
     /**
+     * 小数部分最小位数（-1 表示未设置）。
+     */
+    private int minimumFractionDigits = -1;
+
+    /**
+     * 小数部分最大位数（-1 表示未设置）。
+     */
+    private int maximumFractionDigits = -1;
+
+    /**
+     * 有效数字位数（0 表示未设置）。
+     */
+    private int minimumSignificantDigits = 0;
+
+    /**
+     * 最大有效数字位数（0 表示未设置）。
+     */
+    private int maximumSignificantDigits = 0;
+
+    /**
+     * 数字表示法（"" / "scientific" / "engineering"）。
+     */
+    private String notation = "";
+
+    /**
+     * 紧凑展示方式（"" / "short" / "long"）。
+     */
+    private String compactDisplay = "";
+
+    /**
+     * 是否使用千分位分组。
+     */
+    private boolean useGrouping = true;
+
+    /**
+     * 格式风格（"" / "percent" / "currency"）。
+     */
+    private String style = "";
+
+    /**
+     * 货币代码（如 USD/EUR/GBP）。
+     */
+    private String currency = "";
+
+    /**
+     * 货币展示方式（"" / "symbol" / "code"）。
+     */
+    private String currencyDisplay = "";
+
+    /**
+     * 区域匹配策略（ArkTS ToLocaleStringOptions，不影响数值格式）。
+     */
+    private String localeMatcher = "";
+
+    /**
      * 获取整数部分最小位数（0 表示未设置）。
      *
      * @return minimumIntegerDigits 当前值。
@@ -45,11 +100,6 @@ public class IntlOptions {
     public void setMinimumIntegerDigits(int minimumIntegerDigits) {
         this.minimumIntegerDigits = minimumIntegerDigits;
         }
-
-    /**
-     * 小数部分最小位数（-1 表示未设置）。
-     */
-    private int minimumFractionDigits = -1;
 
     /**
      * 获取小数部分最小位数（-1 表示未设置）。
@@ -70,11 +120,6 @@ public class IntlOptions {
         }
 
     /**
-     * 小数部分最大位数（-1 表示未设置）。
-     */
-    private int maximumFractionDigits = -1;
-
-    /**
      * 获取小数部分最大位数（-1 表示未设置）。
      *
      * @return maximumFractionDigits 当前值。
@@ -91,11 +136,6 @@ public class IntlOptions {
     public void setMaximumFractionDigits(int maximumFractionDigits) {
         this.maximumFractionDigits = maximumFractionDigits;
         }
-
-    /**
-     * 有效数字位数（0 表示未设置）。
-     */
-    private int minimumSignificantDigits = 0;
 
     /**
      * 获取有效数字最小位数（0 表示未设置）。
@@ -116,11 +156,6 @@ public class IntlOptions {
         }
 
     /**
-     * 最大有效数字位数（0 表示未设置）。
-     */
-    private int maximumSignificantDigits = 0;
-
-    /**
      * 获取有效数字最大位数（0 表示未设置）。
      *
      * @return maximumSignificantDigits 当前值。
@@ -137,11 +172,6 @@ public class IntlOptions {
     public void setMaximumSignificantDigits(int maximumSignificantDigits) {
         this.maximumSignificantDigits = maximumSignificantDigits;
         }
-
-    /**
-     * 数字表示法（"" / "scientific" / "engineering"）。
-     */
-    private String notation = "";
 
     /**
      * 获取记数法（standard/scientific/compact 等）。
@@ -162,11 +192,6 @@ public class IntlOptions {
         }
 
     /**
-     * 紧凑展示方式（"" / "short" / "long"）。
-     */
-    private String compactDisplay = "";
-
-    /**
      * 获取compact 记数法的显示风格。
      *
      * @return compactDisplay 当前值。
@@ -183,11 +208,6 @@ public class IntlOptions {
     public void setCompactDisplay(String compactDisplay) {
         this.compactDisplay = compactDisplay;
         }
-
-    /**
-     * 是否使用千分位分组。
-     */
-    private boolean useGrouping = true;
 
     /**
      * 获取是否启用千分位分组。
@@ -208,11 +228,6 @@ public class IntlOptions {
         }
 
     /**
-     * 格式风格（"" / "percent" / "currency"）。
-     */
-    private String style = "";
-
-    /**
      * 获取格式样式（currency/percent/unit 等）。
      *
      * @return style 当前值。
@@ -229,11 +244,6 @@ public class IntlOptions {
     public void setStyle(String style) {
         this.style = style;
         }
-
-    /**
-     * 货币代码（如 USD/EUR/GBP）。
-     */
-    private String currency = "";
 
     /**
      * 获取货币代码（ISO 4217）。
@@ -254,11 +264,6 @@ public class IntlOptions {
         }
 
     /**
-     * 货币展示方式（"" / "symbol" / "code"）。
-     */
-    private String currencyDisplay = "";
-
-    /**
      * 获取货币显示方式。
      *
      * @return currencyDisplay 当前值。
@@ -277,11 +282,6 @@ public class IntlOptions {
         }
 
     /**
-     * 区域匹配策略（ArkTS ToLocaleStringOptions，不影响数值格式）。
-     */
-    private String localeMatcher = "";
-
-    /**
      * 获取区域匹配策略（不影响数值格式）。
      *
      * @return localeMatcher 当前值。
@@ -298,5 +298,4 @@ public class IntlOptions {
     public void setLocaleMatcher(String localeMatcher) {
         this.localeMatcher = localeMatcher;
         }
-
     }

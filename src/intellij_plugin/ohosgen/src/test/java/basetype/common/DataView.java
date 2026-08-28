@@ -57,6 +57,10 @@ public class DataView {
 
     /**
      * 写入无符号 16 位小端值（偏移相对视图起点）。
+     *
+     * @param offset 参数说明。
+     * @param value 参数说明。
+     * @param littleEndian 参数说明。
      */
     public void setUint16(int offset, int value, boolean littleEndian) {
         buffer.setInt16(byteOffset + offset, value);
@@ -75,6 +79,9 @@ public class DataView {
 
     /**
      * 写入无符号 8 位值（偏移相对视图起点）。
+     *
+     * @param offset 参数说明。
+     * @param value 参数说明。
      */
     public void setUint8(int offset, int value) {
         buffer.setInt8(byteOffset + offset, value);

@@ -24,11 +24,16 @@ public interface IntArrayView {
 
     /**
      * 按索引读取元素。
+     *
+     * @param index 参数说明。
+     * @return 返回值说明。
      */
     Integer get(int index);
 
     /**
      * 返回元素个数。
+     *
+     * @return 返回值说明。
      */
     int length();
     }
