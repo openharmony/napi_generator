@@ -807,8 +807,8 @@ public class Uint8ClampedArraySubarray02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 10, 15, 20});
     Uint8ClampedArray sub = arr.subarray(2, 4);
     assertEqual(2, sub.length());
-    assertEqual(arr.get(2), sub.get(0));
-    assertEqual(arr.get(3), sub.get(1));
+    assertEqual(arr.get(2).intValue(), sub.get(0));
+    assertEqual(arr.get(3).intValue(), sub.get(1));
     }
 
     @Test
@@ -816,8 +816,8 @@ public class Uint8ClampedArraySubarray02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 10, 15, 20});
     Uint8ClampedArray sub = arr.subarray(1, 3);
     assertEqual(2, sub.length());
-    assertEqual(arr.get(1), sub.get(0));
-    assertEqual(arr.get(2), sub.get(1));
+    assertEqual(arr.get(1).intValue(), sub.get(0));
+    assertEqual(arr.get(2).intValue(), sub.get(1));
     }
 
     @Test

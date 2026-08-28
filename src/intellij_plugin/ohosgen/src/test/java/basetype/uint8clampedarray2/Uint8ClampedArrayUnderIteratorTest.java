@@ -91,7 +91,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator006() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42});
     Uint8ClampedArray.KeyIterator it = arr.values();
-    assertEqual(42, it.next().value);
+    assertEqual(42, it.next().value.intValue());
     }
 
     @Test
@@ -168,7 +168,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     Uint8ClampedArray.KeyIterator itA = arr.values();
     Uint8ClampedArray.KeyIterator itB = arr.values();
     itA.next();
-    assertEqual(10, itB.next().value);
+    assertEqual(10, itB.next().value.intValue());
     }
 
     @Test
@@ -378,8 +378,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray.KeyIterator itA = arr.values();
     Uint8ClampedArray.KeyIterator itB = arr.values();
-    assertEqual(10, itA.next().value);
-    assertEqual(10, itB.next().value);
+    assertEqual(10, itA.next().value.intValue());
+    assertEqual(10, itB.next().value.intValue());
     }
 
     @Test
@@ -421,7 +421,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray.KeyIterator it = arr.values();
     it.next();
-    assertEqual(20, it.next().value);
+    assertEqual(20, it.next().value.intValue());
     }
 
     @Test
@@ -430,7 +430,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     Uint8ClampedArray.KeyIterator it = arr.values();
     it.next();
     it.next();
-    assertEqual(30, it.next().value);
+    assertEqual(30, it.next().value.intValue());
     }
 
     @Test

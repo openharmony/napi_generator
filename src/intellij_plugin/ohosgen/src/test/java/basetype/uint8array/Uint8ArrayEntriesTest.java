@@ -814,7 +814,7 @@ public class Uint8ArrayEntriesTest extends BasTest {
     EntryResult e = iter.next();
     while (!e.done) {
     int[] entry = e.value;
-    assertEqual(expected.at(idx), entry[1]);
+    assertEqual(expected.at(idx).intValue(), entry[1]);
     idx++;
     e = iter.next();
     }

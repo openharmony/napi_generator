@@ -316,7 +316,7 @@ public class Uint8ClampedArrayUnderSet02Test extends BasTest {
     int v = 100;
     arr1.set(0, v);
     arr2.set(0, 100);
-    assertEqual(arr2.get(0), arr1.get(0));
+    assertEqual(arr2.get(0).intValue(), arr1.get(0));
     }
 
     @Test

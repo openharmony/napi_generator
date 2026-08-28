@@ -1896,9 +1896,9 @@ public class Uint8ArraySubarrayTest extends BasTest {
     Uint8Array src = Uint8Array.of(10, 20, 30, 40, 50);
     Uint8Array sub = src.subarray(1, 4);
     Uint8Array view = new Uint8Array(src.buffer(), 1, 3);
-    assertEqual(view.get(0), sub.get(0));
-    assertEqual(view.get(1), sub.get(1));
-    assertEqual(view.get(2), sub.get(2));
+    assertEqual(view.get(0).intValue(), sub.get(0));
+    assertEqual(view.get(1).intValue(), sub.get(1));
+    assertEqual(view.get(2).intValue(), sub.get(2));
     }
 
     /**

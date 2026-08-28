@@ -1160,7 +1160,7 @@ public class Uint8ClampedArrayFrom03Test extends BasTest {
         src,
         (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v + 100);
     arr.set(0, 200);
-    assertEqual(1.0, src.get(0));
+    assertEqual(1.0, src.get(0).doubleValue());
     }
 
     /**

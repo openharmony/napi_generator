@@ -60,7 +60,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     List<Integer> expected = java.util.Arrays.asList(0, 99, 65535);
     for (int i = 0; i < inputs.size(); i++) {
     int result = inputs.get(i).reduce((prev, curr, array, unused3) -> prev + curr);
-    assertEqual(expected.get(i), result);
+    assertEqual(expected.get(i).intValue(), result);
     }
     }
 
@@ -74,7 +74,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     List<Integer> expected = java.util.Arrays.asList(3, 150, 5, 0, 60, 600);
     for (int i = 0; i < inputs.size(); i++) {
     int result = inputs.get(i).reduce((prev, curr, array, unused3) -> prev + curr);
-    assertEqual(expected.get(i), result);
+    assertEqual(expected.get(i).intValue(), result);
     }
     }
 
@@ -86,7 +86,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     List<Integer> mulExpected = java.util.Arrays.asList(200, 6);
     for (int i = 0; i < mul.size(); i++) {
     double result = mul.get(i).reduceDouble((prev, curr, array, unused3) -> prev * curr);
-    assertEqual(mulExpected.get(i), result);
+    assertEqual(mulExpected.get(i).intValue(), result);
     }
     List<Uint16Array> sub = java.util.Arrays.asList(
         new Uint16Array(new int[] {5, 3}), new Uint16Array(new int[] {100, 200, 300})
@@ -94,7 +94,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     List<Integer> subExpected = java.util.Arrays.asList(2, -400);
     for (int i = 0; i < sub.size(); i++) {
     int result = sub.get(i).reduce((prev, curr, array, unused3) -> prev - curr);
-    assertEqual(subExpected.get(i), result);
+    assertEqual(subExpected.get(i).intValue(), result);
     }
     List<Uint16Array> maxArr = java.util.Arrays.asList(
         new Uint16Array(new int[] {0, 65535}), new Uint16Array(new int[] {5, 10, 15})
@@ -102,7 +102,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     List<Integer> maxExpected = java.util.Arrays.asList(65535, 15);
     for (int i = 0; i < maxArr.size(); i++) {
     int result = maxArr.get(i).reduce((prev, curr, array, unused3) -> prev > curr ? prev : curr);
-    assertEqual(maxExpected.get(i), result);
+    assertEqual(maxExpected.get(i).intValue(), result);
     }
     List<Uint16Array> minArr = java.util.Arrays.asList(
         new Uint16Array(new int[] {7, 2}), new Uint16Array(new int[] {100, 200, 300})
@@ -110,7 +110,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     List<Integer> minExpected = java.util.Arrays.asList(2, 100);
     for (int i = 0; i < minArr.size(); i++) {
     int result = minArr.get(i).reduce((prev, curr, array, unused3) -> prev < curr ? prev : curr);
-    assertEqual(minExpected.get(i), result);
+    assertEqual(minExpected.get(i).intValue(), result);
     }
     }
 
@@ -122,7 +122,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     List<Integer> orExpected = java.util.Arrays.asList(6, 14);
     for (int i = 0; i < orArr.size(); i++) {
     int result = orArr.get(i).reduce((prev, curr, array, unused3) -> prev | curr);
-    assertEqual(orExpected.get(i), result);
+    assertEqual(orExpected.get(i).intValue(), result);
     }
     List<Uint16Array> andArr = java.util.Arrays.asList(
         new Uint16Array(new int[] {2, 4}), new Uint16Array(new int[] {3, 7})
@@ -130,7 +130,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     List<Integer> andExpected = java.util.Arrays.asList(0, 3);
     for (int i = 0; i < andArr.size(); i++) {
     int result = andArr.get(i).reduce((prev, curr, array, unused3) -> prev & curr);
-    assertEqual(andExpected.get(i), result);
+    assertEqual(andExpected.get(i).intValue(), result);
     }
     }
 

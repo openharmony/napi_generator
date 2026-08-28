@@ -504,8 +504,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     Uint16Array a = Uint16Array.of(4, 5);
     ArrayBuffer b = a.buffer();
     Uint16Array.KeyIterator it = a.values();
-    assertEqual(4, it.next().value);
-    assertEqual(5, it.next().value);
+    assertEqual(4, it.next().value.intValue());
+    assertEqual(5, it.next().value.intValue());
     assertEqual(b, a.buffer());
     }
 
@@ -523,8 +523,8 @@ public class Uint16Arraypropertyfour extends BasTest {
     void testUint16Arraypropertyfour063() {
     Uint16Array a = Uint16Array.of(7, 8, 9);
     Uint16Array.KeyIterator it = a.keys();
-    assertEqual(0, it.next().value);
-    assertEqual(1, it.next().value);
+    assertEqual(0, it.next().value.intValue());
+    assertEqual(1, it.next().value.intValue());
     assertEqual("7,8,9", a.join(","));
     }
 

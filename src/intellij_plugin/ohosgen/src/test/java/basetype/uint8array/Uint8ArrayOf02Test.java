@@ -1524,7 +1524,7 @@ public class Uint8ArrayOf02Test extends BasTest {
     double[] expected = new double[] {10, 20, 30};
     int idx = 0;
     for (Integer val : arr.values()) {
-    assertEqual(expected[idx], val);
+    assertEqual(expected[idx], val.intValue());
     idx++;
     }
     assertEqual(3, idx);

@@ -423,8 +423,8 @@ public class Uint16Arrayoveralltwo extends BasTest {
     void testUint16Arrayoveralltwo053() {
     Uint16Array arr = Uint16Array.of(5, 10, 15);
     Uint16Array.KeyIterator iter = arr.keys();
-    assertEqual(0, iter.next().value);
-    assertEqual(1, iter.next().value);
+    assertEqual(0, iter.next().value.intValue());
+    assertEqual(1, iter.next().value.intValue());
     }
 
     @Test

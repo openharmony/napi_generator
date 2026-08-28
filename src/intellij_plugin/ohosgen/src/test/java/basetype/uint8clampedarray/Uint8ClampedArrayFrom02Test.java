@@ -182,8 +182,8 @@ public class Uint8ClampedArrayFrom02Test extends BasTest {
     List<Number> src = java.util.Arrays.asList(1, 2);
     Uint8ClampedArray a1 = Uint8ClampedArray.from(src);
     Uint8ClampedArray a2 = Uint8ClampedArray.from(src);
-    assertEqual(a2.get(0), a1.get(0));
-    assertEqual(a2.get(1), a1.get(1));
+    assertEqual(a2.get(0).intValue(), a1.get(0));
+    assertEqual(a2.get(1).intValue(), a1.get(1));
     }
 
     /**

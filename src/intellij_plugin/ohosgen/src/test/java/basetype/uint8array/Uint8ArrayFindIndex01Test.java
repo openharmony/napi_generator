@@ -156,6 +156,7 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     int result = arr.findIndex(isEven);
     assertEqual(1, result);
     };
+
     /**
      * Verify callback only uses value parameter ignoring index and array
      *
@@ -1178,6 +1179,7 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     int result = arr.findIndex((v) -> isThreshold.test(v));
     assertEqual(1, result);
     };
+
     /**
      * Verify predicate uses arithmetic expression (multiplication)
      *

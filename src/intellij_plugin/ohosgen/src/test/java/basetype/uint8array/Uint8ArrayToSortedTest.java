@@ -1759,9 +1759,9 @@ public class Uint8ArrayToSortedTest extends BasTest {
     Uint8Array u = Uint8Array.of(3, 1, 2);
     Uint8Array r1 = u.toSorted();
     Uint8Array r2 = r1.toSorted();
-    assertEqual(r1.get(0), r2.get(0));
-    assertEqual(r1.get(1), r2.get(1));
-    assertEqual(r1.get(2), r2.get(2));
+    assertEqual(r1.get(0).intValue(), r2.get(0));
+    assertEqual(r1.get(1).intValue(), r2.get(1));
+    assertEqual(r1.get(2).intValue(), r2.get(2));
     }
 
     /**

@@ -351,7 +351,7 @@ public class Uint8ClampedArrayConstructor06Test extends BasTest {
     void testUint8ClampedArrayConstructorSix017() {
     Uint8ClampedArray src = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray dst = new Uint8ClampedArray(src);
-    assertEqual(src.get(0), dst.get(0));
+    assertEqual(src.get(0).intValue(), dst.get(0));
     }
 
     /**

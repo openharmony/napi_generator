@@ -431,7 +431,7 @@ public class Int16ArrayFindTest02 extends BasTest {
     void testInt16ArrayFindTestTwo048() {
     Int16Array arr = Int16Array.of(42, 42, 42, 42);
     Integer result = arr.find((value, index, array) -> true);
-    assertEqual(arr.get(0), result);
+    assertEqual(arr.get(0).intValue(), result);
     }
 
     @Test

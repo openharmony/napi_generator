@@ -1056,7 +1056,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     int val = arr.findLast((v) -> {
         return v > 2;
         });
-    assertEqual(arr.get(idx), val);
+    assertEqual(arr.get(idx).intValue(), val);
     }
 
     /**
@@ -1748,6 +1748,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast(isGreaterThan3);
     assertEqual(5, result);
     };
+
     /**
      * Verify findLast predicate accesses external closure variable
      *

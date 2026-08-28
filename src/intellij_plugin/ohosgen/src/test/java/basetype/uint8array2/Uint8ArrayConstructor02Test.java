@@ -480,7 +480,7 @@ public class Uint8ArrayConstructor02Test extends BasTest {
     void testUint8ArrayConstructor02_061() {
     double[] nums = new double[] {0.0, 1.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0.0, arr.get(0));
+    assertEqual(0.0, arr.get(0).doubleValue());
     }
 
     @Test

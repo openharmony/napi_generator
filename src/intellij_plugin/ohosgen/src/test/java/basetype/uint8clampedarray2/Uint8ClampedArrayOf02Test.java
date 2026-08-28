@@ -444,9 +444,9 @@ public class Uint8ClampedArrayOf02Test extends BasTest {
     assertEqual(10, a1.get(0));
     assertEqual(20, a1.get(1));
     assertEqual(30, a1.get(2));
-    assertEqual(a2.get(0), a1.get(0));
-    assertEqual(a2.get(1), a1.get(1));
-    assertEqual(a2.get(2), a1.get(2));
+    assertEqual(a2.get(0).intValue(), a1.get(0));
+    assertEqual(a2.get(1).intValue(), a1.get(1));
+    assertEqual(a2.get(2).intValue(), a1.get(2));
     }
 
     @Test
@@ -594,6 +594,6 @@ public class Uint8ClampedArrayOf02Test extends BasTest {
     Uint8ClampedArray a1 = Uint8ClampedArray.of(0);
     Uint8ClampedArray a2 = new Uint8ClampedArray(new int[] {0});
     assertEqual(a2.length(), a1.length());
-    assertEqual(a2.get(0), a1.get(0));
+    assertEqual(a2.get(0).intValue(), a1.get(0));
     }
 }

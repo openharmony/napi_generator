@@ -207,7 +207,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
             capturedValue[0] = v;
     }
         });
-    assertEqual(arr.get(0), capturedValue[0]);
+    assertEqual(arr.get(0).intValue(), capturedValue[0]);
     }
 
     /**
@@ -230,7 +230,7 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
             vLast[0] = v;
     }
         });
-    assertEqual(arr.get(2), vLast[0]);
+    assertEqual(arr.get(2).intValue(), vLast[0]);
     }
 
     /**

@@ -418,7 +418,7 @@ public class Uint16ArraytoReversed extends BasTest {
     Uint16Array snapshot = Uint16Array.of(10, 20, 30, 40);
     Uint16Array result = arr.toReversed();
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(snapshot.get(i), arr.get(i));
+    assertEqual(snapshot.get(i).intValue(), arr.get(i));
     }
     }
 

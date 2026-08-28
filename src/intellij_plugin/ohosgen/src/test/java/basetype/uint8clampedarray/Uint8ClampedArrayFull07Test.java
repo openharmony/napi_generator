@@ -1436,7 +1436,7 @@ public class Uint8ClampedArrayFull07Test extends BasTest {
     void testUint8ClampedArrayFullSeven076() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.toReversed().toReversed();
-    assertEqual(arr.get(0), r.get(0));
+    assertEqual(arr.get(0).intValue(), r.get(0));
     }
 
     /**

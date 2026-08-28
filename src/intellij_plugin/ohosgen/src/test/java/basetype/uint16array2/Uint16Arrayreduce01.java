@@ -48,7 +48,7 @@ public class Uint16Arrayreduce01 extends BasTest {
     List<Integer> expected = java.util.Arrays.asList(24, 10, 10, 10, 30);
     for (int i = 0; i < inputs.size(); i++) {
     int result = inputs.get(i).reduce((prev, curr, array, unused3) -> prev + curr, 0);
-    assertEqual(expected.get(i), result);
+    assertEqual(expected.get(i).intValue(), result);
     }
     }
 

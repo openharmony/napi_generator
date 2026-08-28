@@ -895,7 +895,7 @@ public class Uint8ClampedArraySet03Test extends BasTest {
     a2.set(src, 0);
     assertEqual(3, a1.length());
     assertEqual(3, a2.length());
-    assertEqual(a2.get(0), a1.get(0));
+    assertEqual(a2.get(0).intValue(), a1.get(0));
     assertEqual(20, a1.get(1));
     assertEqual(30, a1.get(2));
     assertEqual(20, a2.get(1));
@@ -945,7 +945,7 @@ public class Uint8ClampedArraySet03Test extends BasTest {
     double[] src = new double[] {100.0};
     a2.set(src, 0);
     assertEqual(1, a1.length());
-    assertEqual(a2.get(0), a1.get(0));
+    assertEqual(a2.get(0).intValue(), a1.get(0));
     assertEqual(100, a1.get(0));
     }
 
@@ -959,7 +959,7 @@ public class Uint8ClampedArraySet03Test extends BasTest {
     a2.set(src2);
     assertEqual(2, a1.length());
     assertEqual(2, a2.length());
-    assertEqual(a2.get(1), a1.get(1));
+    assertEqual(a2.get(1).intValue(), a1.get(1));
     assertEqual(10, a1.get(0));
     assertEqual(10, a2.get(0));
     assertEqual(20, a1.get(1));
@@ -986,7 +986,7 @@ public class Uint8ClampedArraySet03Test extends BasTest {
     double[] src = new double[] {256.0};
     a2.set(src, 0);
     assertEqual(1, a1.length());
-    assertEqual(a2.get(0), a1.get(0));
+    assertEqual(a2.get(0).intValue(), a1.get(0));
     assertEqual(255, a1.get(0));
     }
 
@@ -998,7 +998,7 @@ public class Uint8ClampedArraySet03Test extends BasTest {
     double[] src = new double[] {-1.0};
     a2.set(src, 0);
     assertEqual(1, a1.length());
-    assertEqual(a2.get(0), a1.get(0));
+    assertEqual(a2.get(0).intValue(), a1.get(0));
     assertEqual(0, a1.get(0));
     }
 
@@ -1009,6 +1009,6 @@ public class Uint8ClampedArraySet03Test extends BasTest {
     a1.set(0, Double.NaN);
     double[] src = new double[] {Double.NaN};
     a2.set(src, 0);
-    assertEqual(a2.get(0), a1.get(0));
+    assertEqual(a2.get(0).intValue(), a1.get(0));
     }
 }

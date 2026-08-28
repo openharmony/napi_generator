@@ -230,7 +230,7 @@ public class Uint8ClampedArrayUnderSet01Test extends BasTest {
     a1.set(0, v);
     a2.set(0, 100);
     assertEqual(1, a1.length());
-    assertEqual(a2.get(0), a1.get(0));
+    assertEqual(a2.get(0).intValue(), a1.get(0));
     assertEqual(100, a1.get(0));
     }
 

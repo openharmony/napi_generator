@@ -504,9 +504,9 @@ public class Uint16Arraysome01 extends BasTest {
     Uint16Array arr = new Uint16Array(new int[] {1, 2, 3});
     Uint16Array before = new Uint16Array(arr);
     arr.some((e) -> e > 0);
-    assertEqual(before.get(0), arr.get(0));
-    assertEqual(before.get(1), arr.get(1));
-    assertEqual(before.get(2), arr.get(2));
+    assertEqual(before.get(0).intValue(), arr.get(0));
+    assertEqual(before.get(1).intValue(), arr.get(1));
+    assertEqual(before.get(2).intValue(), arr.get(2));
     }
 
     @Test

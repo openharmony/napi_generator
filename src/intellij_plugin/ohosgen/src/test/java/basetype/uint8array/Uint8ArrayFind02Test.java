@@ -774,7 +774,7 @@ public class Uint8ArrayFind02Test extends BasTest {
     void testUint8ArrayFind041() {
     Uint8Array arr = new Uint8Array(new int[] {55, 110, 165});
     Integer result = arr.find((v, i, a) -> v > 50);
-    assertEqual(arr.get(0), result);
+    assertEqual(arr.get(0).intValue(), result);
     }
 
     /**
@@ -792,7 +792,7 @@ public class Uint8ArrayFind02Test extends BasTest {
     void testUint8ArrayFind042() {
     Uint8Array arr = new Uint8Array(new int[] {30, 60, 90});
     Integer result = arr.find((v, i, a) -> v > 50);
-    assertEqual(arr.get(1), result);
+    assertEqual(arr.get(1).intValue(), result);
     }
 
     /**
@@ -1208,10 +1208,10 @@ public class Uint8ArrayFind02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {9, 18, 27, 36});
     List<Integer> snapshot = java.util.Arrays.asList(arr.get(0), arr.get(1), arr.get(2), arr.get(3));
     arr.findIndex((v, i, a) -> false);
-    assertEqual(snapshot.get(0), arr.get(0));
-    assertEqual(snapshot.get(1), arr.get(1));
-    assertEqual(snapshot.get(2), arr.get(2));
-    assertEqual(snapshot.get(3), arr.get(3));
+    assertEqual(snapshot.get(0).intValue(), arr.get(0));
+    assertEqual(snapshot.get(1).intValue(), arr.get(1));
+    assertEqual(snapshot.get(2).intValue(), arr.get(2));
+    assertEqual(snapshot.get(3).intValue(), arr.get(3));
     }
 
     /**
@@ -1301,7 +1301,7 @@ public class Uint8ArrayFind02Test extends BasTest {
     Uint8Array sub = new Uint8Array(buf, 2, 3);
     Integer result = sub.find((v, i, a) -> v == 35);
     assertEqual(35, result);
-    assertEqual(arr.get(3), result);
+    assertEqual(arr.get(3).intValue(), result);
     }
 
     /**
@@ -1436,7 +1436,7 @@ public class Uint8ArrayFind02Test extends BasTest {
     arr.set(2, 120);
     arr.set(3, 160);
     Integer result = arr.find((v, i, a) -> v > 100);
-    assertEqual(arr.get(2), result);
+    assertEqual(arr.get(2).intValue(), result);
     }
 
     /**

@@ -520,7 +520,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     Uint16Array arr = Uint16Array.of(241, 63, 16);
     int count = 0;
     for (int[] entry : arr.entries()) {
-    assertEqual(arr.get(entry[0]), entry[1]);
+    assertEqual(arr.get(entry[0]).intValue(), entry[1]);
     count++;
     }
     assertEqual(3, count);
@@ -543,7 +543,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     double[] expected = new double[] {219, 45, 128};
     int idx = 0;
     for (Integer value : arr.values()) {
-    assertEqual(expected[idx], value);
+    assertEqual(expected[idx], value.intValue());
     idx++;
     }
     assertEqual(3, idx);

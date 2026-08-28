@@ -427,8 +427,8 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo021() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.copyWithin(0, 2);
-    assertEqual(arr.get(0), r.get(0));
-    assertEqual(arr.get(1), r.get(1));
+    assertEqual(arr.get(0).intValue(), r.get(0));
+    assertEqual(arr.get(1).intValue(), r.get(1));
     }
 
     /**

@@ -81,9 +81,9 @@ public class Uint16ArrayFromTwo extends BasTest {
         observed.add(value);
         return value;
         });
-    assertEqual(-1, observed.get(0));
-    assertEqual(65536, observed.get(1));
-    assertEqual(3.9, observed.get(2));
+    assertEqual(-1, observed.get(0).doubleValue());
+    assertEqual(65536, observed.get(1).doubleValue());
+    assertEqual(3.9, observed.get(2).doubleValue());
     assertEqual(65535, result.at(0));
     assertEqual(0, result.at(1));
     assertEqual(3, result.at(2));

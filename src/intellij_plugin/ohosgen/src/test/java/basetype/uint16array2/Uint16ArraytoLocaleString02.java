@@ -516,8 +516,8 @@ public class Uint16ArraytoLocaleString02 extends BasTest {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     Uint16Array backup = Uint16Array.of(arr.get(0), arr.get(1));
     arr.toLocaleString("de-DE");
-    assertEqual(backup.get(0), arr.get(0));
-    assertEqual(backup.get(1), arr.get(1));
+    assertEqual(backup.get(0).intValue(), arr.get(0));
+    assertEqual(backup.get(1).intValue(), arr.get(1));
     }
 
     @Test
@@ -527,8 +527,8 @@ public class Uint16ArraytoLocaleString02 extends BasTest {
     IntlOptions opts = new IntlOptions();
     opts.setMinimumFractionDigits(2);
     arr.toLocaleString("en-US", opts);
-    assertEqual(backup.get(0), arr.get(0));
-    assertEqual(backup.get(1), arr.get(1));
+    assertEqual(backup.get(0).intValue(), arr.get(0));
+    assertEqual(backup.get(1).intValue(), arr.get(1));
     }
 
     @Test
@@ -536,8 +536,8 @@ public class Uint16ArraytoLocaleString02 extends BasTest {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     Uint16Array backup = Uint16Array.of(arr.get(0), arr.get(1));
     arr.toLocaleString("zh-CN");
-    assertEqual(backup.get(0), arr.get(0));
-    assertEqual(backup.get(1), arr.get(1));
+    assertEqual(backup.get(0).intValue(), arr.get(0));
+    assertEqual(backup.get(1).intValue(), arr.get(1));
     }
 
     @Test
@@ -562,8 +562,8 @@ public class Uint16ArraytoLocaleString02 extends BasTest {
     arr.toLocaleString("en-US");
     arr.toLocaleString("de-DE");
     arr.toLocaleString("zh-CN");
-    assertEqual(backup.get(0), arr.get(0));
-    assertEqual(backup.get(1), arr.get(1));
+    assertEqual(backup.get(0).intValue(), arr.get(0));
+    assertEqual(backup.get(1).intValue(), arr.get(1));
     }
 
     @Test

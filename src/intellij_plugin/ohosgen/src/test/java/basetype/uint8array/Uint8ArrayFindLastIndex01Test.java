@@ -178,6 +178,7 @@ public class Uint8ArrayFindLastIndex01Test extends BasTest {
     int result = arr.findLastIndex(pred);
     assertEqual(2, result);
     };
+
     /**
      * Verify findLastIndex predicate only uses value parameter
      *

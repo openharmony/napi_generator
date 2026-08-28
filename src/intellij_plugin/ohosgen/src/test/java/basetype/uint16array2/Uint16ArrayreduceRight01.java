@@ -58,7 +58,7 @@ public class Uint16ArrayreduceRight01 extends BasTest {
     List<Integer> expected = java.util.Arrays.asList(60, 30, 131070, 15, 24, 18);
     for (int i = 0; i < inputs.size(); i++) {
     int result = inputs.get(i).reduceRight((prev, curr, idx, a) -> prev + curr, 0);
-    assertEqual(expected.get(i), result);
+    assertEqual(expected.get(i).intValue(), result);
     }
     }
 

@@ -367,7 +367,7 @@ public class Uint8ClampedArrayValueOfTest extends BasTest {
     void testUint8ClampedArrayValueOf042() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray v = arr.valueOf();
-    assertEqual(arr.get(0), v.get(0));
+    assertEqual(arr.get(0).intValue(), v.get(0));
     }
 
     @Test

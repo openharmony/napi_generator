@@ -35,7 +35,7 @@ public class Int16ArrayKeysTest01 extends BasTest {
     void testInt16ArrayKeysTestOne001() {
     Int16Array arr = new Int16Array(new int[] {10, 20, 30});
     Int16Array.KeyIterator iter = arr.keys();
-    assertEqual(0, iter.next().value);
+    assertEqual(0, iter.next().value.intValue());
     }
 
     @Test

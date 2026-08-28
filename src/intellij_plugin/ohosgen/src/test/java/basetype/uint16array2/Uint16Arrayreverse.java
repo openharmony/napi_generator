@@ -601,7 +601,7 @@ public class Uint16Arrayreverse extends BasTest {
     int[] idx = {0};
     List<Integer> expected = java.util.Arrays.asList(40, 30, 20, 10);
     arr.forEach((val) -> {
-    assertEqual(expected.get(idx[0]), val);
+    assertEqual(expected.get(idx[0]).intValue(), val);
     idx[0]++;
         });
     }
@@ -780,9 +780,9 @@ public class Uint16Arrayreverse extends BasTest {
     Uint16Array arr = new Uint16Array(new int[] {1, 2, 3});
     arr.reverse();
     Uint16Array.KeyIterator vals = arr.values();
-    assertEqual(3, vals.next().value);
-    assertEqual(2, vals.next().value);
-    assertEqual(1, vals.next().value);
+    assertEqual(3, vals.next().value.intValue());
+    assertEqual(2, vals.next().value.intValue());
+    assertEqual(1, vals.next().value.intValue());
     }
 
     @Test

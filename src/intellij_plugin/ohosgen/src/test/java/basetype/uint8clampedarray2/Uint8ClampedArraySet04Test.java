@@ -436,7 +436,7 @@ public class Uint8ClampedArraySet04Test extends BasTest {
     a2.set(src, 0);
     assertEqual(3, a1.length());
     assertEqual(3, a2.length());
-    assertEqual(a2.get(0), a1.get(0));
+    assertEqual(a2.get(0).intValue(), a1.get(0));
     assertEqual(88, a1.get(1));
     assertEqual(88, a2.get(1));
     assertEqual(0, a1.get(2));
@@ -452,7 +452,7 @@ public class Uint8ClampedArraySet04Test extends BasTest {
     a2.set(src, 0);
     assertEqual(3, a1.length());
     assertEqual(3, a2.length());
-    assertEqual(a2.get(1), a1.get(1));
+    assertEqual(a2.get(1).intValue(), a1.get(1));
     assertEqual(99, a1.get(0));
     assertEqual(99, a2.get(0));
     assertEqual(0, a1.get(2));

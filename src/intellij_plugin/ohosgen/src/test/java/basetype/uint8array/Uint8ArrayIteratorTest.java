@@ -292,7 +292,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator013() {
     Uint8Array arr = Uint8Array.of(0);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
-    assertEqual(0, iter.next().value);
+    assertEqual(0, iter.next().value.intValue());
     }
 
     /**
@@ -347,7 +347,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator016() {
     Uint8Array arr = Uint8Array.of(255);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
-    assertEqual(255, iter.next().value);
+    assertEqual(255, iter.next().value.intValue());
     }
 
     /**
@@ -365,7 +365,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator017() {
     Uint8Array arr = Uint8Array.of(128);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
-    assertEqual(128, iter.next().value);
+    assertEqual(128, iter.next().value.intValue());
     }
 
     /**
@@ -383,7 +383,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator018() {
     Uint8Array arr = Uint8Array.of(127);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
-    assertEqual(arr.at(0), iter.next().value);
+    assertEqual(arr.at(0).intValue(), iter.next().value.intValue());
     }
 
     /**
@@ -425,7 +425,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator020() {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
-    assertEqual(0, iter.next().value);
+    assertEqual(0, iter.next().value.intValue());
     }
 
     /**
@@ -444,7 +444,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
     iter.next();
-    assertEqual(127, iter.next().value);
+    assertEqual(127, iter.next().value.intValue());
     }
 
     /**
@@ -464,7 +464,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
     iter.next();
     iter.next();
-    assertEqual(255, iter.next().value);
+    assertEqual(255, iter.next().value.intValue());
     }
 
     /**
@@ -579,7 +579,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator027() {
     Uint8Array arr = Uint8Array.of(256);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
-    assertEqual(0, iter.next().value);
+    assertEqual(0, iter.next().value.intValue());
     }
 
     /**
@@ -597,7 +597,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator028() {
     Uint8Array arr = Uint8Array.of(-1);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
-    assertEqual(255, iter.next().value);
+    assertEqual(255, iter.next().value.intValue());
     }
 
     /**
@@ -615,7 +615,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator029() {
     Uint8Array arr = Uint8Array.of(0xFF);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
-    assertEqual(255, iter.next().value);
+    assertEqual(255, iter.next().value.intValue());
     }
 
     /**
@@ -633,7 +633,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator030() {
     Uint8Array arr = Uint8Array.of(0x100);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
-    assertEqual(0, iter.next().value);
+    assertEqual(0, iter.next().value.intValue());
     }
 
     /**
@@ -651,7 +651,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     void testUint8ArrayIterator031() {
     Uint8Array arr = Uint8Array.of(0x80);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
-    assertEqual(128, iter.next().value);
+    assertEqual(128, iter.next().value.intValue());
     }
 
     /**
@@ -865,7 +865,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator b = arr.values();
     a.next();
     b.next();
-    assertEqual(b.next().value, a.next().value);
+    assertEqual(b.next().value.intValue(), a.next().value.intValue());
     }
 
     /**
@@ -952,7 +952,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     second.add(next2.value);
     next2 = iter2.next();
     }
-    assertEqual(second.get(0), first.get(0));
+    assertEqual(second.get(0).intValue(), first.get(0));
     }
 
     /**
@@ -973,7 +973,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     Uint8Array.KeyIterator iter2 = arr.iteratorSymbol();
     iter1.next();
     iter1.next();
-    assertEqual(1, iter2.next().value);
+    assertEqual(1, iter2.next().value.intValue());
     }
 
     /**
@@ -1039,7 +1039,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     while (!iter.next().done) {
     }
     Uint8Array.KeyIterator iter2 = arr.iteratorSymbol();
-    assertEqual(7, iter2.next().value);
+    assertEqual(7, iter2.next().value.intValue());
     }
 
     /**
@@ -1060,7 +1060,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     iter.next();
     iter.next();
     arr.set(new Uint8Array(new int[] {99}), 2);
-    assertEqual(99, iter.next().value);
+    assertEqual(99, iter.next().value.intValue());
     }
 
     /**
@@ -1080,7 +1080,7 @@ public class Uint8ArrayIteratorTest extends BasTest {
     arr.set(new Uint8Array(new int[] {200}), 1);
     Uint8Array.KeyIterator iter = arr.iteratorSymbol();
     iter.next();
-    assertEqual(200, iter.next().value);
+    assertEqual(200, iter.next().value.intValue());
     }
 
     /**

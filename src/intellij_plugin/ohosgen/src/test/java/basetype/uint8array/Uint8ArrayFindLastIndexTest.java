@@ -1099,7 +1099,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
     Uint8Array original = Uint8Array.of(1, 2, 3, 4, 5);
     arr.findLastIndex((value) -> value == 3);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(original.at(i), arr.at(i));
+    assertEqual(original.at(i).intValue(), arr.at(i));
     }
     }
 
@@ -1139,7 +1139,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
     Uint8Array original = Uint8Array.of(1, 2, 3, 4, 5);
     arr.findLastIndex((value) -> value == 10);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(original.at(i), arr.at(i));
+    assertEqual(original.at(i).intValue(), arr.at(i));
     }
     }
 
@@ -1160,7 +1160,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
     Uint8Array original = Uint8Array.of(5, 5, 5, 5, 5);
     arr.findLastIndex((value) -> value == 5);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(original.at(i), arr.at(i));
+    assertEqual(original.at(i).intValue(), arr.at(i));
     }
     }
 
@@ -1187,7 +1187,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
     assertEqual("Error", e.getClass().getSimpleName());
     }
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(original.at(i), arr.at(i));
+    assertEqual(original.at(i).intValue(), arr.at(i));
     }
     }
 
@@ -1213,7 +1213,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
         });
     assertEqual(3, counter[0]);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(original.at(i), arr.at(i));
+    assertEqual(original.at(i).intValue(), arr.at(i));
     }
     }
 
@@ -1239,7 +1239,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
         });
     assertEqual(3, state.count);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(original.at(i), arr.at(i));
+    assertEqual(original.at(i).intValue(), arr.at(i));
     }
     }
 

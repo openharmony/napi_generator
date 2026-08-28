@@ -101,7 +101,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
     arr.forEach((value, index) -> {
         if (index == 0) {
             alias.set(1, 44);
-    } if (index == 1) {
+    }
+        if (index == 1) {
         seen[0] = value;
     }
         });

@@ -1063,7 +1063,7 @@ public class Uint8ArrayReverse01Test extends BasTest {
     void testUint8ArrayReverse057() {
     Uint8Array arr = new Uint8Array(new double[] {1e0, 2e0, 3e0});
     Uint8Array r = arr.reverse();
-    assertEqual(3e0, r.get(0));
+    assertEqual(3e0, r.get(0).doubleValue());
     }
 
     /**

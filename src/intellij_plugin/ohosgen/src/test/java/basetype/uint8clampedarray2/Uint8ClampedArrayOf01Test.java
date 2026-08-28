@@ -113,7 +113,7 @@ public class Uint8ClampedArrayOf01Test extends BasTest {
     assertEqual(3, arr.get(2));
     assertEqual(2, arr.get(3));
     assertEqual(1, arr.get(4));
-    assertEqual(arr.get(4), arr.get(0));
+    assertEqual(arr.get(4).intValue(), arr.get(0));
     }
 
     @Test

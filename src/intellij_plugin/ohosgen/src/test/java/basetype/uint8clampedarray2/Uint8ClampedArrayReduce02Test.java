@@ -409,7 +409,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
         });
     assertEqual(expected.size(), seen.size());
     for (int k = 0; k < expected.size(); k = k + 1) {
-    assertEqual(expected.get(k), seen.get(k));
+    assertEqual(expected.get(k).intValue(), seen.get(k));
     }
     }
 

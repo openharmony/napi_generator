@@ -39,7 +39,7 @@ public class Uint16Arrayset04 extends BasTest {
     a.set(0, v);
     b.set(0, 10);
     assertEqual(10, a.get(0));
-    assertEqual(b.get(0), a.get(0));
+    assertEqual(b.get(0).intValue(), a.get(0));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class Uint16Arrayset04 extends BasTest {
     a.set(1, v);
     b.set(1, 255);
     assertEqual(255, a.get(1));
-    assertEqual(b.get(1), a.get(1));
+    assertEqual(b.get(1).intValue(), a.get(1));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class Uint16Arrayset04 extends BasTest {
     a.set(2, v);
     b.set(2, 65535);
     assertEqual(65535, a.get(2));
-    assertEqual(b.get(2), a.get(2));
+    assertEqual(b.get(2).intValue(), a.get(2));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class Uint16Arrayset04 extends BasTest {
     a.set(0, v);
     b.set(0, 0);
     assertEqual(0, a.get(0));
-    assertEqual(b.get(0), a.get(0));
+    assertEqual(b.get(0).intValue(), a.get(0));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class Uint16Arrayset04 extends BasTest {
     a.set(1, v);
     b.set(1, 32768);
     assertEqual(32768, a.get(1));
-    assertEqual(b.get(1), a.get(1));
+    assertEqual(b.get(1).intValue(), a.get(1));
     }
 
     @Test
@@ -95,11 +95,11 @@ public class Uint16Arrayset04 extends BasTest {
     a.set(si);
     b.set(sn);
     assertEqual(1, a.get(0));
-    assertEqual(b.get(0), a.get(0));
+    assertEqual(b.get(0).intValue(), a.get(0));
     assertEqual(2, a.get(1));
-    assertEqual(b.get(1), a.get(1));
+    assertEqual(b.get(1).intValue(), a.get(1));
     assertEqual(3, a.get(2));
-    assertEqual(b.get(2), a.get(2));
+    assertEqual(b.get(2).intValue(), a.get(2));
     }
 
     @Test
@@ -111,9 +111,9 @@ public class Uint16Arrayset04 extends BasTest {
     a.set(si);
     b.set(sn);
     assertEqual(65535, a.get(0));
-    assertEqual(b.get(0), a.get(0));
+    assertEqual(b.get(0).intValue(), a.get(0));
     assertEqual(0, a.get(1));
-    assertEqual(b.get(1), a.get(1));
+    assertEqual(b.get(1).intValue(), a.get(1));
     }
 
     @Test
@@ -125,9 +125,9 @@ public class Uint16Arrayset04 extends BasTest {
     a.set(si, 1);
     b.set(sn, 1);
     assertEqual(10, a.get(1));
-    assertEqual(b.get(1), a.get(1));
+    assertEqual(b.get(1).intValue(), a.get(1));
     assertEqual(20, a.get(2));
-    assertEqual(b.get(2), a.get(2));
+    assertEqual(b.get(2).intValue(), a.get(2));
     }
 
     @Test
@@ -141,9 +141,9 @@ public class Uint16Arrayset04 extends BasTest {
     assertEqual(100, a.get(0));
     assertEqual(100, b.get(0));
     assertEqual(200, a.get(1));
-    assertEqual(b.get(1), a.get(1));
+    assertEqual(b.get(1).intValue(), a.get(1));
     assertEqual(300, a.get(2));
-    assertEqual(b.get(2), a.get(2));
+    assertEqual(b.get(2).intValue(), a.get(2));
     }
 
     @Test
@@ -155,9 +155,9 @@ public class Uint16Arrayset04 extends BasTest {
     a.set(src, 1);
     b.set(arr, 1);
     assertEqual(50, a.get(1));
-    assertEqual(b.get(1), a.get(1));
+    assertEqual(b.get(1).intValue(), a.get(1));
     assertEqual(60, a.get(2));
-    assertEqual(b.get(2), a.get(2));
+    assertEqual(b.get(2).intValue(), a.get(2));
     }
 
     @Test
@@ -170,9 +170,9 @@ public class Uint16Arrayset04 extends BasTest {
     assertEqual(7, a.get(0));
     assertEqual(7, b.get(0));
     assertEqual(8, a.get(1));
-    assertEqual(b.get(1), a.get(1));
+    assertEqual(b.get(1).intValue(), a.get(1));
     assertEqual(9, a.get(2));
-    assertEqual(b.get(2), a.get(2));
+    assertEqual(b.get(2).intValue(), a.get(2));
     }
 
     @Test
@@ -216,7 +216,7 @@ public class Uint16Arrayset04 extends BasTest {
     a.set(new Uint16Array(new double[] {3.14}));
     b.set(si);
     assertEqual(3, a.get(0));
-    assertEqual(b.get(0), a.get(0));
+    assertEqual(b.get(0).intValue(), a.get(0));
     }
 
     @Test
@@ -930,9 +930,9 @@ public class Uint16Arrayset04 extends BasTest {
     List<Integer> ii = java.util.Arrays.asList(1, 2, 3);
     a.set(fn);
     b.set(ii);
-    assertEqual(b.get(0), a.get(0));
-    assertEqual(b.get(1), a.get(1));
-    assertEqual(b.get(2), a.get(2));
+    assertEqual(b.get(0).intValue(), a.get(0));
+    assertEqual(b.get(1).intValue(), a.get(1));
+    assertEqual(b.get(2).intValue(), a.get(2));
     }
 
     @Test
@@ -943,8 +943,8 @@ public class Uint16Arrayset04 extends BasTest {
     List<Integer> ii = java.util.Arrays.asList(0, 65535);
     a.set(fn);
     b.set(ii);
-    assertEqual(b.get(0), a.get(0));
-    assertEqual(b.get(1), a.get(1));
+    assertEqual(b.get(0).intValue(), a.get(0));
+    assertEqual(b.get(1).intValue(), a.get(1));
     }
 
     @Test
@@ -1065,7 +1065,7 @@ public class Uint16Arrayset04 extends BasTest {
     Uint16Array t = new Uint16Array(5);
     t.set(src);
     for (int i = 0; i < 5; i++) {
-    assertEqual(src.get(i), t.get(i));
+    assertEqual(src.get(i).intValue(), t.get(i));
     }
     }
 

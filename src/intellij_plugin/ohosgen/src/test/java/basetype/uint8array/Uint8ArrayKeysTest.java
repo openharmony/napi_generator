@@ -178,7 +178,7 @@ public class Uint8ArrayKeysTest extends BasTest {
     void testUint8ArrayKeys008() {
     Uint8Array arr = new Uint8Array(1);
     Uint8Array.KeyIterator iter = arr.keys();
-    assertEqual(0, iter.next().value);
+    assertEqual(0, iter.next().value.intValue());
     }
 
     /**
@@ -255,9 +255,9 @@ public class Uint8ArrayKeysTest extends BasTest {
     void testUint8ArrayKeys012() {
     Uint8Array arr = new Uint8Array(3);
     Uint8Array.KeyIterator iter = arr.keys();
-    assertEqual(0, iter.next().value);
-    assertEqual(1, iter.next().value);
-    assertEqual(2, iter.next().value);
+    assertEqual(0, iter.next().value.intValue());
+    assertEqual(1, iter.next().value.intValue());
+    assertEqual(2, iter.next().value.intValue());
     }
 
     /**
@@ -680,12 +680,12 @@ public class Uint8ArrayKeysTest extends BasTest {
     Uint8Array arr = new Uint8Array(3);
     Uint8Array.KeyIterator iter1 = arr.keys();
     Uint8Array.KeyIterator iter2 = arr.keys();
-    assertEqual(0, iter1.next().value);
-    assertEqual(0, iter2.next().value);
-    assertEqual(1, iter1.next().value);
-    assertEqual(1, iter2.next().value);
-    assertEqual(2, iter1.next().value);
-    assertEqual(2, iter2.next().value);
+    assertEqual(0, iter1.next().value.intValue());
+    assertEqual(0, iter2.next().value.intValue());
+    assertEqual(1, iter1.next().value.intValue());
+    assertEqual(1, iter2.next().value.intValue());
+    assertEqual(2, iter1.next().value.intValue());
+    assertEqual(2, iter2.next().value.intValue());
     assertEqual(true, iter1.next().done);
     assertEqual(true, iter2.next().done);
     }

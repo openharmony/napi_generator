@@ -834,19 +834,19 @@ public class Uint8ClampedArrayUnderGetTest extends BasTest {
     @Test
     void testUint8ClampedArrayUnderGet102() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42, 84, 126});
-    assertEqual(arr.get(0), arr.get(0));
+    assertEqual(arr.get(0).intValue(), arr.get(0));
     }
 
     @Test
     void testUint8ClampedArrayUnderGet103() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42, 84, 126});
-    assertEqual(arr.get(1), arr.get(1));
+    assertEqual(arr.get(1).intValue(), arr.get(1));
     }
 
     @Test
     void testUint8ClampedArrayUnderGet104() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42, 84, 126});
-    assertEqual(arr.get(2), arr.get(2));
+    assertEqual(arr.get(2).intValue(), arr.get(2));
     }
 
     @Test

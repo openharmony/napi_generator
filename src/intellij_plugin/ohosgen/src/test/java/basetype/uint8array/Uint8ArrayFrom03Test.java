@@ -123,7 +123,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     double[] arr = new double[] {1.0, 2.0, 3.0};
     Uint8Array r1 = Uint8Array.from(fa);
     Uint8Array r2 = Uint8Array.from(arr);
-    assertEqual(r2.get(0), r1.get(0));
+    assertEqual(r2.get(0).intValue(), r1.get(0));
     }
 
     /**
@@ -146,7 +146,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     Uint8Array u = Uint8Array.of(1, 2, 3);
     Uint8Array r1 = Uint8Array.from(s);
     Uint8Array r2 = Uint8Array.from(u);
-    assertEqual(r2.get(1), r1.get(1));
+    assertEqual(r2.get(1).intValue(), r1.get(1));
     }
 
     /**
@@ -420,7 +420,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     double[] arr = new double[] {10.0, 20.0, 30.0};
     Uint8Array r1 = Uint8Array.from(src);
     Uint8Array r2 = Uint8Array.from(arr);
-    assertEqual(r2.get(2), r1.get(2));
+    assertEqual(r2.get(2).intValue(), r1.get(2));
     }
 
     /**
@@ -627,8 +627,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     s.add(0);
     Uint8Array r3 = Uint8Array.from(s);
     Uint8Array r4 = Uint8Array.from(Uint8Array.of(0, 0, 0));
-    assertEqual(r2.get(0), r1.get(0));
-    assertEqual(r4.get(0), r3.get(0));
+    assertEqual(r2.get(0).intValue(), r1.get(0));
+    assertEqual(r4.get(0).intValue(), r3.get(0));
     }
 
     /**
@@ -650,8 +650,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     s.add(255);
     Uint8Array r3 = Uint8Array.from(s);
     Uint8Array r4 = Uint8Array.from(Uint8Array.of(255, 255, 255));
-    assertEqual(r2.get(0), r1.get(0));
-    assertEqual(r4.get(0), r3.get(0));
+    assertEqual(r2.get(0).intValue(), r1.get(0));
+    assertEqual(r4.get(0).intValue(), r3.get(0));
     }
 
     /**
@@ -673,8 +673,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     s.add(128);
     Uint8Array r3 = Uint8Array.from(s);
     Uint8Array r4 = Uint8Array.from(Uint8Array.of(128, 128, 128));
-    assertEqual(r2.get(0), r1.get(0));
-    assertEqual(r4.get(0), r3.get(0));
+    assertEqual(r2.get(0).intValue(), r1.get(0));
+    assertEqual(r4.get(0).intValue(), r3.get(0));
     }
 
     /**

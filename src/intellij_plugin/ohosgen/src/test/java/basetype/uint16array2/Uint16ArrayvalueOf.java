@@ -220,9 +220,9 @@ public class Uint16ArrayvalueOf extends BasTest {
     Uint16Array arr = Uint16Array.of(7, 14, 21);
     Uint16Array result = arr.valueOf();
     assertEqual(arr, result);
-    assertEqual(arr.get(0), result.get(0));
-    assertEqual(arr.get(1), result.get(1));
-    assertEqual(arr.get(2), result.get(2));
+    assertEqual(arr.get(0).intValue(), result.get(0));
+    assertEqual(arr.get(1).intValue(), result.get(1));
+    assertEqual(arr.get(2).intValue(), result.get(2));
     }
 
     @Test
@@ -693,8 +693,8 @@ public class Uint16ArrayvalueOf extends BasTest {
     void testUint16ArrayValueOf075() {
     Uint16Array a = Uint16Array.of(4, 5);
     Uint16Array.KeyIterator it = a.valueOf().values();
-    assertEqual(4, it.next().value);
-    assertEqual(5, it.next().value);
+    assertEqual(4, it.next().value.intValue());
+    assertEqual(5, it.next().value.intValue());
     }
 
     @Test
