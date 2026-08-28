@@ -51,6 +51,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayFrom03Test extends BasTest {
     /**
      * Verify FixedArray<int> [1,2,3] correctly dispatches to FixedArray overload, length=3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0010
      * @tc.name testUint8ArrayFrom001
      * @tc.desc Verify FixedArray<int> [1,2,3] correctly dispatches to FixedArray overload, length=3
@@ -68,6 +69,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Array<number> [1.0,2.0,3.0] correctly dispatches to Array overload, length=3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0020
      * @tc.name testUint8ArrayFrom002
      * @tc.desc Verify Array<number> [1.0,2.0,3.0] correctly dispatches to Array overload, length=3
@@ -85,6 +87,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Set<int> {1,2,3} correctly dispatches to Set overload, length=3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0030
      * @tc.name testUint8ArrayFrom003
      * @tc.desc Verify Set<int> {1,2,3} correctly dispatches to Set overload, length=3
@@ -105,6 +108,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Uint8Array [1,2,3] correctly dispatches to Uint8Array overload, length=3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0040
      * @tc.name testUint8ArrayFrom004
      * @tc.desc Verify Uint8Array [1,2,3] correctly dispatches to Uint8Array overload, length=3
@@ -122,6 +126,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify same values [1,2,3] through FixedArray and Array overloads produce same numerical results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0050
      * @tc.name testUint8ArrayFrom005
      * @tc.desc Verify same values [1,2,3] through FixedArray and Array overloads produce same numerical results
@@ -141,6 +146,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify same values [1,2,3] through Set and Uint8Array overloads produce same numerical results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0060
      * @tc.name testUint8ArrayFrom006
      * @tc.desc Verify same values [1,2,3] through Set and Uint8Array overloads produce same numerical results
@@ -163,6 +169,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify empty FixedArray<int> dispatches to FixedArray overload, length=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0070
      * @tc.name testUint8ArrayFrom007
      * @tc.desc Verify empty FixedArray<int> dispatches to FixedArray overload, length=0
@@ -180,6 +187,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify empty Array<number> dispatches to Array overload, length=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0080
      * @tc.name testUint8ArrayFrom008
      * @tc.desc Verify empty Array<number> dispatches to Array overload, length=0
@@ -197,6 +205,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify empty Set<int> dispatches to Set overload, length=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0090
      * @tc.name testUint8ArrayFrom009
      * @tc.desc Verify empty Set<int> dispatches to Set overload, length=0
@@ -214,6 +223,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify empty Uint8Array dispatches to Uint8Array overload, length=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0100
      * @tc.name testUint8ArrayFrom010
      * @tc.desc Verify empty Uint8Array dispatches to Uint8Array overload, length=0
@@ -231,6 +241,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify FixedArray<int> with boundary value 0 is correctly preserved
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0110
      * @tc.name testUint8ArrayFrom011
      * @tc.desc Verify FixedArray<int> with boundary value 0 is correctly preserved
@@ -248,6 +259,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Array<number> with boundary value 0.0 is correctly truncated to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0120
      * @tc.name testUint8ArrayFrom012
      * @tc.desc Verify Array<number> with boundary value 0.0 is correctly truncated to 0
@@ -265,6 +277,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify FixedArray<int> with boundary value 255 is correctly preserved
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0130
      * @tc.name testUint8ArrayFrom013
      * @tc.desc Verify FixedArray<int> with boundary value 255 is correctly preserved
@@ -282,6 +295,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Array<number> with boundary value 255.9 is truncated to 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0140
      * @tc.name testUint8ArrayFrom014
      * @tc.desc Verify Array<number> with boundary value 255.9 is truncated to 255
@@ -299,6 +313,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify FixedArray<int> with mid value 128 is correctly preserved
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0150
      * @tc.name testUint8ArrayFrom015
      * @tc.desc Verify FixedArray<int> with mid value 128 is correctly preserved
@@ -316,6 +331,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Array<number> with value 128.5 is truncated to 128
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0160
      * @tc.name testUint8ArrayFrom016
      * @tc.desc Verify Array<number> with value 128.5 is truncated to 128
@@ -333,6 +349,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify FixedArray<int> overflow value 256 is truncated to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0170
      * @tc.name testUint8ArrayFrom017
      * @tc.desc Verify FixedArray<int> overflow value 256 is truncated to 0
@@ -350,6 +367,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Array<number> overflow value 256.0 is truncated to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0180
      * @tc.name testUint8ArrayFrom018
      * @tc.desc Verify Array<number> overflow value 256.0 is truncated to 0
@@ -367,6 +385,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Set<int> with value 127 is correctly preserved
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0190
      * @tc.name testUint8ArrayFrom019
      * @tc.desc Verify Set<int> with value 127 is correctly preserved
@@ -385,6 +404,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Set<int> overflow value 256 is truncated to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0200
      * @tc.name testUint8ArrayFrom020
      * @tc.desc Verify Set<int> overflow value 256 is truncated to 0
@@ -403,6 +423,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Uint8Array as source produces same numerical results as Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0210
      * @tc.name testUint8ArrayFrom021
      * @tc.desc Verify Uint8Array as source produces same numerical results as Array
@@ -422,6 +443,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Set<int> iteration order {5,1,9} is preserved in result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0220
      * @tc.name testUint8ArrayFrom022
      * @tc.desc Verify Set<int> iteration order {5,1,9} is preserved in result
@@ -444,6 +466,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify four overloads with same values [7,14,21] produce same result length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0230
      * @tc.name testUint8ArrayFrom023
      * @tc.desc Verify four overloads with same values [7,14,21] produce same result length
@@ -467,6 +490,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Array<number> with -1 wraps to 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0240
      * @tc.name testUint8ArrayFrom024
      * @tc.desc Verify Array<number> with -1 wraps to 255
@@ -484,6 +508,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify FixedArray<int> with -1 wraps to 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0250
      * @tc.name testUint8ArrayFrom025
      * @tc.desc Verify FixedArray<int> with -1 wraps to 255
@@ -501,6 +526,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify four overloads BYTES_PER_ELEMENT are all 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0260
      * @tc.name testUint8ArrayFrom026
      * @tc.desc Verify four overloads BYTES_PER_ELEMENT are all 1
@@ -525,6 +551,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify four overloads byteOffset are all 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0270
      * @tc.name testUint8ArrayFrom027
      * @tc.desc Verify four overloads byteOffset are all 0
@@ -549,6 +576,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify four overloads buffer are all non-null
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0280
      * @tc.name testUint8ArrayFrom028
      * @tc.desc Verify four overloads buffer are all non-null
@@ -573,6 +601,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify three-element source four overloads byteLength are all 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0290
      * @tc.name testUint8ArrayFrom029
      * @tc.desc Verify three-element source four overloads byteLength are all 3
@@ -599,6 +628,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify four overloads with [0,0,0] produce same result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0300
      * @tc.name testUint8ArrayFrom030
      * @tc.desc Verify four overloads with [0,0,0] produce same result
@@ -621,6 +651,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify four overloads with [255,255,255] produce same result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0310
      * @tc.name testUint8ArrayFrom031
      * @tc.desc Verify four overloads with [255,255,255] produce same result
@@ -643,6 +674,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify four overloads with [128,128,128] produce same result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0320
      * @tc.name testUint8ArrayFrom032
      * @tc.desc Verify four overloads with [128,128,128] produce same result
@@ -665,6 +697,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn doubles values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0330
      * @tc.name testUint8ArrayFrom033
      * @tc.desc Verify ArrayLike<number> with mapfn doubles values
@@ -684,6 +717,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn adds index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0340
      * @tc.name testUint8ArrayFrom034
      * @tc.desc Verify Iterable<number> with mapfn adds index
@@ -703,6 +737,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<BigInt> with mapfn converts to number
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0350
      * @tc.name testUint8ArrayFrom035
      * @tc.desc Verify ArrayLike<BigInt> with mapfn converts to number
@@ -721,6 +756,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> without mapfn preserves values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0360
      * @tc.name testUint8ArrayFrom036
      * @tc.desc Verify ArrayLike<number> without mapfn preserves values
@@ -740,6 +776,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> without mapfn preserves values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0370
      * @tc.name testUint8ArrayFrom037
      * @tc.desc Verify Iterable<number> without mapfn preserves values
@@ -759,6 +796,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn truncates decimals
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0380
      * @tc.name testUint8ArrayFrom038
      * @tc.desc Verify ArrayLike<number> with mapfn truncates decimals
@@ -777,6 +815,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn truncates decimals
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0390
      * @tc.name testUint8ArrayFrom039
      * @tc.desc Verify Iterable<number> with mapfn truncates decimals
@@ -795,6 +834,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn wraps overflow
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0400
      * @tc.name testUint8ArrayFrom040
      * @tc.desc Verify ArrayLike<number> with mapfn wraps overflow
@@ -813,6 +853,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn wraps overflow
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0410
      * @tc.name testUint8ArrayFrom041
      * @tc.desc Verify Iterable<number> with mapfn wraps overflow
@@ -831,6 +872,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn handles negative results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0420
      * @tc.name testUint8ArrayFrom042
      * @tc.desc Verify ArrayLike<number> with mapfn handles negative results
@@ -849,6 +891,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn handles negative results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0430
      * @tc.name testUint8ArrayFrom043
      * @tc.desc Verify Iterable<number> with mapfn handles negative results
@@ -867,6 +910,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn handles zero results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0440
      * @tc.name testUint8ArrayFrom044
      * @tc.desc Verify ArrayLike<number> with mapfn handles zero results
@@ -885,6 +929,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn handles zero results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0450
      * @tc.name testUint8ArrayFrom045
      * @tc.desc Verify Iterable<number> with mapfn handles zero results
@@ -903,6 +948,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn handles max value results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0460
      * @tc.name testUint8ArrayFrom046
      * @tc.desc Verify ArrayLike<number> with mapfn handles max value results
@@ -921,6 +967,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn handles max value results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0470
      * @tc.name testUint8ArrayFrom047
      * @tc.desc Verify Iterable<number> with mapfn handles max value results
@@ -939,6 +986,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn handles mid value results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0480
      * @tc.name testUint8ArrayFrom048
      * @tc.desc Verify ArrayLike<number> with mapfn handles mid value results
@@ -957,6 +1005,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn handles mid value results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0490
      * @tc.name testUint8ArrayFrom049
      * @tc.desc Verify Iterable<number> with mapfn handles mid value results
@@ -975,6 +1024,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn handles boundary value results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0500
      * @tc.name testUint8ArrayFrom050
      * @tc.desc Verify ArrayLike<number> with mapfn handles boundary value results
@@ -993,6 +1043,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn handles boundary value results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0510
      * @tc.name testUint8ArrayFrom051
      * @tc.desc Verify Iterable<number> with mapfn handles boundary value results
@@ -1011,6 +1062,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn handles negative boundary results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0520
      * @tc.name testUint8ArrayFrom052
      * @tc.desc Verify ArrayLike<number> with mapfn handles negative boundary results
@@ -1029,6 +1081,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn handles negative boundary results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0530
      * @tc.name testUint8ArrayFrom053
      * @tc.desc Verify Iterable<number> with mapfn handles negative boundary results
@@ -1047,6 +1100,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn handles overflow results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0540
      * @tc.name testUint8ArrayFrom054
      * @tc.desc Verify ArrayLike<number> with mapfn handles overflow results
@@ -1065,6 +1119,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn handles overflow results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0550
      * @tc.name testUint8ArrayFrom055
      * @tc.desc Verify Iterable<number> with mapfn handles overflow results
@@ -1083,6 +1138,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify ArrayLike<number> with mapfn handles underflow results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0560
      * @tc.name testUint8ArrayFrom056
      * @tc.desc Verify ArrayLike<number> with mapfn handles underflow results
@@ -1101,6 +1157,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify Iterable<number> with mapfn handles underflow results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0570
      * @tc.name testUint8ArrayFrom057
      * @tc.desc Verify Iterable<number> with mapfn handles underflow results
@@ -1119,6 +1176,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with null source throws TypeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0580
      * @tc.name testUint8ArrayFrom058
      * @tc.desc Verify from() with null source throws TypeError
@@ -1142,6 +1200,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with undefined source throws TypeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0590
      * @tc.name testUint8ArrayFrom059
      * @tc.desc Verify from() with undefined source throws TypeError
@@ -1165,6 +1224,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with null mapfn throws TypeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0600
      * @tc.name testUint8ArrayFrom060
      * @tc.desc Verify from() with null mapfn throws TypeError
@@ -1188,6 +1248,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with invalid mapfn throws TypeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0610
      * @tc.name testUint8ArrayFrom061
      * @tc.desc Verify from() with invalid mapfn throws TypeError
@@ -1211,6 +1272,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with valid numeric source does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0620
      * @tc.name testUint8ArrayFrom062
      * @tc.desc Verify from() with valid numeric source does not throw
@@ -1234,6 +1296,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with empty source does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0630
      * @tc.name testUint8ArrayFrom063
      * @tc.desc Verify from() with empty source does not throw
@@ -1257,6 +1320,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with empty Array does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0640
      * @tc.name testUint8ArrayFrom064
      * @tc.desc Verify from() with empty Array does not throw
@@ -1280,6 +1344,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with empty Set does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0650
      * @tc.name testUint8ArrayFrom065
      * @tc.desc Verify from() with empty Set does not throw
@@ -1303,6 +1368,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with empty Uint8Array does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0660
      * @tc.name testUint8ArrayFrom066
      * @tc.desc Verify from() with empty Uint8Array does not throw
@@ -1326,6 +1392,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with valid Array does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0670
      * @tc.name testUint8ArrayFrom067
      * @tc.desc Verify from() with valid Array does not throw
@@ -1349,6 +1416,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with valid Set does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0680
      * @tc.name testUint8ArrayFrom068
      * @tc.desc Verify from() with valid Set does not throw
@@ -1375,6 +1443,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with valid Uint8Array does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0690
      * @tc.name testUint8ArrayFrom069
      * @tc.desc Verify from() with valid Uint8Array does not throw
@@ -1398,6 +1467,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with valid ArrayLike does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0700
      * @tc.name testUint8ArrayFrom070
      * @tc.desc Verify from() with valid ArrayLike does not throw
@@ -1421,6 +1491,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with valid Iterable does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0710
      * @tc.name testUint8ArrayFrom071
      * @tc.desc Verify from() with valid Iterable does not throw
@@ -1444,6 +1515,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with valid mapfn does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0720
      * @tc.name testUint8ArrayFrom072
      * @tc.desc Verify from() with valid mapfn does not throw
@@ -1467,6 +1539,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with valid Iterable mapfn does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0730
      * @tc.name testUint8ArrayFrom073
      * @tc.desc Verify from() with valid Iterable mapfn does not throw
@@ -1490,6 +1563,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with boundary values does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0740
      * @tc.name testUint8ArrayFrom074
      * @tc.desc Verify from() with boundary values does not throw
@@ -1513,6 +1587,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with overflow values does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0750
      * @tc.name testUint8ArrayFrom075
      * @tc.desc Verify from() with overflow values does not throw
@@ -1536,6 +1611,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from() with negative values does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0760
      * @tc.name testUint8ArrayFrom076
      * @tc.desc Verify from() with negative values does not throw
@@ -1559,6 +1635,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(FixedArray) returns Uint8Array instance
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0770
      * @tc.name testUint8ArrayFrom077
      * @tc.desc Verify from(FixedArray) returns Uint8Array instance
@@ -1576,6 +1653,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Array) returns Uint8Array instance
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0780
      * @tc.name testUint8ArrayFrom078
      * @tc.desc Verify from(Array) returns Uint8Array instance
@@ -1593,6 +1671,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Set) returns Uint8Array instance
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0790
      * @tc.name testUint8ArrayFrom079
      * @tc.desc Verify from(Set) returns Uint8Array instance
@@ -1613,6 +1692,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Uint8Array) returns Uint8Array instance
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0800
      * @tc.name testUint8ArrayFrom080
      * @tc.desc Verify from(Uint8Array) returns Uint8Array instance
@@ -1630,6 +1710,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(ArrayLike) returns Uint8Array instance
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0810
      * @tc.name testUint8ArrayFrom081
      * @tc.desc Verify from(ArrayLike) returns Uint8Array instance
@@ -1647,6 +1728,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Iterable) returns Uint8Array instance
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0820
      * @tc.name testUint8ArrayFrom082
      * @tc.desc Verify from(Iterable) returns Uint8Array instance
@@ -1664,6 +1746,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(FixedArray) result has correct length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0830
      * @tc.name testUint8ArrayFrom083
      * @tc.desc Verify from(FixedArray) result has correct length
@@ -1681,6 +1764,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Array) result has correct length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0840
      * @tc.name testUint8ArrayFrom084
      * @tc.desc Verify from(Array) result has correct length
@@ -1698,6 +1782,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Set) result has correct length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0850
      * @tc.name testUint8ArrayFrom085
      * @tc.desc Verify from(Set) result has correct length
@@ -1720,6 +1805,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Uint8Array) result has correct length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0860
      * @tc.name testUint8ArrayFrom086
      * @tc.desc Verify from(Uint8Array) result has correct length
@@ -1737,6 +1823,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(ArrayLike) result has correct length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0870
      * @tc.name testUint8ArrayFrom087
      * @tc.desc Verify from(ArrayLike) result has correct length
@@ -1754,6 +1841,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Iterable) result has correct length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0880
      * @tc.name testUint8ArrayFrom088
      * @tc.desc Verify from(Iterable) result has correct length
@@ -1771,6 +1859,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(FixedArray) result has correct values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0890
      * @tc.name testUint8ArrayFrom089
      * @tc.desc Verify from(FixedArray) result has correct values
@@ -1790,6 +1879,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Array) result has correct values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0900
      * @tc.name testUint8ArrayFrom090
      * @tc.desc Verify from(Array) result has correct values
@@ -1809,6 +1899,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Set) result has correct values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0910
      * @tc.name testUint8ArrayFrom091
      * @tc.desc Verify from(Set) result has correct values
@@ -1831,6 +1922,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Uint8Array) result has correct values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0920
      * @tc.name testUint8ArrayFrom092
      * @tc.desc Verify from(Uint8Array) result has correct values
@@ -1850,6 +1942,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(ArrayLike) result has correct values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0930
      * @tc.name testUint8ArrayFrom093
      * @tc.desc Verify from(ArrayLike) result has correct values
@@ -1869,6 +1962,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Iterable) result has correct values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0940
      * @tc.name testUint8ArrayFrom094
      * @tc.desc Verify from(Iterable) result has correct values
@@ -1888,6 +1982,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(FixedArray) result has correct BYTES_PER_ELEMENT
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0950
      * @tc.name testUint8ArrayFrom095
      * @tc.desc Verify from(FixedArray) result has correct BYTES_PER_ELEMENT
@@ -1905,6 +2000,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Array) result has correct BYTES_PER_ELEMENT
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0960
      * @tc.name testUint8ArrayFrom096
      * @tc.desc Verify from(Array) result has correct BYTES_PER_ELEMENT
@@ -1922,6 +2018,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Set) result has correct BYTES_PER_ELEMENT
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0970
      * @tc.name testUint8ArrayFrom097
      * @tc.desc Verify from(Set) result has correct BYTES_PER_ELEMENT
@@ -1942,6 +2039,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Uint8Array) result has correct BYTES_PER_ELEMENT
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0980
      * @tc.name testUint8ArrayFrom098
      * @tc.desc Verify from(Uint8Array) result has correct BYTES_PER_ELEMENT
@@ -1959,6 +2057,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(ArrayLike) result has correct BYTES_PER_ELEMENT
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0990
      * @tc.name testUint8ArrayFrom099
      * @tc.desc Verify from(ArrayLike) result has correct BYTES_PER_ELEMENT
@@ -1976,6 +2075,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Iterable) result has correct BYTES_PER_ELEMENT
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1000
      * @tc.name testUint8ArrayFrom100
      * @tc.desc Verify from(Iterable) result has correct BYTES_PER_ELEMENT
@@ -1993,6 +2093,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(FixedArray) result has correct byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1010
      * @tc.name testUint8ArrayFrom101
      * @tc.desc Verify from(FixedArray) result has correct byteOffset
@@ -2010,6 +2111,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Array) result has correct buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1020
      * @tc.name testUint8ArrayFrom102
      * @tc.desc Verify from(Array) result has correct buffer
@@ -2027,6 +2129,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Set) result has correct buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1030
      * @tc.name testUint8ArrayFrom103
      * @tc.desc Verify from(Set) result has correct buffer
@@ -2047,6 +2150,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Uint8Array) result has correct buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1040
      * @tc.name testUint8ArrayFrom104
      * @tc.desc Verify from(Uint8Array) result has correct buffer
@@ -2064,6 +2168,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(ArrayLike) result has correct buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1050
      * @tc.name testUint8ArrayFrom105
      * @tc.desc Verify from(ArrayLike) result has correct buffer
@@ -2081,6 +2186,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Iterable) result has correct buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1060
      * @tc.name testUint8ArrayFrom106
      * @tc.desc Verify from(Iterable) result has correct buffer
@@ -2098,6 +2204,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(FixedArray) result has correct byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1070
      * @tc.name testUint8ArrayFrom107
      * @tc.desc Verify from(FixedArray) result has correct byteLength
@@ -2115,6 +2222,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Array) result has correct byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1080
      * @tc.name testUint8ArrayFrom108
      * @tc.desc Verify from(Array) result has correct byteLength
@@ -2132,6 +2240,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Set) result has correct byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1090
      * @tc.name testUint8ArrayFrom109
      * @tc.desc Verify from(Set) result has correct byteLength
@@ -2152,6 +2261,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Uint8Array) result has correct byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1100
      * @tc.name testUint8ArrayFrom110
      * @tc.desc Verify from(Uint8Array) result has correct byteLength
@@ -2169,6 +2279,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(ArrayLike) result has correct byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1110
      * @tc.name testUint8ArrayFrom111
      * @tc.desc Verify from(ArrayLike) result has correct byteLength
@@ -2186,6 +2297,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Iterable) result has correct byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1120
      * @tc.name testUint8ArrayFrom112
      * @tc.desc Verify from(Iterable) result has correct byteLength
@@ -2203,6 +2315,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(FixedArray) result has correct buffer byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1130
      * @tc.name testUint8ArrayFrom113
      * @tc.desc Verify from(FixedArray) result has correct buffer byteLength
@@ -2220,6 +2333,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Array) result has correct buffer byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1140
      * @tc.name testUint8ArrayFrom114
      * @tc.desc Verify from(Array) result has correct buffer byteLength
@@ -2237,6 +2351,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Set) result has correct buffer byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1150
      * @tc.name testUint8ArrayFrom115
      * @tc.desc Verify from(Set) result has correct buffer byteLength
@@ -2257,6 +2372,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Uint8Array) result has correct buffer byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1160
      * @tc.name testUint8ArrayFrom116
      * @tc.desc Verify from(Uint8Array) result has correct buffer byteLength
@@ -2274,6 +2390,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(ArrayLike) result has correct buffer byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1170
      * @tc.name testUint8ArrayFrom117
      * @tc.desc Verify from(ArrayLike) result has correct buffer byteLength
@@ -2291,6 +2408,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Iterable) result has correct buffer byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1180
      * @tc.name testUint8ArrayFrom118
      * @tc.desc Verify from(Iterable) result has correct buffer byteLength
@@ -2308,6 +2426,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Array) result has correct byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1190
      * @tc.name testUint8ArrayFrom119
      * @tc.desc Verify from(Array) result has correct byteOffset
@@ -2325,6 +2444,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Set) result has correct byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1200
      * @tc.name testUint8ArrayFrom120
      * @tc.desc Verify from(Set) result has correct byteOffset
@@ -2345,6 +2465,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Uint8Array) result has correct byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1210
      * @tc.name testUint8ArrayFrom121
      * @tc.desc Verify from(Uint8Array) result has correct byteOffset
@@ -2362,6 +2483,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(ArrayLike) result has correct byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1220
      * @tc.name testUint8ArrayFrom122
      * @tc.desc Verify from(ArrayLike) result has correct byteOffset
@@ -2379,6 +2501,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(Iterable) result has correct byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1230
      * @tc.name testUint8ArrayFrom123
      * @tc.desc Verify from(Iterable) result has correct byteOffset
@@ -2396,6 +2519,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
 
     /**
      * Verify from(FixedArray) result has correct buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_1240
      * @tc.name testUint8ArrayFrom124
      * @tc.desc Verify from(FixedArray) result has correct buffer

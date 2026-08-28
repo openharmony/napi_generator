@@ -16,7 +16,6 @@
 package basetype.uint8array;
 
 import basetype.common.BasTest;
-import basetype.common.Error;
 import basetype.common.Uint8Array;
 import basetype.common.RangeError;
 
@@ -30,6 +29,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayOf01Test extends BasTest {
     /**
      * Verify of() with empty parameter list creates non-null Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_0100
      * @tc.name testUint8ArrayOf001
      * @tc.desc Verify of() with empty parameter list creates non-null Uint8Array
@@ -46,6 +46,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(17) with single parameter has length 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_0200
      * @tc.name testUint8ArrayOf002
      * @tc.desc Verify of(17) with single parameter has length 1
@@ -62,6 +63,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(99, 199) with two parameters has length 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_0300
      * @tc.name testUint8ArrayOf003
      * @tc.desc Verify of(99, 199) with two parameters has length 2
@@ -78,6 +80,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(11, 22, 33) with three parameters has length 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_0400
      * @tc.name testUint8ArrayOf004
      * @tc.desc Verify of(11, 22, 33) with three parameters has length 3
@@ -94,6 +97,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,2,3,4,5,6,7,8,9,10) with ten parameters has length 10
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_0500
      * @tc.name testUint8ArrayOf005
      * @tc.desc Verify of(1,2,3,4,5,6,7,8,9,10) with ten parameters has length 10
@@ -110,6 +114,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0) with minimum value boundary
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_0600
      * @tc.name testUint8ArrayOf006
      * @tc.desc Verify of(0) with minimum value boundary
@@ -126,6 +131,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(255) with maximum value boundary
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_0700
      * @tc.name testUint8ArrayOf007
      * @tc.desc Verify of(255) with maximum value boundary
@@ -142,6 +148,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(128) with mid-value+1 boundary
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_0800
      * @tc.name testUint8ArrayOf008
      * @tc.desc Verify of(128) with mid-value+1 boundary
@@ -158,6 +165,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(127) with mid-value boundary
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_0900
      * @tc.name testUint8ArrayOf009
      * @tc.desc Verify of(127) with mid-value boundary
@@ -174,6 +182,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1) with minimum positive value boundary
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_1000
      * @tc.name testUint8ArrayOf010
      * @tc.desc Verify of(1) with minimum positive value boundary
@@ -190,6 +199,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(254) with maximum value-1 boundary
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_1100
      * @tc.name testUint8ArrayOf011
      * @tc.desc Verify of(254) with maximum value-1 boundary
@@ -206,6 +216,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0x00) with hexadecimal minimum value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_1200
      * @tc.name testUint8ArrayOf012
      * @tc.desc Verify of(0x00) with hexadecimal minimum value
@@ -222,6 +233,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0xFF) with hexadecimal maximum value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_1300
      * @tc.name testUint8ArrayOf013
      * @tc.desc Verify of(0xFF) with hexadecimal maximum value
@@ -238,6 +250,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0x80) with hexadecimal 128
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_1400
      * @tc.name testUint8ArrayOf014
      * @tc.desc Verify of(0x80) with hexadecimal 128
@@ -254,6 +267,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0x0F) with hexadecimal 15
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_1500
      * @tc.name testUint8ArrayOf015
      * @tc.desc Verify of(0x0F) with hexadecimal 15
@@ -270,6 +284,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0xA5) with hexadecimal 165
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_1600
      * @tc.name testUint8ArrayOf016
      * @tc.desc Verify of(0xA5) with hexadecimal 165
@@ -286,6 +301,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0b00000000) with binary minimum value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_1700
      * @tc.name testUint8ArrayOf017
      * @tc.desc Verify of(0b00000000) with binary minimum value
@@ -302,6 +318,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0b11111111) with binary maximum value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_1800
      * @tc.name testUint8ArrayOf018
      * @tc.desc Verify of(0b11111111) with binary maximum value
@@ -318,6 +335,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0b10000000) with binary 128
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_1900
      * @tc.name testUint8ArrayOf019
      * @tc.desc Verify of(0b10000000) with binary 128
@@ -334,6 +352,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0b10101010) with binary 170
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_2000
      * @tc.name testUint8ArrayOf020
      * @tc.desc Verify of(0b10101010) with binary 170
@@ -350,6 +369,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0o000) with octal minimum value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_2100
      * @tc.name testUint8ArrayOf021
      * @tc.desc Verify of(0o000) with octal minimum value
@@ -366,6 +386,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0o377) with octal maximum value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_2200
      * @tc.name testUint8ArrayOf022
      * @tc.desc Verify of(0o377) with octal maximum value
@@ -382,6 +403,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0o200) with octal 128
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_2300
      * @tc.name testUint8ArrayOf023
      * @tc.desc Verify of(0o200) with octal 128
@@ -398,6 +420,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0o077) with octal 63
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_2400
      * @tc.name testUint8ArrayOf024
      * @tc.desc Verify of(0o077) with octal 63
@@ -414,6 +437,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1+2) with addition expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_2500
      * @tc.name testUint8ArrayOf025
      * @tc.desc Verify of(1+2) with addition expression
@@ -430,6 +454,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(10-1) with subtraction expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_2600
      * @tc.name testUint8ArrayOf026
      * @tc.desc Verify of(10-1) with subtraction expression
@@ -446,6 +471,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(3*5) with multiplication expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_2700
      * @tc.name testUint8ArrayOf027
      * @tc.desc Verify of(3*5) with multiplication expression
@@ -462,6 +488,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(100/2) with division expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_2800
      * @tc.name testUint8ArrayOf028
      * @tc.desc Verify of(100/2) with division expression
@@ -478,6 +505,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(10%3) with modulo expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_2900
      * @tc.name testUint8ArrayOf029
      * @tc.desc Verify of(10%3) with modulo expression
@@ -494,6 +522,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1<<3) with left shift expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_3000
      * @tc.name testUint8ArrayOf030
      * @tc.desc Verify of(1<<3) with left shift expression
@@ -510,6 +539,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0xFF & 0x0F) with bitwise AND expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_3100
      * @tc.name testUint8ArrayOf031
      * @tc.desc Verify of(0xFF & 0x0F) with bitwise AND expression
@@ -526,6 +556,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0xFF ^ 0x0F) with bitwise XOR expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_3200
      * @tc.name testUint8ArrayOf032
      * @tc.desc Verify of(0xFF ^ 0x0F) with bitwise XOR expression
@@ -542,6 +573,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0xFF | 0x00) with bitwise OR expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_3300
      * @tc.name testUint8ArrayOf033
      * @tc.desc Verify of(0xFF | 0x00) with bitwise OR expression
@@ -558,6 +590,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0,0) with double minimum values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_3400
      * @tc.name testUint8ArrayOf034
      * @tc.desc Verify of(0,0) with double minimum values
@@ -575,6 +608,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0,255) with minimum followed by maximum
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_3500
      * @tc.name testUint8ArrayOf035
      * @tc.desc Verify of(0,255) with minimum followed by maximum
@@ -592,6 +626,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(255,0) with maximum followed by minimum
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_3600
      * @tc.name testUint8ArrayOf036
      * @tc.desc Verify of(255,0) with maximum followed by minimum
@@ -609,6 +644,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(127,128) with mid-value and mid-value+1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_3700
      * @tc.name testUint8ArrayOf037
      * @tc.desc Verify of(127,128) with mid-value and mid-value+1
@@ -626,6 +662,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0,128) with minimum and mid-value+1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_3800
      * @tc.name testUint8ArrayOf038
      * @tc.desc Verify of(0,128) with minimum and mid-value+1
@@ -643,6 +680,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(255,128) with maximum and mid-value+1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_3900
      * @tc.name testUint8ArrayOf039
      * @tc.desc Verify of(255,128) with maximum and mid-value+1
@@ -660,6 +698,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,254) with boundary values 1 and 254
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_4000
      * @tc.name testUint8ArrayOf040
      * @tc.desc Verify of(1,254) with boundary values 1 and 254
@@ -677,6 +716,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0,127,255) with increasing three values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_4100
      * @tc.name testUint8ArrayOf041
      * @tc.desc Verify of(0,127,255) with increasing three values
@@ -695,6 +735,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(255,254,253) with decreasing three values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_4200
      * @tc.name testUint8ArrayOf042
      * @tc.desc Verify of(255,254,253) with decreasing three values
@@ -713,6 +754,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,1,1,1,1) with all same values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_4300
      * @tc.name testUint8ArrayOf043
      * @tc.desc Verify of(1,1,1,1,1) with all same values
@@ -733,6 +775,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(255,255,255) with all maximum values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_4400
      * @tc.name testUint8ArrayOf044
      * @tc.desc Verify of(255,255,255) with all maximum values
@@ -751,6 +794,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0,0,0) with all minimum values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_4500
      * @tc.name testUint8ArrayOf045
      * @tc.desc Verify of(0,0,0) with all minimum values
@@ -769,6 +813,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(128,128,128,128) with all mid-value+1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_4600
      * @tc.name testUint8ArrayOf046
      * @tc.desc Verify of(128,128,128,128) with all mid-value+1
@@ -788,6 +833,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,10,100,200) with increasing mixed values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_4700
      * @tc.name testUint8ArrayOf047
      * @tc.desc Verify of(1,10,100,200) with increasing mixed values
@@ -807,6 +853,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of() returns Uint8Array instance
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_4800
      * @tc.name testUint8ArrayOf048
      * @tc.desc Verify of() returns Uint8Array instance
@@ -823,6 +870,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0) returns Uint8Array instance
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_4900
      * @tc.name testUint8ArrayOf049
      * @tc.desc Verify of(0) returns Uint8Array instance
@@ -839,6 +887,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,2,3) returns Uint8Array instance
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_5000
      * @tc.name testUint8ArrayOf050
      * @tc.desc Verify of(1,2,3) returns Uint8Array instance
@@ -855,6 +904,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of() empty array has length 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_5100
      * @tc.name testUint8ArrayOf051
      * @tc.desc Verify of() empty array has length 0
@@ -871,6 +921,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0) single element array has length 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_5200
      * @tc.name testUint8ArrayOf052
      * @tc.desc Verify of(0) single element array has length 1
@@ -887,6 +938,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0,255) two element array has length 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_5300
      * @tc.name testUint8ArrayOf053
      * @tc.desc Verify of(0,255) two element array has length 2
@@ -903,6 +955,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,2,3) three element array has length 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_5400
      * @tc.name testUint8ArrayOf054
      * @tc.desc Verify of(1,2,3) three element array has length 3
@@ -919,6 +972,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,2,3,4,5) five element array has length 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_5500
      * @tc.name testUint8ArrayOf055
      * @tc.desc Verify of(1,2,3,4,5) five element array has length 5
@@ -935,6 +989,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0,1,2) read first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_5600
      * @tc.name testUint8ArrayOf056
      * @tc.desc Verify of(0,1,2) read first element
@@ -951,6 +1006,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(200,255) read tail maximum element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_5700
      * @tc.name testUint8ArrayOf057
      * @tc.desc Verify of(200,255) read tail maximum element
@@ -967,6 +1023,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(128,64) read first element 128
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_5800
      * @tc.name testUint8ArrayOf058
      * @tc.desc Verify of(128,64) read first element 128
@@ -983,6 +1040,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0xFF,0x00) read hexadecimal first element 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_5900
      * @tc.name testUint8ArrayOf059
      * @tc.desc Verify of(0xFF,0x00) read hexadecimal first element 255
@@ -999,6 +1057,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0b11111111,0b00000000) read binary first element 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_6000
      * @tc.name testUint8ArrayOf060
      * @tc.desc Verify of(0b11111111,0b00000000) read binary first element 255
@@ -1015,6 +1074,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0,255) read two elements first
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_6100
      * @tc.name testUint8ArrayOf061
      * @tc.desc Verify of(0,255) read two elements first
@@ -1031,6 +1091,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0,255) read two elements second
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_6200
      * @tc.name testUint8ArrayOf062
      * @tc.desc Verify of(0,255) read two elements second
@@ -1047,6 +1108,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,2,3) read middle element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_6300
      * @tc.name testUint8ArrayOf063
      * @tc.desc Verify of(1,2,3) read middle element
@@ -1063,6 +1125,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,2,3) read last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_6400
      * @tc.name testUint8ArrayOf064
      * @tc.desc Verify of(1,2,3) read last element
@@ -1079,6 +1142,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(254,255) elements near maximum value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_6500
      * @tc.name testUint8ArrayOf065
      * @tc.desc Verify of(254,255) elements near maximum value
@@ -1096,6 +1160,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of() returns array with BYTES_PER_ELEMENT 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_6600
      * @tc.name testUint8ArrayOf066
      * @tc.desc Verify of() returns array with BYTES_PER_ELEMENT 1
@@ -1112,6 +1177,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(255) returns array with BYTES_PER_ELEMENT 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_6700
      * @tc.name testUint8ArrayOf067
      * @tc.desc Verify of(255) returns array with BYTES_PER_ELEMENT 1
@@ -1128,6 +1194,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,2,3) returns array with BYTES_PER_ELEMENT 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_6800
      * @tc.name testUint8ArrayOf068
      * @tc.desc Verify of(1,2,3) returns array with BYTES_PER_ELEMENT 1
@@ -1144,6 +1211,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of() returns array with non-null buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_6900
      * @tc.name testUint8ArrayOf069
      * @tc.desc Verify of() returns array with non-null buffer
@@ -1160,6 +1228,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0) returns array with buffer byteLength 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_7000
      * @tc.name testUint8ArrayOf070
      * @tc.desc Verify of(0) returns array with buffer byteLength 1
@@ -1176,6 +1245,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0,255) returns array with buffer byteLength 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_7100
      * @tc.name testUint8ArrayOf071
      * @tc.desc Verify of(0,255) returns array with buffer byteLength 2
@@ -1192,6 +1262,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of() empty array has buffer byteLength 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_7200
      * @tc.name testUint8ArrayOf072
      * @tc.desc Verify of() empty array has buffer byteLength 0
@@ -1208,6 +1279,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(127+128) addition reaches maximum boundary 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_7300
      * @tc.name testUint8ArrayOf073
      * @tc.desc Verify of(127+128) addition reaches maximum boundary 255
@@ -1224,6 +1296,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(200+55) addition reaches maximum boundary 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_7400
      * @tc.name testUint8ArrayOf074
      * @tc.desc Verify of(200+55) addition reaches maximum boundary 255
@@ -1240,6 +1313,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(300%256) modulo result 44 within byte range
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_7500
      * @tc.name testUint8ArrayOf075
      * @tc.desc Verify of(300%256) modulo result 44 within byte range
@@ -1256,6 +1330,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1+2+3+4+5) multi-step addition sum
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_7600
      * @tc.name testUint8ArrayOf076
      * @tc.desc Verify of(1+2+3+4+5) multi-step addition sum
@@ -1272,6 +1347,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(5*5*5) multiplication result 125 within byte range
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_7700
      * @tc.name testUint8ArrayOf077
      * @tc.desc Verify of(5*5*5) multiplication result 125 within byte range
@@ -1288,6 +1364,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(255<<0) left shift 0 does not change value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_7800
      * @tc.name testUint8ArrayOf078
      * @tc.desc Verify of(255<<0) left shift 0 does not change value
@@ -1304,6 +1381,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0xFF>>1) right shift 1 gives 127
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_7900
      * @tc.name testUint8ArrayOf079
      * @tc.desc Verify of(0xFF>>1) right shift 1 gives 127
@@ -1320,6 +1398,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0x100 & 0xFF) bitwise AND truncation result 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_8000
      * @tc.name testUint8ArrayOf080
      * @tc.desc Verify of(0x100 & 0xFF) bitwise AND truncation result 0
@@ -1336,6 +1415,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of() empty parameters does not throw exception
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_8100
      * @tc.name testUint8ArrayOf081
      * @tc.desc Verify of() empty parameters does not throw exception
@@ -1358,6 +1438,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(0) single parameter does not throw exception
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_8200
      * @tc.name testUint8ArrayOf082
      * @tc.desc Verify of(0) single parameter does not throw exception
@@ -1374,6 +1455,7 @@ public class Uint8ArrayOf01Test extends BasTest {
 
     /**
      * Verify of(1,2,3,4,5,6,7,8,9,10) multiple parameters does not throw exception
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_OF01_8300
      * @tc.name testUint8ArrayOf083
      * @tc.desc Verify of(1,2,3,4,5,6,7,8,9,10) multiple parameters does not throw exception

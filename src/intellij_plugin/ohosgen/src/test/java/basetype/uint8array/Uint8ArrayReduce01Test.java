@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayReduce01Test extends BasTest {
     /**
      * Verify reduce with 2 parameters (callbackfn + initialValue) using addition accumulation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0100
      * @tc.name testUint8ArrayReduce001
      * @tc.desc Verify reduce with 2 parameters (callbackfn + initialValue) using addition accumulation
@@ -48,6 +49,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn with subtraction operator, array [10,20,30], initial value 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0200
      * @tc.name testUint8ArrayReduce002
      * @tc.desc Verify callbackfn with subtraction operator, array [10,20,30], initial value 0
@@ -65,6 +67,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn with multiplication operator, array [2,3,4], initial value 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0300
      * @tc.name testUint8ArrayReduce003
      * @tc.desc Verify callbackfn with multiplication operator, array [2,3,4], initial value 1
@@ -82,6 +85,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn with Math.max to get maximum value, array [3,1,4,1,5], initial value 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0400
      * @tc.name testUint8ArrayReduce004
      * @tc.desc Verify callbackfn with Math.max to get maximum value, array [3,1,4,1,5], initial value 0
@@ -99,6 +103,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn with Math.min to get minimum value, array [3,1,4,1,5], initial value 10
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0500
      * @tc.name testUint8ArrayReduce005
      * @tc.desc Verify callbackfn with Math.min to get minimum value, array [3,1,4,1,5], initial value 10
@@ -116,6 +121,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn with bitwise OR operator, array [1,2,4], initial value 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0600
      * @tc.name testUint8ArrayReduce006
      * @tc.desc Verify callbackfn with bitwise OR operator, array [1,2,4], initial value 0
@@ -133,6 +139,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn with bitwise AND operator, array [3,7,15], initial value 127
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0700
      * @tc.name testUint8ArrayReduce007
      * @tc.desc Verify callbackfn with bitwise AND operator, array [3,7,15], initial value 127
@@ -150,6 +157,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn with bitwise XOR operator, array [1,2,3], initial value 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0800
      * @tc.name testUint8ArrayReduce008
      * @tc.desc Verify callbackfn with bitwise XOR operator, array [1,2,3], initial value 0
@@ -167,6 +175,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn with 4 parameters (prev, curr, idx, array) using idx in calculation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0900
      * @tc.name testUint8ArrayReduce009
      * @tc.desc Verify callbackfn with 4 parameters (prev, curr, idx, array) using idx in calculation
@@ -184,6 +193,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn array parameter references the same array as original
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_1000
      * @tc.name testUint8ArrayReduce010
      * @tc.desc Verify callbackfn array parameter references the same array as original
@@ -207,6 +217,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn always returns prev (ignoring all curr), initial value 999
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_1100
      * @tc.name testUint8ArrayReduce011
      * @tc.desc Verify callbackfn always returns prev (ignoring all curr), initial value 999
@@ -224,6 +235,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn always returns curr (takes last element value), initial value 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_1200
      * @tc.name testUint8ArrayReduce012
      * @tc.desc Verify callbackfn always returns curr (takes last element value), initial value 0
@@ -241,6 +253,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn returns constant value 42, ignoring all parameters
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_1300
      * @tc.name testUint8ArrayReduce013
      * @tc.desc Verify callbackfn returns constant value 42, ignoring all parameters
@@ -258,6 +271,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn reads external scope variable for accumulation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_1400
      * @tc.name testUint8ArrayReduce014
      * @tc.desc Verify callbackfn reads external scope variable for accumulation
@@ -276,6 +290,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn records call count by modifying external variable
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_1500
      * @tc.name testUint8ArrayReduce015
      * @tc.desc Verify callbackfn records call count by modifying external variable
@@ -297,6 +312,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn with compound operation prev + curr * curr
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_1600
      * @tc.name testUint8ArrayReduce016
      * @tc.desc Verify callbackfn with compound operation prev + curr * curr
@@ -314,6 +330,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn with conditional branch, only accumulates odd elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_1700
      * @tc.name testUint8ArrayReduce017
      * @tc.desc Verify callbackfn with conditional branch, only accumulates odd elements
@@ -331,6 +348,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn uses prev + 1 for counting, initial value 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_1800
      * @tc.name testUint8ArrayReduce018
      * @tc.desc Verify callbackfn uses prev + 1 for counting, initial value 0
@@ -348,6 +366,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn calls external function to process current value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_1900
      * @tc.name testUint8ArrayReduce019
      * @tc.desc Verify callbackfn calls external function to process current value
@@ -365,6 +384,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn uses conditional judgment to distinguish first call processing
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2000
      * @tc.name testUint8ArrayReduce020
      * @tc.desc Verify callbackfn uses conditional judgment to distinguish first call processing
@@ -382,6 +402,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn uses index parity to decide whether to accumulate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2100
      * @tc.name testUint8ArrayReduce021
      * @tc.desc Verify callbackfn uses index parity to decide whether to accumulate
@@ -399,6 +420,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn uses average formula (prev + curr) / 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2200
      * @tc.name testUint8ArrayReduce022
      * @tc.desc Verify callbackfn uses average formula (prev + curr) / 2
@@ -416,6 +438,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn uses absolute difference formula Math.abs(prev - curr)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2300
      * @tc.name testUint8ArrayReduce023
      * @tc.desc Verify callbackfn uses absolute difference formula Math.abs(prev - curr)
@@ -433,6 +456,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 1, addition accumulation on [10,20,30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2400
      * @tc.name testUint8ArrayReduce024
      * @tc.desc Verify initialValue is 1, addition accumulation on [10,20,30]
@@ -450,6 +474,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is -1, addition accumulation on [10,20,30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2500
      * @tc.name testUint8ArrayReduce025
      * @tc.desc Verify initialValue is -1, addition accumulation on [10,20,30]
@@ -467,6 +492,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 255 (uint8 max value), addition accumulation on [10,20,30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2600
      * @tc.name testUint8ArrayReduce026
      * @tc.desc Verify initialValue is 255 (uint8 max value), addition accumulation on [10,20,30]
@@ -484,6 +510,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 256 (exceeds uint8 range), addition accumulation on [10]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2700
      * @tc.name testUint8ArrayReduce027
      * @tc.desc Verify initialValue is 256 (exceeds uint8 range), addition accumulation on [10]
@@ -501,6 +528,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 0.5 (floating point), addition accumulation on [10,20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2800
      * @tc.name testUint8ArrayReduce028
      * @tc.desc Verify initialValue is 0.5 (floating point), addition accumulation on [10,20]
@@ -518,6 +546,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 127 (middle value), addition accumulation on [10,20,30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2900
      * @tc.name testUint8ArrayReduce029
      * @tc.desc Verify initialValue is 127 (middle value), addition accumulation on [10,20,30]
@@ -535,6 +564,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 128 (middle value+1), addition accumulation on [10,20,30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3000
      * @tc.name testUint8ArrayReduce030
      * @tc.desc Verify initialValue is 128 (middle value+1), addition accumulation on [10,20,30]
@@ -552,6 +582,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 0xFF (hexadecimal 255), addition accumulation on [10,20,30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3100
      * @tc.name testUint8ArrayReduce031
      * @tc.desc Verify initialValue is 0xFF (hexadecimal 255), addition accumulation on [10,20,30]
@@ -569,6 +600,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 0o377 (octal 255), addition accumulation on [10,20,30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3200
      * @tc.name testUint8ArrayReduce032
      * @tc.desc Verify initialValue is 0o377 (octal 255), addition accumulation on [10,20,30]
@@ -586,6 +618,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 0b11111111 (binary 255), addition accumulation on [10,20,30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3300
      * @tc.name testUint8ArrayReduce033
      * @tc.desc Verify initialValue is 0b11111111 (binary 255), addition accumulation on [10,20,30]
@@ -603,6 +636,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 1e3 (scientific notation 1000), addition accumulation on [10,20,30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3400
      * @tc.name testUint8ArrayReduce034
      * @tc.desc Verify initialValue is 1e3 (scientific notation 1000), addition accumulation on [10,20,30]
@@ -620,6 +654,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 3.14 (floating point), addition accumulation on [1,2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3500
      * @tc.name testUint8ArrayReduce035
      * @tc.desc Verify initialValue is 3.14 (floating point), addition accumulation on [1,2]
@@ -637,6 +672,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is Double.NaN, addition accumulation on [10,20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3600
      * @tc.name testUint8ArrayReduce036
      * @tc.desc Verify initialValue is Double.NaN, addition accumulation on [10,20]
@@ -654,6 +690,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is Double.POSITIVE_INFINITY, addition accumulation on [10,20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3700
      * @tc.name testUint8ArrayReduce037
      * @tc.desc Verify initialValue is Double.POSITIVE_INFINITY, addition accumulation on [10,20]
@@ -671,6 +708,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is Double.NEGATIVE_INFINITY, addition accumulation on [10,20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3800
      * @tc.name testUint8ArrayReduce038
      * @tc.desc Verify initialValue is Double.NEGATIVE_INFINITY, addition accumulation on [10,20]
@@ -688,6 +726,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is -0.5 (negative floating point), addition accumulation on [10,20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3900
      * @tc.name testUint8ArrayReduce039
      * @tc.desc Verify initialValue is -0.5 (negative floating point), addition accumulation on [10,20]
@@ -705,6 +744,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify initialValue is 0x80 (hexadecimal 128), addition accumulation on [10,20,30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4000
      * @tc.name testUint8ArrayReduce040
      * @tc.desc Verify initialValue is 0x80 (hexadecimal 128), addition accumulation on [10,20,30]
@@ -722,6 +762,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify U explicitly specified as string, concatenating numbers as strings
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4100
      * @tc.name testUint8ArrayReduce041
      * @tc.desc Verify U explicitly specified as string, concatenating numbers as strings
@@ -739,6 +780,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify U is string with comma separator concatenation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4200
      * @tc.name testUint8ArrayReduce042
      * @tc.desc Verify U is string with comma separator concatenation
@@ -756,6 +798,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify U is string with sequence number prefix concatenation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4300
      * @tc.name testUint8ArrayReduce043
      * @tc.desc Verify U is string with sequence number prefix concatenation
@@ -774,6 +817,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify U is string with non-empty string initial value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4400
      * @tc.name testUint8ArrayReduce044
      * @tc.desc Verify U is string with non-empty string initial value
@@ -791,6 +835,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify U is string, callbackfn returns empty string slice
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4500
      * @tc.name testUint8ArrayReduce045
      * @tc.desc Verify U is string, callbackfn returns empty string slice
@@ -812,6 +857,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify U is string, concatenates string after condition check
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4600
      * @tc.name testUint8ArrayReduce046
      * @tc.desc Verify U is string, concatenates string after condition check
@@ -829,6 +875,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify U is number with multiplication operation to verify result type
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4700
      * @tc.name testUint8ArrayReduce047
      * @tc.desc Verify U is number with multiplication operation to verify result type
@@ -846,6 +893,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify empty array reduce returns initialValue
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4800
      * @tc.name testUint8ArrayReduce048
      * @tc.desc Verify empty array reduce returns initialValue
@@ -863,6 +911,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify empty array reduce returns initialValue 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4900
      * @tc.name testUint8ArrayReduce049
      * @tc.desc Verify empty array reduce returns initialValue 100
@@ -880,6 +929,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify single element array [5] reduce result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5000
      * @tc.name testUint8ArrayReduce050
      * @tc.desc Verify single element array [5] reduce result
@@ -897,6 +947,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify two element array [1,2] reduce
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5100
      * @tc.name testUint8ArrayReduce051
      * @tc.desc Verify two element array [1,2] reduce
@@ -914,6 +965,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify all-zero array [0,0,0] reduce
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5200
      * @tc.name testUint8ArrayReduce052
      * @tc.desc Verify all-zero array [0,0,0] reduce
@@ -931,6 +983,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify all-255 array [255,255] reduce multiplication to verify truncation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5300
      * @tc.name testUint8ArrayReduce053
      * @tc.desc Verify all-255 array [255,255] reduce multiplication to verify truncation
@@ -948,6 +1001,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify array with truncation values [256, -1, 128] (actually stored as [0, 255, 128])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5400
      * @tc.name testUint8ArrayReduce054
      * @tc.desc Verify array with truncation values [256, -1, 128] (actually stored as [0, 255, 128])
@@ -965,6 +1019,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify array created from subarray
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5500
      * @tc.name testUint8ArrayReduce055
      * @tc.desc Verify array created from subarray
@@ -983,6 +1038,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify array created from new Uint8Array(5) zero-filled
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5600
      * @tc.name testUint8ArrayReduce056
      * @tc.desc Verify array created from new Uint8Array(5) zero-filled
@@ -1000,6 +1056,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify large array (10 elements) reduce
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5700
      * @tc.name testUint8ArrayReduce057
      * @tc.desc Verify large array (10 elements) reduce
@@ -1017,6 +1074,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify array with boundary values [0, 255, 127]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5800
      * @tc.name testUint8ArrayReduce058
      * @tc.desc Verify array with boundary values [0, 255, 127]
@@ -1034,6 +1092,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify U=number result type
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5900
      * @tc.name testUint8ArrayReduce059
      * @tc.desc Verify U=number result type
@@ -1051,6 +1110,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify U=string result type
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_6000
      * @tc.name testUint8ArrayReduce060
      * @tc.desc Verify U=string result type
@@ -1068,6 +1128,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify empty array reduce returns initial string value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_6100
      * @tc.name testUint8ArrayReduce061
      * @tc.desc Verify empty array reduce returns initial string value
@@ -1085,6 +1146,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify single element array reduce equals initialValue + element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_6200
      * @tc.name testUint8ArrayReduce062
      * @tc.desc Verify single element array reduce equals initialValue + element
@@ -1102,6 +1164,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify reduce does not modify array content
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_6300
      * @tc.name testUint8ArrayReduce063
      * @tc.desc Verify reduce does not modify array content
@@ -1121,6 +1184,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify reduce does not change array length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_6400
      * @tc.name testUint8ArrayReduce064
      * @tc.desc Verify reduce does not change array length
@@ -1138,6 +1202,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify 100-element array reduce correctness
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_6500
      * @tc.name testUint8ArrayReduce065
      * @tc.desc Verify 100-element array reduce correctness
@@ -1158,6 +1223,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn exception propagates out
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_6600
      * @tc.name testUint8ArrayReduce066
      * @tc.desc Verify callbackfn exception propagates out
@@ -1182,6 +1248,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn throws RangeError that propagates out
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_6700
      * @tc.name testUint8ArrayReduce067
      * @tc.desc Verify callbackfn throws RangeError that propagates out
@@ -1206,6 +1273,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn throws TypeError that propagates out
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_6800
      * @tc.name testUint8ArrayReduce068
      * @tc.desc Verify callbackfn throws TypeError that propagates out
@@ -1230,6 +1298,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn throws at specific index that propagates out
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_6900
      * @tc.name testUint8ArrayReduce069
      * @tc.desc Verify callbackfn throws at specific index that propagates out
@@ -1257,6 +1326,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callbackfn throws interrupts processing
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_7000
      * @tc.name testUint8ArrayReduce070
      * @tc.desc Verify callbackfn throws interrupts processing
@@ -1286,6 +1356,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify empty array with initial value does not throw error
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_7100
      * @tc.name testUint8ArrayReduce071
      * @tc.desc Verify empty array with initial value does not throw error
@@ -1309,6 +1380,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify callback receives proper values during iteration
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_7200
      * @tc.name testUint8ArrayReduce072
      * @tc.desc Verify callback receives proper values during iteration
@@ -1331,6 +1403,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify single element array with large initial value does not truncate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_7300
      * @tc.name testUint8ArrayReduce073
      * @tc.desc Verify single element array with large initial value does not truncate
@@ -1348,6 +1421,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
 
     /**
      * Verify reduce uses array parameter to read element values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_7400
      * @tc.name testUint8ArrayReduce074
      * @tc.desc Verify reduce uses array parameter to read element values
