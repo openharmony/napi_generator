@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayFindIndex02Test extends BasTest {
     /**
+     * Verify findIndex returns number type when element is found
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_0100
      * @tc.name testUint8ArrayFindIndex001
      * @tc.desc Verify findIndex returns number type when element is found
@@ -42,7 +43,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 15);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns number type when element is not found
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_0200
      * @tc.name testUint8ArrayFindIndex002
      * @tc.desc Verify findIndex returns number type when element is not found
@@ -57,7 +60,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value > 100);
     assertEqual(-1, result);
     }
+
     /**
+     * Verify findIndex returns number type on empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_0300
      * @tc.name testUint8ArrayFindIndex003
      * @tc.desc Verify findIndex returns number type on empty array
@@ -72,7 +77,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> true);
     assertEqual(-1, result);
     }
+
     /**
+     * Verify findIndex returns number type with hexadecimal comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_0400
      * @tc.name testUint8ArrayFindIndex004
      * @tc.desc Verify findIndex returns number type with hexadecimal comparison
@@ -87,7 +94,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 0x0A);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns number type with binary comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_0500
      * @tc.name testUint8ArrayFindIndex005
      * @tc.desc Verify findIndex returns number type with binary comparison
@@ -102,7 +111,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value > 0b0);
     assertEqual(1, result);
     }
+
     /**
+     * Verify array length property type after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_0600
      * @tc.name testUint8ArrayFindIndex006
      * @tc.desc Verify array length property type after findIndex call
@@ -117,7 +128,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 3);
     assertEqual(5, arr.length());
     }
+
     /**
+     * Verify array byteLength property type after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_0700
      * @tc.name testUint8ArrayFindIndex007
      * @tc.desc Verify array byteLength property type after findIndex call
@@ -132,7 +145,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value > 5);
     assertEqual(3, arr.byteLength());
     }
+
     /**
+     * Verify array byteOffset property type after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_0800
      * @tc.name testUint8ArrayFindIndex008
      * @tc.desc Verify array byteOffset property type after findIndex call
@@ -147,7 +162,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 200);
     assertEqual(0, arr.byteOffset());
     }
+
     /**
+     * Verify array BYTES_PER_ELEMENT property type after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_0900
      * @tc.name testUint8ArrayFindIndex009
      * @tc.desc Verify array BYTES_PER_ELEMENT property type after findIndex call
@@ -162,7 +179,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value > 75);
     assertEqual(1, arr.BYTES_PER_ELEMENT);
     }
+
     /**
+     * Verify array buffer property type after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_1000
      * @tc.name testUint8ArrayFindIndex010
      * @tc.desc Verify array buffer property type after findIndex call
@@ -177,7 +196,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 2);
     assertEqual(3, arr.buffer().byteLength());
     }
+
     /**
+     * Verify array name property type after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_1100
      * @tc.name testUint8ArrayFindIndex011
      * @tc.desc Verify array name property type after findIndex call
@@ -192,7 +213,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value % 7 == 0);
     assertEqual("Uint8Array", arr.getClass().getSimpleName());
     }
+
     /**
+     * Verify subarray view byteOffset type after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_1200
      * @tc.name testUint8ArrayFindIndex012
      * @tc.desc Verify subarray view byteOffset type after findIndex call
@@ -208,7 +231,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     sub.findIndex((value) -> value == 2);
     assertEqual(1, sub.byteOffset());
     }
+
     /**
+     * Verify subarray view byteLength type after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_1300
      * @tc.name testUint8ArrayFindIndex013
      * @tc.desc Verify subarray view byteLength type after findIndex call
@@ -224,7 +249,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     sub.findIndex((value) -> value > 3);
     assertEqual(3, sub.byteLength());
     }
+
     /**
+     * Verify ArrayBuffer view byteOffset type after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_1400
      * @tc.name testUint8ArrayFindIndex014
      * @tc.desc Verify ArrayBuffer view byteOffset type after findIndex call
@@ -241,7 +268,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     view.findIndex((value) -> value == 10);
     assertEqual(2, view.byteOffset());
     }
+
     /**
+     * Verify findIndex returns correct index with hexadecimal comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_1500
      * @tc.name testUint8ArrayFindIndex015
      * @tc.desc Verify findIndex returns correct index with hexadecimal comparison
@@ -256,7 +285,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 0x0A);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns correct index with binary comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_1600
      * @tc.name testUint8ArrayFindIndex016
      * @tc.desc Verify findIndex returns correct index with binary comparison
@@ -271,7 +302,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 0b1111);
     assertEqual(0, result);
     }
+
     /**
+     * Verify findIndex returns correct index with octal comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_1700
      * @tc.name testUint8ArrayFindIndex017
      * @tc.desc Verify findIndex returns correct index with octal comparison
@@ -286,7 +319,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 020);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns correct index with scientific notation
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_1800
      * @tc.name testUint8ArrayFindIndex018
      * @tc.desc Verify findIndex returns correct index with scientific notation
@@ -301,7 +336,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 1e1);
     assertEqual(0, result);
     }
+
     /**
+     * Verify findIndex returns correct index with expression comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_1900
      * @tc.name testUint8ArrayFindIndex019
      * @tc.desc Verify findIndex returns correct index with expression comparison
@@ -316,7 +353,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == (0xFF - 0x0F));
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns correct index with greater than comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_2000
      * @tc.name testUint8ArrayFindIndex020
      * @tc.desc Verify findIndex returns correct index with greater than comparison
@@ -331,7 +370,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value > 0xFA);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns correct index with greater than or equal comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_2100
      * @tc.name testUint8ArrayFindIndex021
      * @tc.desc Verify findIndex returns correct index with greater than or equal comparison
@@ -346,7 +387,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value >= 0x80);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns correct index with less than comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_2200
      * @tc.name testUint8ArrayFindIndex022
      * @tc.desc Verify findIndex returns correct index with less than comparison
@@ -361,7 +404,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value < 0x40);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns correct index for 0x7F boundary
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_2300
      * @tc.name testUint8ArrayFindIndex023
      * @tc.desc Verify findIndex returns correct index for 0x7F boundary
@@ -376,7 +421,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 0x7F);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns correct index for 0x80 boundary
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_2400
      * @tc.name testUint8ArrayFindIndex024
      * @tc.desc Verify findIndex returns correct index for 0x80 boundary
@@ -391,7 +438,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 0x80);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns correct index with binary greater than comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_2500
      * @tc.name testUint8ArrayFindIndex025
      * @tc.desc Verify findIndex returns correct index with binary greater than comparison
@@ -406,7 +455,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value > 0b01111111);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns correct index with arithmetic expression
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_2600
      * @tc.name testUint8ArrayFindIndex026
      * @tc.desc Verify findIndex returns correct index with arithmetic expression
@@ -421,7 +472,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == (10 + 20));
     assertEqual(0, result);
     }
+
     /**
+     * Verify findIndex returns correct index for single element array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_2700
      * @tc.name testUint8ArrayFindIndex027
      * @tc.desc Verify findIndex returns correct index for single element array
@@ -436,7 +489,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 50);
     assertEqual(0, result);
     }
+
     /**
+     * Verify findIndex returns -1 when element not found
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_2800
      * @tc.name testUint8ArrayFindIndex028
      * @tc.desc Verify findIndex returns -1 when element not found
@@ -451,7 +506,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 200);
     assertEqual(-1, result);
     }
+
     /**
+     * Verify findIndex returns -1 when condition never satisfied
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_2900
      * @tc.name testUint8ArrayFindIndex029
      * @tc.desc Verify findIndex returns -1 when condition never satisfied
@@ -466,7 +523,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value > 255);
     assertEqual(-1, result);
     }
+
     /**
+     * Verify findIndex returns -1 when negative condition never satisfied
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_3000
      * @tc.name testUint8ArrayFindIndex030
      * @tc.desc Verify findIndex returns -1 when negative condition never satisfied
@@ -481,7 +540,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value < 0);
     assertEqual(-1, result);
     }
+
     /**
+     * Verify findIndex returns correct index with greater than comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_3100
      * @tc.name testUint8ArrayFindIndex031
      * @tc.desc Verify findIndex returns correct index with greater than comparison
@@ -496,7 +557,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value > 200);
     assertEqual(0, result);
     }
+
     /**
+     * Verify findIndex returns correct index for 0xFF boundary
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_3200
      * @tc.name testUint8ArrayFindIndex032
      * @tc.desc Verify findIndex returns correct index for 0xFF boundary
@@ -511,7 +574,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 0xFF);
     assertEqual(1, result);
     }
+
     /**
+     * Verify findIndex returns correct index with not equal comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_3300
      * @tc.name testUint8ArrayFindIndex033
      * @tc.desc Verify findIndex returns correct index with not equal comparison
@@ -526,7 +591,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value != 0);
     assertEqual(2, result);
     }
+
     /**
+     * Verify findIndex returns correct index with less than or equal comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_3400
      * @tc.name testUint8ArrayFindIndex034
      * @tc.desc Verify findIndex returns correct index with less than or equal comparison
@@ -541,7 +608,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value <= 10);
     assertEqual(0, result);
     }
+
     /**
+     * Verify findIndex returns -1 when condition never satisfied for 0xFF
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_3500
      * @tc.name testUint8ArrayFindIndex035
      * @tc.desc Verify findIndex returns -1 when condition never satisfied for 0xFF
@@ -556,7 +625,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value > 0xFF);
     assertEqual(-1, result);
     }
+
     /**
+     * Verify findIndex returns correct index with greater than or equal comparison
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_3600
      * @tc.name testUint8ArrayFindIndex036
      * @tc.desc Verify findIndex returns correct index with greater than or equal comparison
@@ -571,7 +642,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value >= 0xF0);
     assertEqual(1, result);
     }
+
     /**
+     * Verify array length remains unchanged after findIndex finds element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_3700
      * @tc.name testUint8ArrayFindIndex037
      * @tc.desc Verify array length remains unchanged after findIndex finds element
@@ -586,7 +659,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 30);
     assertEqual(5, arr.length());
     }
+
     /**
+     * Verify array length remains unchanged after findIndex does not find element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_3800
      * @tc.name testUint8ArrayFindIndex038
      * @tc.desc Verify array length remains unchanged after findIndex does not find element
@@ -601,7 +676,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value > 100);
     assertEqual(4, arr.length());
     }
+
     /**
+     * Verify empty array length remains 0 after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_3900
      * @tc.name testUint8ArrayFindIndex039
      * @tc.desc Verify empty array length remains 0 after findIndex call
@@ -616,7 +693,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> true);
     assertEqual(0, arr.length());
     }
+
     /**
+     * Verify array byteLength remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_4000
      * @tc.name testUint8ArrayFindIndex040
      * @tc.desc Verify array byteLength remains unchanged after findIndex call
@@ -631,7 +710,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value > 250);
     assertEqual(5, arr.byteLength());
     }
+
     /**
+     * Verify default view byteOffset remains 0 after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_4100
      * @tc.name testUint8ArrayFindIndex041
      * @tc.desc Verify default view byteOffset remains 0 after findIndex call
@@ -646,7 +727,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 200);
     assertEqual(0, arr.byteOffset());
     }
+
     /**
+     * Verify BYTES_PER_ELEMENT remains 1 after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_4200
      * @tc.name testUint8ArrayFindIndex042
      * @tc.desc Verify BYTES_PER_ELEMENT remains 1 after findIndex call
@@ -661,7 +744,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value % 2 == 0);
     assertEqual(1, arr.BYTES_PER_ELEMENT);
     }
+
     /**
+     * Verify array name remains 'Uint8Array' after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_4300
      * @tc.name testUint8ArrayFindIndex043
      * @tc.desc Verify array name remains 'Uint8Array' after findIndex call
@@ -676,7 +761,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value % 7 == 0);
     assertEqual("Uint8Array", arr.getClass().getSimpleName());
     }
+
     /**
+     * Verify buffer byteLength remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_4400
      * @tc.name testUint8ArrayFindIndex044
      * @tc.desc Verify buffer byteLength remains unchanged after findIndex call
@@ -692,7 +779,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 3);
     assertEqual(before, arr.buffer().byteLength());
     }
+
     /**
+     * Verify large array length remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_4500
      * @tc.name testUint8ArrayFindIndex045
      * @tc.desc Verify large array length remains unchanged after findIndex call
@@ -708,7 +797,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 88);
     assertEqual(100, arr.length());
     }
+
     /**
+     * Verify original array length remains unchanged after subarray findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_4600
      * @tc.name testUint8ArrayFindIndex046
      * @tc.desc Verify original array length remains unchanged after subarray findIndex call
@@ -724,7 +815,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     sub.findIndex((value) -> value == 2);
     assertEqual(6, arr.length());
     }
+
     /**
+     * Verify subarray view byteLength remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_4700
      * @tc.name testUint8ArrayFindIndex047
      * @tc.desc Verify subarray view byteLength remains unchanged after findIndex call
@@ -741,7 +834,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     sub.findIndex((value) -> value == 20);
     assertEqual(subByteLen, sub.byteLength());
     }
+
     /**
+     * Verify ArrayBuffer view byteOffset remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_4800
      * @tc.name testUint8ArrayFindIndex048
      * @tc.desc Verify ArrayBuffer view byteOffset remains unchanged after findIndex call
@@ -759,7 +854,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     view.findIndex((value) -> value == 55);
     assertEqual(viewOffset, view.byteOffset());
     }
+
     /**
+     * Verify ArrayBuffer view byteLength remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_4900
      * @tc.name testUint8ArrayFindIndex049
      * @tc.desc Verify ArrayBuffer view byteLength remains unchanged after findIndex call
@@ -776,7 +873,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     view.findIndex((value) -> value == 77);
     assertEqual(6, view.byteLength());
     }
+
     /**
+     * Verify empty ArrayBuffer view byteLength remains 0 after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_5000
      * @tc.name testUint8ArrayFindIndex050
      * @tc.desc Verify empty ArrayBuffer view byteLength remains 0 after findIndex call
@@ -792,7 +891,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     view.findIndex((value) -> true);
     assertEqual(0, view.byteLength());
     }
+
     /**
+     * Verify array element at index 0 remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_5100
      * @tc.name testUint8ArrayFindIndex051
      * @tc.desc Verify array element at index 0 remains unchanged after findIndex call
@@ -807,7 +908,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 30);
     assertEqual(10, arr.get(0));
     }
+
     /**
+     * Verify array element at index 2 remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_5200
      * @tc.name testUint8ArrayFindIndex052
      * @tc.desc Verify array element at index 2 remains unchanged after findIndex call
@@ -822,7 +925,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 30);
     assertEqual(30, arr.get(2));
     }
+
     /**
+     * Verify array element at index 4 remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_5300
      * @tc.name testUint8ArrayFindIndex053
      * @tc.desc Verify array element at index 4 remains unchanged after findIndex call
@@ -837,7 +942,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 30);
     assertEqual(50, arr.get(4));
     }
+
     /**
+     * Verify all array elements remain unchanged when findIndex does not find element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_5400
      * @tc.name testUint8ArrayFindIndex054
      * @tc.desc Verify all array elements remain unchanged when findIndex does not find element
@@ -853,7 +960,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     assertEqual(255, arr.get(0));
     assertEqual(0, arr.get(3));
     }
+
     /**
+     * Verify array elements remain unchanged when findIndex finds element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_5500
      * @tc.name testUint8ArrayFindIndex055
      * @tc.desc Verify array elements remain unchanged when findIndex finds element
@@ -870,7 +979,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     assertEqual(32, arr.get(2));
     assertEqual(16, arr.get(3));
     }
+
     /**
+     * Verify array elements remain unchanged after findIndex finds last element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_5600
      * @tc.name testUint8ArrayFindIndex056
      * @tc.desc Verify array elements remain unchanged after findIndex finds last element
@@ -888,7 +999,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     assertEqual(3, arr.get(2));
     assertEqual(4, arr.get(3));
     }
+
     /**
+     * Verify array elements remain unchanged after two consecutive findIndex calls
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_5700
      * @tc.name testUint8ArrayFindIndex057
      * @tc.desc Verify array elements remain unchanged after two consecutive findIndex calls
@@ -907,7 +1020,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     assertEqual(33, arr.get(2));
     assertEqual(44, arr.get(3));
     }
+
     /**
+     * Verify original array elements remain unchanged after subarray findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_5800
      * @tc.name testUint8ArrayFindIndex058
      * @tc.desc Verify original array elements remain unchanged after subarray findIndex call
@@ -927,7 +1042,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     assertEqual(4, arr.get(3));
     assertEqual(5, arr.get(4));
     }
+
     /**
+     * Verify underlying buffer bytes remain unchanged after ArrayBuffer view findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_5900
      * @tc.name testUint8ArrayFindIndex059
      * @tc.desc Verify underlying buffer bytes remain unchanged after ArrayBuffer view findIndex call
@@ -951,7 +1068,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     assertEqual(30, check.get(2));
     assertEqual(40, check.get(3));
     }
+
     /**
+     * Verify single element array element remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_6000
      * @tc.name testUint8ArrayFindIndex060
      * @tc.desc Verify single element array element remains unchanged after findIndex call
@@ -966,7 +1085,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.findIndex((value) -> value == 77);
     assertEqual(77, arr.get(0));
     }
+
     /**
+     * Verify boundary value array elements remain unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_6100
      * @tc.name testUint8ArrayFindIndex061
      * @tc.desc Verify boundary value array elements remain unchanged after findIndex call
@@ -983,7 +1104,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     assertEqual(127, arr.get(1));
     assertEqual(255, arr.get(2));
     }
+
     /**
+     * Verify subarray view buffer refers to original array buffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_6200
      * @tc.name testUint8ArrayFindIndex062
      * @tc.desc Verify subarray view buffer refers to original array buffer
@@ -999,7 +1122,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     sub.findIndex((value) -> value == 2);
     assertEqual(arr.buffer(), sub.buffer());
     }
+
     /**
+     * Verify subarray view byteOffset after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_6300
      * @tc.name testUint8ArrayFindIndex063
      * @tc.desc Verify subarray view byteOffset after findIndex call
@@ -1015,7 +1140,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     sub.findIndex((value) -> value > 12);
     assertEqual(2, sub.byteOffset());
     }
+
     /**
+     * Verify subarray view byteOffset remains unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_6400
      * @tc.name testUint8ArrayFindIndex064
      * @tc.desc Verify subarray view byteOffset remains unchanged after findIndex call
@@ -1032,7 +1159,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     sub.findIndex((value) -> value == 2);
     assertEqual(offsetBefore, sub.byteOffset());
     }
+
     /**
+     * Verify ArrayBuffer view byteOffset after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_6500
      * @tc.name testUint8ArrayFindIndex065
      * @tc.desc Verify ArrayBuffer view byteOffset after findIndex call
@@ -1049,7 +1178,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     view.findIndex((value) -> value == 100);
     assertEqual(4, view.byteOffset());
     }
+
     /**
+     * Verify ArrayBuffer view byteLength unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_6600
      * @tc.name testUint8ArrayFindIndex066
      * @tc.desc Verify ArrayBuffer view byteLength unchanged after findIndex call
@@ -1066,7 +1197,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     view.findIndex((value) -> value == 200);
     assertEqual(6, view.byteLength());
     }
+
     /**
+     * Verify subarray view reflects changes to original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_6700
      * @tc.name testUint8ArrayFindIndex067
      * @tc.desc Verify subarray view reflects changes to original array
@@ -1083,7 +1216,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = sub.findIndex((value) -> value == 99);
     assertEqual(1, result);
     }
+
     /**
+     * Verify changes to subarray view propagate to original array findIndex
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_6800
      * @tc.name testUint8ArrayFindIndex068
      * @tc.desc Verify changes to subarray view propagate to original array findIndex
@@ -1100,7 +1235,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = arr.findIndex((value) -> value == 88);
     assertEqual(2, result);
     }
+
     /**
+     * Verify two subarray views sharing same buffer affect findIndex results
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_6900
      * @tc.name testUint8ArrayFindIndex069
      * @tc.desc Verify two subarray views sharing same buffer affect findIndex results
@@ -1120,7 +1257,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     assertEqual(r2, r1);
     assertEqual(2, r1);
     }
+
     /**
+     * Verify nested subarray cumulative byteOffset
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_7000
      * @tc.name testUint8ArrayFindIndex070
      * @tc.desc Verify nested subarray cumulative byteOffset
@@ -1137,7 +1276,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     sub2.findIndex((value) -> value == 3);
     assertEqual(2, sub2.byteOffset());
     }
+
     /**
+     * Verify view can findIndex into underlying ArrayBuffer
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_7100
      * @tc.name testUint8ArrayFindIndex071
      * @tc.desc Verify view can findIndex into underlying ArrayBuffer
@@ -1155,7 +1296,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     int result = view2.findIndex((value) -> value == 50);
     assertEqual(1, result);
     }
+
     /**
+     * Verify two different offset views have independent findIndex results
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_7200
      * @tc.name testUint8ArrayFindIndex072
      * @tc.desc Verify two different offset views have independent findIndex results
@@ -1178,7 +1321,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     assertEqual(0, r1);
     assertEqual(-1, r2);
     }
+
     /**
+     * Verify original array buffer remains unchanged after subarray findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_7300
      * @tc.name testUint8ArrayFindIndex073
      * @tc.desc Verify original array buffer remains unchanged after subarray findIndex call
@@ -1195,7 +1340,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     sub.findIndex((value) -> value > 12);
     assertEqual(bufRef, arr.buffer());
     }
+
     /**
+     * Verify ArrayBuffer view buffer unchanged after findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_7400
      * @tc.name testUint8ArrayFindIndex074
      * @tc.desc Verify ArrayBuffer view buffer unchanged after findIndex call
@@ -1211,7 +1358,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     view.findIndex((value) -> value == 99);
     assertEqual(buf, view.buffer());
     }
+
     /**
+     * Verify original array byteOffset unchanged after subarray findIndex call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_7500
      * @tc.name testUint8ArrayFindIndex075
      * @tc.desc Verify original array byteOffset unchanged after subarray findIndex call
@@ -1227,7 +1376,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     sub.findIndex((value) -> value > 1);
     assertEqual(0, arr.byteOffset());
     }
+
     /**
+     * Verify buffer byteLength unchanged after multiple view findIndex calls
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX2_7600
      * @tc.name testUint8ArrayFindIndex076
      * @tc.desc Verify buffer byteLength unchanged after multiple view findIndex calls

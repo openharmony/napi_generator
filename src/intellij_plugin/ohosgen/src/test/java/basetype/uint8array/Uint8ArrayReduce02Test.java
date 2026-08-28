@@ -48,6 +48,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayReduce02Test extends BasTest {
     /**
+     * Verify reduce with 1 parameter (callbackfn) for addition accumulation
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0100
      * @tc.name testUint8ArrayReduce001
      * @tc.desc Verify reduce with 1 parameter (callbackfn) for addition accumulation
@@ -62,7 +63,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
+
     /**
+     * Verify callbackfn predefined as const passed to reduce call
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0200
      * @tc.name testUint8ArrayReduce002
      * @tc.desc Verify callbackfn predefined as const passed to reduce call
@@ -78,7 +81,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce(fn);
     assertEqual(15, result);
     }
+
     /**
+     * Verify callbackfn addition accumulation [1,2,3,4,5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0300
      * @tc.name testUint8ArrayReduce003
      * @tc.desc Verify callbackfn addition accumulation [1,2,3,4,5]
@@ -93,7 +98,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(15, result);
     }
+
     /**
+     * Verify callbackfn multiplication accumulation [2,3,4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0400
      * @tc.name testUint8ArrayReduce004
      * @tc.desc Verify callbackfn multiplication accumulation [2,3,4]
@@ -108,7 +115,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     double result = arr.reduceDouble((prev, curr, index, array) -> prev * curr);
     assertEqual(24, result);
     }
+
     /**
+     * Verify callbackfn subtraction [100,10,20,30]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0500
      * @tc.name testUint8ArrayReduce005
      * @tc.desc Verify callbackfn subtraction [100,10,20,30]
@@ -123,7 +132,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev - curr);
     assertEqual(40, result);
     }
+
     /**
+     * Verify callbackfn division [256,2,4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0600
      * @tc.name testUint8ArrayReduce006
      * @tc.desc Verify callbackfn division [256,2,4]
@@ -138,7 +149,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     double result = arr.reduceDouble((prev, curr, index, array) -> prev / curr);
     assertEqual(0, result);
     }
+
     /**
+     * Verify callbackfn using Math.max to find maximum [3,1,4,1,5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0700
      * @tc.name testUint8ArrayReduce007
      * @tc.desc Verify callbackfn using Math.max to find maximum [3,1,4,1,5]
@@ -153,7 +166,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> Math.max(prev, curr));
     assertEqual(5, result);
     }
+
     /**
+     * Verify callbackfn using Math.min to find minimum [10,2,8,4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0800
      * @tc.name testUint8ArrayReduce008
      * @tc.desc Verify callbackfn using Math.min to find minimum [10,2,8,4]
@@ -168,7 +183,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> Math.min(prev, curr));
     assertEqual(2, result);
     }
+
     /**
+     * Verify callbackfn ternary operator to find maximum [1,9,4,7]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0900
      * @tc.name testUint8ArrayReduce009
      * @tc.desc Verify callbackfn ternary operator to find maximum [1,9,4,7]
@@ -183,7 +200,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev > curr ? prev : curr);
     assertEqual(9, result);
     }
+
     /**
+     * Verify callbackfn ternary operator to find minimum [8,3,6,2]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1000
      * @tc.name testUint8ArrayReduce010
      * @tc.desc Verify callbackfn ternary operator to find minimum [8,3,6,2]
@@ -198,7 +217,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev < curr ? prev : curr);
     assertEqual(2, result);
     }
+
     /**
+     * Verify callbackfn bitwise OR [0x0F,0xF0] hexadecimal
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1100
      * @tc.name testUint8ArrayReduce011
      * @tc.desc Verify callbackfn bitwise OR [0x0F,0xF0] hexadecimal
@@ -213,7 +234,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev | curr);
     assertEqual(255, result);
     }
+
     /**
+     * Verify callbackfn bitwise AND [0xFF,0x0F,0xF0]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1200
      * @tc.name testUint8ArrayReduce012
      * @tc.desc Verify callbackfn bitwise AND [0xFF,0x0F,0xF0]
@@ -228,7 +251,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev & curr);
     assertEqual(0, result);
     }
+
     /**
+     * Verify callbackfn bitwise XOR [0b101,0b011,0b110] binary literals
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1300
      * @tc.name testUint8ArrayReduce013
      * @tc.desc Verify callbackfn bitwise XOR [0b101,0b011,0b110] binary literals
@@ -243,7 +268,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev ^ curr);
     assertEqual(0, result);
     }
+
     /**
+     * Verify callbackfn exponentiation [2,3,2] using **
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1400
      * @tc.name testUint8ArrayReduce014
      * @tc.desc Verify callbackfn exponentiation [2,3,2] using **
@@ -258,7 +285,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     double result = arr.reduceDouble((prev, curr, index, array) -> (int) Math.pow(prev, curr));
     assertEqual(64, result);
     }
+
     /**
+     * Verify callbackfn number concatenation [1,2,3,4] using prev*10+curr
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1500
      * @tc.name testUint8ArrayReduce015
      * @tc.desc Verify callbackfn number concatenation [1,2,3,4] using prev*10+curr
@@ -273,7 +302,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev * 10 + curr);
     assertEqual(1234, result);
     }
+
     /**
+     * Verify callbackfn modulo 256 truncation sum [150,150,150]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1600
      * @tc.name testUint8ArrayReduce016
      * @tc.desc Verify callbackfn modulo 256 truncation sum [150,150,150]
@@ -288,7 +319,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> (prev + curr) & 0xFF);
     assertEqual(194, result);
     }
+
     /**
+     * Verify callbackfn identity return prev [7,1,2,3] first element unchanged
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1700
      * @tc.name testUint8ArrayReduce017
      * @tc.desc Verify callbackfn identity return prev [7,1,2,3] first element unchanged
@@ -303,7 +336,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev);
     assertEqual(7, result);
     }
+
     /**
+     * Verify callbackfn forward return curr [7,1,2,3] result is last element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1800
      * @tc.name testUint8ArrayReduce018
      * @tc.desc Verify callbackfn forward return curr [7,1,2,3] result is last element
@@ -318,7 +353,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> curr);
     assertEqual(3, result);
     }
+
     /**
+     * Verify callbackfn sum of squares [1,3,5] using prev+curr*curr
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1900
      * @tc.name testUint8ArrayReduce019
      * @tc.desc Verify callbackfn sum of squares [1,3,5] using prev+curr*curr
@@ -333,7 +370,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     double result = arr.reduceDouble((prev, curr, index, array) -> prev + curr * curr);
     assertEqual(35, result);
     }
+
     /**
+     * Verify callbackfn absolute difference [100,30,20] using Math.abs
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2000
      * @tc.name testUint8ArrayReduce020
      * @tc.desc Verify callbackfn absolute difference [100,30,20] using Math.abs
@@ -348,7 +387,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> Math.abs(prev - curr));
     assertEqual(50, result);
     }
+
     /**
+     * Verify callbackfn prev*curr+prev [2,3,1]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2100
      * @tc.name testUint8ArrayReduce021
      * @tc.desc Verify callbackfn prev*curr+prev [2,3,1]
@@ -363,7 +404,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     double result = arr.reduceDouble((prev, curr, index, array) -> prev * curr + prev);
     assertEqual(16, result);
     }
+
     /**
+     * Verify callbackfn prev+curr*10 [1,2,3,4]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2200
      * @tc.name testUint8ArrayReduce022
      * @tc.desc Verify callbackfn prev+curr*10 [1,2,3,4]
@@ -378,7 +421,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr * 10);
     assertEqual(91, result);
     }
+
     /**
+     * Verify callbackfn conditional sum [10,50,5,100] only add values greater than 20
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2300
      * @tc.name testUint8ArrayReduce023
      * @tc.desc Verify callbackfn conditional sum [10,50,5,100] only add values greater than 20
@@ -393,7 +438,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> curr > 20 ? prev + curr : prev);
     assertEqual(160, result);
     }
+
     /**
+     * Verify callbackfn prev*(curr+1) [1,2,3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2400
      * @tc.name testUint8ArrayReduce024
      * @tc.desc Verify callbackfn prev*(curr+1) [1,2,3]
@@ -408,7 +455,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev * (curr + 1));
     assertEqual(12, result);
     }
+
     /**
+     * Verify callbackfn left shift accumulation [1,1,1,1] using (prev<<1)+curr
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2500
      * @tc.name testUint8ArrayReduce025
      * @tc.desc Verify callbackfn left shift accumulation [1,1,1,1] using (prev<<1)+curr
@@ -423,7 +472,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> (prev << 1) + curr);
     assertEqual(15, result);
     }
+
     /**
+     * Verify callbackfn bitwise OR three elements [0xAA,0x55,0xFF]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2600
      * @tc.name testUint8ArrayReduce026
      * @tc.desc Verify callbackfn bitwise OR three elements [0xAA,0x55,0xFF]
@@ -438,7 +489,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev | curr);
     assertEqual(255, result);
     }
+
     /**
+     * Verify callbackfn add a[0] each time [1,2,3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2700
      * @tc.name testUint8ArrayReduce027
      * @tc.desc Verify callbackfn add a[0] each time [1,2,3]
@@ -453,7 +506,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, idx, a) -> prev + curr + a.get(0));
     assertEqual(8, result);
     }
+
     /**
+     * Verify callbackfn multi-statement body [3,1,4,1,5] with internal const declaration
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2800
      * @tc.name testUint8ArrayReduce028
      * @tc.desc Verify callbackfn multi-statement body [3,1,4,1,5] with internal const declaration
@@ -472,7 +527,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     });
     assertEqual(14, result);
     }
+
     /**
+     * Verify callbackfn using Math.floor divide by 2 [3,6,9]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2900
      * @tc.name testUint8ArrayReduce029
      * @tc.desc Verify callbackfn using Math.floor divide by 2 [3,6,9]
@@ -487,7 +544,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     double result = arr.reduceDouble((prev, curr, index, array) -> prev + (int) (curr / 2));
     assertEqual(10, result);
     }
+
     /**
+     * Verify callbackfn prev-Math.abs(curr) [100,30,200]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3000
      * @tc.name testUint8ArrayReduce030
      * @tc.desc Verify callbackfn prev-Math.abs(curr) [100,30,200]
@@ -502,7 +561,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev - Math.abs(curr));
     assertEqual(-130, result);
     }
+
     /**
+     * Verify callbackfn prev ^ (curr<<1) [1,2,3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3100
      * @tc.name testUint8ArrayReduce031
      * @tc.desc Verify callbackfn prev ^ (curr<<1) [1,2,3]
@@ -517,7 +578,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev ^ (curr << 1));
     assertEqual(3, result);
     }
+
     /**
+     * Verify callbackfn Math.abs(prev-curr) [10,30,5]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3200
      * @tc.name testUint8ArrayReduce032
      * @tc.desc Verify callbackfn Math.abs(prev-curr) [10,30,5]
@@ -532,7 +595,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> Math.abs(prev - curr));
     assertEqual(15, result);
     }
+
     /**
+     * Verify callbackfn first currentIndex is 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3300
      * @tc.name testUint8ArrayReduce033
      * @tc.desc Verify callbackfn first currentIndex is 1
@@ -553,7 +618,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
         });
     assertEqual(1, firstIdx[0]);
     }
+
     /**
+     * Verify callbackfn last currentIndex is length-1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3400
      * @tc.name testUint8ArrayReduce034
      * @tc.desc Verify callbackfn last currentIndex is length-1
@@ -572,7 +639,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
         });
     assertEqual(2, lastIdx[0]);
     }
+
     /**
+     * Verify callbackfn accumulate index values [1,2,3,4,5] verify index sequence
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3500
      * @tc.name testUint8ArrayReduce035
      * @tc.desc Verify callbackfn accumulate index values [1,2,3,4,5] verify index sequence
@@ -591,7 +660,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
         });
     assertEqual(10, sumIdx[0]);
     }
+
     /**
+     * Verify callbackfn index strictly increments by 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3600
      * @tc.name testUint8ArrayReduce036
      * @tc.desc Verify callbackfn index strictly increments by 1
@@ -614,7 +685,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
         });
     assertTrue(monotonic[0]);
     }
+
     /**
+     * Verify callbackfn call count equals length-1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3700
      * @tc.name testUint8ArrayReduce037
      * @tc.desc Verify callbackfn call count equals length-1
@@ -633,7 +706,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
         });
     assertEqual(4, callCount[0]);
     }
+
     /**
+     * Verify callbackfn a[idx] === curr
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3800
      * @tc.name testUint8ArrayReduce038
      * @tc.desc Verify callbackfn a[idx] === curr
@@ -654,7 +729,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
         });
     assertTrue(match[0]);
     }
+
     /**
+     * Verify callbackfn array parameter === original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3900
      * @tc.name testUint8ArrayReduce039
      * @tc.desc Verify callbackfn array parameter === original array
@@ -673,7 +750,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
         });
     assertTrue(sameRef[0]);
     }
+
     /**
+     * Verify callbackfn array parameter length property
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4000
      * @tc.name testUint8ArrayReduce040
      * @tc.desc Verify callbackfn array parameter length property
@@ -692,7 +771,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
         });
     assertEqual(4, arrLen[0]);
     }
+
     /**
+     * Verify callbackfn array parameter BYTES_PER_ELEMENT
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4100
      * @tc.name testUint8ArrayReduce041
      * @tc.desc Verify callbackfn array parameter BYTES_PER_ELEMENT
@@ -711,7 +792,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
         });
     assertEqual(1, bpe[0]);
     }
+
     /**
+     * Verify callbackfn array parameter buffer sharing
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4200
      * @tc.name testUint8ArrayReduce042
      * @tc.desc Verify callbackfn array parameter buffer sharing
@@ -732,7 +815,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
         });
     assertTrue(sameBuf[0]);
     }
+
     /**
+     * Verify return value type is number
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4300
      * @tc.name testUint8ArrayReduce043
      * @tc.desc Verify return value type is number
@@ -748,7 +833,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     String resultType = BasTest.className(result);
     assertEqual("java.lang.Double", resultType);
     }
+
     /**
+     * Verify single element [42] returns the element itself
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4400
      * @tc.name testUint8ArrayReduce044
      * @tc.desc Verify single element [42] returns the element itself
@@ -763,7 +850,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(42, result);
     }
+
     /**
+     * Verify single element [0] returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4500
      * @tc.name testUint8ArrayReduce045
      * @tc.desc Verify single element [0] returns 0
@@ -778,7 +867,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(0, result);
     }
+
     /**
+     * Verify two elements [10,20] addition
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4600
      * @tc.name testUint8ArrayReduce046
      * @tc.desc Verify two elements [10,20] addition
@@ -793,7 +884,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(30, result);
     }
+
     /**
+     * Verify all-zero array sum is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4700
      * @tc.name testUint8ArrayReduce047
      * @tc.desc Verify all-zero array sum is 0
@@ -808,7 +901,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(0, result);
     }
+
     /**
+     * Verify floating point literal truncation storage [1.5, 2.7] sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4800
      * @tc.name testUint8ArrayReduce048
      * @tc.desc Verify floating point literal truncation storage [1.5, 2.7] sum
@@ -823,7 +918,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(3, result);
     }
+
     /**
+     * Verify negative value wraparound [-1] stored as 255 returns 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4900
      * @tc.name testUint8ArrayReduce049
      * @tc.desc Verify negative value wraparound [-1] stored as 255 returns 255
@@ -838,7 +935,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(255, result);
     }
+
     /**
+     * Verify overflow truncation [256,257] stored as [0,1]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5000
      * @tc.name testUint8ArrayReduce050
      * @tc.desc Verify overflow truncation [256,257] stored as [0,1]
@@ -853,7 +952,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(1, result);
     }
+
     /**
+     * Verify all 255 four elements sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5100
      * @tc.name testUint8ArrayReduce051
      * @tc.desc Verify all 255 four elements sum
@@ -868,7 +969,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(1020, result);
     }
+
     /**
+     * Verify [128,127] midpoint boundary
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5200
      * @tc.name testUint8ArrayReduce052
      * @tc.desc Verify [128,127] midpoint boundary
@@ -883,7 +986,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(255, result);
     }
+
     /**
+     * Verify single element callback not executed, returns element itself
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5300
      * @tc.name testUint8ArrayReduce053
      * @tc.desc Verify single element callback not executed, returns element itself
@@ -903,7 +1008,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     assertFalse(invoked[0]);
     assertEqual(99, result);
     }
+
     /**
+     * Verify result toString
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5400
      * @tc.name testUint8ArrayReduce054
      * @tc.desc Verify result toString
@@ -918,7 +1025,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual("60", String.valueOf(result));
     }
+
     /**
+     * Verify empty array no constructor reduce throws exception
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5500
      * @tc.name testUint8ArrayReduce055
      * @tc.desc Verify empty array no constructor reduce throws exception
@@ -933,10 +1042,13 @@ public class Uint8ArrayReduce02Test extends BasTest {
     try {
     arr.reduce((prev, curr, index, array) -> prev + curr);
     fail();
-    } catch (TypeError e) { assertEqual("basetype.common.TypeError", BasTest.className(e));
+    } catch (TypeError e) {
+        assertEqual("basetype.common.TypeError", BasTest.className(e));
     }
     }
+
     /**
+     * Verify empty ArrayBuffer view reduce throws exception
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5600
      * @tc.name testUint8ArrayReduce056
      * @tc.desc Verify empty ArrayBuffer view reduce throws exception
@@ -951,10 +1063,13 @@ public class Uint8ArrayReduce02Test extends BasTest {
     try {
     arr.reduce((prev, curr, index, array) -> prev + curr);
     fail();
-    } catch (TypeError e) { assertEqual("basetype.common.TypeError", BasTest.className(e));
+    } catch (TypeError e) {
+        assertEqual("basetype.common.TypeError", BasTest.className(e));
     }
     }
+
     /**
+     * Verify filter result empty array reduce throws exception
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5700
      * @tc.name testUint8ArrayReduce057
      * @tc.desc Verify filter result empty array reduce throws exception
@@ -970,10 +1085,13 @@ public class Uint8ArrayReduce02Test extends BasTest {
     try {
     empty.reduce((prev, curr, index, array) -> prev + curr);
     fail();
-    } catch (TypeError e) { assertEqual("basetype.common.TypeError", BasTest.className(e));
+    } catch (TypeError e) {
+        assertEqual("basetype.common.TypeError", BasTest.className(e));
     }
     }
+
     /**
+     * Verify callback throwing Error passthrough
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5800
      * @tc.name testUint8ArrayReduce058
      * @tc.desc Verify callback throwing Error passthrough
@@ -987,14 +1105,16 @@ public class Uint8ArrayReduce02Test extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     try {
     arr.reduce((prev, curr, index, array) -> {
-    throw new Error();
+    return BasTest.throwTestError("");
         });
     fail();
     } catch (Error e) {
     assertEqual("Error", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify callback throwing RangeError
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5900
      * @tc.name testUint8ArrayReduce059
      * @tc.desc Verify callback throwing RangeError
@@ -1015,7 +1135,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify callback throwing error at specific iteration
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_6000
      * @tc.name testUint8ArrayReduce060
      * @tc.desc Verify callback throwing error at specific iteration
@@ -1030,7 +1152,7 @@ public class Uint8ArrayReduce02Test extends BasTest {
     try {
     arr.reduce((prev, curr, idx, index) -> {
     if (idx == 3) {
-    throw new Error();
+    return BasTest.throwTestError("");
     }
     return prev + curr;
         });
@@ -1039,7 +1161,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     assertEqual("Error", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify callback throwing custom error message
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_6100
      * @tc.name testUint8ArrayReduce061
      * @tc.desc Verify callback throwing custom error message
@@ -1053,14 +1177,16 @@ public class Uint8ArrayReduce02Test extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     try {
     arr.reduce((prev, curr, index, array) -> {
-    throw new Error("reduce fail");
+    return BasTest.throwTestError("reduce fail");
         });
     fail();
     } catch (Error e) {
     assertEqual("Error", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify slice reduced sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_6200
      * @tc.name testUint8ArrayReduce062
      * @tc.desc Verify slice reduced sum
@@ -1076,7 +1202,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = sub.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(9, result);
     }
+
     /**
+     * Verify ArrayBuffer view reduce sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_6300
      * @tc.name testUint8ArrayReduce063
      * @tc.desc Verify ArrayBuffer view reduce sum
@@ -1095,7 +1223,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
+
     /**
+     * Verify map then reduce
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_6400
      * @tc.name testUint8ArrayReduce064
      * @tc.desc Verify map then reduce
@@ -1111,7 +1241,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = doubled.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(12, result);
     }
+
     /**
+     * Verify filter then reduce
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_6500
      * @tc.name testUint8ArrayReduce065
      * @tc.desc Verify filter then reduce
@@ -1127,7 +1259,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = filtered.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(12, result);
     }
+
     /**
+     * Verify sub-view reduce
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_6600
      * @tc.name testUint8ArrayReduce066
      * @tc.desc Verify sub-view reduce
@@ -1150,7 +1284,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = firstView.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(6, result);
     }
+
     /**
+     * Verify constructor(length) then reduce
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_6700
      * @tc.name testUint8ArrayReduce067
      * @tc.desc Verify constructor(length) then reduce
@@ -1169,7 +1305,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(50, result);
     }
+
     /**
+     * Verify from array-like reduce sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_6800
      * @tc.name testUint8ArrayReduce068
      * @tc.desc Verify from array-like reduce sum
@@ -1184,7 +1322,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
+
     /**
+     * Verify from with mapFn reduce sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_6900
      * @tc.name testUint8ArrayReduce069
      * @tc.desc Verify from with mapFn reduce sum
@@ -1199,7 +1339,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
+
     /**
+     * Verify closure variable in from mapFn reduce sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_7000
      * @tc.name testUint8ArrayReduce070
      * @tc.desc Verify closure variable in from mapFn reduce sum
@@ -1215,7 +1357,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(30, result);
     }
+
     /**
+     * Verify number array reduce sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_7100
      * @tc.name testUint8ArrayReduce071
      * @tc.desc Verify number array reduce sum
@@ -1230,7 +1374,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(6, result);
     }
+
     /**
+     * Verify Set iterable reduce sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_7200
      * @tc.name testUint8ArrayReduce072
      * @tc.desc Verify Set iterable reduce sum
@@ -1249,7 +1395,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
+
     /**
+     * Verify Map entries iterable reduce sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_7300
      * @tc.name testUint8ArrayReduce073
      * @tc.desc Verify Map entries iterable reduce sum
@@ -1268,7 +1416,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
+
     /**
+     * Verify TypedArray reduce sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_7400
      * @tc.name testUint8ArrayReduce074
      * @tc.desc Verify TypedArray reduce sum
@@ -1284,7 +1434,9 @@ public class Uint8ArrayReduce02Test extends BasTest {
     int result = arr.reduce((prev, curr, index, array) -> prev + curr);
     assertEqual(60, result);
     }
+
     /**
+     * Verify from empty array-like reduce throws exception
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_7500
      * @tc.name testUint8ArrayReduce075
      * @tc.desc Verify from empty array-like reduce throws exception
@@ -1299,10 +1451,13 @@ public class Uint8ArrayReduce02Test extends BasTest {
     try {
     arr.reduce((prev, curr, index, array) -> prev + curr);
     fail();
-    } catch (TypeError e) { assertEqual("basetype.common.TypeError", BasTest.className(e));
+    } catch (TypeError e) {
+        assertEqual("basetype.common.TypeError", BasTest.className(e));
     }
     }
+
     /**
+     * Verify from with mapFn truncation overflow reduce sum
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_7600
      * @tc.name testUint8ArrayReduce076
      * @tc.desc Verify from with mapFn truncation overflow reduce sum
