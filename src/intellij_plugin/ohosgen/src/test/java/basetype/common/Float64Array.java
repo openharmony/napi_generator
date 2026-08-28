@@ -25,12 +25,14 @@ public class Float64Array implements IntArrayView {
 
     private final double[] data;
 
-    public Float64Array(double... values) {
+    public Float64Array(double...values) {
         data = values;
         }
 
     /**
      * length 方法。
+     *
+     * @return 返回值说明。
      */
     public int length() {
         return data.length;
@@ -42,6 +44,9 @@ public class Float64Array implements IntArrayView {
     @Override
     /**
      * 按索引读取元素，对应 get 语义。
+     *
+     * @param index 参数说明。
+     * @return 返回值说明。
      */
     public Integer get(int index) {
         if (index < 0 || index >= data.length) {
@@ -52,6 +57,9 @@ public class Float64Array implements IntArrayView {
 
     /**
      * 读取原始浮点值。
+     *
+     * @param index 参数说明。
+     * @return 返回值说明。
      */
     public double getDouble(int index) {
         return data[index];

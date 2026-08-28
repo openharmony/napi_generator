@@ -39,6 +39,8 @@ public class DataView {
 
     /**
      * 视图相对底层缓冲的字节偏移。
+     *
+     * @return 返回值说明。
      */
     public int byteOffset() {
         return byteOffset;
@@ -46,6 +48,8 @@ public class DataView {
 
     /**
      * 视图覆盖的字节长度。
+     *
+     * @return 返回值说明。
      */
     public int byteLength() {
         return byteLength;
@@ -60,6 +64,10 @@ public class DataView {
 
     /**
      * 读取无符号 16 位小端值（偏移相对视图起点）。
+     *
+     * @param offset 参数说明。
+     * @param littleEndian 参数说明。
+     * @return 返回值说明。
      */
     public int getUint16(int offset, boolean littleEndian) {
         return buffer.getInt16(byteOffset + offset) & 0xFFFF;
@@ -74,6 +82,9 @@ public class DataView {
 
     /**
      * 读取无符号 8 位值（偏移相对视图起点）。
+     *
+     * @param offset 参数说明。
+     * @return 返回值说明。
      */
     public int getUint8(int offset) {
         return buffer.getInt8(byteOffset + offset) & 0xFF;

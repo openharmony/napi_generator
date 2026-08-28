@@ -22,14 +22,6 @@ package basetype.common;
  */
 public class ArrayBuffer {
 
-    /**
-     * 判断对象是否为 TypedArray 视图，对应 ArrayBuffer.isView 语义。
-     */
-    public static boolean isView(Object obj) {
-        return obj instanceof Int16Array || obj instanceof Int8Array || obj instanceof Uint16Array
-                || obj instanceof Uint8Array || obj instanceof Uint8ClampedArray || obj instanceof Int32Array;
-                }
-
     private final byte[] bytes;
 
     public ArrayBuffer(int byteLength) {
@@ -37,7 +29,20 @@ public class ArrayBuffer {
         }
 
     /**
+     * 判断对象是否为 TypedArray 视图，对应 ArrayBuffer.isView 语义。
+     *
+     * @param obj 参数说明。
+     * @return 返回值说明。
+     */
+    public static boolean isView(Object obj) {
+        return obj instanceof Int16Array || obj instanceof Int8Array || obj instanceof Uint16Array
+                || obj instanceof Uint8Array || obj instanceof Uint8ClampedArray || obj instanceof Int32Array;
+                }
+
+    /**
      * byteLength 方法。
+     *
+     * @return 返回值说明。
      */
     public int byteLength() {
         return bytes.length;
@@ -45,6 +50,9 @@ public class ArrayBuffer {
 
     /**
      * 读取指定字节偏移处的 int16 小端值（越界按 0 处理）。
+     *
+     * @param byteOffset 参数说明。
+     * @return 返回值说明。
      */
     int getInt16(int byteOffset) {
         if (byteOffset < 0 || byteOffset + 2 > bytes.length) {
@@ -57,6 +65,9 @@ public class ArrayBuffer {
 
     /**
      * 读取指定字节偏移处的 int32 小端值（越界按 0 处理）。
+     *
+     * @param byteOffset 参数说明。
+     * @return 返回值说明。
      */
     int getInt32(int byteOffset) {
         if (byteOffset < 0 || byteOffset + 4 > bytes.length) {
@@ -84,6 +95,9 @@ public class ArrayBuffer {
 
     /**
      * 读取指定字节偏移处的 int8 值（越界按 0 处理）。
+     *
+     * @param byteOffset 参数说明。
+     * @return 返回值说明。
      */
     int getInt8(int byteOffset) {
         if (byteOffset < 0 || byteOffset >= bytes.length) {

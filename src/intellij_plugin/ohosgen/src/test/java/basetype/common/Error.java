@@ -32,6 +32,8 @@ public class Error extends RuntimeException {
 
     /**
      * ECMAScript Error.name。
+     *
+     * @return 返回值说明。
      */
     public String name() {
         return "Error";

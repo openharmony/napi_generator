@@ -22,7 +22,14 @@ package basetype.common;
  */
 public class EntryResult {
 
+    /**
+     * value 字段。
+     */
     public final int[] value;
+
+    /**
+     * done 字段。
+     */
     public final boolean done;
 
     public EntryResult(int[] value, boolean done) {

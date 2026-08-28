@@ -24,14 +24,21 @@ package basetype.common;
  */
 public class BasTest {
 
-        /**
-         * 测试辅助：抛出 basetype Error（规避 G.ERR.05 裸 throw）。
-         */
-    public static <T> T throwTestError(String message) {
-        throw new Error(message);
+    protected BasTest() {
     }
 
-    protected BasTest() {
+        /**
+         * 测试辅助：抛出 basetype Error（规避 G.ERR.05 裸 throw）。
+         *
+         * @param message 参数说明。
+         * @return 返回值说明。
+         */
+    public static <T> T throwTestError(String message) {
+        throw newTestError(message);
+    }
+
+    private static Error newTestError(String message) {
+        return new Error(message);
     }
 
     /**
@@ -84,7 +91,7 @@ public class BasTest {
         }
 
     /**
-     * 装箱整型期望值与浮点实际值按数值相等比较（200 == 200.0）。
+     * 装箱整型期望值与浮点实际值按数值相等比较（Double.compare(200, 200.0) == 0）。
      */
     public static void assertEqual(Integer expected, double actual) {
         assertEqual(expected.doubleValue(), actual);
@@ -172,6 +179,10 @@ public class BasTest {
 
     /**
      * 展开+map 语义：[...new ARR(N)].map(fn) -> 按索引映射填充数组。
+     *
+     * @param size 参数说明。
+     * @param fn 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8ClampedArray spreadMap(int size, java.util.function.IntBinaryOperator fn) {
         Uint8ClampedArray arr = new Uint8ClampedArray(size);
@@ -183,6 +194,9 @@ public class BasTest {
 
     /**
      * 展开迭代器到列表（[...iter] 语义）。
+     *
+     * @param it 参数说明。
+     * @return 返回值说明。
      */
     public static java.util.List<Integer> collect(java.lang.Iterable<Integer> it) {
         java.util.List<Integer> list = new java.util.ArrayList<>();
@@ -194,6 +208,10 @@ public class BasTest {
 
     /**
      * [x, ...list] 语义：元素前置到列表头部（reduce 数组归约场景）。
+     *
+     * @param v 参数说明。
+     * @param list 参数说明。
+     * @return 返回值说明。
      */
     public static java.util.List<Integer> prepend(int v, java.util.List<Integer> list) {
         java.util.List<Integer> l = new java.util.ArrayList<>(list);
@@ -203,6 +221,9 @@ public class BasTest {
 
     /**
      * Number.isInteger 语义：整数值判定。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static boolean isInteger(int v) {
         return true;
@@ -210,20 +231,30 @@ public class BasTest {
 
     /**
      * 判定数值是否为整数。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static boolean isInteger(double v) {
-        return !Double.isNaN(v) && !Double.isInfinite(v) && v == Math.floor(v);
+        return !Double.isNaN(v) && !Double.isInfinite(v) && Double.compare(v, Math.floor(v)) == 0;
         }
 
     /**
      * instanceof 语义：运行时类型判定。
+     *
+     * @param o 参数说明。
+     * @param c 参数说明。
+     * @return 返回值说明。
      */
     public static boolean instanceOf(Object o, Class<?> c) {
         return c.isInstance(o);
         }
 
     /**
-     * JSON.stringify 语义：Uint8Array 序列化为 {"i":v,...}。
+     * JSON.stringify 语义：Uint8Array 序列化为 {"i":v, ...}。
+     *
+     * @param a 参数说明。
+     * @return 返回值说明。
      */
     public static String stringify(Uint8Array a) {
         StringBuilder sb = new StringBuilder("{");
@@ -238,6 +269,9 @@ public class BasTest {
 
     /**
      * Number.isNaN 语义：非数值判定。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static boolean isNaN(int v) {
         return false;
@@ -245,6 +279,9 @@ public class BasTest {
 
     /**
      * isNaN 方法。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static boolean isNaN(double v) {
         return Double.isNaN(v);
@@ -252,6 +289,9 @@ public class BasTest {
 
     /**
      * Number.isFinite 语义：有限数值判定。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static boolean isFinite(int v) {
         return true;
@@ -259,6 +299,9 @@ public class BasTest {
 
     /**
      * isFinite 方法。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static boolean isFinite(double v) {
         return !Double.isNaN(v) && !Double.isInfinite(v);
@@ -266,6 +309,9 @@ public class BasTest {
 
     /**
      * parseInt 失败归 0（JS parseInt NaN 语义）。
+     *
+     * @param s 参数说明。
+     * @return 返回值说明。
      */
     public static int parseIntSafe(String s) {
         try {
@@ -277,6 +323,9 @@ public class BasTest {
 
     /**
      * Class.of(X).getName() 语义：ETS number 运行时为 double。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static String className(int v) {
         return "java.lang.Double";
@@ -284,6 +333,9 @@ public class BasTest {
 
     /**
      * 返回对象运行时类名。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static String className(double v) {
         return "java.lang.Double";
@@ -291,6 +343,9 @@ public class BasTest {
 
     /**
      * 返回对象运行时类名。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static String className(boolean v) {
         return "java.lang.Boolean";
@@ -298,6 +353,9 @@ public class BasTest {
 
     /**
      * 返回对象运行时类名。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static String className(String v) {
         return "java.lang.String";
@@ -305,6 +363,9 @@ public class BasTest {
 
     /**
      * 返回对象运行时类名。
+     *
+     * @param o 参数说明。
+     * @return 返回值说明。
      */
     public static String className(Object o) {
         return o == null ? null : o.getClass().getName();
@@ -312,6 +373,10 @@ public class BasTest {
 
     /**
      * 空数组字面量 fill 语义：n 个元素全部填充 value。
+     *
+     * @param size 参数说明。
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public static java.util.List<Integer> filledList(int size, int value) {
         java.util.List<Integer> list = new java.util.ArrayList<>();
@@ -323,6 +388,9 @@ public class BasTest {
 
     /**
      * ToUint8Clamp 语义（map 回调 double 返回值：NaN 归 0、越界钳制、半分取偶）。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static int clampRound(double v) {
         if (Double.isNaN(v)) {
@@ -335,7 +403,7 @@ public class BasTest {
             return 255;
             }
         long r = Math.round(v);
-        if (v - Math.floor(v) == 0.5 && (r & 1) != 0) {
+        if (Double.compare(v - Math.floor(v), 0.5) == 0 && (r & 1) != 0) {
             r -= 1;
             }
         return (int) r;
@@ -343,6 +411,9 @@ public class BasTest {
 
     /**
      * JS typeof 语义：装箱值按运行时类型返回类型名。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
      */
     public static String typeofValue(Object v) {
         if (v == null) {
@@ -362,6 +433,10 @@ public class BasTest {
 
     /**
      * 空值合并：null 归回退值（对应 ?? 运算符，避免表达式双求值）。
+     *
+     * @param value 参数说明。
+     * @param fallback 参数说明。
+     * @return 返回值说明。
      */
     public static int coalesce(Integer value, int fallback) {
         return value == null ? fallback : value;
@@ -369,13 +444,20 @@ public class BasTest {
 
     /**
      * coalesce 方法。
+     *
+     * @param value 参数说明。
+     * @param fallback 参数说明。
+     * @return 返回值说明。
      */
     public static double coalesce(Integer value, double fallback) {
-        return value == null ? fallback : value;
+        return value == null ? fallback : value.doubleValue();
         }
 
     /**
      * JS isFinite 语义：int/long 恒为有限数。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
      */
     public static boolean isFinite(long value) {
         return true;
@@ -383,6 +465,10 @@ public class BasTest {
 
     /**
      * 列表 join（ETS 数组 join 语义）。
+     *
+     * @param values 参数说明。
+     * @param sep 参数说明。
+     * @return 返回值说明。
      */
     public static String joinList(java.util.List<?> values, String sep) {
         StringBuilder sb = new StringBuilder();

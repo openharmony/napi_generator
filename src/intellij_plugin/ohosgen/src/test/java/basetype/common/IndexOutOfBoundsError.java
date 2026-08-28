@@ -28,6 +28,8 @@ public class IndexOutOfBoundsError extends RuntimeException {
 
     /**
      * ECMAScript IndexOutOfBoundsError.name。
+     *
+     * @return 返回值说明。
      */
     public String name() {
         return "IndexOutOfBoundsError";

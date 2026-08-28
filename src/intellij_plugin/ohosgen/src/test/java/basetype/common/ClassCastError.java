@@ -32,6 +32,8 @@ public class ClassCastError extends RuntimeException {
 
     /**
      * 语句级抛错辅助（编译器不会将其视为不可达，便于后续 fail() 共存）。
+     *
+     * @return 返回值说明。
      */
     public static ClassCastError raise() {
         throw new ClassCastError();

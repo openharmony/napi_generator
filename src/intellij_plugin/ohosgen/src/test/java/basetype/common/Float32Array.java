@@ -25,7 +25,7 @@ public class Float32Array implements IntArrayView {
 
     private final float[] data;
 
-    public Float32Array(double... values) {
+    public Float32Array(double...values) {
         data = new float[values.length];
         for (int i = 0; i < values.length; i++) {
             data[i] = (float) values[i];
@@ -34,6 +34,8 @@ public class Float32Array implements IntArrayView {
 
     /**
      * length 方法。
+     *
+     * @return 返回值说明。
      */
     public int length() {
         return data.length;
@@ -45,6 +47,9 @@ public class Float32Array implements IntArrayView {
     @Override
     /**
      * 按索引读取元素，对应 get 语义。
+     *
+     * @param index 参数说明。
+     * @return 返回值说明。
      */
     public Integer get(int index) {
         if (index < 0 || index >= data.length) {
@@ -55,6 +60,9 @@ public class Float32Array implements IntArrayView {
 
     /**
      * 读取原始浮点值。
+     *
+     * @param index 参数说明。
+     * @return 返回值说明。
      */
     public float getFloat(int index) {
         return data[index];
