@@ -1243,9 +1243,9 @@ public class Int16ArrayFillTest04 extends BasTest {
     void testInt16ArrayFillTestFour077() {
     Int16Array arr = new Int16Array(new int[] {0, 0, 0, 0, 0, 0, 0, 0});
     arr
-    .fill((int) 1, 0, 2)
-    .fill(2, 2, 5)
-    .fill(3, 5, 8);
+.fill((int) 1, 0, 2)
+.fill(2, 2, 5)
+.fill(3, 5, 8);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 1;
     assertEqual(expected1, actual1);

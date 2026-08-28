@@ -21,11 +21,7 @@ import basetype.common.Uint16Array;
 import basetype.common.IntlOptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -279,7 +275,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1033() {
     Uint16Array arr = Uint16Array.of(5, 50);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 2;
+    options.setMinimumIntegerDigits(2);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("05,50", result);
     }
@@ -288,7 +284,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1034() {
     Uint16Array arr = Uint16Array.of(5, 50);
     IntlOptions opts = new IntlOptions();
-    opts.minimumIntegerDigits = 5;
+    opts.setMinimumIntegerDigits(5);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("00,005,00,050", result);
     }
@@ -297,7 +293,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1035() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.minimumFractionDigits = 0;
+    opts.setMinimumFractionDigits(0);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000,2,000", result);
     }
@@ -306,7 +302,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1036() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.minimumFractionDigits = 2;
+    opts.setMinimumFractionDigits(2);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000.00,2,000.00", result);
     }
@@ -315,7 +311,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1037() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.minimumFractionDigits = 3;
+    opts.setMinimumFractionDigits(3);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000.000,2,000.000", result);
     }
@@ -324,7 +320,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1038() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.maximumFractionDigits = 0;
+    opts.setMaximumFractionDigits(0);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000,2,000", result);
     }
@@ -333,7 +329,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1039() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.maximumFractionDigits = 2;
+    opts.setMaximumFractionDigits(2);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000,2,000", result);
     }
@@ -342,7 +338,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1040() {
     Uint16Array arr = Uint16Array.of(5, 50);
     IntlOptions opts = new IntlOptions();
-    opts.minimumSignificantDigits = 2;
+    opts.setMinimumSignificantDigits(2);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("5.0,50", result);
     }
@@ -351,7 +347,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1041() {
     Uint16Array arr = Uint16Array.of(5, 50);
     IntlOptions opts = new IntlOptions();
-    opts.minimumSignificantDigits = 5;
+    opts.setMinimumSignificantDigits(5);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("5.0000,50.000", result);
     }
@@ -360,7 +356,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1042() {
     Uint16Array arr = Uint16Array.of(12345, 67890);
     IntlOptions opts = new IntlOptions();
-    opts.maximumSignificantDigits = 2;
+    opts.setMaximumSignificantDigits(2);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("12,000,2,400", result);
     }
@@ -369,7 +365,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1043() {
     Uint16Array arr = Uint16Array.of(12345, 67890);
     IntlOptions opts = new IntlOptions();
-    opts.maximumSignificantDigits = 5;
+    opts.setMaximumSignificantDigits(5);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("12,345,2,354", result);
     }
@@ -378,7 +374,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1044() {
     Uint16Array arr = Uint16Array.of(10000, 20000);
     IntlOptions opts = new IntlOptions();
-    opts.useGrouping = false;
+    opts.setUseGrouping(false);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("10000,20000", result);
     }
@@ -387,7 +383,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1045() {
     Uint16Array arr = Uint16Array.of(10000, 20000);
     IntlOptions opts = new IntlOptions();
-    opts.useGrouping = true;
+    opts.setUseGrouping(true);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("10,000,20,000", result);
     }
@@ -396,7 +392,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1046() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "decimal";
+    opts.setStyle("decimal");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000,2,000", result);
     }
@@ -405,7 +401,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1047() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "percent";
+    opts.setStyle("percent");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("100,000%,200,000%", result);
     }
@@ -414,8 +410,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1048() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "USD";
+    opts.setStyle("currency");
+    opts.setCurrency("USD");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("$1,000.00,$2,000.00", result);
     }
@@ -424,8 +420,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1049() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "EUR";
+    opts.setStyle("currency");
+    opts.setCurrency("EUR");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("€1,000.00,€2,000.00", result);
     }
@@ -434,8 +430,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1050() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "JPY";
+    opts.setStyle("currency");
+    opts.setCurrency("JPY");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("¥1,000,¥2,000", result);
     }
@@ -444,8 +440,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1051() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "GBP";
+    opts.setStyle("currency");
+    opts.setCurrency("GBP");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("£1,000.00,£2,000.00", result);
     }
@@ -454,7 +450,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1052() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.notation = "scientific";
+    opts.setNotation("scientific");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1E3,2E3", result);
     }
@@ -463,7 +459,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1053() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.notation = "engineering";
+    opts.setNotation("engineering");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1E3,2E3", result);
     }
@@ -472,8 +468,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1054() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.notation = "compact";
-    opts.compactDisplay = "short";
+    opts.setNotation("compact");
+    opts.setCompactDisplay("short");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1K,2K", result);
     }
@@ -482,7 +478,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1055() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.compactDisplay = "short";
+    opts.setCompactDisplay("short");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000,2,000", result);
     }
@@ -491,7 +487,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1056() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.compactDisplay = "long";
+    opts.setCompactDisplay("long");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000,2,000", result);
     }
@@ -500,9 +496,9 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1057() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "USD";
-    opts.currencyDisplay = "symbol";
+    opts.setStyle("currency");
+    opts.setCurrency("USD");
+    opts.setCurrencyDisplay("symbol");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("$1,000.00,$2,000.00", result);
     }
@@ -511,9 +507,9 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1058() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "USD";
-    opts.currencyDisplay = "code";
+    opts.setStyle("currency");
+    opts.setCurrency("USD");
+    opts.setCurrencyDisplay("code");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("USD 1,000.00,USD 2,000.00", result);
     }
@@ -522,9 +518,9 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1059() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "USD";
-    opts.currencyDisplay = "name";
+    opts.setStyle("currency");
+    opts.setCurrency("USD");
+    opts.setCurrencyDisplay("name");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000.00 US dollars,2,000.00 US dollars", result);
     }
@@ -533,8 +529,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1060() {
     Uint16Array arr = Uint16Array.of(100, 200);
     IntlOptions opts = new IntlOptions();
-    opts.minimumIntegerDigits = 2;
-    opts.useGrouping = false;
+    opts.setMinimumIntegerDigits(2);
+    opts.setUseGrouping(false);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("100,200", result);
     }
@@ -543,8 +539,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1061() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.minimumFractionDigits = 2;
-    opts.maximumFractionDigits = 2;
+    opts.setMinimumFractionDigits(2);
+    opts.setMaximumFractionDigits(2);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000.00,2,000.00", result);
     }
@@ -553,8 +549,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1062() {
     Uint16Array arr = Uint16Array.of(5, 50);
     IntlOptions opts = new IntlOptions();
-    opts.minimumIntegerDigits = 3;
-    opts.minimumFractionDigits = 2;
+    opts.setMinimumIntegerDigits(3);
+    opts.setMinimumFractionDigits(2);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("005.00,050.00", result);
     }
@@ -563,9 +559,9 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1063() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "EUR";
-    opts.currencyDisplay = "code";
+    opts.setStyle("currency");
+    opts.setCurrency("EUR");
+    opts.setCurrencyDisplay("code");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("EUR 1,000.00,EUR 2,000.00", result);
     }
@@ -574,8 +570,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1064() {
     Uint16Array arr = Uint16Array.of(10000, 20000);
     IntlOptions opts = new IntlOptions();
-    opts.notation = "compact";
-    opts.compactDisplay = "long";
+    opts.setNotation("compact");
+    opts.setCompactDisplay("long");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("10 thousand,20 thousand", result);
     }
@@ -584,9 +580,9 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1065() {
     Uint16Array arr = Uint16Array.of(100, 200);
     IntlOptions opts = new IntlOptions();
-    opts.minimumIntegerDigits = 4;
-    opts.useGrouping = true;
-    opts.minimumFractionDigits = 2;
+    opts.setMinimumIntegerDigits(4);
+    opts.setUseGrouping(true);
+    opts.setMinimumFractionDigits(2);
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("0,100.00,0,200.00", result);
     }
@@ -595,7 +591,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1066() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.minimumFractionDigits = 2;
+    opts.setMinimumFractionDigits(2);
     String result = arr.toLocaleString("de-DE", opts);
     assertEqual("1.000,00,2.000,00", result);
     }
@@ -604,7 +600,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1067() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "percent";
+    opts.setStyle("percent");
     String result = arr.toLocaleString("zh-CN", opts);
     assertEqual("100,000%,200,000%", result);
     }
@@ -613,7 +609,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1068() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.notation = "scientific";
+    opts.setNotation("scientific");
     String result = arr.toLocaleString("ja-JP", opts);
     assertEqual("1E3,2E3", result);
     }
@@ -622,7 +618,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1069() {
     Uint16Array arr = Uint16Array.of(5, 50);
     IntlOptions opts = new IntlOptions();
-    opts.minimumIntegerDigits = 3;
+    opts.setMinimumIntegerDigits(3);
     String result = arr.toLocaleString("ar-SA", opts);
     assertEqual("٠٠٥,٠٥٠", result);
     }
@@ -631,7 +627,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1070() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.minimumFractionDigits = 2;
+    opts.setMinimumFractionDigits(2);
     String result = arr.toLocaleString("th-TH", opts);
     assertEqual("1,000.00,2,000.00", result);
     }
@@ -647,8 +643,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1072() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "USD";
+    opts.setStyle("currency");
+    opts.setCurrency("USD");
     String result = arr.toLocaleString("de-DE", opts);
     assertEqual("1.000,00 $,2.000,00 $", result);
     }
@@ -657,7 +653,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1073() {
     Uint16Array arr = Uint16Array.of(5, 50);
     IntlOptions opts = new IntlOptions();
-    opts.minimumIntegerDigits = 4;
+    opts.setMinimumIntegerDigits(4);
     String result = arr.toLocaleString("zh-CN", opts);
     assertEqual("0,005,0,050", result);
     }
@@ -666,7 +662,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1074() {
     Uint16Array arr = Uint16Array.of(10000, 20000);
     IntlOptions opts = new IntlOptions();
-    opts.useGrouping = false;
+    opts.setUseGrouping(false);
     String result = arr.toLocaleString("ko-KR", opts);
     assertEqual("10000,20000", result);
     }
@@ -675,7 +671,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1075() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.notation = "engineering";
+    opts.setNotation("engineering");
     String result = arr.toLocaleString("it-IT", opts);
     assertEqual("1E3,2E3", result);
     }
@@ -684,9 +680,9 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1076() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "GBP";
-    opts.currencyDisplay = "name";
+    opts.setStyle("currency");
+    opts.setCurrency("GBP");
+    opts.setCurrencyDisplay("name");
     String result = arr.toLocaleString("en-US", opts);
     assertEqual("1,000.00 British pounds,2,000.00 British pounds", result);
     }
@@ -695,8 +691,8 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1077() {
     Uint16Array arr = Uint16Array.of(1000, 2000);
     IntlOptions opts = new IntlOptions();
-    opts.style = "currency";
-    opts.currency = "JPY";
+    opts.setStyle("currency");
+    opts.setCurrency("JPY");
     String result = arr.toLocaleString("ja-JP", opts);
     assertEqual("￥1,000,￥2,000", result);
     }
@@ -705,7 +701,7 @@ public class Uint16ArraytoLocaleString01 extends BasTest {
     void testUint16ArrayToLocaleStringPart1078() {
     Uint16Array arr = Uint16Array.of(5, 50);
     IntlOptions opts = new IntlOptions();
-    opts.minimumSignificantDigits = 3;
+    opts.setMinimumSignificantDigits(3);
     String result = arr.toLocaleString("es-ES", opts);
     assertEqual("5,00,50,0", result);
     }

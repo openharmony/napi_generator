@@ -19,12 +19,6 @@ import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.Int16Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**

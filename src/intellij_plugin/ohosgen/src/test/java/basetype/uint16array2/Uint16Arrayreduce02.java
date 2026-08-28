@@ -23,10 +23,8 @@ import basetype.common.Uint16Array;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -614,9 +612,9 @@ public class Uint16Arrayreduce02 extends BasTest {
 
     @Test
     void testUint16ArrayReducePart2056() {
-    int FACTOR = 2;
+    int factor = 2;
     Uint16Array arr = new Uint16Array(new int[] {1, 2, 3});
-    double result = arr.reduceDouble((prev, curr, array, unused3) -> prev + curr * FACTOR);
+    double result = arr.reduceDouble((prev, curr, array, unused3) -> prev + curr * factor);
     assertEqual(11, result);
     }
 
@@ -706,7 +704,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     @Test
     void testUint16ArrayReducePart2066() {
     Uint16Array arr = new Uint16Array(new int[] {1, 2, 3});
-    int result = 
+    int result =
         arr.reduce((prev, curr, array, unused3) -> Integer.parseInt(String.valueOf(prev) + String.valueOf(curr)));
     assertEqual(123, result);
     }

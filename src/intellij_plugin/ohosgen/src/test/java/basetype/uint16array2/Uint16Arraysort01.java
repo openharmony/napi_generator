@@ -215,8 +215,7 @@ public class Uint16Arraysort01 extends BasTest {
     void testUint16ArraySortPart1020() {
     Uint16Array arr = Uint16Array.of(50, 30, 40);
     arr.sort((a, b) -> {
-    int r = (a - b);
-    return r;
+    return (a - b);
         });
     assertEqual(30, arr.get(0));
     assertEqual(40, arr.get(1));

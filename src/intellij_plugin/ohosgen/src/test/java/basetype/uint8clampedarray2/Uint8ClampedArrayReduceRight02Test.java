@@ -299,7 +299,7 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     List<Integer> idxes = new ArrayList<>();
     arr.reduceRight((p, c, i, a) -> {
-    idxes.add(i );
+    idxes.add(i);
     return p;
         });
     assertEqual(3, idxes.size());

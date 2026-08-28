@@ -203,7 +203,7 @@ public class Int16ArrayFindTest01 extends BasTest {
     void testInt16ArrayFindTestOne019() {
     Int16Array arr = new Int16Array(new int[] {29, 58, 87, 116});
     Integer result = arr.find((value, index, array) -> {
-        DummyObj038 obj = new DummyObj038(1 );
+        DummyObj038 obj = new DummyObj038(1);
         return obj.tag == 1;
     });
     assertEqual(29, result);

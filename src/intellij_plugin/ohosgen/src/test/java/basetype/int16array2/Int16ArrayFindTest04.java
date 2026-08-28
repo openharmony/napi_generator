@@ -521,7 +521,7 @@ public class Int16ArrayFindTest04 extends BasTest {
     Int16Array inner = Int16Array.of(10, 20, 30);
     boolean[] matchFound = {false};
     outer.find((value, index, array) -> {
-    Integer innerResult = inner.find((iv, ii, ia) -> {;
+    Integer innerResult = inner.find((iv, ii, ia) -> {
     return iv == value * 10;
         });
     if (innerResult != null) {
@@ -646,7 +646,7 @@ public class Int16ArrayFindTest04 extends BasTest {
     int[] secondResult = {0};
     arr.find((value, index, array) -> {
     if (index == 1) {
-    Integer inner = array.find((v, i, a) -> {;
+    Integer inner = array.find((v, i, a) -> {
     return v > 3;
         });
     if (inner != null) {

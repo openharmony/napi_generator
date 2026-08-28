@@ -1134,9 +1134,9 @@ public class Int16ArrayFillTest03 extends BasTest {
     void testInt16ArrayFillTestThree072() {
     Int16Array arr = Int16Array.of((int) 1, (int) 2, (int) 3, (int) 4, (int) 5, (int) 6);
     arr
-    .fill((int) 99, 0, 3)
-    .reverse()
-    .fill((int) 11, 3, 6);
+.fill((int) 99, 0, 3)
+.reverse()
+.fill((int) 11, 3, 6);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 6;
     assertEqual(expected1, actual1);

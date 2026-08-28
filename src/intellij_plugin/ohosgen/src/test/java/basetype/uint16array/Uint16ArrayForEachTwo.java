@@ -72,7 +72,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
         seen.add(value);
     if (index == 0) {
         array.set(1, 20);
-    } });
+    }
+        });
     assertEqual(20, seen.get(1));
     }
 
@@ -84,7 +85,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
         count[0]++;
     if (index == 1) {
         array.set(0, 99);
-    } });
+    }
+        });
     assertEqual(3, count[0]);
     assertEqual(99, arr.at(0));
     }
@@ -101,7 +103,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
             alias.set(1, 44);
     } if (index == 1) {
         seen[0] = value;
-    } });
+    }
+        });
     assertEqual(44, seen[0]);
     }
 

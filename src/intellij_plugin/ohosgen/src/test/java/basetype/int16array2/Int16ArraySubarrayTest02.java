@@ -417,9 +417,9 @@ public class Int16ArraySubarrayTest02 extends BasTest {
     void testInt16ArraySubarrayTestTwo043() {
     Int16Array arr = Int16Array.of(32767, 0, -1, -32768);
     int val = arr
-    .subarray(0, 2)
-    .fill(99)
-    .get((int) 0);
+.subarray(0, 2)
+.fill(99)
+.get((int) 0);
     assertEqual(99, val);
     }
 
@@ -427,9 +427,9 @@ public class Int16ArraySubarrayTest02 extends BasTest {
     void testInt16ArraySubarrayTestTwo044() {
     Int16Array arr = Int16Array.of(32767, 0, -1);
     int val = arr
-    .subarray(0, 3)
-    .reverse()
-    .get((int) 0);
+.subarray(0, 3)
+.reverse()
+.get((int) 0);
     assertEqual(-1, val);
     }
 

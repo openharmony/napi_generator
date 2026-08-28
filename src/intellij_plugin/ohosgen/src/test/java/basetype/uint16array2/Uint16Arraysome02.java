@@ -64,8 +64,7 @@ public class Uint16Arraysome02 extends BasTest {
     Uint16Array arr = new Uint16Array(new int[] {1, 2, 3});
     boolean outerResult = arr.some((e) -> {
         if (e > 1) {
-            boolean inner = arr.some((x) -> x == 3);
-        return inner;
+            return arr.some((x) -> x == 3);
         }
         return false;
     });
@@ -101,7 +100,8 @@ public class Uint16Arraysome02 extends BasTest {
     } catch (Error inner) {
         assertEqual("Error", inner.getClass().getSimpleName());
     return true;
-    } });
+    }
+        });
     assertTrue(result);
     }
 
