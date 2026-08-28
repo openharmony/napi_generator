@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayTotal02Test extends BasTest {
     /**
      * Verify typeof new Uint8Array(5) is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0010
      * @tc.name testUint8ArrayTotal001
      * @tc.desc Verify typeof new Uint8Array(5) is 'object'
@@ -46,6 +47,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof Uint8Array.BYTES_PER_ELEMENT is 'number'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0020
      * @tc.name testUint8ArrayTotal002
      * @tc.desc Verify typeof Uint8Array.BYTES_PER_ELEMENT is 'number'
@@ -62,6 +64,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.buffer is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0030
      * @tc.name testUint8ArrayTotal003
      * @tc.desc Verify typeof arr.buffer is 'object'
@@ -78,6 +81,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.byteOffset is 'number'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0040
      * @tc.name testUint8ArrayTotal004
      * @tc.desc Verify typeof arr.byteOffset is 'number'
@@ -94,6 +98,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr[0] is 'number'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0050
      * @tc.name testUint8ArrayTotal005
      * @tc.desc Verify typeof arr[0] is 'number'
@@ -110,6 +115,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.at(0) is 'number'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0060
      * @tc.name testUint8ArrayTotal006
      * @tc.desc Verify typeof arr.at(0) is 'number'
@@ -130,6 +136,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.at(5) with out-of-bounds index is 'undefined'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0070
      * @tc.name testUint8ArrayTotal007
      * @tc.desc Verify typeof arr.at(5) with out-of-bounds index is 'undefined'
@@ -146,6 +153,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.slice() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0080
      * @tc.name testUint8ArrayTotal008
      * @tc.desc Verify typeof arr.slice() is 'object'
@@ -162,6 +170,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.map() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0090
      * @tc.name testUint8ArrayTotal009
      * @tc.desc Verify typeof arr.map() is 'object'
@@ -179,6 +188,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.filter() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0100
      * @tc.name testUint8ArrayTotal010
      * @tc.desc Verify typeof arr.filter() is 'object'
@@ -196,6 +206,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof Uint8Array.of() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0110
      * @tc.name testUint8ArrayTotal011
      * @tc.desc Verify typeof Uint8Array.of() is 'object'
@@ -212,6 +223,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof Uint8Array.from() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0120
      * @tc.name testUint8ArrayTotal012
      * @tc.desc Verify typeof Uint8Array.from() is 'object'
@@ -228,6 +240,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.entries() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0130
      * @tc.name testUint8ArrayTotal013
      * @tc.desc Verify typeof arr.entries() is 'object'
@@ -244,6 +257,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.fill() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0140
      * @tc.name testUint8ArrayTotal014
      * @tc.desc Verify typeof arr.fill() is 'object'
@@ -261,6 +275,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.copyWithin() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0150
      * @tc.name testUint8ArrayTotal015
      * @tc.desc Verify typeof arr.copyWithin() is 'object'
@@ -278,6 +293,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.every() is 'boolean'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0160
      * @tc.name testUint8ArrayTotal016
      * @tc.desc Verify typeof arr.every() is 'boolean'
@@ -295,6 +311,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.some() is 'boolean'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0170
      * @tc.name testUint8ArrayTotal017
      * @tc.desc Verify typeof arr.some() is 'boolean'
@@ -312,6 +329,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.forEach() is 'undefined'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0180
      * @tc.name testUint8ArrayTotal018
      * @tc.desc Verify typeof arr.forEach() is 'undefined'
@@ -330,6 +348,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.reduce() is 'number'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0190
      * @tc.name testUint8ArrayTotal019
      * @tc.desc Verify typeof arr.reduce() is 'number'
@@ -347,6 +366,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.find() is 'number'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0200
      * @tc.name testUint8ArrayTotal020
      * @tc.desc Verify typeof arr.find() is 'number'
@@ -364,6 +384,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.findIndex() is 'number'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0210
      * @tc.name testUint8ArrayTotal021
      * @tc.desc Verify typeof arr.findIndex() is 'number'
@@ -381,6 +402,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.includes() is 'boolean'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0220
      * @tc.name testUint8ArrayTotal022
      * @tc.desc Verify typeof arr.includes() is 'boolean'
@@ -398,6 +420,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.indexOf() is 'number'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0230
      * @tc.name testUint8ArrayTotal023
      * @tc.desc Verify typeof arr.indexOf() is 'number'
@@ -415,6 +438,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.join() is 'string'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0240
      * @tc.name testUint8ArrayTotal024
      * @tc.desc Verify typeof arr.join() is 'string'
@@ -432,6 +456,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.reverse() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0250
      * @tc.name testUint8ArrayTotal025
      * @tc.desc Verify typeof arr.reverse() is 'object'
@@ -450,6 +475,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.sort() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0260
      * @tc.name testUint8ArrayTotal026
      * @tc.desc Verify typeof arr.sort() is 'object'
@@ -468,6 +494,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.toReversed() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0270
      * @tc.name testUint8ArrayTotal027
      * @tc.desc Verify typeof arr.toReversed() is 'object'
@@ -485,6 +512,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.toSorted() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0280
      * @tc.name testUint8ArrayTotal028
      * @tc.desc Verify typeof arr.toSorted() is 'object'
@@ -502,6 +530,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.with() is 'object'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0290
      * @tc.name testUint8ArrayTotal029
      * @tc.desc Verify typeof arr.with() is 'object'
@@ -519,6 +548,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify typeof arr.set() is 'undefined'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0300
      * @tc.name testUint8ArrayTotal030
      * @tc.desc Verify typeof arr.set() is 'undefined'
@@ -537,6 +567,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.length is 0 for empty Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0310
      * @tc.name testUint8ArrayTotal031
      * @tc.desc Verify arr.length is 0 for empty Uint8Array
@@ -553,6 +584,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.length is 5 for Uint8Array(5)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0320
      * @tc.name testUint8ArrayTotal032
      * @tc.desc Verify arr.length is 5 for Uint8Array(5)
@@ -569,6 +601,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.length is 3 for Uint8Array([1,2,3])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0330
      * @tc.name testUint8ArrayTotal033
      * @tc.desc Verify arr.length is 3 for Uint8Array([1,2,3])
@@ -585,6 +618,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.length is 3 for Uint8Array.of(1,2,3)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0340
      * @tc.name testUint8ArrayTotal034
      * @tc.desc Verify arr.length is 3 for Uint8Array.of(1,2,3)
@@ -601,6 +635,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.length is 3 for Uint8Array.from([1,2,3])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0350
      * @tc.name testUint8ArrayTotal035
      * @tc.desc Verify arr.length is 3 for Uint8Array.from([1,2,3])
@@ -617,6 +652,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.length is 3 for subarray of length 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0360
      * @tc.name testUint8ArrayTotal036
      * @tc.desc Verify arr.length is 3 for subarray of length 3
@@ -634,6 +670,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.length is 0 for subarray(0,0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0370
      * @tc.name testUint8ArrayTotal037
      * @tc.desc Verify arr.length is 0 for subarray(0,0)
@@ -651,6 +688,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.byteOffset is 0 for Uint8Array(5)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0380
      * @tc.name testUint8ArrayTotal038
      * @tc.desc Verify arr.byteOffset is 0 for Uint8Array(5)
@@ -667,6 +705,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.byteOffset is 0 for Uint8Array([1,2,3])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0390
      * @tc.name testUint8ArrayTotal039
      * @tc.desc Verify arr.byteOffset is 0 for Uint8Array([1,2,3])
@@ -683,6 +722,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.byteOffset is 0 for Uint8Array.of(1,2,3)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0400
      * @tc.name testUint8ArrayTotal040
      * @tc.desc Verify arr.byteOffset is 0 for Uint8Array.of(1,2,3)
@@ -699,6 +739,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.byteOffset is 0 for Uint8Array.from([1,2,3])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0410
      * @tc.name testUint8ArrayTotal041
      * @tc.desc Verify arr.byteOffset is 0 for Uint8Array.from([1,2,3])
@@ -715,6 +756,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.byteOffset is 0 for subarray(0,3) from start
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0420
      * @tc.name testUint8ArrayTotal042
      * @tc.desc Verify arr.byteOffset is 0 for subarray(0,3) from start
@@ -732,6 +774,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.byteOffset is 2 for subarray(2,5)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0430
      * @tc.name testUint8ArrayTotal043
      * @tc.desc Verify arr.byteOffset is 2 for subarray(2,5)
@@ -749,6 +792,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.BYTES_PER_ELEMENT is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0440
      * @tc.name testUint8ArrayTotal044
      * @tc.desc Verify arr.BYTES_PER_ELEMENT is 1
@@ -765,6 +809,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array(5)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0450
      * @tc.name testUint8ArrayTotal045
      * @tc.desc Verify arr[0] is 0 for Uint8Array(5)
@@ -781,6 +826,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 42 for Uint8Array([42])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0460
      * @tc.name testUint8ArrayTotal046
      * @tc.desc Verify arr[0] is 42 for Uint8Array([42])
@@ -797,6 +843,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 1 for Uint8Array.of(1,2,3)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0470
      * @tc.name testUint8ArrayTotal047
      * @tc.desc Verify arr[0] is 1 for Uint8Array.of(1,2,3)
@@ -813,6 +860,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 1 for Uint8Array.from([1,2,3])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0480
      * @tc.name testUint8ArrayTotal048
      * @tc.desc Verify arr[0] is 1 for Uint8Array.from([1,2,3])
@@ -829,6 +877,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 255 for Uint8Array([255])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0490
      * @tc.name testUint8ArrayTotal049
      * @tc.desc Verify arr[0] is 255 for Uint8Array([255])
@@ -845,6 +894,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array([256]) (overflow)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0500
      * @tc.name testUint8ArrayTotal050
      * @tc.desc Verify arr[0] is 0 for Uint8Array([256]) (overflow)
@@ -861,6 +911,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 255 for Uint8Array([-1]) (underflow)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0510
      * @tc.name testUint8ArrayTotal051
      * @tc.desc Verify arr[0] is 255 for Uint8Array([-1]) (underflow)
@@ -877,6 +928,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 3 for Uint8Array([3.9]) (float truncation toward zero)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0520
      * @tc.name testUint8ArrayTotal052
      * @tc.desc Verify arr[0] is 3 for Uint8Array([3.9]) (float truncation toward zero)
@@ -893,6 +945,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify NaN input converts to 0 while following numeric input remains 7
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0530
      * @tc.name testUint8ArrayTotal053
      * @tc.desc Verify NaN input converts to 0 while following numeric input remains 7
@@ -910,6 +963,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array([0])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0540
      * @tc.name testUint8ArrayTotal054
      * @tc.desc Verify arr[0] is 0 for Uint8Array([0])
@@ -926,6 +980,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify boolean false converts to 0 and true converts to 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0550
      * @tc.name testUint8ArrayTotal055
      * @tc.desc Verify boolean false converts to 0 and true converts to 1
@@ -943,6 +998,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 1 for Uint8Array([1])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0560
      * @tc.name testUint8ArrayTotal056
      * @tc.desc Verify arr[0] is 1 for Uint8Array([1])
@@ -959,6 +1015,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify positive infinity converts to 0 without changing following value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0570
      * @tc.name testUint8ArrayTotal057
      * @tc.desc Verify positive infinity converts to 0 without changing following value
@@ -976,6 +1033,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify negative infinity converts to 0 without changing following value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0580
      * @tc.name testUint8ArrayTotal058
      * @tc.desc Verify negative infinity converts to 0 without changing following value
@@ -993,6 +1051,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 255 for Uint8Array([511])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0590
      * @tc.name testUint8ArrayTotal059
      * @tc.desc Verify arr[0] is 255 for Uint8Array([511])
@@ -1009,6 +1068,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify fractional values 0.5 and 1.5 truncate toward zero
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0600
      * @tc.name testUint8ArrayTotal060
      * @tc.desc Verify fractional values 0.5 and 1.5 truncate toward zero
@@ -1026,6 +1086,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify invalid parseInt converts to 0 while valid parseInt keeps value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0610
      * @tc.name testUint8ArrayTotal061
      * @tc.desc Verify invalid parseInt converts to 0 while valid parseInt keeps value
@@ -1043,6 +1104,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 1 for Uint8Array([1,2,3])[0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0620
      * @tc.name testUint8ArrayTotal062
      * @tc.desc Verify arr[0] is 1 for Uint8Array([1,2,3])[0]
@@ -1059,6 +1121,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[1] is 2 for Uint8Array([1,2,3])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0630
      * @tc.name testUint8ArrayTotal063
      * @tc.desc Verify arr[1] is 2 for Uint8Array([1,2,3])
@@ -1075,6 +1138,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[2] is 3 for Uint8Array([1,2,3])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0640
      * @tc.name testUint8ArrayTotal064
      * @tc.desc Verify arr[2] is 3 for Uint8Array([1,2,3])
@@ -1091,6 +1155,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[3] throws RangeError for out-of-bounds index on Uint8Array([1,2,3])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0650
      * @tc.name testUint8ArrayTotal065
      * @tc.desc Verify arr[3] throws RangeError for out-of-bounds index on Uint8Array([1,2,3])
@@ -1112,6 +1177,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[-1] throws RangeError for negative index on Uint8Array([1,2,3])
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0660
      * @tc.name testUint8ArrayTotal066
      * @tc.desc Verify arr[-1] throws RangeError for negative index on Uint8Array([1,2,3])
@@ -1133,6 +1199,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0670
      * @tc.name testUint8ArrayTotal067
      * @tc.desc Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=0
@@ -1150,6 +1217,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 255 for Uint8Array(5) after setting arr[0]=255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0680
      * @tc.name testUint8ArrayTotal068
      * @tc.desc Verify arr[0] is 255 for Uint8Array(5) after setting arr[0]=255
@@ -1167,6 +1235,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=256 (overflow)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0690
      * @tc.name testUint8ArrayTotal069
      * @tc.desc Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=256 (overflow)
@@ -1184,6 +1253,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 255 for Uint8Array(5) after setting arr[0]=-1 (underflow)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0700
      * @tc.name testUint8ArrayTotal070
      * @tc.desc Verify arr[0] is 255 for Uint8Array(5) after setting arr[0]=-1 (underflow)
@@ -1201,6 +1271,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 3 for Uint8Array(5) after setting arr[0]=3.9 (truncation)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0710
      * @tc.name testUint8ArrayTotal071
      * @tc.desc Verify arr[0] is 3 for Uint8Array(5) after setting arr[0]=3.9 (truncation)
@@ -1218,6 +1289,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=Number.NaN
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0720
      * @tc.name testUint8ArrayTotal072
      * @tc.desc Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=Number.NaN
@@ -1235,6 +1307,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=512
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0730
      * @tc.name testUint8ArrayTotal073
      * @tc.desc Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=512
@@ -1252,6 +1325,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=-256
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0740
      * @tc.name testUint8ArrayTotal074
      * @tc.desc Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=-256
@@ -1269,6 +1343,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 1 for Uint8Array(5) after setting arr[0]=1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0750
      * @tc.name testUint8ArrayTotal075
      * @tc.desc Verify arr[0] is 1 for Uint8Array(5) after setting arr[0]=1
@@ -1286,6 +1361,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=''0''
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0760
      * @tc.name testUint8ArrayTotal076
      * @tc.desc Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=''0''
@@ -1303,6 +1379,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 255 for Uint8Array(5) after setting arr[0]=''255''
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0770
      * @tc.name testUint8ArrayTotal077
      * @tc.desc Verify arr[0] is 255 for Uint8Array(5) after setting arr[0]=''255''
@@ -1320,6 +1397,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=''''
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0780
      * @tc.name testUint8ArrayTotal078
      * @tc.desc Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=''''
@@ -1337,6 +1415,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=''abc''
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0790
      * @tc.name testUint8ArrayTotal079
      * @tc.desc Verify arr[0] is 0 for Uint8Array(5) after setting arr[0]=''abc''
@@ -1354,6 +1433,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.fill(0) sets all elements to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0800
      * @tc.name testUint8ArrayTotal080
      * @tc.desc Verify arr.fill(0) sets all elements to 0
@@ -1373,6 +1453,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.fill(255) sets all elements to 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0810
      * @tc.name testUint8ArrayTotal081
      * @tc.desc Verify arr.fill(255) sets all elements to 255
@@ -1392,6 +1473,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.fill(0,1,2) fills partial range
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0820
      * @tc.name testUint8ArrayTotal082
      * @tc.desc Verify arr.fill(0,1,2) fills partial range
@@ -1411,6 +1493,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.copyWithin(0,1,2) copies elements within array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0830
      * @tc.name testUint8ArrayTotal083
      * @tc.desc Verify arr.copyWithin(0,1,2) copies elements within array
@@ -1428,6 +1511,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.every() returns true when all elements satisfy condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0840
      * @tc.name testUint8ArrayTotal084
      * @tc.desc Verify arr.every() returns true when all elements satisfy condition
@@ -1445,6 +1529,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.every() returns false when some elements fail condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0850
      * @tc.name testUint8ArrayTotal085
      * @tc.desc Verify arr.every() returns false when some elements fail condition
@@ -1462,6 +1547,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.some() returns true when at least one element satisfies condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0860
      * @tc.name testUint8ArrayTotal086
      * @tc.desc Verify arr.some() returns true when at least one element satisfies condition
@@ -1479,6 +1565,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.some() returns false when no element satisfies condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0870
      * @tc.name testUint8ArrayTotal087
      * @tc.desc Verify arr.some() returns false when no element satisfies condition
@@ -1496,6 +1583,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.forEach() iterates over all elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0880
      * @tc.name testUint8ArrayTotal088
      * @tc.desc Verify arr.forEach() iterates over all elements
@@ -1516,6 +1604,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.reduce() sums all elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0890
      * @tc.name testUint8ArrayTotal089
      * @tc.desc Verify arr.reduce() sums all elements
@@ -1533,6 +1622,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.find() returns first matching element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0900
      * @tc.name testUint8ArrayTotal090
      * @tc.desc Verify arr.find() returns first matching element
@@ -1550,6 +1640,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.find() returns undefined when no match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0910
      * @tc.name testUint8ArrayTotal091
      * @tc.desc Verify arr.find() returns undefined when no match
@@ -1567,6 +1658,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.findIndex() returns index of first matching element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0920
      * @tc.name testUint8ArrayTotal092
      * @tc.desc Verify arr.findIndex() returns index of first matching element
@@ -1584,6 +1676,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.findIndex() returns -1 when no match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0930
      * @tc.name testUint8ArrayTotal093
      * @tc.desc Verify arr.findIndex() returns -1 when no match
@@ -1601,6 +1694,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.findLast() returns last matching element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0940
      * @tc.name testUint8ArrayTotal094
      * @tc.desc Verify arr.findLast() returns last matching element
@@ -1618,6 +1712,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.findLastIndex() returns index of last matching element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0950
      * @tc.name testUint8ArrayTotal095
      * @tc.desc Verify arr.findLastIndex() returns index of last matching element
@@ -1635,6 +1730,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.includes() returns true for existing element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0960
      * @tc.name testUint8ArrayTotal096
      * @tc.desc Verify arr.includes() returns true for existing element
@@ -1652,6 +1748,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.includes() returns false for non-existing element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0970
      * @tc.name testUint8ArrayTotal097
      * @tc.desc Verify arr.includes() returns false for non-existing element
@@ -1669,6 +1766,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.indexOf() returns correct index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0980
      * @tc.name testUint8ArrayTotal098
      * @tc.desc Verify arr.indexOf() returns correct index
@@ -1686,6 +1784,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify arr.indexOf() returns -1 for non-existing element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0990
      * @tc.name testUint8ArrayTotal099
      * @tc.desc Verify arr.indexOf() returns -1 for non-existing element
@@ -1703,6 +1802,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify subarray(1,4).buffer is same as original buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_1000
      * @tc.name testUint8ArrayTotal100
      * @tc.desc Verify subarray(1,4).buffer is same as original buffer
@@ -1720,6 +1820,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify writing to subarray affects original array (shared buffer forward)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_1010
      * @tc.name testUint8ArrayTotal101
      * @tc.desc Verify writing to subarray affects original array (shared buffer forward)
@@ -1738,6 +1839,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify writing to original array affects subarray (shared buffer reverse)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_1020
      * @tc.name testUint8ArrayTotal102
      * @tc.desc Verify writing to original array affects subarray (shared buffer reverse)
@@ -1756,6 +1858,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify slice().buffer is different from original buffer (non-shared)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_1030
      * @tc.name testUint8ArrayTotal103
      * @tc.desc Verify slice().buffer is different from original buffer (non-shared)
@@ -1773,6 +1876,7 @@ public class Uint8ArrayTotal02Test extends BasTest {
 
     /**
      * Verify subarray(0,arr.length).byteOffset is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_1040
      * @tc.name testUint8ArrayTotal104
      * @tc.desc Verify subarray(0,arr.length).byteOffset is 0

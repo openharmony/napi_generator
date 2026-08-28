@@ -17,23 +17,8 @@ package basetype.uint8array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
 import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
 import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 
 import org.junit.jupiter.api.Test;
 
@@ -45,6 +30,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayTotal03Test extends BasTest {
     /**
      * Verify includes returns false when fromIndex equals length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0010
      * @tc.name testUint8ArrayTotal001
      * @tc.desc Verify includes returns false when fromIndex equals length
@@ -62,6 +48,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes returns false when fromIndex far exceeds length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0020
      * @tc.name testUint8ArrayTotal002
      * @tc.desc Verify includes returns false when fromIndex far exceeds length
@@ -79,9 +66,10 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes returns true when fromIndex is negative and abs(fromIndex) exce
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0030
      * @tc.name testUint8ArrayTotal003
-          * @tc.desc Verify includes returns true when fromIndex is negative and abs(fromIndex) exce
+     * @tc.desc Verify includes returns true when fromIndex is negative and abs(fromIndex) exce
      * eds length, fromIndex clamped to 0
      * @tc.type Function
      * @tc.size MediumTest
@@ -97,6 +85,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes returns true when fromIndex is negative and element exists in range
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0040
      * @tc.name testUint8ArrayTotal004
      * @tc.desc Verify includes returns true when fromIndex is negative and element exists in range
@@ -114,6 +103,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes returns false for non-existent element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0050
      * @tc.name testUint8ArrayTotal005
      * @tc.desc Verify includes returns false for non-existent element
@@ -131,6 +121,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes returns true for element at first index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0060
      * @tc.name testUint8ArrayTotal006
      * @tc.desc Verify includes returns true for element at first index
@@ -148,6 +139,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes returns true for element at last index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0070
      * @tc.name testUint8ArrayTotal007
      * @tc.desc Verify includes returns true for element at last index
@@ -165,6 +157,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes returns true for element at middle
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0080
      * @tc.name testUint8ArrayTotal008
      * @tc.desc Verify includes returns true for element at middle
@@ -182,6 +175,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes with fromIndex=0 returns true for existing element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0090
      * @tc.name testUint8ArrayTotal009
      * @tc.desc Verify includes with fromIndex=0 returns true for existing element
@@ -199,6 +193,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes with fromIndex=4 finds last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0100
      * @tc.name testUint8ArrayTotal010
      * @tc.desc Verify includes with fromIndex=4 finds last element
@@ -216,6 +211,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes with fromIndex=0 on single element array returns true
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0110
      * @tc.name testUint8ArrayTotal011
      * @tc.desc Verify includes with fromIndex=0 on single element array returns true
@@ -233,6 +229,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes with fromIndex=1 on single element array returns false
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0120
      * @tc.name testUint8ArrayTotal012
      * @tc.desc Verify includes with fromIndex=1 on single element array returns false
@@ -250,6 +247,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes returns true for zero value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0130
      * @tc.name testUint8ArrayTotal013
      * @tc.desc Verify includes returns true for zero value
@@ -267,6 +265,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes returns true for 255 max value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0140
      * @tc.name testUint8ArrayTotal014
      * @tc.desc Verify includes returns true for 255 max value
@@ -284,6 +283,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes returns true for value 128
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0150
      * @tc.name testUint8ArrayTotal015
      * @tc.desc Verify includes returns true for value 128
@@ -301,6 +301,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf returns -1 when fromIndex equals length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0160
      * @tc.name testUint8ArrayTotal016
      * @tc.desc Verify indexOf returns -1 when fromIndex equals length
@@ -318,6 +319,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf returns -1 when fromIndex far exceeds length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0170
      * @tc.name testUint8ArrayTotal017
      * @tc.desc Verify indexOf returns -1 when fromIndex far exceeds length
@@ -335,6 +337,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf returns 0 for first element with default fromIndex
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0180
      * @tc.name testUint8ArrayTotal018
      * @tc.desc Verify indexOf returns 0 for first element with default fromIndex
@@ -352,6 +355,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf returns 4 for last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0190
      * @tc.name testUint8ArrayTotal019
      * @tc.desc Verify indexOf returns 4 for last element
@@ -369,6 +373,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf returns 2 for middle element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0200
      * @tc.name testUint8ArrayTotal020
      * @tc.desc Verify indexOf returns 2 for middle element
@@ -386,6 +391,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf returns -1 for non-existent element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0210
      * @tc.name testUint8ArrayTotal021
      * @tc.desc Verify indexOf returns -1 for non-existent element
@@ -403,6 +409,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf returns first occurrence for duplicate values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0220
      * @tc.name testUint8ArrayTotal022
      * @tc.desc Verify indexOf returns first occurrence for duplicate values
@@ -420,6 +427,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf with fromIndex=2 skips earlier duplicate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0230
      * @tc.name testUint8ArrayTotal023
      * @tc.desc Verify indexOf with fromIndex=2 skips earlier duplicate
@@ -437,6 +445,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify lastIndexOf returns last occurrence for duplicate values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0240
      * @tc.name testUint8ArrayTotal024
      * @tc.desc Verify lastIndexOf returns last occurrence for duplicate values
@@ -454,6 +463,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify lastIndexOf returns -1 for non-existent element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0250
      * @tc.name testUint8ArrayTotal025
      * @tc.desc Verify lastIndexOf returns -1 for non-existent element
@@ -471,6 +481,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify lastIndexOf returns 4 for last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0260
      * @tc.name testUint8ArrayTotal026
      * @tc.desc Verify lastIndexOf returns 4 for last element
@@ -488,6 +499,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify lastIndexOf with fromIndex=0 returns first element if matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0270
      * @tc.name testUint8ArrayTotal027
      * @tc.desc Verify lastIndexOf with fromIndex=0 returns first element if matches
@@ -505,6 +517,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify lastIndexOf with negative fromIndex searches from offset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0280
      * @tc.name testUint8ArrayTotal028
      * @tc.desc Verify lastIndexOf with negative fromIndex searches from offset
@@ -522,9 +535,10 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf returns 0 when fromIndex is negative and abs(fromIndex) exceeds
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0290
      * @tc.name testUint8ArrayTotal029
-          * @tc.desc Verify indexOf returns 0 when fromIndex is negative and abs(fromIndex) exceeds
+     * @tc.desc Verify indexOf returns 0 when fromIndex is negative and abs(fromIndex) exceeds
      * length, fromIndex clamped to 0
      * @tc.type Function
      * @tc.size MediumTest
@@ -540,6 +554,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf with fromIndex=-2 finds element in last two positions
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0300
      * @tc.name testUint8ArrayTotal030
      * @tc.desc Verify indexOf with fromIndex=-2 finds element in last two positions
@@ -557,6 +572,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify lastIndexOf with fromIndex=-3 searches only first 3 positions from end
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0310
      * @tc.name testUint8ArrayTotal031
      * @tc.desc Verify lastIndexOf with fromIndex=-3 searches only first 3 positions from end
@@ -574,6 +590,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf works with 0 value on array containing zero
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0320
      * @tc.name testUint8ArrayTotal032
      * @tc.desc Verify indexOf works with 0 value on array containing zero
@@ -591,6 +608,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf works with 255 max value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0330
      * @tc.name testUint8ArrayTotal033
      * @tc.desc Verify indexOf works with 255 max value
@@ -608,6 +626,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify lastIndexOf works for single element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0340
      * @tc.name testUint8ArrayTotal034
      * @tc.desc Verify lastIndexOf works for single element array
@@ -625,6 +644,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf on empty array returns -1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0350
      * @tc.name testUint8ArrayTotal035
      * @tc.desc Verify indexOf on empty array returns -1
@@ -642,6 +662,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify includes on empty array returns false
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0360
      * @tc.name testUint8ArrayTotal036
      * @tc.desc Verify includes on empty array returns false
@@ -659,6 +680,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify lastIndexOf on empty array returns -1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0370
      * @tc.name testUint8ArrayTotal037
      * @tc.desc Verify lastIndexOf on empty array returns -1
@@ -676,6 +698,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify indexOf with fromIndex=-0 treated as 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0380
      * @tc.name testUint8ArrayTotal038
      * @tc.desc Verify indexOf with fromIndex=-0 treated as 0
@@ -693,6 +716,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify findIndex returns index of matching element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0390
      * @tc.name testUint8ArrayTotal039
      * @tc.desc Verify findIndex returns index of matching element
@@ -710,6 +734,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify findIndex returns -1 when no element matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0400
      * @tc.name testUint8ArrayTotal040
      * @tc.desc Verify findIndex returns -1 when no element matches
@@ -727,6 +752,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify find returns matching element value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0410
      * @tc.name testUint8ArrayTotal041
      * @tc.desc Verify find returns matching element value
@@ -744,6 +770,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify find returns undefined when no element matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0420
      * @tc.name testUint8ArrayTotal042
      * @tc.desc Verify find returns undefined when no element matches
@@ -761,6 +788,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify some returns true when at least one element matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0430
      * @tc.name testUint8ArrayTotal043
      * @tc.desc Verify some returns true when at least one element matches
@@ -778,6 +806,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify some returns false when no element matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0440
      * @tc.name testUint8ArrayTotal044
      * @tc.desc Verify some returns false when no element matches
@@ -795,6 +824,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify every returns true when all elements match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0450
      * @tc.name testUint8ArrayTotal045
      * @tc.desc Verify every returns true when all elements match
@@ -812,6 +842,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify every returns false when at least one element fails
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0460
      * @tc.name testUint8ArrayTotal046
      * @tc.desc Verify every returns false when at least one element fails
@@ -829,6 +860,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify Uint8Array.from([256]) overflow source truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0470
      * @tc.name testUint8ArrayTotal047
      * @tc.desc Verify Uint8Array.from([256]) overflow source truncates to 0
@@ -845,6 +877,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify Uint8Array.from([-1]) negative source wraps to 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0480
      * @tc.name testUint8ArrayTotal048
      * @tc.desc Verify Uint8Array.from([-1]) negative source wraps to 255
@@ -861,6 +894,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify Uint8Array.from([3.14]) float truncates to 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0490
      * @tc.name testUint8ArrayTotal049
      * @tc.desc Verify Uint8Array.from([3.14]) float truncates to 3
@@ -877,6 +911,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify Uint8Array.from([-3.14]) negative float truncates and wraps
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0500
      * @tc.name testUint8ArrayTotal050
      * @tc.desc Verify Uint8Array.from([-3.14]) negative float truncates and wraps
@@ -893,6 +928,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify Uint8Array.from([NaN]) source NaN truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0510
      * @tc.name testUint8ArrayTotal051
      * @tc.desc Verify Uint8Array.from([NaN]) source NaN truncates to 0
@@ -909,6 +945,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify Uint8Array.from([-Infinity]) source negative infinity truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0520
      * @tc.name testUint8ArrayTotal052
      * @tc.desc Verify Uint8Array.from([-Infinity]) source negative infinity truncates to 0
@@ -925,6 +962,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify Uint8Array.from([Infinity]) source positive infinity truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0530
      * @tc.name testUint8ArrayTotal053
      * @tc.desc Verify Uint8Array.from([Infinity]) source positive infinity truncates to 0
@@ -941,6 +979,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify constructor with negative int length -1 throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0540
      * @tc.name testUint8ArrayTotal054
      * @tc.desc Verify constructor with negative int length -1 throws RangeError
@@ -961,6 +1000,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify constructor with large negative int length -100 throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0550
      * @tc.name testUint8ArrayTotal055
      * @tc.desc Verify constructor with large negative int length -100 throws RangeError
@@ -981,6 +1021,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify constructor with negative number length -1.0 throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0560
      * @tc.name testUint8ArrayTotal056
      * @tc.desc Verify constructor with negative number length -1.0 throws RangeError
@@ -1001,6 +1042,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify constructor with ArrayBuffer offset exceeding buffer length throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0570
      * @tc.name testUint8ArrayTotal057
      * @tc.desc Verify constructor with ArrayBuffer offset exceeding buffer length throws RangeError
@@ -1022,6 +1064,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify constructor with ArrayBuffer length exceeding buffer throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0580
      * @tc.name testUint8ArrayTotal058
      * @tc.desc Verify constructor with ArrayBuffer length exceeding buffer throws RangeError
@@ -1043,6 +1086,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify constructor with ArrayBuffer offset+length exceeding buffer throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0590
      * @tc.name testUint8ArrayTotal059
      * @tc.desc Verify constructor with ArrayBuffer offset+length exceeding buffer throws RangeError
@@ -1064,6 +1108,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify constructor with negative ArrayBuffer offset throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0600
      * @tc.name testUint8ArrayTotal060
      * @tc.desc Verify constructor with negative ArrayBuffer offset throws RangeError
@@ -1085,6 +1130,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_get with negative index -1 returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0610
      * @tc.name testUint8ArrayTotal061
      * @tc.desc Verify $_get with negative index -1 returns undefined
@@ -1106,6 +1152,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_get with negative index -5 equals -length returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0620
      * @tc.name testUint8ArrayTotal062
      * @tc.desc Verify $_get with negative index -5 equals -length returns undefined
@@ -1127,6 +1174,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_get with negative index -6 equals -length-1 returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0630
      * @tc.name testUint8ArrayTotal063
      * @tc.desc Verify $_get with negative index -6 equals -length-1 returns undefined
@@ -1148,6 +1196,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_get with index 5 equals length returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0640
      * @tc.name testUint8ArrayTotal064
      * @tc.desc Verify $_get with index 5 equals length returns undefined
@@ -1169,6 +1218,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_get with index 6 equals length+1 returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0650
      * @tc.name testUint8ArrayTotal065
      * @tc.desc Verify $_get with index 6 equals length+1 returns undefined
@@ -1190,6 +1240,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_get with large positive index 100000 returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0660
      * @tc.name testUint8ArrayTotal066
      * @tc.desc Verify $_get with large positive index 100000 returns undefined
@@ -1211,6 +1262,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_get with large negative index -100000 returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0670
      * @tc.name testUint8ArrayTotal067
      * @tc.desc Verify $_get with large negative index -100000 returns undefined
@@ -1232,6 +1284,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with negative index -1 does not modify array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0680
      * @tc.name testUint8ArrayTotal068
      * @tc.desc Verify $_set with negative index -1 does not modify array
@@ -1253,6 +1306,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with negative index -5 equals -length does not modify array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0690
      * @tc.name testUint8ArrayTotal069
      * @tc.desc Verify $_set with negative index -5 equals -length does not modify array
@@ -1274,6 +1328,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with negative index -6 equals -length-1 does not modify array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0700
      * @tc.name testUint8ArrayTotal070
      * @tc.desc Verify $_set with negative index -6 equals -length-1 does not modify array
@@ -1295,6 +1350,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with index 5 equals length does not modify array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0710
      * @tc.name testUint8ArrayTotal071
      * @tc.desc Verify $_set with index 5 equals length does not modify array
@@ -1316,6 +1372,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with index 6 equals length+1 does not modify array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0720
      * @tc.name testUint8ArrayTotal072
      * @tc.desc Verify $_set with index 6 equals length+1 does not modify array
@@ -1337,6 +1394,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with large positive index 100000 does not modify array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0730
      * @tc.name testUint8ArrayTotal073
      * @tc.desc Verify $_set with large positive index 100000 does not modify array
@@ -1358,6 +1416,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with large negative index -100000 does not modify array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0740
      * @tc.name testUint8ArrayTotal074
      * @tc.desc Verify $_set with large negative index -100000 does not modify array
@@ -1379,6 +1438,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with value 256 overflows and truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0750
      * @tc.name testUint8ArrayTotal075
      * @tc.desc Verify $_set with value 256 overflows and truncates to 0
@@ -1396,6 +1456,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with value -1 wraps around to 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0760
      * @tc.name testUint8ArrayTotal076
      * @tc.desc Verify $_set with value -1 wraps around to 255
@@ -1413,6 +1474,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with value 512 multiple overflow wraps to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0770
      * @tc.name testUint8ArrayTotal077
      * @tc.desc Verify $_set with value 512 multiple overflow wraps to 0
@@ -1430,6 +1492,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with value -257 negative multiple wraps to 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0780
      * @tc.name testUint8ArrayTotal078
      * @tc.desc Verify $_set with value -257 negative multiple wraps to 255
@@ -1447,6 +1510,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with float value 3.14 truncates to 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0790
      * @tc.name testUint8ArrayTotal079
      * @tc.desc Verify $_set with float value 3.14 truncates to 3
@@ -1464,6 +1528,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with float value 255.9 truncates to 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0800
      * @tc.name testUint8ArrayTotal080
      * @tc.desc Verify $_set with float value 255.9 truncates to 255
@@ -1481,6 +1546,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify $_set with negative float -3.14 truncates and wraps to 253
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0810
      * @tc.name testUint8ArrayTotal081
      * @tc.desc Verify $_set with negative float -3.14 truncates and wraps to 253
@@ -1498,6 +1564,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify at with index 5 equals length returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0820
      * @tc.name testUint8ArrayTotal082
      * @tc.desc Verify at with index 5 equals length returns undefined
@@ -1515,6 +1582,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify at with index 6 equals length+1 returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0830
      * @tc.name testUint8ArrayTotal083
      * @tc.desc Verify at with index 6 equals length+1 returns undefined
@@ -1532,6 +1600,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify at with index -6 equals -length-1 returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0840
      * @tc.name testUint8ArrayTotal084
      * @tc.desc Verify at with index -6 equals -length-1 returns undefined
@@ -1549,6 +1618,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify at with large positive index 100000 returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0850
      * @tc.name testUint8ArrayTotal085
      * @tc.desc Verify at with large positive index 100000 returns undefined
@@ -1566,6 +1636,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify at with large negative index -100000 returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0860
      * @tc.name testUint8ArrayTotal086
      * @tc.desc Verify at with large negative index -100000 returns undefined
@@ -1583,6 +1654,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify with with index -6 equals -length-1 throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0870
      * @tc.name testUint8ArrayTotal087
      * @tc.desc Verify with with index -6 equals -length-1 throws RangeError
@@ -1604,6 +1676,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify with with index 5 equals length throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0880
      * @tc.name testUint8ArrayTotal088
      * @tc.desc Verify with with index 5 equals length throws RangeError
@@ -1625,6 +1698,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify with with index 6 equals length+1 throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0890
      * @tc.name testUint8ArrayTotal089
      * @tc.desc Verify with with index 6 equals length+1 throws RangeError
@@ -1646,6 +1720,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify with with large positive index 100000 throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0900
      * @tc.name testUint8ArrayTotal090
      * @tc.desc Verify with with large positive index 100000 throws RangeError
@@ -1667,6 +1742,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify with with large negative index -100000 throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0910
      * @tc.name testUint8ArrayTotal091
      * @tc.desc Verify with with large negative index -100000 throws RangeError
@@ -1688,6 +1764,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify set with negative offset -1 throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0920
      * @tc.name testUint8ArrayTotal092
      * @tc.desc Verify set with negative offset -1 throws RangeError
@@ -1709,6 +1786,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify set with offset+source length exceeding this throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0930
      * @tc.name testUint8ArrayTotal093
      * @tc.desc Verify set with offset+source length exceeding this throws RangeError
@@ -1730,6 +1808,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify set with offset equal to length throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0940
      * @tc.name testUint8ArrayTotal094
      * @tc.desc Verify set with offset equal to length throws RangeError
@@ -1751,6 +1830,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify set with large positive offset 100000 throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0950
      * @tc.name testUint8ArrayTotal095
      * @tc.desc Verify set with large positive offset 100000 throws RangeError
@@ -1772,6 +1852,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify set with large negative offset -100000 throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0960
      * @tc.name testUint8ArrayTotal096
      * @tc.desc Verify set with large negative offset -100000 throws RangeError
@@ -1793,6 +1874,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify set with source array exceeding total target length throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0970
      * @tc.name testUint8ArrayTotal097
      * @tc.desc Verify set with source array exceeding total target length throws RangeError
@@ -1814,6 +1896,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify set with Uint8Array source and offset exceeding throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0980
      * @tc.name testUint8ArrayTotal098
      * @tc.desc Verify set with Uint8Array source and offset exceeding throws RangeError
@@ -1835,6 +1918,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify copyWithin with negative target copies from 2nd last position
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_0990
      * @tc.name testUint8ArrayTotal099
      * @tc.desc Verify copyWithin with negative target copies from 2nd last position
@@ -1852,6 +1936,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify copyWithin with negative start copies from 2nd last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1000
      * @tc.name testUint8ArrayTotal100
      * @tc.desc Verify copyWithin with negative start copies from 2nd last element
@@ -1869,6 +1954,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify copyWithin with negative end excludes the last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1010
      * @tc.name testUint8ArrayTotal101
      * @tc.desc Verify copyWithin with negative end excludes the last element
@@ -1886,6 +1972,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify copyWithin with start far beyond length leaves array unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1020
      * @tc.name testUint8ArrayTotal102
      * @tc.desc Verify copyWithin with start far beyond length leaves array unchanged
@@ -1903,6 +1990,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify copyWithin with start greater than end leaves array unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1030
      * @tc.name testUint8ArrayTotal103
      * @tc.desc Verify copyWithin with start greater than end leaves array unchanged
@@ -1920,6 +2008,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify copyWithin with large negative start clamps to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1040
      * @tc.name testUint8ArrayTotal104
      * @tc.desc Verify copyWithin with large negative start clamps to 0
@@ -1937,6 +2026,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify copyWithin with negative target beyond start clamps to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1050
      * @tc.name testUint8ArrayTotal105
      * @tc.desc Verify copyWithin with negative target beyond start clamps to 0
@@ -1954,6 +2044,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify copyWithin with positive indices copies middle segment to front
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1060
      * @tc.name testUint8ArrayTotal106
      * @tc.desc Verify copyWithin with positive indices copies middle segment to front
@@ -1971,6 +2062,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify copyWithin with overlapping ranges copies correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1070
      * @tc.name testUint8ArrayTotal107
      * @tc.desc Verify copyWithin with overlapping ranges copies correctly
@@ -1988,6 +2080,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify fill with negative end clamps to 0, no fill
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1080
      * @tc.name testUint8ArrayTotal108
      * @tc.desc Verify fill with negative end clamps to 0, no fill
@@ -2005,6 +2098,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify fill with negative start replaces from that offset to end
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1090
      * @tc.name testUint8ArrayTotal109
      * @tc.desc Verify fill with negative start replaces from that offset to end
@@ -2022,6 +2116,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify fill with start greater than end leaves array unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1100
      * @tc.name testUint8ArrayTotal110
      * @tc.desc Verify fill with start greater than end leaves array unchanged
@@ -2039,6 +2134,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify fill with large overflow end clamps to length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1110
      * @tc.name testUint8ArrayTotal111
      * @tc.desc Verify fill with large overflow end clamps to length
@@ -2056,6 +2152,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify fill with large negative start clamps to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1120
      * @tc.name testUint8ArrayTotal112
      * @tc.desc Verify fill with large negative start clamps to 0
@@ -2073,6 +2170,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify fill on empty array with default indices does nothing
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1130
      * @tc.name testUint8ArrayTotal113
      * @tc.desc Verify fill on empty array with default indices does nothing
@@ -2090,6 +2188,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset mismatch with subarray byteOffset - offset must be multiple of element size
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1140
      * @tc.name testUint8ArrayTotal114
      * @tc.desc Verify ArrayBuffer offset mismatch with subarray byteOffset - offset must be multiple of element size
@@ -2107,6 +2206,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with negative begin takes last elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1150
      * @tc.name testUint8ArrayTotal115
      * @tc.desc Verify subarray with negative begin takes last elements
@@ -2124,6 +2224,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with negative begin and end selects elements between
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1160
      * @tc.name testUint8ArrayTotal116
      * @tc.desc Verify subarray with negative begin and end selects elements between
@@ -2141,6 +2242,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with begin greater than end returns empty
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1170
      * @tc.name testUint8ArrayTotal117
      * @tc.desc Verify subarray with begin greater than end returns empty
@@ -2158,6 +2260,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with begin and end equal returns empty
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1180
      * @tc.name testUint8ArrayTotal118
      * @tc.desc Verify subarray with begin and end equal returns empty
@@ -2175,6 +2278,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with begin=0 end=length returns full copy
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1190
      * @tc.name testUint8ArrayTotal119
      * @tc.desc Verify subarray with begin=0 end=length returns full copy
@@ -2192,6 +2296,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with begin=0 includes first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1200
      * @tc.name testUint8ArrayTotal120
      * @tc.desc Verify subarray with begin=0 includes first element
@@ -2209,6 +2314,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with begin=length-1 takes last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1210
      * @tc.name testUint8ArrayTotal121
      * @tc.desc Verify subarray with begin=length-1 takes last element
@@ -2226,6 +2332,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with begin=length returns empty
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1220
      * @tc.name testUint8ArrayTotal122
      * @tc.desc Verify subarray with begin=length returns empty
@@ -2243,6 +2350,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with begin far beyond length returns empty
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1230
      * @tc.name testUint8ArrayTotal123
      * @tc.desc Verify subarray with begin far beyond length returns empty
@@ -2260,6 +2368,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with begin=0 end far beyond length truncates to all elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1240
      * @tc.name testUint8ArrayTotal124
      * @tc.desc Verify subarray with begin=0 end far beyond length truncates to all elements
@@ -2277,6 +2386,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with large negative begin clamps to 0 and takes all
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1250
      * @tc.name testUint8ArrayTotal125
      * @tc.desc Verify subarray with large negative begin clamps to 0 and takes all
@@ -2294,6 +2404,7 @@ public class Uint8ArrayTotal03Test extends BasTest {
 
     /**
      * Verify subarray with large negative begin clamps to 0 and takes first 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL03_1260
      * @tc.name testUint8ArrayTotal126
      * @tc.desc Verify subarray with large negative begin clamps to 0 and takes first 2

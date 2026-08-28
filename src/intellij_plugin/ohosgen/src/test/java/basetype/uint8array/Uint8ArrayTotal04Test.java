@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayTotal04Test extends BasTest {
     /**
      * Verify sort changes first element from max to ascending first
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0010
      * @tc.name testUint8ArrayTotal04_001
      * @tc.desc Verify sort changes first element from max to ascending first
@@ -52,6 +53,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort changes last element to ascending last
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0020
      * @tc.name testUint8ArrayTotal04_002
      * @tc.desc Verify sort changes last element to ascending last
@@ -69,6 +71,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reverse changes first element to original last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0030
      * @tc.name testUint8ArrayTotal04_003
      * @tc.desc Verify reverse changes first element to original last element
@@ -86,6 +89,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reverse changes last element to original first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0040
      * @tc.name testUint8ArrayTotal04_004
      * @tc.desc Verify reverse changes last element to original first element
@@ -103,6 +107,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill changes all elements to fill value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0050
      * @tc.name testUint8ArrayTotal04_005
      * @tc.desc Verify fill changes all elements to fill value
@@ -120,6 +125,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill with start and end changes partial positions
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0060
      * @tc.name testUint8ArrayTotal04_006
      * @tc.desc Verify fill with start and end changes partial positions
@@ -137,6 +143,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify copyWithin changes target position to source start value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0070
      * @tc.name testUint8ArrayTotal04_007
      * @tc.desc Verify copyWithin changes target position to source start value
@@ -154,6 +161,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify copyWithin keeps source position value unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0080
      * @tc.name testUint8ArrayTotal04_008
      * @tc.desc Verify copyWithin keeps source position value unchanged
@@ -171,6 +179,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify set with FixedArray changes first element value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0090
      * @tc.name testUint8ArrayTotal04_009
      * @tc.desc Verify set with FixedArray changes first element value
@@ -188,6 +197,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify set with Uint8Array changes first element value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0100
      * @tc.name testUint8ArrayTotal04_010
      * @tc.desc Verify set with Uint8Array changes first element value
@@ -205,6 +215,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify $_set changes specified element value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0110
      * @tc.name testUint8ArrayTotal04_011
      * @tc.desc Verify $_set changes specified element value
@@ -222,6 +233,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort does not change length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0120
      * @tc.name testUint8ArrayTotal04_012
      * @tc.desc Verify sort does not change length
@@ -239,6 +251,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reverse does not change length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0130
      * @tc.name testUint8ArrayTotal04_013
      * @tc.desc Verify reverse does not change length
@@ -256,6 +269,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill does not change length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0140
      * @tc.name testUint8ArrayTotal04_014
      * @tc.desc Verify fill does not change length
@@ -273,6 +287,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify copyWithin does not change length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0150
      * @tc.name testUint8ArrayTotal04_015
      * @tc.desc Verify copyWithin does not change length
@@ -290,6 +305,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort keeps buffer reference unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0160
      * @tc.name testUint8ArrayTotal04_016
      * @tc.desc Verify sort keeps buffer reference unchanged
@@ -308,6 +324,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reverse keeps buffer reference unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0170
      * @tc.name testUint8ArrayTotal04_017
      * @tc.desc Verify reverse keeps buffer reference unchanged
@@ -326,6 +343,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill keeps buffer reference unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0180
      * @tc.name testUint8ArrayTotal04_018
      * @tc.desc Verify fill keeps buffer reference unchanged
@@ -344,6 +362,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify set keeps buffer reference unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0190
      * @tc.name testUint8ArrayTotal04_019
      * @tc.desc Verify set keeps buffer reference unchanged
@@ -362,6 +381,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort does not change byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0200
      * @tc.name testUint8ArrayTotal04_020
      * @tc.desc Verify sort does not change byteLength
@@ -379,6 +399,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify second fill overwrites first fill
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0210
      * @tc.name testUint8ArrayTotal04_021
      * @tc.desc Verify second fill overwrites first fill
@@ -397,6 +418,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill then reverse: full fill then reverse
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0220
      * @tc.name testUint8ArrayTotal04_022
      * @tc.desc Verify fill then reverse: full fill then reverse
@@ -415,6 +437,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort then reverse: ascending sort then reverse to descending
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0230
      * @tc.name testUint8ArrayTotal04_023
      * @tc.desc Verify sort then reverse: ascending sort then reverse to descending
@@ -433,6 +456,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify copyWithin then fill: copy then fill first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0240
      * @tc.name testUint8ArrayTotal04_024
      * @tc.desc Verify copyWithin then fill: copy then fill first element
@@ -451,6 +475,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill then copyWithin: fill then copy
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0250
      * @tc.name testUint8ArrayTotal04_025
      * @tc.desc Verify fill then copyWithin: fill then copy
@@ -469,6 +494,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill 0 then fill 255: overwrite all zeros with all 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0260
      * @tc.name testUint8ArrayTotal04_026
      * @tc.desc Verify fill 0 then fill 255: overwrite all zeros with all 255
@@ -487,6 +513,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort descending then reverse is equivalent to ascending
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0270
      * @tc.name testUint8ArrayTotal04_027
      * @tc.desc Verify sort descending then reverse is equivalent to ascending
@@ -505,6 +532,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reverse then sort: reverse then sort to ascending
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0280
      * @tc.name testUint8ArrayTotal04_028
      * @tc.desc Verify reverse then sort: reverse then sort to ascending
@@ -523,6 +551,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify partial fill then copyWithin: partial fill then copy
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0290
      * @tc.name testUint8ArrayTotal04_029
      * @tc.desc Verify partial fill then copyWithin: partial fill then copy
@@ -541,6 +570,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort then fill: sort then overwrite first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0300
      * @tc.name testUint8ArrayTotal04_030
      * @tc.desc Verify sort then fill: sort then overwrite first element
@@ -559,6 +589,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reverse then fill with negative end: reverse then fill last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0310
      * @tc.name testUint8ArrayTotal04_031
      * @tc.desc Verify reverse then fill with negative end: reverse then fill last element
@@ -577,6 +608,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill sort reverse triple combination
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0320
      * @tc.name testUint8ArrayTotal04_032
      * @tc.desc Verify fill sort reverse triple combination
@@ -596,6 +628,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reverse fill copyWithin triple combination
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0330
      * @tc.name testUint8ArrayTotal04_033
      * @tc.desc Verify reverse fill copyWithin triple combination
@@ -615,6 +648,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort reverse sort: sort reverse then sort restores ascending
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0340
      * @tc.name testUint8ArrayTotal04_034
      * @tc.desc Verify sort reverse sort: sort reverse then sort restores ascending
@@ -634,6 +668,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify copyWithin reverse fill compound chain
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0350
      * @tc.name testUint8ArrayTotal04_035
      * @tc.desc Verify copyWithin reverse fill compound chain
@@ -653,6 +688,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify forEach callback accumulates external int counter
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0360
      * @tc.name testUint8ArrayTotal04_036
      * @tc.desc Verify forEach callback accumulates external int counter
@@ -673,6 +709,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify forEach callback writes elements to external Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0370
      * @tc.name testUint8ArrayTotal04_037
      * @tc.desc Verify forEach callback writes elements to external Uint8Array
@@ -695,6 +732,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify map callback uses external number coefficient
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0380
      * @tc.name testUint8ArrayTotal04_038
      * @tc.desc Verify map callback uses external number coefficient
@@ -713,6 +751,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify filter callback references external number threshold
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0390
      * @tc.name testUint8ArrayTotal04_039
      * @tc.desc Verify filter callback references external number threshold
@@ -731,6 +770,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reduce callback accumulates and writes to external Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0400
      * @tc.name testUint8ArrayTotal04_040
      * @tc.desc Verify reduce callback accumulates and writes to external Uint8Array
@@ -753,6 +793,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify some callback modifies external boolean flag
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0410
      * @tc.name testUint8ArrayTotal04_041
      * @tc.desc Verify some callback modifies external boolean flag
@@ -777,6 +818,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify every callback modifies external int counter
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0420
      * @tc.name testUint8ArrayTotal04_042
      * @tc.desc Verify every callback modifies external int counter
@@ -798,6 +840,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify find callback reads external int offset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0430
      * @tc.name testUint8ArrayTotal04_043
      * @tc.desc Verify find callback reads external int offset
@@ -817,6 +860,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort compare function uses external int descending variable
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0440
      * @tc.name testUint8ArrayTotal04_044
      * @tc.desc Verify sort compare function uses external int descending variable
@@ -835,6 +879,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify forEach callback writes elements to external Uint8Array one by one
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0450
      * @tc.name testUint8ArrayTotal04_045
      * @tc.desc Verify forEach callback writes elements to external Uint8Array one by one
@@ -857,6 +902,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify map callback reads external FixedArray coefficient
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0460
      * @tc.name testUint8ArrayTotal04_046
      * @tc.desc Verify map callback reads external FixedArray coefficient
@@ -878,6 +924,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reduce callback modifies external Uint8Array storing squares
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0470
      * @tc.name testUint8ArrayTotal04_047
      * @tc.desc Verify reduce callback modifies external Uint8Array storing squares
@@ -900,6 +947,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify findLast callback writes to external int index variable
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0480
      * @tc.name testUint8ArrayTotal04_048
      * @tc.desc Verify findLast callback writes to external int index variable
@@ -924,6 +972,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify forEach double accumulates external int
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0490
      * @tc.name testUint8ArrayTotal04_049
      * @tc.desc Verify forEach double accumulates external int
@@ -944,6 +993,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify filter callback reads external int exclude value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0500
      * @tc.name testUint8ArrayTotal04_050
      * @tc.desc Verify filter callback reads external int exclude value
@@ -962,6 +1012,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify some callback reads external int mapped target value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0510
      * @tc.name testUint8ArrayTotal04_051
      * @tc.desc Verify some callback reads external int mapped target value
@@ -980,6 +1031,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify every callback reads external int breakpoint index to early terminate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0520
      * @tc.name testUint8ArrayTotal04_052
      * @tc.desc Verify every callback reads external int breakpoint index to early terminate
@@ -1002,6 +1054,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify findIndex callback writes to external Uint8Array recording accessed elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0530
      * @tc.name testUint8ArrayTotal04_053
      * @tc.desc Verify findIndex callback writes to external Uint8Array recording accessed elements
@@ -1025,6 +1078,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill 42 then at(0) reads fill value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0540
      * @tc.name testUint8ArrayTotal04_054
      * @tc.desc Verify fill 42 then at(0) reads fill value
@@ -1042,6 +1096,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify set then at reads set value at offset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0550
      * @tc.name testUint8ArrayTotal04_055
      * @tc.desc Verify set then at reads set value at offset
@@ -1059,6 +1114,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort then at reads ascending first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0560
      * @tc.name testUint8ArrayTotal04_056
      * @tc.desc Verify sort then at reads ascending first element
@@ -1076,6 +1132,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reverse then at reads reversed first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0570
      * @tc.name testUint8ArrayTotal04_057
      * @tc.desc Verify reverse then at reads reversed first element
@@ -1093,6 +1150,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill first element zero then indexOf(0) query
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0580
      * @tc.name testUint8ArrayTotal04_058
      * @tc.desc Verify fill first element zero then indexOf(0) query
@@ -1110,6 +1168,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify set then includes verification
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0590
      * @tc.name testUint8ArrayTotal04_059
      * @tc.desc Verify set then includes verification
@@ -1127,6 +1186,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify $_set then $_get value verification
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0600
      * @tc.name testUint8ArrayTotal04_060
      * @tc.desc Verify $_set then $_get value verification
@@ -1144,6 +1204,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify multiple $_set then at reads middle position
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0610
      * @tc.name testUint8ArrayTotal04_061
      * @tc.desc Verify multiple $_set then at reads middle position
@@ -1163,6 +1224,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify copyWithin then $_get verifies copy result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0620
      * @tc.name testUint8ArrayTotal04_062
      * @tc.desc Verify copyWithin then $_get verifies copy result
@@ -1180,6 +1242,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify set with Uint8Array source then $_get verification
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0630
      * @tc.name testUint8ArrayTotal04_063
      * @tc.desc Verify set with Uint8Array source then $_get verification
@@ -1198,6 +1261,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort then includes checks sorted array contains max value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0640
      * @tc.name testUint8ArrayTotal04_064
      * @tc.desc Verify sort then includes checks sorted array contains max value
@@ -1215,6 +1279,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill 77 then findLast verifies fill value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0650
      * @tc.name testUint8ArrayTotal04_065
      * @tc.desc Verify fill 77 then findLast verifies fill value
@@ -1233,6 +1298,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reverse then some checks original first element exists
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0660
      * @tc.name testUint8ArrayTotal04_066
      * @tc.desc Verify reverse then some checks original first element exists
@@ -1251,6 +1317,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sort then every checks ascending order
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0670
      * @tc.name testUint8ArrayTotal04_067
      * @tc.desc Verify sort then every checks ascending order
@@ -1271,6 +1338,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify forEach callback writing to next index element modifies array correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0680
      * @tc.name testUint8ArrayTotal04_068
      * @tc.desc Verify forEach callback writing to next index element modifies array correctly
@@ -1292,6 +1360,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify map callback modifying other array position works correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0690
      * @tc.name testUint8ArrayTotal04_069
      * @tc.desc Verify map callback modifying other array position works correctly
@@ -1314,6 +1383,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify reduce callback modifying array element works correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0700
      * @tc.name testUint8ArrayTotal04_070
      * @tc.desc Verify reduce callback modifying array element works correctly
@@ -1336,6 +1406,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify some callback modifying array element works correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0710
      * @tc.name testUint8ArrayTotal04_071
      * @tc.desc Verify some callback modifying array element works correctly
@@ -1358,6 +1429,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify every callback modifying array element works correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0720
      * @tc.name testUint8ArrayTotal04_072
      * @tc.desc Verify every callback modifying array element works correctly
@@ -1380,6 +1452,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify find callback modifying unvisited element works correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0730
      * @tc.name testUint8ArrayTotal04_073
      * @tc.desc Verify find callback modifying unvisited element works correctly
@@ -1402,6 +1475,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify forEach modification then re-traverse sum calculation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0740
      * @tc.name testUint8ArrayTotal04_074
      * @tc.desc Verify forEach modification then re-traverse sum calculation
@@ -1425,6 +1499,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify forEach callback with fill all elements works correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0750
      * @tc.name testUint8ArrayTotal04_075
      * @tc.desc Verify forEach callback with fill all elements works correctly
@@ -1446,6 +1521,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify some callback modification then at verification
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0760
      * @tc.name testUint8ArrayTotal04_076
      * @tc.desc Verify some callback modification then at verification
@@ -1469,6 +1545,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify findIndex callback setting other position works correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0770
      * @tc.name testUint8ArrayTotal04_077
      * @tc.desc Verify findIndex callback setting other position works correctly
@@ -1491,6 +1568,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify findLast callback setting other position works correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0780
      * @tc.name testUint8ArrayTotal04_078
      * @tc.desc Verify findLast callback setting other position works correctly
@@ -1514,6 +1592,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify forEach callback modifying previous element works correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0790
      * @tc.name testUint8ArrayTotal04_079
      * @tc.desc Verify forEach callback modifying previous element works correctly
@@ -1535,6 +1614,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify forEach set all to zero then reduce sum equals zero
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0800
      * @tc.name testUint8ArrayTotal04_080
      * @tc.desc Verify forEach set all to zero then reduce sum equals zero
@@ -1555,6 +1635,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify every callback modifying read element value works correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0810
      * @tc.name testUint8ArrayTotal04_081
      * @tc.desc Verify every callback modifying read element value works correctly
@@ -1579,6 +1660,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify some early termination and traversal count
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0820
      * @tc.name testUint8ArrayTotal04_082
      * @tc.desc Verify some early termination and traversal count
@@ -1600,6 +1682,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(256) truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0830
      * @tc.name testUint8ArrayTotal04_083
      * @tc.desc Verify fill(256) truncates to 0 for Uint8Array
@@ -1617,6 +1700,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(-1) wraps to 255 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0840
      * @tc.name testUint8ArrayTotal04_084
      * @tc.desc Verify fill(-1) wraps to 255 for Uint8Array
@@ -1634,6 +1718,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(3.14) truncates to 3 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0850
      * @tc.name testUint8ArrayTotal04_085
      * @tc.desc Verify fill(3.14) truncates to 3 for Uint8Array
@@ -1651,6 +1736,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(255.9) truncates to 255 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0860
      * @tc.name testUint8ArrayTotal04_086
      * @tc.desc Verify fill(255.9) truncates to 255 for Uint8Array
@@ -1668,6 +1754,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(Infinity) truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0870
      * @tc.name testUint8ArrayTotal04_087
      * @tc.desc Verify fill(Infinity) truncates to 0 for Uint8Array
@@ -1685,6 +1772,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(NaN) truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0880
      * @tc.name testUint8ArrayTotal04_088
      * @tc.desc Verify fill(NaN) truncates to 0 for Uint8Array
@@ -1702,6 +1790,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(-0) retains as 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0890
      * @tc.name testUint8ArrayTotal04_089
      * @tc.desc Verify fill(-0) retains as 0 for Uint8Array
@@ -1719,6 +1808,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(257) truncates to 1 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0900
      * @tc.name testUint8ArrayTotal04_090
      * @tc.desc Verify fill(257) truncates to 1 for Uint8Array
@@ -1736,6 +1826,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(0x100) hex overflow truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0910
      * @tc.name testUint8ArrayTotal04_091
      * @tc.desc Verify fill(0x100) hex overflow truncates to 0 for Uint8Array
@@ -1753,6 +1844,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(0xFF) hex max retains 255 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0920
      * @tc.name testUint8ArrayTotal04_092
      * @tc.desc Verify fill(0xFF) hex max retains 255 for Uint8Array
@@ -1770,6 +1862,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(-0.5) negative float truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0930
      * @tc.name testUint8ArrayTotal04_093
      * @tc.desc Verify fill(-0.5) negative float truncates to 0 for Uint8Array
@@ -1787,6 +1880,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(0o200) octal 128 retains for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0940
      * @tc.name testUint8ArrayTotal04_094
      * @tc.desc Verify fill(0o200) octal 128 retains for Uint8Array
@@ -1804,6 +1898,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(0b11111111) binary 255 retains for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0950
      * @tc.name testUint8ArrayTotal04_095
      * @tc.desc Verify fill(0b11111111) binary 255 retains for Uint8Array
@@ -1821,6 +1916,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(1e10) scientific notation large value truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0960
      * @tc.name testUint8ArrayTotal04_096
      * @tc.desc Verify fill(1e10) scientific notation large value truncates to 0
@@ -1838,6 +1934,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify fill(512) larger overflow truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0970
      * @tc.name testUint8ArrayTotal04_097
      * @tc.desc Verify fill(512) larger overflow truncates to 0 for Uint8Array
@@ -1855,6 +1952,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify set([256],0) truncates source value to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0980
      * @tc.name testUint8ArrayTotal04_098
      * @tc.desc Verify set([256],0) truncates source value to 0 for Uint8Array
@@ -1872,6 +1970,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify set(Uint8Array.of(257),0) truncates source to 1 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0990
      * @tc.name testUint8ArrayTotal04_099
      * @tc.desc Verify set(Uint8Array.of(257),0) truncates source to 1 for Uint8Array
@@ -1889,6 +1988,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify set([-1],0) negative source wraps to 255 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1000
      * @tc.name testUint8ArrayTotal04_100
      * @tc.desc Verify set([-1],0) negative source wraps to 255 for Uint8Array
@@ -1906,6 +2006,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify set([3.9],0) float source truncates to 3 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1010
      * @tc.name testUint8ArrayTotal04_101
      * @tc.desc Verify set([3.9],0) float source truncates to 3 for Uint8Array
@@ -1923,6 +2024,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify from([256]) truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1020
      * @tc.name testUint8ArrayTotal04_102
      * @tc.desc Verify from([256]) truncates to 0 for Uint8Array
@@ -1939,6 +2041,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify from([-1]) negative wraps to 255 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1030
      * @tc.name testUint8ArrayTotal04_103
      * @tc.desc Verify from([-1]) negative wraps to 255 for Uint8Array
@@ -1955,6 +2058,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify from([3.9]) float truncates to 3 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1040
      * @tc.name testUint8ArrayTotal04_104
      * @tc.desc Verify from([3.9]) float truncates to 3 for Uint8Array
@@ -1971,6 +2075,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify from([Infinity]) truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1050
      * @tc.name testUint8ArrayTotal04_105
      * @tc.desc Verify from([Infinity]) truncates to 0 for Uint8Array
@@ -1987,6 +2092,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify from([NaN]) truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1060
      * @tc.name testUint8ArrayTotal04_106
      * @tc.desc Verify from([NaN]) truncates to 0 for Uint8Array
@@ -2003,6 +2109,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify map callback returning 256 truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1070
      * @tc.name testUint8ArrayTotal04_107
      * @tc.desc Verify map callback returning 256 truncates to 0 for Uint8Array
@@ -2020,6 +2127,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify map callback returning -1 wraps to 255 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1080
      * @tc.name testUint8ArrayTotal04_108
      * @tc.desc Verify map callback returning -1 wraps to 255 for Uint8Array
@@ -2037,6 +2145,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify map callback returning 3.9 truncates to 3 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1090
      * @tc.name testUint8ArrayTotal04_109
      * @tc.desc Verify map callback returning 3.9 truncates to 3 for Uint8Array
@@ -2054,6 +2163,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify map callback returning Infinity truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1100
      * @tc.name testUint8ArrayTotal04_110
      * @tc.desc Verify map callback returning Infinity truncates to 0 for Uint8Array
@@ -2071,6 +2181,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify map callback returning NaN truncates to 0 for Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1110
      * @tc.name testUint8ArrayTotal04_111
      * @tc.desc Verify map callback returning NaN truncates to 0 for Uint8Array
@@ -2088,6 +2199,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify subarray view reflects parent set modification
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1120
      * @tc.name testUint8ArrayTotal04_112
      * @tc.desc Verify subarray view reflects parent set modification
@@ -2106,6 +2218,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify parent copyWithin affects child subarray view
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1130
      * @tc.name testUint8ArrayTotal04_113
      * @tc.desc Verify parent copyWithin affects child subarray view
@@ -2124,6 +2237,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify child set modifies parent view accordingly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1140
      * @tc.name testUint8ArrayTotal04_114
      * @tc.desc Verify child set modifies parent view accordingly
@@ -2142,6 +2256,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify multi-level subarray of subarray shares same buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1150
      * @tc.name testUint8ArrayTotal04_115
      * @tc.desc Verify multi-level subarray of subarray shares same buffer
@@ -2161,6 +2276,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify parent fill(0) clears all child view elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1160
      * @tc.name testUint8ArrayTotal04_116
      * @tc.desc Verify parent fill(0) clears all child view elements
@@ -2179,6 +2295,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify parent modification does not change child length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1170
      * @tc.name testUint8ArrayTotal04_117
      * @tc.desc Verify parent modification does not change child length
@@ -2197,6 +2314,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify sub-subarray of child still shares buffer with parent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1180
      * @tc.name testUint8ArrayTotal04_118
      * @tc.desc Verify sub-subarray of child still shares buffer with parent
@@ -2216,6 +2334,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify offset view child byteOffset reflects relative to original ArrayBuffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1190
      * @tc.name testUint8ArrayTotal04_119
      * @tc.desc Verify offset view child byteOffset reflects relative to original ArrayBuffer
@@ -2233,6 +2352,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify two independent Uint8Array different buffer writes do not affect each other
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1200
      * @tc.name testUint8ArrayTotal04_120
      * @tc.desc Verify two independent Uint8Array different buffer writes do not affect each other
@@ -2251,6 +2371,7 @@ public class Uint8ArrayTotal04Test extends BasTest {
 
     /**
      * Verify child set(FixedArray) propagates to parent view
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1210
      * @tc.name testUint8ArrayTotal04_121
      * @tc.desc Verify child set(FixedArray) propagates to parent view

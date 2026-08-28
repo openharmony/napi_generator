@@ -15,25 +15,10 @@
 
 package basetype.uint8array;
 
-import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
 import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
 import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
 import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +36,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayToLocaleString01Test extends BasTest {
     /**
      * Verify toLocaleString() with no parameters returns string
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_0100
      * @tc.name testUint8ArrayToLocaleString001
      * @tc.desc Verify toLocaleString() with no parameters returns string
@@ -68,6 +54,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString(locales) with single valid string parameter
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_0200
      * @tc.name testUint8ArrayToLocaleString002
      * @tc.desc Verify toLocaleString(locales) with single valid string parameter
@@ -85,6 +72,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString(undefined) with explicit undefined parameter
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_0300
      * @tc.name testUint8ArrayToLocaleString003
      * @tc.desc Verify toLocaleString(undefined) with explicit undefined parameter
@@ -102,6 +90,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString(locales, options) with two parameters
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_0400
      * @tc.name testUint8ArrayToLocaleString004
      * @tc.desc Verify toLocaleString(locales, options) with two parameters
@@ -120,6 +109,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString(undefined, options) with undefined locales and empty options
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_0500
      * @tc.name testUint8ArrayToLocaleString005
      * @tc.desc Verify toLocaleString(undefined, options) with undefined locales and empty options
@@ -138,6 +128,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString(undefined, undefined) with both parameters undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_0600
      * @tc.name testUint8ArrayToLocaleString006
      * @tc.desc Verify toLocaleString(undefined, undefined) with both parameters undefined
@@ -155,6 +146,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with zh-CN locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_0700
      * @tc.name testUint8ArrayToLocaleString007
      * @tc.desc Verify toLocaleString with zh-CN locale
@@ -172,6 +164,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with ja-JP locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_0800
      * @tc.name testUint8ArrayToLocaleString008
      * @tc.desc Verify toLocaleString with ja-JP locale
@@ -189,6 +182,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with de-DE locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_0900
      * @tc.name testUint8ArrayToLocaleString009
      * @tc.desc Verify toLocaleString with de-DE locale
@@ -206,6 +200,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with fr-FR locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_1000
      * @tc.name testUint8ArrayToLocaleString010
      * @tc.desc Verify toLocaleString with fr-FR locale
@@ -223,6 +218,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with ko-KR locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_1100
      * @tc.name testUint8ArrayToLocaleString011
      * @tc.desc Verify toLocaleString with ko-KR locale
@@ -240,6 +236,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with ar-SA locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_1200
      * @tc.name testUint8ArrayToLocaleString012
      * @tc.desc Verify toLocaleString with ar-SA locale
@@ -257,6 +254,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with th-TH locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_1300
      * @tc.name testUint8ArrayToLocaleString013
      * @tc.desc Verify toLocaleString with th-TH locale
@@ -274,6 +272,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with en-GB locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_1400
      * @tc.name testUint8ArrayToLocaleString014
      * @tc.desc Verify toLocaleString with en-GB locale
@@ -291,6 +290,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with es-ES locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_1500
      * @tc.name testUint8ArrayToLocaleString015
      * @tc.desc Verify toLocaleString with es-ES locale
@@ -308,6 +308,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with pt-BR locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_1600
      * @tc.name testUint8ArrayToLocaleString016
      * @tc.desc Verify toLocaleString with pt-BR locale
@@ -325,6 +326,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with ru-RU locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_1700
      * @tc.name testUint8ArrayToLocaleString017
      * @tc.desc Verify toLocaleString with ru-RU locale
@@ -342,6 +344,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with it-IT locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_1800
      * @tc.name testUint8ArrayToLocaleString018
      * @tc.desc Verify toLocaleString with it-IT locale
@@ -359,6 +362,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with pl-PL locale
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_1900
      * @tc.name testUint8ArrayToLocaleString019
      * @tc.desc Verify toLocaleString with pl-PL locale
@@ -376,6 +380,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with th-TH-u-nu-thai locale extension
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_2000
      * @tc.name testUint8ArrayToLocaleString020
      * @tc.desc Verify toLocaleString with th-TH-u-nu-thai locale extension
@@ -393,6 +398,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with de-DE-u-co-phonebk locale extension
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_2100
      * @tc.name testUint8ArrayToLocaleString021
      * @tc.desc Verify toLocaleString with de-DE-u-co-phonebk locale extension
@@ -410,6 +416,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with en-US-u-ca-buddhist locale extension
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_2200
      * @tc.name testUint8ArrayToLocaleString022
      * @tc.desc Verify toLocaleString with en-US-u-ca-buddhist locale extension
@@ -427,6 +434,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with ar-SA-u-nu-arab locale extension
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_2300
      * @tc.name testUint8ArrayToLocaleString023
      * @tc.desc Verify toLocaleString with ar-SA-u-nu-arab locale extension
@@ -444,6 +452,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with zh-CN-u-nu-hanidec locale extension
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_2400
      * @tc.name testUint8ArrayToLocaleString024
      * @tc.desc Verify toLocaleString with zh-CN-u-nu-hanidec locale extension
@@ -461,6 +470,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with ja-JP-u-ca-japanese locale extension
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_2500
      * @tc.name testUint8ArrayToLocaleString025
      * @tc.desc Verify toLocaleString with ja-JP-u-ca-japanese locale extension
@@ -478,6 +488,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with EN-US uppercase locale tag
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_2600
      * @tc.name testUint8ArrayToLocaleString026
      * @tc.desc Verify toLocaleString with EN-US uppercase locale tag
@@ -495,6 +506,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with i-default deprecated locale tag
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_2700
      * @tc.name testUint8ArrayToLocaleString027
      * @tc.desc Verify toLocaleString with i-default deprecated locale tag
@@ -516,6 +528,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with und undefined language tag
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_2800
      * @tc.name testUint8ArrayToLocaleString028
      * @tc.desc Verify toLocaleString with und undefined language tag
@@ -533,6 +546,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with zh-Hans-CN locale tag
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_2900
      * @tc.name testUint8ArrayToLocaleString029
      * @tc.desc Verify toLocaleString with zh-Hans-CN locale tag
@@ -550,6 +564,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with sr-RS locale tag
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_3000
      * @tc.name testUint8ArrayToLocaleString030
      * @tc.desc Verify toLocaleString with sr-RS locale tag
@@ -567,6 +582,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with en-US locale and locales array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_3100
      * @tc.name testUint8ArrayToLocaleString031
      * @tc.desc Verify toLocaleString with en-US locale and locales array
@@ -584,6 +600,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with zh-CN locale and locales array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_3200
      * @tc.name testUint8ArrayToLocaleString032
      * @tc.desc Verify toLocaleString with zh-CN locale and locales array
@@ -601,6 +618,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with multiple locales array fallback
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_3300
      * @tc.name testUint8ArrayToLocaleString033
      * @tc.desc Verify toLocaleString with multiple locales array fallback
@@ -618,6 +636,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with empty locales array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_3400
      * @tc.name testUint8ArrayToLocaleString034
      * @tc.desc Verify toLocaleString with empty locales array
@@ -635,6 +654,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with empty locales array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_3500
      * @tc.name testUint8ArrayToLocaleString035
      * @tc.desc Verify toLocaleString with empty locales array
@@ -652,6 +672,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with locales array containing multiple fallback locales
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_3600
      * @tc.name testUint8ArrayToLocaleString036
      * @tc.desc Verify toLocaleString with locales array containing multiple fallback locales
@@ -669,6 +690,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with style decimal option does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_3700
      * @tc.name testUint8ArrayToLocaleString037
      * @tc.desc Verify toLocaleString with style decimal option does not throw
@@ -688,6 +710,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with style currency and USD does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_3800
      * @tc.name testUint8ArrayToLocaleString038
      * @tc.desc Verify toLocaleString with style currency and USD does not throw
@@ -708,6 +731,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with style percent does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_3900
      * @tc.name testUint8ArrayToLocaleString039
      * @tc.desc Verify toLocaleString with style percent does not throw
@@ -727,6 +751,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with useGrouping true does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_4000
      * @tc.name testUint8ArrayToLocaleString040
      * @tc.desc Verify toLocaleString with useGrouping true does not throw
@@ -746,6 +771,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with useGrouping false does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_4100
      * @tc.name testUint8ArrayToLocaleString041
      * @tc.desc Verify toLocaleString with useGrouping false does not throw
@@ -765,6 +791,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumIntegerDigits 1 does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_4200
      * @tc.name testUint8ArrayToLocaleString042
      * @tc.desc Verify toLocaleString with minimumIntegerDigits 1 does not throw
@@ -784,6 +811,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumIntegerDigits 2 does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_4300
      * @tc.name testUint8ArrayToLocaleString043
      * @tc.desc Verify toLocaleString with minimumIntegerDigits 2 does not throw
@@ -803,6 +831,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumIntegerDigits 3 does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_4400
      * @tc.name testUint8ArrayToLocaleString044
      * @tc.desc Verify toLocaleString with minimumIntegerDigits 3 does not throw
@@ -822,6 +851,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumIntegerDigits 5 option does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_4500
      * @tc.name testUint8ArrayToLocaleString045
      * @tc.desc Verify toLocaleString with minimumIntegerDigits 5 option does not throw
@@ -841,6 +871,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumFractionDigits 0 option does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_4600
      * @tc.name testUint8ArrayToLocaleString046
      * @tc.desc Verify toLocaleString with minimumFractionDigits 0 option does not throw
@@ -860,6 +891,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumFractionDigits 2 does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_4700
      * @tc.name testUint8ArrayToLocaleString047
      * @tc.desc Verify toLocaleString with minimumFractionDigits 2 does not throw
@@ -879,6 +911,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumFractionDigits 3 option does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_4800
      * @tc.name testUint8ArrayToLocaleString048
      * @tc.desc Verify toLocaleString with minimumFractionDigits 3 option does not throw
@@ -898,6 +931,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with maximumFractionDigits 3 option does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_4900
      * @tc.name testUint8ArrayToLocaleString049
      * @tc.desc Verify toLocaleString with maximumFractionDigits 3 option does not throw
@@ -917,6 +951,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumFractionDigits 2 does not throw and maximumFractionDigits 4
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_5000
      * @tc.name testUint8ArrayToLocaleString050
      * @tc.desc Verify toLocaleString with minimumFractionDigits 2 does not throw and maximumFractionDigits 4
@@ -937,6 +972,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumFractionDigits 3 and maximumFractionDigits 5 options does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_5100
      * @tc.name testUint8ArrayToLocaleString051
      * @tc.desc Verify toLocaleString with minimumFractionDigits 3 and maximumFractionDigits 5 options does not throw
@@ -957,6 +993,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumSignificantDigits 1 does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_5200
      * @tc.name testUint8ArrayToLocaleString052
      * @tc.desc Verify toLocaleString with minimumSignificantDigits 1 does not throw
@@ -976,6 +1013,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with minimumSignificantDigits 2 does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_5300
      * @tc.name testUint8ArrayToLocaleString053
      * @tc.desc Verify toLocaleString with minimumSignificantDigits 2 does not throw
@@ -995,6 +1033,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with maximumSignificantDigits 1 option does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_5400
      * @tc.name testUint8ArrayToLocaleString054
      * @tc.desc Verify toLocaleString with maximumSignificantDigits 1 option does not throw
@@ -1014,6 +1053,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with maximumSignificantDigits 3 does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_5500
      * @tc.name testUint8ArrayToLocaleString055
      * @tc.desc Verify toLocaleString with maximumSignificantDigits 3 does not throw
@@ -1033,6 +1073,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with currencyDisplay symbol does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_5600
      * @tc.name testUint8ArrayToLocaleString056
      * @tc.desc Verify toLocaleString with currencyDisplay symbol does not throw
@@ -1054,6 +1095,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with currencyDisplay name option does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_5700
      * @tc.name testUint8ArrayToLocaleString057
      * @tc.desc Verify toLocaleString with currencyDisplay name option does not throw
@@ -1075,6 +1117,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with currencyDisplay name for EUR option does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_5800
      * @tc.name testUint8ArrayToLocaleString058
      * @tc.desc Verify toLocaleString with currencyDisplay name for EUR option does not throw
@@ -1096,6 +1139,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with notation scientific does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_5900
      * @tc.name testUint8ArrayToLocaleString059
      * @tc.desc Verify toLocaleString with notation scientific does not throw
@@ -1115,6 +1159,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with notation engineering does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_6000
      * @tc.name testUint8ArrayToLocaleString060
      * @tc.desc Verify toLocaleString with notation engineering does not throw
@@ -1134,6 +1179,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with notation compact does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_6100
      * @tc.name testUint8ArrayToLocaleString061
      * @tc.desc Verify toLocaleString with notation compact does not throw
@@ -1153,6 +1199,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with notation compact does not throw and compactDisplay long
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_6200
      * @tc.name testUint8ArrayToLocaleString062
      * @tc.desc Verify toLocaleString with notation compact does not throw and compactDisplay long
@@ -1173,6 +1220,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with localeMatcher lookup does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_6300
      * @tc.name testUint8ArrayToLocaleString063
      * @tc.desc Verify toLocaleString with localeMatcher lookup does not throw
@@ -1192,6 +1240,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
 
     /**
      * Verify toLocaleString with localeMatcher best fit does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING01_6400
      * @tc.name testUint8ArrayToLocaleString064
      * @tc.desc Verify toLocaleString with localeMatcher best fit does not throw

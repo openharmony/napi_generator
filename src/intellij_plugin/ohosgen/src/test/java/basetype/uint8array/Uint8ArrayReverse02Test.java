@@ -17,7 +17,6 @@ package basetype.uint8array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.Error;
 import basetype.common.Uint8Array;
 import basetype.common.RangeError;
 
@@ -37,6 +36,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayReverse02Test extends BasTest {
     /**
      * reverse() with no arguments returns the array itself (reference identity)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_0100
      * @tc.name testUint8ArrayReverse001
      * @tc.desc reverse() with no arguments returns the array itself (reference identity)
@@ -54,6 +54,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * reverse() with no arguments executes without throwing (no invalid args passed)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_0200
      * @tc.name testUint8ArrayReverse002
      * @tc.desc reverse() with no arguments executes without throwing (no invalid args passed)
@@ -77,6 +78,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify typeof reverse() return value is object for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_0300
      * @tc.name testUint8ArrayReverse003
      * @tc.desc Verify typeof reverse() return value is object for empty array
@@ -94,6 +96,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify typeof reverse() return value is object for non-empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_0400
      * @tc.name testUint8ArrayReverse004
      * @tc.desc Verify typeof reverse() return value is object for non-empty array
@@ -111,6 +114,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify reverse() return value instanceof Uint8Array is true for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_0500
      * @tc.name testUint8ArrayReverse005
      * @tc.desc Verify reverse() return value instanceof Uint8Array is true for empty array
@@ -128,6 +132,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify reverse() return value instanceof Uint8Array is true for non-empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_0600
      * @tc.name testUint8ArrayReverse006
      * @tc.desc Verify reverse() return value instanceof Uint8Array is true for non-empty array
@@ -145,6 +150,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify reverse() return value is not undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_0700
      * @tc.name testUint8ArrayReverse007
      * @tc.desc Verify reverse() return value is not undefined
@@ -162,6 +168,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify empty array after reverse() joins to empty string
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_0800
      * @tc.name testUint8ArrayReverse008
      * @tc.desc Verify empty array after reverse() joins to empty string
@@ -179,6 +186,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify single-element [0x80] content unchanged after reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_0900
      * @tc.name testUint8ArrayReverse009
      * @tc.desc Verify single-element [0x80] content unchanged after reverse()
@@ -196,6 +204,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0xFF, 0x00] after reverse() first and last swap, join is '0,255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1000
      * @tc.name testUint8ArrayReverse010
      * @tc.desc Verify [0xFF, 0x00] after reverse() first and last swap, join is '0,255'
@@ -213,6 +222,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x80, 0x7F] after reverse() swap, join is '127,128'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1100
      * @tc.name testUint8ArrayReverse011
      * @tc.desc Verify [0x80, 0x7F] after reverse() swap, join is '127,128'
@@ -230,6 +240,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0xFF, 0x00, 0x80] after reverse() join is '128,0,255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1200
      * @tc.name testUint8ArrayReverse012
      * @tc.desc Verify [0xFF, 0x00, 0x80] after reverse() join is '128,0,255'
@@ -247,6 +258,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x55, 0xAA] after reverse() join is '170,85'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1300
      * @tc.name testUint8ArrayReverse013
      * @tc.desc Verify [0x55, 0xAA] after reverse() join is '170,85'
@@ -264,6 +276,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x0F, 0xF0] after reverse() join is '240,15'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1400
      * @tc.name testUint8ArrayReverse014
      * @tc.desc Verify [0x0F, 0xF0] after reverse() join is '240,15'
@@ -281,6 +294,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [255, 0, 127] after reverse() join is '127,0,255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1500
      * @tc.name testUint8ArrayReverse015
      * @tc.desc Verify [255, 0, 127] after reverse() join is '127,0,255'
@@ -298,6 +312,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [1, 254] after reverse() join is '254,1'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1600
      * @tc.name testUint8ArrayReverse016
      * @tc.desc Verify [1, 254] after reverse() join is '254,1'
@@ -315,6 +330,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x00, 0x01, 0x02, 0x03] after reverse() join is '3,2,1,0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1700
      * @tc.name testUint8ArrayReverse017
      * @tc.desc Verify [0x00, 0x01, 0x02, 0x03] after reverse() join is '3,2,1,0'
@@ -332,6 +348,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [100, 200, 50, 150] after reverse() join is '150,50,200,100'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1800
      * @tc.name testUint8ArrayReverse018
      * @tc.desc Verify [100, 200, 50, 150] after reverse() join is '150,50,200,100'
@@ -349,6 +366,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [7, 7, 7] all-same array unchanged after reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1900
      * @tc.name testUint8ArrayReverse019
      * @tc.desc Verify [7, 7, 7] all-same array unchanged after reverse()
@@ -366,6 +384,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0, 0, 0, 0] all-zero array unchanged after reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2000
      * @tc.name testUint8ArrayReverse020
      * @tc.desc Verify [0, 0, 0, 0] all-zero array unchanged after reverse()
@@ -383,6 +402,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [255, 255, 255] all-max-value array unchanged after reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2100
      * @tc.name testUint8ArrayReverse021
      * @tc.desc Verify [255, 255, 255] all-max-value array unchanged after reverse()
@@ -400,6 +420,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [1, 2, 2, 1] even-length palindrome unchanged after reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2200
      * @tc.name testUint8ArrayReverse022
      * @tc.desc Verify [1, 2, 2, 1] even-length palindrome unchanged after reverse()
@@ -417,6 +438,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [1, 2, 1] odd-length palindrome unchanged after reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2300
      * @tc.name testUint8ArrayReverse023
      * @tc.desc Verify [1, 2, 1] odd-length palindrome unchanged after reverse()
@@ -434,6 +456,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [5, 4, 3, 2, 1, 0] descending becomes ascending after reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2400
      * @tc.name testUint8ArrayReverse024
      * @tc.desc Verify [5, 4, 3, 2, 1, 0] descending becomes ascending after reverse()
@@ -451,6 +474,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0xFE, 0x01, 0xFD, 0x02] after reverse() join is '2,253,1,254'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2500
      * @tc.name testUint8ArrayReverse025
      * @tc.desc Verify [0xFE, 0x01, 0xFD, 0x02] after reverse() join is '2,253,1,254'
@@ -468,6 +492,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x7F, 0x80, 0x81] after reverse() join is '129,128,127'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2600
      * @tc.name testUint8ArrayReverse026
      * @tc.desc Verify [0x7F, 0x80, 0x81] after reverse() join is '129,128,127'
@@ -485,6 +510,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x0F, 0xF0, 0xFF] after reverse() join is '255,240,15'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2700
      * @tc.name testUint8ArrayReverse027
      * @tc.desc Verify [0x0F, 0xF0, 0xFF] after reverse() join is '255,240,15'
@@ -502,6 +528,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [10, 20, 30, 40, 50] after reverse() join is '50,40,30,20,10'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2800
      * @tc.name testUint8ArrayReverse028
      * @tc.desc Verify [10, 20, 30, 40, 50] after reverse() join is '50,40,30,20,10'
@@ -519,6 +546,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x00, 0xFF, 0x7F] after reverse() join is '127,255,0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2900
      * @tc.name testUint8ArrayReverse029
      * @tc.desc Verify [0x00, 0xFF, 0x7F] after reverse() join is '127,255,0'
@@ -536,6 +564,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [1, 2, 4, 8, 16, 32, 64, 128] after reverse() join is '128,64,32,16,8,4,2,1'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3000
      * @tc.name testUint8ArrayReverse030
      * @tc.desc Verify [1, 2, 4, 8, 16, 32, 64, 128] after reverse() join is '128,64,32,16,8,4,2,1'
@@ -553,6 +582,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0xAA, 0x55, 0xAA, 0x55] alternating pattern after reverse() join is '85,170,85,170'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3100
      * @tc.name testUint8ArrayReverse031
      * @tc.desc Verify [0xAA, 0x55, 0xAA, 0x55] alternating pattern after reverse() join is '85,170,85,170'
@@ -570,6 +600,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x01, 0x10, 0x02, 0x20] after reverse() join is '32,2,16,1'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3200
      * @tc.name testUint8ArrayReverse032
      * @tc.desc Verify [0x01, 0x10, 0x02, 0x20] after reverse() join is '32,2,16,1'
@@ -587,6 +618,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0xE0, 0x1C, 0x03] after reverse() join is '3,28,224'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3300
      * @tc.name testUint8ArrayReverse033
      * @tc.desc Verify [0xE0, 0x1C, 0x03] after reverse() join is '3,28,224'
@@ -604,6 +636,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x0D, 0x0E, 0x0A, 0x0D] after reverse() join is '13,10,14,13'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3400
      * @tc.name testUint8ArrayReverse034
      * @tc.desc Verify [0x0D, 0x0E, 0x0A, 0x0D] after reverse() join is '13,10,14,13'
@@ -621,6 +654,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [255, 128, 0, 0, 128, 255] symmetric palindrome content unchanged after reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3500
      * @tc.name testUint8ArrayReverse035
      * @tc.desc Verify [255, 128, 0, 0, 128, 255] symmetric palindrome content unchanged after reverse()
@@ -638,6 +672,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x03, 0x0C, 0x30, 0xC0] after reverse() join is '192,48,12,3'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3600
      * @tc.name testUint8ArrayReverse036
      * @tc.desc Verify [0x03, 0x0C, 0x30, 0xC0] after reverse() join is '192,48,12,3'
@@ -655,6 +690,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify [0x0B, 0x0E, 0x0E, 0x0F] after reverse() join is '15,14,14,11'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3700
      * @tc.name testUint8ArrayReverse037
      * @tc.desc Verify [0x0B, 0x0E, 0x0E, 0x0F] after reverse() join is '15,14,14,11'
@@ -672,6 +708,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify six-element [0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5] after reverse() first index is 0xF5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3800
      * @tc.name testUint8ArrayReverse038
      * @tc.desc Verify six-element [0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5] after reverse() first index is 0xF5
@@ -689,6 +726,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify six-element array after reverse() last index is 0xF0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3900
      * @tc.name testUint8ArrayReverse039
      * @tc.desc Verify six-element array after reverse() last index is 0xF0
@@ -706,6 +744,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify six-element array after reverse() middle index [2] was 0xF2 now 0xF3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_4000
      * @tc.name testUint8ArrayReverse040
      * @tc.desc Verify six-element array after reverse() middle index [2] was 0xF2 now 0xF3
@@ -723,6 +762,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify four-element [0x10, 0x20, 0x30, 0x40] after reverse() index [0] was 0x10 now 0x40
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_4100
      * @tc.name testUint8ArrayReverse041
      * @tc.desc Verify four-element [0x10, 0x20, 0x30, 0x40] after reverse() index [0] was 0x10 now 0x40
@@ -740,6 +780,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify four-element array after reverse() index [3] was 0x40 now 0x10
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_4200
      * @tc.name testUint8ArrayReverse042
      * @tc.desc Verify four-element array after reverse() index [3] was 0x40 now 0x10
@@ -757,6 +798,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify ten-element sequential fill after reverse() first element is 9
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_4300
      * @tc.name testUint8ArrayReverse043
      * @tc.desc Verify ten-element sequential fill after reverse() first element is 9
@@ -774,6 +816,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify ten-element array after reverse() last element is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_4400
      * @tc.name testUint8ArrayReverse044
      * @tc.desc Verify ten-element array after reverse() last element is 0
@@ -791,6 +834,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify empty array after reverse() length remains 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_4500
      * @tc.name testUint8ArrayReverse045
      * @tc.desc Verify empty array after reverse() length remains 0
@@ -808,6 +852,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify single-element array after reverse() length remains 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_4600
      * @tc.name testUint8ArrayReverse046
      * @tc.desc Verify single-element array after reverse() length remains 1
@@ -825,6 +870,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify five-element array after reverse() length remains 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_4700
      * @tc.name testUint8ArrayReverse047
      * @tc.desc Verify five-element array after reverse() length remains 5
@@ -842,6 +888,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify hundred-element array after reverse() length remains 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_4800
      * @tc.name testUint8ArrayReverse048
      * @tc.desc Verify hundred-element array after reverse() length remains 100
@@ -859,6 +906,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify thousand-element array after reverse() length remains 1000
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_4900
      * @tc.name testUint8ArrayReverse049
      * @tc.desc Verify thousand-element array after reverse() length remains 1000
@@ -876,6 +924,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify empty array after reverse() byteLength remains 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_5000
      * @tc.name testUint8ArrayReverse050
      * @tc.desc Verify empty array after reverse() byteLength remains 0
@@ -893,6 +942,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify single-element array after reverse() byteLength remains 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_5100
      * @tc.name testUint8ArrayReverse051
      * @tc.desc Verify single-element array after reverse() byteLength remains 1
@@ -910,6 +960,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify five-element array after reverse() byteLength remains 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_5200
      * @tc.name testUint8ArrayReverse052
      * @tc.desc Verify five-element array after reverse() byteLength remains 5
@@ -927,6 +978,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify hundred-element array after reverse() byteLength remains 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_5300
      * @tc.name testUint8ArrayReverse053
      * @tc.desc Verify hundred-element array after reverse() byteLength remains 100
@@ -944,6 +996,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify thousand-element array after reverse() byteLength remains 1000
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_5400
      * @tc.name testUint8ArrayReverse054
      * @tc.desc Verify thousand-element array after reverse() byteLength remains 1000
@@ -961,6 +1014,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify empty array reverse() returns itself (reference identity ===)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_5500
      * @tc.name testUint8ArrayReverse055
      * @tc.desc Verify empty array reverse() returns itself (reference identity ===)
@@ -978,6 +1032,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of()-constructed array reverse() returns itself (reference identity ===)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_5600
      * @tc.name testUint8ArrayReverse056
      * @tc.desc Verify of()-constructed array reverse() returns itself (reference identity ===)
@@ -995,6 +1050,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify modifying first element of reverse() return value also modifies original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_5700
      * @tc.name testUint8ArrayReverse057
      * @tc.desc Verify modifying first element of reverse() return value also modifies original array
@@ -1013,6 +1069,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify double reverse() restores original content (swap permutation)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_5800
      * @tc.name testUint8ArrayReverse058
      * @tc.desc Verify double reverse() restores original content (swap permutation)
@@ -1031,6 +1088,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify triple reverse() is equivalent to single reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_5900
      * @tc.name testUint8ArrayReverse059
      * @tc.desc Verify triple reverse() is equivalent to single reverse()
@@ -1052,6 +1110,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify even-length array after double reverse() join restores original value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_6000
      * @tc.name testUint8ArrayReverse060
      * @tc.desc Verify even-length array after double reverse() join restores original value
@@ -1070,6 +1129,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify ArrayBuffer-constructed array after reverse() buffer reference unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_6100
      * @tc.name testUint8ArrayReverse061
      * @tc.desc Verify ArrayBuffer-constructed array after reverse() buffer reference unchanged
@@ -1091,6 +1151,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify ArrayBuffer-constructed array after reverse() buffer.byteLength unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_6200
      * @tc.name testUint8ArrayReverse062
      * @tc.desc Verify ArrayBuffer-constructed array after reverse() buffer.byteLength unchanged
@@ -1111,6 +1172,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify offset-constructed array after reverse() byteOffset unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_6300
      * @tc.name testUint8ArrayReverse063
      * @tc.desc Verify offset-constructed array after reverse() byteOffset unchanged
@@ -1132,6 +1194,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify two views sharing same buffer, reverse() one then the other reflects reversed result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_6400
      * @tc.name testUint8ArrayReverse064
      * @tc.desc Verify two views sharing same buffer, reverse() one then the other reflects reversed result
@@ -1154,6 +1217,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify after buffer view reverse(), reading other view via bracket shows reversed data
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_6500
      * @tc.name testUint8ArrayReverse065
      * @tc.desc Verify after buffer view reverse(), reading other view via bracket shows reversed data
@@ -1177,6 +1241,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify subarray view content synchronously reversed after parent reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_6600
      * @tc.name testUint8ArrayReverse066
      * @tc.desc Verify subarray view content synchronously reversed after parent reverse()
@@ -1199,6 +1264,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of()-constructed array after reverse() join is correct
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_6700
      * @tc.name testUint8ArrayReverse067
      * @tc.desc Verify of()-constructed array after reverse() join is correct
@@ -1216,6 +1282,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify from()-constructed array after reverse() join is correct
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_6800
      * @tc.name testUint8ArrayReverse068
      * @tc.desc Verify from()-constructed array after reverse() join is correct
@@ -1234,6 +1301,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify ArrayBuffer-constructed array after reverse() content is correct
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_6900
      * @tc.name testUint8ArrayReverse069
      * @tc.desc Verify ArrayBuffer-constructed array after reverse() content is correct
@@ -1256,6 +1324,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify copy-constructed array after reverse() join is correct
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7000
      * @tc.name testUint8ArrayReverse070
      * @tc.desc Verify copy-constructed array after reverse() join is correct
@@ -1274,6 +1343,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify empty ArrayBuffer-constructed array reverse() does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7100
      * @tc.name testUint8ArrayReverse071
      * @tc.desc Verify empty ArrayBuffer-constructed array reverse() does not throw
@@ -1298,6 +1368,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(256, 1) where 256 truncates to 0, after reverse() join is '1,0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7200
      * @tc.name testUint8ArrayReverse072
      * @tc.desc Verify of(256, 1) where 256 truncates to 0, after reverse() join is '1,0'
@@ -1315,6 +1386,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(-1, 2) where -1 wraps to 255, after reverse() join is '2,255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7300
      * @tc.name testUint8ArrayReverse073
      * @tc.desc Verify of(-1, 2) where -1 wraps to 255, after reverse() join is '2,255'
@@ -1332,6 +1404,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(0x100, 0x01) where 0x100 truncates to 0, after reverse() join is '1,0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7400
      * @tc.name testUint8ArrayReverse074
      * @tc.desc Verify of(0x100, 0x01) where 0x100 truncates to 0, after reverse() join is '1,0'
@@ -1349,6 +1422,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(-255, 0x80) where -255 wraps to 1, after reverse() join is '128,1'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7500
      * @tc.name testUint8ArrayReverse075
      * @tc.desc Verify of(-255, 0x80) where -255 wraps to 1, after reverse() join is '128,1'
@@ -1366,6 +1440,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(257, 0) where 257 truncates to 1, after reverse() join is '0,1'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7600
      * @tc.name testUint8ArrayReverse076
      * @tc.desc Verify of(257, 0) where 257 truncates to 1, after reverse() join is '0,1'
@@ -1383,6 +1458,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(511, 0xFF) where 511 truncates to 255, after reverse() join is '255,255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7700
      * @tc.name testUint8ArrayReverse077
      * @tc.desc Verify of(511, 0xFF) where 511 truncates to 255, after reverse() join is '255,255'
@@ -1400,6 +1476,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(-2, 3) where -2 wraps to 254, after reverse() join is '3,254'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7800
      * @tc.name testUint8ArrayReverse078
      * @tc.desc Verify of(-2, 3) where -2 wraps to 254, after reverse() join is '3,254'
@@ -1417,6 +1494,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(0x1FF, 0x80) where 0x1FF truncates to 0xFF, after reverse() join is '128,255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7900
      * @tc.name testUint8ArrayReverse079
      * @tc.desc Verify of(0x1FF, 0x80) where 0x1FF truncates to 0xFF, after reverse() join is '128,255'
@@ -1434,6 +1512,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(-256, 0x80) where -256 wraps to 0, after reverse() join is '128,0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8000
      * @tc.name testUint8ArrayReverse080
      * @tc.desc Verify of(-256, 0x80) where -256 wraps to 0, after reverse() join is '128,0'
@@ -1451,6 +1530,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(0xFFFFFF, 0x01) where 0xFFFFFF truncates to 0xFF, after reverse() join is '1,255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8100
      * @tc.name testUint8ArrayReverse081
      * @tc.desc Verify of(0xFFFFFF, 0x01) where 0xFFFFFF truncates to 0xFF, after reverse() join is '1,255'
@@ -1468,6 +1548,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(0x1FF, 0x200) both values truncated, after reverse() join is '0,255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8200
      * @tc.name testUint8ArrayReverse082
      * @tc.desc Verify of(0x1FF, 0x200) both values truncated, after reverse() join is '0,255'
@@ -1485,6 +1566,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify of(-128, 0x80) where -128 wraps to 128, after reverse() join is '128,128'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8300
      * @tc.name testUint8ArrayReverse083
      * @tc.desc Verify of(-128, 0x80) where -128 wraps to 128, after reverse() join is '128,128'
@@ -1502,6 +1584,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify thousand-element array reverse() does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8400
      * @tc.name testUint8ArrayReverse084
      * @tc.desc Verify thousand-element array reverse() does not throw
@@ -1525,6 +1608,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset-constructed array reverse() does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8500
      * @tc.name testUint8ArrayReverse085
      * @tc.desc Verify ArrayBuffer offset-constructed array reverse() does not throw
@@ -1554,6 +1638,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
 
     /**
      * Verify all-boundary-value array reverse() does not throw
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8600
      * @tc.name testUint8ArrayReverse086
      * @tc.desc Verify all-boundary-value array reverse() does not throw

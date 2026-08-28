@@ -18,7 +18,6 @@ package basetype.uint8array;
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.EntryResult;
-import basetype.common.Error;
 import basetype.common.Int32Array;
 import basetype.common.Uint8Array;
 import basetype.common.RangeError;
@@ -33,6 +32,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayToStringTest extends BasTest {
     /**
      * Verify toString() with no arguments returns comma-separated string
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0100
      * @tc.name testUint8ArrayToString001
      * @tc.desc Verify toString() with no arguments returns comma-separated string
@@ -50,6 +50,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on empty Uint8Array(0) returns empty string
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0200
      * @tc.name testUint8ArrayToString002
      * @tc.desc Verify toString on empty Uint8Array(0) returns empty string
@@ -67,6 +68,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on empty Uint8Array from literal empty array returns empty string
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0300
      * @tc.name testUint8ArrayToString003
      * @tc.desc Verify toString on empty Uint8Array from literal empty array returns empty string
@@ -84,6 +86,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array.of() empty returns empty string
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0400
      * @tc.name testUint8ArrayToString004
      * @tc.desc Verify toString on Uint8Array.of() empty returns empty string
@@ -101,6 +104,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array.from empty source returns empty string
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0500
      * @tc.name testUint8ArrayToString005
      * @tc.desc Verify toString on Uint8Array.from empty source returns empty string
@@ -118,6 +122,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array from zero-length ArrayBuffer returns empty string
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0600
      * @tc.name testUint8ArrayToString006
      * @tc.desc Verify toString on Uint8Array from zero-length ArrayBuffer returns empty string
@@ -136,13 +141,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with element 0 returns '0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0700
      * @tc.name testUint8ArrayToString007
      * @tc.desc Verify toString with element 0 returns '0'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString007() {
@@ -153,6 +159,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with max element 255 returns '255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0800
      * @tc.name testUint8ArrayToString008
      * @tc.desc Verify toString with max element 255 returns '255'
@@ -170,6 +177,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with mid value 127 returns '127'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_0900
      * @tc.name testUint8ArrayToString009
      * @tc.desc Verify toString with mid value 127 returns '127'
@@ -187,6 +195,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with element 128 returns '128'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1000
      * @tc.name testUint8ArrayToString010
      * @tc.desc Verify toString with element 128 returns '128'
@@ -204,13 +213,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with element 1 returns '1'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1100
      * @tc.name testUint8ArrayToString011
      * @tc.desc Verify toString with element 1 returns '1'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString011() {
@@ -221,6 +231,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with element 254 returns '254'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1200
      * @tc.name testUint8ArrayToString012
      * @tc.desc Verify toString with element 254 returns '254'
@@ -238,6 +249,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with overflow 256 truncates to 0 returns '0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1300
      * @tc.name testUint8ArrayToString013
      * @tc.desc Verify toString with overflow 256 truncates to 0 returns '0'
@@ -255,6 +267,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with -1 wraps to 255 returns '255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1400
      * @tc.name testUint8ArrayToString014
      * @tc.desc Verify toString with -1 wraps to 255 returns '255'
@@ -272,13 +285,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with hex literal 0x80 returns '128'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1500
      * @tc.name testUint8ArrayToString015
      * @tc.desc Verify toString with hex literal 0x80 returns '128'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString015() {
@@ -289,6 +303,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with hex max 0xFF returns '255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1600
      * @tc.name testUint8ArrayToString016
      * @tc.desc Verify toString with hex max 0xFF returns '255'
@@ -306,6 +321,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with hex overflow 0x100 returns '0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1700
      * @tc.name testUint8ArrayToString017
      * @tc.desc Verify toString with hex overflow 0x100 returns '0'
@@ -323,6 +339,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with scientific notation 1e2 returns '100'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1800
      * @tc.name testUint8ArrayToString018
      * @tc.desc Verify toString with scientific notation 1e2 returns '100'
@@ -340,13 +357,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with NaN converts to 0 returns '0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_1900
      * @tc.name testUint8ArrayToString019
      * @tc.desc Verify toString with NaN converts to 0 returns '0'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString019() {
@@ -357,6 +375,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with float 3.5 truncates to 3 returns '3'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2000
      * @tc.name testUint8ArrayToString020
      * @tc.desc Verify toString with float 3.5 truncates to 3 returns '3'
@@ -374,6 +393,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with negative float -3.5 wraps to 253 returns '253'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2100
      * @tc.name testUint8ArrayToString021
      * @tc.desc Verify toString with negative float -3.5 wraps to 253 returns '253'
@@ -391,6 +411,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with -0 converts to 0 returns '0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2200
      * @tc.name testUint8ArrayToString022
      * @tc.desc Verify toString with -0 converts to 0 returns '0'
@@ -408,13 +429,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with binary literal 0b11111111 returns '255'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2300
      * @tc.name testUint8ArrayToString023
      * @tc.desc Verify toString with binary literal 0b11111111 returns '255'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString023() {
@@ -425,6 +447,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with float integer 1.0 returns '1'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2400
      * @tc.name testUint8ArrayToString024
      * @tc.desc Verify toString with float integer 1.0 returns '1'
@@ -442,6 +465,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with -128 wraps to 128 returns '128'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2500
      * @tc.name testUint8ArrayToString025
      * @tc.desc Verify toString with -128 wraps to 128 returns '128'
@@ -459,6 +483,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with -255 wraps to 1 returns '1'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2600
      * @tc.name testUint8ArrayToString026
      * @tc.desc Verify toString with -255 wraps to 1 returns '1'
@@ -476,13 +501,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with mixed boundary values [0,255,127,128]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2700
      * @tc.name testUint8ArrayToString027
      * @tc.desc Verify toString with mixed boundary values [0,255,127,128]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString027() {
@@ -493,6 +519,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with all overflow/wrap elements [256,-1,0x100]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2800
      * @tc.name testUint8ArrayToString028
      * @tc.desc Verify toString with all overflow/wrap elements [256,-1,0x100]
@@ -510,6 +537,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with all zero elements [0,0,0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_2900
      * @tc.name testUint8ArrayToString029
      * @tc.desc Verify toString with all zero elements [0,0,0]
@@ -527,6 +555,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with all max elements [255,255,255]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3000
      * @tc.name testUint8ArrayToString030
      * @tc.desc Verify toString with all max elements [255,255,255]
@@ -544,13 +573,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with ten consecutive elements [1..10]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3100
      * @tc.name testUint8ArrayToString031
      * @tc.desc Verify toString with ten consecutive elements [1..10]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString031() {
@@ -561,6 +591,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with negative, mid and overflow mix [-128,127,256]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3200
      * @tc.name testUint8ArrayToString032
      * @tc.desc Verify toString with negative, mid and overflow mix [-128,127,256]
@@ -578,6 +609,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with five zero elements [0,0,0,0,0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3300
      * @tc.name testUint8ArrayToString033
      * @tc.desc Verify toString with five zero elements [0,0,0,0,0]
@@ -595,6 +627,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with float truncation combination [3.5,2.7]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3400
      * @tc.name testUint8ArrayToString034
      * @tc.desc Verify toString with float truncation combination [3.5,2.7]
@@ -612,13 +645,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with hex boundary combination [0x7F,0x80,0xFF]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3500
      * @tc.name testUint8ArrayToString035
      * @tc.desc Verify toString with hex boundary combination [0x7F,0x80,0xFF]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString035() {
@@ -629,6 +663,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with scientific notation combination [1e1,2e1,3e1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3600
      * @tc.name testUint8ArrayToString036
      * @tc.desc Verify toString with scientific notation combination [1e1,2e1,3e1]
@@ -646,6 +681,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with partial overflow combination [100,200,300]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3700
      * @tc.name testUint8ArrayToString037
      * @tc.desc Verify toString with partial overflow combination [100,200,300]
@@ -663,6 +699,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with multiple negative wrap combination [-1,-2,-3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3800
      * @tc.name testUint8ArrayToString038
      * @tc.desc Verify toString with multiple negative wrap combination [-1,-2,-3]
@@ -680,13 +717,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with NaN and float combination [NaN,3.5,2.7]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_3900
      * @tc.name testUint8ArrayToString039
      * @tc.desc Verify toString with NaN and float combination [NaN,3.5,2.7]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString039() {
@@ -697,6 +735,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with binary literal combination [0b1010,0b1111]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4000
      * @tc.name testUint8ArrayToString040
      * @tc.desc Verify toString with binary literal combination [0b1010,0b1111]
@@ -714,6 +753,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with large overflow combination [1000,2000,3000]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4100
      * @tc.name testUint8ArrayToString041
      * @tc.desc Verify toString with large overflow combination [1000,2000,3000]
@@ -731,6 +771,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with -0 and 0 combination [-0,0,-0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4200
      * @tc.name testUint8ArrayToString042
      * @tc.desc Verify toString with -0 and 0 combination [-0,0,-0]
@@ -748,13 +789,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with decimal precision combination [0.1,0.9,1.1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4300
      * @tc.name testUint8ArrayToString043
      * @tc.desc Verify toString with decimal precision combination [0.1,0.9,1.1]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString043() {
@@ -765,6 +807,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with different construction from ArrayBuffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4400
      * @tc.name testUint8ArrayToString044
      * @tc.desc Verify toString with different construction from ArrayBuffer
@@ -786,13 +829,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array from ArrayBuffer with byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4500
      * @tc.name testUint8ArrayToString045
      * @tc.desc Verify toString on Uint8Array from ArrayBuffer with byteOffset
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString045() {
@@ -807,6 +851,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array.of with multiple values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4600
      * @tc.name testUint8ArrayToString046
      * @tc.desc Verify toString on Uint8Array.of with multiple values
@@ -824,6 +869,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array.from with mapFn
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4700
      * @tc.name testUint8ArrayToString047
      * @tc.desc Verify toString on Uint8Array.from with mapFn
@@ -841,6 +887,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array from existing Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4800
      * @tc.name testUint8ArrayToString048
      * @tc.desc Verify toString on Uint8Array from existing Uint8Array
@@ -859,13 +906,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array from TypedArray
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_4900
      * @tc.name testUint8ArrayToString049
      * @tc.desc Verify toString on Uint8Array from TypedArray
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString049() {
@@ -877,6 +925,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array from Array with overflow
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5000
      * @tc.name testUint8ArrayToString050
      * @tc.desc Verify toString on Uint8Array from Array with overflow
@@ -894,6 +943,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array from Array with negative values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5100
      * @tc.name testUint8ArrayToString051
      * @tc.desc Verify toString on Uint8Array from Array with negative values
@@ -911,6 +961,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array from Array with float values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5200
      * @tc.name testUint8ArrayToString052
      * @tc.desc Verify toString on Uint8Array from Array with float values
@@ -928,13 +979,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array from Array with NaN and Infinity
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5300
      * @tc.name testUint8ArrayToString053
      * @tc.desc Verify toString on Uint8Array from Array with NaN and Infinity
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString053() {
@@ -945,6 +997,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on Uint8Array from Array with decimal values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5400
      * @tc.name testUint8ArrayToString054
      * @tc.desc Verify toString on Uint8Array from Array with decimal values
@@ -962,13 +1015,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after slice operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5500
      * @tc.name testUint8ArrayToString055
      * @tc.desc Verify toString after slice operation
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString055() {
@@ -980,6 +1034,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after filter operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5600
      * @tc.name testUint8ArrayToString056
      * @tc.desc Verify toString after filter operation
@@ -998,13 +1053,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after map operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5700
      * @tc.name testUint8ArrayToString057
      * @tc.desc Verify toString after map operation
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString057() {
@@ -1016,6 +1072,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after reverse operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5800
      * @tc.name testUint8ArrayToString058
      * @tc.desc Verify toString after reverse operation
@@ -1034,6 +1091,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after sort operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_5900
      * @tc.name testUint8ArrayToString059
      * @tc.desc Verify toString after sort operation
@@ -1052,6 +1110,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after fill operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6000
      * @tc.name testUint8ArrayToString060
      * @tc.desc Verify toString after fill operation
@@ -1070,13 +1129,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after copyWithin operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6100
      * @tc.name testUint8ArrayToString061
      * @tc.desc Verify toString after copyWithin operation
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString061() {
@@ -1088,6 +1148,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after set operation from array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6200
      * @tc.name testUint8ArrayToString062
      * @tc.desc Verify toString after set operation from array
@@ -1106,6 +1167,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after set operation from TypedArray
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6300
      * @tc.name testUint8ArrayToString063
      * @tc.desc Verify toString after set operation from TypedArray
@@ -1125,6 +1187,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after toReversed operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6400
      * @tc.name testUint8ArrayToString064
      * @tc.desc Verify toString after toReversed operation
@@ -1143,13 +1206,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after toSorted operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6500
      * @tc.name testUint8ArrayToString065
      * @tc.desc Verify toString after toSorted operation
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString065() {
@@ -1161,6 +1225,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after index assignment with boundary values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6600
      * @tc.name testUint8ArrayToString066
      * @tc.desc Verify toString after index assignment with boundary values
@@ -1181,6 +1246,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after forEach modification
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6700
      * @tc.name testUint8ArrayToString067
      * @tc.desc Verify toString after forEach modification
@@ -1201,6 +1267,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after reduce operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6800
      * @tc.name testUint8ArrayToString068
      * @tc.desc Verify toString after reduce operation
@@ -1218,13 +1285,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after reduceRight operation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_6900
      * @tc.name testUint8ArrayToString069
      * @tc.desc Verify toString after reduceRight operation
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString069() {
@@ -1235,6 +1303,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after entries iteration
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7000
      * @tc.name testUint8ArrayToString070
      * @tc.desc Verify toString after entries iteration
@@ -1256,13 +1325,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString returns string type
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7100
      * @tc.name testUint8ArrayToString071
      * @tc.desc Verify toString returns string type
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString071() {
@@ -1273,6 +1343,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString result contains commas for multi-element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7200
      * @tc.name testUint8ArrayToString072
      * @tc.desc Verify toString result contains commas for multi-element array
@@ -1291,6 +1362,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString result does not contain commas for single element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7300
      * @tc.name testUint8ArrayToString073
      * @tc.desc Verify toString result does not contain commas for single element array
@@ -1309,6 +1381,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString result does not contain trailing comma
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7400
      * @tc.name testUint8ArrayToString074
      * @tc.desc Verify toString result does not contain trailing comma
@@ -1327,13 +1400,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with large overflow 999 truncates to 231
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7500
      * @tc.name testUint8ArrayToString075
      * @tc.desc Verify toString with large overflow 999 truncates to 231
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString075() {
@@ -1344,6 +1418,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with negative overflow -256 wraps to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7600
      * @tc.name testUint8ArrayToString076
      * @tc.desc Verify toString with negative overflow -256 wraps to 0
@@ -1361,6 +1436,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with float 0.999 truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7700
      * @tc.name testUint8ArrayToString077
      * @tc.desc Verify toString with float 0.999 truncates to 0
@@ -1378,6 +1454,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with negative float -0.999 truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7800
      * @tc.name testUint8ArrayToString078
      * @tc.desc Verify toString with negative float -0.999 truncates to 0
@@ -1395,13 +1472,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with Infinity converts to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_7900
      * @tc.name testUint8ArrayToString079
      * @tc.desc Verify toString with Infinity converts to 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString079() {
@@ -1412,6 +1490,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with -Infinity converts to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8000
      * @tc.name testUint8ArrayToString080
      * @tc.desc Verify toString with -Infinity converts to 0
@@ -1429,6 +1508,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with very small negative -1e-10 truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8100
      * @tc.name testUint8ArrayToString081
      * @tc.desc Verify toString with very small negative -1e-10 truncates to 0
@@ -1446,13 +1526,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on view from same ArrayBuffer reflects changes
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8200
      * @tc.name testUint8ArrayToString082
      * @tc.desc Verify toString on view from same ArrayBuffer reflects changes
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString082() {
@@ -1466,6 +1547,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on subarray view reflects original changes
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8300
      * @tc.name testUint8ArrayToString083
      * @tc.desc Verify toString on subarray view reflects original changes
@@ -1485,6 +1567,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on slice is independent from original
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8400
      * @tc.name testUint8ArrayToString084
      * @tc.desc Verify toString on slice is independent from original
@@ -1504,6 +1587,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on buffer with offset view
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8500
      * @tc.name testUint8ArrayToString085
      * @tc.desc Verify toString on buffer with offset view
@@ -1528,13 +1612,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on multiple views of same buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8600
      * @tc.name testUint8ArrayToString086
      * @tc.desc Verify toString on multiple views of same buffer
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString086() {
@@ -1550,13 +1635,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with Number.MAX_VALUE truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8700
      * @tc.name testUint8ArrayToString087
      * @tc.desc Verify toString with Number.MAX_VALUE truncates to 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString087() {
@@ -1567,6 +1653,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with Number.MIN_VALUE truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8800
      * @tc.name testUint8ArrayToString088
      * @tc.desc Verify toString with Number.MIN_VALUE truncates to 0
@@ -1584,6 +1671,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with -Number.MAX_VALUE wraps to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_8900
      * @tc.name testUint8ArrayToString089
      * @tc.desc Verify toString with -Number.MAX_VALUE wraps to 0
@@ -1601,6 +1689,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString with -Number.MIN_VALUE truncates to 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9000
      * @tc.name testUint8ArrayToString090
      * @tc.desc Verify toString with -Number.MIN_VALUE truncates to 0
@@ -1618,13 +1707,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after index assignment with boundary value 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9100
      * @tc.name testUint8ArrayToString091
      * @tc.desc Verify toString after index assignment with boundary value 255
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString091() {
@@ -1636,6 +1726,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after index assignment with overflow 256
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9200
      * @tc.name testUint8ArrayToString092
      * @tc.desc Verify toString after index assignment with overflow 256
@@ -1654,6 +1745,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after multiple index assignments
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9300
      * @tc.name testUint8ArrayToString093
      * @tc.desc Verify toString after multiple index assignments
@@ -1675,6 +1767,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after index assignment with float truncation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9400
      * @tc.name testUint8ArrayToString094
      * @tc.desc Verify toString after index assignment with float truncation
@@ -1693,6 +1786,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString after index assignment with wrap value -1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9500
      * @tc.name testUint8ArrayToString095
      * @tc.desc Verify toString after index assignment with wrap value -1
@@ -1711,13 +1805,14 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on 100-element zero array has correct length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9600
      * @tc.name testUint8ArrayToString096
      * @tc.desc Verify toString on 100-element zero array has correct length
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
-    */
+     */
 
     @Test
     void testUint8ArrayToString096() {
@@ -1728,6 +1823,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on 100-element zero array first char is '0'
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9700
      * @tc.name testUint8ArrayToString097
      * @tc.desc Verify toString on 100-element zero array first char is '0'
@@ -1745,6 +1841,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString on single element array has no extra prefix
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9800
      * @tc.name testUint8ArrayToString098
      * @tc.desc Verify toString on single element array has no extra prefix
@@ -1762,6 +1859,7 @@ public class Uint8ArrayToStringTest extends BasTest {
 
     /**
      * Verify toString never throws exception on empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_STRING_9900
      * @tc.name testUint8ArrayToString099
      * @tc.desc Verify toString never throws exception on empty array
