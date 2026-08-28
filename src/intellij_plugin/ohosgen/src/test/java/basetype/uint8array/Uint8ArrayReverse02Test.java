@@ -20,12 +20,7 @@ import basetype.common.BasTest;
 import basetype.common.Uint8Array;
 import basetype.common.RangeError;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -203,11 +198,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0xFF, 0x00] after reverse() first and last swap, join is '0,255'
+     * Verify [0xFF, 0x00] after reverse() first and last swap, join is '0, 255'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1000
      * @tc.name testUint8ArrayReverse010
-     * @tc.desc Verify [0xFF, 0x00] after reverse() first and last swap, join is '0,255'
+     * @tc.desc Verify [0xFF, 0x00] after reverse() first and last swap, join is '0, 255'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -221,11 +216,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x80, 0x7F] after reverse() swap, join is '127,128'
+     * Verify [0x80, 0x7F] after reverse() swap, join is '127, 128'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1100
      * @tc.name testUint8ArrayReverse011
-     * @tc.desc Verify [0x80, 0x7F] after reverse() swap, join is '127,128'
+     * @tc.desc Verify [0x80, 0x7F] after reverse() swap, join is '127, 128'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -239,11 +234,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0xFF, 0x00, 0x80] after reverse() join is '128,0,255'
+     * Verify [0xFF, 0x00, 0x80] after reverse() join is '128, 0, 255'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1200
      * @tc.name testUint8ArrayReverse012
-     * @tc.desc Verify [0xFF, 0x00, 0x80] after reverse() join is '128,0,255'
+     * @tc.desc Verify [0xFF, 0x00, 0x80] after reverse() join is '128, 0, 255'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -257,11 +252,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x55, 0xAA] after reverse() join is '170,85'
+     * Verify [0x55, 0xAA] after reverse() join is '170, 85'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1300
      * @tc.name testUint8ArrayReverse013
-     * @tc.desc Verify [0x55, 0xAA] after reverse() join is '170,85'
+     * @tc.desc Verify [0x55, 0xAA] after reverse() join is '170, 85'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -275,11 +270,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x0F, 0xF0] after reverse() join is '240,15'
+     * Verify [0x0F, 0xF0] after reverse() join is '240, 15'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1400
      * @tc.name testUint8ArrayReverse014
-     * @tc.desc Verify [0x0F, 0xF0] after reverse() join is '240,15'
+     * @tc.desc Verify [0x0F, 0xF0] after reverse() join is '240, 15'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -293,11 +288,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [255, 0, 127] after reverse() join is '127,0,255'
+     * Verify [255, 0, 127] after reverse() join is '127, 0, 255'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1500
      * @tc.name testUint8ArrayReverse015
-     * @tc.desc Verify [255, 0, 127] after reverse() join is '127,0,255'
+     * @tc.desc Verify [255, 0, 127] after reverse() join is '127, 0, 255'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -311,11 +306,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [1, 254] after reverse() join is '254,1'
+     * Verify [1, 254] after reverse() join is '254, 1'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1600
      * @tc.name testUint8ArrayReverse016
-     * @tc.desc Verify [1, 254] after reverse() join is '254,1'
+     * @tc.desc Verify [1, 254] after reverse() join is '254, 1'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -329,11 +324,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x00, 0x01, 0x02, 0x03] after reverse() join is '3,2,1,0'
+     * Verify [0x00, 0x01, 0x02, 0x03] after reverse() join is '3, 2, 1, 0'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1700
      * @tc.name testUint8ArrayReverse017
-     * @tc.desc Verify [0x00, 0x01, 0x02, 0x03] after reverse() join is '3,2,1,0'
+     * @tc.desc Verify [0x00, 0x01, 0x02, 0x03] after reverse() join is '3, 2, 1, 0'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -347,11 +342,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [100, 200, 50, 150] after reverse() join is '150,50,200,100'
+     * Verify [100, 200, 50, 150] after reverse() join is '150, 50, 200, 100'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_1800
      * @tc.name testUint8ArrayReverse018
-     * @tc.desc Verify [100, 200, 50, 150] after reverse() join is '150,50,200,100'
+     * @tc.desc Verify [100, 200, 50, 150] after reverse() join is '150, 50, 200, 100'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -473,11 +468,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0xFE, 0x01, 0xFD, 0x02] after reverse() join is '2,253,1,254'
+     * Verify [0xFE, 0x01, 0xFD, 0x02] after reverse() join is '2, 253, 1, 254'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2500
      * @tc.name testUint8ArrayReverse025
-     * @tc.desc Verify [0xFE, 0x01, 0xFD, 0x02] after reverse() join is '2,253,1,254'
+     * @tc.desc Verify [0xFE, 0x01, 0xFD, 0x02] after reverse() join is '2, 253, 1, 254'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -491,11 +486,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x7F, 0x80, 0x81] after reverse() join is '129,128,127'
+     * Verify [0x7F, 0x80, 0x81] after reverse() join is '129, 128, 127'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2600
      * @tc.name testUint8ArrayReverse026
-     * @tc.desc Verify [0x7F, 0x80, 0x81] after reverse() join is '129,128,127'
+     * @tc.desc Verify [0x7F, 0x80, 0x81] after reverse() join is '129, 128, 127'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -509,11 +504,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x0F, 0xF0, 0xFF] after reverse() join is '255,240,15'
+     * Verify [0x0F, 0xF0, 0xFF] after reverse() join is '255, 240, 15'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2700
      * @tc.name testUint8ArrayReverse027
-     * @tc.desc Verify [0x0F, 0xF0, 0xFF] after reverse() join is '255,240,15'
+     * @tc.desc Verify [0x0F, 0xF0, 0xFF] after reverse() join is '255, 240, 15'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -527,11 +522,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [10, 20, 30, 40, 50] after reverse() join is '50,40,30,20,10'
+     * Verify [10, 20, 30, 40, 50] after reverse() join is '50, 40, 30, 20, 10'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2800
      * @tc.name testUint8ArrayReverse028
-     * @tc.desc Verify [10, 20, 30, 40, 50] after reverse() join is '50,40,30,20,10'
+     * @tc.desc Verify [10, 20, 30, 40, 50] after reverse() join is '50, 40, 30, 20, 10'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -545,11 +540,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x00, 0xFF, 0x7F] after reverse() join is '127,255,0'
+     * Verify [0x00, 0xFF, 0x7F] after reverse() join is '127, 255, 0'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_2900
      * @tc.name testUint8ArrayReverse029
-     * @tc.desc Verify [0x00, 0xFF, 0x7F] after reverse() join is '127,255,0'
+     * @tc.desc Verify [0x00, 0xFF, 0x7F] after reverse() join is '127, 255, 0'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -563,11 +558,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [1, 2, 4, 8, 16, 32, 64, 128] after reverse() join is '128,64,32,16,8,4,2,1'
+     * Verify [1, 2, 4, 8, 16, 32, 64, 128] after reverse() join is '128, 64, 32, 16, 8, 4, 2, 1'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3000
      * @tc.name testUint8ArrayReverse030
-     * @tc.desc Verify [1, 2, 4, 8, 16, 32, 64, 128] after reverse() join is '128,64,32,16,8,4,2,1'
+     * @tc.desc Verify [1, 2, 4, 8, 16, 32, 64, 128] after reverse() join is '128, 64, 32, 16, 8, 4, 2, 1'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -581,11 +576,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0xAA, 0x55, 0xAA, 0x55] alternating pattern after reverse() join is '85,170,85,170'
+     * Verify [0xAA, 0x55, 0xAA, 0x55] alternating pattern after reverse() join is '85, 170, 85, 170'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3100
      * @tc.name testUint8ArrayReverse031
-     * @tc.desc Verify [0xAA, 0x55, 0xAA, 0x55] alternating pattern after reverse() join is '85,170,85,170'
+     * @tc.desc Verify [0xAA, 0x55, 0xAA, 0x55] alternating pattern after reverse() join is '85, 170, 85, 170'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -599,11 +594,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x01, 0x10, 0x02, 0x20] after reverse() join is '32,2,16,1'
+     * Verify [0x01, 0x10, 0x02, 0x20] after reverse() join is '32, 2, 16, 1'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3200
      * @tc.name testUint8ArrayReverse032
-     * @tc.desc Verify [0x01, 0x10, 0x02, 0x20] after reverse() join is '32,2,16,1'
+     * @tc.desc Verify [0x01, 0x10, 0x02, 0x20] after reverse() join is '32, 2, 16, 1'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -617,11 +612,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0xE0, 0x1C, 0x03] after reverse() join is '3,28,224'
+     * Verify [0xE0, 0x1C, 0x03] after reverse() join is '3, 28, 224'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3300
      * @tc.name testUint8ArrayReverse033
-     * @tc.desc Verify [0xE0, 0x1C, 0x03] after reverse() join is '3,28,224'
+     * @tc.desc Verify [0xE0, 0x1C, 0x03] after reverse() join is '3, 28, 224'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -635,11 +630,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x0D, 0x0E, 0x0A, 0x0D] after reverse() join is '13,10,14,13'
+     * Verify [0x0D, 0x0E, 0x0A, 0x0D] after reverse() join is '13, 10, 14, 13'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3400
      * @tc.name testUint8ArrayReverse034
-     * @tc.desc Verify [0x0D, 0x0E, 0x0A, 0x0D] after reverse() join is '13,10,14,13'
+     * @tc.desc Verify [0x0D, 0x0E, 0x0A, 0x0D] after reverse() join is '13, 10, 14, 13'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -671,11 +666,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x03, 0x0C, 0x30, 0xC0] after reverse() join is '192,48,12,3'
+     * Verify [0x03, 0x0C, 0x30, 0xC0] after reverse() join is '192, 48, 12, 3'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3600
      * @tc.name testUint8ArrayReverse036
-     * @tc.desc Verify [0x03, 0x0C, 0x30, 0xC0] after reverse() join is '192,48,12,3'
+     * @tc.desc Verify [0x03, 0x0C, 0x30, 0xC0] after reverse() join is '192, 48, 12, 3'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -689,11 +684,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify [0x0B, 0x0E, 0x0E, 0x0F] after reverse() join is '15,14,14,11'
+     * Verify [0x0B, 0x0E, 0x0E, 0x0F] after reverse() join is '15, 14, 14, 11'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_3700
      * @tc.name testUint8ArrayReverse037
-     * @tc.desc Verify [0x0B, 0x0E, 0x0E, 0x0F] after reverse() join is '15,14,14,11'
+     * @tc.desc Verify [0x0B, 0x0E, 0x0E, 0x0F] after reverse() join is '15, 14, 14, 11'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1367,11 +1362,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(256, 1) where 256 truncates to 0, after reverse() join is '1,0'
+     * Verify of(256, 1) where 256 truncates to 0, after reverse() join is '1, 0'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7200
      * @tc.name testUint8ArrayReverse072
-     * @tc.desc Verify of(256, 1) where 256 truncates to 0, after reverse() join is '1,0'
+     * @tc.desc Verify of(256, 1) where 256 truncates to 0, after reverse() join is '1, 0'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1385,11 +1380,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(-1, 2) where -1 wraps to 255, after reverse() join is '2,255'
+     * Verify of(-1, 2) where -1 wraps to 255, after reverse() join is '2, 255'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7300
      * @tc.name testUint8ArrayReverse073
-     * @tc.desc Verify of(-1, 2) where -1 wraps to 255, after reverse() join is '2,255'
+     * @tc.desc Verify of(-1, 2) where -1 wraps to 255, after reverse() join is '2, 255'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1403,11 +1398,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(0x100, 0x01) where 0x100 truncates to 0, after reverse() join is '1,0'
+     * Verify of(0x100, 0x01) where 0x100 truncates to 0, after reverse() join is '1, 0'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7400
      * @tc.name testUint8ArrayReverse074
-     * @tc.desc Verify of(0x100, 0x01) where 0x100 truncates to 0, after reverse() join is '1,0'
+     * @tc.desc Verify of(0x100, 0x01) where 0x100 truncates to 0, after reverse() join is '1, 0'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1421,11 +1416,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(-255, 0x80) where -255 wraps to 1, after reverse() join is '128,1'
+     * Verify of(-255, 0x80) where -255 wraps to 1, after reverse() join is '128, 1'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7500
      * @tc.name testUint8ArrayReverse075
-     * @tc.desc Verify of(-255, 0x80) where -255 wraps to 1, after reverse() join is '128,1'
+     * @tc.desc Verify of(-255, 0x80) where -255 wraps to 1, after reverse() join is '128, 1'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1439,11 +1434,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(257, 0) where 257 truncates to 1, after reverse() join is '0,1'
+     * Verify of(257, 0) where 257 truncates to 1, after reverse() join is '0, 1'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7600
      * @tc.name testUint8ArrayReverse076
-     * @tc.desc Verify of(257, 0) where 257 truncates to 1, after reverse() join is '0,1'
+     * @tc.desc Verify of(257, 0) where 257 truncates to 1, after reverse() join is '0, 1'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1457,11 +1452,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(511, 0xFF) where 511 truncates to 255, after reverse() join is '255,255'
+     * Verify of(511, 0xFF) where 511 truncates to 255, after reverse() join is '255, 255'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7700
      * @tc.name testUint8ArrayReverse077
-     * @tc.desc Verify of(511, 0xFF) where 511 truncates to 255, after reverse() join is '255,255'
+     * @tc.desc Verify of(511, 0xFF) where 511 truncates to 255, after reverse() join is '255, 255'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1475,11 +1470,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(-2, 3) where -2 wraps to 254, after reverse() join is '3,254'
+     * Verify of(-2, 3) where -2 wraps to 254, after reverse() join is '3, 254'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7800
      * @tc.name testUint8ArrayReverse078
-     * @tc.desc Verify of(-2, 3) where -2 wraps to 254, after reverse() join is '3,254'
+     * @tc.desc Verify of(-2, 3) where -2 wraps to 254, after reverse() join is '3, 254'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1493,11 +1488,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(0x1FF, 0x80) where 0x1FF truncates to 0xFF, after reverse() join is '128,255'
+     * Verify of(0x1FF, 0x80) where 0x1FF truncates to 0xFF, after reverse() join is '128, 255'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_7900
      * @tc.name testUint8ArrayReverse079
-     * @tc.desc Verify of(0x1FF, 0x80) where 0x1FF truncates to 0xFF, after reverse() join is '128,255'
+     * @tc.desc Verify of(0x1FF, 0x80) where 0x1FF truncates to 0xFF, after reverse() join is '128, 255'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1511,11 +1506,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(-256, 0x80) where -256 wraps to 0, after reverse() join is '128,0'
+     * Verify of(-256, 0x80) where -256 wraps to 0, after reverse() join is '128, 0'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8000
      * @tc.name testUint8ArrayReverse080
-     * @tc.desc Verify of(-256, 0x80) where -256 wraps to 0, after reverse() join is '128,0'
+     * @tc.desc Verify of(-256, 0x80) where -256 wraps to 0, after reverse() join is '128, 0'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1529,11 +1524,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(0xFFFFFF, 0x01) where 0xFFFFFF truncates to 0xFF, after reverse() join is '1,255'
+     * Verify of(0xFFFFFF, 0x01) where 0xFFFFFF truncates to 0xFF, after reverse() join is '1, 255'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8100
      * @tc.name testUint8ArrayReverse081
-     * @tc.desc Verify of(0xFFFFFF, 0x01) where 0xFFFFFF truncates to 0xFF, after reverse() join is '1,255'
+     * @tc.desc Verify of(0xFFFFFF, 0x01) where 0xFFFFFF truncates to 0xFF, after reverse() join is '1, 255'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1547,11 +1542,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(0x1FF, 0x200) both values truncated, after reverse() join is '0,255'
+     * Verify of(0x1FF, 0x200) both values truncated, after reverse() join is '0, 255'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8200
      * @tc.name testUint8ArrayReverse082
-     * @tc.desc Verify of(0x1FF, 0x200) both values truncated, after reverse() join is '0,255'
+     * @tc.desc Verify of(0x1FF, 0x200) both values truncated, after reverse() join is '0, 255'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1565,11 +1560,11 @@ public class Uint8ArrayReverse02Test extends BasTest {
     }
 
     /**
-     * Verify of(-128, 0x80) where -128 wraps to 128, after reverse() join is '128,128'
+     * Verify of(-128, 0x80) where -128 wraps to 128, after reverse() join is '128, 128'
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE02_8300
      * @tc.name testUint8ArrayReverse083
-     * @tc.desc Verify of(-128, 0x80) where -128 wraps to 128, after reverse() join is '128,128'
+     * @tc.desc Verify of(-128, 0x80) where -128 wraps to 128, after reverse() join is '128, 128'
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

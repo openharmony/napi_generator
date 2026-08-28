@@ -1188,11 +1188,11 @@ public class Uint8ArrayIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify indexOf with fromIndex=0, array [0,1,2], search 1 returns 1
+     * Verify indexOf with fromIndex=0, array [0, 1, 2], search 1 returns 1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF01_6500
      * @tc.name testUint8ArrayIndexOf065
-     * @tc.desc Verify indexOf with fromIndex=0, array [0,1,2], search 1 returns 1
+     * @tc.desc Verify indexOf with fromIndex=0, array [0, 1, 2], search 1 returns 1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1206,11 +1206,11 @@ public class Uint8ArrayIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify indexOf with fromIndex=0, array [0,1,2], search 2 returns 2
+     * Verify indexOf with fromIndex=0, array [0, 1, 2], search 2 returns 2
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF01_6600
      * @tc.name testUint8ArrayIndexOf066
-     * @tc.desc Verify indexOf with fromIndex=0, array [0,1,2], search 2 returns 2
+     * @tc.desc Verify indexOf with fromIndex=0, array [0, 1, 2], search 2 returns 2
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1224,11 +1224,11 @@ public class Uint8ArrayIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify indexOf with fromIndex=2, array [0,1,2], search 1 (before index), returns -1
+     * Verify indexOf with fromIndex=2, array [0, 1, 2], search 1 (before index), returns -1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF01_6700
      * @tc.name testUint8ArrayIndexOf067
-     * @tc.desc Verify indexOf with fromIndex=2, array [0,1,2], search 1 (before index), returns -1
+     * @tc.desc Verify indexOf with fromIndex=2, array [0, 1, 2], search 1 (before index), returns -1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1242,11 +1242,11 @@ public class Uint8ArrayIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify indexOf with fromIndex=-4, array [0,255,0,255], search 255 returns index 1
+     * Verify indexOf with fromIndex=-4, array [0, 255, 0, 255], search 255 returns index 1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF01_6800
      * @tc.name testUint8ArrayIndexOf068
-     * @tc.desc Verify indexOf with fromIndex=-4, array [0,255,0,255], search 255 returns index 1
+     * @tc.desc Verify indexOf with fromIndex=-4, array [0, 255, 0, 255], search 255 returns index 1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1260,11 +1260,11 @@ public class Uint8ArrayIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify indexOf with fromIndex=-2, array [0,255,0,255], search 255 returns index 3
+     * Verify indexOf with fromIndex=-2, array [0, 255, 0, 255], search 255 returns index 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF01_6900
      * @tc.name testUint8ArrayIndexOf069
-     * @tc.desc Verify indexOf with fromIndex=-2, array [0,255,0,255], search 255 returns index 3
+     * @tc.desc Verify indexOf with fromIndex=-2, array [0, 255, 0, 255], search 255 returns index 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1278,11 +1278,11 @@ public class Uint8ArrayIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify indexOf with fromIndex=-1, array [0,255,0,255], search 255 returns index 3
+     * Verify indexOf with fromIndex=-1, array [0, 255, 0, 255], search 255 returns index 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF01_7000
      * @tc.name testUint8ArrayIndexOf070
-     * @tc.desc Verify indexOf with fromIndex=-1, array [0,255,0,255], search 255 returns index 3
+     * @tc.desc Verify indexOf with fromIndex=-1, array [0, 255, 0, 255], search 255 returns index 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1296,11 +1296,11 @@ public class Uint8ArrayIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify indexOf with fromIndex=3, array [0,0,0,255,0,255], search 0xFF returns index 3
+     * Verify indexOf with fromIndex=3, array [0, 0, 0, 255, 0, 255], search 0xFF returns index 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF01_7100
      * @tc.name testUint8ArrayIndexOf071
-     * @tc.desc Verify indexOf with fromIndex=3, array [0,0,0,255,0,255], search 0xFF returns index 3
+     * @tc.desc Verify indexOf with fromIndex=3, array [0, 0, 0, 255, 0, 255], search 0xFF returns index 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1314,11 +1314,11 @@ public class Uint8ArrayIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify indexOf with fromIndex=-2, array [0,0,128,128], from index 2, returns 2
+     * Verify indexOf with fromIndex=-2, array [0, 0, 128, 128], from index 2, returns 2
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF01_7200
      * @tc.name testUint8ArrayIndexOf072
-     * @tc.desc Verify indexOf with fromIndex=-2, array [0,0,128,128], from index 2, returns 2
+     * @tc.desc Verify indexOf with fromIndex=-2, array [0, 0, 128, 128], from index 2, returns 2
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1332,11 +1332,11 @@ public class Uint8ArrayIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify indexOf with fromIndex=0, array [255,0,255], search 0b11111111 from index 0, returns 0
+     * Verify indexOf with fromIndex=0, array [255, 0, 255], search 0b11111111 from index 0, returns 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF01_7300
      * @tc.name testUint8ArrayIndexOf073
-     * @tc.desc Verify indexOf with fromIndex=0, array [255,0,255], search 0b11111111 from index 0, returns 0
+     * @tc.desc Verify indexOf with fromIndex=0, array [255, 0, 255], search 0b11111111 from index 0, returns 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1350,11 +1350,11 @@ public class Uint8ArrayIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify indexOf with fromIndex=1, array [255,0,255], search 0xFF skip index 0, returns 2
+     * Verify indexOf with fromIndex=1, array [255, 0, 255], search 0xFF skip index 0, returns 2
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF01_7400
      * @tc.name testUint8ArrayIndexOf074
-     * @tc.desc Verify indexOf with fromIndex=1, array [255,0,255], search 0xFF skip index 0, returns 2
+     * @tc.desc Verify indexOf with fromIndex=1, array [255, 0, 255], search 0xFF skip index 0, returns 2
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

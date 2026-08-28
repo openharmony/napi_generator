@@ -1175,11 +1175,11 @@ public class Uint8ArrayReverse01Test extends BasTest {
     }
 
     /**
-     * Verify Uint8Array from Uint8Array([55,66,77,88]) reverse, first element becomes 88
+     * Verify Uint8Array from Uint8Array([55, 66, 77, 88]) reverse, first element becomes 88
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE01_6400
      * @tc.name testUint8ArrayReverse064
-     * @tc.desc Verify Uint8Array from Uint8Array([55,66,77,88]) reverse, first element becomes 88
+     * @tc.desc Verify Uint8Array from Uint8Array([55, 66, 77, 88]) reverse, first element becomes 88
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1554,11 +1554,11 @@ public class Uint8ArrayReverse01Test extends BasTest {
     }
 
     /**
-     * Verify dual overflow [256,-1] stored as [0,255], reverse first element becomes 255
+     * Verify dual overflow [256, -1] stored as [0, 255], reverse first element becomes 255
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE01_8500
      * @tc.name testUint8ArrayReverse085
-     * @tc.desc Verify dual overflow [256,-1] stored as [0,255], reverse first element becomes 255
+     * @tc.desc Verify dual overflow [256, -1] stored as [0, 255], reverse first element becomes 255
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1572,11 +1572,11 @@ public class Uint8ArrayReverse01Test extends BasTest {
     }
 
     /**
-     * Verify dual float [3.14,2.71] stored as [3,2], reverse first element becomes 2
+     * Verify dual float [3.14, 2.71] stored as [3, 2], reverse first element becomes 2
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE01_8600
      * @tc.name testUint8ArrayReverse086
-     * @tc.desc Verify dual float [3.14,2.71] stored as [3,2], reverse first element becomes 2
+     * @tc.desc Verify dual float [3.14, 2.71] stored as [3, 2], reverse first element becomes 2
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1770,11 +1770,11 @@ public class Uint8ArrayReverse01Test extends BasTest {
     }
 
     /**
-     * Verify multi-overflow [0x100,0x1FF] stored as [0,255], reverse first element becomes 255
+     * Verify multi-overflow [0x100, 0x1FF] stored as [0, 255], reverse first element becomes 255
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REVERSE01_9700
      * @tc.name testUint8ArrayReverse097
-     * @tc.desc Verify multi-overflow [0x100,0x1FF] stored as [0,255], reverse first element becomes 255
+     * @tc.desc Verify multi-overflow [0x100, 0x1FF] stored as [0, 255], reverse first element becomes 255
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

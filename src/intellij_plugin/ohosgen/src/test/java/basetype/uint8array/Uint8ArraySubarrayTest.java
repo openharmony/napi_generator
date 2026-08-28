@@ -46,11 +46,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,0) empty result instanceof Uint8Array
+     * Verify subarray(0, 0) empty result instanceof Uint8Array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0020
      * @tc.name testUint8ArraySubarray002
-     * @tc.desc Verify subarray(0,0) empty result instanceof Uint8Array
+     * @tc.desc Verify subarray(0, 0) empty result instanceof Uint8Array
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -64,11 +64,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(1,3) result instanceof Uint8Array
+     * Verify subarray(1, 3) result instanceof Uint8Array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0030
      * @tc.name testUint8ArraySubarray003
-     * @tc.desc Verify subarray(1,3) result instanceof Uint8Array
+     * @tc.desc Verify subarray(1, 3) result instanceof Uint8Array
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -321,11 +321,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,3) first three elements correct
+     * Verify subarray(0, 3) first three elements correct
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0170
      * @tc.name testUint8ArraySubarray017
-     * @tc.desc Verify subarray(0,3) first three elements correct
+     * @tc.desc Verify subarray(0, 3) first three elements correct
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -342,11 +342,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(2,5) middle three elements correct
+     * Verify subarray(2, 5) middle three elements correct
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0180
      * @tc.name testUint8ArraySubarray018
-     * @tc.desc Verify subarray(2,5) middle three elements correct
+     * @tc.desc Verify subarray(2, 5) middle three elements correct
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -404,11 +404,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,0) empty result has no elements
+     * Verify subarray(0, 0) empty result has no elements
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0210
      * @tc.name testUint8ArraySubarray021
-     * @tc.desc Verify subarray(0,0) empty result has no elements
+     * @tc.desc Verify subarray(0, 0) empty result has no elements
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -422,11 +422,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(3,3) empty result (begin===end) has no elements
+     * Verify subarray(3, 3) empty result (begin===end) has no elements
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0220
      * @tc.name testUint8ArraySubarray022
-     * @tc.desc Verify subarray(3,3) empty result (begin===end) has no elements
+     * @tc.desc Verify subarray(3, 3) empty result (begin===end) has no elements
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -440,11 +440,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(5,3) begin>end returns empty
+     * Verify subarray(5, 3) begin>end returns empty
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0230
      * @tc.name testUint8ArraySubarray023
-     * @tc.desc Verify subarray(5,3) begin>end returns empty
+     * @tc.desc Verify subarray(5, 3) begin>end returns empty
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -458,11 +458,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,1) single element correct
+     * Verify subarray(0, 1) single element correct
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0240
      * @tc.name testUint8ArraySubarray024
-     * @tc.desc Verify subarray(0,1) single element correct
+     * @tc.desc Verify subarray(0, 1) single element correct
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -698,11 +698,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,3) length is 3
+     * Verify subarray(0, 3) length is 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0360
      * @tc.name testUint8ArraySubarray036
-     * @tc.desc Verify subarray(0,3) length is 3
+     * @tc.desc Verify subarray(0, 3) length is 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -752,11 +752,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,0) length is 0
+     * Verify subarray(0, 0) length is 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0390
      * @tc.name testUint8ArraySubarray039
-     * @tc.desc Verify subarray(0,0) length is 0
+     * @tc.desc Verify subarray(0, 0) length is 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -770,11 +770,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(5,5) length is 0
+     * Verify subarray(5, 5) length is 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0400
      * @tc.name testUint8ArraySubarray040
-     * @tc.desc Verify subarray(5,5) length is 0
+     * @tc.desc Verify subarray(5, 5) length is 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -860,11 +860,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,3) byteLength is 3
+     * Verify subarray(0, 3) byteLength is 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0450
      * @tc.name testUint8ArraySubarray045
-     * @tc.desc Verify subarray(0,3) byteLength is 3
+     * @tc.desc Verify subarray(0, 3) byteLength is 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -896,11 +896,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,0) byteLength is 0
+     * Verify subarray(0, 0) byteLength is 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0470
      * @tc.name testUint8ArraySubarray047
-     * @tc.desc Verify subarray(0,0) byteLength is 0
+     * @tc.desc Verify subarray(0, 0) byteLength is 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -986,11 +986,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(2,5) byteOffset is 2
+     * Verify subarray(2, 5) byteOffset is 2
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0520
      * @tc.name testUint8ArraySubarray052
-     * @tc.desc Verify subarray(2,5) byteOffset is 2
+     * @tc.desc Verify subarray(2, 5) byteOffset is 2
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1040,11 +1040,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,0) byteOffset is 0
+     * Verify subarray(0, 0) byteOffset is 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0550
      * @tc.name testUint8ArraySubarray055
-     * @tc.desc Verify subarray(0,0) byteOffset is 0
+     * @tc.desc Verify subarray(0, 0) byteOffset is 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1058,11 +1058,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(5,5) byteOffset is 5
+     * Verify subarray(5, 5) byteOffset is 5
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0560
      * @tc.name testUint8ArraySubarray056
-     * @tc.desc Verify subarray(5,5) byteOffset is 5
+     * @tc.desc Verify subarray(5, 5) byteOffset is 5
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1076,11 +1076,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(5,3) reverse range byteOffset is 5
+     * Verify subarray(5, 3) reverse range byteOffset is 5
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0570
      * @tc.name testUint8ArraySubarray057
-     * @tc.desc Verify subarray(5,3) reverse range byteOffset is 5
+     * @tc.desc Verify subarray(5, 3) reverse range byteOffset is 5
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1094,11 +1094,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,3) byteOffset is 0
+     * Verify subarray(0, 3) byteOffset is 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0580
      * @tc.name testUint8ArraySubarray058
-     * @tc.desc Verify subarray(0,3) byteOffset is 0
+     * @tc.desc Verify subarray(0, 3) byteOffset is 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1130,11 +1130,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(1,3) from offset view byteOffset superposition correct
+     * Verify subarray(1, 3) from offset view byteOffset superposition correct
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0600
      * @tc.name testUint8ArraySubarray060
-     * @tc.desc Verify subarray(1,3) from offset view byteOffset superposition correct
+     * @tc.desc Verify subarray(1, 3) from offset view byteOffset superposition correct
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1263,11 +1263,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(1,3) original non-range elements unchanged
+     * Verify subarray(1, 3) original non-range elements unchanged
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0670
      * @tc.name testUint8ArraySubarray067
-     * @tc.desc Verify subarray(1,3) original non-range elements unchanged
+     * @tc.desc Verify subarray(1, 3) original non-range elements unchanged
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1283,11 +1283,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(5,3) reverse range original elements unchanged
+     * Verify subarray(5, 3) reverse range original elements unchanged
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0680
      * @tc.name testUint8ArraySubarray068
-     * @tc.desc Verify subarray(5,3) reverse range original elements unchanged
+     * @tc.desc Verify subarray(5, 3) reverse range original elements unchanged
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1559,11 +1559,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(1,3).buffer is same reference as original buffer
+     * Verify subarray(1, 3).buffer is same reference as original buffer
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0820
      * @tc.name testUint8ArraySubarray082
-     * @tc.desc Verify subarray(1,3).buffer is same reference as original buffer
+     * @tc.desc Verify subarray(1, 3).buffer is same reference as original buffer
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1577,11 +1577,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray(0,0) empty result buffer same as original
+     * Verify subarray(0, 0) empty result buffer same as original
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_0830
      * @tc.name testUint8ArraySubarray083
-     * @tc.desc Verify subarray(0,0) empty result buffer same as original
+     * @tc.desc Verify subarray(0, 0) empty result buffer same as original
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1949,11 +1949,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray unchanged after original .fill outside range
+     * Verify subarray unchanged after original.fill outside range
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_1010
      * @tc.name testUint8ArraySubarray101
-     * @tc.desc Verify subarray unchanged after original .fill outside range
+     * @tc.desc Verify subarray unchanged after original.fill outside range
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1970,11 +1970,11 @@ public class Uint8ArraySubarrayTest extends BasTest {
     }
 
     /**
-     * Verify subarray data consistent after original .set() batch write
+     * Verify subarray data consistent after original.set() batch write
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_SUBARRAY02_1020
      * @tc.name testUint8ArraySubarray102
-     * @tc.desc Verify subarray data consistent after original .set() batch write
+     * @tc.desc Verify subarray data consistent after original.set() batch write
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

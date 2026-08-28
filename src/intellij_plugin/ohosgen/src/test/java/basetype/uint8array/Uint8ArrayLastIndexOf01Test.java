@@ -792,11 +792,11 @@ public class Uint8ArrayLastIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify all same array [5,5,5,5,5] search 5, from right to left should return index 4
+     * Verify all same array [5, 5, 5, 5, 5] search 5, from right to left should return index 4
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF01_4600
      * @tc.name testUint8ArrayLastIndexOf046
-     * @tc.desc Verify all same array [5,5,5,5,5] search 5, from right to left should return index 4
+     * @tc.desc Verify all same array [5, 5, 5, 5, 5] search 5, from right to left should return index 4
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -809,11 +809,11 @@ public class Uint8ArrayLastIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify all zero array [0,0,0] search 0, from right to left should return index 2
+     * Verify all zero array [0, 0, 0] search 0, from right to left should return index 2
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF01_4700
      * @tc.name testUint8ArrayLastIndexOf047
-     * @tc.desc Verify all zero array [0,0,0] search 0, from right to left should return index 2
+     * @tc.desc Verify all zero array [0, 0, 0] search 0, from right to left should return index 2
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -826,11 +826,11 @@ public class Uint8ArrayLastIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify all same array [255,255] search 255, from right to left should return index 1
+     * Verify all same array [255, 255] search 255, from right to left should return index 1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF01_4800
      * @tc.name testUint8ArrayLastIndexOf048
-     * @tc.desc Verify all same array [255,255] search 255, from right to left should return index 1
+     * @tc.desc Verify all same array [255, 255] search 255, from right to left should return index 1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1166,11 +1166,11 @@ public class Uint8ArrayLastIndexOf01Test extends BasTest {
     }
 
     /**
-     * Verify fromIndex=1, searchElement=20 in [20,30,20,40,20], should return 0
+     * Verify fromIndex=1, searchElement=20 in [20, 30, 20, 40, 20], should return 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_LAST_INDEX_OF01_6800
      * @tc.name testUint8ArrayLastIndexOf068
-     * @tc.desc Verify fromIndex=1, searchElement=20 in [20,30,20,40,20], should return 0
+     * @tc.desc Verify fromIndex=1, searchElement=20 in [20, 30, 20, 40, 20], should return 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

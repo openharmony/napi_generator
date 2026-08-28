@@ -50,11 +50,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight subtraction with [10,20,30], result 30-20-10=0
+     * Verify reduceRight subtraction with [10, 20, 30], result 30-20-10=0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_0200
      * @tc.name testUint8ArrayReduceRight002
-     * @tc.desc Verify reduceRight subtraction with [10,20,30], result 30-20-10=0
+     * @tc.desc Verify reduceRight subtraction with [10, 20, 30], result 30-20-10=0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -68,11 +68,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight subtraction with [100,50,25], result 25-50-100=-125
+     * Verify reduceRight subtraction with [100, 50, 25], result 25-50-100=-125
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_0300
      * @tc.name testUint8ArrayReduceRight003
-     * @tc.desc Verify reduceRight subtraction with [100,50,25], result 25-50-100=-125
+     * @tc.desc Verify reduceRight subtraction with [100, 50, 25], result 25-50-100=-125
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -86,11 +86,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight subtraction with [5,3,1], result 1-3-5=-7
+     * Verify reduceRight subtraction with [5, 3, 1], result 1-3-5=-7
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_0400
      * @tc.name testUint8ArrayReduceRight004
-     * @tc.desc Verify reduceRight subtraction with [5,3,1], result 1-3-5=-7
+     * @tc.desc Verify reduceRight subtraction with [5, 3, 1], result 1-3-5=-7
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -104,11 +104,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight subtraction with [30,20,10,5], result 5-10-20-30=-55
+     * Verify reduceRight subtraction with [30, 20, 10, 5], result 5-10-20-30=-55
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_0500
      * @tc.name testUint8ArrayReduceRight005
-     * @tc.desc Verify reduceRight subtraction with [30,20,10,5], result 5-10-20-30=-55
+     * @tc.desc Verify reduceRight subtraction with [30, 20, 10, 5], result 5-10-20-30=-55
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -122,11 +122,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight addition with [10,20,30], result 30+20+10=60
+     * Verify reduceRight addition with [10, 20, 30], result 30+20+10=60
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_0600
      * @tc.name testUint8ArrayReduceRight006
-     * @tc.desc Verify reduceRight addition with [10,20,30], result 30+20+10=60
+     * @tc.desc Verify reduceRight addition with [10, 20, 30], result 30+20+10=60
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -140,11 +140,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight addition with [1,2,3,4], result 4+3+2+1=10
+     * Verify reduceRight addition with [1, 2, 3, 4], result 4+3+2+1=10
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_0700
      * @tc.name testUint8ArrayReduceRight007
-     * @tc.desc Verify reduceRight addition with [1,2,3,4], result 4+3+2+1=10
+     * @tc.desc Verify reduceRight addition with [1, 2, 3, 4], result 4+3+2+1=10
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -158,11 +158,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight addition with [100,200,50], result 50+200+100=350
+     * Verify reduceRight addition with [100, 200, 50], result 50+200+100=350
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_0800
      * @tc.name testUint8ArrayReduceRight008
-     * @tc.desc Verify reduceRight addition with [100,200,50], result 50+200+100=350
+     * @tc.desc Verify reduceRight addition with [100, 200, 50], result 50+200+100=350
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -176,11 +176,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight multiplication with [2,3,4], result 4*3*2=24
+     * Verify reduceRight multiplication with [2, 3, 4], result 4*3*2=24
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_0900
      * @tc.name testUint8ArrayReduceRight009
-     * @tc.desc Verify reduceRight multiplication with [2,3,4], result 4*3*2=24
+     * @tc.desc Verify reduceRight multiplication with [2, 3, 4], result 4*3*2=24
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -194,11 +194,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight multiplication with [5,5,5], result 5*5*5=125
+     * Verify reduceRight multiplication with [5, 5, 5], result 5*5*5=125
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_1000
      * @tc.name testUint8ArrayReduceRight010
-     * @tc.desc Verify reduceRight multiplication with [5,5,5], result 5*5*5=125
+     * @tc.desc Verify reduceRight multiplication with [5, 5, 5], result 5*5*5=125
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -212,11 +212,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight multiplication with [1,2,3,4], result 4*3*2*1=24
+     * Verify reduceRight multiplication with [1, 2, 3, 4], result 4*3*2*1=24
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_1100
      * @tc.name testUint8ArrayReduceRight011
-     * @tc.desc Verify reduceRight multiplication with [1,2,3,4], result 4*3*2*1=24
+     * @tc.desc Verify reduceRight multiplication with [1, 2, 3, 4], result 4*3*2*1=24
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -230,11 +230,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight division with [100,20,2], result 2/20/100=0.001
+     * Verify reduceRight division with [100, 20, 2], result 2/20/100=0.001
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_1200
      * @tc.name testUint8ArrayReduceRight012
-     * @tc.desc Verify reduceRight division with [100,20,2], result 2/20/100=0.001
+     * @tc.desc Verify reduceRight division with [100, 20, 2], result 2/20/100=0.001
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -248,11 +248,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight modulo with [23,7,10], result 10%7=3, 3%23=3
+     * Verify reduceRight modulo with [23, 7, 10], result 10%7=3, 3%23=3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_1300
      * @tc.name testUint8ArrayReduceRight013
-     * @tc.desc Verify reduceRight modulo with [23,7,10], result 10%7=3, 3%23=3
+     * @tc.desc Verify reduceRight modulo with [23, 7, 10], result 10%7=3, 3%23=3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -266,11 +266,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight bitwise OR with [1,2,4], result 4|2|1=7
+     * Verify reduceRight bitwise OR with [1, 2, 4], result 4|2|1=7
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_1400
      * @tc.name testUint8ArrayReduceRight014
-     * @tc.desc Verify reduceRight bitwise OR with [1,2,4], result 4|2|1=7
+     * @tc.desc Verify reduceRight bitwise OR with [1, 2, 4], result 4|2|1=7
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -284,11 +284,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight bitwise AND with [7,6,5], result 5&6=4, 4&7=4
+     * Verify reduceRight bitwise AND with [7, 6, 5], result 5&6=4, 4&7=4
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_1500
      * @tc.name testUint8ArrayReduceRight015
-     * @tc.desc Verify reduceRight bitwise AND with [7,6,5], result 5&6=4, 4&7=4
+     * @tc.desc Verify reduceRight bitwise AND with [7, 6, 5], result 5&6=4, 4&7=4
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -302,11 +302,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight bitwise XOR with [1,2,3], result 3^2=1, 1^1=0
+     * Verify reduceRight bitwise XOR with [1, 2, 3], result 3^2=1, 1^1=0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_1600
      * @tc.name testUint8ArrayReduceRight016
-     * @tc.desc Verify reduceRight bitwise XOR with [1,2,3], result 3^2=1, 1^1=0
+     * @tc.desc Verify reduceRight bitwise XOR with [1, 2, 3], result 3^2=1, 1^1=0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -320,11 +320,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight left shift with [1,2,3], result 3<<2=12, 12<<1=24
+     * Verify reduceRight left shift with [1, 2, 3], result 3<<2=12, 12<<1=24
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_1700
      * @tc.name testUint8ArrayReduceRight017
-     * @tc.desc Verify reduceRight left shift with [1,2,3], result 3<<2=12, 12<<1=24
+     * @tc.desc Verify reduceRight left shift with [1, 2, 3], result 3<<2=12, 12<<1=24
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -338,11 +338,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight Math.pow with [2,3,4], result pow(4,3)=64, pow(64,2)=4096
+     * Verify reduceRight Math.pow with [2, 3, 4], result pow(4, 3)=64, pow(64, 2)=4096
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_1800
      * @tc.name testUint8ArrayReduceRight018
-     * @tc.desc Verify reduceRight Math.pow with [2,3,4], result pow(4,3)=64, pow(64,2)=4096
+     * @tc.desc Verify reduceRight Math.pow with [2, 3, 4], result pow(4, 3)=64, pow(64, 2)=4096
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -356,11 +356,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight Math.min with [5,10,3], result min(3,10)=3, min(3,5)=3
+     * Verify reduceRight Math.min with [5, 10, 3], result min(3, 10)=3, min(3, 5)=3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_1900
      * @tc.name testUint8ArrayReduceRight019
-     * @tc.desc Verify reduceRight Math.min with [5,10,3], result min(3,10)=3, min(3,5)=3
+     * @tc.desc Verify reduceRight Math.min with [5, 10, 3], result min(3, 10)=3, min(3, 5)=3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -374,11 +374,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight Math.max with [5,10,3], result max(3,10)=10, max(10,5)=10
+     * Verify reduceRight Math.max with [5, 10, 3], result max(3, 10)=10, max(10, 5)=10
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_2000
      * @tc.name testUint8ArrayReduceRight020
-     * @tc.desc Verify reduceRight Math.max with [5,10,3], result max(3,10)=10, max(10,5)=10
+     * @tc.desc Verify reduceRight Math.max with [5, 10, 3], result max(3, 10)=10, max(10, 5)=10
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -392,11 +392,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight average (p+c)/2 with [10,20,30], result (30+20)/2=25, (25+10)/2=17.5
+     * Verify reduceRight average (p+c)/2 with [10, 20, 30], result (30+20)/2=25, (25+10)/2=17.5
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_2100
      * @tc.name testUint8ArrayReduceRight021
-     * @tc.desc Verify reduceRight average (p+c)/2 with [10,20,30], result (30+20)/2=25, (25+10)/2=17.5
+     * @tc.desc Verify reduceRight average (p+c)/2 with [10, 20, 30], result (30+20)/2=25, (25+10)/2=17.5
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -410,11 +410,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight Math.abs(p-c) with [5,10,30], result |30-10|=20, |20-5|=15
+     * Verify reduceRight Math.abs(p-c) with [5, 10, 30], result |30-10|=20, |20-5|=15
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_2200
      * @tc.name testUint8ArrayReduceRight022
-     * @tc.desc Verify reduceRight Math.abs(p-c) with [5,10,30], result |30-10|=20, |20-5|=15
+     * @tc.desc Verify reduceRight Math.abs(p-c) with [5, 10, 30], result |30-10|=20, |20-5|=15
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -428,11 +428,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight (p+c)%256 with [200,100,50], result (50+100)%256=150, (150+200)%256=94
+     * Verify reduceRight (p+c)%256 with [200, 100, 50], result (50+100)%256=150, (150+200)%256=94
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_2300
      * @tc.name testUint8ArrayReduceRight023
-     * @tc.desc Verify reduceRight (p+c)%256 with [200,100,50], result (50+100)%256=150, (150+200)%256=94
+     * @tc.desc Verify reduceRight (p+c)%256 with [200, 100, 50], result (50+100)%256=150, (150+200)%256=94
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -446,11 +446,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight reverse subtraction c-p with [10,20,30], result 20-30=-10, 10-(-10)=20
+     * Verify reduceRight reverse subtraction c-p with [10, 20, 30], result 20-30=-10, 10-(-10)=20
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_2400
      * @tc.name testUint8ArrayReduceRight024
-     * @tc.desc Verify reduceRight reverse subtraction c-p with [10,20,30], result 20-30=-10, 10-(-10)=20
+     * @tc.desc Verify reduceRight reverse subtraction c-p with [10, 20, 30], result 20-30=-10, 10-(-10)=20
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -464,11 +464,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight multiply by 0 with [1,2,3], result always 0
+     * Verify reduceRight multiply by 0 with [1, 2, 3], result always 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_2500
      * @tc.name testUint8ArrayReduceRight025
-     * @tc.desc Verify reduceRight multiply by 0 with [1,2,3], result always 0
+     * @tc.desc Verify reduceRight multiply by 0 with [1, 2, 3], result always 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -482,11 +482,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight identity return constant 1 with [10,20,30]
+     * Verify reduceRight identity return constant 1 with [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_2600
      * @tc.name testUint8ArrayReduceRight026
-     * @tc.desc Verify reduceRight identity return constant 1 with [10,20,30]
+     * @tc.desc Verify reduceRight identity return constant 1 with [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -500,11 +500,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight addition with element 0 [0,5,10], result 10+5+0=15
+     * Verify reduceRight addition with element 0 [0, 5, 10], result 10+5+0=15
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_2700
      * @tc.name testUint8ArrayReduceRight027
-     * @tc.desc Verify reduceRight addition with element 0 [0,5,10], result 10+5+0=15
+     * @tc.desc Verify reduceRight addition with element 0 [0, 5, 10], result 10+5+0=15
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -518,11 +518,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight addition with element 255 [255,1,1], result 1+1+255=257
+     * Verify reduceRight addition with element 255 [255, 1, 1], result 1+1+255=257
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_2800
      * @tc.name testUint8ArrayReduceRight028
-     * @tc.desc Verify reduceRight addition with element 255 [255,1,1], result 1+1+255=257
+     * @tc.desc Verify reduceRight addition with element 255 [255, 1, 1], result 1+1+255=257
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -536,11 +536,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight addition with element 127 [127,1,1], result 1+1+127=129
+     * Verify reduceRight addition with element 127 [127, 1, 1], result 1+1+127=129
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_2900
      * @tc.name testUint8ArrayReduceRight029
-     * @tc.desc Verify reduceRight addition with element 127 [127,1,1], result 1+1+127=129
+     * @tc.desc Verify reduceRight addition with element 127 [127, 1, 1], result 1+1+127=129
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -554,11 +554,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight addition with element 128 [128,1,1], result 1+1+128=130
+     * Verify reduceRight addition with element 128 [128, 1, 1], result 1+1+128=130
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_3000
      * @tc.name testUint8ArrayReduceRight030
-     * @tc.desc Verify reduceRight addition with element 128 [128,1,1], result 1+1+128=130
+     * @tc.desc Verify reduceRight addition with element 128 [128, 1, 1], result 1+1+128=130
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -572,11 +572,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight addition with 0/255 mixed [0,255,0,255], result 255+0+255+0=510
+     * Verify reduceRight addition with 0/255 mixed [0, 255, 0, 255], result 255+0+255+0=510
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_3100
      * @tc.name testUint8ArrayReduceRight031
-     * @tc.desc Verify reduceRight addition with 0/255 mixed [0,255,0,255], result 255+0+255+0=510
+     * @tc.desc Verify reduceRight addition with 0/255 mixed [0, 255, 0, 255], result 255+0+255+0=510
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -590,11 +590,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight bitwise AND with all 255 [255,255,255], result 255
+     * Verify reduceRight bitwise AND with all 255 [255, 255, 255], result 255
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_3200
      * @tc.name testUint8ArrayReduceRight032
-     * @tc.desc Verify reduceRight bitwise AND with all 255 [255,255,255], result 255
+     * @tc.desc Verify reduceRight bitwise AND with all 255 [255, 255, 255], result 255
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -608,11 +608,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight bitwise OR with all 0 [0,0,0], result 0
+     * Verify reduceRight bitwise OR with all 0 [0, 0, 0], result 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_3300
      * @tc.name testUint8ArrayReduceRight033
-     * @tc.desc Verify reduceRight bitwise OR with all 0 [0,0,0], result 0
+     * @tc.desc Verify reduceRight bitwise OR with all 0 [0, 0, 0], result 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -626,11 +626,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight Math.max with [0,255,127], result max(127,255)=255, max(255,0)=255
+     * Verify reduceRight Math.max with [0, 255, 127], result max(127, 255)=255, max(255, 0)=255
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_3400
      * @tc.name testUint8ArrayReduceRight034
-     * @tc.desc Verify reduceRight Math.max with [0,255,127], result max(127,255)=255, max(255,0)=255
+     * @tc.desc Verify reduceRight Math.max with [0, 255, 127], result max(127, 255)=255, max(255, 0)=255
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -644,11 +644,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with overflow values 256/257 truncated to [0,1], result 0+1=1
+     * Verify reduceRight with overflow values 256/257 truncated to [0, 1], result 0+1=1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_3500
      * @tc.name testUint8ArrayReduceRight035
-     * @tc.desc Verify reduceRight with overflow values 256/257 truncated to [0,1], result 0+1=1
+     * @tc.desc Verify reduceRight with overflow values 256/257 truncated to [0, 1], result 0+1=1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -662,11 +662,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with negative values [-1,-2] wrapped to [255,254], result 255+254=509
+     * Verify reduceRight with negative values [-1, -2] wrapped to [255, 254], result 255+254=509
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_3600
      * @tc.name testUint8ArrayReduceRight036
-     * @tc.desc Verify reduceRight with negative values [-1,-2] wrapped to [255,254], result 255+254=509
+     * @tc.desc Verify reduceRight with negative values [-1, -2] wrapped to [255, 254], result 255+254=509
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -680,11 +680,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with float truncation [1.9,2.1] stored as [1,2], result 1+2=3
+     * Verify reduceRight with float truncation [1.9, 2.1] stored as [1, 2], result 1+2=3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_3700
      * @tc.name testUint8ArrayReduceRight037
-     * @tc.desc Verify reduceRight with float truncation [1.9,2.1] stored as [1,2], result 1+2=3
+     * @tc.desc Verify reduceRight with float truncation [1.9, 2.1] stored as [1, 2], result 1+2=3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -698,11 +698,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with hex literals [0x10,0x20,0x30], result 48+32+16=96
+     * Verify reduceRight with hex literals [0x10, 0x20, 0x30], result 48+32+16=96
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_3800
      * @tc.name testUint8ArrayReduceRight038
-     * @tc.desc Verify reduceRight with hex literals [0x10,0x20,0x30], result 48+32+16=96
+     * @tc.desc Verify reduceRight with hex literals [0x10, 0x20, 0x30], result 48+32+16=96
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -716,11 +716,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with binary literals [0b1,0b10,0b100], result 4+2+1=7
+     * Verify reduceRight with binary literals [0b1, 0b10, 0b100], result 4+2+1=7
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_3900
      * @tc.name testUint8ArrayReduceRight039
-     * @tc.desc Verify reduceRight with binary literals [0b1,0b10,0b100], result 4+2+1=7
+     * @tc.desc Verify reduceRight with binary literals [0b1, 0b10, 0b100], result 4+2+1=7
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -734,11 +734,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with octal literals [0o10,0o20], result 16+8=24
+     * Verify reduceRight with octal literals [0o10, 0o20], result 16+8=24
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_4000
      * @tc.name testUint8ArrayReduceRight040
-     * @tc.desc Verify reduceRight with octal literals [0o10,0o20], result 16+8=24
+     * @tc.desc Verify reduceRight with octal literals [0o10, 0o20], result 16+8=24
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -752,11 +752,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with scientific notation [1e0,2e0,3e0], result 3+2+1=6
+     * Verify reduceRight with scientific notation [1e0, 2e0, 3e0], result 3+2+1=6
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_4100
      * @tc.name testUint8ArrayReduceRight041
-     * @tc.desc Verify reduceRight with scientific notation [1e0,2e0,3e0], result 3+2+1=6
+     * @tc.desc Verify reduceRight with scientific notation [1e0, 2e0, 3e0], result 3+2+1=6
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -770,11 +770,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with powers of 2 [1,2,4,8,16,32,64,128], result sum=255
+     * Verify reduceRight with powers of 2 [1, 2, 4, 8, 16, 32, 64, 128], result sum=255
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_4200
      * @tc.name testUint8ArrayReduceRight042
-     * @tc.desc Verify reduceRight with powers of 2 [1,2,4,8,16,32,64,128], result sum=255
+     * @tc.desc Verify reduceRight with powers of 2 [1, 2, 4, 8, 16, 32, 64, 128], result sum=255
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -811,11 +811,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with two elements [10,20] addition, result 20+10=30
+     * Verify reduceRight with two elements [10, 20] addition, result 20+10=30
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_4400
      * @tc.name testUint8ArrayReduceRight044
-     * @tc.desc Verify reduceRight with two elements [10,20] addition, result 20+10=30
+     * @tc.desc Verify reduceRight with two elements [10, 20] addition, result 20+10=30
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -829,11 +829,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with two elements [10,20] subtraction, result 20-10=10
+     * Verify reduceRight with two elements [10, 20] subtraction, result 20-10=10
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_4500
      * @tc.name testUint8ArrayReduceRight045
-     * @tc.desc Verify reduceRight with two elements [10,20] subtraction, result 20-10=10
+     * @tc.desc Verify reduceRight with two elements [10, 20] subtraction, result 20-10=10
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -891,11 +891,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with three identical elements [5,5,5] addition, result 15
+     * Verify reduceRight with three identical elements [5, 5, 5] addition, result 15
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_4800
      * @tc.name testUint8ArrayReduceRight048
-     * @tc.desc Verify reduceRight with three identical elements [5,5,5] addition, result 15
+     * @tc.desc Verify reduceRight with three identical elements [5, 5, 5] addition, result 15
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -909,11 +909,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight right-to-left order with [1,2,3,4,5] subtraction, result -5
+     * Verify reduceRight right-to-left order with [1, 2, 3, 4, 5] subtraction, result -5
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_4900
      * @tc.name testUint8ArrayReduceRight049
-     * @tc.desc Verify reduceRight right-to-left order with [1,2,3,4,5] subtraction, result -5
+     * @tc.desc Verify reduceRight right-to-left order with [1, 2, 3, 4, 5] subtraction, result -5
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -927,11 +927,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight right-to-left order with [5,4,3,2,1] subtraction, result -13
+     * Verify reduceRight right-to-left order with [5, 4, 3, 2, 1] subtraction, result -13
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_5000
      * @tc.name testUint8ArrayReduceRight050
-     * @tc.desc Verify reduceRight right-to-left order with [5,4,3,2,1] subtraction, result -13
+     * @tc.desc Verify reduceRight right-to-left order with [5, 4, 3, 2, 1] subtraction, result -13
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -945,11 +945,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight right-to-left order with [10,20,30,40,50] subtraction, result -50
+     * Verify reduceRight right-to-left order with [10, 20, 30, 40, 50] subtraction, result -50
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_5100
      * @tc.name testUint8ArrayReduceRight051
-     * @tc.desc Verify reduceRight right-to-left order with [10,20,30,40,50] subtraction, result -50
+     * @tc.desc Verify reduceRight right-to-left order with [10, 20, 30, 40, 50] subtraction, result -50
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -963,11 +963,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight right-to-left order with [2,3,4] double subtraction p-c-c, result -6
+     * Verify reduceRight right-to-left order with [2, 3, 4] double subtraction p-c-c, result -6
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_5200
      * @tc.name testUint8ArrayReduceRight052
-     * @tc.desc Verify reduceRight right-to-left order with [2,3,4] double subtraction p-c-c, result -6
+     * @tc.desc Verify reduceRight right-to-left order with [2, 3, 4] double subtraction p-c-c, result -6
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -981,11 +981,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight right-to-left order with [2,3,4] division p/c, result 0.666...
+     * Verify reduceRight right-to-left order with [2, 3, 4] division p/c, result 0.666...
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_5300
      * @tc.name testUint8ArrayReduceRight053
-     * @tc.desc Verify reduceRight right-to-left order with [2,3,4] division p/c, result 0.666...
+     * @tc.desc Verify reduceRight right-to-left order with [2, 3, 4] division p/c, result 0.666...
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -999,11 +999,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight callback receives correct indices [10,20,30,40]
+     * Verify reduceRight callback receives correct indices [10, 20, 30, 40]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_5400
      * @tc.name testUint8ArrayReduceRight054
-     * @tc.desc Verify reduceRight callback receives correct indices [10,20,30,40]
+     * @tc.desc Verify reduceRight callback receives correct indices [10, 20, 30, 40]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1025,11 +1025,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight callback index with two elements [5,10], only 1 call with index=0
+     * Verify reduceRight callback index with two elements [5, 10], only 1 call with index=0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_5500
      * @tc.name testUint8ArrayReduceRight055
-     * @tc.desc Verify reduceRight callback index with two elements [5,10], only 1 call with index=0
+     * @tc.desc Verify reduceRight callback index with two elements [5, 10], only 1 call with index=0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1050,11 +1050,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight callback indices with six elements [1,2,3,4,5,6]
+     * Verify reduceRight callback indices with six elements [1, 2, 3, 4, 5, 6]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_5600
      * @tc.name testUint8ArrayReduceRight056
-     * @tc.desc Verify reduceRight callback indices with six elements [1,2,3,4,5,6]
+     * @tc.desc Verify reduceRight callback indices with six elements [1, 2, 3, 4, 5, 6]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1154,18 +1154,17 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     void testUint8ArrayReduceRight060() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     int result = arr.reduceRight((p, c, index, array) -> {
-        int tmp = p + c;
-        return tmp;
+        return p + c;
     });
     assertEqual(60, result);
     }
 
     /**
-     * Verify reduceRight callback ignores curr, uses prev and index (p,c,i) => p + i
+     * Verify reduceRight callback ignores curr, uses prev and index (p, c, i) => p + i
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_6100
      * @tc.name testUint8ArrayReduceRight061
-     * @tc.desc Verify reduceRight callback ignores curr, uses prev and index (p,c,i) => p + i
+     * @tc.desc Verify reduceRight callback ignores curr, uses prev and index (p, c, i) => p + i
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1179,11 +1178,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight callback ignores prev, uses cur and index (p,c,i) => c + i
+     * Verify reduceRight callback ignores prev, uses cur and index (p, c, i) => c + i
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_6200
      * @tc.name testUint8ArrayReduceRight062
-     * @tc.desc Verify reduceRight callback ignores prev, uses cur and index (p,c,i) => c + i
+     * @tc.desc Verify reduceRight callback ignores prev, uses cur and index (p, c, i) => c + i
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1197,11 +1196,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight callback uses array parameter (p,c,i,a) => p + a[0]
+     * Verify reduceRight callback uses array parameter (p, c, i, a) => p + a[0]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_6300
      * @tc.name testUint8ArrayReduceRight063
-     * @tc.desc Verify reduceRight callback uses array parameter (p,c,i,a) => p + a[0]
+     * @tc.desc Verify reduceRight callback uses array parameter (p, c, i, a) => p + a[0]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1251,11 +1250,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with two elements [15,25] addition, result 40
+     * Verify reduceRight with two elements [15, 25] addition, result 40
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_6600
      * @tc.name testUint8ArrayReduceRight066
-     * @tc.desc Verify reduceRight with two elements [15,25] addition, result 40
+     * @tc.desc Verify reduceRight with two elements [15, 25] addition, result 40
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1269,11 +1268,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with four elements [10,20,30,40] addition, result 100
+     * Verify reduceRight with four elements [10, 20, 30, 40] addition, result 100
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_6700
      * @tc.name testUint8ArrayReduceRight067
-     * @tc.desc Verify reduceRight with four elements [10,20,30,40] addition, result 100
+     * @tc.desc Verify reduceRight with four elements [10, 20, 30, 40] addition, result 100
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1287,11 +1286,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with float return value [3,2,1] division, result 0.166666...
+     * Verify reduceRight with float return value [3, 2, 1] division, result 0.166666...
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_6800
      * @tc.name testUint8ArrayReduceRight068
-     * @tc.desc Verify reduceRight with float return value [3,2,1] division, result 0.166666...
+     * @tc.desc Verify reduceRight with float return value [3, 2, 1] division, result 0.166666...
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1344,11 +1343,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with [1,2,3,4,5] multiplication, result 120
+     * Verify reduceRight with [1, 2, 3, 4, 5] multiplication, result 120
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_7100
      * @tc.name testUint8ArrayReduceRight071
-     * @tc.desc Verify reduceRight with [1,2,3,4,5] multiplication, result 120
+     * @tc.desc Verify reduceRight with [1, 2, 3, 4, 5] multiplication, result 120
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1383,11 +1382,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with negative values truncated [-1,-2,-3] stored as [255,254,253], result 762
+     * Verify reduceRight with negative values truncated [-1, -2, -3] stored as [255, 254, 253], result 762
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_7300
      * @tc.name testUint8ArrayReduceRight073
-     * @tc.desc Verify reduceRight with negative values truncated [-1,-2,-3] stored as [255,254,253], result 762
+     * @tc.desc Verify reduceRight with negative values truncated [-1, -2, -3] stored as [255, 254, 253], result 762
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1401,11 +1400,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
 
     /**
-     * Verify reduceRight with large overflow values [512,1024] stored as [0,0], result 0
+     * Verify reduceRight with large overflow values [512, 1024] stored as [0, 0], result 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE_RIGHT02_7400
      * @tc.name testUint8ArrayReduceRight074
-     * @tc.desc Verify reduceRight with large overflow values [512,1024] stored as [0,0], result 0
+     * @tc.desc Verify reduceRight with large overflow values [512, 1024] stored as [0, 0], result 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

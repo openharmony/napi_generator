@@ -241,11 +241,11 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify three element array keys() yields 0,1,2 in order
+     * Verify three element array keys() yields 0, 1, 2 in order
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_1200
      * @tc.name testUint8ArrayKeys012
-     * @tc.desc Verify three element array keys() yields 0,1,2 in order
+     * @tc.desc Verify three element array keys() yields 0, 1, 2 in order
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -424,11 +424,11 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify length=2 array keys() produces indices 0,1
+     * Verify length=2 array keys() produces indices 0, 1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2100
      * @tc.name testUint8ArrayKeys021
-     * @tc.desc Verify length=2 array keys() produces indices 0,1
+     * @tc.desc Verify length=2 array keys() produces indices 0, 1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -499,11 +499,11 @@ public class Uint8ArrayKeysTest extends BasTest {
     }
 
     /**
-     * Verify Uint8Array.of(1,2,3) array keys() iterates three times
+     * Verify Uint8Array.of(1, 2, 3) array keys() iterates three times
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_KEYS_2500
      * @tc.name testUint8ArrayKeys025
-     * @tc.desc Verify Uint8Array.of(1,2,3) array keys() iterates three times
+     * @tc.desc Verify Uint8Array.of(1, 2, 3) array keys() iterates three times
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

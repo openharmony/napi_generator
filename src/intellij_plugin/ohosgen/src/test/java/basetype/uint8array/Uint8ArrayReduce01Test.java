@@ -48,11 +48,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn with subtraction operator, array [10,20,30], initial value 0
+     * Verify callbackfn with subtraction operator, array [10, 20, 30], initial value 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0200
      * @tc.name testUint8ArrayReduce002
-     * @tc.desc Verify callbackfn with subtraction operator, array [10,20,30], initial value 0
+     * @tc.desc Verify callbackfn with subtraction operator, array [10, 20, 30], initial value 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -66,11 +66,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn with multiplication operator, array [2,3,4], initial value 1
+     * Verify callbackfn with multiplication operator, array [2, 3, 4], initial value 1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0300
      * @tc.name testUint8ArrayReduce003
-     * @tc.desc Verify callbackfn with multiplication operator, array [2,3,4], initial value 1
+     * @tc.desc Verify callbackfn with multiplication operator, array [2, 3, 4], initial value 1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -84,11 +84,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn with Math.max to get maximum value, array [3,1,4,1,5], initial value 0
+     * Verify callbackfn with Math.max to get maximum value, array [3, 1, 4, 1, 5], initial value 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0400
      * @tc.name testUint8ArrayReduce004
-     * @tc.desc Verify callbackfn with Math.max to get maximum value, array [3,1,4,1,5], initial value 0
+     * @tc.desc Verify callbackfn with Math.max to get maximum value, array [3, 1, 4, 1, 5], initial value 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -102,11 +102,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn with Math.min to get minimum value, array [3,1,4,1,5], initial value 10
+     * Verify callbackfn with Math.min to get minimum value, array [3, 1, 4, 1, 5], initial value 10
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0500
      * @tc.name testUint8ArrayReduce005
-     * @tc.desc Verify callbackfn with Math.min to get minimum value, array [3,1,4,1,5], initial value 10
+     * @tc.desc Verify callbackfn with Math.min to get minimum value, array [3, 1, 4, 1, 5], initial value 10
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -120,11 +120,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn with bitwise OR operator, array [1,2,4], initial value 0
+     * Verify callbackfn with bitwise OR operator, array [1, 2, 4], initial value 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0600
      * @tc.name testUint8ArrayReduce006
-     * @tc.desc Verify callbackfn with bitwise OR operator, array [1,2,4], initial value 0
+     * @tc.desc Verify callbackfn with bitwise OR operator, array [1, 2, 4], initial value 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -138,11 +138,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn with bitwise AND operator, array [3,7,15], initial value 127
+     * Verify callbackfn with bitwise AND operator, array [3, 7, 15], initial value 127
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0700
      * @tc.name testUint8ArrayReduce007
-     * @tc.desc Verify callbackfn with bitwise AND operator, array [3,7,15], initial value 127
+     * @tc.desc Verify callbackfn with bitwise AND operator, array [3, 7, 15], initial value 127
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -156,11 +156,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn with bitwise XOR operator, array [1,2,3], initial value 0
+     * Verify callbackfn with bitwise XOR operator, array [1, 2, 3], initial value 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_0800
      * @tc.name testUint8ArrayReduce008
-     * @tc.desc Verify callbackfn with bitwise XOR operator, array [1,2,3], initial value 0
+     * @tc.desc Verify callbackfn with bitwise XOR operator, array [1, 2, 3], initial value 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -455,11 +455,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 1, addition accumulation on [10,20,30]
+     * Verify initialValue is 1, addition accumulation on [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2400
      * @tc.name testUint8ArrayReduce024
-     * @tc.desc Verify initialValue is 1, addition accumulation on [10,20,30]
+     * @tc.desc Verify initialValue is 1, addition accumulation on [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -473,11 +473,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is -1, addition accumulation on [10,20,30]
+     * Verify initialValue is -1, addition accumulation on [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2500
      * @tc.name testUint8ArrayReduce025
-     * @tc.desc Verify initialValue is -1, addition accumulation on [10,20,30]
+     * @tc.desc Verify initialValue is -1, addition accumulation on [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -491,11 +491,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 255 (uint8 max value), addition accumulation on [10,20,30]
+     * Verify initialValue is 255 (uint8 max value), addition accumulation on [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2600
      * @tc.name testUint8ArrayReduce026
-     * @tc.desc Verify initialValue is 255 (uint8 max value), addition accumulation on [10,20,30]
+     * @tc.desc Verify initialValue is 255 (uint8 max value), addition accumulation on [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -527,11 +527,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 0.5 (floating point), addition accumulation on [10,20]
+     * Verify initialValue is 0.5 (floating point), addition accumulation on [10, 20]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2800
      * @tc.name testUint8ArrayReduce028
-     * @tc.desc Verify initialValue is 0.5 (floating point), addition accumulation on [10,20]
+     * @tc.desc Verify initialValue is 0.5 (floating point), addition accumulation on [10, 20]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -545,11 +545,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 127 (middle value), addition accumulation on [10,20,30]
+     * Verify initialValue is 127 (middle value), addition accumulation on [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_2900
      * @tc.name testUint8ArrayReduce029
-     * @tc.desc Verify initialValue is 127 (middle value), addition accumulation on [10,20,30]
+     * @tc.desc Verify initialValue is 127 (middle value), addition accumulation on [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -563,11 +563,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 128 (middle value+1), addition accumulation on [10,20,30]
+     * Verify initialValue is 128 (middle value+1), addition accumulation on [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3000
      * @tc.name testUint8ArrayReduce030
-     * @tc.desc Verify initialValue is 128 (middle value+1), addition accumulation on [10,20,30]
+     * @tc.desc Verify initialValue is 128 (middle value+1), addition accumulation on [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -581,11 +581,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 0xFF (hexadecimal 255), addition accumulation on [10,20,30]
+     * Verify initialValue is 0xFF (hexadecimal 255), addition accumulation on [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3100
      * @tc.name testUint8ArrayReduce031
-     * @tc.desc Verify initialValue is 0xFF (hexadecimal 255), addition accumulation on [10,20,30]
+     * @tc.desc Verify initialValue is 0xFF (hexadecimal 255), addition accumulation on [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -599,11 +599,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 0o377 (octal 255), addition accumulation on [10,20,30]
+     * Verify initialValue is 0o377 (octal 255), addition accumulation on [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3200
      * @tc.name testUint8ArrayReduce032
-     * @tc.desc Verify initialValue is 0o377 (octal 255), addition accumulation on [10,20,30]
+     * @tc.desc Verify initialValue is 0o377 (octal 255), addition accumulation on [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -617,11 +617,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 0b11111111 (binary 255), addition accumulation on [10,20,30]
+     * Verify initialValue is 0b11111111 (binary 255), addition accumulation on [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3300
      * @tc.name testUint8ArrayReduce033
-     * @tc.desc Verify initialValue is 0b11111111 (binary 255), addition accumulation on [10,20,30]
+     * @tc.desc Verify initialValue is 0b11111111 (binary 255), addition accumulation on [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -635,11 +635,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 1e3 (scientific notation 1000), addition accumulation on [10,20,30]
+     * Verify initialValue is 1e3 (scientific notation 1000), addition accumulation on [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3400
      * @tc.name testUint8ArrayReduce034
-     * @tc.desc Verify initialValue is 1e3 (scientific notation 1000), addition accumulation on [10,20,30]
+     * @tc.desc Verify initialValue is 1e3 (scientific notation 1000), addition accumulation on [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -653,11 +653,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 3.14 (floating point), addition accumulation on [1,2]
+     * Verify initialValue is 3.14 (floating point), addition accumulation on [1, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3500
      * @tc.name testUint8ArrayReduce035
-     * @tc.desc Verify initialValue is 3.14 (floating point), addition accumulation on [1,2]
+     * @tc.desc Verify initialValue is 3.14 (floating point), addition accumulation on [1, 2]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -671,11 +671,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is Double.NaN, addition accumulation on [10,20]
+     * Verify initialValue is Double.NaN, addition accumulation on [10, 20]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3600
      * @tc.name testUint8ArrayReduce036
-     * @tc.desc Verify initialValue is Double.NaN, addition accumulation on [10,20]
+     * @tc.desc Verify initialValue is Double.NaN, addition accumulation on [10, 20]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -689,11 +689,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is Double.POSITIVE_INFINITY, addition accumulation on [10,20]
+     * Verify initialValue is Double.POSITIVE_INFINITY, addition accumulation on [10, 20]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3700
      * @tc.name testUint8ArrayReduce037
-     * @tc.desc Verify initialValue is Double.POSITIVE_INFINITY, addition accumulation on [10,20]
+     * @tc.desc Verify initialValue is Double.POSITIVE_INFINITY, addition accumulation on [10, 20]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -707,11 +707,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is Double.NEGATIVE_INFINITY, addition accumulation on [10,20]
+     * Verify initialValue is Double.NEGATIVE_INFINITY, addition accumulation on [10, 20]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3800
      * @tc.name testUint8ArrayReduce038
-     * @tc.desc Verify initialValue is Double.NEGATIVE_INFINITY, addition accumulation on [10,20]
+     * @tc.desc Verify initialValue is Double.NEGATIVE_INFINITY, addition accumulation on [10, 20]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -725,11 +725,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is -0.5 (negative floating point), addition accumulation on [10,20]
+     * Verify initialValue is -0.5 (negative floating point), addition accumulation on [10, 20]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_3900
      * @tc.name testUint8ArrayReduce039
-     * @tc.desc Verify initialValue is -0.5 (negative floating point), addition accumulation on [10,20]
+     * @tc.desc Verify initialValue is -0.5 (negative floating point), addition accumulation on [10, 20]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -743,11 +743,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify initialValue is 0x80 (hexadecimal 128), addition accumulation on [10,20,30]
+     * Verify initialValue is 0x80 (hexadecimal 128), addition accumulation on [10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_4000
      * @tc.name testUint8ArrayReduce040
-     * @tc.desc Verify initialValue is 0x80 (hexadecimal 128), addition accumulation on [10,20,30]
+     * @tc.desc Verify initialValue is 0x80 (hexadecimal 128), addition accumulation on [10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -810,7 +810,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
     @Test
     void testUint8ArrayReduce043() {
     Uint8Array arr = Uint8Array.of(5, 10);
-    String result = 
+    String result =
         arr.reduce((prev, curr, idx, index) -> prev + "[" + String.valueOf(idx) + ":" + String.valueOf(curr) + "]", "");
     assertEqual("[0:5][1:10]", result);
     }
@@ -946,11 +946,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify two element array [1,2] reduce
+     * Verify two element array [1, 2] reduce
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5100
      * @tc.name testUint8ArrayReduce051
-     * @tc.desc Verify two element array [1,2] reduce
+     * @tc.desc Verify two element array [1, 2] reduce
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -964,11 +964,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify all-zero array [0,0,0] reduce
+     * Verify all-zero array [0, 0, 0] reduce
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5200
      * @tc.name testUint8ArrayReduce052
-     * @tc.desc Verify all-zero array [0,0,0] reduce
+     * @tc.desc Verify all-zero array [0, 0, 0] reduce
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -982,11 +982,11 @@ public class Uint8ArrayReduce01Test extends BasTest {
     }
 
     /**
-     * Verify all-255 array [255,255] reduce multiplication to verify truncation
+     * Verify all-255 array [255, 255] reduce multiplication to verify truncation
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE01_5300
      * @tc.name testUint8ArrayReduce053
-     * @tc.desc Verify all-255 array [255,255] reduce multiplication to verify truncation
+     * @tc.desc Verify all-255 array [255, 255] reduce multiplication to verify truncation
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

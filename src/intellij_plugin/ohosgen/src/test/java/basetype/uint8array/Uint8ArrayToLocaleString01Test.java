@@ -21,11 +21,6 @@ import basetype.common.IntlOptions;
 import basetype.common.Uint8Array;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -703,7 +698,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString037() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.style = "decimal";
+    options.setStyle("decimal");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -723,8 +718,8 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString038() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     IntlOptions options = new IntlOptions();
-    options.style = "currency";
-    options.currency = "USD";
+    options.setStyle("currency");
+    options.setCurrency("USD");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("1,2,3", result);
     }
@@ -744,7 +739,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString039() {
     Uint8Array arr = Uint8Array.of(255, 0, 128);
     IntlOptions options = new IntlOptions();
-    options.style = "percent";
+    options.setStyle("percent");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("255,0,128", result);
     }
@@ -764,7 +759,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString040() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.useGrouping = true;
+    options.setUseGrouping(true);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -784,7 +779,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString041() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.useGrouping = false;
+    options.setUseGrouping(false);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -804,7 +799,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString042() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 1;
+    options.setMinimumIntegerDigits(1);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("1,2,3", result);
     }
@@ -824,7 +819,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString043() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 2;
+    options.setMinimumIntegerDigits(2);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("1,2,3", result);
     }
@@ -844,7 +839,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString044() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 3;
+    options.setMinimumIntegerDigits(3);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("1,2,3", result);
     }
@@ -864,7 +859,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString045() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 5;
+    options.setMinimumIntegerDigits(5);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("1,2,3", result);
     }
@@ -884,7 +879,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString046() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 0;
+    options.setMinimumFractionDigits(0);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -904,7 +899,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString047() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 2;
+    options.setMinimumFractionDigits(2);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -924,7 +919,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString048() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 3;
+    options.setMinimumFractionDigits(3);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -944,7 +939,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString049() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.maximumFractionDigits = 3;
+    options.setMaximumFractionDigits(3);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -964,8 +959,8 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString050() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 2;
-    options.maximumFractionDigits = 4;
+    options.setMinimumFractionDigits(2);
+    options.setMaximumFractionDigits(4);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -985,8 +980,8 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString051() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 3;
-    options.maximumFractionDigits = 5;
+    options.setMinimumFractionDigits(3);
+    options.setMaximumFractionDigits(5);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -1006,7 +1001,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString052() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.minimumSignificantDigits = 1;
+    options.setMinimumSignificantDigits(1);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -1026,7 +1021,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString053() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.minimumSignificantDigits = 2;
+    options.setMinimumSignificantDigits(2);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -1046,7 +1041,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString054() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.maximumSignificantDigits = 1;
+    options.setMaximumSignificantDigits(1);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -1066,7 +1061,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString055() {
     Uint8Array arr = Uint8Array.of(123, 45, 67);
     IntlOptions options = new IntlOptions();
-    options.maximumSignificantDigits = 3;
+    options.setMaximumSignificantDigits(3);
     String result = arr.toLocaleString("en-US", options);
     assertEqual("123,45,67", result);
     }
@@ -1086,9 +1081,9 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString056() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     IntlOptions options = new IntlOptions();
-    options.style = "currency";
-    options.currency = "USD";
-    options.currencyDisplay = "symbol";
+    options.setStyle("currency");
+    options.setCurrency("USD");
+    options.setCurrencyDisplay("symbol");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("1,2,3", result);
     }
@@ -1108,9 +1103,9 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString057() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     IntlOptions options = new IntlOptions();
-    options.style = "currency";
-    options.currency = "USD";
-    options.currencyDisplay = "name";
+    options.setStyle("currency");
+    options.setCurrency("USD");
+    options.setCurrencyDisplay("name");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("1,2,3", result);
     }
@@ -1130,9 +1125,9 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString058() {
     Uint8Array arr = Uint8Array.of(1, 2, 3);
     IntlOptions options = new IntlOptions();
-    options.style = "currency";
-    options.currency = "EUR";
-    options.currencyDisplay = "name";
+    options.setStyle("currency");
+    options.setCurrency("EUR");
+    options.setCurrencyDisplay("name");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("1,2,3", result);
     }
@@ -1152,7 +1147,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString059() {
     Uint8Array arr = Uint8Array.of(100);
     IntlOptions options = new IntlOptions();
-    options.notation = "scientific";
+    options.setNotation("scientific");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("100", result);
     }
@@ -1172,7 +1167,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString060() {
     Uint8Array arr = Uint8Array.of(0, 0, 0);
     IntlOptions options = new IntlOptions();
-    options.notation = "engineering";
+    options.setNotation("engineering");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("0,0,0", result);
     }
@@ -1192,7 +1187,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString061() {
     Uint8Array arr = Uint8Array.of(7);
     IntlOptions options = new IntlOptions();
-    options.notation = "compact";
+    options.setNotation("compact");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("7", result);
     }
@@ -1212,8 +1207,8 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString062() {
     Uint8Array arr = Uint8Array.of(99, 77);
     IntlOptions options = new IntlOptions();
-    options.notation = "compact";
-    options.compactDisplay = "long";
+    options.setNotation("compact");
+    options.setCompactDisplay("long");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("99,77", result);
     }
@@ -1233,7 +1228,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString063() {
     Uint8Array arr = Uint8Array.of(12, 34);
     IntlOptions options = new IntlOptions();
-    options.localeMatcher = "lookup";
+    options.setLocaleMatcher("lookup");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("12,34", result);
     }
@@ -1253,7 +1248,7 @@ public class Uint8ArrayToLocaleString01Test extends BasTest {
     void testUint8ArrayToLocaleString064() {
     Uint8Array arr = Uint8Array.of(1, 1, 1, 1);
     IntlOptions options = new IntlOptions();
-    options.localeMatcher = "best fit";
+    options.setLocaleMatcher("best fit");
     String result = arr.toLocaleString("en-US", options);
     assertEqual("1,1,1,1", result);
     }

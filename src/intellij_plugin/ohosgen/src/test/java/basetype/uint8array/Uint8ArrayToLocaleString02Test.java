@@ -115,7 +115,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString005() {
     Uint8Array a = Uint8Array.of(66, 77);
     IntlOptions options = new IntlOptions();
-    options.maximumFractionDigits = 0;
+    options.setMaximumFractionDigits(0);
     String s = a.toLocaleString(null, options);
     assertEqual("66,77", s);
     }
@@ -135,7 +135,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString006() {
     Uint8Array a = Uint8Array.of(88, 99);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 2;
+    options.setMinimumIntegerDigits(2);
     String s = a.toLocaleString("nb-NO", options);
     assertEqual("88,99", s);
     }
@@ -304,11 +304,11 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     }
 
     /**
-     * Verify toLocaleString() returns '1,1' for array [1, 1]
+     * Verify toLocaleString() returns '1, 1' for array [1, 1]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_1600
      * @tc.name testUint8ArrayToLocaleString016
-     * @tc.desc Verify toLocaleString() returns '1,1' for array [1, 1]
+     * @tc.desc Verify toLocaleString() returns '1, 1' for array [1, 1]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -321,11 +321,11 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     }
 
     /**
-     * Verify toLocaleString() returns '3,6' for array [3, 6]
+     * Verify toLocaleString() returns '3, 6' for array [3, 6]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_1700
      * @tc.name testUint8ArrayToLocaleString017
-     * @tc.desc Verify toLocaleString() returns '3,6' for array [3, 6]
+     * @tc.desc Verify toLocaleString() returns '3, 6' for array [3, 6]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -338,11 +338,11 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     }
 
     /**
-     * Verify toLocaleString() returns '5,10,15' for array [5, 10, 15]
+     * Verify toLocaleString() returns '5, 10, 15' for array [5, 10, 15]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_1800
      * @tc.name testUint8ArrayToLocaleString018
-     * @tc.desc Verify toLocaleString() returns '5,10,15' for array [5, 10, 15]
+     * @tc.desc Verify toLocaleString() returns '5, 10, 15' for array [5, 10, 15]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -445,11 +445,11 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     }
 
     /**
-     * Verify toLocaleString('en-US') returns '11,22' for array [11, 22]
+     * Verify toLocaleString('en-US') returns '11, 22' for array [11, 22]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_2400
      * @tc.name testUint8ArrayToLocaleString024
-     * @tc.desc Verify toLocaleString('en-US') returns '11,22' for array [11, 22]
+     * @tc.desc Verify toLocaleString('en-US') returns '11, 22' for array [11, 22]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -462,11 +462,11 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     }
 
     /**
-     * Verify toLocaleString('de-DE') returns '33,44' for array [33, 44]
+     * Verify toLocaleString('de-DE') returns '33, 44' for array [33, 44]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_2500
      * @tc.name testUint8ArrayToLocaleString025
-     * @tc.desc Verify toLocaleString('de-DE') returns '33,44' for array [33, 44]
+     * @tc.desc Verify toLocaleString('de-DE') returns '33, 44' for array [33, 44]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -479,11 +479,11 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     }
 
     /**
-     * Verify toLocaleString('fr-FR') returns '55,66' for array [55, 66]
+     * Verify toLocaleString('fr-FR') returns '55, 66' for array [55, 66]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_2600
      * @tc.name testUint8ArrayToLocaleString026
-     * @tc.desc Verify toLocaleString('fr-FR') returns '55,66' for array [55, 66]
+     * @tc.desc Verify toLocaleString('fr-FR') returns '55, 66' for array [55, 66]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -496,11 +496,11 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     }
 
     /**
-     * Verify toLocaleString('ja-JP') returns '77,88' for array [77, 88]
+     * Verify toLocaleString('ja-JP') returns '77, 88' for array [77, 88]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_2700
      * @tc.name testUint8ArrayToLocaleString027
-     * @tc.desc Verify toLocaleString('ja-JP') returns '77,88' for array [77, 88]
+     * @tc.desc Verify toLocaleString('ja-JP') returns '77, 88' for array [77, 88]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -547,11 +547,11 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     }
 
     /**
-     * Verify toLocaleString('it-IT') returns '13,37' for array [13, 37]
+     * Verify toLocaleString('it-IT') returns '13, 37' for array [13, 37]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_3000
      * @tc.name testUint8ArrayToLocaleString030
-     * @tc.desc Verify toLocaleString('it-IT') returns '13,37' for array [13, 37]
+     * @tc.desc Verify toLocaleString('it-IT') returns '13, 37' for array [13, 37]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -564,11 +564,11 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     }
 
     /**
-     * Verify toLocaleString('fi-FI') returns '42,84' for array [42, 84]
+     * Verify toLocaleString('fi-FI') returns '42, 84' for array [42, 84]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_3100
      * @tc.name testUint8ArrayToLocaleString031
-     * @tc.desc Verify toLocaleString('fi-FI') returns '42,84' for array [42, 84]
+     * @tc.desc Verify toLocaleString('fi-FI') returns '42, 84' for array [42, 84]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -598,11 +598,11 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     }
 
     /**
-     * Verify toLocaleString('da-DK') returns '2,4,8' for array [2, 4, 8]
+     * Verify toLocaleString('da-DK') returns '2, 4, 8' for array [2, 4, 8]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_3300
      * @tc.name testUint8ArrayToLocaleString033
-     * @tc.desc Verify toLocaleString('da-DK') returns '2,4,8' for array [2, 4, 8]
+     * @tc.desc Verify toLocaleString('da-DK') returns '2, 4, 8' for array [2, 4, 8]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -719,7 +719,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString039() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 2;
+    options.setMinimumIntegerDigits(2);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -738,7 +738,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString040() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 3;
+    options.setMinimumIntegerDigits(3);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -757,7 +757,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString041() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 5;
+    options.setMinimumIntegerDigits(5);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -776,16 +776,16 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString042() {
     Uint8Array a = Uint8Array.of(255);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 2;
+    options.setMinimumIntegerDigits(2);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
     /**
-     * Verify toLocaleString with minimumIntegerDigits 3 returns '001,002' for array [1, 2]
+     * Verify toLocaleString with minimumIntegerDigits 3 returns '001, 002' for array [1, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_4300
      * @tc.name testUint8ArrayToLocaleString043
-     * @tc.desc Verify toLocaleString with minimumIntegerDigits 3 returns '001,002' for array [1, 2]
+     * @tc.desc Verify toLocaleString with minimumIntegerDigits 3 returns '001, 002' for array [1, 2]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -795,16 +795,16 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString043() {
     Uint8Array a = Uint8Array.of(1, 2);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 3;
+    options.setMinimumIntegerDigits(3);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
     /**
-     * Verify toLocaleString with minimumIntegerDigits 4 returns '0000,0000' for array [0, 0]
+     * Verify toLocaleString with minimumIntegerDigits 4 returns '0000, 0000' for array [0, 0]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_4400
      * @tc.name testUint8ArrayToLocaleString044
-     * @tc.desc Verify toLocaleString with minimumIntegerDigits 4 returns '0000,0000' for array [0, 0]
+     * @tc.desc Verify toLocaleString with minimumIntegerDigits 4 returns '0000, 0000' for array [0, 0]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -814,7 +814,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString044() {
     Uint8Array a = Uint8Array.of(0, 0);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 4;
+    options.setMinimumIntegerDigits(4);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -833,7 +833,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString045() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 1;
+    options.setMinimumFractionDigits(1);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -852,7 +852,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString046() {
     Uint8Array a = Uint8Array.of(0);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 2;
+    options.setMinimumFractionDigits(2);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -871,16 +871,16 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString047() {
     Uint8Array a = Uint8Array.of(255);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 3;
+    options.setMinimumFractionDigits(3);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
     /**
-     * Verify toLocaleString with minimumFractionDigits 2 returns '1.00,2.00' for array [1, 2]
+     * Verify toLocaleString with minimumFractionDigits 2 returns '1.00, 2.00' for array [1, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_4800
      * @tc.name testUint8ArrayToLocaleString048
-     * @tc.desc Verify toLocaleString with minimumFractionDigits 2 returns '1.00,2.00' for array [1, 2]
+     * @tc.desc Verify toLocaleString with minimumFractionDigits 2 returns '1.00, 2.00' for array [1, 2]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -890,7 +890,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString048() {
     Uint8Array a = Uint8Array.of(1, 2);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 2;
+    options.setMinimumFractionDigits(2);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -909,16 +909,16 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString049() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.maximumFractionDigits = 0;
+    options.setMaximumFractionDigits(0);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
     /**
-     * Verify toLocaleString with maximumFractionDigits 0 returns '1,2' for array [1, 2]
+     * Verify toLocaleString with maximumFractionDigits 0 returns '1, 2' for array [1, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_5000
      * @tc.name testUint8ArrayToLocaleString050
-     * @tc.desc Verify toLocaleString with maximumFractionDigits 0 returns '1,2' for array [1, 2]
+     * @tc.desc Verify toLocaleString with maximumFractionDigits 0 returns '1, 2' for array [1, 2]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -928,7 +928,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString050() {
     Uint8Array a = Uint8Array.of(1, 2);
     IntlOptions options = new IntlOptions();
-    options.maximumFractionDigits = 0;
+    options.setMaximumFractionDigits(0);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -947,7 +947,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString051() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.maximumFractionDigits = 2;
+    options.setMaximumFractionDigits(2);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -966,8 +966,8 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString052() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 3;
-    options.minimumFractionDigits = 2;
+    options.setMinimumIntegerDigits(3);
+    options.setMinimumFractionDigits(2);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -986,8 +986,8 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString053() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 2;
-    options.maximumFractionDigits = 0;
+    options.setMinimumIntegerDigits(2);
+    options.setMaximumFractionDigits(0);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -1006,8 +1006,8 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString054() {
     Uint8Array a = Uint8Array.of(0);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 2;
-    options.minimumFractionDigits = 1;
+    options.setMinimumIntegerDigits(2);
+    options.setMinimumFractionDigits(1);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -1026,18 +1026,18 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString055() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 3;
-    options.minimumFractionDigits = 2;
-    options.maximumFractionDigits = 2;
+    options.setMinimumIntegerDigits(3);
+    options.setMinimumFractionDigits(2);
+    options.setMaximumFractionDigits(2);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
     /**
-     * Verify toLocaleString with useGrouping false returns '1000,2000' for array [1000, 2000]
+     * Verify toLocaleString with useGrouping false returns '1000, 2000' for array [1000, 2000]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_5600
      * @tc.name testUint8ArrayToLocaleString056
-     * @tc.desc Verify toLocaleString with useGrouping false returns '1000,2000' for array [1000, 2000]
+     * @tc.desc Verify toLocaleString with useGrouping false returns '1000, 2000' for array [1000, 2000]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1047,16 +1047,16 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString056() {
     Uint8Array a = Uint8Array.of(1000, 2000);
     IntlOptions options = new IntlOptions();
-    options.useGrouping = false;
+    options.setUseGrouping(false);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
     /**
-     * Verify toLocaleString with useGrouping true returns '1,000,2,000' for array [1000, 2000]
+     * Verify toLocaleString with useGrouping true returns '1, 000, 2, 000' for array [1000, 2000]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_5700
      * @tc.name testUint8ArrayToLocaleString057
-     * @tc.desc Verify toLocaleString with useGrouping true returns '1,000,2,000' for array [1000, 2000]
+     * @tc.desc Verify toLocaleString with useGrouping true returns '1, 000, 2, 000' for array [1000, 2000]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1066,7 +1066,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString057() {
     Uint8Array a = Uint8Array.of(1000, 2000);
     IntlOptions options = new IntlOptions();
-    options.useGrouping = true;
+    options.setUseGrouping(true);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -1085,7 +1085,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString058() {
     Uint8Array a = Uint8Array.of(255);
     IntlOptions options = new IntlOptions();
-    options.notation = "scientific";
+    options.setNotation("scientific");
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -1104,8 +1104,8 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString059() {
     Uint8Array a = Uint8Array.of(100);
     IntlOptions options = new IntlOptions();
-    options.style = "currency";
-    options.currency = "USD";
+    options.setStyle("currency");
+    options.setCurrency("USD");
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -1124,8 +1124,8 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString060() {
     Uint8Array a = Uint8Array.of(200);
     IntlOptions options = new IntlOptions();
-    options.style = "currency";
-    options.currency = "EUR";
+    options.setStyle("currency");
+    options.setCurrency("EUR");
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -1144,7 +1144,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString061() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.minimumSignificantDigits = 2;
+    options.setMinimumSignificantDigits(2);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -1163,7 +1163,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString062() {
     Uint8Array a = Uint8Array.of(123);
     IntlOptions options = new IntlOptions();
-    options.maximumSignificantDigits = 2;
+    options.setMaximumSignificantDigits(2);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -1182,8 +1182,8 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString063() {
     Uint8Array a = Uint8Array.of(1);
     IntlOptions options = new IntlOptions();
-    options.minimumSignificantDigits = 3;
-    options.maximumSignificantDigits = 5;
+    options.setMinimumSignificantDigits(3);
+    options.setMaximumSignificantDigits(5);
     assertTrue(a.toLocaleString(null, options).length() > 0);
     }
 
@@ -1202,16 +1202,16 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString064() {
     Uint8Array a = Uint8Array.of(7);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 2;
+    options.setMinimumIntegerDigits(2);
     assertTrue(a.toLocaleString("de-DE", options).length() > 0);
     }
 
     /**
-     * Verify toLocaleString('fr-FR') with minimumFractionDigits 2 returns '9,00' for [9]
+     * Verify toLocaleString('fr-FR') with minimumFractionDigits 2 returns '9, 00' for [9]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_6500
      * @tc.name testUint8ArrayToLocaleString065
-     * @tc.desc Verify toLocaleString('fr-FR') with minimumFractionDigits 2 returns '9,00' for [9]
+     * @tc.desc Verify toLocaleString('fr-FR') with minimumFractionDigits 2 returns '9, 00' for [9]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1221,7 +1221,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString065() {
     Uint8Array a = Uint8Array.of(9);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 2;
+    options.setMinimumFractionDigits(2);
     assertTrue(a.toLocaleString("fr-FR", options).length() > 0);
     }
 
@@ -1240,17 +1240,17 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString066() {
     Uint8Array a = Uint8Array.of(3);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 3;
-    options.minimumFractionDigits = 1;
+    options.setMinimumIntegerDigits(3);
+    options.setMinimumFractionDigits(1);
     assertTrue(a.toLocaleString("ja-JP", options).length() > 0);
     }
 
     /**
-     * Verify toLocaleString('zh-CN') with useGrouping false returns '1000,2000' for [1000, 2000]
+     * Verify toLocaleString('zh-CN') with useGrouping false returns '1000, 2000' for [1000, 2000]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TO_LOCALE_STRING02_6700
      * @tc.name testUint8ArrayToLocaleString067
-     * @tc.desc Verify toLocaleString('zh-CN') with useGrouping false returns '1000,2000' for [1000, 2000]
+     * @tc.desc Verify toLocaleString('zh-CN') with useGrouping false returns '1000, 2000' for [1000, 2000]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1260,7 +1260,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString067() {
     Uint8Array a = Uint8Array.of(1000, 2000);
     IntlOptions options = new IntlOptions();
-    options.useGrouping = false;
+    options.setUseGrouping(false);
     assertTrue(a.toLocaleString("zh-CN", options).length() > 0);
     }
 
@@ -1279,8 +1279,8 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString068() {
     Uint8Array a = Uint8Array.of(50);
     IntlOptions options = new IntlOptions();
-    options.style = "currency";
-    options.currency = "GBP";
+    options.setStyle("currency");
+    options.setCurrency("GBP");
     assertTrue(a.toLocaleString("en-US", options).length() > 0);
     }
 
@@ -1407,7 +1407,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString075() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.minimumIntegerDigits = 2;
+    options.setMinimumIntegerDigits(2);
     String s = a.toLocaleString(null, options);
     assertEqual(1, s.length());
     }
@@ -1427,7 +1427,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     void testUint8ArrayToLocaleString076() {
     Uint8Array a = Uint8Array.of(5);
     IntlOptions options = new IntlOptions();
-    options.minimumFractionDigits = 2;
+    options.setMinimumFractionDigits(2);
     String s = a.toLocaleString(null, options);
     assertEqual(1, s.length());
     }

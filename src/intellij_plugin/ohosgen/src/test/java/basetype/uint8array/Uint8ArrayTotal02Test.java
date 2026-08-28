@@ -600,11 +600,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.length is 3 for Uint8Array([1,2,3])
+     * Verify arr.length is 3 for Uint8Array([1, 2, 3])
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0330
      * @tc.name testUint8ArrayTotal033
-     * @tc.desc Verify arr.length is 3 for Uint8Array([1,2,3])
+     * @tc.desc Verify arr.length is 3 for Uint8Array([1, 2, 3])
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -617,11 +617,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.length is 3 for Uint8Array.of(1,2,3)
+     * Verify arr.length is 3 for Uint8Array.of(1, 2, 3)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0340
      * @tc.name testUint8ArrayTotal034
-     * @tc.desc Verify arr.length is 3 for Uint8Array.of(1,2,3)
+     * @tc.desc Verify arr.length is 3 for Uint8Array.of(1, 2, 3)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -634,11 +634,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.length is 3 for Uint8Array.from([1,2,3])
+     * Verify arr.length is 3 for Uint8Array.from([1, 2, 3])
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0350
      * @tc.name testUint8ArrayTotal035
-     * @tc.desc Verify arr.length is 3 for Uint8Array.from([1,2,3])
+     * @tc.desc Verify arr.length is 3 for Uint8Array.from([1, 2, 3])
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -669,11 +669,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.length is 0 for subarray(0,0)
+     * Verify arr.length is 0 for subarray(0, 0)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0370
      * @tc.name testUint8ArrayTotal037
-     * @tc.desc Verify arr.length is 0 for subarray(0,0)
+     * @tc.desc Verify arr.length is 0 for subarray(0, 0)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -704,11 +704,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.byteOffset is 0 for Uint8Array([1,2,3])
+     * Verify arr.byteOffset is 0 for Uint8Array([1, 2, 3])
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0390
      * @tc.name testUint8ArrayTotal039
-     * @tc.desc Verify arr.byteOffset is 0 for Uint8Array([1,2,3])
+     * @tc.desc Verify arr.byteOffset is 0 for Uint8Array([1, 2, 3])
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -721,11 +721,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.byteOffset is 0 for Uint8Array.of(1,2,3)
+     * Verify arr.byteOffset is 0 for Uint8Array.of(1, 2, 3)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0400
      * @tc.name testUint8ArrayTotal040
-     * @tc.desc Verify arr.byteOffset is 0 for Uint8Array.of(1,2,3)
+     * @tc.desc Verify arr.byteOffset is 0 for Uint8Array.of(1, 2, 3)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -738,11 +738,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.byteOffset is 0 for Uint8Array.from([1,2,3])
+     * Verify arr.byteOffset is 0 for Uint8Array.from([1, 2, 3])
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0410
      * @tc.name testUint8ArrayTotal041
-     * @tc.desc Verify arr.byteOffset is 0 for Uint8Array.from([1,2,3])
+     * @tc.desc Verify arr.byteOffset is 0 for Uint8Array.from([1, 2, 3])
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -755,11 +755,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.byteOffset is 0 for subarray(0,3) from start
+     * Verify arr.byteOffset is 0 for subarray(0, 3) from start
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0420
      * @tc.name testUint8ArrayTotal042
-     * @tc.desc Verify arr.byteOffset is 0 for subarray(0,3) from start
+     * @tc.desc Verify arr.byteOffset is 0 for subarray(0, 3) from start
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -773,11 +773,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.byteOffset is 2 for subarray(2,5)
+     * Verify arr.byteOffset is 2 for subarray(2, 5)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0430
      * @tc.name testUint8ArrayTotal043
-     * @tc.desc Verify arr.byteOffset is 2 for subarray(2,5)
+     * @tc.desc Verify arr.byteOffset is 2 for subarray(2, 5)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -842,11 +842,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr[0] is 1 for Uint8Array.of(1,2,3)
+     * Verify arr[0] is 1 for Uint8Array.of(1, 2, 3)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0470
      * @tc.name testUint8ArrayTotal047
-     * @tc.desc Verify arr[0] is 1 for Uint8Array.of(1,2,3)
+     * @tc.desc Verify arr[0] is 1 for Uint8Array.of(1, 2, 3)
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -859,11 +859,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr[0] is 1 for Uint8Array.from([1,2,3])
+     * Verify arr[0] is 1 for Uint8Array.from([1, 2, 3])
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0480
      * @tc.name testUint8ArrayTotal048
-     * @tc.desc Verify arr[0] is 1 for Uint8Array.from([1,2,3])
+     * @tc.desc Verify arr[0] is 1 for Uint8Array.from([1, 2, 3])
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -1103,11 +1103,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr[0] is 1 for Uint8Array([1,2,3])[0]
+     * Verify arr[0] is 1 for Uint8Array([1, 2, 3])[0]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0620
      * @tc.name testUint8ArrayTotal062
-     * @tc.desc Verify arr[0] is 1 for Uint8Array([1,2,3])[0]
+     * @tc.desc Verify arr[0] is 1 for Uint8Array([1, 2, 3])[0]
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -1120,11 +1120,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr[1] is 2 for Uint8Array([1,2,3])
+     * Verify arr[1] is 2 for Uint8Array([1, 2, 3])
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0630
      * @tc.name testUint8ArrayTotal063
-     * @tc.desc Verify arr[1] is 2 for Uint8Array([1,2,3])
+     * @tc.desc Verify arr[1] is 2 for Uint8Array([1, 2, 3])
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -1137,11 +1137,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr[2] is 3 for Uint8Array([1,2,3])
+     * Verify arr[2] is 3 for Uint8Array([1, 2, 3])
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0640
      * @tc.name testUint8ArrayTotal064
-     * @tc.desc Verify arr[2] is 3 for Uint8Array([1,2,3])
+     * @tc.desc Verify arr[2] is 3 for Uint8Array([1, 2, 3])
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -1154,11 +1154,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr[3] throws RangeError for out-of-bounds index on Uint8Array([1,2,3])
+     * Verify arr[3] throws RangeError for out-of-bounds index on Uint8Array([1, 2, 3])
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0650
      * @tc.name testUint8ArrayTotal065
-     * @tc.desc Verify arr[3] throws RangeError for out-of-bounds index on Uint8Array([1,2,3])
+     * @tc.desc Verify arr[3] throws RangeError for out-of-bounds index on Uint8Array([1, 2, 3])
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -1176,11 +1176,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr[-1] throws RangeError for negative index on Uint8Array([1,2,3])
+     * Verify arr[-1] throws RangeError for negative index on Uint8Array([1, 2, 3])
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0660
      * @tc.name testUint8ArrayTotal066
-     * @tc.desc Verify arr[-1] throws RangeError for negative index on Uint8Array([1,2,3])
+     * @tc.desc Verify arr[-1] throws RangeError for negative index on Uint8Array([1, 2, 3])
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -1472,11 +1472,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.fill(0,1,2) fills partial range
+     * Verify arr.fill(0, 1, 2) fills partial range
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0820
      * @tc.name testUint8ArrayTotal082
-     * @tc.desc Verify arr.fill(0,1,2) fills partial range
+     * @tc.desc Verify arr.fill(0, 1, 2) fills partial range
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -1492,11 +1492,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify arr.copyWithin(0,1,2) copies elements within array
+     * Verify arr.copyWithin(0, 1, 2) copies elements within array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_0830
      * @tc.name testUint8ArrayTotal083
-     * @tc.desc Verify arr.copyWithin(0,1,2) copies elements within array
+     * @tc.desc Verify arr.copyWithin(0, 1, 2) copies elements within array
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -1801,11 +1801,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify subarray(1,4).buffer is same as original buffer
+     * Verify subarray(1, 4).buffer is same as original buffer
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_1000
      * @tc.name testUint8ArrayTotal100
-     * @tc.desc Verify subarray(1,4).buffer is same as original buffer
+     * @tc.desc Verify subarray(1, 4).buffer is same as original buffer
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2
@@ -1875,11 +1875,11 @@ public class Uint8ArrayTotal02Test extends BasTest {
     }
 
     /**
-     * Verify subarray(0,arr.length).byteOffset is 0
+     * Verify subarray(0, arr.length).byteOffset is 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL02_1040
      * @tc.name testUint8ArrayTotal104
-     * @tc.desc Verify subarray(0,arr.length).byteOffset is 0
+     * @tc.desc Verify subarray(0, arr.length).byteOffset is 0
      * @tc.size MediumTest
      * @tc.type Function
      * @tc.level LEVEL2

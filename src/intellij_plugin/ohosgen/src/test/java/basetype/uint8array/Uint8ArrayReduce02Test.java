@@ -73,11 +73,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn addition accumulation [1,2,3,4,5]
+     * Verify callbackfn addition accumulation [1, 2, 3, 4, 5]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0300
      * @tc.name testUint8ArrayReduce003
-     * @tc.desc Verify callbackfn addition accumulation [1,2,3,4,5]
+     * @tc.desc Verify callbackfn addition accumulation [1, 2, 3, 4, 5]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -91,11 +91,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn multiplication accumulation [2,3,4]
+     * Verify callbackfn multiplication accumulation [2, 3, 4]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0400
      * @tc.name testUint8ArrayReduce004
-     * @tc.desc Verify callbackfn multiplication accumulation [2,3,4]
+     * @tc.desc Verify callbackfn multiplication accumulation [2, 3, 4]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -109,11 +109,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn subtraction [100,10,20,30]
+     * Verify callbackfn subtraction [100, 10, 20, 30]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0500
      * @tc.name testUint8ArrayReduce005
-     * @tc.desc Verify callbackfn subtraction [100,10,20,30]
+     * @tc.desc Verify callbackfn subtraction [100, 10, 20, 30]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -127,11 +127,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn division [256,2,4]
+     * Verify callbackfn division [256, 2, 4]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0600
      * @tc.name testUint8ArrayReduce006
-     * @tc.desc Verify callbackfn division [256,2,4]
+     * @tc.desc Verify callbackfn division [256, 2, 4]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -145,11 +145,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn using Math.max to find maximum [3,1,4,1,5]
+     * Verify callbackfn using Math.max to find maximum [3, 1, 4, 1, 5]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0700
      * @tc.name testUint8ArrayReduce007
-     * @tc.desc Verify callbackfn using Math.max to find maximum [3,1,4,1,5]
+     * @tc.desc Verify callbackfn using Math.max to find maximum [3, 1, 4, 1, 5]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -163,11 +163,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn using Math.min to find minimum [10,2,8,4]
+     * Verify callbackfn using Math.min to find minimum [10, 2, 8, 4]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0800
      * @tc.name testUint8ArrayReduce008
-     * @tc.desc Verify callbackfn using Math.min to find minimum [10,2,8,4]
+     * @tc.desc Verify callbackfn using Math.min to find minimum [10, 2, 8, 4]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -181,11 +181,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn ternary operator to find maximum [1,9,4,7]
+     * Verify callbackfn ternary operator to find maximum [1, 9, 4, 7]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_0900
      * @tc.name testUint8ArrayReduce009
-     * @tc.desc Verify callbackfn ternary operator to find maximum [1,9,4,7]
+     * @tc.desc Verify callbackfn ternary operator to find maximum [1, 9, 4, 7]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -199,11 +199,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn ternary operator to find minimum [8,3,6,2]
+     * Verify callbackfn ternary operator to find minimum [8, 3, 6, 2]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1000
      * @tc.name testUint8ArrayReduce010
-     * @tc.desc Verify callbackfn ternary operator to find minimum [8,3,6,2]
+     * @tc.desc Verify callbackfn ternary operator to find minimum [8, 3, 6, 2]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -217,11 +217,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn bitwise OR [0x0F,0xF0] hexadecimal
+     * Verify callbackfn bitwise OR [0x0F, 0xF0] hexadecimal
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1100
      * @tc.name testUint8ArrayReduce011
-     * @tc.desc Verify callbackfn bitwise OR [0x0F,0xF0] hexadecimal
+     * @tc.desc Verify callbackfn bitwise OR [0x0F, 0xF0] hexadecimal
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -235,11 +235,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn bitwise AND [0xFF,0x0F,0xF0]
+     * Verify callbackfn bitwise AND [0xFF, 0x0F, 0xF0]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1200
      * @tc.name testUint8ArrayReduce012
-     * @tc.desc Verify callbackfn bitwise AND [0xFF,0x0F,0xF0]
+     * @tc.desc Verify callbackfn bitwise AND [0xFF, 0x0F, 0xF0]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -253,11 +253,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn bitwise XOR [0b101,0b011,0b110] binary literals
+     * Verify callbackfn bitwise XOR [0b101, 0b011, 0b110] binary literals
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1300
      * @tc.name testUint8ArrayReduce013
-     * @tc.desc Verify callbackfn bitwise XOR [0b101,0b011,0b110] binary literals
+     * @tc.desc Verify callbackfn bitwise XOR [0b101, 0b011, 0b110] binary literals
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -271,11 +271,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn exponentiation [2,3,2] using **
+     * Verify callbackfn exponentiation [2, 3, 2] using **
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1400
      * @tc.name testUint8ArrayReduce014
-     * @tc.desc Verify callbackfn exponentiation [2,3,2] using **
+     * @tc.desc Verify callbackfn exponentiation [2, 3, 2] using **
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -289,11 +289,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn number concatenation [1,2,3,4] using prev*10+curr
+     * Verify callbackfn number concatenation [1, 2, 3, 4] using prev*10+curr
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1500
      * @tc.name testUint8ArrayReduce015
-     * @tc.desc Verify callbackfn number concatenation [1,2,3,4] using prev*10+curr
+     * @tc.desc Verify callbackfn number concatenation [1, 2, 3, 4] using prev*10+curr
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -307,11 +307,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn modulo 256 truncation sum [150,150,150]
+     * Verify callbackfn modulo 256 truncation sum [150, 150, 150]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1600
      * @tc.name testUint8ArrayReduce016
-     * @tc.desc Verify callbackfn modulo 256 truncation sum [150,150,150]
+     * @tc.desc Verify callbackfn modulo 256 truncation sum [150, 150, 150]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -325,11 +325,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn identity return prev [7,1,2,3] first element unchanged
+     * Verify callbackfn identity return prev [7, 1, 2, 3] first element unchanged
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1700
      * @tc.name testUint8ArrayReduce017
-     * @tc.desc Verify callbackfn identity return prev [7,1,2,3] first element unchanged
+     * @tc.desc Verify callbackfn identity return prev [7, 1, 2, 3] first element unchanged
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -343,11 +343,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn forward return curr [7,1,2,3] result is last element
+     * Verify callbackfn forward return curr [7, 1, 2, 3] result is last element
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1800
      * @tc.name testUint8ArrayReduce018
-     * @tc.desc Verify callbackfn forward return curr [7,1,2,3] result is last element
+     * @tc.desc Verify callbackfn forward return curr [7, 1, 2, 3] result is last element
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -361,11 +361,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn sum of squares [1,3,5] using prev+curr*curr
+     * Verify callbackfn sum of squares [1, 3, 5] using prev+curr*curr
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_1900
      * @tc.name testUint8ArrayReduce019
-     * @tc.desc Verify callbackfn sum of squares [1,3,5] using prev+curr*curr
+     * @tc.desc Verify callbackfn sum of squares [1, 3, 5] using prev+curr*curr
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -379,11 +379,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn absolute difference [100,30,20] using Math.abs
+     * Verify callbackfn absolute difference [100, 30, 20] using Math.abs
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2000
      * @tc.name testUint8ArrayReduce020
-     * @tc.desc Verify callbackfn absolute difference [100,30,20] using Math.abs
+     * @tc.desc Verify callbackfn absolute difference [100, 30, 20] using Math.abs
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -397,11 +397,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn prev*curr+prev [2,3,1]
+     * Verify callbackfn prev*curr+prev [2, 3, 1]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2100
      * @tc.name testUint8ArrayReduce021
-     * @tc.desc Verify callbackfn prev*curr+prev [2,3,1]
+     * @tc.desc Verify callbackfn prev*curr+prev [2, 3, 1]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -415,11 +415,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn prev+curr*10 [1,2,3,4]
+     * Verify callbackfn prev+curr*10 [1, 2, 3, 4]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2200
      * @tc.name testUint8ArrayReduce022
-     * @tc.desc Verify callbackfn prev+curr*10 [1,2,3,4]
+     * @tc.desc Verify callbackfn prev+curr*10 [1, 2, 3, 4]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -433,11 +433,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn conditional sum [10,50,5,100] only add values greater than 20
+     * Verify callbackfn conditional sum [10, 50, 5, 100] only add values greater than 20
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2300
      * @tc.name testUint8ArrayReduce023
-     * @tc.desc Verify callbackfn conditional sum [10,50,5,100] only add values greater than 20
+     * @tc.desc Verify callbackfn conditional sum [10, 50, 5, 100] only add values greater than 20
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -451,11 +451,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn prev*(curr+1) [1,2,3]
+     * Verify callbackfn prev*(curr+1) [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2400
      * @tc.name testUint8ArrayReduce024
-     * @tc.desc Verify callbackfn prev*(curr+1) [1,2,3]
+     * @tc.desc Verify callbackfn prev*(curr+1) [1, 2, 3]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -469,11 +469,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn left shift accumulation [1,1,1,1] using (prev<<1)+curr
+     * Verify callbackfn left shift accumulation [1, 1, 1, 1] using (prev<<1)+curr
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2500
      * @tc.name testUint8ArrayReduce025
-     * @tc.desc Verify callbackfn left shift accumulation [1,1,1,1] using (prev<<1)+curr
+     * @tc.desc Verify callbackfn left shift accumulation [1, 1, 1, 1] using (prev<<1)+curr
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -487,11 +487,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn bitwise OR three elements [0xAA,0x55,0xFF]
+     * Verify callbackfn bitwise OR three elements [0xAA, 0x55, 0xFF]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2600
      * @tc.name testUint8ArrayReduce026
-     * @tc.desc Verify callbackfn bitwise OR three elements [0xAA,0x55,0xFF]
+     * @tc.desc Verify callbackfn bitwise OR three elements [0xAA, 0x55, 0xFF]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -505,11 +505,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn add a[0] each time [1,2,3]
+     * Verify callbackfn add a[0] each time [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2700
      * @tc.name testUint8ArrayReduce027
-     * @tc.desc Verify callbackfn add a[0] each time [1,2,3]
+     * @tc.desc Verify callbackfn add a[0] each time [1, 2, 3]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -523,11 +523,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn multi-statement body [3,1,4,1,5] with internal const declaration
+     * Verify callbackfn multi-statement body [3, 1, 4, 1, 5] with internal const declaration
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2800
      * @tc.name testUint8ArrayReduce028
-     * @tc.desc Verify callbackfn multi-statement body [3,1,4,1,5] with internal const declaration
+     * @tc.desc Verify callbackfn multi-statement body [3, 1, 4, 1, 5] with internal const declaration
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -545,11 +545,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn using Math.floor divide by 2 [3,6,9]
+     * Verify callbackfn using Math.floor divide by 2 [3, 6, 9]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_2900
      * @tc.name testUint8ArrayReduce029
-     * @tc.desc Verify callbackfn using Math.floor divide by 2 [3,6,9]
+     * @tc.desc Verify callbackfn using Math.floor divide by 2 [3, 6, 9]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -563,11 +563,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn prev-Math.abs(curr) [100,30,200]
+     * Verify callbackfn prev-Math.abs(curr) [100, 30, 200]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3000
      * @tc.name testUint8ArrayReduce030
-     * @tc.desc Verify callbackfn prev-Math.abs(curr) [100,30,200]
+     * @tc.desc Verify callbackfn prev-Math.abs(curr) [100, 30, 200]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -581,11 +581,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn prev ^ (curr<<1) [1,2,3]
+     * Verify callbackfn prev ^ (curr<<1) [1, 2, 3]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3100
      * @tc.name testUint8ArrayReduce031
-     * @tc.desc Verify callbackfn prev ^ (curr<<1) [1,2,3]
+     * @tc.desc Verify callbackfn prev ^ (curr<<1) [1, 2, 3]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -599,11 +599,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn Math.abs(prev-curr) [10,30,5]
+     * Verify callbackfn Math.abs(prev-curr) [10, 30, 5]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3200
      * @tc.name testUint8ArrayReduce032
-     * @tc.desc Verify callbackfn Math.abs(prev-curr) [10,30,5]
+     * @tc.desc Verify callbackfn Math.abs(prev-curr) [10, 30, 5]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -663,11 +663,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify callbackfn accumulate index values [1,2,3,4,5] verify index sequence
+     * Verify callbackfn accumulate index values [1, 2, 3, 4, 5] verify index sequence
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_3500
      * @tc.name testUint8ArrayReduce035
-     * @tc.desc Verify callbackfn accumulate index values [1,2,3,4,5] verify index sequence
+     * @tc.desc Verify callbackfn accumulate index values [1, 2, 3, 4, 5] verify index sequence
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -902,11 +902,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify two elements [10,20] addition
+     * Verify two elements [10, 20] addition
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_4600
      * @tc.name testUint8ArrayReduce046
-     * @tc.desc Verify two elements [10,20] addition
+     * @tc.desc Verify two elements [10, 20] addition
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -974,11 +974,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify overflow truncation [256,257] stored as [0,1]
+     * Verify overflow truncation [256, 257] stored as [0, 1]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5000
      * @tc.name testUint8ArrayReduce050
-     * @tc.desc Verify overflow truncation [256,257] stored as [0,1]
+     * @tc.desc Verify overflow truncation [256, 257] stored as [0, 1]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1010,11 +1010,11 @@ public class Uint8ArrayReduce02Test extends BasTest {
     }
 
     /**
-     * Verify [128,127] midpoint boundary
+     * Verify [128, 127] midpoint boundary
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_REDUCE02_5200
      * @tc.name testUint8ArrayReduce052
-     * @tc.desc Verify [128,127] midpoint boundary
+     * @tc.desc Verify [128, 127] midpoint boundary
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

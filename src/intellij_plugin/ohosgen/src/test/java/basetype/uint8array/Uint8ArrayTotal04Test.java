@@ -19,12 +19,7 @@ import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.Uint8Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -1951,11 +1946,11 @@ public class Uint8ArrayTotal04Test extends BasTest {
     }
 
     /**
-     * Verify set([256],0) truncates source value to 0 for Uint8Array
+     * Verify set([256], 0) truncates source value to 0 for Uint8Array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0980
      * @tc.name testUint8ArrayTotal04_098
-     * @tc.desc Verify set([256],0) truncates source value to 0 for Uint8Array
+     * @tc.desc Verify set([256], 0) truncates source value to 0 for Uint8Array
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1969,11 +1964,11 @@ public class Uint8ArrayTotal04Test extends BasTest {
     }
 
     /**
-     * Verify set(Uint8Array.of(257),0) truncates source to 1 for Uint8Array
+     * Verify set(Uint8Array.of(257), 0) truncates source to 1 for Uint8Array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_0990
      * @tc.name testUint8ArrayTotal04_099
-     * @tc.desc Verify set(Uint8Array.of(257),0) truncates source to 1 for Uint8Array
+     * @tc.desc Verify set(Uint8Array.of(257), 0) truncates source to 1 for Uint8Array
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1987,11 +1982,11 @@ public class Uint8ArrayTotal04Test extends BasTest {
     }
 
     /**
-     * Verify set([-1],0) negative source wraps to 255 for Uint8Array
+     * Verify set([-1], 0) negative source wraps to 255 for Uint8Array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1000
      * @tc.name testUint8ArrayTotal04_100
-     * @tc.desc Verify set([-1],0) negative source wraps to 255 for Uint8Array
+     * @tc.desc Verify set([-1], 0) negative source wraps to 255 for Uint8Array
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -2005,11 +2000,11 @@ public class Uint8ArrayTotal04Test extends BasTest {
     }
 
     /**
-     * Verify set([3.9],0) float source truncates to 3 for Uint8Array
+     * Verify set([3.9], 0) float source truncates to 3 for Uint8Array
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_TOTAL04_1010
      * @tc.name testUint8ArrayTotal04_101
-     * @tc.desc Verify set([3.9],0) float source truncates to 3 for Uint8Array
+     * @tc.desc Verify set([3.9], 0) float source truncates to 3 for Uint8Array
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
