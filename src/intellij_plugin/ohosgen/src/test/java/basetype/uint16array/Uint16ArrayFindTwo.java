@@ -60,7 +60,8 @@ public class Uint16ArrayFindTwo extends BasTest {
 
     @Test
     void testUint16ArrayFindTwo023() {
-    try { Uint16Array.of(1).find((value) -> {
+    try {
+        Uint16Array.of(1).find((value) -> {
         return BasTest.throwTestError("find marker");
         });
         fail();

@@ -123,7 +123,8 @@ public class Uint16ArrayFindLastIndexTwo extends BasTest {
 
     @Test
     void testUint16ArrayFindLastIndexTwo027() {
-    try { Uint16Array.of(1).findLastIndex((value) -> {
+    try {
+        Uint16Array.of(1).findLastIndex((value) -> {
         throw new RangeError("findLastIndex range");
         });
         fail();

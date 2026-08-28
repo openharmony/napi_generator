@@ -96,7 +96,8 @@ public class Uint16ArrayEveryTwo extends BasTest {
 
     @Test
     void testUint16ArrayEveryTwo021() {
-    try { Uint16Array.of(1).every((value) -> {
+    try {
+        Uint16Array.of(1).every((value) -> {
         return BasTest.throwTestError("every marker");
         });
         fail();

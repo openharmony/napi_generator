@@ -134,7 +134,8 @@ public class Uint16ArrayFilterTwo extends BasTest {
 
     @Test
     void testUint16ArrayFilterTwo024() {
-    try { Uint16Array.of(1).filter((value) -> {
+    try {
+        Uint16Array.of(1).filter((value) -> {
         throw new RangeError("filter range");
         });
         fail();

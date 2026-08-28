@@ -81,7 +81,8 @@ public class Uint16ArrayFindLastTwo extends BasTest {
 
     @Test
     void testUint16ArrayFindLastTwo019() {
-    try { Uint16Array.of(1).findLast((value) -> {
+    try {
+        Uint16Array.of(1).findLast((value) -> {
         return BasTest.throwTestError("findLast marker");
         });
         fail();

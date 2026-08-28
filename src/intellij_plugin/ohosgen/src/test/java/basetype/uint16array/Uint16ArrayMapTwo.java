@@ -148,7 +148,8 @@ public class Uint16ArrayMapTwo extends BasTest {
 
     @Test
     void testUint16ArrayMapTwo032() {
-    try { Uint16Array.of(1).map((value) -> {
+    try {
+        Uint16Array.of(1).map((value) -> {
         throw new RangeError("map range");
         });
         fail();

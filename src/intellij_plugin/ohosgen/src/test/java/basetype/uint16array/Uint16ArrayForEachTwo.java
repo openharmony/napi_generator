@@ -121,7 +121,8 @@ public class Uint16ArrayForEachTwo extends BasTest {
     @Test
     void testUint16ArrayForEachTwo019() {
     Uint16Array arr = Uint16Array.of(1);
-    try { arr.forEach((value) -> {
+    try {
+        arr.forEach((value) -> {
         BasTest.throwTestError("forEach marker");
         });
         fail();

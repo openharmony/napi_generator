@@ -110,7 +110,7 @@ public class Uint16Arraysome02 extends BasTest {
     Uint16Array arr = new Uint16Array(new int[] {4, 9, 16, 25});
     boolean result = arr.some((e) -> {
         double sqrt = Math.sqrt(e);
-        return sqrt == 5;
+        return Math.abs(sqrt - 5) < 1e-9;
     });
     assertTrue(result);
     }

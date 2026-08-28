@@ -18,7 +18,6 @@ package basetype.uint8clampedarray2;
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.RangeError;
-import basetype.common.Uint8Array;
 import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;

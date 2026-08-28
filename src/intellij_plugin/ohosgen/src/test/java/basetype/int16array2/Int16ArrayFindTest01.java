@@ -372,7 +372,7 @@ public class Int16ArrayFindTest01 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {4, 9, 16, 25});
     Integer result = arr.find((value) -> {
         double sqrt = Math.sqrt(value);
-        return sqrt == 4;
+        return Math.abs(sqrt - 4) < 1e-9;
     });
     assertEqual(16, result);
     }
