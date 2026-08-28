@@ -121,8 +121,10 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.some((e, i, a) -> {
-        if (i == 2) { throw new Error("inner");
-        } return false;
+        if (i == 2) {
+            return BasTest.throwTestError("inner");
+        }
+        return false;
     });
     fail();
     } catch (Error e) {
@@ -180,7 +182,9 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     void testUint8ClampedArraySomeTwo015() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     boolean r = arr.some((e, i, a) -> {
-        if (i == 0) a.set(2, 99);
+        if (i == 0) {
+            a.set(2, 99);
+        }
         return e == 1;
     });
     assertTrue(r);
@@ -191,7 +195,9 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     void testUint8ClampedArraySomeTwo016() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     boolean r = arr.some((e, i, a) -> {
-        if (i == 0) a.set(2, 99);
+        if (i == 0) {
+            a.set(2, 99);
+        }
         return e == 99;
     });
     assertTrue(r);
@@ -220,7 +226,9 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     void testUint8ClampedArraySomeTwo018() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 0, 0});
     boolean r = arr.some((e, i, a) -> {
-        if (i == 0) a.set(2, 300);
+        if (i == 0) {
+            a.set(2, 300);
+        }
         return e == 255;
     });
     assertTrue(r);
@@ -295,7 +303,8 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     @Test
     void testUint8ClampedArraySomeTwo027() {
     List<Integer> src = new ArrayList<>();
-    for (int i = 0; i < 100; i++) { src.add(i);
+    for (int i = 0; i < 100; i++) {
+        src.add(i);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     int[] count = {0};
@@ -310,7 +319,8 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     @Test
     void testUint8ClampedArraySomeTwo028() {
     List<Integer> src = new ArrayList<>();
-    for (int i = 0; i < 49; i++) { src.add(0);
+    for (int i = 0; i < 49; i++) {
+        src.add(0);
     }
     src.add(1);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
@@ -326,7 +336,8 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     @Test
     void testUint8ClampedArraySomeTwo029() {
     List<Integer> src = new ArrayList<>();
-    for (int i = 0; i < 30; i++) { src.add(1);
+    for (int i = 0; i < 30; i++) {
+        src.add(1);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     int[] count = {0};
@@ -377,7 +388,8 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     @Test
     void testUint8ClampedArraySomeTwo035() {
     List<Integer> src = new ArrayList<>();
-    for (int i = 0; i < 20; i++) { src.add(i == 10 ? 250 : 10);
+    for (int i = 0; i < 20; i++) {
+        src.add(i == 10 ? 250 : 10);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     boolean r = arr.some((e, i, a) -> e > 200);
@@ -473,7 +485,8 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     @Test
     void testUint8ClampedArraySomeTwo047() {
     List<Integer> src = new ArrayList<>();
-    for (int i = 0; i < 200; i++) { src.add(i == 150 ? 100 : 1);
+    for (int i = 0; i < 200; i++) {
+        src.add(i == 150 ? 100 : 1);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     boolean r = arr.some((e, i, a) -> {
@@ -486,7 +499,8 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     @Test
     void testUint8ClampedArraySomeTwo048() {
     List<Integer> src = new ArrayList<>();
-    for (int i = 0; i < 300; i++) { src.add(5);
+    for (int i = 0; i < 300; i++) {
+        src.add(5);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     boolean r = arr.some((e, i, a) -> i == a.length() - 1);
@@ -602,9 +616,11 @@ public class Uint8ClampedArraySome02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     int[] trueCount = {0};
     boolean r = arr.some((e, i, a) -> {
-        if (e == 2) { trueCount[0]++;
+        if (e == 2) {
+            trueCount[0]++;
         return true;
-        } return false;
+        }
+        return false;
     });
     assertTrue(r);
     assertEqual(1, trueCount[0]);

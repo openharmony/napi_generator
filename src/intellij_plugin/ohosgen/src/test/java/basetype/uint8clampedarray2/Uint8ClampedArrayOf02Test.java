@@ -496,7 +496,8 @@ public class Uint8ClampedArrayOf02Test extends BasTest {
     @Test
     void testUint8ClampedArrayOfTwo066() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(1, 2, 3);
-    Uint8ClampedArray m = arr.map((x) -> { return x * 2;
+    Uint8ClampedArray m = arr.map((x) -> {
+        return x * 2;
         });
     assertEqual(2, m.get(0));
     assertEqual(4, m.get(1));
@@ -545,7 +546,8 @@ public class Uint8ClampedArrayOf02Test extends BasTest {
     @Test
     void testUint8ClampedArrayOfTwo071() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(1, 2, 3, 4, 5);
-    Uint8ClampedArray f = arr.filter((x) -> { return x > 2;
+    Uint8ClampedArray f = arr.filter((x) -> {
+        return x > 2;
         });
     assertEqual(3, f.length());
     assertEqual(3, f.get(0));

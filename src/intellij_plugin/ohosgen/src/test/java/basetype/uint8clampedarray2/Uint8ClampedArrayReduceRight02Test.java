@@ -94,7 +94,8 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     void testUint8ClampedArrayReduceRightTwo009() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    arr.reduceRight((p, c, i, a) -> { throw new RangeError("boom");
+    arr.reduceRight((p, c, i, a) -> {
+        throw new RangeError("boom");
         });
     fail();
     } catch (RangeError e) {
@@ -106,7 +107,8 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     void testUint8ClampedArrayReduceRightTwo010() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    arr.reduceRight((p, c, i, a) -> { throw new TypeError("boom");
+    arr.reduceRight((p, c, i, a) -> {
+        throw new TypeError("boom");
         });
     fail();
     } catch (TypeError e) {
@@ -121,7 +123,7 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     try {
     arr.reduceRight((p, c, i, a) -> {
         count[0]++;
-        throw new Error("x");
+        return BasTest.throwTestError("x");
     });
     fail();
     } catch (Error e) {
@@ -137,7 +139,9 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     try {
     arr.reduceRight((p, c, i, a) -> {
     count[0]++;
-    if (count[0] == 2) throw new Error("mid");
+    if (count[0] == 2) {
+        return BasTest.throwTestError("mid");
+    }
     return p + c;
         });
     fail();
@@ -181,7 +185,9 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 99});
     int[] firstP = {-1};
     arr.reduceRight((p, c, i, a) -> {
-    if (firstP[0] == -1) firstP[0] = p;
+    if (firstP[0] == -1) {
+        firstP[0] = p;
+    }
     return p;
         });
     assertEqual(99, firstP[0]);
@@ -192,7 +198,9 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 0});
     int[] firstP = {-1};
     arr.reduceRight((p, c, i, a) -> {
-    if (firstP[0] == -1) firstP[0] = p;
+    if (firstP[0] == -1) {
+        firstP[0] = p;
+    }
     return p;
         });
     assertEqual(0, firstP[0]);
@@ -203,7 +211,9 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 255});
     int[] firstP = {-2};
     arr.reduceRight((p, c, i, a) -> {
-    if (firstP[0] == -2) firstP[0] = p;
+    if (firstP[0] == -2) {
+        firstP[0] = p;
+    }
     return p;
         });
     assertEqual(255, firstP[0]);
@@ -216,7 +226,9 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     int[] callCnt = {0};
     arr.reduceRight((p, c, i, a) -> {
     callCnt[0]++;
-    if (callCnt[0] == 2) secondP[0] = p;
+    if (callCnt[0] == 2) {
+        secondP[0] = p;
+    }
     return p + c;
         });
     assertEqual(30, secondP[0]);
@@ -227,7 +239,9 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 50, 99});
     int[] firstC = {-1};
     arr.reduceRight((p, c, i, a) -> {
-    if (firstC[0] == -1) firstC[0] = c;
+    if (firstC[0] == -1) {
+        firstC[0] = c;
+    }
     return p;
         });
     assertEqual(50, firstC[0]);
@@ -612,7 +626,8 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     void testUint8ClampedArrayReduceRightTwo059() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     try {
-    arr.reduceRight((p, c, i, a) -> { throw new SyntaxError("s");
+    arr.reduceRight((p, c, i, a) -> {
+        throw new SyntaxError("s");
         });
     fail();
     } catch (SyntaxError e) {
@@ -624,7 +639,9 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     void testUint8ClampedArrayReduceRightTwo060() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     arr.reduceRight((p, c, i, a) -> {
-    if (i == 2) a.set(0, 99);
+    if (i == 2) {
+        a.set(0, 99);
+    }
     return p;
         });
     assertEqual(99, arr.get(0));
@@ -645,8 +662,12 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int[] cVal = {-1};
     arr.reduceRight((p, c, i, a) -> {
-    if (i == 1) a.set(0, 50);
-    if (i == 0) cVal[0] = c;
+    if (i == 1) {
+        a.set(0, 50);
+    }
+    if (i == 0) {
+        cVal[0] = c;
+    }
     return p;
         });
     assertEqual(50, cVal[0]);
@@ -657,7 +678,9 @@ public class Uint8ClampedArrayReduceRight02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     int[] other = {-1};
     arr.reduceRight((p, c, i, a) -> {
-    if (i == 2) other[0] = a.get(0);
+    if (i == 2) {
+        other[0] = a.get(0);
+    }
     return p;
         });
     assertEqual(10, other[0]);

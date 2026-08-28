@@ -389,7 +389,8 @@ public class Uint8ClampedArrayToStringTest extends BasTest {
     @Test
     void testUint8ClampedArrayToString060() {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
-    for (int i = 0; i < 256; i++) { arr.set(i, i);
+    for (int i = 0; i < 256; i++) {
+        arr.set(i, i);
     }
     assertEqual(arr.join(","), String.valueOf(arr));
     }

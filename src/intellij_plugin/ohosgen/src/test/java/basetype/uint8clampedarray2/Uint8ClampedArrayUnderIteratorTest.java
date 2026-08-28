@@ -106,7 +106,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator008() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {256});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(255, v);
     }
@@ -115,7 +116,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator009() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {-1});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(0, v);
     }
@@ -124,7 +126,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator010() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {Double.NaN});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(0, v);
     }
@@ -133,7 +136,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator011() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {Double.POSITIVE_INFINITY});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(255, v);
     }
@@ -142,7 +146,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator012() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {127.5});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(128, v);
     }
@@ -151,7 +156,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator013() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {128.5});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(128, v);
     }
@@ -223,7 +229,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     for (Integer v : arr.values()) {
-    throw new Error("inner");
+    BasTest.throwTestError("inner");
     }
     fail();
     } catch (Error e) {
@@ -431,7 +437,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator039() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {-Double.POSITIVE_INFINITY});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(0, v);
     }
@@ -440,7 +447,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator040() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(0, v);
     }
@@ -449,7 +457,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator041() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {255});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(255, v);
     }
@@ -458,7 +467,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator042() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {1e9});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(255, v);
     }
@@ -467,7 +477,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator043() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {-1e9});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(0, v);
     }
@@ -476,7 +487,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator044() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {0.9});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(1, v);
     }
@@ -485,7 +497,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator045() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {0.4});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(0, v);
     }
@@ -494,7 +507,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator046() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0xFF});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(255, v);
     }
@@ -503,7 +517,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator047() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {017});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(15, v);
     }
@@ -512,7 +527,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator048() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0b1010});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(10, v);
     }
@@ -521,7 +537,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator049() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {1e2});
     int v = -1;
-    for (Integer x : arr.values()) { v = x;
+    for (Integer x : arr.values()) {
+        v = x;
     }
     assertEqual(100, v);
     }

@@ -137,7 +137,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceTwo013() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
-    int r = arr.reduce((p, c, i, a) -> i );
+    int r = arr.reduce((p, c, i, a) -> i);
     assertEqual(3, r);
     }
 
@@ -146,7 +146,8 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     boolean[] sameRef = {false};
     arr.reduce((p, c, i, a) -> {
-    if (a == arr) { sameRef[0] = true;
+    if (a == arr) {
+        sameRef[0] = true;
     }
     return p + c;
         });
@@ -244,7 +245,8 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceTwo024() {
     List<Integer> buf = new ArrayList<>();
-    for (int k = 0; k < 256; k = k + 1) { buf.add(k);
+    for (int k = 0; k < 256; k = k + 1) {
+        buf.add(k);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
     int r = arr.reduce((p, c, i, a) -> p + c);
@@ -254,7 +256,8 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceTwo025() {
     List<Integer> buf = new ArrayList<>();
-    for (int k = 0; k < 1024; k = k + 1) { buf.add(1);
+    for (int k = 0; k < 1024; k = k + 1) {
+        buf.add(1);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
     int r = arr.reduce((p, c, i, a) -> p + c);
@@ -420,7 +423,8 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     int[] firstC = {-1};
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {66, 77, 88});
     arr.reduce((p, c, i, a) -> {
-    if (firstP[0] == -1) { firstP[0] = p;
+    if (firstP[0] == -1) {
+        firstP[0] = p;
     firstC[0] = c;
     }
     return p + c;
@@ -586,7 +590,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.reduce((p, c, i, a) -> {
-    throw new Error("boom");
+    return BasTest.throwTestError("boom");
         });
     fail();
     } catch (Error e) {
@@ -627,7 +631,8 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     try {
     arr.reduce((p, c, i, a) -> {
     cnt[0] = cnt[0] + 1;
-    if (i == 2) { throw new Error("stop");
+    if (i == 2) {
+        return BasTest.throwTestError("stop");
     }
     return p + c;
         });

@@ -73,7 +73,8 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     @Test
     void testUint8ClampedArrayToReversed005() {
     Uint8ClampedArray arr = new Uint8ClampedArray(255);
-    for (int i = 0; i < 255; i++) { arr.set(i, i);
+    for (int i = 0; i < 255; i++) {
+        arr.set(i, i);
     }
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(255, r.length());
@@ -85,7 +86,8 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     @Test
     void testUint8ClampedArrayToReversed006() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
-    for (int i = 0; i < 1024; i++) { arr.set(i, i & 0xFF);
+    for (int i = 0; i < 1024; i++) {
+        arr.set(i, i & 0xFF);
     }
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(1024, r.length());
@@ -501,7 +503,8 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     @Test
     void testUint8ClampedArrayToReversed041() {
     Uint8ClampedArray arr = new Uint8ClampedArray(255);
-    for (int i = 0; i < 255; i++) { arr.set(i, i);
+    for (int i = 0; i < 255; i++) {
+        arr.set(i, i);
     }
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(255, r.length());

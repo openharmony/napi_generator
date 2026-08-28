@@ -178,7 +178,8 @@ public class Uint8ClampedArrayWith01Test extends BasTest {
     @Test
     void testUint8ClampedArrayWithOne012() {
     List<Integer> src = new ArrayList<>();
-    for (int i = 0; i < 256; i++) { src.add(i);
+    for (int i = 0; i < 256; i++) {
+        src.add(i);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     int v = 50;
@@ -192,7 +193,8 @@ public class Uint8ClampedArrayWith01Test extends BasTest {
     @Test
     void testUint8ClampedArrayWithOne013() {
     List<Integer> src = new ArrayList<>();
-    for (int i = 0; i < 256; i++) { src.add(i);
+    for (int i = 0; i < 256; i++) {
+        src.add(i);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     int v = 1;

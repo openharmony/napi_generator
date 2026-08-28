@@ -134,7 +134,7 @@ public class Uint8ClampedArrayReduce01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.reduce((p, c, index, array) -> {
-        throw new Error("cb fail");
+        return BasTest.throwTestError("cb fail");
         }, 0);
     fail();
     } catch (Error e) {
@@ -175,7 +175,7 @@ public class Uint8ClampedArrayReduce01Test extends BasTest {
     try {
     arr.reduce((p, c, index, array) -> {
         calls[0] += 1;
-        throw new Error("x");
+        return BasTest.throwTestError("x");
         }, 0);
     fail();
     } catch (Error e) {
@@ -191,7 +191,9 @@ public class Uint8ClampedArrayReduce01Test extends BasTest {
     try {
     arr.reduce((p, c, index, array) -> {
         calls[0] += 1;
-        if (calls[0] == 3) throw new Error("mid");
+        if (calls[0] == 3) {
+            return BasTest.throwTestError("mid");
+        }
         return p + c;
         }, 0);
     fail();
@@ -205,7 +207,9 @@ public class Uint8ClampedArrayReduce01Test extends BasTest {
     void testUint8ClampedArrayReduceOne018() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int r = arr.reduce((p, c, i, a) -> {
-        if (i == 0) a.set(2, 99);
+        if (i == 0) {
+            a.set(2, 99);
+        }
         return p + c;
         }, 0);
     assertEqual(102, r);
@@ -444,7 +448,8 @@ public class Uint8ClampedArrayReduce01Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceOne051() {
     List<Integer> src = new java.util.ArrayList<>();
-    for (int i = 0; i < 100; i++) { (src).add(1);
+    for (int i = 0; i < 100; i++) {
+        (src).add(1);
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     int r = arr.reduce((p, c, index, array) -> p + c, 0);
@@ -454,7 +459,8 @@ public class Uint8ClampedArrayReduce01Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceOne052() {
     List<Integer> tmp = new ArrayList<>();
-    for (int i = 0; i < 256; i++) { tmp.add(2);
+    for (int i = 0; i < 256; i++) {
+        tmp.add(2);
     }
     List<Integer> src = tmp;
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
@@ -479,7 +485,9 @@ public class Uint8ClampedArrayReduce01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     int[] firstPrev = {-1};
     arr.reduce((p, c, i, index) -> {
-        if (i == 0) firstPrev[0] = p;
+        if (i == 0) {
+            firstPrev[0] = p;
+        }
         return p + c;
         }, 999);
     assertEqual(999, firstPrev[0]);
@@ -490,7 +498,9 @@ public class Uint8ClampedArrayReduce01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     int[] firstIdx = {-1};
     arr.reduce((p, c, i, index) -> {
-        if (firstIdx[0] == -1) firstIdx[0] = i;
+        if (firstIdx[0] == -1) {
+            firstIdx[0] = i;
+        }
         return p + c;
         }, 0);
     assertEqual(0, firstIdx[0]);
@@ -537,7 +547,9 @@ public class Uint8ClampedArrayReduce01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     boolean[] match = {true};
     arr.reduce((p, c, i, a) -> {
-        if (c != a.get(i)) match[0] = false;
+        if (c != a.get(i)) {
+            match[0] = false;
+        }
         return p;
         }, 0);
     assertTrue(match[0]);

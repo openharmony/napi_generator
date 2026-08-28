@@ -502,7 +502,8 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     void testUint8ClampedArrayWithTwo046() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {100, 20, 30});
     Uint8ClampedArray w = arr.with(0, 50);
-    Uint8ClampedArray m = w.map((x) -> { return x * 2;
+    Uint8ClampedArray m = w.map((x) -> {
+        return x * 2;
         });
     assertEqual(3, m.length());
     assertEqual(100, m.get(0));
@@ -514,7 +515,8 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     void testUint8ClampedArrayWithTwo047() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 200, 30});
     Uint8ClampedArray w = arr.with(1, 50);
-    Uint8ClampedArray f = w.filter((x) -> { return x > 40;
+    Uint8ClampedArray f = w.filter((x) -> {
+        return x > 40;
         });
     assertEqual(1, f.length());
     assertEqual(50, f.get(0));

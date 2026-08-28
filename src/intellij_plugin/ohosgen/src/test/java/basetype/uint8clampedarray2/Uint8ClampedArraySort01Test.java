@@ -109,7 +109,8 @@ public class Uint8ClampedArraySort01Test extends BasTest {
     void testUint8ClampedArraySortOne008() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {3, 1, 2});
     try {
-    arr.sort((a, b) -> { throw new TypeError("type");
+    arr.sort((a, b) -> {
+        throw new TypeError("type");
         });
     fail();
     } catch (TypeError e) {
@@ -121,7 +122,8 @@ public class Uint8ClampedArraySort01Test extends BasTest {
     void testUint8ClampedArraySortOne009() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {3, 1, 2});
     try {
-    arr.sort((a, b) -> { throw new RangeError("range");
+    arr.sort((a, b) -> {
+        throw new RangeError("range");
         });
     fail();
     } catch (RangeError e) {
@@ -175,7 +177,8 @@ public class Uint8ClampedArraySort01Test extends BasTest {
     void testUint8ClampedArraySortOne013() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {3, 1, 2});
     try {
-    arr.sort((a, b) -> { throw new Error("boom");
+    arr.sort((a, b) -> {
+        return BasTest.throwTestError("boom");
         });
     fail();
     } catch (Error e) {

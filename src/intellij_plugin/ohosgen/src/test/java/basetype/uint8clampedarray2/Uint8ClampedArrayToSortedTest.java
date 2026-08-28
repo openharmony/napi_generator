@@ -509,7 +509,8 @@ public class Uint8ClampedArrayToSortedTest extends BasTest {
     @Test
     void testUint8ClampedArrayToSorted046() {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
-    for (int i = 0; i < 256; i++) { arr.set(i, i);
+    for (int i = 0; i < 256; i++) {
+        arr.set(i, i);
     }
     Uint8ClampedArray sorted = arr.toSorted();
     assertEqual(256, sorted.length());

@@ -180,7 +180,8 @@ public class Uint8ClampedArrayMap01Test extends BasTest {
     int[] last = {-1};
     boolean[] ok = {true};
     arr.map((v, i, a) -> {
-    if (i != last[0] + 1) { ok[0] = false;
+    if (i != last[0] + 1) {
+        ok[0] = false;
     }
     last[0] = i;
     return v;
@@ -204,7 +205,8 @@ public class Uint8ClampedArrayMap01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     boolean[] same = {true};
     arr.map((v, i, a) -> {
-    if (a != arr) { same[0] = false;
+    if (a != arr) {
+        same[0] = false;
     }
     return v;
         });

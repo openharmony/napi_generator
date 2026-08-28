@@ -219,7 +219,8 @@ public class Uint8ClampedArraySome01Test extends BasTest {
     @Test
     void testUint8ClampedArraySomeOne024() {
     List<Integer> src = new ArrayList<>();
-    for (int i = 0; i < 65534; i++) { src.add(0);
+    for (int i = 0; i < 65534; i++) {
+        src.add(0);
     }
     src.add(200);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
@@ -353,7 +354,8 @@ public class Uint8ClampedArraySome01Test extends BasTest {
     void testUint8ClampedArraySomeOne038() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    arr.some((e, i, a) -> { throw new RangeError("rng");
+    arr.some((e, i, a) -> {
+        throw new RangeError("rng");
         });
     fail();
     } catch (RangeError e) {
@@ -365,7 +367,8 @@ public class Uint8ClampedArraySome01Test extends BasTest {
     void testUint8ClampedArraySomeOne039() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    arr.some((e, i, a) -> { throw new TypeError("te");
+    arr.some((e, i, a) -> {
+        throw new TypeError("te");
         });
     fail();
     } catch (TypeError e) {
@@ -379,7 +382,7 @@ public class Uint8ClampedArraySome01Test extends BasTest {
     boolean[] called = {false};
     boolean r = arr.some((e, i, a) -> {
         called[0] = true;
-        throw new Error("x");
+        return BasTest.throwTestError("x");
     });
     assertFalse(r);
     assertFalse(called[0]);
@@ -392,7 +395,9 @@ public class Uint8ClampedArraySome01Test extends BasTest {
     try {
     arr.some((e, i, a) -> {
         count[0]++;
-        if (i == 1) throw new Error("stop");
+        if (i == 1) {
+            return BasTest.throwTestError("stop");
+        }
         return false;
     });
     fail();
@@ -406,7 +411,8 @@ public class Uint8ClampedArraySome01Test extends BasTest {
     void testUint8ClampedArraySomeOne042() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
-    arr.some((e, i, a) -> { throw new Error("x");
+    arr.some((e, i, a) -> {
+        return BasTest.throwTestError("x");
         });
     fail();
     } catch (Error e) {

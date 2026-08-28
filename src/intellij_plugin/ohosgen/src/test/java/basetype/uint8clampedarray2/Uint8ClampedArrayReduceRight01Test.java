@@ -118,7 +118,7 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     try {
     arr.reduceRight((p, c, i, a) -> {
-        throw new Error("cb-fail");
+        return BasTest.throwTestError("cb-fail");
         }, 0);
     fail();
     } catch (Error e) {
@@ -133,7 +133,7 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
     try {
     arr.reduceRight((p, c, i, a) -> {
         count[0]++;
-        throw new Error("boom");
+        return BasTest.throwTestError("boom");
         }, 0);
     fail();
     } catch (Error e) {
@@ -149,7 +149,9 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
     try {
     arr.reduceRight((p, c, i, a) -> {
     count[0]++;
-    if (count[0] == 2) throw new Error("mid");
+    if (count[0] == 2) {
+        return BasTest.throwTestError("mid");
+    }
     return p;
     }, 0);
     fail();
@@ -420,7 +422,9 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceRightOne042() {
     List<Integer> buf = new ArrayList<>();
-    for (int k = 0; k < 256; k++) buf.add(1);
+    for (int k = 0; k < 256; k++) {
+        buf.add(1);
+    }
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
     int r = arr.reduceRight((p, c, i, a) -> p + c, 0);
     assertEqual(256, r);
@@ -429,7 +433,9 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
     @Test
     void testUint8ClampedArrayReduceRightOne043() {
     List<Integer> buf = new ArrayList<>();
-    for (int k = 0; k < 1024; k++) buf.add(2);
+    for (int k = 0; k < 1024; k++) {
+        buf.add(2);
+    }
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
     int r = arr.reduceRight((p, c, i, a) -> p + c, 0);
     assertEqual(2048, r);
@@ -572,7 +578,9 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
     void testUint8ClampedArrayReduceRightOne060() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     int r = arr.reduceRight((p, c, i, a) -> {
-        if (i == 2) a.set(0, 99);
+        if (i == 2) {
+            a.set(0, 99);
+        }
         return p + c;
         }, 0);
     assertEqual(99 + 2 + 3, r);
@@ -600,7 +608,9 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
     arr.reduceRight((p, c, i, a) -> {
     count[0]++;
     partial[0] = p + c;
-    if (count[0] == 3) throw new Error("third");
+    if (count[0] == 3) {
+        return BasTest.throwTestError("third");
+    }
     return p + c;
     }, 0);
     fail();
