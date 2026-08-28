@@ -36,6 +36,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayAttribute01Test extends BasTest {
     /**
      * Verify empty constructor BYTES_PER_ELEMENT is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_0100
      * @tc.name testUint8ArrayAttribute001
      * @tc.desc Verify empty constructor BYTES_PER_ELEMENT is 1
@@ -52,6 +53,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify empty constructor buffer.byteLength is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_0200
      * @tc.name testUint8ArrayAttribute002
      * @tc.desc Verify empty constructor buffer.byteLength is 0
@@ -68,6 +70,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify empty constructor byteOffset is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_0300
      * @tc.name testUint8ArrayAttribute003
      * @tc.desc Verify empty constructor byteOffset is 0
@@ -84,6 +87,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify empty constructor name is Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_0400
      * @tc.name testUint8ArrayAttribute004
      * @tc.desc Verify empty constructor name is Uint8Array
@@ -100,6 +104,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify int constructor BYTES_PER_ELEMENT is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_0500
      * @tc.name testUint8ArrayAttribute005
      * @tc.desc Verify int constructor BYTES_PER_ELEMENT is 1
@@ -116,6 +121,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify int constructor byteLength is 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_0600
      * @tc.name testUint8ArrayAttribute006
      * @tc.desc Verify int constructor byteLength is 5
@@ -132,6 +138,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify int constructor name is Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_0700
      * @tc.name testUint8ArrayAttribute007
      * @tc.desc Verify int constructor name is Uint8Array
@@ -148,6 +155,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify number constructor length is 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_0800
      * @tc.name testUint8ArrayAttribute008
      * @tc.desc Verify number constructor length is 5
@@ -164,6 +172,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify copy constructor BYTES_PER_ELEMENT is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_0900
      * @tc.name testUint8ArrayAttribute009
      * @tc.desc Verify copy constructor BYTES_PER_ELEMENT is 1
@@ -181,6 +190,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify copy constructor byteLength matches source
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_1000
      * @tc.name testUint8ArrayAttribute010
      * @tc.desc Verify copy constructor byteLength matches source
@@ -198,6 +208,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify copy constructor name is Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_1100
      * @tc.name testUint8ArrayAttribute011
      * @tc.desc Verify copy constructor name is Uint8Array
@@ -215,6 +226,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify copy constructor buffer is independent
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_1200
      * @tc.name testUint8ArrayAttribute012
      * @tc.desc Verify copy constructor buffer is independent
@@ -234,6 +246,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify copy constructor byteOffset is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_1300
      * @tc.name testUint8ArrayAttribute013
      * @tc.desc Verify copy constructor byteOffset is 0
@@ -251,6 +264,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify FixedArray<int> constructor length is 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_1400
      * @tc.name testUint8ArrayAttribute014
      * @tc.desc Verify FixedArray<int> constructor length is 3
@@ -267,6 +281,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify FixedArray<int> constructor BYTES_PER_ELEMENT is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_1500
      * @tc.name testUint8ArrayAttribute015
      * @tc.desc Verify FixedArray<int> constructor BYTES_PER_ELEMENT is 1
@@ -283,6 +298,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify FixedArray<number> constructor length is 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_1600
      * @tc.name testUint8ArrayAttribute016
      * @tc.desc Verify FixedArray<number> constructor length is 2
@@ -299,6 +315,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Array<int> constructor length matches source
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_1700
      * @tc.name testUint8ArrayAttribute017
      * @tc.desc Verify Array<int> constructor length matches source
@@ -316,6 +333,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer constructor buffer reference is shared
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_1800
      * @tc.name testUint8ArrayAttribute018
      * @tc.desc Verify ArrayBuffer constructor buffer reference is shared
@@ -333,6 +351,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer constructor byteOffset is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_1900
      * @tc.name testUint8ArrayAttribute019
      * @tc.desc Verify ArrayBuffer constructor byteOffset is 0
@@ -350,6 +369,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer constructor byteLength equals buf.byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_2000
      * @tc.name testUint8ArrayAttribute020
      * @tc.desc Verify ArrayBuffer constructor byteLength equals buf.byteLength
@@ -367,6 +387,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify two-parameter int offset constructor buffer reference is shared
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_2100
      * @tc.name testUint8ArrayAttribute021
      * @tc.desc Verify two-parameter int offset constructor buffer reference is shared
@@ -384,6 +405,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify two-parameter int offset constructor byteOffset is 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_2200
      * @tc.name testUint8ArrayAttribute022
      * @tc.desc Verify two-parameter int offset constructor byteOffset is 2
@@ -401,6 +423,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify two-parameter int offset constructor byteLength is remaining bytes
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_2300
      * @tc.name testUint8ArrayAttribute023
      * @tc.desc Verify two-parameter int offset constructor byteLength is remaining bytes
@@ -418,6 +441,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify two-parameter number offset constructor byteOffset is 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_2400
      * @tc.name testUint8ArrayAttribute024
      * @tc.desc Verify two-parameter number offset constructor byteOffset is 2
@@ -435,6 +459,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify two-parameter number offset constructor byteLength is remaining bytes
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_2500
      * @tc.name testUint8ArrayAttribute025
      * @tc.desc Verify two-parameter number offset constructor byteLength is remaining bytes
@@ -452,6 +477,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify three-parameter constructor length is 4
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_2600
      * @tc.name testUint8ArrayAttribute026
      * @tc.desc Verify three-parameter constructor length is 4
@@ -469,6 +495,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify three-parameter undefined constructor length covers full buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_2700
      * @tc.name testUint8ArrayAttribute027
      * @tc.desc Verify three-parameter undefined constructor length covers full buffer
@@ -486,6 +513,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify three-parameter undefined constructor byteOffset is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_2800
      * @tc.name testUint8ArrayAttribute028
      * @tc.desc Verify three-parameter undefined constructor byteOffset is 0
@@ -503,6 +531,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify int length 0 constructor length is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_2900
      * @tc.name testUint8ArrayAttribute029
      * @tc.desc Verify int length 0 constructor length is 0
@@ -519,6 +548,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify int length 1 constructor length is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_3000
      * @tc.name testUint8ArrayAttribute030
      * @tc.desc Verify int length 1 constructor length is 1
@@ -535,6 +565,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify int length 100 constructor length is 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_3100
      * @tc.name testUint8ArrayAttribute031
      * @tc.desc Verify int length 100 constructor length is 100
@@ -551,6 +582,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify int length 255 constructor byteLength is 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_3200
      * @tc.name testUint8ArrayAttribute032
      * @tc.desc Verify int length 255 constructor byteLength is 255
@@ -567,6 +599,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify int length 256 constructor byteLength is 256
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_3300
      * @tc.name testUint8ArrayAttribute033
      * @tc.desc Verify int length 256 constructor byteLength is 256
@@ -583,6 +616,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify int length -1 constructor throws RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_3400
      * @tc.name testUint8ArrayAttribute034
      * @tc.desc Verify int length -1 constructor throws RangeError
@@ -603,6 +637,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify number length 2.0 constructor length is 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_3500
      * @tc.name testUint8ArrayAttribute035
      * @tc.desc Verify number length 2.0 constructor length is 2
@@ -619,6 +654,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify number length 3.5 constructor length is truncated to 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_3600
      * @tc.name testUint8ArrayAttribute036
      * @tc.desc Verify number length 3.5 constructor length is truncated to 3
@@ -635,6 +671,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify number length 5.7 constructor length is truncated to 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_3700
      * @tc.name testUint8ArrayAttribute037
      * @tc.desc Verify number length 5.7 constructor length is truncated to 5
@@ -651,6 +688,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset int 0 constructor byteOffset is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_3800
      * @tc.name testUint8ArrayAttribute038
      * @tc.desc Verify ArrayBuffer offset int 0 constructor byteOffset is 0
@@ -668,6 +706,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset int 1 constructor byteOffset is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_3900
      * @tc.name testUint8ArrayAttribute039
      * @tc.desc Verify ArrayBuffer offset int 1 constructor byteOffset is 1
@@ -685,6 +724,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset int 1 constructor byteLength is remaining 7
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_4000
      * @tc.name testUint8ArrayAttribute040
      * @tc.desc Verify ArrayBuffer offset int 1 constructor byteLength is remaining 7
@@ -702,6 +742,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset int 3 constructor byteOffset is 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_4100
      * @tc.name testUint8ArrayAttribute041
      * @tc.desc Verify ArrayBuffer offset int 3 constructor byteOffset is 3
@@ -719,6 +760,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset number 1.5 constructor byteOffset is truncated to 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_4200
      * @tc.name testUint8ArrayAttribute042
      * @tc.desc Verify ArrayBuffer offset number 1.5 constructor byteOffset is truncated to 1
@@ -736,6 +778,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset number 1.5 constructor byteLength is remaining 7
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_4300
      * @tc.name testUint8ArrayAttribute043
      * @tc.desc Verify ArrayBuffer offset number 1.5 constructor byteLength is remaining 7
@@ -753,6 +796,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer three-parameter length int 0 constructor length is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_4400
      * @tc.name testUint8ArrayAttribute044
      * @tc.desc Verify ArrayBuffer three-parameter length int 0 constructor length is 0
@@ -770,6 +814,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer three-parameter length int 1 constructor length is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_4500
      * @tc.name testUint8ArrayAttribute045
      * @tc.desc Verify ArrayBuffer three-parameter length int 1 constructor length is 1
@@ -787,6 +832,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer three-parameter length int covers full buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_4600
      * @tc.name testUint8ArrayAttribute046
      * @tc.desc Verify ArrayBuffer three-parameter length int covers full buffer
@@ -804,6 +850,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Uint8Array.of(1) single element length is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_4700
      * @tc.name testUint8ArrayAttribute047
      * @tc.desc Verify Uint8Array.of(1) single element length is 1
@@ -820,6 +867,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Uint8Array.of(1, 2, 3) multiple elements length is 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_4800
      * @tc.name testUint8ArrayAttribute048
      * @tc.desc Verify Uint8Array.of(1, 2, 3) multiple elements length is 3
@@ -836,6 +884,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Uint8Array.of(1, 2, 3) multiple elements BYTES_PER_ELEMENT is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_4900
      * @tc.name testUint8ArrayAttribute049
      * @tc.desc Verify Uint8Array.of(1, 2, 3) multiple elements BYTES_PER_ELEMENT is 1
@@ -852,6 +901,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Uint8Array.of(1, 2, 3) multiple elements name is Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_5000
      * @tc.name testUint8ArrayAttribute050
      * @tc.desc Verify Uint8Array.of(1, 2, 3) multiple elements name is Uint8Array
@@ -868,6 +918,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Uint8Array.from([10, 20]) from FixedArray length is 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_5100
      * @tc.name testUint8ArrayAttribute051
      * @tc.desc Verify Uint8Array.from([10, 20]) from FixedArray length is 2
@@ -884,6 +935,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Uint8Array.from(Set<int>) from Set length equals set size
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_5200
      * @tc.name testUint8ArrayAttribute052
      * @tc.desc Verify Uint8Array.from(Set<int>) from Set length equals set size
@@ -903,6 +955,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Uint8Array.from(src) from same type copy length is same
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_5300
      * @tc.name testUint8ArrayAttribute053
      * @tc.desc Verify Uint8Array.from(src) from same type copy length is same
@@ -920,6 +973,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify fill operation length unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_5400
      * @tc.name testUint8ArrayAttribute054
      * @tc.desc Verify fill operation length unchanged
@@ -937,6 +991,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify fill operation BYTES_PER_ELEMENT unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_5500
      * @tc.name testUint8ArrayAttribute055
      * @tc.desc Verify fill operation BYTES_PER_ELEMENT unchanged
@@ -954,6 +1009,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify fill operation name unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_5600
      * @tc.name testUint8ArrayAttribute056
      * @tc.desc Verify fill operation name unchanged
@@ -971,6 +1027,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify copyWithin operation length unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_5700
      * @tc.name testUint8ArrayAttribute057
      * @tc.desc Verify copyWithin operation length unchanged
@@ -988,6 +1045,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify set operation length unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_5800
      * @tc.name testUint8ArrayAttribute058
      * @tc.desc Verify set operation length unchanged
@@ -1005,6 +1063,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify sort operation length unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_5900
      * @tc.name testUint8ArrayAttribute059
      * @tc.desc Verify sort operation length unchanged
@@ -1022,6 +1081,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify reverse operation length unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_6000
      * @tc.name testUint8ArrayAttribute060
      * @tc.desc Verify reverse operation length unchanged
@@ -1039,6 +1099,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify map operation original array length unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_6100
      * @tc.name testUint8ArrayAttribute061
      * @tc.desc Verify map operation original array length unchanged
@@ -1056,6 +1117,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify filter operation original array length unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_6200
      * @tc.name testUint8ArrayAttribute062
      * @tc.desc Verify filter operation original array length unchanged
@@ -1073,6 +1135,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify two Uint8Array from same ArrayBuffer share buffer reference
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_6300
      * @tc.name testUint8ArrayAttribute063
      * @tc.desc Verify two Uint8Array from same ArrayBuffer share buffer reference
@@ -1091,6 +1154,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify subarray view shares buffer with original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_6400
      * @tc.name testUint8ArrayAttribute064
      * @tc.desc Verify subarray view shares buffer with original array
@@ -1108,6 +1172,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify subarray view byteOffset reflects start offset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_6500
      * @tc.name testUint8ArrayAttribute065
      * @tc.desc Verify subarray view byteOffset reflects start offset
@@ -1125,6 +1190,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify subarray view byteLength corresponds to element count
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_6600
      * @tc.name testUint8ArrayAttribute066
      * @tc.desc Verify subarray view byteLength corresponds to element count
@@ -1142,6 +1208,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify hexadecimal 0xFF and 0x80 elements length is 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_6700
      * @tc.name testUint8ArrayAttribute067
      * @tc.desc Verify hexadecimal 0xFF and 0x80 elements length is 2
@@ -1158,6 +1225,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify mixed hexadecimal elements byteLength is 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_6800
      * @tc.name testUint8ArrayAttribute068
      * @tc.desc Verify mixed hexadecimal elements byteLength is 3
@@ -1174,6 +1242,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify all-zero elements length is 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_6900
      * @tc.name testUint8ArrayAttribute069
      * @tc.desc Verify all-zero elements length is 3
@@ -1190,6 +1259,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify all-255 elements length is 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_7000
      * @tc.name testUint8ArrayAttribute070
      * @tc.desc Verify all-255 elements length is 3
@@ -1206,6 +1276,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify middle value 127 element length is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_7100
      * @tc.name testUint8ArrayAttribute071
      * @tc.desc Verify middle value 127 element length is 1
@@ -1222,6 +1293,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify boundary values 1 and 255 elements byteLength is 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_7200
      * @tc.name testUint8ArrayAttribute072
      * @tc.desc Verify boundary values 1 and 255 elements byteLength is 2
@@ -1238,6 +1310,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify copy from empty Uint8Array length is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_7300
      * @tc.name testUint8ArrayAttribute073
      * @tc.desc Verify copy from empty Uint8Array length is 0
@@ -1255,6 +1328,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Uint8Array.from from empty Set length is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_7400
      * @tc.name testUint8ArrayAttribute074
      * @tc.desc Verify Uint8Array.from from empty Set length is 0
@@ -1272,6 +1346,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Uint8Array.from from single element Set length is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_7500
      * @tc.name testUint8ArrayAttribute075
      * @tc.desc Verify Uint8Array.from from single element Set length is 1
@@ -1290,6 +1365,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer size 1 constructor length is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_7600
      * @tc.name testUint8ArrayAttribute076
      * @tc.desc Verify ArrayBuffer size 1 constructor length is 1
@@ -1307,6 +1383,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer size 100 constructor length is 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_7700
      * @tc.name testUint8ArrayAttribute077
      * @tc.desc Verify ArrayBuffer size 100 constructor length is 100
@@ -1324,6 +1401,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset int 7 constructor byteOffset is 7
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_7800
      * @tc.name testUint8ArrayAttribute078
      * @tc.desc Verify ArrayBuffer offset int 7 constructor byteOffset is 7
@@ -1341,6 +1419,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset int 7 constructor byteLength is remaining 9
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_7900
      * @tc.name testUint8ArrayAttribute079
      * @tc.desc Verify ArrayBuffer offset int 7 constructor byteLength is remaining 9
@@ -1358,6 +1437,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset int 15 constructor byteOffset is 15
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_8000
      * @tc.name testUint8ArrayAttribute080
      * @tc.desc Verify ArrayBuffer offset int 15 constructor byteOffset is 15
@@ -1375,6 +1455,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset int 15 constructor byteLength is 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_8100
      * @tc.name testUint8ArrayAttribute081
      * @tc.desc Verify ArrayBuffer offset int 15 constructor byteLength is 1
@@ -1392,6 +1473,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify ArrayBuffer offset int 0 three-parameter length covers full buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_8200
      * @tc.name testUint8ArrayAttribute082
      * @tc.desc Verify ArrayBuffer offset int 0 three-parameter length covers full buffer
@@ -1409,6 +1491,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify Array<int> with 10 zero elements length is 10
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_8300
      * @tc.name testUint8ArrayAttribute083
      * @tc.desc Verify Array<int> with 10 zero elements length is 10
@@ -1426,6 +1509,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify map returns new array with same length as original
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_8400
      * @tc.name testUint8ArrayAttribute084
      * @tc.desc Verify map returns new array with same length as original
@@ -1443,6 +1527,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify filter returns new array with length less than original
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_8500
      * @tc.name testUint8ArrayAttribute085
      * @tc.desc Verify filter returns new array with length less than original
@@ -1460,6 +1545,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify toReversed returns new array with same length as original
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_8600
      * @tc.name testUint8ArrayAttribute086
      * @tc.desc Verify toReversed returns new array with same length as original
@@ -1477,6 +1563,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
 
     /**
      * Verify toSorted returns new array with same length as original
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_ATTRIBUTE01_8700
      * @tc.name testUint8ArrayAttribute087
      * @tc.desc Verify toSorted returns new array with same length as original

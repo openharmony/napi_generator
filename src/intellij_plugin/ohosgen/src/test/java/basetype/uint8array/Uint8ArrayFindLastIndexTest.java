@@ -39,6 +39,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with normal predicate parameter
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_0100
      * @tc.name testUint8ArrayFindLastIndex001
      * @tc.desc Verify findLastIndex with normal predicate parameter
@@ -56,6 +57,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback always returns true, all elements match, return last element index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_0200
      * @tc.name testUint8ArrayFindLastIndex002
      * @tc.desc Verify callback always returns true, all elements match, return last element index
@@ -73,6 +75,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback always returns false, no elements match, return -1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_0300
      * @tc.name testUint8ArrayFindLastIndex003
      * @tc.desc Verify callback always returns false, no elements match, return -1
@@ -90,6 +93,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches value===0, array contains 0 value, return last 0 index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_0400
      * @tc.name testUint8ArrayFindLastIndex004
      * @tc.desc Verify callback matches value===0, array contains 0 value, return last 0 index
@@ -107,6 +111,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches value===255, array contains 255 value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_0500
      * @tc.name testUint8ArrayFindLastIndex005
      * @tc.desc Verify callback matches value===255, array contains 255 value
@@ -124,6 +129,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches value>100, array contains multiple values greater than 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_0600
      * @tc.name testUint8ArrayFindLastIndex006
      * @tc.desc Verify callback matches value>100, array contains multiple values greater than 100
@@ -141,6 +147,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches value<50, array contains multiple values less than 50
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_0700
      * @tc.name testUint8ArrayFindLastIndex007
      * @tc.desc Verify callback matches value<50, array contains multiple values less than 50
@@ -158,6 +165,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches value>=128, array contains 128 and 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_0800
      * @tc.name testUint8ArrayFindLastIndex008
      * @tc.desc Verify callback matches value>=128, array contains 128 and 255
@@ -175,6 +183,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches value<=127, array contains 0 and 127
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_0900
      * @tc.name testUint8ArrayFindLastIndex009
      * @tc.desc Verify callback matches value<=127, array contains 0 and 127
@@ -192,6 +201,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches value%2===0 for even numbers
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_1000
      * @tc.name testUint8ArrayFindLastIndex010
      * @tc.desc Verify callback matches value%2===0 for even numbers
@@ -209,6 +219,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches value%2!==0 for odd numbers
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_1100
      * @tc.name testUint8ArrayFindLastIndex011
      * @tc.desc Verify callback matches value%2!==0 for odd numbers
@@ -226,6 +237,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches index===length-1 for tail element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_1200
      * @tc.name testUint8ArrayFindLastIndex012
      * @tc.desc Verify callback matches index===length-1 for tail element
@@ -243,6 +255,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches index===0 for head element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_1300
      * @tc.name testUint8ArrayFindLastIndex013
      * @tc.desc Verify callback matches index===0 for head element
@@ -260,6 +273,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches index%2===0 for even indices, multiple hits
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_1400
      * @tc.name testUint8ArrayFindLastIndex014
      * @tc.desc Verify callback matches index%2===0 for even indices, multiple hits
@@ -277,6 +291,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches index===2 for specific index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_1500
      * @tc.name testUint8ArrayFindLastIndex015
      * @tc.desc Verify callback matches index===2 for specific index
@@ -294,6 +309,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches index>=3, return largest index meeting condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_1600
      * @tc.name testUint8ArrayFindLastIndex016
      * @tc.desc Verify callback matches index>=3, return largest index meeting condition
@@ -311,6 +327,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches index<2, return largest index meeting condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_1700
      * @tc.name testUint8ArrayFindLastIndex017
      * @tc.desc Verify callback matches index<2, return largest index meeting condition
@@ -328,6 +345,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches index>3, return largest index meeting condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_1800
      * @tc.name testUint8ArrayFindLastIndex018
      * @tc.desc Verify callback matches index>3, return largest index meeting condition
@@ -345,6 +363,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback matches index===length-2 for second to last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_1900
      * @tc.name testUint8ArrayFindLastIndex019
      * @tc.desc Verify callback matches index===length-2 for second to last element
@@ -362,6 +381,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback uses array parameter to access array length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_2000
      * @tc.name testUint8ArrayFindLastIndex020
      * @tc.desc Verify callback uses array parameter to access array length
@@ -381,6 +401,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback uses array parameter to access array elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_2100
      * @tc.name testUint8ArrayFindLastIndex021
      * @tc.desc Verify callback uses array parameter to access array elements
@@ -401,6 +422,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback uses array parameter to compare with first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_2200
      * @tc.name testUint8ArrayFindLastIndex022
      * @tc.desc Verify callback uses array parameter to compare with first element
@@ -420,6 +442,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback uses both value and index parameters
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_2300
      * @tc.name testUint8ArrayFindLastIndex023
      * @tc.desc Verify callback uses both value and index parameters
@@ -439,6 +462,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with two elements, only second matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_2400
      * @tc.name testUint8ArrayFindLastIndex024
      * @tc.desc Verify findLastIndex with two elements, only second matches
@@ -456,6 +480,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with three elements, first and second match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_2500
      * @tc.name testUint8ArrayFindLastIndex025
      * @tc.desc Verify findLastIndex with three elements, first and second match
@@ -473,6 +498,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with four elements, all match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_2600
      * @tc.name testUint8ArrayFindLastIndex026
      * @tc.desc Verify findLastIndex with four elements, all match
@@ -490,6 +516,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with four elements, only last matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_2700
      * @tc.name testUint8ArrayFindLastIndex027
      * @tc.desc Verify findLastIndex with four elements, only last matches
@@ -507,6 +534,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with four elements, only first matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_2800
      * @tc.name testUint8ArrayFindLastIndex028
      * @tc.desc Verify findLastIndex with four elements, only first matches
@@ -524,6 +552,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify return value type when matching tail element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_2900
      * @tc.name testUint8ArrayFindLastIndex029
      * @tc.desc Verify return value type when matching tail element
@@ -541,6 +570,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify return value type when matching head element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_3000
      * @tc.name testUint8ArrayFindLastIndex030
      * @tc.desc Verify return value type when matching head element
@@ -558,6 +588,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify return value type when no match found
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_3100
      * @tc.name testUint8ArrayFindLastIndex031
      * @tc.desc Verify return value type when no match found
@@ -575,6 +606,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify return value type for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_3200
      * @tc.name testUint8ArrayFindLastIndex032
      * @tc.desc Verify return value type for empty array
@@ -592,6 +624,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify return value type for ArrayBuffer constructed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_3300
      * @tc.name testUint8ArrayFindLastIndex033
      * @tc.desc Verify return value type for ArrayBuffer constructed array
@@ -612,6 +645,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify return value is -1 when no element matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_3400
      * @tc.name testUint8ArrayFindLastIndex034
      * @tc.desc Verify return value is -1 when no element matches
@@ -629,6 +663,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify return value is last index when all elements match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_3500
      * @tc.name testUint8ArrayFindLastIndex035
      * @tc.desc Verify return value is last index when all elements match
@@ -646,6 +681,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify return value is correct index when only one element matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_3600
      * @tc.name testUint8ArrayFindLastIndex036
      * @tc.desc Verify return value is correct index when only one element matches
@@ -663,6 +699,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback throws Error, error is propagated
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_3700
      * @tc.name testUint8ArrayFindLastIndex037
      * @tc.desc Verify callback throws Error, error is propagated
@@ -686,6 +723,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify error occurs at first element, callback throws on first call
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_3800
      * @tc.name testUint8ArrayFindLastIndex038
      * @tc.desc Verify error occurs at first element, callback throws on first call
@@ -715,6 +753,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify error occurs at last element, callback throws on last call
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_3900
      * @tc.name testUint8ArrayFindLastIndex039
      * @tc.desc Verify error occurs at last element, callback throws on last call
@@ -744,6 +783,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify error occurs at middle element, callback throws on middle call
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_4000
      * @tc.name testUint8ArrayFindLastIndex040
      * @tc.desc Verify error occurs at middle element, callback throws on middle call
@@ -773,6 +813,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify error occurs after match found, callback throws after finding match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_4100
      * @tc.name testUint8ArrayFindLastIndex041
      * @tc.desc Verify error occurs after match found, callback throws after finding match
@@ -802,6 +843,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with large array (length=1000)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_4200
      * @tc.name testUint8ArrayFindLastIndex042
      * @tc.desc Verify findLastIndex with large array (length=1000)
@@ -820,6 +862,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with large array (length=1000), middle element match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_4300
      * @tc.name testUint8ArrayFindLastIndex043
      * @tc.desc Verify findLastIndex with large array (length=1000), middle element match
@@ -838,6 +881,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with large array (length=1000), first element match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_4400
      * @tc.name testUint8ArrayFindLastIndex044
      * @tc.desc Verify findLastIndex with large array (length=1000), first element match
@@ -856,6 +900,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with large array (length=1000), no match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_4500
      * @tc.name testUint8ArrayFindLastIndex045
      * @tc.desc Verify findLastIndex with large array (length=1000), no match
@@ -873,6 +918,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with large array (length=1000), multiple matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_4600
      * @tc.name testUint8ArrayFindLastIndex046
      * @tc.desc Verify findLastIndex with large array (length=1000), multiple matches
@@ -893,6 +939,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with large array (length=1000), all elements match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_4700
      * @tc.name testUint8ArrayFindLastIndex047
      * @tc.desc Verify findLastIndex with large array (length=1000), all elements match
@@ -911,6 +958,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with element value 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_4800
      * @tc.name testUint8ArrayFindLastIndex048
      * @tc.desc Verify findLastIndex with element value 0
@@ -928,6 +976,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with element value 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_4900
      * @tc.name testUint8ArrayFindLastIndex049
      * @tc.desc Verify findLastIndex with element value 255
@@ -945,6 +994,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with element value 127 (midpoint-1)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_5000
      * @tc.name testUint8ArrayFindLastIndex050
      * @tc.desc Verify findLastIndex with element value 127 (midpoint-1)
@@ -962,6 +1012,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with element value 1 (minimum positive)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_5100
      * @tc.name testUint8ArrayFindLastIndex051
      * @tc.desc Verify findLastIndex with element value 1 (minimum positive)
@@ -979,6 +1030,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with element value 254 (maximum-1)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_5200
      * @tc.name testUint8ArrayFindLastIndex052
      * @tc.desc Verify findLastIndex with element value 254 (maximum-1)
@@ -996,6 +1048,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with element value 10 (decimal)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_5300
      * @tc.name testUint8ArrayFindLastIndex053
      * @tc.desc Verify findLastIndex with element value 10 (decimal)
@@ -1013,6 +1066,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with element value 0x0A (hexadecimal 10)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_5400
      * @tc.name testUint8ArrayFindLastIndex054
      * @tc.desc Verify findLastIndex with element value 0x0A (hexadecimal 10)
@@ -1030,6 +1084,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex does not modify array elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_5500
      * @tc.name testUint8ArrayFindLastIndex055
      * @tc.desc Verify findLastIndex does not modify array elements
@@ -1050,6 +1105,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex does not modify array length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_5600
      * @tc.name testUint8ArrayFindLastIndex056
      * @tc.desc Verify findLastIndex does not modify array length
@@ -1068,6 +1124,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex does not modify array when no match found
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_5700
      * @tc.name testUint8ArrayFindLastIndex057
      * @tc.desc Verify findLastIndex does not modify array when no match found
@@ -1088,6 +1145,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex does not modify array when all elements match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_5800
      * @tc.name testUint8ArrayFindLastIndex058
      * @tc.desc Verify findLastIndex does not modify array when all elements match
@@ -1108,6 +1166,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex does not modify array when callback throws error
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_5900
      * @tc.name testUint8ArrayFindLastIndex059
      * @tc.desc Verify findLastIndex does not modify array when callback throws error
@@ -1134,6 +1193,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex does not modify array when callback modifies local variable
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_6000
      * @tc.name testUint8ArrayFindLastIndex060
      * @tc.desc Verify findLastIndex does not modify array when callback modifies local variable
@@ -1159,6 +1219,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex does not modify array when callback modifies external object
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_6100
      * @tc.name testUint8ArrayFindLastIndex061
      * @tc.desc Verify findLastIndex does not modify array when callback modifies external object
@@ -1184,6 +1245,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with Uint8Array.of() constructor
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_6200
      * @tc.name testUint8ArrayFindLastIndex062
      * @tc.desc Verify findLastIndex with Uint8Array.of() constructor
@@ -1201,6 +1263,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with new Uint8Array(length) constructor
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_6300
      * @tc.name testUint8ArrayFindLastIndex063
      * @tc.desc Verify findLastIndex with new Uint8Array(length) constructor
@@ -1220,6 +1283,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with Uint8Array.from() constructor
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_6400
      * @tc.name testUint8ArrayFindLastIndex064
      * @tc.desc Verify findLastIndex with Uint8Array.from() constructor
@@ -1237,6 +1301,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with Uint8Array.from() using string
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_6500
      * @tc.name testUint8ArrayFindLastIndex065
      * @tc.desc Verify findLastIndex with Uint8Array.from() using string
@@ -1254,6 +1319,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with hexadecimal literal 0x0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_6600
      * @tc.name testUint8ArrayFindLastIndex066
      * @tc.desc Verify findLastIndex with hexadecimal literal 0x0
@@ -1271,6 +1337,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify findLastIndex with hexadecimal literal 0xFF
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_6700
      * @tc.name testUint8ArrayFindLastIndex067
      * @tc.desc Verify findLastIndex with hexadecimal literal 0xFF
@@ -1288,6 +1355,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback condition value===128 (midpoint value match)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_6800
      * @tc.name testUint8ArrayFindLastIndex068
      * @tc.desc Verify callback condition value===128 (midpoint value match)
@@ -1305,6 +1373,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback condition value!==0 (non-zero value match)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_6900
      * @tc.name testUint8ArrayFindLastIndex069
      * @tc.desc Verify callback condition value!==0 (non-zero value match)
@@ -1322,6 +1391,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify callback condition value>arr[index+1] (compare with next element)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_7000
      * @tc.name testUint8ArrayFindLastIndex070
      * @tc.desc Verify callback condition value>arr[index+1] (compare with next element)
@@ -1345,6 +1415,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
 
     /**
      * Verify adjacent matches, consecutive i and i+1 both satisfy condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX_7100
      * @tc.name testUint8ArrayFindLastIndex071
      * @tc.desc Verify adjacent matches, consecutive i and i+1 both satisfy condition

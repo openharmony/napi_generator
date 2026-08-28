@@ -34,6 +34,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify forEach with one required parameter callbackfn executes normally
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0100
      * @tc.name testUint8ArrayForEach001
      * @tc.desc Verify forEach with one required parameter callbackfn executes normally
@@ -54,6 +55,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives correct value parameter for single element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0200
      * @tc.name testUint8ArrayForEach002
      * @tc.desc Verify callbackfn receives correct value parameter for single element array
@@ -74,6 +76,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives correct value parameter sequence for multi-element sum
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0300
      * @tc.name testUint8ArrayForEach003
      * @tc.desc Verify callbackfn receives correct value parameter sequence for multi-element sum
@@ -94,6 +97,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives correct index parameter sequence for sum
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0400
      * @tc.name testUint8ArrayForEach004
      * @tc.desc Verify callbackfn receives correct index parameter sequence for sum
@@ -114,6 +118,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn first call index is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0500
      * @tc.name testUint8ArrayForEach005
      * @tc.desc Verify callbackfn first call index is 0
@@ -136,6 +141,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn last call index is length-1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0600
      * @tc.name testUint8ArrayForEach006
      * @tc.desc Verify callbackfn last call index is length-1
@@ -156,6 +162,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn third parameter array reference is same as original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0700
      * @tc.name testUint8ArrayForEach007
      * @tc.desc Verify callbackfn third parameter array reference is same as original array
@@ -178,6 +185,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn call count equals array length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0800
      * @tc.name testUint8ArrayForEach008
      * @tc.desc Verify callbackfn call count equals array length
@@ -198,6 +206,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn is called in ascending index order
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_0900
      * @tc.name testUint8ArrayForEach009
      * @tc.desc Verify callbackfn is called in ascending index order
@@ -222,6 +231,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn declares 3 parameters and receives all
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1000
      * @tc.name testUint8ArrayForEach010
      * @tc.desc Verify callbackfn declares 3 parameters and receives all
@@ -242,6 +252,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn declares only 2 parameters (value, index)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1100
      * @tc.name testUint8ArrayForEach011
      * @tc.desc Verify callbackfn declares only 2 parameters (value, index)
@@ -264,6 +275,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn declares only 1 parameter (value)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1200
      * @tc.name testUint8ArrayForEach012
      * @tc.desc Verify callbackfn declares only 1 parameter (value)
@@ -284,6 +296,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn declares no parameters but is still called
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1300
      * @tc.name testUint8ArrayForEach013
      * @tc.desc Verify callbackfn declares no parameters but is still called
@@ -304,6 +317,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn uses arrow function syntax
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1400
      * @tc.name testUint8ArrayForEach014
      * @tc.desc Verify callbackfn uses arrow function syntax
@@ -324,6 +338,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn uses named function reference
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1500
      * @tc.name testUint8ArrayForEach015
      * @tc.desc Verify callbackfn uses named function reference
@@ -345,6 +360,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn uses inline function expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1600
      * @tc.name testUint8ArrayForEach016
      * @tc.desc Verify callbackfn uses inline function expression
@@ -365,6 +381,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives value as minimum value 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1700
      * @tc.name testUint8ArrayForEach017
      * @tc.desc Verify callbackfn receives value as minimum value 0
@@ -386,6 +403,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives value as maximum value 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1800
      * @tc.name testUint8ArrayForEach018
      * @tc.desc Verify callbackfn receives value as maximum value 255
@@ -407,6 +425,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives value as middle value 127
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_1900
      * @tc.name testUint8ArrayForEach019
      * @tc.desc Verify callbackfn receives value as middle value 127
@@ -427,6 +446,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives value as middle value 128
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2000
      * @tc.name testUint8ArrayForEach020
      * @tc.desc Verify callbackfn receives value as middle value 128
@@ -447,6 +467,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives value from 0x00 literal construction
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2100
      * @tc.name testUint8ArrayForEach021
      * @tc.desc Verify callbackfn receives value from 0x00 literal construction
@@ -467,6 +488,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives value from 0xFF literal construction
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2200
      * @tc.name testUint8ArrayForEach022
      * @tc.desc Verify callbackfn receives value from 0xFF literal construction
@@ -487,6 +509,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives value from 0x80 literal construction
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2300
      * @tc.name testUint8ArrayForEach023
      * @tc.desc Verify callbackfn receives value from 0x80 literal construction
@@ -507,6 +530,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives value from 0x7F literal construction
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2400
      * @tc.name testUint8ArrayForEach024
      * @tc.desc Verify callbackfn receives value from 0x7F literal construction
@@ -527,6 +551,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives value as minimum positive value 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2500
      * @tc.name testUint8ArrayForEach025
      * @tc.desc Verify callbackfn receives value as minimum positive value 1
@@ -547,6 +572,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives multiple boundary values [0,255,127,128] in correct sequence
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2600
      * @tc.name testUint8ArrayForEach026
      * @tc.desc Verify callbackfn receives multiple boundary values [0,255,127,128] in correct sequence
@@ -567,6 +593,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify empty array new Uint8Array() callbackfn is not called
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2700
      * @tc.name testUint8ArrayForEach027
      * @tc.desc Verify empty array new Uint8Array() callbackfn is not called
@@ -587,6 +614,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify single element array callbackfn is called once
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2800
      * @tc.name testUint8ArrayForEach028
      * @tc.desc Verify single element array callbackfn is called once
@@ -607,6 +635,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify two element array callbackfn is called twice
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2900
      * @tc.name testUint8ArrayForEach029
      * @tc.desc Verify two element array callbackfn is called twice
@@ -627,6 +656,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify three element array callbackfn is called three times
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3000
      * @tc.name testUint8ArrayForEach030
      * @tc.desc Verify three element array callbackfn is called three times
@@ -647,6 +677,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify five element array callbackfn is called five times
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3100
      * @tc.name testUint8ArrayForEach031
      * @tc.desc Verify five element array callbackfn is called five times
@@ -667,6 +698,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify ten element array callbackfn is called ten times
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3200
      * @tc.name testUint8ArrayForEach032
      * @tc.desc Verify ten element array callbackfn is called ten times
@@ -687,6 +719,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify 100 element array callbackfn is called 100 times
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3300
      * @tc.name testUint8ArrayForEach033
      * @tc.desc Verify 100 element array callbackfn is called 100 times
@@ -707,6 +740,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify 256 element array callbackfn is called 256 times
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3400
      * @tc.name testUint8ArrayForEach034
      * @tc.desc Verify 256 element array callbackfn is called 256 times
@@ -727,6 +761,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives index 0 for first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3500
      * @tc.name testUint8ArrayForEach035
      * @tc.desc Verify callbackfn receives index 0 for first element
@@ -749,6 +784,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives index 1 for second element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3600
      * @tc.name testUint8ArrayForEach036
      * @tc.desc Verify callbackfn receives index 1 for second element
@@ -771,6 +807,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives index 2 for third element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3700
      * @tc.name testUint8ArrayForEach037
      * @tc.desc Verify callbackfn receives index 2 for third element
@@ -793,6 +830,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives index 9 for tenth element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3800
      * @tc.name testUint8ArrayForEach038
      * @tc.desc Verify callbackfn receives index 9 for tenth element
@@ -815,6 +853,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives index 99 for hundredth element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_3900
      * @tc.name testUint8ArrayForEach039
      * @tc.desc Verify callbackfn receives index 99 for hundredth element
@@ -837,6 +876,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives index 255 for 256th element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4000
      * @tc.name testUint8ArrayForEach040
      * @tc.desc Verify callbackfn receives index 255 for 256th element
@@ -859,6 +899,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives index 0 for single element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4100
      * @tc.name testUint8ArrayForEach041
      * @tc.desc Verify callbackfn receives index 0 for single element array
@@ -879,6 +920,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives index 1 for two element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4200
      * @tc.name testUint8ArrayForEach042
      * @tc.desc Verify callbackfn receives index 1 for two element array
@@ -899,6 +941,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives index 4 for five element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4300
      * @tc.name testUint8ArrayForEach043
      * @tc.desc Verify callbackfn receives index 4 for five element array
@@ -919,6 +962,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives array parameter as Uint8Array type
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4400
      * @tc.name testUint8ArrayForEach044
      * @tc.desc Verify callbackfn receives array parameter as Uint8Array type
@@ -941,6 +985,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives array parameter with same length as original
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4500
      * @tc.name testUint8ArrayForEach045
      * @tc.desc Verify callbackfn receives array parameter with same length as original
@@ -963,6 +1008,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives array parameter with same elements as original
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4600
      * @tc.name testUint8ArrayForEach046
      * @tc.desc Verify callbackfn receives array parameter with same elements as original
@@ -985,6 +1031,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives array parameter with same buffer as original
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4700
      * @tc.name testUint8ArrayForEach047
      * @tc.desc Verify callbackfn receives array parameter with same buffer as original
@@ -1007,6 +1054,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify callbackfn receives array parameter with same byteOffset as original
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4800
      * @tc.name testUint8ArrayForEach048
      * @tc.desc Verify callbackfn receives array parameter with same byteOffset as original
@@ -1029,6 +1077,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify forEach returns undefined (void)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_4900
      * @tc.name testUint8ArrayForEach049
      * @tc.desc Verify forEach returns undefined (void)
@@ -1047,6 +1096,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify forEach returns undefined for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5000
      * @tc.name testUint8ArrayForEach050
      * @tc.desc Verify forEach returns undefined for empty array
@@ -1065,6 +1115,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify forEach returns undefined for single element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5100
      * @tc.name testUint8ArrayForEach051
      * @tc.desc Verify forEach returns undefined for single element array
@@ -1083,6 +1134,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify forEach returns undefined for large array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5200
      * @tc.name testUint8ArrayForEach052
      * @tc.desc Verify forEach returns undefined for large array
@@ -1101,6 +1153,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify forEach propagates exception when callbackfn throws, result variable remains undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5300
      * @tc.name testUint8ArrayForEach053
      * @tc.desc Verify forEach propagates exception when callbackfn throws, result variable remains undefined
@@ -1124,6 +1177,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify forEach returns undefined when callbackfn modifies array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5400
      * @tc.name testUint8ArrayForEach054
      * @tc.desc Verify forEach returns undefined when callbackfn modifies array
@@ -1144,6 +1198,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify forEach returns undefined when callbackfn modifies existing elements in place
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5500
      * @tc.name testUint8ArrayForEach055
      * @tc.desc Verify forEach returns undefined when callbackfn modifies existing elements in place
@@ -1164,6 +1219,7 @@ public class Uint8ArrayForEachTest extends BasTest {
 
     /**
      * Verify forEach returns undefined when callbackfn assigns current value unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_5600
      * @tc.name testUint8ArrayForEach056
      * @tc.desc Verify forEach returns undefined when callbackfn assigns current value unchanged

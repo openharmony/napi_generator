@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayFindLast02Test extends BasTest {
     /**
      * Verify findLast returns number type when matching element value is 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_0100
      * @tc.name testUint8ArrayFindLast001
      * @tc.desc Verify findLast returns number type when matching element value is 0
@@ -48,6 +49,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns number type when matching element value is 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_0200
      * @tc.name testUint8ArrayFindLast002
      * @tc.desc Verify findLast returns number type when matching element value is 255
@@ -67,6 +69,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns number type when matching with bitwise operation condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_0300
      * @tc.name testUint8ArrayFindLast003
      * @tc.desc Verify findLast returns number type when matching with bitwise operation condition
@@ -86,6 +89,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns number type when matching based on index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_0400
      * @tc.name testUint8ArrayFindLast004
      * @tc.desc Verify findLast returns number type when matching based on index
@@ -105,6 +109,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns number type when single element array matches
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_0500
      * @tc.name testUint8ArrayFindLast005
      * @tc.desc Verify findLast returns number type when single element array matches
@@ -124,6 +129,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns exact value 77 when matching
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_0600
      * @tc.name testUint8ArrayFindLast006
      * @tc.desc Verify findLast returns exact value 77 when matching
@@ -143,6 +149,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns exact value 160 when matching
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_0700
      * @tc.name testUint8ArrayFindLast007
      * @tc.desc Verify findLast returns exact value 160 when matching
@@ -162,6 +169,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns exact value 9 when matching
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_0800
      * @tc.name testUint8ArrayFindLast008
      * @tc.desc Verify findLast returns exact value 9 when matching
@@ -181,6 +189,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns last matching value 220 when v >= 210
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_0900
      * @tc.name testUint8ArrayFindLast009
      * @tc.desc Verify findLast returns last matching value 220 when v >= 210
@@ -200,6 +209,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns last matching value 33 when v <= 33
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_1000
      * @tc.name testUint8ArrayFindLast010
      * @tc.desc Verify findLast returns last matching value 33 when v <= 33
@@ -219,6 +229,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 90 when v > 80 and v < 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_1100
      * @tc.name testUint8ArrayFindLast011
      * @tc.desc Verify findLast returns 90 when v > 80 and v < 100
@@ -238,6 +249,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns last matching value 14 when divisible by 7
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_1200
      * @tc.name testUint8ArrayFindLast012
      * @tc.desc Verify findLast returns last matching value 14 when divisible by 7
@@ -257,6 +269,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns last matching value 27 when v % 8 === 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_1300
      * @tc.name testUint8ArrayFindLast013
      * @tc.desc Verify findLast returns last matching value 27 when v % 8 === 3
@@ -276,6 +289,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 150 when v * 3 > 200
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_1400
      * @tc.name testUint8ArrayFindLast014
      * @tc.desc Verify findLast returns 150 when v * 3 > 200
@@ -295,6 +309,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 200 when v + 30 > 200
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_1500
      * @tc.name testUint8ArrayFindLast015
      * @tc.desc Verify findLast returns 200 when v + 30 > 200
@@ -314,6 +329,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 20 when v - 40 < 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_1600
      * @tc.name testUint8ArrayFindLast016
      * @tc.desc Verify findLast returns 20 when v - 40 < 0
@@ -333,6 +349,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 152 when v > 150
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_1700
      * @tc.name testUint8ArrayFindLast017
      * @tc.desc Verify findLast returns 152 when v > 150
@@ -352,6 +369,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 148 when v < 150 (tail-to-head traversal)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_1800
      * @tc.name testUint8ArrayFindLast018
      * @tc.desc Verify findLast returns 148 when v < 150 (tail-to-head traversal)
@@ -371,6 +389,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 240 when matching binary literal 0b11110000
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_1900
      * @tc.name testUint8ArrayFindLast019
      * @tc.desc Verify findLast returns 240 when matching binary literal 0b11110000
@@ -390,6 +409,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 15 when matching binary literal 0b00001111
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_2000
      * @tc.name testUint8ArrayFindLast020
      * @tc.desc Verify findLast returns 15 when matching binary literal 0b00001111
@@ -409,6 +429,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 63 when matching octal literal 0o77
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_2100
      * @tc.name testUint8ArrayFindLast021
      * @tc.desc Verify findLast returns 63 when matching octal literal 0o77
@@ -428,6 +449,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 170 when matching hexadecimal literal 0xAA
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_2200
      * @tc.name testUint8ArrayFindLast022
      * @tc.desc Verify findLast returns 170 when matching hexadecimal literal 0xAA
@@ -447,6 +469,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 128 when value is between 0x80 and 0xBF
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_2300
      * @tc.name testUint8ArrayFindLast023
      * @tc.desc Verify findLast returns 128 when value is between 0x80 and 0xBF
@@ -466,6 +489,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 33 when v > 0 and divisible by 11
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_2400
      * @tc.name testUint8ArrayFindLast024
      * @tc.desc Verify findLast returns 33 when v > 0 and divisible by 11
@@ -485,6 +509,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 204 when matching binary literal 0b11001100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_2500
      * @tc.name testUint8ArrayFindLast025
      * @tc.desc Verify findLast returns 204 when matching binary literal 0b11001100
@@ -504,6 +529,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns exact value 222 when matching
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_2600
      * @tc.name testUint8ArrayFindLast026
      * @tc.desc Verify findLast returns exact value 222 when matching
@@ -523,6 +549,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 32 when v < 128 (last element match)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_2700
      * @tc.name testUint8ArrayFindLast027
      * @tc.desc Verify findLast returns 32 when v < 128 (last element match)
@@ -542,6 +569,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 90 when matching hexadecimal 0x5A
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_2800
      * @tc.name testUint8ArrayFindLast028
      * @tc.desc Verify findLast returns 90 when matching hexadecimal 0x5A
@@ -561,6 +589,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns last matching value when even index and v > 15
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_2900
      * @tc.name testUint8ArrayFindLast029
      * @tc.desc Verify findLast returns last matching value when even index and v > 15
@@ -580,6 +609,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify array length remains unchanged after findLast with match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_3000
      * @tc.name testUint8ArrayFindLast030
      * @tc.desc Verify array length remains unchanged after findLast with match
@@ -600,6 +630,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify subarray length remains unchanged after findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_3100
      * @tc.name testUint8ArrayFindLast031
      * @tc.desc Verify subarray length remains unchanged after findLast
@@ -621,6 +652,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify byteLength remains unchanged after findLast with match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_3200
      * @tc.name testUint8ArrayFindLast032
      * @tc.desc Verify byteLength remains unchanged after findLast with match
@@ -641,6 +673,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify buffer.byteLength remains unchanged after findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_3300
      * @tc.name testUint8ArrayFindLast033
      * @tc.desc Verify buffer.byteLength remains unchanged after findLast
@@ -661,6 +694,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify BYTES_PER_ELEMENT remains 1 after findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_3400
      * @tc.name testUint8ArrayFindLast034
      * @tc.desc Verify BYTES_PER_ELEMENT remains 1 after findLast
@@ -680,6 +714,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify byteOffset remains unchanged after findLast (no offset view)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_3500
      * @tc.name testUint8ArrayFindLast035
      * @tc.desc Verify byteOffset remains unchanged after findLast (no offset view)
@@ -700,6 +735,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify byteOffset remains unchanged after findLast (with offset view)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_3600
      * @tc.name testUint8ArrayFindLast036
      * @tc.desc Verify byteOffset remains unchanged after findLast (with offset view)
@@ -724,6 +760,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify element at index 0 remains unchanged after findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_3700
      * @tc.name testUint8ArrayFindLast037
      * @tc.desc Verify element at index 0 remains unchanged after findLast
@@ -743,6 +780,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify element at index 2 remains unchanged after findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_3800
      * @tc.name testUint8ArrayFindLast038
      * @tc.desc Verify element at index 2 remains unchanged after findLast
@@ -762,6 +800,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify last element remains unchanged after findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_3900
      * @tc.name testUint8ArrayFindLast039
      * @tc.desc Verify last element remains unchanged after findLast
@@ -781,6 +820,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify sum of all elements remains unchanged after findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_4000
      * @tc.name testUint8ArrayFindLast040
      * @tc.desc Verify sum of all elements remains unchanged after findLast
@@ -808,6 +848,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify single element array element remains unchanged after findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_4100
      * @tc.name testUint8ArrayFindLast041
      * @tc.desc Verify single element array element remains unchanged after findLast
@@ -827,6 +868,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns correct value on subarray
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_4200
      * @tc.name testUint8ArrayFindLast042
      * @tc.desc Verify findLast returns correct value on subarray
@@ -847,6 +889,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify subarray elements remain unchanged after findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_4300
      * @tc.name testUint8ArrayFindLast043
      * @tc.desc Verify subarray elements remain unchanged after findLast
@@ -867,6 +910,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify original array elements remain unchanged after subarray findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_4400
      * @tc.name testUint8ArrayFindLast044
      * @tc.desc Verify original array elements remain unchanged after subarray findLast
@@ -887,6 +931,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify two subarrays from same buffer do not affect each other
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_4500
      * @tc.name testUint8ArrayFindLast045
      * @tc.desc Verify two subarrays from same buffer do not affect each other
@@ -908,6 +953,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify nested subarray findLast does not affect parent subarray
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_4600
      * @tc.name testUint8ArrayFindLast046
      * @tc.desc Verify nested subarray findLast does not affect parent subarray
@@ -929,6 +975,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns correct value on Uint8Array with byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_4700
      * @tc.name testUint8ArrayFindLast047
      * @tc.desc Verify findLast returns correct value on Uint8Array with byteOffset
@@ -952,6 +999,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify two views from same buffer do not affect each other
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_4800
      * @tc.name testUint8ArrayFindLast048
      * @tc.desc Verify two views from same buffer do not affect each other
@@ -978,6 +1026,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns correct value on two-level nested subarray
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_4900
      * @tc.name testUint8ArrayFindLast049
      * @tc.desc Verify findLast returns correct value on two-level nested subarray
@@ -999,6 +1048,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify buffer content remains unchanged after findLast (verified via new view)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_5000
      * @tc.name testUint8ArrayFindLast050
      * @tc.desc Verify buffer content remains unchanged after findLast (verified via new view)
@@ -1024,6 +1074,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify ArrayBuffer.isView remains true after findLast
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_5100
      * @tc.name testUint8ArrayFindLast051
      * @tc.desc Verify ArrayBuffer.isView remains true after findLast
@@ -1043,6 +1094,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify 3 consecutive findLast calls return consistent values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_5200
      * @tc.name testUint8ArrayFindLast052
      * @tc.desc Verify 3 consecutive findLast calls return consistent values
@@ -1069,6 +1121,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify toString does not affect subsequent findLast return value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_5300
      * @tc.name testUint8ArrayFindLast053
      * @tc.desc Verify toString does not affect subsequent findLast return value
@@ -1092,6 +1145,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify valueOf does not affect subsequent findLast return value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_5400
      * @tc.name testUint8ArrayFindLast054
      * @tc.desc Verify valueOf does not affect subsequent findLast return value
@@ -1115,6 +1169,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify two independent arrays with same content return same findLast value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_5500
      * @tc.name testUint8ArrayFindLast055
      * @tc.desc Verify two independent arrays with same content return same findLast value
@@ -1138,6 +1193,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify different predicates return their correct values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_5600
      * @tc.name testUint8ArrayFindLast056
      * @tc.desc Verify different predicates return their correct values
@@ -1161,6 +1217,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast return value remains unchanged after traversing array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_5700
      * @tc.name testUint8ArrayFindLast057
      * @tc.desc Verify findLast return value remains unchanged after traversing array
@@ -1186,6 +1243,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast return value is within array range (<=255)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_5800
      * @tc.name testUint8ArrayFindLast058
      * @tc.desc Verify findLast return value is within array range (<=255)
@@ -1205,6 +1263,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast return value is within array range (>=0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_5900
      * @tc.name testUint8ArrayFindLast059
      * @tc.desc Verify findLast return value is within array range (>=0)
@@ -1224,6 +1283,7 @@ public class Uint8ArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast return value matches manual tail-to-head traversal result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST02_6000
      * @tc.name testUint8ArrayFindLast060
      * @tc.desc Verify findLast return value matches manual tail-to-head traversal result

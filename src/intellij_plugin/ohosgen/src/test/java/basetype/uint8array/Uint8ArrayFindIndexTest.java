@@ -17,7 +17,6 @@ package basetype.uint8array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.Error;
 import basetype.common.Uint8Array;
 import basetype.common.RangeError;
 
@@ -37,6 +36,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ArrayFindIndexTest extends BasTest {
     /**
      * Verify findIndex with 1 parameter and normal call returns expected value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0010
      * @tc.name testUint8ArrayFindIndex001
      * @tc.desc Verify findIndex with 1 parameter and normal call returns expected value
@@ -55,6 +55,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     private static boolean extraParam = false;
     /**
      * Verify findIndex callback declares 4 parameters, the 4th is undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0020
      * @tc.name testUint8ArrayFindIndex002
      * @tc.desc Verify findIndex callback declares 4 parameters, the 4th is undefined
@@ -64,6 +65,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
      */
     /**
      * Verify empty array findIndex with callback returns -1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0030
      * @tc.name testUint8ArrayFindIndex003
      * @tc.desc Verify empty array findIndex with callback returns -1
@@ -81,6 +83,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value===0 match, array [0,1,2] finds 0 returns index=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0040
      * @tc.name testUint8ArrayFindIndex004
      * @tc.desc Verify value===0 match, array [0,1,2] finds 0 returns index=0
@@ -98,6 +101,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value===255 match, array [0,128,255] finds 255 returns index=2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0050
      * @tc.name testUint8ArrayFindIndex005
      * @tc.desc Verify value===255 match, array [0,128,255] finds 255 returns index=2
@@ -115,6 +119,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value>0 match, array [0,1,2] returns index=1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0060
      * @tc.name testUint8ArrayFindIndex006
      * @tc.desc Verify value>0 match, array [0,1,2] returns index=1
@@ -132,6 +137,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value>200 match, array [50,150,250] returns index=2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0070
      * @tc.name testUint8ArrayFindIndex007
      * @tc.desc Verify value>200 match, array [50,150,250] returns index=2
@@ -149,6 +155,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value===0xFF(255) hexadecimal literal match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0080
      * @tc.name testUint8ArrayFindIndex008
      * @tc.desc Verify value===0xFF(255) hexadecimal literal match
@@ -166,6 +173,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value>127 match, array [0,100,200] finds 200
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0090
      * @tc.name testUint8ArrayFindIndex009
      * @tc.desc Verify value>127 match, array [0,100,200] finds 200
@@ -183,6 +191,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value>=128 match, array [127,128,129] finds 128
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0100
      * @tc.name testUint8ArrayFindIndex010
      * @tc.desc Verify value>=128 match, array [127,128,129] finds 128
@@ -200,6 +209,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value<100 match, array [200,50,100] finds 50
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0110
      * @tc.name testUint8ArrayFindIndex011
      * @tc.desc Verify value<100 match, array [200,50,100] finds 50
@@ -217,6 +227,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value%2===0 match even value, array [1,2,3] finds 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0120
      * @tc.name testUint8ArrayFindIndex012
      * @tc.desc Verify value%2===0 match even value, array [1,2,3] finds 2
@@ -234,6 +245,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value%2===1 match odd value, array [2,4,5] finds 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0130
      * @tc.name testUint8ArrayFindIndex013
      * @tc.desc Verify value%2===1 match odd value, array [2,4,5] finds 5
@@ -251,6 +263,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value!==0 match non-zero, array [0,0,3] finds 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0140
      * @tc.name testUint8ArrayFindIndex014
      * @tc.desc Verify value!==0 match non-zero, array [0,0,3] finds 3
@@ -268,6 +281,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value>100 and value<200 combined condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0150
      * @tc.name testUint8ArrayFindIndex015
      * @tc.desc Verify value>100 and value<200 combined condition
@@ -285,6 +299,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value===0x80(128) hexadecimal match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0160
      * @tc.name testUint8ArrayFindIndex016
      * @tc.desc Verify value===0x80(128) hexadecimal match
@@ -302,6 +317,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value===127 mid-value match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0170
      * @tc.name testUint8ArrayFindIndex017
      * @tc.desc Verify value===127 mid-value match
@@ -319,6 +335,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value<=1 match, array [0,1,2] returns first satisfying index=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0180
      * @tc.name testUint8ArrayFindIndex018
      * @tc.desc Verify value<=1 match, array [0,1,2] returns first satisfying index=0
@@ -336,6 +353,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value>=0 always true, returns first element index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0190
      * @tc.name testUint8ArrayFindIndex019
      * @tc.desc Verify value>=0 always true, returns first element index
@@ -353,6 +371,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify index===0 match first element, returns index=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0200
      * @tc.name testUint8ArrayFindIndex020
      * @tc.desc Verify index===0 match first element, returns index=0
@@ -370,6 +389,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify index===length-1 match last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0210
      * @tc.name testUint8ArrayFindIndex021
      * @tc.desc Verify index===length-1 match last element
@@ -387,6 +407,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify index===2 match third element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0220
      * @tc.name testUint8ArrayFindIndex022
      * @tc.desc Verify index===2 match third element
@@ -404,6 +425,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify index%2===0 match even index, returns first even index 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0230
      * @tc.name testUint8ArrayFindIndex023
      * @tc.desc Verify index%2===0 match even index, returns first even index 0
@@ -421,6 +443,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify index%2===1 match odd index, returns first odd index 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0240
      * @tc.name testUint8ArrayFindIndex024
      * @tc.desc Verify index%2===1 match odd index, returns first odd index 1
@@ -438,6 +461,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify index>2 match, returns first index>2 element index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0250
      * @tc.name testUint8ArrayFindIndex025
      * @tc.desc Verify index>2 match, returns first index>2 element index
@@ -455,6 +479,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify index<2 match, returns first index<2 element index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0260
      * @tc.name testUint8ArrayFindIndex026
      * @tc.desc Verify index<2 match, returns first index<2 element index
@@ -472,6 +497,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify index>=2 and index<=3 combined range match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0270
      * @tc.name testUint8ArrayFindIndex027
      * @tc.desc Verify index>=2 and index<=3 combined range match
@@ -489,6 +515,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify array parameter reference is same as original array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0280
      * @tc.name testUint8ArrayFindIndex028
      * @tc.desc Verify array parameter reference is same as original array
@@ -510,6 +537,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify array.length equals 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0290
      * @tc.name testUint8ArrayFindIndex029
      * @tc.desc Verify array.length equals 3
@@ -527,6 +555,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify array[index]===value element position consistency
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0300
      * @tc.name testUint8ArrayFindIndex030
      * @tc.desc Verify array[index]===value element position consistency
@@ -544,6 +573,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify array.byteLength property value is 4
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0310
      * @tc.name testUint8ArrayFindIndex031
      * @tc.desc Verify array.byteLength property value is 4
@@ -565,6 +595,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify reading adjacent element via array[index+1] for condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0320
      * @tc.name testUint8ArrayFindIndex032
      * @tc.desc Verify reading adjacent element via array[index+1] for condition
@@ -587,6 +618,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value and index combined condition value+index>55
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0330
      * @tc.name testUint8ArrayFindIndex033
      * @tc.desc Verify value and index combined condition value+index>55
@@ -604,6 +636,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value>array[0] condition, starts matching from second element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0340
      * @tc.name testUint8ArrayFindIndex034
      * @tc.desc Verify value>array[0] condition, starts matching from second element
@@ -621,6 +654,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value>2 and index<4 and array.length===5 three conditions combined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0350
      * @tc.name testUint8ArrayFindIndex035
      * @tc.desc Verify value>2 and index<4 and array.length===5 three conditions combined
@@ -640,6 +674,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value*index>100 condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0360
      * @tc.name testUint8ArrayFindIndex036
      * @tc.desc Verify value*index>100 condition
@@ -657,6 +692,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value>index condition
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0370
      * @tc.name testUint8ArrayFindIndex037
      * @tc.desc Verify value>index condition
@@ -674,6 +710,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify callback only uses value, ignores index and array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0380
      * @tc.name testUint8ArrayFindIndex038
      * @tc.desc Verify callback only uses value, ignores index and array
@@ -691,6 +728,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify callback uses value and index, ignores array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0390
      * @tc.name testUint8ArrayFindIndex039
      * @tc.desc Verify callback uses value and index, ignores array
@@ -708,6 +746,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify callback uses arrow function concise body returning expression
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0400
      * @tc.name testUint8ArrayFindIndex040
      * @tc.desc Verify callback uses arrow function concise body returning expression
@@ -725,6 +764,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value>255 never found, uint8 max value 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0410
      * @tc.name testUint8ArrayFindIndex041
      * @tc.desc Verify value>255 never found, uint8 max value 255
@@ -742,6 +782,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value<0 never found, uint8 min value 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0420
      * @tc.name testUint8ArrayFindIndex042
      * @tc.desc Verify value<0 never found, uint8 min value 0
@@ -759,6 +800,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify value===-1 not exists in uint8 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0430
      * @tc.name testUint8ArrayFindIndex043
      * @tc.desc Verify value===-1 not exists in uint8 array
@@ -776,6 +818,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify empty array findIndex never finds
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0440
      * @tc.name testUint8ArrayFindIndex044
      * @tc.desc Verify empty array findIndex never finds
@@ -793,6 +836,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify single element array condition not matched
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0450
      * @tc.name testUint8ArrayFindIndex045
      * @tc.desc Verify single element array condition not matched
@@ -810,6 +854,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify Uint8Array.of(500) stores 244 and findIndex finds value 244
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0460
      * @tc.name testUint8ArrayFindIndex046
      * @tc.desc Verify Uint8Array.of(500) stores 244 and findIndex finds value 244
@@ -827,6 +872,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify callback always returns false not found
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0470
      * @tc.name testUint8ArrayFindIndex047
      * @tc.desc Verify callback always returns false not found
@@ -844,6 +890,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify all-zero array find >0 not found
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0480
      * @tc.name testUint8ArrayFindIndex048
      * @tc.desc Verify all-zero array find >0 not found
@@ -861,6 +908,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify all-255 array find <0 not found
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0490
      * @tc.name testUint8ArrayFindIndex049
      * @tc.desc Verify all-255 array find <0 not found
@@ -878,6 +926,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify index>100 not found on small array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0500
      * @tc.name testUint8ArrayFindIndex050
      * @tc.desc Verify index>100 not found on small array
@@ -895,6 +944,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify contradictory condition value>200 and value<50 not found
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0510
      * @tc.name testUint8ArrayFindIndex051
      * @tc.desc Verify contradictory condition value>200 and value<50 not found
@@ -912,6 +962,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify NaN self-comparison (v!==v) not found in uint8 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0520
      * @tc.name testUint8ArrayFindIndex052
      * @tc.desc Verify NaN self-comparison (v!==v) not found in uint8 array
@@ -929,6 +980,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify empty ArrayBuffer constructed array not found
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0530
      * @tc.name testUint8ArrayFindIndex053
      * @tc.desc Verify empty ArrayBuffer constructed array not found
@@ -947,6 +999,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify index===-1 negative index not found on small array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0540
      * @tc.name testUint8ArrayFindIndex054
      * @tc.desc Verify index===-1 negative index not found on small array
@@ -964,6 +1017,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify traversal order from index 0 to length-1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0550
      * @tc.name testUint8ArrayFindIndex055
      * @tc.desc Verify traversal order from index 0 to length-1
@@ -990,6 +1044,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify traversal stops at first match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0560
      * @tc.name testUint8ArrayFindIndex056
      * @tc.desc Verify traversal stops at first match
@@ -1012,6 +1067,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify traversal visits all elements when no match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0570
      * @tc.name testUint8ArrayFindIndex057
      * @tc.desc Verify traversal visits all elements when no match
@@ -1034,6 +1090,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify traversal order on single element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0580
      * @tc.name testUint8ArrayFindIndex058
      * @tc.desc Verify traversal order on single element array
@@ -1056,6 +1113,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify traversal order on two element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0590
      * @tc.name testUint8ArrayFindIndex059
      * @tc.desc Verify traversal order on two element array
@@ -1079,6 +1137,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify traversal stops at first match on large array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0600
      * @tc.name testUint8ArrayFindIndex060
      * @tc.desc Verify traversal stops at first match on large array
@@ -1101,6 +1160,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify traversal visits all elements on large array when no match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0610
      * @tc.name testUint8ArrayFindIndex061
      * @tc.desc Verify traversal visits all elements on large array when no match
@@ -1123,6 +1183,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify traversal stops at first match on 100-element array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0620
      * @tc.name testUint8ArrayFindIndex062
      * @tc.desc Verify traversal stops at first match on 100-element array
@@ -1148,6 +1209,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify traversal visits all elements on 100-element array when no match
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0630
      * @tc.name testUint8ArrayFindIndex063
      * @tc.desc Verify traversal visits all elements on 100-element array when no match
@@ -1173,6 +1235,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex returns number type when element is found
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0640
      * @tc.name testUint8ArrayFindIndex064
      * @tc.desc Verify findIndex returns number type when element is found
@@ -1190,6 +1253,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex returns number type when element is not found
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0650
      * @tc.name testUint8ArrayFindIndex065
      * @tc.desc Verify findIndex returns number type when element is not found
@@ -1207,6 +1271,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex returns number type with hexadecimal comparison
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0660
      * @tc.name testUint8ArrayFindIndex066
      * @tc.desc Verify findIndex returns number type with hexadecimal comparison
@@ -1224,6 +1289,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex returns number type with binary comparison
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0670
      * @tc.name testUint8ArrayFindIndex067
      * @tc.desc Verify findIndex returns number type with binary comparison
@@ -1241,6 +1307,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex returns number type with octal comparison
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0680
      * @tc.name testUint8ArrayFindIndex068
      * @tc.desc Verify findIndex returns number type with octal comparison
@@ -1258,6 +1325,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex returns number type with scientific notation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0690
      * @tc.name testUint8ArrayFindIndex069
      * @tc.desc Verify findIndex returns number type with scientific notation
@@ -1275,6 +1343,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex returns number type with negative comparison
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0700
      * @tc.name testUint8ArrayFindIndex070
      * @tc.desc Verify findIndex returns number type with negative comparison
@@ -1292,6 +1361,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify callback throws Error with message 'test error', findIndex propagates
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0710
      * @tc.name testUint8ArrayFindIndex071
      * @tc.desc Verify callback throws Error with message 'test error', findIndex propagates
@@ -1318,6 +1388,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify callback throws Error with message 'string error', findIndex propagates
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0720
      * @tc.name testUint8ArrayFindIndex072
      * @tc.desc Verify callback throws Error with message 'string error', findIndex propagates
@@ -1344,6 +1415,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify callback throws Error with message '42', findIndex propagates
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0730
      * @tc.name testUint8ArrayFindIndex073
      * @tc.desc Verify callback throws Error with message '42', findIndex propagates
@@ -1370,6 +1442,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify error thrown on first element, callback not called for subsequent elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0740
      * @tc.name testUint8ArrayFindIndex074
      * @tc.desc Verify error thrown on first element, callback not called for subsequent elements
@@ -1401,6 +1474,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify error thrown on second element, callback not called for third element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0750
      * @tc.name testUint8ArrayFindIndex075
      * @tc.desc Verify error thrown on second element, callback not called for third element
@@ -1432,6 +1506,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify error thrown on last element, all elements visited
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0760
      * @tc.name testUint8ArrayFindIndex076
      * @tc.desc Verify error thrown on last element, all elements visited
@@ -1463,6 +1538,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex on single element array (length 1)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0770
      * @tc.name testUint8ArrayFindIndex077
      * @tc.desc Verify findIndex on single element array (length 1)
@@ -1480,6 +1556,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex on two element array (length 2)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0780
      * @tc.name testUint8ArrayFindIndex078
      * @tc.desc Verify findIndex on two element array (length 2)
@@ -1497,6 +1574,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex on 100-element array (length 100)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0790
      * @tc.name testUint8ArrayFindIndex079
      * @tc.desc Verify findIndex on 100-element array (length 100)
@@ -1517,6 +1595,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex on 256-element array (length 256)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0800
      * @tc.name testUint8ArrayFindIndex080
      * @tc.desc Verify findIndex on 256-element array (length 256)
@@ -1537,6 +1616,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex on 1000-element array (length 1000)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0810
      * @tc.name testUint8ArrayFindIndex081
      * @tc.desc Verify findIndex on 1000-element array (length 1000)
@@ -1557,6 +1637,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex on 10000-element array (length 10000)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0820
      * @tc.name testUint8ArrayFindIndex082
      * @tc.desc Verify findIndex on 10000-element array (length 10000)
@@ -1577,6 +1658,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex with value 0 (uint8 min value)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0830
      * @tc.name testUint8ArrayFindIndex083
      * @tc.desc Verify findIndex with value 0 (uint8 min value)
@@ -1594,6 +1676,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex with value 255 (uint8 max value)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0840
      * @tc.name testUint8ArrayFindIndex084
      * @tc.desc Verify findIndex with value 255 (uint8 max value)
@@ -1611,6 +1694,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex with value 128 (mid-value)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0850
      * @tc.name testUint8ArrayFindIndex085
      * @tc.desc Verify findIndex with value 128 (mid-value)
@@ -1628,6 +1712,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex with value 1 (boundary)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0860
      * @tc.name testUint8ArrayFindIndex086
      * @tc.desc Verify findIndex with value 1 (boundary)
@@ -1645,6 +1730,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex with value 254 (boundary)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0870
      * @tc.name testUint8ArrayFindIndex087
      * @tc.desc Verify findIndex with value 254 (boundary)
@@ -1662,6 +1748,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex with value 253 (boundary)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0880
      * @tc.name testUint8ArrayFindIndex088
      * @tc.desc Verify findIndex with value 253 (boundary)
@@ -1679,6 +1766,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex with value 2 (boundary)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0890
      * @tc.name testUint8ArrayFindIndex089
      * @tc.desc Verify findIndex with value 2 (boundary)
@@ -1696,6 +1784,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex with value 252 (boundary)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0900
      * @tc.name testUint8ArrayFindIndex090
      * @tc.desc Verify findIndex with value 252 (boundary)
@@ -1713,6 +1802,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex does not modify array elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0910
      * @tc.name testUint8ArrayFindIndex091
      * @tc.desc Verify findIndex does not modify array elements
@@ -1734,6 +1824,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex does not modify array length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0920
      * @tc.name testUint8ArrayFindIndex092
      * @tc.desc Verify findIndex does not modify array length
@@ -1752,6 +1843,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex does not modify array byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0930
      * @tc.name testUint8ArrayFindIndex093
      * @tc.desc Verify findIndex does not modify array byteLength
@@ -1770,6 +1862,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex does not modify array buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0940
      * @tc.name testUint8ArrayFindIndex094
      * @tc.desc Verify findIndex does not modify array buffer
@@ -1788,6 +1881,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex does not modify array byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0950
      * @tc.name testUint8ArrayFindIndex095
      * @tc.desc Verify findIndex does not modify array byteOffset
@@ -1806,6 +1900,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex does not modify array when no match found
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0960
      * @tc.name testUint8ArrayFindIndex096
      * @tc.desc Verify findIndex does not modify array when no match found
@@ -1828,6 +1923,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex does not modify array when callback throws
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0970
      * @tc.name testUint8ArrayFindIndex097
      * @tc.desc Verify findIndex does not modify array when callback throws
@@ -1856,6 +1952,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex on Uint8Array.from created array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0980
      * @tc.name testUint8ArrayFindIndex098
      * @tc.desc Verify findIndex on Uint8Array.from created array
@@ -1874,6 +1971,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex on ArrayBuffer constructed Uint8Array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_0990
      * @tc.name testUint8ArrayFindIndex099
      * @tc.desc Verify findIndex on ArrayBuffer constructed Uint8Array
@@ -1894,6 +1992,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex on subarray subview
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_1000
      * @tc.name testUint8ArrayFindIndex100
      * @tc.desc Verify findIndex on subarray subview
@@ -1912,6 +2011,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex on ArrayBuffer view with byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_1010
      * @tc.name testUint8ArrayFindIndex101
      * @tc.desc Verify findIndex on ArrayBuffer view with byteOffset
@@ -1931,6 +2031,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify findIndex then verify original array elements unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_1020
      * @tc.name testUint8ArrayFindIndex102
      * @tc.desc Verify findIndex then verify original array elements unchanged
@@ -1952,6 +2053,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
 
     /**
      * Verify nested findIndex calls, inner and outer return correct results
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX_1030
      * @tc.name testUint8ArrayFindIndex103
      * @tc.desc Verify nested findIndex calls, inner and outer return correct results
