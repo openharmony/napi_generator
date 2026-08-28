@@ -363,11 +363,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,2,3,4,5] all elements > 0 returns true
+     * Verify [1, 2, 3, 4, 5] all elements > 0 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0170
      * @tc.name testUint8ArrayEvery017
-     * @tc.desc Verify [1,2,3,4,5] all elements > 0 returns true
+     * @tc.desc Verify [1, 2, 3, 4, 5] all elements > 0 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -381,11 +381,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [10,20,30] all elements <= 30 returns true
+     * Verify [10, 20, 30] all elements <= 30 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0180
      * @tc.name testUint8ArrayEvery018
-     * @tc.desc Verify [10,20,30] all elements <= 30 returns true
+     * @tc.desc Verify [10, 20, 30] all elements <= 30 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -399,11 +399,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [5,10,15] all elements % 5 === 0 returns true
+     * Verify [5, 10, 15] all elements % 5 === 0 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0190
      * @tc.name testUint8ArrayEvery019
-     * @tc.desc Verify [5,10,15] all elements % 5 === 0 returns true
+     * @tc.desc Verify [5, 10, 15] all elements % 5 === 0 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -417,11 +417,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,0,0] all elements === 0 returns true
+     * Verify [0, 0, 0] all elements === 0 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0200
      * @tc.name testUint8ArrayEvery020
-     * @tc.desc Verify [0,0,0] all elements === 0 returns true
+     * @tc.desc Verify [0, 0, 0] all elements === 0 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -435,11 +435,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,1,1] all elements === 1 returns true
+     * Verify [1, 1, 1] all elements === 1 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0210
      * @tc.name testUint8ArrayEvery021
-     * @tc.desc Verify [1,1,1] all elements === 1 returns true
+     * @tc.desc Verify [1, 1, 1] all elements === 1 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -453,11 +453,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [2,4,6,8] all elements % 2 === 0 returns true
+     * Verify [2, 4, 6, 8] all elements % 2 === 0 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0220
      * @tc.name testUint8ArrayEvery022
-     * @tc.desc Verify [2,4,6,8] all elements % 2 === 0 returns true
+     * @tc.desc Verify [2, 4, 6, 8] all elements % 2 === 0 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -471,11 +471,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [255,255,255] all elements < 256 returns true
+     * Verify [255, 255, 255] all elements < 256 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0230
      * @tc.name testUint8ArrayEvery023
-     * @tc.desc Verify [255,255,255] all elements < 256 returns true
+     * @tc.desc Verify [255, 255, 255] all elements < 256 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -489,11 +489,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,128,255] all elements <= 255 returns true
+     * Verify [0, 128, 255] all elements <= 255 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0240
      * @tc.name testUint8ArrayEvery024
-     * @tc.desc Verify [0,128,255] all elements <= 255 returns true
+     * @tc.desc Verify [0, 128, 255] all elements <= 255 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -507,11 +507,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [100,200,250] all elements > 50 returns true
+     * Verify [100, 200, 250] all elements > 50 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0250
      * @tc.name testUint8ArrayEvery025
-     * @tc.desc Verify [100,200,250] all elements > 50 returns true
+     * @tc.desc Verify [100, 200, 250] all elements > 50 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -525,11 +525,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [10,20,30] all elements >= 10 returns true
+     * Verify [10, 20, 30] all elements >= 10 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0260
      * @tc.name testUint8ArrayEvery026
-     * @tc.desc Verify [10,20,30] all elements >= 10 returns true
+     * @tc.desc Verify [10, 20, 30] all elements >= 10 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -543,11 +543,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,2,3] all elements >= 1 returns true
+     * Verify [1, 2, 3] all elements >= 1 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0270
      * @tc.name testUint8ArrayEvery027
-     * @tc.desc Verify [1,2,3] all elements >= 1 returns true
+     * @tc.desc Verify [1, 2, 3] all elements >= 1 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -561,11 +561,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,2,3] all elements <= 3 returns true
+     * Verify [1, 2, 3] all elements <= 3 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0280
      * @tc.name testUint8ArrayEvery028
-     * @tc.desc Verify [1,2,3] all elements <= 3 returns true
+     * @tc.desc Verify [1, 2, 3] all elements <= 3 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -579,11 +579,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,127,128,255] all elements < 256 returns true
+     * Verify [0, 127, 128, 255] all elements < 256 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0290
      * @tc.name testUint8ArrayEvery029
-     * @tc.desc Verify [0,127,128,255] all elements < 256 returns true
+     * @tc.desc Verify [0, 127, 128, 255] all elements < 256 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -597,11 +597,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,127,128,255] all elements > -1 returns true
+     * Verify [0, 127, 128, 255] all elements > -1 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0300
      * @tc.name testUint8ArrayEvery030
-     * @tc.desc Verify [0,127,128,255] all elements > -1 returns true
+     * @tc.desc Verify [0, 127, 128, 255] all elements > -1 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -615,11 +615,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,1,2] first element 0 not satisfy > 0 returns false
+     * Verify [0, 1, 2] first element 0 not satisfy > 0 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0310
      * @tc.name testUint8ArrayEvery031
-     * @tc.desc Verify [0,1,2] first element 0 not satisfy > 0 returns false
+     * @tc.desc Verify [0, 1, 2] first element 0 not satisfy > 0 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -633,11 +633,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,0,2] middle element 0 not satisfy > 0 returns false
+     * Verify [1, 0, 2] middle element 0 not satisfy > 0 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0320
      * @tc.name testUint8ArrayEvery032
-     * @tc.desc Verify [1,0,2] middle element 0 not satisfy > 0 returns false
+     * @tc.desc Verify [1, 0, 2] middle element 0 not satisfy > 0 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -651,11 +651,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,2,0] last element 0 not satisfy > 0 returns false
+     * Verify [1, 2, 0] last element 0 not satisfy > 0 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0330
      * @tc.name testUint8ArrayEvery033
-     * @tc.desc Verify [1,2,0] last element 0 not satisfy > 0 returns false
+     * @tc.desc Verify [1, 2, 0] last element 0 not satisfy > 0 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -669,11 +669,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [10,20,3] last element 3 not satisfy > 5 returns false
+     * Verify [10, 20, 3] last element 3 not satisfy > 5 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0340
      * @tc.name testUint8ArrayEvery034
-     * @tc.desc Verify [10,20,3] last element 3 not satisfy > 5 returns false
+     * @tc.desc Verify [10, 20, 3] last element 3 not satisfy > 5 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -687,11 +687,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [10,5,10] middle element 5 not satisfy >= 10 returns false
+     * Verify [10, 5, 10] middle element 5 not satisfy >= 10 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0350
      * @tc.name testUint8ArrayEvery035
-     * @tc.desc Verify [10,5,10] middle element 5 not satisfy >= 10 returns false
+     * @tc.desc Verify [10, 5, 10] middle element 5 not satisfy >= 10 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -705,11 +705,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [5,10,10] first element 5 not satisfy >= 10 returns false
+     * Verify [5, 10, 10] first element 5 not satisfy >= 10 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0360
      * @tc.name testUint8ArrayEvery036
-     * @tc.desc Verify [5,10,10] first element 5 not satisfy >= 10 returns false
+     * @tc.desc Verify [5, 10, 10] first element 5 not satisfy >= 10 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -723,11 +723,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,2,30] last element 30 not satisfy <= 20 returns false
+     * Verify [1, 2, 30] last element 30 not satisfy <= 20 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0370
      * @tc.name testUint8ArrayEvery037
-     * @tc.desc Verify [1,2,30] last element 30 not satisfy <= 20 returns false
+     * @tc.desc Verify [1, 2, 30] last element 30 not satisfy <= 20 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -741,11 +741,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [5,10,15] first element 5 not satisfy > 10 returns false
+     * Verify [5, 10, 15] first element 5 not satisfy > 10 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0380
      * @tc.name testUint8ArrayEvery038
-     * @tc.desc Verify [5,10,15] first element 5 not satisfy > 10 returns false
+     * @tc.desc Verify [5, 10, 15] first element 5 not satisfy > 10 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -759,11 +759,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [5,10,15] second element 10 not satisfy < 10 returns false
+     * Verify [5, 10, 15] second element 10 not satisfy < 10 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0390
      * @tc.name testUint8ArrayEvery039
-     * @tc.desc Verify [5,10,15] second element 10 not satisfy < 10 returns false
+     * @tc.desc Verify [5, 10, 15] second element 10 not satisfy < 10 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -777,11 +777,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [10,20,30] only first element === 10 returns false
+     * Verify [10, 20, 30] only first element === 10 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0400
      * @tc.name testUint8ArrayEvery040
-     * @tc.desc Verify [10,20,30] only first element === 10 returns false
+     * @tc.desc Verify [10, 20, 30] only first element === 10 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -795,11 +795,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [100,200,250] first element 100 not satisfy > 200 returns false
+     * Verify [100, 200, 250] first element 100 not satisfy > 200 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0410
      * @tc.name testUint8ArrayEvery041
-     * @tc.desc Verify [100,200,250] first element 100 not satisfy > 200 returns false
+     * @tc.desc Verify [100, 200, 250] first element 100 not satisfy > 200 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -813,11 +813,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,2,3] first element 1 not satisfy > 1 returns false
+     * Verify [1, 2, 3] first element 1 not satisfy > 1 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0420
      * @tc.name testUint8ArrayEvery042
-     * @tc.desc Verify [1,2,3] first element 1 not satisfy > 1 returns false
+     * @tc.desc Verify [1, 2, 3] first element 1 not satisfy > 1 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -831,11 +831,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,2,3] last element 3 not satisfy < 3 returns false
+     * Verify [1, 2, 3] last element 3 not satisfy < 3 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0430
      * @tc.name testUint8ArrayEvery043
-     * @tc.desc Verify [1,2,3] last element 3 not satisfy < 3 returns false
+     * @tc.desc Verify [1, 2, 3] last element 3 not satisfy < 3 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -849,11 +849,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,255,0,255] element 0 not satisfy > 0 returns false
+     * Verify [0, 255, 0, 255] element 0 not satisfy > 0 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0440
      * @tc.name testUint8ArrayEvery044
-     * @tc.desc Verify [0,255,0,255] element 0 not satisfy > 0 returns false
+     * @tc.desc Verify [0, 255, 0, 255] element 0 not satisfy > 0 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -867,11 +867,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,255,0,255] element 255 not satisfy === 0 returns false
+     * Verify [0, 255, 0, 255] element 255 not satisfy === 0 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0450
      * @tc.name testUint8ArrayEvery045
-     * @tc.desc Verify [0,255,0,255] element 255 not satisfy === 0 returns false
+     * @tc.desc Verify [0, 255, 0, 255] element 255 not satisfy === 0 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -885,11 +885,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [255,255,255] all elements 255 not satisfy > 255 returns false
+     * Verify [255, 255, 255] all elements 255 not satisfy > 255 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0460
      * @tc.name testUint8ArrayEvery046
-     * @tc.desc Verify [255,255,255] all elements 255 not satisfy > 255 returns false
+     * @tc.desc Verify [255, 255, 255] all elements 255 not satisfy > 255 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -903,11 +903,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,0,0] all elements 0 not satisfy > 0 returns false
+     * Verify [0, 0, 0] all elements 0 not satisfy > 0 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0470
      * @tc.name testUint8ArrayEvery047
-     * @tc.desc Verify [0,0,0] all elements 0 not satisfy > 0 returns false
+     * @tc.desc Verify [0, 0, 0] all elements 0 not satisfy > 0 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1235,11 +1235,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,127,128,255] all elements >= 0 returns true
+     * Verify [0, 127, 128, 255] all elements >= 0 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0630
      * @tc.name testUint8ArrayEvery063
-     * @tc.desc Verify [0,127,128,255] all elements >= 0 returns true
+     * @tc.desc Verify [0, 127, 128, 255] all elements >= 0 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1253,11 +1253,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,127,128,255] exists element <= 127 returns false
+     * Verify [0, 127, 128, 255] exists element <= 127 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0640
      * @tc.name testUint8ArrayEvery064
-     * @tc.desc Verify [0,127,128,255] exists element <= 127 returns false
+     * @tc.desc Verify [0, 127, 128, 255] exists element <= 127 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1271,11 +1271,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,127,128,255] exists element >= 128 returns false
+     * Verify [0, 127, 128, 255] exists element >= 128 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0650
      * @tc.name testUint8ArrayEvery065
-     * @tc.desc Verify [0,127,128,255] exists element >= 128 returns false
+     * @tc.desc Verify [0, 127, 128, 255] exists element >= 128 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1289,11 +1289,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,127,128,255] exists odd value 127 even condition returns false
+     * Verify [0, 127, 128, 255] exists odd value 127 even condition returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0660
      * @tc.name testUint8ArrayEvery066
-     * @tc.desc Verify [0,127,128,255] exists odd value 127 even condition returns false
+     * @tc.desc Verify [0, 127, 128, 255] exists odd value 127 even condition returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1307,11 +1307,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,255] all elements < 256 returns true
+     * Verify [0, 255] all elements < 256 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0670
      * @tc.name testUint8ArrayEvery067
-     * @tc.desc Verify [0,255] all elements < 256 returns true
+     * @tc.desc Verify [0, 255] all elements < 256 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1325,11 +1325,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,255] all elements >= 0 returns true
+     * Verify [0, 255] all elements >= 0 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0680
      * @tc.name testUint8ArrayEvery068
-     * @tc.desc Verify [0,255] all elements >= 0 returns true
+     * @tc.desc Verify [0, 255] all elements >= 0 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1796,11 +1796,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [100,100,100] all same === 100 returns true
+     * Verify [100, 100, 100] all same === 100 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0920
      * @tc.name testUint8ArrayEvery092
-     * @tc.desc Verify [100,100,100] all same === 100 returns true
+     * @tc.desc Verify [100, 100, 100] all same === 100 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1814,11 +1814,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [100,100,100] all same !== 100 returns false
+     * Verify [100, 100, 100] all same !== 100 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0930
      * @tc.name testUint8ArrayEvery093
-     * @tc.desc Verify [100,100,100] all same !== 100 returns false
+     * @tc.desc Verify [100, 100, 100] all same !== 100 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1832,11 +1832,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [200,200,200] all same > 199 returns true
+     * Verify [200, 200, 200] all same > 199 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0940
      * @tc.name testUint8ArrayEvery094
-     * @tc.desc Verify [200,200,200] all same > 199 returns true
+     * @tc.desc Verify [200, 200, 200] all same > 199 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1850,11 +1850,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [200,200,200] all same > 200 returns false
+     * Verify [200, 200, 200] all same > 200 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0950
      * @tc.name testUint8ArrayEvery095
-     * @tc.desc Verify [200,200,200] all same > 200 returns false
+     * @tc.desc Verify [200, 200, 200] all same > 200 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1868,11 +1868,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,0,0] all elements < 0 returns false
+     * Verify [0, 0, 0] all elements < 0 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0960
      * @tc.name testUint8ArrayEvery096
-     * @tc.desc Verify [0,0,0] all elements < 0 returns false
+     * @tc.desc Verify [0, 0, 0] all elements < 0 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1886,11 +1886,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [255,255,255] all elements === 0 returns false
+     * Verify [255, 255, 255] all elements === 0 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0970
      * @tc.name testUint8ArrayEvery097
-     * @tc.desc Verify [255,255,255] all elements === 0 returns false
+     * @tc.desc Verify [255, 255, 255] all elements === 0 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1904,11 +1904,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [255,255,255] all elements > 0 returns true
+     * Verify [255, 255, 255] all elements > 0 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0980
      * @tc.name testUint8ArrayEvery098
-     * @tc.desc Verify [255,255,255] all elements > 0 returns true
+     * @tc.desc Verify [255, 255, 255] all elements > 0 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1922,11 +1922,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [127,128] all elements > 126 and < 129 returns true
+     * Verify [127, 128] all elements > 126 and < 129 returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0990
      * @tc.name testUint8ArrayEvery099
-     * @tc.desc Verify [127,128] all elements > 126 and < 129 returns true
+     * @tc.desc Verify [127, 128] all elements > 126 and < 129 returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1940,11 +1940,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [127,128] odd condition 128 even not satisfy returns false
+     * Verify [127, 128] odd condition 128 even not satisfy returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1000
      * @tc.name testUint8ArrayEvery100
-     * @tc.desc Verify [127,128] odd condition 128 even not satisfy returns false
+     * @tc.desc Verify [127, 128] odd condition 128 even not satisfy returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1958,11 +1958,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [10,10,10,10] index < 2 on 4 elements returns false
+     * Verify [10, 10, 10, 10] index < 2 on 4 elements returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1010
      * @tc.name testUint8ArrayEvery101
-     * @tc.desc Verify [10,10,10,10] index < 2 on 4 elements returns false
+     * @tc.desc Verify [10, 10, 10, 10] index < 2 on 4 elements returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1976,11 +1976,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [10,10,10,10] index >= 2 on 4 elements returns false
+     * Verify [10, 10, 10, 10] index >= 2 on 4 elements returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1020
      * @tc.name testUint8ArrayEvery102
-     * @tc.desc Verify [10,10,10,10] index >= 2 on 4 elements returns false
+     * @tc.desc Verify [10, 10, 10, 10] index >= 2 on 4 elements returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1994,11 +1994,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [5,5,5,5,5] all index in [0,5) range returns true
+     * Verify [5, 5, 5, 5, 5] all index in [0, 5) range returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1030
      * @tc.name testUint8ArrayEvery103
-     * @tc.desc Verify [5,5,5,5,5] all index in [0,5) range returns true
+     * @tc.desc Verify [5, 5, 5, 5, 5] all index in [0, 5) range returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -2012,11 +2012,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [5,5,5,5,5] index < 4 fails at index 4 returns false
+     * Verify [5, 5, 5, 5, 5] index < 4 fails at index 4 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1040
      * @tc.name testUint8ArrayEvery104
-     * @tc.desc Verify [5,5,5,5,5] index < 4 fails at index 4 returns false
+     * @tc.desc Verify [5, 5, 5, 5, 5] index < 4 fails at index 4 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -2030,11 +2030,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [0,127] even condition fails at 127 returns false
+     * Verify [0, 127] even condition fails at 127 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1050
      * @tc.name testUint8ArrayEvery105
-     * @tc.desc Verify [0,127] even condition fails at 127 returns false
+     * @tc.desc Verify [0, 127] even condition fails at 127 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -2048,11 +2048,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,2,3,4,5] predicate v === i + 1 all match returns true
+     * Verify [1, 2, 3, 4, 5] predicate v === i + 1 all match returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1060
      * @tc.name testUint8ArrayEvery106
-     * @tc.desc Verify [1,2,3,4,5] predicate v === i + 1 all match returns true
+     * @tc.desc Verify [1, 2, 3, 4, 5] predicate v === i + 1 all match returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -2066,11 +2066,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,2,3,4,5] predicate v === i fails at index 0 returns false
+     * Verify [1, 2, 3, 4, 5] predicate v === i fails at index 0 returns false
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1070
      * @tc.name testUint8ArrayEvery107
-     * @tc.desc Verify [1,2,3,4,5] predicate v === i fails at index 0 returns false
+     * @tc.desc Verify [1, 2, 3, 4, 5] predicate v === i fails at index 0 returns false
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -2084,11 +2084,11 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
 
     /**
-     * Verify [1,2,3,4,5] predicate v > i all match returns true
+     * Verify [1, 2, 3, 4, 5] predicate v > i all match returns true
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1080
      * @tc.name testUint8ArrayEvery108
-     * @tc.desc Verify [1,2,3,4,5] predicate v > i all match returns true
+     * @tc.desc Verify [1, 2, 3, 4, 5] predicate v > i all match returns true
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

@@ -98,7 +98,7 @@ public class Uint8ArrayEntriesTest extends BasTest {
     void testUint8ArrayEntries004() {
     Uint8Array arr = Uint8Array.of(1, 2);
     Uint8Array.EntriesIterator iter = arr.entries();
-    Uint8Array.EntriesIterator same = iter.$_iterator();
+    Uint8Array.EntriesIterator same = iter.iteratorSymbol();
     assertEqual(iter, same);
     }
 

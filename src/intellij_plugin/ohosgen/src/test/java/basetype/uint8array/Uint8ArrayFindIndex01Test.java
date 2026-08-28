@@ -738,11 +738,11 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     }
 
     /**
-     * Verify two elements [0,255] find 0
+     * Verify two elements [0, 255] find 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX01_4000
      * @tc.name testUint8ArrayFindIndex040
-     * @tc.desc Verify two elements [0,255] find 0
+     * @tc.desc Verify two elements [0, 255] find 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -756,11 +756,11 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     }
 
     /**
-     * Verify two elements [0,255] find 255
+     * Verify two elements [0, 255] find 255
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX01_4100
      * @tc.name testUint8ArrayFindIndex041
-     * @tc.desc Verify two elements [0,255] find 255
+     * @tc.desc Verify two elements [0, 255] find 255
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -774,11 +774,11 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     }
 
     /**
-     * Verify two elements [0,255] find > 0
+     * Verify two elements [0, 255] find > 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_INDEX01_4200
      * @tc.name testUint8ArrayFindIndex042
-     * @tc.desc Verify two elements [0,255] find > 0
+     * @tc.desc Verify two elements [0, 255] find > 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1026,7 +1026,7 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     @Test
     void testUint8ArrayFindIndex055() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    int result = arr.findIndex((v) -> v == 1.0);
+    int result = arr.findIndex((v) -> Double.compare(v, 1.0) == 0);
     assertEqual(0, result);
     }
 
@@ -1323,7 +1323,7 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     @Test
     void testUint8ArrayFindIndex070() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    int result = arr.findIndex((v) -> v == Double.MAX_VALUE);
+    int result = arr.findIndex((v) -> Double.compare(v, Double.MAX_VALUE) == 0);
     assertEqual(-1, result);
     }
 
@@ -1341,7 +1341,7 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     @Test
     void testUint8ArrayFindIndex071() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    int result = arr.findIndex((v) -> v == Double.MIN_VALUE);
+    int result = arr.findIndex((v) -> Double.compare(v, Double.MIN_VALUE) == 0);
     assertEqual(-1, result);
     }
 
@@ -1359,7 +1359,7 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     @Test
     void testUint8ArrayFindIndex072() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
-    int result = arr.findIndex((v) -> v == Double.NaN);
+    int result = arr.findIndex((v) -> Double.isNaN(v));
     assertEqual(-1, result);
     }
 

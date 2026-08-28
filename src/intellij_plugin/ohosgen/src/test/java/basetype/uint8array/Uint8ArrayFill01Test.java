@@ -1130,11 +1130,11 @@ public class Uint8ArrayFill01Test extends BasTest {
     }
 
     /**
-     * Verify fill with end=3 fills [0,3) interval
+     * Verify fill with end=3 fills [0, 3) interval
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILL01_0620
      * @tc.name testUint8ArrayFill062
-     * @tc.desc Verify fill with end=3 fills [0,3) interval
+     * @tc.desc Verify fill with end=3 fills [0, 3) interval
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1256,11 +1256,11 @@ public class Uint8ArrayFill01Test extends BasTest {
     }
 
     /**
-     * Verify fill with end=-1 (equivalent to index 4) fills [0,4) interval
+     * Verify fill with end=-1 (equivalent to index 4) fills [0, 4) interval
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILL01_0690
      * @tc.name testUint8ArrayFill069
-     * @tc.desc Verify fill with end=-1 (equivalent to index 4) fills [0,4) interval
+     * @tc.desc Verify fill with end=-1 (equivalent to index 4) fills [0, 4) interval
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1292,11 +1292,11 @@ public class Uint8ArrayFill01Test extends BasTest {
     }
 
     /**
-     * Verify fill with end=-2 (equivalent to index 3) fills [0,3) interval
+     * Verify fill with end=-2 (equivalent to index 3) fills [0, 3) interval
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILL01_0710
      * @tc.name testUint8ArrayFill071
-     * @tc.desc Verify fill with end=-2 (equivalent to index 3) fills [0,3) interval
+     * @tc.desc Verify fill with end=-2 (equivalent to index 3) fills [0, 3) interval
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1310,11 +1310,11 @@ public class Uint8ArrayFill01Test extends BasTest {
     }
 
     /**
-     * Verify fill with end=-5 (equivalent to index 0) fills [0,0) interval (no elements)
+     * Verify fill with end=-5 (equivalent to index 0) fills [0, 0) interval (no elements)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILL01_0720
      * @tc.name testUint8ArrayFill072
-     * @tc.desc Verify fill with end=-5 (equivalent to index 0) fills [0,0) interval (no elements)
+     * @tc.desc Verify fill with end=-5 (equivalent to index 0) fills [0, 0) interval (no elements)
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1454,11 +1454,11 @@ public class Uint8ArrayFill01Test extends BasTest {
     }
 
     /**
-     * Verify fill with start=1, end=-1 fills elements [1,4) since end=-1 resolves to 4
+     * Verify fill with start=1, end=-1 fills elements [1, 4) since end=-1 resolves to 4
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILL01_0800
      * @tc.name testUint8ArrayFill080
-     * @tc.desc Verify fill with start=1, end=-1 fills elements [1,4) since end=-1 resolves to 4
+     * @tc.desc Verify fill with start=1, end=-1 fills elements [1, 4) since end=-1 resolves to 4
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1472,11 +1472,11 @@ public class Uint8ArrayFill01Test extends BasTest {
     }
 
     /**
-     * Verify fill with start=0, end=-1 fills elements [0,4) since end=-1 resolves to 4
+     * Verify fill with start=0, end=-1 fills elements [0, 4) since end=-1 resolves to 4
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILL01_0810
      * @tc.name testUint8ArrayFill081
-     * @tc.desc Verify fill with start=0, end=-1 fills elements [0,4) since end=-1 resolves to 4
+     * @tc.desc Verify fill with start=0, end=-1 fills elements [0, 4) since end=-1 resolves to 4
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1940,11 +1940,11 @@ public class Uint8ArrayFill01Test extends BasTest {
     }
 
     /**
-     * Verify fill on non-zero array with partial range [1,4)
+     * Verify fill on non-zero array with partial range [1, 4)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILL01_1070
      * @tc.name testUint8ArrayFill107
-     * @tc.desc Verify fill on non-zero array with partial range [1,4)
+     * @tc.desc Verify fill on non-zero array with partial range [1, 4)
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

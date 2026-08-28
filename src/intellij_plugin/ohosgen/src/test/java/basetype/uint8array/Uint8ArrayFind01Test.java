@@ -20,11 +20,7 @@ import basetype.common.BasTest;
 import basetype.common.Uint8Array;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -68,7 +64,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     void testUint8ArrayFind002() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array.Uint8ArrayFinder cb = (v, i, a) -> v == 30;
-    Integer result = arr.find( cb);
+    Integer result = arr.find(cb);
     assertEqual(30, result);
     }
 

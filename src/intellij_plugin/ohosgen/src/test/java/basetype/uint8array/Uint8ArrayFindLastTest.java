@@ -17,31 +17,12 @@ package basetype.uint8array;
 
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
 import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
 import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
 import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.ClassCastError;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -51,11 +32,11 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayFindLastTest extends BasTest {
     /**
-     * Verify findLast matches last element 5 in [1,2,3,4,5]
+     * Verify findLast matches last element 5 in [1, 2, 3, 4, 5]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_0100
      * @tc.name testUint8ArrayFindLast001
-     * @tc.desc Verify findLast matches last element 5 in [1,2,3,4,5]
+     * @tc.desc Verify findLast matches last element 5 in [1, 2, 3, 4, 5]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1408,11 +1389,11 @@ public class Uint8ArrayFindLastTest extends BasTest {
     }
 
     /**
-     * Verify findLast v===5 in [5,5,5,3,5] returns value 5 at last matching index 4
+     * Verify findLast v===5 in [5, 5, 5, 3, 5] returns value 5 at last matching index 4
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6700
      * @tc.name testUint8ArrayFindLast067
-     * @tc.desc Verify findLast v===5 in [5,5,5,3,5] returns value 5 at last matching index 4
+     * @tc.desc Verify findLast v===5 in [5, 5, 5, 3, 5] returns value 5 at last matching index 4
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1428,11 +1409,11 @@ public class Uint8ArrayFindLastTest extends BasTest {
     }
 
     /**
-     * Verify findLast v===3 in [5,5,5,3,5] returns 3
+     * Verify findLast v===3 in [5, 5, 5, 3, 5] returns 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6800
      * @tc.name testUint8ArrayFindLast068
-     * @tc.desc Verify findLast v===3 in [5,5,5,3,5] returns 3
+     * @tc.desc Verify findLast v===3 in [5, 5, 5, 3, 5] returns 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1448,11 +1429,11 @@ public class Uint8ArrayFindLastTest extends BasTest {
     }
 
     /**
-     * Verify findLast v===1 in [1,1,1,1,2] returns value 1 at last matching index 3
+     * Verify findLast v===1 in [1, 1, 1, 1, 2] returns value 1 at last matching index 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_6900
      * @tc.name testUint8ArrayFindLast069
-     * @tc.desc Verify findLast v===1 in [1,1,1,1,2] returns value 1 at last matching index 3
+     * @tc.desc Verify findLast v===1 in [1, 1, 1, 1, 2] returns value 1 at last matching index 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1508,11 +1489,11 @@ public class Uint8ArrayFindLastTest extends BasTest {
     }
 
     /**
-     * Verify findLast v===1 in [0,0,0,1,0] returns 1
+     * Verify findLast v===1 in [0, 0, 0, 1, 0] returns 1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7200
      * @tc.name testUint8ArrayFindLast072
-     * @tc.desc Verify findLast v===1 in [0,0,0,1,0] returns 1
+     * @tc.desc Verify findLast v===1 in [0, 0, 0, 1, 0] returns 1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1528,11 +1509,11 @@ public class Uint8ArrayFindLastTest extends BasTest {
     }
 
     /**
-     * Verify findLast v===1 in [0,1,0,1,0] returns last occurrence
+     * Verify findLast v===1 in [0, 1, 0, 1, 0] returns last occurrence
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7300
      * @tc.name testUint8ArrayFindLast073
-     * @tc.desc Verify findLast v===1 in [0,1,0,1,0] returns last occurrence
+     * @tc.desc Verify findLast v===1 in [0, 1, 0, 1, 0] returns last occurrence
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1548,11 +1529,11 @@ public class Uint8ArrayFindLastTest extends BasTest {
     }
 
     /**
-     * Verify findLast v===1 in [1,0,1,0,1] returns last occurrence
+     * Verify findLast v===1 in [1, 0, 1, 0, 1] returns last occurrence
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_7400
      * @tc.name testUint8ArrayFindLast074
-     * @tc.desc Verify findLast v===1 in [1,0,1,0,1] returns last occurrence
+     * @tc.desc Verify findLast v===1 in [1, 0, 1, 0, 1] returns last occurrence
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

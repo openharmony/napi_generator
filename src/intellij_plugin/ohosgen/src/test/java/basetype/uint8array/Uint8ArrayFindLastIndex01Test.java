@@ -15,25 +15,8 @@
 
 package basetype.uint8array;
 
-import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
-import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
 import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 import basetype.common.ClassCastError;
 
 import org.junit.jupiter.api.Test;
@@ -1209,11 +1192,11 @@ public class Uint8ArrayFindLastIndex01Test extends BasTest {
     }
 
     /**
-     * Verify findLastIndex on [1,2,3,4,5] with value > 3
+     * Verify findLastIndex on [1, 2, 3, 4, 5] with value > 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX01_6300
      * @tc.name testUint8ArrayFindLastIndex063
-     * @tc.desc Verify findLastIndex on [1,2,3,4,5] with value > 3
+     * @tc.desc Verify findLastIndex on [1, 2, 3, 4, 5] with value > 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1227,11 +1210,11 @@ public class Uint8ArrayFindLastIndex01Test extends BasTest {
     }
 
     /**
-     * Verify findLastIndex on [1,2,3,4,5] with value > 4
+     * Verify findLastIndex on [1, 2, 3, 4, 5] with value > 4
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX01_6400
      * @tc.name testUint8ArrayFindLastIndex064
-     * @tc.desc Verify findLastIndex on [1,2,3,4,5] with value > 4
+     * @tc.desc Verify findLastIndex on [1, 2, 3, 4, 5] with value > 4
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1263,11 +1246,11 @@ public class Uint8ArrayFindLastIndex01Test extends BasTest {
     }
 
     /**
-     * Verify findLastIndex on [10,20,10,20,10] finds last index of value 10 (index 4)
+     * Verify findLastIndex on [10, 20, 10, 20, 10] finds last index of value 10 (index 4)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX01_6600
      * @tc.name testUint8ArrayFindLastIndex066
-     * @tc.desc Verify findLastIndex on [10,20,10,20,10] finds last index of value 10 (index 4)
+     * @tc.desc Verify findLastIndex on [10, 20, 10, 20, 10] finds last index of value 10 (index 4)
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1281,11 +1264,11 @@ public class Uint8ArrayFindLastIndex01Test extends BasTest {
     }
 
     /**
-     * Verify findLastIndex on [10,20,30,20,10] finds last index of value 20 (index 3)
+     * Verify findLastIndex on [10, 20, 30, 20, 10] finds last index of value 20 (index 3)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX01_6700
      * @tc.name testUint8ArrayFindLastIndex067
-     * @tc.desc Verify findLastIndex on [10,20,30,20,10] finds last index of value 20 (index 3)
+     * @tc.desc Verify findLastIndex on [10, 20, 30, 20, 10] finds last index of value 20 (index 3)
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1299,11 +1282,11 @@ public class Uint8ArrayFindLastIndex01Test extends BasTest {
     }
 
     /**
-     * Verify findLastIndex on [1,2,3,4,5] last even number is at index 3
+     * Verify findLastIndex on [1, 2, 3, 4, 5] last even number is at index 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND_LAST_INDEX01_6800
      * @tc.name testUint8ArrayFindLastIndex068
-     * @tc.desc Verify findLastIndex on [1,2,3,4,5] last even number is at index 3
+     * @tc.desc Verify findLastIndex on [1, 2, 3, 4, 5] last even number is at index 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

@@ -262,11 +262,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(0) returns first element 10
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(0) returns first element 10
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0120
      * @tc.name testUint8ArrayGet012
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(0) returns first element 10
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(0) returns first element 10
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -279,11 +279,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(1) returns second element 20
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(1) returns second element 20
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0130
      * @tc.name testUint8ArrayGet013
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(1) returns second element 20
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(1) returns second element 20
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -296,11 +296,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(3) returns element 40
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(3) returns element 40
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0140
      * @tc.name testUint8ArrayGet014
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(3) returns element 40
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(3) returns element 40
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -313,11 +313,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(4) returns last element 50
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(4) returns last element 50
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0150
      * @tc.name testUint8ArrayGet015
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(4) returns last element 50
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(4) returns last element 50
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -330,11 +330,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(5) exactly out of bounds throws RangeError
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(5) exactly out of bounds throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0160
      * @tc.name testUint8ArrayGet016
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(5) exactly out of bounds throws RangeError
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(5) exactly out of bounds throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -352,11 +352,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(6) out of bounds throws RangeError
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(6) out of bounds throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0170
      * @tc.name testUint8ArrayGet017
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(6) out of bounds throws RangeError
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(6) out of bounds throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -374,11 +374,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(-1) negative index throws RangeError
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(-1) negative index throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0180
      * @tc.name testUint8ArrayGet018
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(-1) negative index throws RangeError
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(-1) negative index throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -396,11 +396,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(-5) negative index absolute v
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(-5) negative index absolute v
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0190
      * @tc.name testUint8ArrayGet019
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(-5) negative index absolute v
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(-5) negative index absolute v
      * alue equals length throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
@@ -419,11 +419,12 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(-6) negative index exceeds length throws RangeError
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(-6) negative index exceeds length throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0200
      * @tc.name testUint8ArrayGet020
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(-6) negative index exceeds length throws RangeError
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(-6) negative index exceed
+     * s length throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -441,11 +442,12 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(100) large positive out of bounds throws RangeError
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(100) large positive out of bounds throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0210
      * @tc.name testUint8ArrayGet021
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(100) large positive out of bounds throws RangeError
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(100) large positive out o
+     * f bounds throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -463,11 +465,12 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify multi-element array of(10,20,30,40,50) get(-100) large negative out of bounds throws RangeError
+     * Verify multi-element array of(10, 20, 30, 40, 50) get(-100) large negative out of bounds throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0220
      * @tc.name testUint8ArrayGet022
-     * @tc.desc Verify multi-element array of(10,20,30,40,50) get(-100) large negative out of bounds throws RangeError
+     * @tc.desc Verify multi-element array of(10, 20, 30, 40, 50) get(-100) large negative out
+     * of bounds throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -485,11 +488,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify boundary value array of(0,255,127,128) get(0) returns minimum value 0
+     * Verify boundary value array of(0, 255, 127, 128) get(0) returns minimum value 0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0230
      * @tc.name testUint8ArrayGet023
-     * @tc.desc Verify boundary value array of(0,255,127,128) get(0) returns minimum value 0
+     * @tc.desc Verify boundary value array of(0, 255, 127, 128) get(0) returns minimum value 0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -502,11 +505,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify boundary value array of(0,255,127,128) get(1) returns maximum value 255
+     * Verify boundary value array of(0, 255, 127, 128) get(1) returns maximum value 255
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0240
      * @tc.name testUint8ArrayGet024
-     * @tc.desc Verify boundary value array of(0,255,127,128) get(1) returns maximum value 255
+     * @tc.desc Verify boundary value array of(0, 255, 127, 128) get(1) returns maximum value 255
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -519,11 +522,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify boundary value array of(0,255,127,128) get(2) returns middle value 127
+     * Verify boundary value array of(0, 255, 127, 128) get(2) returns middle value 127
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0250
      * @tc.name testUint8ArrayGet025
-     * @tc.desc Verify boundary value array of(0,255,127,128) get(2) returns middle value 127
+     * @tc.desc Verify boundary value array of(0, 255, 127, 128) get(2) returns middle value 127
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -536,11 +539,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify boundary value array of(0,255,127,128) get(3) returns middle value plus one 128
+     * Verify boundary value array of(0, 255, 127, 128) get(3) returns middle value plus one 128
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0260
      * @tc.name testUint8ArrayGet026
-     * @tc.desc Verify boundary value array of(0,255,127,128) get(3) returns middle value plus one 128
+     * @tc.desc Verify boundary value array of(0, 255, 127, 128) get(3) returns middle value plus one 128
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -553,11 +556,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify boundary value array of(0,255,127,128) get(4) out of bounds throws RangeError
+     * Verify boundary value array of(0, 255, 127, 128) get(4) out of bounds throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0270
      * @tc.name testUint8ArrayGet027
-     * @tc.desc Verify boundary value array of(0,255,127,128) get(4) out of bounds throws RangeError
+     * @tc.desc Verify boundary value array of(0, 255, 127, 128) get(4) out of bounds throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -575,11 +578,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify all same elements array of(7,7,7) get(0) returns 7
+     * Verify all same elements array of(7, 7, 7) get(0) returns 7
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0280
      * @tc.name testUint8ArrayGet028
-     * @tc.desc Verify all same elements array of(7,7,7) get(0) returns 7
+     * @tc.desc Verify all same elements array of(7, 7, 7) get(0) returns 7
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -592,11 +595,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify all same elements array of(7,7,7) get(1) returns 7
+     * Verify all same elements array of(7, 7, 7) get(1) returns 7
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0290
      * @tc.name testUint8ArrayGet029
-     * @tc.desc Verify all same elements array of(7,7,7) get(1) returns 7
+     * @tc.desc Verify all same elements array of(7, 7, 7) get(1) returns 7
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -609,11 +612,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify all same elements array of(7,7,7) get(2) returns 7
+     * Verify all same elements array of(7, 7, 7) get(2) returns 7
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0300
      * @tc.name testUint8ArrayGet030
-     * @tc.desc Verify all same elements array of(7,7,7) get(2) returns 7
+     * @tc.desc Verify all same elements array of(7, 7, 7) get(2) returns 7
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -626,11 +629,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify all same elements array of(7,7,7) get(3) out of bounds throws RangeError
+     * Verify all same elements array of(7, 7, 7) get(3) out of bounds throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0310
      * @tc.name testUint8ArrayGet031
-     * @tc.desc Verify all same elements array of(7,7,7) get(3) out of bounds throws RangeError
+     * @tc.desc Verify all same elements array of(7, 7, 7) get(3) out of bounds throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -877,11 +880,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify different construction method of(1,2,3) get(0) returns first element 1
+     * Verify different construction method of(1, 2, 3) get(0) returns first element 1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0440
      * @tc.name testUint8ArrayGet044
-     * @tc.desc Verify different construction method of(1,2,3) get(0) returns first element 1
+     * @tc.desc Verify different construction method of(1, 2, 3) get(0) returns first element 1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -894,11 +897,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify different construction method of(1,2,3) get(1) returns middle element 2
+     * Verify different construction method of(1, 2, 3) get(1) returns middle element 2
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0450
      * @tc.name testUint8ArrayGet045
-     * @tc.desc Verify different construction method of(1,2,3) get(1) returns middle element 2
+     * @tc.desc Verify different construction method of(1, 2, 3) get(1) returns middle element 2
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -911,11 +914,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify different construction method of(1,2,3) get(2) returns last element 3
+     * Verify different construction method of(1, 2, 3) get(2) returns last element 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0460
      * @tc.name testUint8ArrayGet046
-     * @tc.desc Verify different construction method of(1,2,3) get(2) returns last element 3
+     * @tc.desc Verify different construction method of(1, 2, 3) get(2) returns last element 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -928,11 +931,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify different construction method from([1,2,3]) get(0) returns first element 1
+     * Verify different construction method from([1, 2, 3]) get(0) returns first element 1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0470
      * @tc.name testUint8ArrayGet047
-     * @tc.desc Verify different construction method from([1,2,3]) get(0) returns first element 1
+     * @tc.desc Verify different construction method from([1, 2, 3]) get(0) returns first element 1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -945,11 +948,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify different construction method from([1,2,3]) get(1) returns middle element 2
+     * Verify different construction method from([1, 2, 3]) get(1) returns middle element 2
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0480
      * @tc.name testUint8ArrayGet048
-     * @tc.desc Verify different construction method from([1,2,3]) get(1) returns middle element 2
+     * @tc.desc Verify different construction method from([1, 2, 3]) get(1) returns middle element 2
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -962,11 +965,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify different construction method from([1,2,3]) get(2) returns last element 3
+     * Verify different construction method from([1, 2, 3]) get(2) returns last element 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0490
      * @tc.name testUint8ArrayGet049
-     * @tc.desc Verify different construction method from([1,2,3]) get(2) returns last element 3
+     * @tc.desc Verify different construction method from([1, 2, 3]) get(2) returns last element 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -979,11 +982,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify different construction method from([1,2,3]) get(3) out of bounds throws RangeError
+     * Verify different construction method from([1, 2, 3]) get(3) out of bounds throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0500
      * @tc.name testUint8ArrayGet050
-     * @tc.desc Verify different construction method from([1,2,3]) get(3) out of bounds throws RangeError
+     * @tc.desc Verify different construction method from([1, 2, 3]) get(3) out of bounds throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1001,11 +1004,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify copy construction from(of(1,2,3)) get(0) returns 1
+     * Verify copy construction from(of(1, 2, 3)) get(0) returns 1
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0510
      * @tc.name testUint8ArrayGet051
-     * @tc.desc Verify copy construction from(of(1,2,3)) get(0) returns 1
+     * @tc.desc Verify copy construction from(of(1, 2, 3)) get(0) returns 1
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1019,11 +1022,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify copy construction from(of(1,2,3)) get(2) returns 3
+     * Verify copy construction from(of(1, 2, 3)) get(2) returns 3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0520
      * @tc.name testUint8ArrayGet052
-     * @tc.desc Verify copy construction from(of(1,2,3)) get(2) returns 3
+     * @tc.desc Verify copy construction from(of(1, 2, 3)) get(2) returns 3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1037,11 +1040,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify copy construction from(of(1,2,3)) get(3) out of bounds throws RangeError
+     * Verify copy construction from(of(1, 2, 3)) get(3) out of bounds throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0530
      * @tc.name testUint8ArrayGet053
-     * @tc.desc Verify copy construction from(of(1,2,3)) get(3) out of bounds throws RangeError
+     * @tc.desc Verify copy construction from(of(1, 2, 3)) get(3) out of bounds throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1060,11 +1063,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify FixedArray construction [10,20,30] get(0) returns 10
+     * Verify FixedArray construction [10, 20, 30] get(0) returns 10
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0540
      * @tc.name testUint8ArrayGet054
-     * @tc.desc Verify FixedArray construction [10,20,30] get(0) returns 10
+     * @tc.desc Verify FixedArray construction [10, 20, 30] get(0) returns 10
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1078,11 +1081,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify FixedArray construction [10,20,30] get(2) returns 30
+     * Verify FixedArray construction [10, 20, 30] get(2) returns 30
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0550
      * @tc.name testUint8ArrayGet055
-     * @tc.desc Verify FixedArray construction [10,20,30] get(2) returns 30
+     * @tc.desc Verify FixedArray construction [10, 20, 30] get(2) returns 30
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1096,11 +1099,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify FixedArray construction [10,20,30] get(3) out of bounds throws RangeError
+     * Verify FixedArray construction [10, 20, 30] get(3) out of bounds throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0560
      * @tc.name testUint8ArrayGet056
-     * @tc.desc Verify FixedArray construction [10,20,30] get(3) out of bounds throws RangeError
+     * @tc.desc Verify FixedArray construction [10, 20, 30] get(3) out of bounds throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1264,11 +1267,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify super large array out of bounds of(1,2,3) get(1000000) throws RangeError
+     * Verify super large array out of bounds of(1, 2, 3) get(1000000) throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0650
      * @tc.name testUint8ArrayGet065
-     * @tc.desc Verify super large array out of bounds of(1,2,3) get(1000000) throws RangeError
+     * @tc.desc Verify super large array out of bounds of(1, 2, 3) get(1000000) throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1286,11 +1289,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify super large array out of bounds of(1,2,3) get(-1000000) throws RangeError
+     * Verify super large array out of bounds of(1, 2, 3) get(-1000000) throws RangeError
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0660
      * @tc.name testUint8ArrayGet066
-     * @tc.desc Verify super large array out of bounds of(1,2,3) get(-1000000) throws RangeError
+     * @tc.desc Verify super large array out of bounds of(1, 2, 3) get(-1000000) throws RangeError
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1441,11 +1444,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify return value assertion of(1,50,100,150,200,250) get(5) returns last element 250
+     * Verify return value assertion of(1, 50, 100, 150, 200, 250) get(5) returns last element 250
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0740
      * @tc.name testUint8ArrayGet074
-     * @tc.desc Verify return value assertion of(1,50,100,150,200,250) get(5) returns last element 250
+     * @tc.desc Verify return value assertion of(1, 50, 100, 150, 200, 250) get(5) returns last element 250
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1458,11 +1461,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify return value assertion of(1,50,100,150,200,250) get(3) returns 150
+     * Verify return value assertion of(1, 50, 100, 150, 200, 250) get(3) returns 150
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0750
      * @tc.name testUint8ArrayGet075
-     * @tc.desc Verify return value assertion of(1,50,100,150,200,250) get(3) returns 150
+     * @tc.desc Verify return value assertion of(1, 50, 100, 150, 200, 250) get(3) returns 150
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1475,11 +1478,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify return value assertion of(1,50,100,150,200,250) get(1) returns 50
+     * Verify return value assertion of(1, 50, 100, 150, 200, 250) get(1) returns 50
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0760
      * @tc.name testUint8ArrayGet076
-     * @tc.desc Verify return value assertion of(1,50,100,150,200,250) get(1) returns 50
+     * @tc.desc Verify return value assertion of(1, 50, 100, 150, 200, 250) get(1) returns 50
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1587,11 +1590,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify (4) boundary out of bounds throws RangeError on Uint8Array(1,2,3,4)
+     * Verify (4) boundary out of bounds throws RangeError on Uint8Array(1, 2, 3, 4)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0820
      * @tc.name testUint8ArrayGet082
-     * @tc.desc Verify (4) boundary out of bounds throws RangeError on Uint8Array(1,2,3,4)
+     * @tc.desc Verify (4) boundary out of bounds throws RangeError on Uint8Array(1, 2, 3, 4)
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1609,11 +1612,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify (-1) negative index throws RangeError on Uint8Array(1,2,3,4)
+     * Verify (-1) negative index throws RangeError on Uint8Array(1, 2, 3, 4)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0830
      * @tc.name testUint8ArrayGet083
-     * @tc.desc Verify (-1) negative index throws RangeError on Uint8Array(1,2,3,4)
+     * @tc.desc Verify (-1) negative index throws RangeError on Uint8Array(1, 2, 3, 4)
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1631,11 +1634,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify (-4) negative value equals length throws RangeError on Uint8Array(1,2,3,4)
+     * Verify (-4) negative value equals length throws RangeError on Uint8Array(1, 2, 3, 4)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0840
      * @tc.name testUint8ArrayGet084
-     * @tc.desc Verify (-4) negative value equals length throws RangeError on Uint8Array(1,2,3,4)
+     * @tc.desc Verify (-4) negative value equals length throws RangeError on Uint8Array(1, 2, 3, 4)
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1653,11 +1656,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify (-5) negative value exceeds length throws RangeError on Uint8Array(1,2,3,4)
+     * Verify (-5) negative value exceeds length throws RangeError on Uint8Array(1, 2, 3, 4)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0850
      * @tc.name testUint8ArrayGet085
-     * @tc.desc Verify (-5) negative value exceeds length throws RangeError on Uint8Array(1,2,3,4)
+     * @tc.desc Verify (-5) negative value exceeds length throws RangeError on Uint8Array(1, 2, 3, 4)
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1675,11 +1678,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify (10) positive out of bounds throws RangeError on Uint8Array(1,2,3,4)
+     * Verify (10) positive out of bounds throws RangeError on Uint8Array(1, 2, 3, 4)
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0860
      * @tc.name testUint8ArrayGet086
-     * @tc.desc Verify (10) positive out of bounds throws RangeError on Uint8Array(1,2,3,4)
+     * @tc.desc Verify (10) positive out of bounds throws RangeError on Uint8Array(1, 2, 3, 4)
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1781,11 +1784,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify error handling boundary of(100,200) get(2) exactly exceeds length
+     * Verify error handling boundary of(100, 200) get(2) exactly exceeds length
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0910
      * @tc.name testUint8ArrayGet091
-     * @tc.desc Verify error handling boundary of(100,200) get(2) exactly exceeds length
+     * @tc.desc Verify error handling boundary of(100, 200) get(2) exactly exceeds length
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -1803,11 +1806,11 @@ public class Uint8ArrayGetTest extends BasTest {
     }
 
     /**
-     * Verify error handling boundary of(100,200) get(-3) negative value exceeds length absolute value
+     * Verify error handling boundary of(100, 200) get(-3) negative value exceeds length absolute value
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_GET_0920
      * @tc.name testUint8ArrayGet092
-     * @tc.desc Verify error handling boundary of(100,200) get(-3) negative value exceeds length absolute value
+     * @tc.desc Verify error handling boundary of(100, 200) get(-3) negative value exceeds length absolute value
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

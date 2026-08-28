@@ -33,16 +33,6 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayFrom02Test extends BasTest {
     /**
-     * Verify from(Set<int>) with 1 parameter normal call
-     *
-     * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM02_0100
-     * @tc.name testUint8ArrayFrom001
-     * @tc.desc Verify from(Set<int>) with 1 parameter normal call
-     * @tc.type Function
-     * @tc.size MediumTest
-     * @tc.level LEVEL2
-     */
-    /**
      * Verify from(Array<number>) with 1 parameter normal call
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM02_0200

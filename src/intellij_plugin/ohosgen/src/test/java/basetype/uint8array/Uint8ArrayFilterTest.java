@@ -45,11 +45,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify filter with value greater than 3 returns [4,5]
+     * Verify filter with value greater than 3 returns [4, 5]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0020
      * @tc.name testUint8ArrayFilter002
-     * @tc.desc Verify filter with value greater than 3 returns [4,5]
+     * @tc.desc Verify filter with value greater than 3 returns [4, 5]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -101,11 +101,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify filter with value greater than or equal to 128 returns [128,255]
+     * Verify filter with value greater than or equal to 128 returns [128, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0050
      * @tc.name testUint8ArrayFilter005
-     * @tc.desc Verify filter with value greater than or equal to 128 returns [128,255]
+     * @tc.desc Verify filter with value greater than or equal to 128 returns [128, 255]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -121,11 +121,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify filter with value less than 128 returns [0,127]
+     * Verify filter with value less than 128 returns [0, 127]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0060
      * @tc.name testUint8ArrayFilter006
-     * @tc.desc Verify filter with value less than 128 returns [0,127]
+     * @tc.desc Verify filter with value less than 128 returns [0, 127]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -253,11 +253,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify all-zero array [0,0,0] filter equal to 0 returns all
+     * Verify all-zero array [0, 0, 0] filter equal to 0 returns all
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0130
      * @tc.name testUint8ArrayFilter013
-     * @tc.desc Verify all-zero array [0,0,0] filter equal to 0 returns all
+     * @tc.desc Verify all-zero array [0, 0, 0] filter equal to 0 returns all
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -271,11 +271,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify all-zero array [0,0,0] filter not equal to 0 returns empty
+     * Verify all-zero array [0, 0, 0] filter not equal to 0 returns empty
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0140
      * @tc.name testUint8ArrayFilter014
-     * @tc.desc Verify all-zero array [0,0,0] filter not equal to 0 returns empty
+     * @tc.desc Verify all-zero array [0, 0, 0] filter not equal to 0 returns empty
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -289,11 +289,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify duplicate array [100,200,100,200] filter equal to 100
+     * Verify duplicate array [100, 200, 100, 200] filter equal to 100
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0150
      * @tc.name testUint8ArrayFilter015
-     * @tc.desc Verify duplicate array [100,200,100,200] filter equal to 100
+     * @tc.desc Verify duplicate array [100, 200, 100, 200] filter equal to 100
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -309,11 +309,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify duplicate array [100,200,100,200] filter equal to 200
+     * Verify duplicate array [100, 200, 100, 200] filter equal to 200
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0160
      * @tc.name testUint8ArrayFilter016
-     * @tc.desc Verify duplicate array [100,200,100,200] filter equal to 200
+     * @tc.desc Verify duplicate array [100, 200, 100, 200] filter equal to 200
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -329,11 +329,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array [0,1,254,255] filter > 254 returns [255]
+     * Verify boundary array [0, 1, 254, 255] filter > 254 returns [255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0170
      * @tc.name testUint8ArrayFilter017
-     * @tc.desc Verify boundary array [0,1,254,255] filter > 254 returns [255]
+     * @tc.desc Verify boundary array [0, 1, 254, 255] filter > 254 returns [255]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -348,11 +348,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array [0,1,254,255] filter < 1 returns [0]
+     * Verify boundary array [0, 1, 254, 255] filter < 1 returns [0]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0180
      * @tc.name testUint8ArrayFilter018
-     * @tc.desc Verify boundary array [0,1,254,255] filter < 1 returns [0]
+     * @tc.desc Verify boundary array [0, 1, 254, 255] filter < 1 returns [0]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -367,11 +367,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter >= 254 returns [254,255]
+     * Verify boundary array filter >= 254 returns [254, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0190
      * @tc.name testUint8ArrayFilter019
-     * @tc.desc Verify boundary array filter >= 254 returns [254,255]
+     * @tc.desc Verify boundary array filter >= 254 returns [254, 255]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -387,11 +387,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter <= 1 returns [0,1]
+     * Verify boundary array filter <= 1 returns [0, 1]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0200
      * @tc.name testUint8ArrayFilter020
-     * @tc.desc Verify boundary array filter <= 1 returns [0,1]
+     * @tc.desc Verify boundary array filter <= 1 returns [0, 1]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -407,11 +407,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter not equal 0 returns [1,254,255]
+     * Verify boundary array filter not equal 0 returns [1, 254, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0210
      * @tc.name testUint8ArrayFilter021
-     * @tc.desc Verify boundary array filter not equal 0 returns [1,254,255]
+     * @tc.desc Verify boundary array filter not equal 0 returns [1, 254, 255]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -428,11 +428,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter not equal 255 returns [0,1,254]
+     * Verify boundary array filter not equal 255 returns [0, 1, 254]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0220
      * @tc.name testUint8ArrayFilter022
-     * @tc.desc Verify boundary array filter not equal 255 returns [0,1,254]
+     * @tc.desc Verify boundary array filter not equal 255 returns [0, 1, 254]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -449,11 +449,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter > 127 returns [254,255]
+     * Verify boundary array filter > 127 returns [254, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0230
      * @tc.name testUint8ArrayFilter023
-     * @tc.desc Verify boundary array filter > 127 returns [254,255]
+     * @tc.desc Verify boundary array filter > 127 returns [254, 255]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -469,11 +469,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter < 128 returns [0,1]
+     * Verify boundary array filter < 128 returns [0, 1]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0240
      * @tc.name testUint8ArrayFilter024
-     * @tc.desc Verify boundary array filter < 128 returns [0,1]
+     * @tc.desc Verify boundary array filter < 128 returns [0, 1]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -489,11 +489,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter >= 128 returns [254,255]
+     * Verify boundary array filter >= 128 returns [254, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0250
      * @tc.name testUint8ArrayFilter025
-     * @tc.desc Verify boundary array filter >= 128 returns [254,255]
+     * @tc.desc Verify boundary array filter >= 128 returns [254, 255]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -509,11 +509,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter <= 127 returns [0,1]
+     * Verify boundary array filter <= 127 returns [0, 1]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0260
      * @tc.name testUint8ArrayFilter026
-     * @tc.desc Verify boundary array filter <= 127 returns [0,1]
+     * @tc.desc Verify boundary array filter <= 127 returns [0, 1]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -529,11 +529,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter > 0 returns [1,254,255]
+     * Verify boundary array filter > 0 returns [1, 254, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0270
      * @tc.name testUint8ArrayFilter027
-     * @tc.desc Verify boundary array filter > 0 returns [1,254,255]
+     * @tc.desc Verify boundary array filter > 0 returns [1, 254, 255]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -550,11 +550,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter < 255 returns [0,1,254]
+     * Verify boundary array filter < 255 returns [0, 1, 254]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0280
      * @tc.name testUint8ArrayFilter028
-     * @tc.desc Verify boundary array filter < 255 returns [0,1,254]
+     * @tc.desc Verify boundary array filter < 255 returns [0, 1, 254]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -681,11 +681,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter > 1 returns [254,255]
+     * Verify boundary array filter > 1 returns [254, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0350
      * @tc.name testUint8ArrayFilter035
-     * @tc.desc Verify boundary array filter > 1 returns [254,255]
+     * @tc.desc Verify boundary array filter > 1 returns [254, 255]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -701,11 +701,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter < 254 returns [0,1]
+     * Verify boundary array filter < 254 returns [0, 1]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0360
      * @tc.name testUint8ArrayFilter036
-     * @tc.desc Verify boundary array filter < 254 returns [0,1]
+     * @tc.desc Verify boundary array filter < 254 returns [0, 1]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -721,11 +721,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter >= 1 returns [1,254,255]
+     * Verify boundary array filter >= 1 returns [1, 254, 255]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0370
      * @tc.name testUint8ArrayFilter037
-     * @tc.desc Verify boundary array filter >= 1 returns [1,254,255]
+     * @tc.desc Verify boundary array filter >= 1 returns [1, 254, 255]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -742,11 +742,11 @@ public class Uint8ArrayFilterTest extends BasTest {
     }
 
     /**
-     * Verify boundary array filter <= 254 returns [0,1,254]
+     * Verify boundary array filter <= 254 returns [0, 1, 254]
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FILTER_0380
      * @tc.name testUint8ArrayFilter038
-     * @tc.desc Verify boundary array filter <= 254 returns [0,1,254]
+     * @tc.desc Verify boundary array filter <= 254 returns [0, 1, 254]
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

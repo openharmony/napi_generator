@@ -571,11 +571,11 @@ public class Uint8ArrayForEachTest extends BasTest {
     }
 
     /**
-     * Verify callbackfn receives multiple boundary values [0,255,127,128] in correct sequence
+     * Verify callbackfn receives multiple boundary values [0, 255, 127, 128] in correct sequence
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FOR_EACH_2600
      * @tc.name testUint8ArrayForEach026
-     * @tc.desc Verify callbackfn receives multiple boundary values [0,255,127,128] in correct sequence
+     * @tc.desc Verify callbackfn receives multiple boundary values [0, 255, 127, 128] in correct sequence
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

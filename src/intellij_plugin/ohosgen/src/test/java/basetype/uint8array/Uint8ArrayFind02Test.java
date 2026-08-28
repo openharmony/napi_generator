@@ -19,12 +19,7 @@ import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.Uint8Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -346,11 +341,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 32 from [32,64,96] matching v>=32
+     * Verify find returns 32 from [32, 64, 96] matching v>=32
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_1800
      * @tc.name testUint8ArrayFind018
-     * @tc.desc Verify find returns 32 from [32,64,96] matching v>=32
+     * @tc.desc Verify find returns 32 from [32, 64, 96] matching v>=32
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -382,11 +377,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 44 from [22,44,66] matching middle
+     * Verify find returns 44 from [22, 44, 66] matching middle
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_2000
      * @tc.name testUint8ArrayFind020
-     * @tc.desc Verify find returns 44 from [22,44,66] matching middle
+     * @tc.desc Verify find returns 44 from [22, 44, 66] matching middle
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -418,11 +413,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 55 from [55,0,255] matching v>0
+     * Verify find returns 55 from [55, 0, 255] matching v>0
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_2200
      * @tc.name testUint8ArrayFind022
-     * @tc.desc Verify find returns 55 from [55,0,255] matching v>0
+     * @tc.desc Verify find returns 55 from [55, 0, 255] matching v>0
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -459,11 +454,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 66 from [33,66,99] matching middle
+     * Verify find returns 66 from [33, 66, 99] matching middle
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_2400
      * @tc.name testUint8ArrayFind024
-     * @tc.desc Verify find returns 66 from [33,66,99] matching middle
+     * @tc.desc Verify find returns 66 from [33, 66, 99] matching middle
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -513,11 +508,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 84 from [42,84,126] matching middle
+     * Verify find returns 84 from [42, 84, 126] matching middle
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_2700
      * @tc.name testUint8ArrayFind027
-     * @tc.desc Verify find returns 84 from [42,84,126] matching middle
+     * @tc.desc Verify find returns 84 from [42, 84, 126] matching middle
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -531,11 +526,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 88 from [44,88,132] match
+     * Verify find returns 88 from [44, 88, 132] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_2800
      * @tc.name testUint8ArrayFind028
-     * @tc.desc Verify find returns 88 from [44,88,132] match
+     * @tc.desc Verify find returns 88 from [44, 88, 132] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -549,11 +544,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 96 from [48,96,144] match
+     * Verify find returns 96 from [48, 96, 144] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_2900
      * @tc.name testUint8ArrayFind029
-     * @tc.desc Verify find returns 96 from [48,96,144] match
+     * @tc.desc Verify find returns 96 from [48, 96, 144] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -567,11 +562,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 104 from [52,104,156] match
+     * Verify find returns 104 from [52, 104, 156] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_3000
      * @tc.name testUint8ArrayFind030
-     * @tc.desc Verify find returns 104 from [52,104,156] match
+     * @tc.desc Verify find returns 104 from [52, 104, 156] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -603,11 +598,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 112 from [56,112,168] match
+     * Verify find returns 112 from [56, 112, 168] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_3200
      * @tc.name testUint8ArrayFind032
-     * @tc.desc Verify find returns 112 from [56,112,168] match
+     * @tc.desc Verify find returns 112 from [56, 112, 168] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -621,11 +616,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 120 from [60,120,180] match
+     * Verify find returns 120 from [60, 120, 180] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_3300
      * @tc.name testUint8ArrayFind033
-     * @tc.desc Verify find returns 120 from [60,120,180] match
+     * @tc.desc Verify find returns 120 from [60, 120, 180] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -639,11 +634,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 124 from [62,124,186] match
+     * Verify find returns 124 from [62, 124, 186] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_3400
      * @tc.name testUint8ArrayFind034
-     * @tc.desc Verify find returns 124 from [62,124,186] match
+     * @tc.desc Verify find returns 124 from [62, 124, 186] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -657,11 +652,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 130 from [65,130,195] match
+     * Verify find returns 130 from [65, 130, 195] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_3500
      * @tc.name testUint8ArrayFind035
-     * @tc.desc Verify find returns 130 from [65,130,195] match
+     * @tc.desc Verify find returns 130 from [65, 130, 195] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -675,11 +670,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 132 from [66,132,198] match
+     * Verify find returns 132 from [66, 132, 198] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_3600
      * @tc.name testUint8ArrayFind036
-     * @tc.desc Verify find returns 132 from [66,132,198] match
+     * @tc.desc Verify find returns 132 from [66, 132, 198] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -693,11 +688,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 144 from [72,144,216] match
+     * Verify find returns 144 from [72, 144, 216] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_3700
      * @tc.name testUint8ArrayFind037
-     * @tc.desc Verify find returns 144 from [72,144,216] match
+     * @tc.desc Verify find returns 144 from [72, 144, 216] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -711,11 +706,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 160 from [80,160,240] match
+     * Verify find returns 160 from [80, 160, 240] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_3800
      * @tc.name testUint8ArrayFind038
-     * @tc.desc Verify find returns 160 from [80,160,240] match
+     * @tc.desc Verify find returns 160 from [80, 160, 240] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -729,11 +724,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 176 from [88,176,255] match
+     * Verify find returns 176 from [88, 176, 255] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_3900
      * @tc.name testUint8ArrayFind039
-     * @tc.desc Verify find returns 176 from [88,176,255] match
+     * @tc.desc Verify find returns 176 from [88, 176, 255] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -747,11 +742,11 @@ public class Uint8ArrayFind02Test extends BasTest {
     }
 
     /**
-     * Verify find returns 180 from [90,180,240] match
+     * Verify find returns 180 from [90, 180, 240] match
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FIND02_4000
      * @tc.name testUint8ArrayFind040
-     * @tc.desc Verify find returns 180 from [90,180,240] match
+     * @tc.desc Verify find returns 180 from [90, 180, 240] match
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2

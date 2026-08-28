@@ -15,31 +15,13 @@
 
 package basetype.uint8array;
 
-import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
-import basetype.common.EntryResult;
-import basetype.common.Error;
-import basetype.common.Int8Array;
-import basetype.common.IteratorResult;
 import basetype.common.RangeError;
-import basetype.common.SyntaxError;
-import basetype.common.URIError;
-import basetype.common.TypeError;
-import basetype.common.Uint16Array;
-import basetype.common.DataView;
-import basetype.common.Float32Array;
-import basetype.common.Float64Array;
-import basetype.common.Int32Array;
-import basetype.common.IntlOptions;
-import basetype.common.NullPointerError;
 import basetype.common.Uint8Array;
-import basetype.common.Uint8ClampedArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
@@ -50,11 +32,11 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayFrom03Test extends BasTest {
     /**
-     * Verify FixedArray<int> [1,2,3] correctly dispatches to FixedArray overload, length=3
+     * Verify FixedArray<int> [1, 2, 3] correctly dispatches to FixedArray overload, length=3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0010
      * @tc.name testUint8ArrayFrom001
-     * @tc.desc Verify FixedArray<int> [1,2,3] correctly dispatches to FixedArray overload, length=3
+     * @tc.desc Verify FixedArray<int> [1, 2, 3] correctly dispatches to FixedArray overload, length=3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -68,11 +50,11 @@ public class Uint8ArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Array<number> [1.0,2.0,3.0] correctly dispatches to Array overload, length=3
+     * Verify Array<number> [1.0, 2.0, 3.0] correctly dispatches to Array overload, length=3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0020
      * @tc.name testUint8ArrayFrom002
-     * @tc.desc Verify Array<number> [1.0,2.0,3.0] correctly dispatches to Array overload, length=3
+     * @tc.desc Verify Array<number> [1.0, 2.0, 3.0] correctly dispatches to Array overload, length=3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -86,11 +68,11 @@ public class Uint8ArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Set<int> {1,2,3} correctly dispatches to Set overload, length=3
+     * Verify Set<int> {1, 2, 3} correctly dispatches to Set overload, length=3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0030
      * @tc.name testUint8ArrayFrom003
-     * @tc.desc Verify Set<int> {1,2,3} correctly dispatches to Set overload, length=3
+     * @tc.desc Verify Set<int> {1, 2, 3} correctly dispatches to Set overload, length=3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -107,11 +89,11 @@ public class Uint8ArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Uint8Array [1,2,3] correctly dispatches to Uint8Array overload, length=3
+     * Verify Uint8Array [1, 2, 3] correctly dispatches to Uint8Array overload, length=3
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0040
      * @tc.name testUint8ArrayFrom004
-     * @tc.desc Verify Uint8Array [1,2,3] correctly dispatches to Uint8Array overload, length=3
+     * @tc.desc Verify Uint8Array [1, 2, 3] correctly dispatches to Uint8Array overload, length=3
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -125,11 +107,11 @@ public class Uint8ArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify same values [1,2,3] through FixedArray and Array overloads produce same numerical results
+     * Verify same values [1, 2, 3] through FixedArray and Array overloads produce same numerical results
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0050
      * @tc.name testUint8ArrayFrom005
-     * @tc.desc Verify same values [1,2,3] through FixedArray and Array overloads produce same numerical results
+     * @tc.desc Verify same values [1, 2, 3] through FixedArray and Array overloads produce same numerical results
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -145,11 +127,11 @@ public class Uint8ArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify same values [1,2,3] through Set and Uint8Array overloads produce same numerical results
+     * Verify same values [1, 2, 3] through Set and Uint8Array overloads produce same numerical results
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0060
      * @tc.name testUint8ArrayFrom006
-     * @tc.desc Verify same values [1,2,3] through Set and Uint8Array overloads produce same numerical results
+     * @tc.desc Verify same values [1, 2, 3] through Set and Uint8Array overloads produce same numerical results
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -442,11 +424,11 @@ public class Uint8ArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify Set<int> iteration order {5,1,9} is preserved in result
+     * Verify Set<int> iteration order {5, 1, 9} is preserved in result
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0220
      * @tc.name testUint8ArrayFrom022
-     * @tc.desc Verify Set<int> iteration order {5,1,9} is preserved in result
+     * @tc.desc Verify Set<int> iteration order {5, 1, 9} is preserved in result
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -465,11 +447,11 @@ public class Uint8ArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify four overloads with same values [7,14,21] produce same result length
+     * Verify four overloads with same values [7, 14, 21] produce same result length
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0230
      * @tc.name testUint8ArrayFrom023
-     * @tc.desc Verify four overloads with same values [7,14,21] produce same result length
+     * @tc.desc Verify four overloads with same values [7, 14, 21] produce same result length
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -627,11 +609,11 @@ public class Uint8ArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify four overloads with [0,0,0] produce same result
+     * Verify four overloads with [0, 0, 0] produce same result
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0300
      * @tc.name testUint8ArrayFrom030
-     * @tc.desc Verify four overloads with [0,0,0] produce same result
+     * @tc.desc Verify four overloads with [0, 0, 0] produce same result
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -650,11 +632,11 @@ public class Uint8ArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify four overloads with [255,255,255] produce same result
+     * Verify four overloads with [255, 255, 255] produce same result
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0310
      * @tc.name testUint8ArrayFrom031
-     * @tc.desc Verify four overloads with [255,255,255] produce same result
+     * @tc.desc Verify four overloads with [255, 255, 255] produce same result
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
@@ -673,11 +655,11 @@ public class Uint8ArrayFrom03Test extends BasTest {
     }
 
     /**
-     * Verify four overloads with [128,128,128] produce same result
+     * Verify four overloads with [128, 128, 128] produce same result
      *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_FROM03_0320
      * @tc.name testUint8ArrayFrom032
-     * @tc.desc Verify four overloads with [128,128,128] produce same result
+     * @tc.desc Verify four overloads with [128, 128, 128] produce same result
      * @tc.type Function
      * @tc.size MediumTest
      * @tc.level LEVEL2
