@@ -38,6 +38,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayEvery02Test extends BasTest {
     /**
      * Verify every result is true for array [0, 128, 255]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0100
      * @tc.name testUint8ClampedArrayEveryTwo001
      * @tc.desc Verify every result is true for array [0, 128, 255]
@@ -55,6 +56,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every integer elements Math.floor
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0200
      * @tc.name testUint8ClampedArrayEveryTwo002
      * @tc.desc Verify every integer elements Math.floor
@@ -72,6 +74,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every invokes an always-true predicate once per element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0300
      * @tc.name testUint8ClampedArrayEveryTwo003
      * @tc.desc Verify every invokes an always-true predicate once per element
@@ -94,6 +97,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every stops after the first call when the predicate is false
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0400
      * @tc.name testUint8ClampedArrayEveryTwo004
      * @tc.desc Verify every stops after the first call when the predicate is false
@@ -116,6 +120,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every true predicate strictEqual true
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0500
      * @tc.name testUint8ClampedArrayEveryTwo005
      * @tc.desc Verify every true predicate strictEqual true
@@ -133,6 +138,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every false predicate strictEqual false
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0600
      * @tc.name testUint8ClampedArrayEveryTwo006
      * @tc.desc Verify every false predicate strictEqual false
@@ -150,6 +156,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every true predicate assertTrue and false predicate assertFalse
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0700
      * @tc.name testUint8ClampedArrayEveryTwo007
      * @tc.desc Verify every true predicate assertTrue and false predicate assertFalse
@@ -169,6 +176,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every true predicate returns true and array length unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0800
      * @tc.name testUint8ClampedArrayEveryTwo008
      * @tc.desc Verify every true predicate returns true and array length unchanged
@@ -187,6 +195,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every element at arr[0] equals 10 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_0900
      * @tc.name testUint8ClampedArrayEveryTwo009
      * @tc.desc Verify every element at arr[0] equals 10 for array [10, 20, 30]
@@ -205,6 +214,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every element at arr[1] equals 20 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1000
      * @tc.name testUint8ClampedArrayEveryTwo010
      * @tc.desc Verify every element at arr[1] equals 20 for array [10, 20, 30]
@@ -223,6 +233,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every element at arr[2] equals 30 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1100
      * @tc.name testUint8ClampedArrayEveryTwo011
      * @tc.desc Verify every element at arr[2] equals 30 for array [10, 20, 30]
@@ -241,6 +252,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every yields byteLength before for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1200
      * @tc.name testUint8ClampedArrayEveryTwo012
      * @tc.desc Verify every yields byteLength before for array [1, 2, 3, 4]
@@ -260,6 +272,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every buffer reference matches for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1300
      * @tc.name testUint8ClampedArrayEveryTwo013
      * @tc.desc Verify every buffer reference matches for array [1, 2, 3]
@@ -279,6 +292,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every false predicate preserves array elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1400
      * @tc.name testUint8ClampedArrayEveryTwo014
      * @tc.desc Verify every false predicate preserves array elements
@@ -299,6 +313,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate throws Error
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1500
      * @tc.name testUint8ClampedArrayEveryTwo015
      * @tc.desc Verify every predicate throws Error
@@ -322,6 +337,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every propagates TypeError thrown by the predicate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1600
      * @tc.name testUint8ClampedArrayEveryTwo016
      * @tc.desc Verify every propagates TypeError thrown by the predicate
@@ -345,6 +361,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every propagates RangeError thrown by the predicate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1700
      * @tc.name testUint8ClampedArrayEveryTwo017
      * @tc.desc Verify every propagates RangeError thrown by the predicate
@@ -368,6 +385,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate stops on thrown Error after 1 visit
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1800
      * @tc.name testUint8ClampedArrayEveryTwo018
      * @tc.desc Verify every predicate stops on thrown Error after 1 visit
@@ -394,6 +412,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every stops at index 1 with 2 visits when predicate throws
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_1900
      * @tc.name testUint8ClampedArrayEveryTwo019
      * @tc.desc Verify every stops at index 1 with 2 visits when predicate throws
@@ -423,6 +442,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate throws Error at index 3 after 4 visits
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2000
      * @tc.name testUint8ClampedArrayEveryTwo020
      * @tc.desc Verify every predicate throws Error at index 3 after 4 visits
@@ -452,6 +472,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate throws Error preserves array elements
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2100
      * @tc.name testUint8ClampedArrayEveryTwo021
      * @tc.desc Verify every predicate throws Error preserves array elements
@@ -478,6 +499,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate throws Error on element 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2200
      * @tc.name testUint8ClampedArrayEveryTwo022
      * @tc.desc Verify every predicate throws Error on element 100
@@ -504,6 +526,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate returns false on element 0 without reaching 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2300
      * @tc.name testUint8ClampedArrayEveryTwo023
      * @tc.desc Verify every predicate returns false on element 0 without reaching 100
@@ -526,6 +549,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every throws Error when predicate hits element 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2400
      * @tc.name testUint8ClampedArrayEveryTwo024
      * @tc.desc Verify every throws Error when predicate hits element 100
@@ -552,6 +576,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every repeated calls return equal results for e>0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2500
      * @tc.name testUint8ClampedArrayEveryTwo025
      * @tc.desc Verify every repeated calls return equal results for e>0
@@ -570,6 +595,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate nested every on second array e2>=10
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2600
      * @tc.name testUint8ClampedArrayEveryTwo026
      * @tc.desc Verify every predicate nested every on second array e2>=10
@@ -590,6 +616,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify nested every on same array via predicate's a parameter
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2700
      * @tc.name testUint8ClampedArrayEveryTwo027
      * @tc.desc Verify nested every on same array via predicate's a parameter
@@ -609,6 +636,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every result is true for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2800
      * @tc.name testUint8ClampedArrayEveryTwo028
      * @tc.desc Verify every result is true for array [1, 2, 3]
@@ -629,6 +657,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every true combined with length===3 short-circuit
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_2900
      * @tc.name testUint8ClampedArrayEveryTwo029
      * @tc.desc Verify every true combined with length===3 short-circuit
@@ -646,6 +675,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every returns false when the subarray predicate reaches zero at index 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3000
      * @tc.name testUint8ClampedArrayEveryTwo030
      * @tc.desc Verify every returns false when the subarray predicate reaches zero at index 2
@@ -669,6 +699,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every on empty subarray returns true (vacuous truth)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3100
      * @tc.name testUint8ClampedArrayEveryTwo031
      * @tc.desc Verify every on empty subarray returns true (vacuous truth)
@@ -687,6 +718,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every returns true when all elements >= 10 for from(src) result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3200
      * @tc.name testUint8ClampedArrayEveryTwo032
      * @tc.desc Verify every returns true when all elements >= 10 for from(src) result
@@ -705,6 +737,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every returns true when all elements === 5 for of(5, 5, 5)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3300
      * @tc.name testUint8ClampedArrayEveryTwo033
      * @tc.desc Verify every returns true when all elements === 5 for of(5, 5, 5)
@@ -722,6 +755,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every returns true when all elements equal fill value for length-10 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3400
      * @tc.name testUint8ClampedArrayEveryTwo034
      * @tc.desc Verify every returns true when all elements equal fill value for length-10 array
@@ -740,6 +774,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate e===10 false after setting index 2 to 99
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3500
      * @tc.name testUint8ClampedArrayEveryTwo035
      * @tc.desc Verify every predicate e===10 false after setting index 2 to 99
@@ -759,6 +794,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every returns true and invokes the predicate once per element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3600
      * @tc.name testUint8ClampedArrayEveryTwo036
      * @tc.desc Verify every returns true and invokes the predicate once per element
@@ -781,6 +817,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate element greater than index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3700
      * @tc.name testUint8ClampedArrayEveryTwo037
      * @tc.desc Verify every predicate element greater than index
@@ -798,6 +835,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every result is true for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3800
      * @tc.name testUint8ClampedArrayEveryTwo038
      * @tc.desc Verify every result is true for array [1, 2, 3, 4]
@@ -815,6 +853,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every visits all 1024 elements when predicate true
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_3900
      * @tc.name testUint8ClampedArrayEveryTwo039
      * @tc.desc Verify every visits all 1024 elements when predicate true
@@ -838,6 +877,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every stops at 501 calls when predicate false on 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4000
      * @tc.name testUint8ClampedArrayEveryTwo040
      * @tc.desc Verify every stops at 501 calls when predicate false on 0
@@ -862,6 +902,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate true pushes all 4 indices
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4100
      * @tc.name testUint8ClampedArrayEveryTwo041
      * @tc.desc Verify every predicate true pushes all 4 indices
@@ -884,6 +925,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every result is true for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4200
      * @tc.name testUint8ClampedArrayEveryTwo042
      * @tc.desc Verify every result is true for array [10, 20, 30]
@@ -901,6 +943,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every result is true for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4300
      * @tc.name testUint8ClampedArrayEveryTwo043
      * @tc.desc Verify every result is true for array [10, 20, 30]
@@ -918,6 +961,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every result is true for array [7, 7, 7, 7]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4400
      * @tc.name testUint8ClampedArrayEveryTwo044
      * @tc.desc Verify every result is true for array [7, 7, 7, 7]
@@ -935,6 +979,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate e===0 for clamped -0 values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4500
      * @tc.name testUint8ClampedArrayEveryTwo045
      * @tc.desc Verify every predicate e===0 for clamped -0 values
@@ -953,6 +998,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify predicate !== NaN (clamp NaN)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4600
      * @tc.name testUint8ClampedArrayEveryTwo046
      * @tc.desc Verify predicate !== NaN (clamp NaN)
@@ -971,6 +1017,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every result is true for array [1, 2, 255]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4700
      * @tc.name testUint8ClampedArrayEveryTwo047
      * @tc.desc Verify every result is true for array [1, 2, 255]
@@ -988,6 +1035,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate Number.isInteger for clamped 1.5 2.5 3.5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4800
      * @tc.name testUint8ClampedArrayEveryTwo048
      * @tc.desc Verify every predicate Number.isInteger for clamped 1.5 2.5 3.5
@@ -1006,6 +1054,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every predicate e===0 or e===255 alternating
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_4900
      * @tc.name testUint8ClampedArrayEveryTwo049
      * @tc.desc Verify every predicate e===0 or e===255 alternating
@@ -1023,6 +1072,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every with parity-based predicate (odd index or multiple of 10)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_5000
      * @tc.name testUint8ClampedArrayEveryTwo050
      * @tc.desc Verify every with parity-based predicate (odd index or multiple of 10)
@@ -1040,6 +1090,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
 
     /**
      * Verify every accepts boundary values 100 and interior values 50
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_EVERY_TWO_5100
      * @tc.name testUint8ClampedArrayEveryTwo051
      * @tc.desc Verify every accepts boundary values 100 and interior values 50

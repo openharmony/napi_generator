@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayConstructor07Test extends BasTest {
     /**
      * Verify constructing ArrayBuffer-backed array yields length 8
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_0100
      * @tc.name testUint8ClampedArrayConstructorSeven001
      * @tc.desc Verify constructing ArrayBuffer-backed array yields length 8
@@ -52,6 +53,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields length 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_0200
      * @tc.name testUint8ClampedArrayConstructorSeven002
      * @tc.desc Verify constructing ArrayBuffer-backed array yields length 1
@@ -69,6 +71,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields length 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_0300
      * @tc.name testUint8ClampedArrayConstructorSeven003
      * @tc.desc Verify constructing ArrayBuffer-backed array yields length 255
@@ -86,6 +89,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields length 127
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_0400
      * @tc.name testUint8ClampedArrayConstructorSeven004
      * @tc.desc Verify constructing ArrayBuffer-backed array yields length 127
@@ -103,6 +107,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields length 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_0500
      * @tc.name testUint8ClampedArrayConstructorSeven005
      * @tc.desc Verify constructing ArrayBuffer-backed array yields length 0
@@ -120,6 +125,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify buf(65535) + offset 0.0 buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_0600
      * @tc.name testUint8ClampedArrayConstructorSeven006
      * @tc.desc Verify buf(65535) + offset 0.0 buffer
@@ -137,6 +143,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify buf(65535) + offset 32768.0 buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_0700
      * @tc.name testUint8ClampedArrayConstructorSeven007
      * @tc.desc Verify buf(65535) + offset 32768.0 buffer
@@ -154,6 +161,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 5 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_0800
      * @tc.name testUint8ClampedArrayConstructorSeven008
      * @tc.desc Verify constructor element [0] equals 5 for array from src
@@ -171,6 +179,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 15 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_0900
      * @tc.name testUint8ClampedArrayConstructorSeven009
      * @tc.desc Verify constructor element [0] equals 15 for array from src
@@ -188,6 +197,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 31 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_1000
      * @tc.name testUint8ClampedArrayConstructorSeven010
      * @tc.desc Verify constructor element [0] equals 31 for array from src
@@ -205,6 +215,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 32 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_1100
      * @tc.name testUint8ClampedArrayConstructorSeven011
      * @tc.desc Verify constructor element [0] equals 32 for array from src
@@ -222,6 +233,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 63 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_1200
      * @tc.name testUint8ClampedArrayConstructorSeven012
      * @tc.desc Verify constructor element [0] equals 63 for array from src
@@ -239,6 +251,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify Array<number> 65 (ASCII 'A')
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_1300
      * @tc.name testUint8ClampedArrayConstructorSeven013
      * @tc.desc Verify Array<number> 65 (ASCII 'A')
@@ -256,6 +269,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 16 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_1400
      * @tc.name testUint8ClampedArrayConstructorSeven014
      * @tc.desc Verify constructor element [0] equals 16 for array from src
@@ -273,6 +287,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 15 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_1500
      * @tc.name testUint8ClampedArrayConstructorSeven015
      * @tc.desc Verify constructor element [0] equals 15 for array from src
@@ -290,6 +305,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 5 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_1600
      * @tc.name testUint8ClampedArrayConstructorSeven016
      * @tc.desc Verify constructor element [0] equals 5 for array from src
@@ -307,6 +323,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify Array<number> 0x10 0o17 0b101
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_1700
      * @tc.name testUint8ClampedArrayConstructorSeven017
      * @tc.desc Verify Array<number> 0x10 0o17 0b101
@@ -326,6 +343,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_1800
      * @tc.name testUint8ClampedArrayConstructorSeven018
      * @tc.desc Verify constructor element [0] equals 0 for array from src
@@ -344,6 +362,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_1900
      * @tc.name testUint8ClampedArrayConstructorSeven019
      * @tc.desc Verify constructor element [0] equals 0 for array from src
@@ -362,6 +381,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_2000
      * @tc.name testUint8ClampedArrayConstructorSeven020
      * @tc.desc Verify constructor element [0] equals 0 for array from src
@@ -380,6 +400,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify Array<number> arr[0]=99 assignable
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_2100
      * @tc.name testUint8ClampedArrayConstructorSeven021
      * @tc.desc Verify Array<number> arr[0]=99 assignable
@@ -398,6 +419,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 255 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_2200
      * @tc.name testUint8ClampedArrayConstructorSeven022
      * @tc.desc Verify constructor element [0] equals 255 for array from src
@@ -416,6 +438,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_2300
      * @tc.name testUint8ClampedArrayConstructorSeven023
      * @tc.desc Verify constructor element [0] equals 0 for array from src
@@ -434,6 +457,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify Array<number> source unaffected after arr[0]=99
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_2400
      * @tc.name testUint8ClampedArrayConstructorSeven024
      * @tc.desc Verify Array<number> source unaffected after arr[0]=99
@@ -452,6 +476,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
 
     /**
      * Verify constructing array from src yields length 256
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_SEVEN_2500
      * @tc.name testUint8ClampedArrayConstructorSeven025
      * @tc.desc Verify constructing array from src yields length 256

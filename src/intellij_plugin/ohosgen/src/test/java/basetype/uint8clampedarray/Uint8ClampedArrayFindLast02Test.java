@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFindLast02Test extends BasTest {
     /**
      * Verify findLast buffer reference matches for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_0100
      * @tc.name testUint8ClampedArrayFindLastTwo001
      * @tc.desc Verify findLast buffer reference matches for array [1, 2, 3]
@@ -49,6 +50,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast yields byteOffset 2 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_0200
      * @tc.name testUint8ClampedArrayFindLastTwo002
      * @tc.desc Verify findLast yields byteOffset 2 for ArrayBuffer-backed array
@@ -68,6 +70,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify predicate throws Error is caught with correct name
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_0300
      * @tc.name testUint8ClampedArrayFindLastTwo003
      * @tc.desc Verify predicate throws Error is caught with correct name
@@ -91,6 +94,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast propagates Error on the second reverse callback invocation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_0400
      * @tc.name testUint8ClampedArrayFindLastTwo004
      * @tc.desc Verify findLast propagates Error on the second reverse callback invocation
@@ -120,6 +124,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast propagates Error on the first reverse callback invocation
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_0500
      * @tc.name testUint8ClampedArrayFindLastTwo005
      * @tc.desc Verify findLast propagates Error on the first reverse callback invocation
@@ -146,6 +151,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast preserves the first element when its callback throws Error
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_0600
      * @tc.name testUint8ClampedArrayFindLastTwo006
      * @tc.desc Verify findLast preserves the first element when its callback throws Error
@@ -170,6 +176,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast propagates Error thrown by the predicate
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_0700
      * @tc.name testUint8ClampedArrayFindLastTwo007
      * @tc.desc Verify findLast propagates Error thrown by the predicate
@@ -193,6 +200,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast exposes the original array length before callback failure
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_0800
      * @tc.name testUint8ClampedArrayFindLastTwo008
      * @tc.desc Verify findLast exposes the original array length before callback failure
@@ -219,6 +227,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast calls equals 1 for array [1, 2, 3, 99]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_0900
      * @tc.name testUint8ClampedArrayFindLastTwo009
      * @tc.desc Verify findLast calls equals 1 for array [1, 2, 3, 99]
@@ -241,6 +250,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast calls equals 2 for array [1, 2, 99, 100]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_1000
      * @tc.name testUint8ClampedArrayFindLastTwo010
      * @tc.desc Verify findLast calls equals 2 for array [1, 2, 99, 100]
@@ -262,6 +272,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast calls equals 3 for array [1, 99, 100, 101]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_1100
      * @tc.name testUint8ClampedArrayFindLastTwo011
      * @tc.desc Verify findLast calls equals 3 for array [1, 99, 100, 101]
@@ -283,6 +294,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast calls equals 4 for array [99, 1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_1200
      * @tc.name testUint8ClampedArrayFindLastTwo012
      * @tc.desc Verify findLast calls equals 4 for array [99, 1, 2, 3]
@@ -304,6 +316,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast last key equals 1 for array [7, 7]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_1300
      * @tc.name testUint8ClampedArrayFindLastTwo013
      * @tc.desc Verify findLast last key equals 1 for array [7, 7]
@@ -328,6 +341,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast last key equals 2 for array [7, 7, 7]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_1400
      * @tc.name testUint8ClampedArrayFindLastTwo014
      * @tc.desc Verify findLast last key equals 2 for array [7, 7, 7]
@@ -352,6 +366,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast calls equals 5 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_1500
      * @tc.name testUint8ClampedArrayFindLastTwo015
      * @tc.desc Verify findLast calls equals 5 for array [1, 2, 3, 4, 5]
@@ -373,6 +388,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify subarray element at parent[1] equals 20 for array [10, 20, 30, 40]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_1600
      * @tc.name testUint8ClampedArrayFindLastTwo016
      * @tc.desc Verify subarray element at parent[1] equals 20 for array [10, 20, 30, 40]
@@ -392,6 +408,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify subarray findLast parent length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_1700
      * @tc.name testUint8ClampedArrayFindLastTwo017
      * @tc.desc Verify subarray findLast parent length
@@ -411,6 +428,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify slice element at arr[0] equals 1 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_1800
      * @tc.name testUint8ClampedArrayFindLastTwo018
      * @tc.desc Verify slice element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -430,6 +448,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast element at b[0] equals 10 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_1900
      * @tc.name testUint8ClampedArrayFindLastTwo019
      * @tc.desc Verify findLast element at b[0] equals 10 for ArrayBuffer-backed array
@@ -452,6 +471,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 3 after a nested find returns 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_2000
      * @tc.name testUint8ClampedArrayFindLastTwo020
      * @tc.desc Verify findLast returns 3 after a nested find returns 1
@@ -472,6 +492,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast r1 equals 2 and r2 equals 3 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_2100
      * @tc.name testUint8ClampedArrayFindLastTwo021
      * @tc.desc Verify findLast r1 equals 2 and r2 equals 3 for array [1, 2, 3]
@@ -491,6 +512,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify toReversed r1 equals r2 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_2200
      * @tc.name testUint8ClampedArrayFindLastTwo022
      * @tc.desc Verify toReversed r1 equals r2 for array [1, 2, 3]
@@ -511,6 +533,7 @@ public class Uint8ClampedArrayFindLast02Test extends BasTest {
 
     /**
      * Verify findLast returns 0 and predicate is invoked for array [0, 1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FIND_LAST_TWO_2300
      * @tc.name testUint8ClampedArrayFindLastTwo023
      * @tc.desc Verify findLast returns 0 and predicate is invoked for array [0, 1, 2]

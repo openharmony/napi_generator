@@ -36,6 +36,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayConstructor05Test extends BasTest {
     /**
      * Verify constructing array from src yields length 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_0100
      * @tc.name testUint8ClampedArrayConstructorFive001
      * @tc.desc Verify constructing array from src yields length 3
@@ -53,6 +54,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify ArrayBuffer+byteOffset:number - 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_0200
      * @tc.name testUint8ClampedArrayConstructorFive002
      * @tc.desc Verify ArrayBuffer+byteOffset:number - 0
@@ -70,6 +72,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_0300
      * @tc.name testUint8ClampedArrayConstructorFive003
      * @tc.desc Verify constructor element [0] equals 0 for array from src
@@ -87,6 +90,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 1 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_0400
      * @tc.name testUint8ClampedArrayConstructorFive004
      * @tc.desc Verify constructor element [0] equals 1 for array from src
@@ -104,6 +108,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify Array<number> 127 (byte MAX)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_0500
      * @tc.name testUint8ClampedArrayConstructorFive005
      * @tc.desc Verify Array<number> 127 (byte MAX)
@@ -121,6 +126,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify Array<number> -128 (byte MIN, clamp 0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_0600
      * @tc.name testUint8ClampedArrayConstructorFive006
      * @tc.desc Verify Array<number> -128 (byte MIN, clamp 0)
@@ -139,6 +145,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_0700
      * @tc.name testUint8ClampedArrayConstructorFive007
      * @tc.desc Verify constructor element [0] equals 0 for array from src
@@ -157,6 +164,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_0800
      * @tc.name testUint8ClampedArrayConstructorFive008
      * @tc.desc Verify constructor element [0] equals 0 for array from src
@@ -179,6 +187,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing array from src yields length 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_0900
      * @tc.name testUint8ClampedArrayConstructorFive009
      * @tc.desc Verify constructing array from src yields length 2
@@ -196,6 +205,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing array from src yields length 10
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_1000
      * @tc.name testUint8ClampedArrayConstructorFive010
      * @tc.desc Verify constructing array from src yields length 10
@@ -213,6 +223,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing array from src yields length 100
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_1100
      * @tc.name testUint8ClampedArrayConstructorFive011
      * @tc.desc Verify constructing array from src yields length 100
@@ -235,6 +246,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 127 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_1200
      * @tc.name testUint8ClampedArrayConstructorFive012
      * @tc.desc Verify constructor element [0] equals 127 for array from src
@@ -252,6 +264,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 63 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_1300
      * @tc.name testUint8ClampedArrayConstructorFive013
      * @tc.desc Verify constructor element [0] equals 63 for array from src
@@ -269,6 +282,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 127 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_1400
      * @tc.name testUint8ClampedArrayConstructorFive014
      * @tc.desc Verify constructor element [0] equals 127 for array from src
@@ -286,6 +300,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_1500
      * @tc.name testUint8ClampedArrayConstructorFive015
      * @tc.desc Verify constructor element [0] equals 0 for array from src
@@ -304,6 +319,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 50 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_1600
      * @tc.name testUint8ClampedArrayConstructorFive016
      * @tc.desc Verify constructor element [0] equals 50 for array from src
@@ -323,6 +339,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_1700
      * @tc.name testUint8ClampedArrayConstructorFive017
      * @tc.desc Verify constructor element [0] equals 0 for array from src
@@ -342,6 +359,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [2] equals 30 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_1800
      * @tc.name testUint8ClampedArrayConstructorFive018
      * @tc.desc Verify constructor element [2] equals 30 for array from src
@@ -360,6 +378,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 50 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_1900
      * @tc.name testUint8ClampedArrayConstructorFive019
      * @tc.desc Verify constructor element [0] equals 50 for array from src
@@ -378,6 +397,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing array from src yields length 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_2000
      * @tc.name testUint8ClampedArrayConstructorFive020
      * @tc.desc Verify constructing array from src yields length 3
@@ -396,6 +416,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify Array<number> byte MIN clamp
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_2100
      * @tc.name testUint8ClampedArrayConstructorFive021
      * @tc.desc Verify Array<number> byte MIN clamp
@@ -416,6 +437,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify Array<number> [byte_MIN, byte_MAX]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_2200
      * @tc.name testUint8ClampedArrayConstructorFive022
      * @tc.desc Verify Array<number> [byte_MIN, byte_MAX]
@@ -435,6 +457,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 64 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_2300
      * @tc.name testUint8ClampedArrayConstructorFive023
      * @tc.desc Verify constructor element [0] equals 64 for array from src
@@ -452,6 +475,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 100 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_2400
      * @tc.name testUint8ClampedArrayConstructorFive024
      * @tc.desc Verify constructor element [0] equals 100 for array from src
@@ -469,6 +493,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 126 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_2500
      * @tc.name testUint8ClampedArrayConstructorFive025
      * @tc.desc Verify constructor element [0] equals 126 for array from src
@@ -486,6 +511,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_2600
      * @tc.name testUint8ClampedArrayConstructorFive026
      * @tc.desc Verify constructor element [0] equals 0 for array from src
@@ -504,6 +530,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify Array<number> construction preserves length and values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_2700
      * @tc.name testUint8ClampedArrayConstructorFive027
      * @tc.desc Verify Array<number> construction preserves length and values
@@ -523,6 +550,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing array from src yields length 4
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_2800
      * @tc.name testUint8ClampedArrayConstructorFive028
      * @tc.desc Verify constructing array from src yields length 4
@@ -540,6 +568,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify FixedArray<E> byteLength length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_2900
      * @tc.name testUint8ClampedArrayConstructorFive029
      * @tc.desc Verify FixedArray<E> byteLength length
@@ -557,6 +586,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing array from src yields byteOffset 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3000
      * @tc.name testUint8ClampedArrayConstructorFive030
      * @tc.desc Verify constructing array from src yields byteOffset 0
@@ -574,6 +604,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify FixedArray<E> BYTES_PER_ELEMENT 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3100
      * @tc.name testUint8ClampedArrayConstructorFive031
      * @tc.desc Verify FixedArray<E> BYTES_PER_ELEMENT 1
@@ -591,6 +622,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 10 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3200
      * @tc.name testUint8ClampedArrayConstructorFive032
      * @tc.desc Verify constructor element [0] equals 10 for array from src
@@ -609,6 +641,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify FixedArray<E> buffer byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3300
      * @tc.name testUint8ClampedArrayConstructorFive033
      * @tc.desc Verify FixedArray<E> buffer byteLength
@@ -626,6 +659,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 11 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3400
      * @tc.name testUint8ClampedArrayConstructorFive034
      * @tc.desc Verify constructor element [0] equals 11 for array from src
@@ -645,6 +679,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify FixedArray<E> length from Array<number> [1,2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3500
      * @tc.name testUint8ClampedArrayConstructorFive035
      * @tc.desc Verify FixedArray<E> length from Array<number> [1,2]
@@ -662,6 +697,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor arr.$_get(0) equals 99 for array from src
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3600
      * @tc.name testUint8ClampedArrayConstructorFive036
      * @tc.desc Verify constructor arr.$_get(0) equals 99 for array from src
@@ -679,6 +715,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify FixedArray<E> $_get(length-1)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3700
      * @tc.name testUint8ClampedArrayConstructorFive037
      * @tc.desc Verify FixedArray<E> $_get(length-1)
@@ -696,6 +733,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify ArrayBuffer byteLength=1,byteOffset=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3800
      * @tc.name testUint8ClampedArrayConstructorFive038
      * @tc.desc Verify ArrayBuffer byteLength=1,byteOffset=0
@@ -713,6 +751,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify ArrayBuffer byteLength=256,byteOffset=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_3900
      * @tc.name testUint8ClampedArrayConstructorFive039
      * @tc.desc Verify ArrayBuffer byteLength=256,byteOffset=0
@@ -730,6 +769,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify ArrayBuffer byteLength=1024,byteOffset=0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4000
      * @tc.name testUint8ClampedArrayConstructorFive040
      * @tc.desc Verify ArrayBuffer byteLength=1024,byteOffset=0
@@ -747,6 +787,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4100
      * @tc.name testUint8ClampedArrayConstructorFive041
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 0
@@ -765,6 +806,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4200
      * @tc.name testUint8ClampedArrayConstructorFive042
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 1
@@ -783,6 +825,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4300
      * @tc.name testUint8ClampedArrayConstructorFive043
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 0
@@ -801,6 +844,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 10
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4400
      * @tc.name testUint8ClampedArrayConstructorFive044
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 10
@@ -819,6 +863,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4500
      * @tc.name testUint8ClampedArrayConstructorFive045
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 2
@@ -837,6 +882,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4600
      * @tc.name testUint8ClampedArrayConstructorFive046
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 0
@@ -855,6 +901,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor throws RangeError for buf, Number.POSITIVE_INFINITY
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4700
      * @tc.name testUint8ClampedArrayConstructorFive047
      * @tc.desc Verify constructor throws RangeError for buf, Number.POSITIVE_INFINITY
@@ -876,6 +923,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor throws RangeError for buf, -Number.POSITIVE_INFINITY
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4800
      * @tc.name testUint8ClampedArrayConstructorFive048
      * @tc.desc Verify constructor throws RangeError for buf, -Number.POSITIVE_INFINITY
@@ -897,6 +945,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor throws RangeError for buf, Number.MAX_VALUE
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_4900
      * @tc.name testUint8ClampedArrayConstructorFive049
      * @tc.desc Verify constructor throws RangeError for buf, Number.MAX_VALUE
@@ -918,6 +967,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify byteOffset=Number.MIN_VALUE 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_5000
      * @tc.name testUint8ClampedArrayConstructorFive050
      * @tc.desc Verify byteOffset=Number.MIN_VALUE 0
@@ -936,6 +986,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 3
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_5100
      * @tc.name testUint8ClampedArrayConstructorFive051
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 3
@@ -954,6 +1005,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_5200
      * @tc.name testUint8ClampedArrayConstructorFive052
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 5
@@ -972,6 +1024,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 9
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_5300
      * @tc.name testUint8ClampedArrayConstructorFive053
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 9
@@ -990,6 +1043,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 10
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_5400
      * @tc.name testUint8ClampedArrayConstructorFive054
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 10
@@ -1008,6 +1062,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify ArrayBuffer construction uses the supplied buffer and full length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_5500
      * @tc.name testUint8ClampedArrayConstructorFive055
      * @tc.desc Verify ArrayBuffer construction uses the supplied buffer and full length
@@ -1026,6 +1081,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify ArrayBuffer length byteLength-byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_5600
      * @tc.name testUint8ClampedArrayConstructorFive056
      * @tc.desc Verify ArrayBuffer length byteLength-byteOffset
@@ -1043,6 +1099,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteOffset 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_5700
      * @tc.name testUint8ClampedArrayConstructorFive057
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteOffset 2
@@ -1060,6 +1117,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify ArrayBuffer byteLength length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_5800
      * @tc.name testUint8ClampedArrayConstructorFive058
      * @tc.desc Verify ArrayBuffer byteLength length
@@ -1077,6 +1135,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify ArrayBuffer BYTES_PER_ELEMENT 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_5900
      * @tc.name testUint8ClampedArrayConstructorFive059
      * @tc.desc Verify ArrayBuffer BYTES_PER_ELEMENT 1
@@ -1094,6 +1153,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields byteLength 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_6000
      * @tc.name testUint8ClampedArrayConstructorFive060
      * @tc.desc Verify constructing ArrayBuffer-backed array yields byteLength 0
@@ -1111,6 +1171,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_6100
      * @tc.name testUint8ClampedArrayConstructorFive061
      * @tc.desc Verify constructor element [0] equals 0 for ArrayBuffer-backed array
@@ -1129,6 +1190,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor arr.$_get(0) equals 0 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_6200
      * @tc.name testUint8ClampedArrayConstructorFive062
      * @tc.desc Verify constructor arr.$_get(0) equals 0 for ArrayBuffer-backed array
@@ -1146,6 +1208,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor buffer reference matches for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_6300
      * @tc.name testUint8ClampedArrayConstructorFive063
      * @tc.desc Verify constructor buffer reference matches for ArrayBuffer-backed array
@@ -1163,6 +1226,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify buffer.byteLength buffer.byteLength
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_6400
      * @tc.name testUint8ClampedArrayConstructorFive064
      * @tc.desc Verify buffer.byteLength buffer.byteLength
@@ -1180,6 +1244,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 100 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_6500
      * @tc.name testUint8ClampedArrayConstructorFive065
      * @tc.desc Verify constructor element [0] equals 100 for ArrayBuffer-backed array
@@ -1198,6 +1263,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor buffer reference matches for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_6600
      * @tc.name testUint8ClampedArrayConstructorFive066
      * @tc.desc Verify constructor buffer reference matches for ArrayBuffer-backed array
@@ -1216,6 +1282,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 99 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_6700
      * @tc.name testUint8ClampedArrayConstructorFive067
      * @tc.desc Verify constructor element [0] equals 99 for ArrayBuffer-backed array
@@ -1235,6 +1302,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [2] equals 77 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_6800
      * @tc.name testUint8ClampedArrayConstructorFive068
      * @tc.desc Verify constructor element [2] equals 77 for ArrayBuffer-backed array
@@ -1254,6 +1322,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify buffer - byteOffset byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_6900
      * @tc.name testUint8ClampedArrayConstructorFive069
      * @tc.desc Verify buffer - byteOffset byteOffset
@@ -1273,6 +1342,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor buffer reference matches for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_7000
      * @tc.name testUint8ClampedArrayConstructorFive070
      * @tc.desc Verify constructor buffer reference matches for ArrayBuffer-backed array
@@ -1291,6 +1361,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 50 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_7100
      * @tc.name testUint8ClampedArrayConstructorFive071
      * @tc.desc Verify constructor element [0] equals 50 for ArrayBuffer-backed array
@@ -1312,6 +1383,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor buffer reference matches for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_7200
      * @tc.name testUint8ClampedArrayConstructorFive072
      * @tc.desc Verify constructor buffer reference matches for ArrayBuffer-backed array
@@ -1330,6 +1402,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 255 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_7300
      * @tc.name testUint8ClampedArrayConstructorFive073
      * @tc.desc Verify constructor element [0] equals 255 for ArrayBuffer-backed array
@@ -1348,6 +1421,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor element [0] equals 0 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_7400
      * @tc.name testUint8ClampedArrayConstructorFive074
      * @tc.desc Verify constructor element [0] equals 0 for ArrayBuffer-backed array
@@ -1366,6 +1440,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify byteOffset=byteLength+1 RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_7500
      * @tc.name testUint8ClampedArrayConstructorFive075
      * @tc.desc Verify byteOffset=byteLength+1 RangeError
@@ -1387,6 +1462,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor throws RangeError for buf, -1.0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_7600
      * @tc.name testUint8ClampedArrayConstructorFive076
      * @tc.desc Verify constructor throws RangeError for buf, -1.0
@@ -1408,6 +1484,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor throws RangeError for buf, -2.5
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_7700
      * @tc.name testUint8ClampedArrayConstructorFive077
      * @tc.desc Verify constructor throws RangeError for buf, -2.5
@@ -1429,6 +1506,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor throws RangeError for buf, -1e9
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_7800
      * @tc.name testUint8ClampedArrayConstructorFive078
      * @tc.desc Verify constructor throws RangeError for buf, -1e9
@@ -1450,6 +1528,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify buffer byteOffset=1 RangeError
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_7900
      * @tc.name testUint8ClampedArrayConstructorFive079
      * @tc.desc Verify buffer byteOffset=1 RangeError
@@ -1471,6 +1550,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor throws RangeError for buf, 2147483648.0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_8000
      * @tc.name testUint8ClampedArrayConstructorFive080
      * @tc.desc Verify constructor throws RangeError for buf, 2147483648.0
@@ -1492,6 +1572,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructor throws RangeError for buf, 1e9
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_8100
      * @tc.name testUint8ClampedArrayConstructorFive081
      * @tc.desc Verify constructor throws RangeError for buf, 1e9
@@ -1513,6 +1594,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields length 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_8200
      * @tc.name testUint8ClampedArrayConstructorFive082
      * @tc.desc Verify constructing ArrayBuffer-backed array yields length 2
@@ -1530,6 +1612,7 @@ public class Uint8ClampedArrayConstructor05Test extends BasTest {
 
     /**
      * Verify constructing ArrayBuffer-backed array yields length 1
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_CONSTRUCTOR_FIVE_8300
      * @tc.name testUint8ClampedArrayConstructorFive083
      * @tc.desc Verify constructing ArrayBuffer-backed array yields length 1

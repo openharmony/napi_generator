@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFill02Test extends BasTest {
     /**
      * Verify arity=1 value number start/end
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_0100
      * @tc.name testUint8ClampedArrayFillTwo001
      * @tc.desc Verify arity=1 value number start/end
@@ -47,6 +48,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_0200
      * @tc.name testUint8ClampedArrayFillTwo002
      * @tc.desc Verify fill element at arr[0] equals 0 for array [0, 0, 0, 0]
@@ -65,6 +67,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[1] equals 5 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_0300
      * @tc.name testUint8ClampedArrayFillTwo003
      * @tc.desc Verify fill element at arr[1] equals 5 for array [0, 0, 0, 0]
@@ -83,6 +86,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[2] equals 11 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_0400
      * @tc.name testUint8ClampedArrayFillTwo004
      * @tc.desc Verify fill element at arr[2] equals 11 for array [0, 0, 0]
@@ -100,6 +104,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_0500
      * @tc.name testUint8ClampedArrayFillTwo005
      * @tc.desc Verify fill element at arr[0] equals 0 for array [10, 20, 30]
@@ -118,6 +123,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 255 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_0600
      * @tc.name testUint8ClampedArrayFillTwo006
      * @tc.desc Verify fill element at arr[0] equals 255 for array [0, 0]
@@ -136,6 +142,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_0700
      * @tc.name testUint8ClampedArrayFillTwo007
      * @tc.desc Verify fill element at arr[0] equals 1 for array [0, 0]
@@ -153,6 +160,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 127 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_0800
      * @tc.name testUint8ClampedArrayFillTwo008
      * @tc.desc Verify fill element at arr[0] equals 127 for array [0, 0]
@@ -170,6 +178,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 128 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_0900
      * @tc.name testUint8ClampedArrayFillTwo009
      * @tc.desc Verify fill element at arr[0] equals 128 for array [0, 0]
@@ -187,6 +196,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [5, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_1000
      * @tc.name testUint8ClampedArrayFillTwo010
      * @tc.desc Verify fill element at arr[0] equals 0 for array [5, 5]
@@ -204,6 +214,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [5, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_1100
      * @tc.name testUint8ClampedArrayFillTwo011
      * @tc.desc Verify fill element at arr[0] equals 0 for array [5, 5]
@@ -221,6 +232,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [5, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_1200
      * @tc.name testUint8ClampedArrayFillTwo012
      * @tc.desc Verify fill element at arr[0] equals 0 for array [5, 5]
@@ -238,6 +250,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_1300
      * @tc.name testUint8ClampedArrayFillTwo013
      * @tc.desc Verify fill element at arr[0] equals 1 for array [0, 0]
@@ -255,6 +268,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 2 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_1400
      * @tc.name testUint8ClampedArrayFillTwo014
      * @tc.desc Verify fill element at arr[0] equals 2 for array [0, 0]
@@ -272,6 +286,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 2 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_1500
      * @tc.name testUint8ClampedArrayFillTwo015
      * @tc.desc Verify fill element at arr[0] equals 2 for array [0, 0]
@@ -289,6 +304,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 128 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_1600
      * @tc.name testUint8ClampedArrayFillTwo016
      * @tc.desc Verify fill element at arr[0] equals 128 for array [0, 0]
@@ -306,6 +322,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 128 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_1700
      * @tc.name testUint8ClampedArrayFillTwo017
      * @tc.desc Verify fill element at arr[0] equals 128 for array [0, 0]
@@ -323,6 +340,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 254 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_1800
      * @tc.name testUint8ClampedArrayFillTwo018
      * @tc.desc Verify fill element at arr[0] equals 254 for array [0, 0]
@@ -340,6 +358,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 201 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_1900
      * @tc.name testUint8ClampedArrayFillTwo019
      * @tc.desc Verify fill element at arr[0] equals 201 for array [0, 0]
@@ -357,6 +376,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 63 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_2000
      * @tc.name testUint8ClampedArrayFillTwo020
      * @tc.desc Verify fill element at arr[0] equals 63 for array [0, 0]
@@ -374,6 +394,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 100 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_2100
      * @tc.name testUint8ClampedArrayFillTwo021
      * @tc.desc Verify fill element at arr[0] equals 100 for array [0, 0]
@@ -391,6 +412,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 255 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_2200
      * @tc.name testUint8ClampedArrayFillTwo022
      * @tc.desc Verify fill element at arr[0] equals 255 for array [0, 0]
@@ -408,6 +430,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify value=2147483648.0(>INT_MAX) clamp 255
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_2300
      * @tc.name testUint8ClampedArrayFillTwo023
      * @tc.desc Verify value=2147483648.0(>INT_MAX) clamp 255
@@ -425,6 +448,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 255 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_2400
      * @tc.name testUint8ClampedArrayFillTwo024
      * @tc.desc Verify fill element at arr[0] equals 255 for array [0, 0]
@@ -442,6 +466,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [5, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_2500
      * @tc.name testUint8ClampedArrayFillTwo025
      * @tc.desc Verify fill element at arr[0] equals 0 for array [5, 5]
@@ -459,6 +484,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [5, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_2600
      * @tc.name testUint8ClampedArrayFillTwo026
      * @tc.desc Verify fill element at arr[0] equals 0 for array [5, 5]
@@ -476,6 +502,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify value=Number.MIN_VALUE clamp 0
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_2700
      * @tc.name testUint8ClampedArrayFillTwo027
      * @tc.desc Verify value=Number.MIN_VALUE clamp 0
@@ -493,6 +520,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [5, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_2800
      * @tc.name testUint8ClampedArrayFillTwo028
      * @tc.desc Verify fill element at arr[0] equals 0 for array [5, 5]
@@ -510,6 +538,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [5, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_2900
      * @tc.name testUint8ClampedArrayFillTwo029
      * @tc.desc Verify fill element at arr[0] equals 0 for array [5, 5]
@@ -527,6 +556,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 255 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_3000
      * @tc.name testUint8ClampedArrayFillTwo030
      * @tc.desc Verify fill element at arr[0] equals 255 for array [0, 0]
@@ -544,6 +574,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 255 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_3100
      * @tc.name testUint8ClampedArrayFillTwo031
      * @tc.desc Verify fill element at arr[0] equals 255 for array [0, 0]
@@ -561,6 +592,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 255 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_3200
      * @tc.name testUint8ClampedArrayFillTwo032
      * @tc.desc Verify fill element at arr[0] equals 255 for array [0, 0]
@@ -578,6 +610,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [1, 1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_3300
      * @tc.name testUint8ClampedArrayFillTwo033
      * @tc.desc Verify fill element at arr[0] equals 0 for array [1, 1]
@@ -595,6 +628,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [1, 1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_3400
      * @tc.name testUint8ClampedArrayFillTwo034
      * @tc.desc Verify fill element at arr[0] equals 0 for array [1, 1]
@@ -612,6 +646,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 8 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_3500
      * @tc.name testUint8ClampedArrayFillTwo035
      * @tc.desc Verify fill element at arr[0] equals 8 for array [0, 0, 0, 0]
@@ -630,6 +665,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 1, 1, 1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_3600
      * @tc.name testUint8ClampedArrayFillTwo036
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 1, 1, 1]
@@ -649,6 +685,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[2] equals 1 for array [1, 1, 1, 1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_3700
      * @tc.name testUint8ClampedArrayFillTwo037
      * @tc.desc Verify fill element at arr[2] equals 1 for array [1, 1, 1, 1]
@@ -667,6 +704,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_3800
      * @tc.name testUint8ClampedArrayFillTwo038
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3]
@@ -685,6 +723,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_3900
      * @tc.name testUint8ClampedArrayFillTwo039
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3]
@@ -703,6 +742,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_4000
      * @tc.name testUint8ClampedArrayFillTwo040
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3]
@@ -721,6 +761,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_4100
      * @tc.name testUint8ClampedArrayFillTwo041
      * @tc.desc Verify fill element at arr[0] equals 0 for array [0, 0, 0]
@@ -739,6 +780,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[1] equals 0 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_4200
      * @tc.name testUint8ClampedArrayFillTwo042
      * @tc.desc Verify fill element at arr[1] equals 0 for array [0, 0, 0, 0]
@@ -758,6 +800,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 3 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_4300
      * @tc.name testUint8ClampedArrayFillTwo043
      * @tc.desc Verify fill element at arr[0] equals 3 for array [0, 0, 0]
@@ -776,6 +819,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 2 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_4400
      * @tc.name testUint8ClampedArrayFillTwo044
      * @tc.desc Verify fill element at arr[0] equals 2 for array [0, 0, 0]
@@ -794,6 +838,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 5 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_4500
      * @tc.name testUint8ClampedArrayFillTwo045
      * @tc.desc Verify fill element at arr[0] equals 5 for array [0, 0, 0]
@@ -812,6 +857,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 4 for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_4600
      * @tc.name testUint8ClampedArrayFillTwo046
      * @tc.desc Verify fill element at arr[0] equals 4 for array [0, 0]
@@ -830,6 +876,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[2] equals 3 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_4700
      * @tc.name testUint8ClampedArrayFillTwo047
      * @tc.desc Verify fill element at arr[2] equals 3 for array [0, 0, 0]
@@ -847,6 +894,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 7 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_4800
      * @tc.name testUint8ClampedArrayFillTwo048
      * @tc.desc Verify fill element at arr[0] equals 7 for array [0, 0, 0]
@@ -865,6 +913,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[2] equals 5 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_4900
      * @tc.name testUint8ClampedArrayFillTwo049
      * @tc.desc Verify fill element at arr[2] equals 5 for array [0, 0, 0, 0]
@@ -883,6 +932,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[2] equals 6 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_5000
      * @tc.name testUint8ClampedArrayFillTwo050
      * @tc.desc Verify fill element at arr[2] equals 6 for array [0, 0, 0]
@@ -900,6 +950,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[2] equals 8 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_5100
      * @tc.name testUint8ClampedArrayFillTwo051
      * @tc.desc Verify fill element at arr[2] equals 8 for array [0, 0, 0]
@@ -917,6 +968,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[2] equals 9 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_5200
      * @tc.name testUint8ClampedArrayFillTwo052
      * @tc.desc Verify fill element at arr[2] equals 9 for array [0, 0, 0, 0]
@@ -935,6 +987,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[1] equals 7 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_5300
      * @tc.name testUint8ClampedArrayFillTwo053
      * @tc.desc Verify fill element at arr[1] equals 7 for array [0, 0, 0, 0]
@@ -953,6 +1006,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_5400
      * @tc.name testUint8ClampedArrayFillTwo054
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3]
@@ -971,6 +1025,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_5500
      * @tc.name testUint8ClampedArrayFillTwo055
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3]
@@ -989,6 +1044,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_5600
      * @tc.name testUint8ClampedArrayFillTwo056
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2]
@@ -1007,6 +1063,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_5700
      * @tc.name testUint8ClampedArrayFillTwo057
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3]
@@ -1025,6 +1082,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_5800
      * @tc.name testUint8ClampedArrayFillTwo058
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3]
@@ -1044,6 +1102,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_5900
      * @tc.name testUint8ClampedArrayFillTwo059
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3]
@@ -1062,6 +1121,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_6000
      * @tc.name testUint8ClampedArrayFillTwo060
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3]
@@ -1081,6 +1141,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_6100
      * @tc.name testUint8ClampedArrayFillTwo061
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3]
@@ -1099,6 +1160,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify start=-1 end=-2 no-op start>end
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_6200
      * @tc.name testUint8ClampedArrayFillTwo062
      * @tc.desc Verify start=-1 end=-2 no-op start>end
@@ -1117,6 +1179,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify start=length end=length no-op
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_6300
      * @tc.name testUint8ClampedArrayFillTwo063
      * @tc.desc Verify start=length end=length no-op
@@ -1135,6 +1198,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_6400
      * @tc.name testUint8ClampedArrayFillTwo064
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2]
@@ -1153,6 +1217,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[1] equals 0 for array [0, 0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_6500
      * @tc.name testUint8ClampedArrayFillTwo065
      * @tc.desc Verify fill element at arr[1] equals 0 for array [0, 0, 0, 0, 0]
@@ -1173,6 +1238,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 5 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_6600
      * @tc.name testUint8ClampedArrayFillTwo066
      * @tc.desc Verify fill element at arr[0] equals 5 for array [0, 0, 0, 0]
@@ -1191,6 +1257,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_6700
      * @tc.name testUint8ClampedArrayFillTwo067
      * @tc.desc Verify fill element at arr[0] equals 0 for array [0, 0, 0]
@@ -1210,6 +1277,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill ret equals arr for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_6800
      * @tc.name testUint8ClampedArrayFillTwo068
      * @tc.desc Verify fill ret equals arr for array [0, 0, 0]
@@ -1227,6 +1295,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill yields length 4 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_6900
      * @tc.name testUint8ClampedArrayFillTwo069
      * @tc.desc Verify fill yields length 4 for array [0, 0, 0, 0]
@@ -1244,6 +1313,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill buffer reference matches for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_7000
      * @tc.name testUint8ClampedArrayFillTwo070
      * @tc.desc Verify fill buffer reference matches for array [0, 0]
@@ -1261,6 +1331,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill yields byteOffset arr.byteOffset for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_7100
      * @tc.name testUint8ClampedArrayFillTwo071
      * @tc.desc Verify fill yields byteOffset arr.byteOffset for array [0, 0]
@@ -1278,6 +1349,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill yields byteLength arr.byteLength for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_7200
      * @tc.name testUint8ClampedArrayFillTwo072
      * @tc.desc Verify fill yields byteLength arr.byteLength for array [0, 0, 0]
@@ -1295,6 +1367,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at ret[0] equals 1 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_7300
      * @tc.name testUint8ClampedArrayFillTwo073
      * @tc.desc Verify fill element at ret[0] equals 1 for array [0, 0, 0, 0]
@@ -1313,6 +1386,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill ret equals arr for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_7400
      * @tc.name testUint8ClampedArrayFillTwo074
      * @tc.desc Verify fill ret equals arr for empty array
@@ -1330,6 +1404,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill ret equals arr for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_7500
      * @tc.name testUint8ClampedArrayFillTwo075
      * @tc.desc Verify fill ret equals arr for array [1, 2, 3]
@@ -1347,6 +1422,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill yields length 0 for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_7600
      * @tc.name testUint8ClampedArrayFillTwo076
      * @tc.desc Verify fill yields length 0 for empty array
@@ -1364,6 +1440,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill yields length 0 for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_7700
      * @tc.name testUint8ClampedArrayFillTwo077
      * @tc.desc Verify fill yields length 0 for empty array
@@ -1381,6 +1458,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill yields length 0 for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_7800
      * @tc.name testUint8ClampedArrayFillTwo078
      * @tc.desc Verify fill yields length 0 for empty array
@@ -1398,6 +1476,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill yields length 0 for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_7900
      * @tc.name testUint8ClampedArrayFillTwo079
      * @tc.desc Verify fill yields length 0 for empty array
@@ -1415,6 +1494,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill yields length 0 for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_8000
      * @tc.name testUint8ClampedArrayFillTwo080
      * @tc.desc Verify fill yields length 0 for empty array
@@ -1432,6 +1512,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill yields length 0 for empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_8100
      * @tc.name testUint8ClampedArrayFillTwo081
      * @tc.desc Verify fill yields length 0 for empty array
@@ -1451,6 +1532,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_8200
      * @tc.name testUint8ClampedArrayFillTwo082
      * @tc.desc Verify fill element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -1471,6 +1553,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 10 for array [10, 20, 30, 40]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_8300
      * @tc.name testUint8ClampedArrayFillTwo083
      * @tc.desc Verify fill element at arr[0] equals 10 for array [10, 20, 30, 40]
@@ -1491,6 +1574,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 5 for array [5, 5, 5, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_8400
      * @tc.name testUint8ClampedArrayFillTwo084
      * @tc.desc Verify fill element at arr[0] equals 5 for array [5, 5, 5, 5]
@@ -1511,6 +1595,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 255 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_8500
      * @tc.name testUint8ClampedArrayFillTwo085
      * @tc.desc Verify fill element at arr[0] equals 255 for array [0, 0, 0, 0]
@@ -1530,6 +1615,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [100, 100, 100]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_8600
      * @tc.name testUint8ClampedArrayFillTwo086
      * @tc.desc Verify fill element at arr[0] equals 0 for array [100, 100, 100]
@@ -1549,6 +1635,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 255 for array [0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_8700
      * @tc.name testUint8ClampedArrayFillTwo087
      * @tc.desc Verify fill element at arr[0] equals 255 for array [0, 0, 0, 0]
@@ -1569,6 +1656,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 255 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_8800
      * @tc.name testUint8ClampedArrayFillTwo088
      * @tc.desc Verify fill element at arr[0] equals 255 for array [1, 2, 3, 4, 5]
@@ -1587,6 +1675,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 0 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_8900
      * @tc.name testUint8ClampedArrayFillTwo089
      * @tc.desc Verify fill element at arr[0] equals 0 for array [10, 20, 30]
@@ -1605,6 +1694,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 2 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_9000
      * @tc.name testUint8ClampedArrayFillTwo090
      * @tc.desc Verify fill element at arr[0] equals 2 for array [0, 0, 0]
@@ -1623,6 +1713,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 2 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_9100
      * @tc.name testUint8ClampedArrayFillTwo091
      * @tc.desc Verify fill element at arr[0] equals 2 for array [0, 0, 0]
@@ -1641,6 +1732,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at view[0] equals 7 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_9200
      * @tc.name testUint8ClampedArrayFillTwo092
      * @tc.desc Verify fill element at view[0] equals 7 for ArrayBuffer-backed array
@@ -1661,6 +1753,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify subarray element at arr[0] equals 1 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_9300
      * @tc.name testUint8ClampedArrayFillTwo093
      * @tc.desc Verify subarray element at arr[0] equals 1 for array [1, 2, 3, 4]
@@ -1682,6 +1775,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill buffer reference matches for array [0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_9400
      * @tc.name testUint8ClampedArrayFillTwo094
      * @tc.desc Verify fill buffer reference matches for array [0, 0]
@@ -1700,6 +1794,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at fullView[0] equals 0 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_9500
      * @tc.name testUint8ClampedArrayFillTwo095
      * @tc.desc Verify fill element at fullView[0] equals 0 for ArrayBuffer-backed array
@@ -1722,6 +1817,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 10 for array [10, 20, 30, 40, 50]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_9600
      * @tc.name testUint8ClampedArrayFillTwo096
      * @tc.desc Verify fill element at arr[0] equals 10 for array [10, 20, 30, 40, 50]
@@ -1741,6 +1837,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill yields length 3 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_9700
      * @tc.name testUint8ClampedArrayFillTwo097
      * @tc.desc Verify fill yields length 3 for array [1, 2, 3]
@@ -1758,6 +1855,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 8 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_9800
      * @tc.name testUint8ClampedArrayFillTwo098
      * @tc.desc Verify fill element at arr[0] equals 8 for array [0, 0, 0]
@@ -1777,6 +1875,7 @@ public class Uint8ClampedArrayFill02Test extends BasTest {
 
     /**
      * Verify fill element at arr[0] equals 3 for array [0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILL_TWO_9900
      * @tc.name testUint8ClampedArrayFillTwo099
      * @tc.desc Verify fill element at arr[0] equals 3 for array [0, 0, 0]

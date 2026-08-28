@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayAtTest extends BasTest {
     /**
      * Verify at(0) returns the first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_0100
      * @tc.name testUint8ClampedArrayAt001
      * @tc.desc Verify at(0) returns the first element
@@ -46,6 +47,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(1) returns the second element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_0200
      * @tc.name testUint8ClampedArrayAt002
      * @tc.desc Verify at(1) returns the second element
@@ -62,6 +64,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(length - 1) returns the last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_0300
      * @tc.name testUint8ClampedArrayAt003
      * @tc.desc Verify at(length - 1) returns the last element
@@ -78,6 +81,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(length) returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_0400
      * @tc.name testUint8ClampedArrayAt004
      * @tc.desc Verify at(length) returns undefined
@@ -94,6 +98,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-1) returns the last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_0500
      * @tc.name testUint8ClampedArrayAt005
      * @tc.desc Verify at(-1) returns the last element
@@ -110,6 +115,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-2) returns the second last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_0600
      * @tc.name testUint8ClampedArrayAt006
      * @tc.desc Verify at(-2) returns the second last element
@@ -126,6 +132,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-length - 1) returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_0700
      * @tc.name testUint8ClampedArrayAt007
      * @tc.desc Verify at(-length - 1) returns undefined
@@ -142,6 +149,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(INT_MAX) returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_0800
      * @tc.name testUint8ClampedArrayAt008
      * @tc.desc Verify at(INT_MAX) returns undefined
@@ -158,6 +166,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(INT_MIN) returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_0900
      * @tc.name testUint8ClampedArrayAt009
      * @tc.desc Verify at(INT_MIN) returns undefined
@@ -174,6 +183,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0x7FFFFFFF) returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_1000
      * @tc.name testUint8ClampedArrayAt010
      * @tc.desc Verify at(0x7FFFFFFF) returns undefined
@@ -190,6 +200,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(INT_MAX - 1) returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_1100
      * @tc.name testUint8ClampedArrayAt011
      * @tc.desc Verify at(INT_MAX - 1) returns undefined
@@ -206,6 +217,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(INT_MIN + 1) returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_1200
      * @tc.name testUint8ClampedArrayAt012
      * @tc.desc Verify at(INT_MIN + 1) returns undefined
@@ -222,6 +234,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(1000000) returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_1300
      * @tc.name testUint8ClampedArrayAt013
      * @tc.desc Verify at(1000000) returns undefined
@@ -238,6 +251,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-1000000) returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_1400
      * @tc.name testUint8ClampedArrayAt014
      * @tc.desc Verify at(-1000000) returns undefined
@@ -254,6 +268,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at arr.at(65535) equals undefined for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_1500
      * @tc.name testUint8ClampedArrayAt015
      * @tc.desc Verify at arr.at(65535) equals undefined for array [1, 2, 3]
@@ -270,6 +285,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-65535) returns undefined
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_1600
      * @tc.name testUint8ClampedArrayAt016
      * @tc.desc Verify at(-65535) returns undefined
@@ -286,6 +302,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0x0) returns the first element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_1700
      * @tc.name testUint8ClampedArrayAt017
      * @tc.desc Verify at(0x0) returns the first element
@@ -302,6 +319,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0x1) returns the second element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_1800
      * @tc.name testUint8ClampedArrayAt018
      * @tc.desc Verify at(0x1) returns the second element
@@ -318,6 +336,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0xA) returns the eleventh element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_1900
      * @tc.name testUint8ClampedArrayAt019
      * @tc.desc Verify at(0xA) returns the eleventh element
@@ -334,6 +353,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0o2) returns the third element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_2000
      * @tc.name testUint8ClampedArrayAt020
      * @tc.desc Verify at(0o2) returns the third element
@@ -350,6 +370,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0b10) returns the third element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_2100
      * @tc.name testUint8ClampedArrayAt021
      * @tc.desc Verify at(0b10) returns the third element
@@ -366,6 +387,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0b11) returns undefined when index equals length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_2200
      * @tc.name testUint8ClampedArrayAt022
      * @tc.desc Verify at(0b11) returns undefined when index equals length
@@ -382,6 +404,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0o7) returns undefined when index equals length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_2300
      * @tc.name testUint8ClampedArrayAt023
      * @tc.desc Verify at(0o7) returns undefined when index equals length
@@ -398,6 +421,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0) returns undefined for an empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_2400
      * @tc.name testUint8ClampedArrayAt024
      * @tc.desc Verify at(0) returns undefined for an empty array
@@ -414,6 +438,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-1) returns undefined for an empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_2500
      * @tc.name testUint8ClampedArrayAt025
      * @tc.desc Verify at(-1) returns undefined for an empty array
@@ -430,6 +455,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(1) returns undefined for an empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_2600
      * @tc.name testUint8ClampedArrayAt026
      * @tc.desc Verify at(1) returns undefined for an empty array
@@ -446,6 +472,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(INT_MAX) returns undefined for an empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_2700
      * @tc.name testUint8ClampedArrayAt027
      * @tc.desc Verify at(INT_MAX) returns undefined for an empty array
@@ -462,6 +489,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(INT_MIN) returns undefined for an empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_2800
      * @tc.name testUint8ClampedArrayAt028
      * @tc.desc Verify at(INT_MIN) returns undefined for an empty array
@@ -478,6 +506,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(255) returns 255 in a 256-length array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_2900
      * @tc.name testUint8ClampedArrayAt029
      * @tc.desc Verify at(255) returns 255 in a 256-length array
@@ -497,6 +526,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-1) returns 255 in a 256-length array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_3000
      * @tc.name testUint8ClampedArrayAt030
      * @tc.desc Verify at(-1) returns 255 in a 256-length array
@@ -516,6 +546,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0) returns 0 in a 256-length array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_3100
      * @tc.name testUint8ClampedArrayAt031
      * @tc.desc Verify at(0) returns 0 in a 256-length array
@@ -535,6 +566,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-256) returns 0 in a 256-length array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_3200
      * @tc.name testUint8ClampedArrayAt032
      * @tc.desc Verify at(-256) returns 0 in a 256-length array
@@ -554,6 +586,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(256) returns undefined in a 256-length array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_3300
      * @tc.name testUint8ClampedArrayAt033
      * @tc.desc Verify at(256) returns undefined in a 256-length array
@@ -573,6 +606,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-257) returns undefined in a 256-length array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_3400
      * @tc.name testUint8ClampedArrayAt034
      * @tc.desc Verify at(-257) returns undefined in a 256-length array
@@ -592,6 +626,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(512) returns the stored value 0 in a 1024-length array filled with cyclic byte values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_3500
      * @tc.name testUint8ClampedArrayAt035
      * @tc.desc Verify at(512) returns the stored value 0 in a 1024-length array filled with cyclic byte values
@@ -611,6 +646,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(1023) returns 255 in a 1024-length array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_3600
      * @tc.name testUint8ClampedArrayAt036
      * @tc.desc Verify at(1023) returns 255 in a 1024-length array
@@ -630,6 +666,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-1024) returns 0 in a 1024-length array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_3700
      * @tc.name testUint8ClampedArrayAt037
      * @tc.desc Verify at(-1024) returns 0 in a 1024-length array
@@ -649,6 +686,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify value 256 is clamped to 255 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_3800
      * @tc.name testUint8ClampedArrayAt038
      * @tc.desc Verify value 256 is clamped to 255 and returned by at(0)
@@ -666,6 +704,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify value -1 is clamped to 0 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_3900
      * @tc.name testUint8ClampedArrayAt039
      * @tc.desc Verify value -1 is clamped to 0 and returned by at(0)
@@ -683,6 +722,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify NaN is clamped to 0 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_4000
      * @tc.name testUint8ClampedArrayAt040
      * @tc.desc Verify NaN is clamped to 0 and returned by at(0)
@@ -700,6 +740,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify positive infinity is clamped to 255 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_4100
      * @tc.name testUint8ClampedArrayAt041
      * @tc.desc Verify positive infinity is clamped to 255 and returned by at(0)
@@ -717,6 +758,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify negative infinity is clamped to 0 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_4200
      * @tc.name testUint8ClampedArrayAt042
      * @tc.desc Verify negative infinity is clamped to 0 and returned by at(0)
@@ -734,6 +776,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify 127.5 is rounded to even value 128 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_4300
      * @tc.name testUint8ClampedArrayAt043
      * @tc.desc Verify 127.5 is rounded to even value 128 and returned by at(0)
@@ -751,6 +794,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify 128.5 is rounded to even value 128 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_4400
      * @tc.name testUint8ClampedArrayAt044
      * @tc.desc Verify 128.5 is rounded to even value 128 and returned by at(0)
@@ -768,6 +812,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify 0.5 is rounded to even value 0 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_4500
      * @tc.name testUint8ClampedArrayAt045
      * @tc.desc Verify 0.5 is rounded to even value 0 and returned by at(0)
@@ -785,6 +830,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify 0.9 is rounded to 1 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_4600
      * @tc.name testUint8ClampedArrayAt046
      * @tc.desc Verify 0.9 is rounded to 1 and returned by at(0)
@@ -802,6 +848,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify 0.4 is rounded to 0 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_4700
      * @tc.name testUint8ClampedArrayAt047
      * @tc.desc Verify 0.4 is rounded to 0 and returned by at(0)
@@ -819,6 +866,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify 1e9 is clamped to 255 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_4800
      * @tc.name testUint8ClampedArrayAt048
      * @tc.desc Verify 1e9 is clamped to 255 and returned by at(0)
@@ -836,6 +884,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify -1e9 is clamped to 0 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_4900
      * @tc.name testUint8ClampedArrayAt049
      * @tc.desc Verify -1e9 is clamped to 0 and returned by at(0)
@@ -853,6 +902,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify Number.MAX_VALUE is clamped to 255 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_5000
      * @tc.name testUint8ClampedArrayAt050
      * @tc.desc Verify Number.MAX_VALUE is clamped to 255 and returned by at(0)
@@ -870,6 +920,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify Number.MIN_VALUE is rounded to 0 and returned by at(0)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_5100
      * @tc.name testUint8ClampedArrayAt051
      * @tc.desc Verify Number.MIN_VALUE is rounded to 0 and returned by at(0)
@@ -887,6 +938,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0) reads the first element from an ArrayBuffer view
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_5200
      * @tc.name testUint8ClampedArrayAt052
      * @tc.desc Verify at(0) reads the first element from an ArrayBuffer view
@@ -904,6 +956,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-1) reads the last element from an ArrayBuffer view
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_5300
      * @tc.name testUint8ClampedArrayAt053
      * @tc.desc Verify at(-1) reads the last element from an ArrayBuffer view
@@ -921,6 +974,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(length) returns undefined for an ArrayBuffer view with byteOffset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_5400
      * @tc.name testUint8ClampedArrayAt054
      * @tc.desc Verify at(length) returns undefined for an ArrayBuffer view with byteOffset
@@ -938,6 +992,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0) returns undefined for a zero-length ArrayBuffer view
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_5500
      * @tc.name testUint8ClampedArrayAt055
      * @tc.desc Verify at(0) returns undefined for a zero-length ArrayBuffer view
@@ -955,6 +1010,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-1) returns 0 for a one-byte ArrayBuffer view
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_5600
      * @tc.name testUint8ClampedArrayAt056
      * @tc.desc Verify at(-1) returns 0 for a one-byte ArrayBuffer view
@@ -972,6 +1028,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0) returns the first element value 10 for array [10, 20]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_5700
      * @tc.name testUint8ClampedArrayAt057
      * @tc.desc Verify at(0) returns the first element value 10 for array [10, 20]
@@ -989,6 +1046,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(99) returns undefined for an out-of-range index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_5800
      * @tc.name testUint8ClampedArrayAt058
      * @tc.desc Verify at(99) returns undefined for an out-of-range index
@@ -1006,6 +1064,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0) returns undefined for an empty array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_5900
      * @tc.name testUint8ClampedArrayAt059
      * @tc.desc Verify at(0) returns undefined for an empty array
@@ -1023,6 +1082,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(1) returns the same value as bracket access
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_6000
      * @tc.name testUint8ClampedArrayAt060
      * @tc.desc Verify at(1) returns the same value as bracket access
@@ -1039,6 +1099,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(0) returns the same value as bracket access
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_6100
      * @tc.name testUint8ClampedArrayAt061
      * @tc.desc Verify at(0) returns the same value as bracket access
@@ -1055,6 +1116,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-1) returns the same value as arr[length - 1]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_6200
      * @tc.name testUint8ClampedArrayAt062
      * @tc.desc Verify at(-1) returns the same value as arr[length - 1]
@@ -1071,6 +1133,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at(-2) returns the same value as arr[length - 2]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_6300
      * @tc.name testUint8ClampedArrayAt063
      * @tc.desc Verify at(-2) returns the same value as arr[length - 2]
@@ -1087,6 +1150,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify repeated at(1) calls return the same value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_6400
      * @tc.name testUint8ClampedArrayAt064
      * @tc.desc Verify repeated at(1) calls return the same value
@@ -1106,6 +1170,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at() returns filled values after fill()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_6500
      * @tc.name testUint8ClampedArrayAt065
      * @tc.desc Verify at() returns filled values after fill()
@@ -1125,6 +1190,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify assigned value -5 is clamped to 0 and returned by at(1)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_6600
      * @tc.name testUint8ClampedArrayAt066
      * @tc.desc Verify assigned value -5 is clamped to 0 and returned by at(1)
@@ -1142,6 +1208,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify assigned value 300 is clamped to 255 and returned by at(-2)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_6700
      * @tc.name testUint8ClampedArrayAt067
      * @tc.desc Verify assigned value 300 is clamped to 255 and returned by at(-2)
@@ -1159,6 +1226,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at() returns updated values after copyWithin()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_6800
      * @tc.name testUint8ClampedArrayAt068
      * @tc.desc Verify at() returns updated values after copyWithin()
@@ -1177,6 +1245,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at() returns updated first and last values after reverse()
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_6900
      * @tc.name testUint8ClampedArrayAt069
      * @tc.desc Verify at() returns updated first and last values after reverse()
@@ -1195,6 +1264,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify subarray at(0) and at(-1) return expected view values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_7000
      * @tc.name testUint8ClampedArrayAt070
      * @tc.desc Verify subarray at(0) and at(-1) return expected view values
@@ -1213,6 +1283,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify subarray modification is reflected in parent at(1)
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_7100
      * @tc.name testUint8ClampedArrayAt071
      * @tc.desc Verify subarray modification is reflected in parent at(1)
@@ -1231,6 +1302,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify slice at(0) keeps copied value after parent modification
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_7200
      * @tc.name testUint8ClampedArrayAt072
      * @tc.desc Verify slice at(0) keeps copied value after parent modification
@@ -1249,6 +1321,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify at() result can be converted and reused as an index
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_7300
      * @tc.name testUint8ClampedArrayAt073
      * @tc.desc Verify at() result can be converted and reused as an index
@@ -1266,6 +1339,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify summing values with forward at() iteration
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_7400
      * @tc.name testUint8ClampedArrayAt074
      * @tc.desc Verify summing values with forward at() iteration
@@ -1286,6 +1360,7 @@ public class Uint8ClampedArrayAtTest extends BasTest {
 
     /**
      * Verify summing values with reverse negative at() iteration
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_AT_7500
      * @tc.name testUint8ClampedArrayAt075
      * @tc.desc Verify summing values with reverse negative at() iteration

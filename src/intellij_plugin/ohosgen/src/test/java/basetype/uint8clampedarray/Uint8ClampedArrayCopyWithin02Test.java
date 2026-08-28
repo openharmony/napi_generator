@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     /**
      * Verify copyWithin(0,3) returns the receiver and copies the trailing values
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0100
      * @tc.name testUint8ClampedArrayCopyWithinTwo001
      * @tc.desc Verify copyWithin(0,3) returns the receiver and copies the trailing values
@@ -48,6 +49,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin(0,1) result arr[0] equals 20
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0200
      * @tc.name testUint8ClampedArrayCopyWithinTwo002
      * @tc.desc Verify copyWithin(0,1) result arr[0] equals 20
@@ -65,6 +67,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin(0,2,5) returns the receiver and respects the end bound
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0300
      * @tc.name testUint8ClampedArrayCopyWithinTwo003
      * @tc.desc Verify copyWithin(0,2,5) returns the receiver and respects the end bound
@@ -85,6 +88,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin on an empty array returns the unchanged receiver
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0400
      * @tc.name testUint8ClampedArrayCopyWithinTwo004
      * @tc.desc Verify copyWithin on an empty array returns the unchanged receiver
@@ -103,6 +107,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin(0,0) returns the receiver without changing its only value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0500
      * @tc.name testUint8ClampedArrayCopyWithinTwo005
      * @tc.desc Verify copyWithin(0,0) returns the receiver without changing its only value
@@ -121,6 +126,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify an inverted copyWithin source range leaves the receiver unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0600
      * @tc.name testUint8ClampedArrayCopyWithinTwo006
      * @tc.desc Verify an inverted copyWithin source range leaves the receiver unchanged
@@ -140,6 +146,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify a negative copyWithin target writes at the resolved receiver offset
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0700
      * @tc.name testUint8ClampedArrayCopyWithinTwo007
      * @tc.desc Verify a negative copyWithin target writes at the resolved receiver offset
@@ -159,6 +166,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin(0,-2) result arr[0] equals 7
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0800
      * @tc.name testUint8ClampedArrayCopyWithinTwo008
      * @tc.desc Verify copyWithin(0,-2) result arr[0] equals 7
@@ -176,6 +184,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify a negative copyWithin end excludes the final source element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_0900
      * @tc.name testUint8ClampedArrayCopyWithinTwo009
      * @tc.desc Verify a negative copyWithin end excludes the final source element
@@ -196,6 +205,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin returns receiver and modifies array correctly
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1000
      * @tc.name testUint8ClampedArrayCopyWithinTwo010
      * @tc.desc Verify copyWithin returns receiver and modifies array correctly
@@ -216,6 +226,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at arr[2] equals 100 for array [1e2, 0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1100
      * @tc.name testUint8ClampedArrayCopyWithinTwo011
      * @tc.desc Verify copyWithin element at arr[2] equals 100 for array [1e2, 0, 0, 0, 0]
@@ -233,6 +244,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin r equals arr for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1200
      * @tc.name testUint8ClampedArrayCopyWithinTwo012
      * @tc.desc Verify copyWithin r equals arr for array [1, 2, 3, 4]
@@ -250,6 +262,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin r.length === arr.length
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1300
      * @tc.name testUint8ClampedArrayCopyWithinTwo013
      * @tc.desc Verify copyWithin r.length === arr.length
@@ -267,6 +280,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin r.buffer === arr.buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1400
      * @tc.name testUint8ClampedArrayCopyWithinTwo014
      * @tc.desc Verify copyWithin r.buffer === arr.buffer
@@ -284,6 +298,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin r equals arr for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1500
      * @tc.name testUint8ClampedArrayCopyWithinTwo015
      * @tc.desc Verify copyWithin r equals arr for array [1, 2, 3, 4, 5]
@@ -301,6 +316,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin yields byteLength 5 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1600
      * @tc.name testUint8ClampedArrayCopyWithinTwo016
      * @tc.desc Verify copyWithin yields byteLength 5 for array [1, 2, 3, 4, 5]
@@ -318,6 +334,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin yields byteOffset 0 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1700
      * @tc.name testUint8ClampedArrayCopyWithinTwo017
      * @tc.desc Verify copyWithin yields byteOffset 0 for array [1, 2, 3, 4]
@@ -335,6 +352,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin byteOffset ArrayBuffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1800
      * @tc.name testUint8ClampedArrayCopyWithinTwo018
      * @tc.desc Verify copyWithin byteOffset ArrayBuffer
@@ -353,6 +371,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin arr.buffer buffer
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_1900
      * @tc.name testUint8ClampedArrayCopyWithinTwo019
      * @tc.desc Verify copyWithin arr.buffer buffer
@@ -371,6 +390,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at b[0] equals 30 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2000
      * @tc.name testUint8ClampedArrayCopyWithinTwo020
      * @tc.desc Verify copyWithin element at b[0] equals 30 for ArrayBuffer-backed array
@@ -394,6 +414,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify r arr element consistency after copyWithin
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2100
      * @tc.name testUint8ClampedArrayCopyWithinTwo021
      * @tc.desc Verify r arr element consistency after copyWithin
@@ -412,6 +433,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify a no-op copyWithin leaves the first element unchanged
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2200
      * @tc.name testUint8ClampedArrayCopyWithinTwo022
      * @tc.desc Verify a no-op copyWithin leaves the first element unchanged
@@ -429,6 +451,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at r[1] equals 8 for array [7, 8, 9]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2300
      * @tc.name testUint8ClampedArrayCopyWithinTwo023
      * @tc.desc Verify copyWithin element at r[1] equals 8 for array [7, 8, 9]
@@ -446,6 +469,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at r[2] equals 9 for array [7, 8, 9]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2400
      * @tc.name testUint8ClampedArrayCopyWithinTwo024
      * @tc.desc Verify copyWithin element at r[2] equals 9 for array [7, 8, 9]
@@ -463,6 +487,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin shared buffer visibility
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2500
      * @tc.name testUint8ClampedArrayCopyWithinTwo025
      * @tc.desc Verify copyWithin shared buffer visibility
@@ -487,6 +512,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at b[1] equals 5 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2600
      * @tc.name testUint8ClampedArrayCopyWithinTwo026
      * @tc.desc Verify copyWithin element at b[1] equals 5 for ArrayBuffer-backed array
@@ -511,6 +537,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at b[2] equals 3 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2700
      * @tc.name testUint8ClampedArrayCopyWithinTwo027
      * @tc.desc Verify copyWithin element at b[2] equals 3 for ArrayBuffer-backed array
@@ -535,6 +562,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin yields length 4 for ArrayBuffer-backed array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2800
      * @tc.name testUint8ClampedArrayCopyWithinTwo028
      * @tc.desc Verify copyWithin yields length 4 for ArrayBuffer-backed array
@@ -554,6 +582,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at arr[0] equals 200 for array [0, 0, 200, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_2900
      * @tc.name testUint8ClampedArrayCopyWithinTwo029
      * @tc.desc Verify copyWithin element at arr[0] equals 200 for array [0, 0, 200, 0]
@@ -571,6 +600,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at arr[0] equals 64 for array [0, 0, 64, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3000
      * @tc.name testUint8ClampedArrayCopyWithinTwo030
      * @tc.desc Verify copyWithin element at arr[0] equals 64 for array [0, 0, 64, 0]
@@ -588,6 +618,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin yields length 256 for length-256 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3100
      * @tc.name testUint8ClampedArrayCopyWithinTwo031
      * @tc.desc Verify copyWithin yields length 256 for length-256 array
@@ -608,6 +639,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at r[0] equals 128 for length-256 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3200
      * @tc.name testUint8ClampedArrayCopyWithinTwo032
      * @tc.desc Verify copyWithin element at r[0] equals 128 for length-256 array
@@ -628,6 +660,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at r[127] equals 255 for length-256 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3300
      * @tc.name testUint8ClampedArrayCopyWithinTwo033
      * @tc.desc Verify copyWithin element at r[127] equals 255 for length-256 array
@@ -648,6 +681,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at r[128] equals 128 for length-256 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3400
      * @tc.name testUint8ClampedArrayCopyWithinTwo034
      * @tc.desc Verify copyWithin element at r[128] equals 128 for length-256 array
@@ -668,6 +702,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin r equals arr for length-256 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3500
      * @tc.name testUint8ClampedArrayCopyWithinTwo035
      * @tc.desc Verify copyWithin r equals arr for length-256 array
@@ -685,6 +720,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin yields length 1024 for length-1024 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3600
      * @tc.name testUint8ClampedArrayCopyWithinTwo036
      * @tc.desc Verify copyWithin yields length 1024 for length-1024 array
@@ -702,6 +738,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin yields byteLength 1024 for length-1024 array
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3700
      * @tc.name testUint8ClampedArrayCopyWithinTwo037
      * @tc.desc Verify copyWithin yields byteLength 1024 for length-1024 array
@@ -719,6 +756,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at arr[2] equals 128 for array [0x80, 0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3800
      * @tc.name testUint8ClampedArrayCopyWithinTwo038
      * @tc.desc Verify copyWithin element at arr[2] equals 128 for array [0x80, 0, 0, 0, 0]
@@ -736,6 +774,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at arr[2] equals 255 for array [0xFF, 0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_3900
      * @tc.name testUint8ClampedArrayCopyWithinTwo039
      * @tc.desc Verify copyWithin element at arr[2] equals 255 for array [0xFF, 0, 0, 0, 0]
@@ -753,6 +792,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at arr[2] equals 255 for array [0b11111111, 0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_4000
      * @tc.name testUint8ClampedArrayCopyWithinTwo040
      * @tc.desc Verify copyWithin element at arr[2] equals 255 for array [0b11111111, 0, 0, 0, 0]
@@ -770,6 +810,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
 
     /**
      * Verify copyWithin element at arr[2] equals 255 for array [0o377, 0, 0, 0, 0]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_COPY_WITHIN_TWO_4100
      * @tc.name testUint8ClampedArrayCopyWithinTwo041
      * @tc.desc Verify copyWithin element at arr[2] equals 255 for array [0o377, 0, 0, 0, 0]

@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
 public class Uint8ClampedArrayFilter02Test extends BasTest {
     /**
      * Verify filter propagates TypeError thrown by the callback
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_0100
      * @tc.name testUint8ClampedArrayFilterTwo001
      * @tc.desc Verify filter propagates TypeError thrown by the callback
@@ -54,6 +55,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter propagates RangeError thrown by the callback
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_0200
      * @tc.name testUint8ClampedArrayFilterTwo002
      * @tc.desc Verify filter propagates RangeError thrown by the callback
@@ -77,6 +79,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter yields length 3 for array [0, 1, 2, 0, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_0300
      * @tc.name testUint8ClampedArrayFilterTwo003
      * @tc.desc Verify filter yields length 3 for array [0, 1, 2, 0, 3]
@@ -94,6 +97,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter reads mutated value when callback modifies source array mid-iteration
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_0400
      * @tc.name testUint8ClampedArrayFilterTwo004
      * @tc.desc Verify filter reads mutated value when callback modifies source array mid-iteration
@@ -116,6 +120,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter yields length 3 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_0500
      * @tc.name testUint8ClampedArrayFilterTwo005
      * @tc.desc Verify filter yields length 3 for array [1, 2, 3, 4, 5]
@@ -133,6 +138,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter yields length 0 for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_0600
      * @tc.name testUint8ClampedArrayFilterTwo006
      * @tc.desc Verify filter yields length 0 for array [1, 2, 3]
@@ -150,6 +156,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter map() adds 10 to first value
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_0700
      * @tc.name testUint8ClampedArrayFilterTwo007
      * @tc.desc Verify filter map() adds 10 to first value
@@ -168,6 +175,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter accumulated sum equals 12 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_0800
      * @tc.name testUint8ClampedArrayFilterTwo008
      * @tc.desc Verify filter accumulated sum equals 12 for array [1, 2, 3, 4, 5]
@@ -186,6 +194,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter accumulated sum equals 50 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_0900
      * @tc.name testUint8ClampedArrayFilterTwo009
      * @tc.desc Verify filter accumulated sum equals 50 for array [10, 20, 30]
@@ -207,6 +216,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter r.join(',') equals '2,3,4' for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1000
      * @tc.name testUint8ClampedArrayFilterTwo010
      * @tc.desc Verify filter r.join(',') equals '2,3,4' for array [1, 2, 3, 4]
@@ -224,6 +234,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter r.join(',') equals '' for array [1, 2, 3]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1100
      * @tc.name testUint8ClampedArrayFilterTwo011
      * @tc.desc Verify filter r.join(',') equals '' for array [1, 2, 3]
@@ -241,6 +252,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify subarray(0, 2) on filter result yields length 2 for array [1, 2, 3, 4, 5]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1200
      * @tc.name testUint8ClampedArrayFilterTwo012
      * @tc.desc Verify subarray(0, 2) on filter result yields length 2 for array [1, 2, 3, 4, 5]
@@ -259,6 +271,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter iterator value is 20 for array [10, 20, 30]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1300
      * @tc.name testUint8ClampedArrayFilterTwo013
      * @tc.desc Verify filter iterator value is 20 for array [10, 20, 30]
@@ -278,6 +291,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter iterator is done after consuming last element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1400
      * @tc.name testUint8ClampedArrayFilterTwo014
      * @tc.desc Verify filter iterator is done after consuming last element
@@ -297,6 +311,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter accumulated sum equals 9 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1500
      * @tc.name testUint8ClampedArrayFilterTwo015
      * @tc.desc Verify filter accumulated sum equals 9 for array [1, 2, 3, 4]
@@ -318,6 +333,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter r.indexOf(3) equals 1 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1600
      * @tc.name testUint8ClampedArrayFilterTwo016
      * @tc.desc Verify filter r.indexOf(3) equals 1 for array [1, 2, 3, 4]
@@ -335,6 +351,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter returns correct length and elements for predicate v >= 2 on [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1700
      * @tc.name testUint8ClampedArrayFilterTwo017
      * @tc.desc Verify filter returns correct length and elements for predicate v >= 2 on [1, 2, 3, 4]
@@ -355,6 +372,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify chained filter produces independent backing buffer for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1800
      * @tc.name testUint8ClampedArrayFilterTwo018
      * @tc.desc Verify chained filter produces independent backing buffer for array [1, 2, 3, 4]
@@ -373,6 +391,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify some finds value 3 in the filtered result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_1900
      * @tc.name testUint8ClampedArrayFilterTwo019
      * @tc.desc Verify some finds value 3 in the filtered result
@@ -390,6 +409,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify every confirms all filtered values are at least 2
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_2000
      * @tc.name testUint8ClampedArrayFilterTwo020
      * @tc.desc Verify every confirms all filtered values are at least 2
@@ -407,6 +427,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify find returns value 4 from the filtered result
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_2100
      * @tc.name testUint8ClampedArrayFilterTwo021
      * @tc.desc Verify find returns value 4 from the filtered result
@@ -424,6 +445,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify find returns undefined when filter rejects every element
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_2200
      * @tc.name testUint8ClampedArrayFilterTwo022
      * @tc.desc Verify find returns undefined when filter rejects every element
@@ -441,6 +463,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter r.at(0) equals 2 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_2300
      * @tc.name testUint8ClampedArrayFilterTwo023
      * @tc.desc Verify filter r.at(0) equals 2 for array [1, 2, 3, 4]
@@ -458,6 +481,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter r.at(-1) equals 4 for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_2400
      * @tc.name testUint8ClampedArrayFilterTwo024
      * @tc.desc Verify filter r.at(-1) equals 4 for array [1, 2, 3, 4]
@@ -475,6 +499,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter then slice produces independent backing buffer for array [1, 2, 3, 4]
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_2500
      * @tc.name testUint8ClampedArrayFilterTwo025
      * @tc.desc Verify filter then slice produces independent backing buffer for array [1, 2, 3, 4]
@@ -493,6 +518,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
 
     /**
      * Verify filter predicate v % 20 === 0 first value 20
+     *
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FILTER_TWO_2600
      * @tc.name testUint8ClampedArrayFilterTwo026
      * @tc.desc Verify filter predicate v % 20 === 0 first value 20
