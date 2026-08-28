@@ -583,7 +583,9 @@ public class Int16ArraySubarrayTest04 extends BasTest {
     @Test
     void testInt16ArraySubarrayTestFour051() {
     Int16Array arr = Int16Array.of(32767, 0, -1, -32768);
-    List<Integer> copy = java.util.Arrays.asList(arr.get((int) 0), arr.get((int) 1), arr.get((int) 2), arr.get((int) 3));
+    List<Integer> copy = java.util.Arrays.asList(
+        arr.get((int) 0), arr.get((int) 1), arr.get((int) 2), arr.get((int) 3)
+    );
     arr.subarray(1, 3);
     Integer actual1 = arr.get((int) 0);
     int expected1 = copy.get(0);

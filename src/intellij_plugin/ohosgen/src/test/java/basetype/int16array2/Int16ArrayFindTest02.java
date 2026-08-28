@@ -123,28 +123,28 @@ public class Int16ArrayFindTest02 extends BasTest {
     @Test
     void testInt16ArrayFindTestTwo013() {
     Int16Array arr = Int16Array.of(2, -1, 4, -1, 6);
-    Integer result = arr.find( (value, index, array) -> value == -1 );
+    Integer result = arr.find((value, index, array) -> value == -1);
     assertEqual(-1, result);
     }
 
     @Test
     void testInt16ArrayFindTestTwo014() {
     Int16Array arr = Int16Array.of(100, 32767, 200);
-    Integer result = arr.find( (value, index, array) -> value == 32767 );
+    Integer result = arr.find((value, index, array) -> value == 32767);
     assertEqual(32767, result);
     }
 
     @Test
     void testInt16ArrayFindTestTwo015() {
     Int16Array arr = Int16Array.of(50, -32768, 150);
-    Integer result = arr.find( (value, index, array) -> value == -32768 );
+    Integer result = arr.find((value, index, array) -> value == -32768);
     assertEqual(-32768, result);
     }
 
     @Test
     void testInt16ArrayFindTestTwo016() {
     Int16Array arr = Int16Array.of(-5, 100, -10, 50);
-    Integer result = arr.find( (value, index, array) -> value == 100 );
+    Integer result = arr.find((value, index, array) -> value == 100);
     assertEqual(100, result);
     }
 
@@ -158,28 +158,29 @@ public class Int16ArrayFindTest02 extends BasTest {
     @Test
     void testInt16ArrayFindTestTwo018() {
     Int16Array arr = Int16Array.of(5, 15, 25, 35, 45);
-    Integer result = arr.find( (value, index, array) -> index % 2 == 0 );
+    Integer result = arr.find((value, index, array) -> index % 2 == 0);
     assertEqual(5, result);
     }
 
     @Test
     void testInt16ArrayFindTestTwo019() {
     Int16Array arr = Int16Array.of(1, 3, 7, 10, 15);
-    Integer result = arr.find( (value, index, array) -> value > 5 && index > 1 );
+    Integer result = arr.find((value, index, array) -> value > 5 && index > 1);
     assertEqual(7, result);
     }
 
     @Test
     void testInt16ArrayFindTestTwo020() {
     Int16Array arr = Int16Array.of(3, 6, 9, 12, 15);
-    Integer result = arr.find( (value, index, array) -> value == array.length() * 3 );
+    Integer result = arr.find((value, index, array) -> value == array.length() * 3);
     assertEqual(15, result);
     }
 
     @Test
     void testInt16ArrayFindTestTwo021() {
     Int16Array arr = Int16Array.of(7, 14, 21);
-    Integer result = arr.find((value, index, array) -> { return array == arr && value > 10;
+    Integer result = arr.find((value, index, array) -> {
+        return array == arr && value > 10;
         });
     assertEqual(14, result);
     }
@@ -187,21 +188,21 @@ public class Int16ArrayFindTest02 extends BasTest {
     @Test
     void testInt16ArrayFindTestTwo022() {
     Int16Array arr = Int16Array.of(100, 200, 300);
-    Integer result = arr.find( (value, index, array) -> value > 32767 );
+    Integer result = arr.find((value, index, array) -> value > 32767);
     assertNull(result);
     }
 
     @Test
     void testInt16ArrayFindTestTwo023() {
     Int16Array arr = Int16Array.of(-100, -200, -300);
-    Integer result = arr.find( (value, index, array) -> value < -32768 );
+    Integer result = arr.find((value, index, array) -> value < -32768);
     assertNull(result);
     }
 
     @Test
     void testInt16ArrayFindTestTwo024() {
     Int16Array arr = Int16Array.of(1, 2, 3, 4, 5);
-    Integer result = arr.find( (value, index, array) -> value == 999 );
+    Integer result = arr.find((value, index, array) -> value == 999);
     assertNull(result);
     }
 
@@ -243,7 +244,7 @@ public class Int16ArrayFindTest02 extends BasTest {
     @Test
     void testInt16ArrayFindTestTwo029() {
     Int16Array arr = Int16Array.of(42);
-    Integer result = arr.find( (value, index, array) -> value == 42 );
+    Integer result = arr.find((value, index, array) -> value == 42);
     int actual1 = arr.length();
     assertEqual(1, actual1);
     }
@@ -282,7 +283,7 @@ public class Int16ArrayFindTest02 extends BasTest {
     void testInt16ArrayFindTestTwo033() {
     Int16Array arr = Int16Array.of(7, 14, 21, 28);
     int blBefore = arr.byteLength();
-    Integer result = arr.find( (value, index, array) -> value > 1000 );
+    Integer result = arr.find((value, index, array) -> value > 1000);
     int actual1 = arr.byteLength();
     int expected1 = blBefore;
     assertEqual(expected1, actual1);
@@ -307,7 +308,7 @@ public class Int16ArrayFindTest02 extends BasTest {
     @Test
     void testInt16ArrayFindTestTwo036() {
     Int16Array arr = Int16Array.of(10, 20, 30, 40, 50);
-    Integer result = arr.find( (value, index, array) -> value == 40 );
+    Integer result = arr.find((value, index, array) -> value == 40);
     Integer actual1 = arr.get(2);
     assertEqual(30, actual1);
     }
@@ -331,7 +332,7 @@ public class Int16ArrayFindTest02 extends BasTest {
     @Test
     void testInt16ArrayFindTestTwo039() {
     Int16Array arr = Int16Array.of(11, 22, 33, 44, 55);
-    Integer result = arr.find( (value, index, array) -> value == 44 );
+    Integer result = arr.find((value, index, array) -> value == 44);
     Integer actual1 = arr.get(1);
     assertEqual(22, actual1);
     }
@@ -354,7 +355,7 @@ public class Int16ArrayFindTest02 extends BasTest {
     @Test
     void testInt16ArrayFindTestTwo041() {
     Int16Array arr = Int16Array.of(7, 8, 9, 10, 11);
-    Integer result = arr.find( (value, index, array) -> value > 1000 );
+    Integer result = arr.find((value, index, array) -> value > 1000);
     boolean allMatch = true;
     List<Integer> expected = java.util.Arrays.asList(7, 8, 9, 10, 11);
     for (int i = 0; i < arr.length(); i++) {
@@ -417,7 +418,7 @@ public class Int16ArrayFindTest02 extends BasTest {
     @Test
     void testInt16ArrayFindTestTwo046() {
     Int16Array arr = Int16Array.of(32767);
-    Integer result = arr.find( (value, index, array) -> value == 32767 );
+    Integer result = arr.find((value, index, array) -> value == 32767);
     assertEqual(32767, result);
     }
 

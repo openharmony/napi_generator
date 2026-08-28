@@ -1522,7 +1522,8 @@ public class Int16ArrayFillTest04 extends BasTest {
     void testInt16ArrayFillTestFour094() {
     Int16Array arr = new Int16Array(new int[] {10, 20, 30, 40});
     arr.fill((int) 100, 1, 3);
-    Int16Array mapped = arr.map((v) -> { return v + 1;
+    Int16Array mapped = arr.map((v) -> {
+        return v + 1;
         });
     Integer actual1 = arr.get(1);
     int expected1 = (int) 100;

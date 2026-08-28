@@ -36,10 +36,10 @@ public class Int16ArrayFindTest01 extends BasTest {
     private static boolean matchTarget007(int value, int index, Int16Array array) {
     return value == 77;
     }
-    static class DummyObj_038 {
+    static class DummyObj038 {
         int tag;
 
-        DummyObj_038(int tag) {
+        DummyObj038(int tag) {
             this.tag = tag;
             }
     }
@@ -58,7 +58,7 @@ public class Int16ArrayFindTest01 extends BasTest {
     @Test
     void testInt16ArrayFindTestOne002() {
     Int16Array arr = new Int16Array(new int[] {5, 10, 15, 20, 25});
-    Integer result = arr.find( (value, index, array) -> value == 15 );
+    Integer result = arr.find((value, index, array) -> value == 15);
     assertEqual(15, result);
     }
 
@@ -97,7 +97,8 @@ public class Int16ArrayFindTest01 extends BasTest {
     @Test
     void testInt16ArrayFindTestOne007() {
     Int16Array arr = new Int16Array(new int[] {42, 84, 126});
-    Integer result = arr.find((value, index, array) -> { return true;
+    Integer result = arr.find((value, index, array) -> {
+        return true;
         });
     assertEqual(42, result);
     }
@@ -105,7 +106,8 @@ public class Int16ArrayFindTest01 extends BasTest {
     @Test
     void testInt16ArrayFindTestOne008() {
     Int16Array arr = new Int16Array(new int[] {55, 66, 77, 88});
-    Integer result = arr.find((value, index, array) -> { return index == 0 && value == 55;
+    Integer result = arr.find((value, index, array) -> {
+        return index == 0 && value == 55;
         });
     assertEqual(55, result);
     }
@@ -113,7 +115,8 @@ public class Int16ArrayFindTest01 extends BasTest {
     @Test
     void testInt16ArrayFindTestOne009() {
     Int16Array arr = new Int16Array(new int[] {7, 14, 21, 28});
-    Integer result = arr.find((value, index, array) -> { return index == 3 && value == 28;
+    Integer result = arr.find((value, index, array) -> {
+        return index == 3 && value == 28;
         });
     assertEqual(28, result);
     }
@@ -121,7 +124,8 @@ public class Int16ArrayFindTest01 extends BasTest {
     @Test
     void testInt16ArrayFindTestOne010() {
     Int16Array arr = new Int16Array(new int[] {99, 88, 77, 66});
-    Integer result = arr.find((value, index, array) -> { return index == 0;
+    Integer result = arr.find((value, index, array) -> {
+        return index == 0;
         });
     assertEqual(99, result);
     }
@@ -129,7 +133,8 @@ public class Int16ArrayFindTest01 extends BasTest {
     @Test
     void testInt16ArrayFindTestOne011() {
     Int16Array arr = new Int16Array(new int[] {111, 222, 333});
-    Integer result = arr.find((value, index, array) -> { return array instanceof Int16Array;
+    Integer result = arr.find((value, index, array) -> {
+        return array instanceof Int16Array;
         });
     assertEqual(111, result);
     }
@@ -149,7 +154,8 @@ public class Int16ArrayFindTest01 extends BasTest {
     @Test
     void testInt16ArrayFindTestOne013() {
     Int16Array arr = new Int16Array(new int[] {8, 16, 24, 32});
-    Integer result = arr.find((value, index, array) -> { return array.length() == 4;
+    Integer result = arr.find((value, index, array) -> {
+        return array.length() == 4;
         });
     assertEqual(8, result);
     }
@@ -164,7 +170,8 @@ public class Int16ArrayFindTest01 extends BasTest {
     @Test
     void testInt16ArrayFindTestOne015() {
     Int16Array arr = new Int16Array(new int[] {2, 4, 8, 16});
-    Integer result = arr.find((value, index, array) -> { return index > 0 && array.get(index - 1) == 4;
+    Integer result = arr.find((value, index, array) -> {
+        return index > 0 && array.get(index - 1) == 4;
         });
     assertEqual(8, result);
     }
@@ -186,7 +193,8 @@ public class Int16ArrayFindTest01 extends BasTest {
     @Test
     void testInt16ArrayFindTestOne018() {
     Int16Array arr = new Int16Array(new int[] {45, 90, 135, 180});
-    Integer result = arr.find((value, index, array) -> { return true;
+    Integer result = arr.find((value, index, array) -> {
+        return true;
         });
     assertEqual(45, result);
     }
@@ -195,7 +203,7 @@ public class Int16ArrayFindTest01 extends BasTest {
     void testInt16ArrayFindTestOne019() {
     Int16Array arr = new Int16Array(new int[] {29, 58, 87, 116});
     Integer result = arr.find((value, index, array) -> {
-        DummyObj_038 obj = new DummyObj_038(1 );
+        DummyObj038 obj = new DummyObj038(1 );
         return obj.tag == 1;
     });
     assertEqual(29, result);
@@ -204,7 +212,8 @@ public class Int16ArrayFindTest01 extends BasTest {
     @Test
     void testInt16ArrayFindTestOne020() {
     Int16Array arr = new Int16Array(new int[] {37, 74, 111, 148});
-    Integer result = arr.find((value, index, array) -> { return false;
+    Integer result = arr.find((value, index, array) -> {
+        return false;
         });
     assertNull(result);
     }
@@ -339,8 +348,10 @@ public class Int16ArrayFindTest01 extends BasTest {
     void testInt16ArrayFindTestOne037() {
     Int16Array arr = new Int16Array(new int[] {1, 2, 3, 4, 5});
     Integer result = arr.find((value, index, array) -> {
-        if (index == 0) { array.set(2, 999);
-        } return value == 999;
+        if (index == 0) {
+            array.set(2, 999);
+        }
+        return value == 999;
     });
     assertEqual(999, result);
     }
@@ -378,7 +389,7 @@ public class Int16ArrayFindTest01 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {1, 2, 3, 4, 5});
     try {
     arr.find((value) -> {
-    throw new Error("predicate error");
+    return BasTest.throwTestError("predicate error");
         });
     fail();
     } catch (Error e) {
@@ -394,7 +405,7 @@ public class Int16ArrayFindTest01 extends BasTest {
     arr.find((value) -> {
     callIdx[0]++;
     if (callIdx[0] == 2) {
-    throw new Error("second call error");
+    return BasTest.throwTestError("second call error");
     }
     return false;
         });
@@ -410,7 +421,7 @@ public class Int16ArrayFindTest01 extends BasTest {
     try {
     arr.find((value, index) -> {
     if (index == 2) {
-    throw new Error("middle error");
+    return BasTest.throwTestError("middle error");
     }
     return false;
         });
@@ -426,7 +437,7 @@ public class Int16ArrayFindTest01 extends BasTest {
     try {
     arr.find((value, index, array) -> {
     if (index == array.length() - 1) {
-    throw new Error("last element error");
+    return BasTest.throwTestError("last element error");
     }
     return false;
         });
