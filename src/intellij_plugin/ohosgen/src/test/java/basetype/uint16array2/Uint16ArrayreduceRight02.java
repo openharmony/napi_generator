@@ -367,7 +367,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     @Test
     void testUint16ArrayReduceRightPart2044() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    int finalPrev = arr.reduceRight((prev, curr, idx, a) -> { return prev + curr;
+    int finalPrev = arr.reduceRight((prev, curr, idx, a) -> {
+        return prev + curr;
         });
     assertEqual(60, finalPrev);
     }
@@ -433,7 +434,7 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
     try {
     arr.reduceRight((prev, curr, idx, a) -> {
-    throw new Error("custom error");
+    return BasTest.throwTestError("custom error");
         });
     fail();
     } catch (Error e) {
@@ -606,7 +607,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     @Test
     void testUint16ArrayReduceRightPart2071() {
     Uint16Array a = Uint16Array.of(100, 10, 2);
-    double r = a.reduceRightDouble((p, v, array, unused3) -> { return p / v;
+    double r = a.reduceRightDouble((p, v, array, unused3) -> {
+        return p / v;
         });
     assertEqual(0.002, r);
     }
@@ -614,7 +616,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     @Test
     void testUint16ArrayReduceRightPart2072() {
     Uint16Array a = Uint16Array.of(20, 5, 2);
-    int r = a.reduceRight((p, v, array, unused3) -> { return p - v;
+    int r = a.reduceRight((p, v, array, unused3) -> {
+        return p - v;
         });
     assertEqual(-23, r);
     }
@@ -647,7 +650,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     @Test
     void testUint16ArrayReduceRightPart2075() {
     Uint16Array a = Uint16Array.of(1, 2, 3, 4);
-    int r = a.reduceRight((p, v, array, unused3) -> { return p * 10 + v;
+    int r = a.reduceRight((p, v, array, unused3) -> {
+        return p * 10 + v;
         });
     assertEqual(4321, r);
     }
@@ -656,7 +660,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     void testUint16ArrayReduceRightPart2076() {
     Uint16Array a = Uint16Array.of(9, 8, 7, 6, 5);
     Uint16Array v = a.subarray(1, 4);
-    double r = v.reduceRightDouble((p, n, i, unused3) -> { return p + n * i;
+    double r = v.reduceRightDouble((p, n, i, unused3) -> {
+        return p + n * i;
         });
     assertEqual(13, r);
     }
@@ -664,7 +669,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     @Test
     void testUint16ArrayReduceRightPart2077() {
     Uint16Array a = Uint16Array.of(8, 2);
-    double r = a.reduceRightDouble((p, v, array, unused3) -> { return p / v;
+    double r = a.reduceRightDouble((p, v, array, unused3) -> {
+        return p / v;
         });
     assertEqual(0.25, r);
     }
@@ -685,7 +691,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     Uint16Array original = Uint16Array.of(2, 4, 8);
     Uint16Array copy = new Uint16Array(original);
     copy.set(2, 16);
-    int r = copy.reduceRight((p, v, array, unused3) -> { return p + v;
+    int r = copy.reduceRight((p, v, array, unused3) -> {
+        return p + v;
         });
     assertEqual(22, r);
     assertEqual("2,4,8", original.join(","));
@@ -694,7 +701,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     @Test
     void testUint16ArrayReduceRightPart2080() {
     Uint16Array a = Uint16Array.of(5, 0, 7);
-    double r = a.reduceRightDouble((p, v, array, unused3) -> { return p * v;
+    double r = a.reduceRightDouble((p, v, array, unused3) -> {
+        return p * v;
         });
     assertEqual(0, r);
     }

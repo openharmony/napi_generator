@@ -298,8 +298,12 @@ public class Uint16Arraysort02 extends BasTest {
     void testUint16ArraySortPart2038() {
     Uint16Array arr = Uint16Array.of(3, 1, 2);
     arr.sort((a, b) -> {
-    if (a < b) return -0;
-    if (a > b) return 0;
+    if (a < b) {
+        return -0;
+    }
+    if (a > b) {
+        return 0;
+    }
     return 0;
         });
     assertEqual("3,1,2", arr.join(","));
@@ -478,7 +482,7 @@ public class Uint16Arraysort02 extends BasTest {
     Uint16Array arr = Uint16Array.of(3, 1, 2);
     try {
     arr.sort((a, b) -> {
-    throw new Error("sort error");
+    return BasTest.throwTestError("sort error");
         });
     fail();
     } catch (Error e) {
@@ -492,7 +496,7 @@ public class Uint16Arraysort02 extends BasTest {
     String before = arr.join(",");
     try {
     arr.sort((a, b) -> {
-    throw new Error("stop");
+    return BasTest.throwTestError("stop");
         });
     } catch (Error e) {
     assertEqual("Error", e.getClass().getSimpleName());

@@ -55,7 +55,10 @@ public class Uint16ArrayreduceRight01 extends BasTest {
 
     @Test
     void testUint16ArrayReduceRightPart1002() {
-    List<Uint16Array> inputs = java.util.Arrays.asList(Uint16Array.of(10, 20, 30), Uint16Array.of(5, 10, 15), Uint16Array.of(65535, 65535), Uint16Array.of(1, 2, 3, 4, 5), Uint16Array.of(7, 8, 9), Uint16Array.of(3, 6, 9));
+    List<Uint16Array> inputs = java.util.Arrays.asList(Uint16Array.of(
+        10, 20, 30), Uint16Array.of(5, 10, 15), Uint16Array.of(65535, 65535), Uint16Array.of(1, 2, 3, 4, 5),
+        Uint16Array.of(7, 8, 9), Uint16Array.of(3, 6, 9)
+    );
     List<Integer> expected = java.util.Arrays.asList(60, 30, 131070, 15, 24, 18);
     for (int i = 0; i < inputs.size(); i++) {
     int result = inputs.get(i).reduceRight((prev, curr, idx, a) -> prev + curr, 0);
@@ -380,7 +383,7 @@ public class Uint16ArrayreduceRight01 extends BasTest {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     try {
     arr.reduceRight((prev, curr, idx, a) -> {
-    throw new Error("callback error");
+    return BasTest.throwTestError("callback error");
     }, 0);
     fail();
     } catch (Error e) {
@@ -590,8 +593,10 @@ public class Uint16ArrayreduceRight01 extends BasTest {
     Uint16Array a = Uint16Array.of(2, 4, 8);
     int[] same = {0};
     int r = a.reduceRight((p, v, i, x) -> {
-        if (x == a) { same[0]++;
-        } return p + v;
+        if (x == a) {
+            same[0]++;
+        }
+        return p + v;
         }, 0);
     assertEqual(14, r);
     assertEqual(3, same[0]);
@@ -644,7 +649,7 @@ public class Uint16ArrayreduceRight01 extends BasTest {
     a.reduceRight((p, v, i, unused3) -> {
     calls[0]++;
     if (i == 2) {
-    throw new Error("stop");
+    return BasTest.throwTestError("stop");
     }
     return p;
     }, 0);
@@ -660,8 +665,10 @@ public class Uint16ArrayreduceRight01 extends BasTest {
     void testUint16ArrayReduceRightPart1071() {
     Uint16Array a = Uint16Array.of(1, 2, 3);
     int r = a.reduceRight((p, v, i, x) -> {
-        if (i == 2) { x.set(0, 10);
-        } return p + v;
+        if (i == 2) {
+            x.set(0, 10);
+        }
+        return p + v;
         }, 0);
     assertEqual(15, r);
     assertEqual(10, a.get(0));

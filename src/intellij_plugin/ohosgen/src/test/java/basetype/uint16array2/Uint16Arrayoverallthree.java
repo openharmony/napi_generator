@@ -311,7 +311,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     try {
     arr.forEach((value, index) -> {
     if (index == 1) {
-    throw new Error("callback error");
+    BasTest.throwTestError("callback error");
     }
     });
     fail();
@@ -326,7 +326,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     try {
     arr.map((value, index) -> {
     if (index == 1) {
-    throw new Error("callback error");
+    return BasTest.throwTestError("callback error");
     }
     return value + 1;
         });
@@ -342,7 +342,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     try {
     arr.filter((value, index) -> {
     if (index == 1) {
-    throw new Error("callback error");
+    return BasTest.throwTestError("callback error");
     }
     return value > 10;
         });
@@ -358,7 +358,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     try {
     arr.every((value, index) -> {
     if (index == 1) {
-    throw new Error("callback error");
+    return BasTest.throwTestError("callback error");
     }
     return value > 0;
         });
@@ -374,7 +374,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     try {
     arr.reduce((acc, val, idx, unused3) -> {
     if (idx == 1) {
-    throw new Error("callback error");
+    return BasTest.throwTestError("callback error");
     }
     return acc + val;
     }, 0);
@@ -390,7 +390,7 @@ public class Uint16Arrayoverallthree extends BasTest {
     try {
     arr.sort((a, b) -> {
     if (a == 10) {
-    throw new Error("callback error");
+    return BasTest.throwTestError("callback error");
     }
     return (a - b);
         });

@@ -521,8 +521,10 @@ public class Uint16Arraypropertytwo extends BasTest {
     List<Integer> s = java.util.Arrays.asList(1, 2, 3);
     try {
     Uint16Array a = Uint16Array.from(s, (v, i) -> {
-        if (i == 1) { throw new Error("map stop");
-        } return v;
+        if (i == 1) {
+            return BasTest.throwTestError("map stop");
+        }
+        return v;
     });
     fail();
     } catch (Error e) {

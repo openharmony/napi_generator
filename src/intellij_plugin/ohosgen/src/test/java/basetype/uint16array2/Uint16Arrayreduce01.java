@@ -45,7 +45,10 @@ public class Uint16Arrayreduce01 extends BasTest {
 
     @Test
     void testUint16ArrayReducePart1002() {
-    List<Uint16Array> inputs = java.util.Arrays.asList(Uint16Array.of(7, 8, 9), Uint16Array.of(3, 7), Uint16Array.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1), Uint16Array.of(0, 1, 2, 3, 4), Uint16Array.of(5, 10, 15));
+    List<Uint16Array> inputs = java.util.Arrays.asList(Uint16Array.of(
+        7, 8, 9), Uint16Array.of(3, 7), Uint16Array.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1), Uint16Array.of(0, 1, 2,
+        3, 4), Uint16Array.of(5, 10, 15)
+    );
     List<Integer> expected = java.util.Arrays.asList(24, 10, 10, 10, 30);
     for (int i = 0; i < inputs.size(); i++) {
     int result = inputs.get(i).reduce((prev, curr, array, unused3) -> prev + curr, 0);
@@ -442,7 +445,7 @@ public class Uint16Arrayreduce01 extends BasTest {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     try {
     arr.reduce((prev, curr, array, unused3) -> {
-    throw new Error("reduce_error");
+    return BasTest.throwTestError("reduce_error");
     }, 0);
     fail();
     } catch (Error e) {
@@ -459,7 +462,7 @@ public class Uint16Arrayreduce01 extends BasTest {
     arr.reduce((prev, curr, array, unused3) -> {
     iteratedCount[0] = iteratedCount[0] + 1;
     if (curr > 2) {
-    throw new Error("stop");
+    return BasTest.throwTestError("stop");
     }
     return prev + curr;
     }, 0);
@@ -475,8 +478,10 @@ public class Uint16Arrayreduce01 extends BasTest {
     void testUint16ArrayReducePart1055() {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     int result = arr.reduce((prev, curr, idx, a) -> {
-        if (idx == 0) { a.set(1, 10);
-        } return prev + curr;
+        if (idx == 0) {
+            a.set(1, 10);
+        }
+        return prev + curr;
         }, 0);
     assertEqual(14, result);
     }

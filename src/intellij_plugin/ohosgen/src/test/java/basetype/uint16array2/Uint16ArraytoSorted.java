@@ -463,7 +463,8 @@ public class Uint16ArraytoSorted extends BasTest {
     @Test
     void testUint16ArrayToSorted061() {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
-    Uint16Array mapped = arr.map((v) -> { return v * 10;
+    Uint16Array mapped = arr.map((v) -> {
+        return v * 10;
         });
     Uint16Array result = mapped.toSorted();
     assertEqual("10,20,30", result.join(","));

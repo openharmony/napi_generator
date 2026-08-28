@@ -168,7 +168,7 @@ public class Uint16Arraysort01 extends BasTest {
     Uint16Array arr = Uint16Array.of(3, 1, 2);
     try {
     arr.sort((a, b) -> {
-    throw new Error("sort fail");
+    return BasTest.throwTestError("sort fail");
         });
     fail();
     } catch (Error e) {
@@ -404,7 +404,7 @@ public class Uint16Arraysort01 extends BasTest {
     try {
     arr.sort((a, b) -> {
     called[0] = true;
-    throw new Error("abort");
+    return BasTest.throwTestError("abort");
         });
     fail();
     } catch (RangeError e) {
@@ -418,7 +418,7 @@ public class Uint16Arraysort01 extends BasTest {
     Uint16Array arr = Uint16Array.of(9, 6, 3);
     try {
     arr.sort((a, b) -> {
-    throw new Error("custom error");
+    return BasTest.throwTestError("custom error");
         });
     fail();
     } catch (Error e) {
@@ -433,7 +433,7 @@ public class Uint16Arraysort01 extends BasTest {
     try {
     arr.sort((a, b) -> {
     sideEffect[0] = 99;
-    throw new Error("side");
+    return BasTest.throwTestError("side");
         });
     fail();
     } catch (RangeError e) {
@@ -593,7 +593,7 @@ public class Uint16Arraysort01 extends BasTest {
     Uint16Array source = Uint16Array.of(3, 2, 1);
     try {
     source.sort((left, right) -> {
-    throw new Error("sort stop");
+    return BasTest.throwTestError("sort stop");
         });
     fail();
     } catch (Error e) {

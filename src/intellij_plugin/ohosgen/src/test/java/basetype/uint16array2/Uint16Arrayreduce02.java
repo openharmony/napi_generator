@@ -56,7 +56,9 @@ public class Uint16Arrayreduce02 extends BasTest {
 
     @Test
     void testUint16ArrayReducePart2003() {
-    List<Uint16Array> inputs = java.util.Arrays.asList(new Uint16Array(new int[] {0}), new Uint16Array(new int[] {99}), new Uint16Array(new int[] {65535}));
+    List<Uint16Array> inputs = java.util.Arrays.asList(
+        new Uint16Array(new int[] {0}), new Uint16Array(new int[] {99}), new Uint16Array(new int[] {65535})
+    );
     List<Integer> expected = java.util.Arrays.asList(0, 99, 65535);
     for (int i = 0; i < inputs.size(); i++) {
     int result = inputs.get(i).reduce((prev, curr, array, unused3) -> prev + curr);
@@ -66,7 +68,11 @@ public class Uint16Arrayreduce02 extends BasTest {
 
     @Test
     void testUint16ArrayReducePart2004() {
-    List<Uint16Array> inputs = java.util.Arrays.asList(new Uint16Array(new int[] {1, 2}), new Uint16Array(new int[] {10, 20, 30, 40, 50}), new Uint16Array(new int[] {1, 1, 1, 1, 1}), new Uint16Array(new int[] {0, 0, 0}), new Uint16Array(new int[] {10, 20, 30}), new Uint16Array(new int[] {100, 200, 300}));
+    List<Uint16Array> inputs = java.util.Arrays.asList(
+        new Uint16Array(new int[] {1, 2}), new Uint16Array(new int[] {10, 20, 30, 40, 50}),
+        new Uint16Array(new int[] {1, 1, 1, 1, 1}), new Uint16Array(new int[] {0, 0, 0}),
+        new Uint16Array(new int[] {10, 20, 30}), new Uint16Array(new int[] {100, 200, 300})
+    );
     List<Integer> expected = java.util.Arrays.asList(3, 150, 5, 0, 60, 600);
     for (int i = 0; i < inputs.size(); i++) {
     int result = inputs.get(i).reduce((prev, curr, array, unused3) -> prev + curr);
@@ -76,25 +82,33 @@ public class Uint16Arrayreduce02 extends BasTest {
 
     @Test
     void testUint16ArrayReducePart2005() {
-    List<Uint16Array> mul = java.util.Arrays.asList(new Uint16Array(new int[] {10, 20}), new Uint16Array(new int[] {1, 2, 3}));
+    List<Uint16Array> mul = java.util.Arrays.asList(
+        new Uint16Array(new int[] {10, 20}), new Uint16Array(new int[] {1, 2, 3})
+    );
     List<Integer> mulExpected = java.util.Arrays.asList(200, 6);
     for (int i = 0; i < mul.size(); i++) {
     double result = mul.get(i).reduceDouble((prev, curr, array, unused3) -> prev * curr);
     assertEqual(mulExpected.get(i), result);
     }
-    List<Uint16Array> sub = java.util.Arrays.asList(new Uint16Array(new int[] {5, 3}), new Uint16Array(new int[] {100, 200, 300}));
+    List<Uint16Array> sub = java.util.Arrays.asList(
+        new Uint16Array(new int[] {5, 3}), new Uint16Array(new int[] {100, 200, 300})
+    );
     List<Integer> subExpected = java.util.Arrays.asList(2, -400);
     for (int i = 0; i < sub.size(); i++) {
     int result = sub.get(i).reduce((prev, curr, array, unused3) -> prev - curr);
     assertEqual(subExpected.get(i), result);
     }
-    List<Uint16Array> maxArr = java.util.Arrays.asList(new Uint16Array(new int[] {0, 65535}), new Uint16Array(new int[] {5, 10, 15}));
+    List<Uint16Array> maxArr = java.util.Arrays.asList(
+        new Uint16Array(new int[] {0, 65535}), new Uint16Array(new int[] {5, 10, 15})
+    );
     List<Integer> maxExpected = java.util.Arrays.asList(65535, 15);
     for (int i = 0; i < maxArr.size(); i++) {
     int result = maxArr.get(i).reduce((prev, curr, array, unused3) -> prev > curr ? prev : curr);
     assertEqual(maxExpected.get(i), result);
     }
-    List<Uint16Array> minArr = java.util.Arrays.asList(new Uint16Array(new int[] {7, 2}), new Uint16Array(new int[] {100, 200, 300}));
+    List<Uint16Array> minArr = java.util.Arrays.asList(
+        new Uint16Array(new int[] {7, 2}), new Uint16Array(new int[] {100, 200, 300})
+    );
     List<Integer> minExpected = java.util.Arrays.asList(2, 100);
     for (int i = 0; i < minArr.size(); i++) {
     int result = minArr.get(i).reduce((prev, curr, array, unused3) -> prev < curr ? prev : curr);
@@ -104,13 +118,17 @@ public class Uint16Arrayreduce02 extends BasTest {
 
     @Test
     void testUint16ArrayReducePart2006() {
-    List<Uint16Array> orArr = java.util.Arrays.asList(new Uint16Array(new int[] {2, 4}), new Uint16Array(new int[] {2, 4, 8}));
+    List<Uint16Array> orArr = java.util.Arrays.asList(
+        new Uint16Array(new int[] {2, 4}), new Uint16Array(new int[] {2, 4, 8})
+    );
     List<Integer> orExpected = java.util.Arrays.asList(6, 14);
     for (int i = 0; i < orArr.size(); i++) {
     int result = orArr.get(i).reduce((prev, curr, array, unused3) -> prev | curr);
     assertEqual(orExpected.get(i), result);
     }
-    List<Uint16Array> andArr = java.util.Arrays.asList(new Uint16Array(new int[] {2, 4}), new Uint16Array(new int[] {3, 7}));
+    List<Uint16Array> andArr = java.util.Arrays.asList(
+        new Uint16Array(new int[] {2, 4}), new Uint16Array(new int[] {3, 7})
+    );
     List<Integer> andExpected = java.util.Arrays.asList(0, 3);
     for (int i = 0; i < andArr.size(); i++) {
     int result = andArr.get(i).reduce((prev, curr, array, unused3) -> prev & curr);
@@ -300,8 +318,10 @@ public class Uint16Arrayreduce02 extends BasTest {
     void testUint16ArrayReducePart2027() {
     Uint16Array arr = new Uint16Array(new int[] {10, 20, 30, 40});
     double result = arr.reduceDouble((prev, curr, idx, unused3) -> {
-        if (idx % 2 == 0) { return prev + curr;
-        } return prev;
+        if (idx % 2 == 0) {
+            return prev + curr;
+        }
+        return prev;
     });
     assertEqual(40, result);
     }
@@ -356,8 +376,10 @@ public class Uint16Arrayreduce02 extends BasTest {
     void testUint16ArrayReducePart2032() {
     Uint16Array arr = new Uint16Array(new int[] {5, 8, 3, 10});
     int result = arr.reduce((prev, curr, idx, a) -> {
-        if (curr > a.get(0)) { return prev + curr;
-        } return prev;
+        if (curr > a.get(0)) {
+            return prev + curr;
+        }
+        return prev;
     });
     assertEqual(23, result);
     }
@@ -437,9 +459,11 @@ public class Uint16Arrayreduce02 extends BasTest {
     int[] firstCurrent = {-1};
     double result = arr.reduceDouble((prev, curr, array, unused3) -> {
         callCount[0]++;
-        if (callCount[0] == 1) { firstPrevious[0] = (int) prev;
+        if (callCount[0] == 1) {
+            firstPrevious[0] = (int) prev;
         firstCurrent[0] = (int) curr;
-        } return Double.NaN;
+        }
+        return Double.NaN;
     });
     assertTrue(true);
     assertEqual(2, callCount[0]);
@@ -517,7 +541,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     try {
     Uint16Array arr = new Uint16Array(new int[] {1, 2, 3});
     arr.reduce((prev, curr, array, unused3) -> {
-    throw new Error("reduce error");
+    return BasTest.throwTestError("reduce error");
         });
     fail();
     } catch (Error e) {
@@ -534,7 +558,7 @@ public class Uint16Arrayreduce02 extends BasTest {
     arr.reduce((prev, curr, array, unused3) -> {
     callCount[0]++;
     if (callCount[0] == 2) {
-    throw new Error("fail on second call");
+    return BasTest.throwTestError("fail on second call");
     }
     return prev + curr;
         });
@@ -682,7 +706,8 @@ public class Uint16Arrayreduce02 extends BasTest {
     @Test
     void testUint16ArrayReducePart2066() {
     Uint16Array arr = new Uint16Array(new int[] {1, 2, 3});
-    int result = arr.reduce((prev, curr, array, unused3) -> Integer.parseInt(String.valueOf(prev) + String.valueOf(curr)));
+    int result = 
+        arr.reduce((prev, curr, array, unused3) -> Integer.parseInt(String.valueOf(prev) + String.valueOf(curr)));
     assertEqual(123, result);
     }
 
