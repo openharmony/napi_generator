@@ -36,6 +36,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ClampedArrayFrom01Test extends BasTest {
     /**
+     * Verify Uint8ClampedArray.from yields length 3 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_0100
      * @tc.name testUint8ClampedArrayFromOne001
      * @tc.desc Verify Uint8ClampedArray.from yields length 3 for from(src)
@@ -50,7 +51,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(3, arr.length());
     }
+
     /**
+     * Verify Uint8ClampedArray.from yields length 3 for array [1, 2, 3]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_0200
      * @tc.name testUint8ClampedArrayFromOne002
      * @tc.desc Verify Uint8ClampedArray.from yields length 3 for array [1, 2, 3]
@@ -65,7 +68,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(parent);
     assertEqual(3, arr.length());
     }
+
     /**
+     * Verify Uint8ClampedArray.from yields length 3 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_0300
      * @tc.name testUint8ClampedArrayFromOne003
      * @tc.desc Verify Uint8ClampedArray.from yields length 3 for from(src)
@@ -80,7 +85,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(3, arr.length());
     }
+
     /**
+     * Verify Iterable<number> Set 3 elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_0400
      * @tc.name testUint8ClampedArrayFromOne004
      * @tc.desc Verify Iterable<number> Set 3 elements
@@ -98,7 +105,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set);
     assertEqual(3, arr.length());
     }
+
     /**
+     * Verify Uint8ClampedArray.from yields length 2 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_0500
      * @tc.name testUint8ClampedArrayFromOne005
      * @tc.desc Verify Uint8ClampedArray.from yields length 2 for from(set, (v: number, k: )
@@ -112,12 +121,16 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Set<Number> set = new LinkedHashSet<>();
     set.add(1.0);
     set.add(2.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v + 10.0);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v + 10.0);
     assertEqual(2, arr.length());
     assertEqual(11, arr.get(0));
     assertEqual(12, arr.get(1));
     }
+
     /**
+     * Verify from([256]) clamps 256 to 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_0600
      * @tc.name testUint8ClampedArrayFromOne006
      * @tc.desc Verify from([256]) clamps 256 to 255
@@ -132,7 +145,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_0700
      * @tc.name testUint8ClampedArrayFromOne007
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
@@ -147,7 +162,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Array<number> INT_MAX clamp 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_0800
      * @tc.name testUint8ClampedArrayFromOne008
      * @tc.desc Verify Array<number> INT_MAX clamp 255
@@ -162,7 +179,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Array<number> INT_MIN clamp 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_0900
      * @tc.name testUint8ClampedArrayFromOne009
      * @tc.desc Verify Array<number> INT_MIN clamp 0
@@ -177,7 +196,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_1000
      * @tc.name testUint8ClampedArrayFromOne010
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
@@ -192,7 +213,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_1100
      * @tc.name testUint8ClampedArrayFromOne011
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
@@ -207,7 +230,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_1200
      * @tc.name testUint8ClampedArrayFromOne012
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
@@ -222,7 +247,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Array<number> 0 127 255 range
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_1300
      * @tc.name testUint8ClampedArrayFromOne013
      * @tc.desc Verify Array<number> 0 127 255 range
@@ -238,7 +265,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(0, arr.get(0));
     assertEqual(255, arr.get(4));
     }
+
     /**
+     * Verify Array<number> 10 elements length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_1400
      * @tc.name testUint8ClampedArrayFromOne014
      * @tc.desc Verify Array<number> 10 elements length
@@ -253,7 +282,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(10, arr.length());
     }
+
     /**
+     * Verify Array<number> 1000 clamp 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_1500
      * @tc.name testUint8ClampedArrayFromOne015
      * @tc.desc Verify Array<number> 1000 clamp 255
@@ -268,7 +299,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_1600
      * @tc.name testUint8ClampedArrayFromOne016
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
@@ -283,7 +316,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from yields length 0 for empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_1700
      * @tc.name testUint8ClampedArrayFromOne017
      * @tc.desc Verify Uint8ClampedArray.from yields length 0 for empty array
@@ -298,7 +333,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(parent);
     assertEqual(0, arr.length());
     }
+
     /**
+     * Verify Uint8ClampedArray element 42
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_1800
      * @tc.name testUint8ClampedArrayFromOne018
      * @tc.desc Verify Uint8ClampedArray element 42
@@ -313,7 +350,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(parent);
     assertEqual(42, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray length=5 element 3
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_1900
      * @tc.name testUint8ClampedArrayFromOne019
      * @tc.desc Verify Uint8ClampedArray length=5 element 3
@@ -329,7 +368,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(5, arr.length());
     assertEqual(3, arr.get(2));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for array [0, 255]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_2000
      * @tc.name testUint8ClampedArrayFromOne020
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for array [0, 255]
@@ -345,7 +386,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(0, arr.get(0));
     assertEqual(255, arr.get(1));
     }
+
     /**
+     * Verify Uint8ClampedArray buffer distinct
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_2100
      * @tc.name testUint8ClampedArrayFromOne021
      * @tc.desc Verify Uint8ClampedArray buffer distinct
@@ -360,7 +403,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(parent);
     assertNotEqual(parent.buffer(), arr.buffer());
     }
+
     /**
+     * Verify Uint8ClampedArray copy independent of parent
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_2200
      * @tc.name testUint8ClampedArrayFromOne022
      * @tc.desc Verify Uint8ClampedArray copy independent of parent
@@ -376,7 +421,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     parent.set(0, 99);
     assertEqual(10, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray parent independent of copy
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_2300
      * @tc.name testUint8ClampedArrayFromOne023
      * @tc.desc Verify Uint8ClampedArray parent independent of copy
@@ -392,7 +439,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     arr.set(0, 88);
     assertEqual(10, parent.get(0));
     }
+
     /**
+     * Verify from creates storage independent from a Uint8ClampedArray source
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_2400
      * @tc.name testUint8ClampedArrayFromOne024
      * @tc.desc Verify from creates storage independent from a Uint8ClampedArray source
@@ -408,7 +457,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     arr.set(0, 9);
     assertEqual(1, parent.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray byteLength
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_2500
      * @tc.name testUint8ClampedArrayFromOne025
      * @tc.desc Verify Uint8ClampedArray byteLength
@@ -423,7 +474,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(parent);
     assertEqual(4, arr.byteLength());
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for array [0, 0, 0]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_2600
      * @tc.name testUint8ClampedArrayFromOne026
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for array [0, 0, 0]
@@ -439,7 +492,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(0, arr.get(0));
     assertEqual(3, arr.length());
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[1] equals 255 for array [255, 255]
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_2700
      * @tc.name testUint8ClampedArrayFromOne027
      * @tc.desc Verify Uint8ClampedArray.from element at arr[1] equals 255 for array [255, 255]
@@ -454,7 +509,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(parent);
     assertEqual(255, arr.get(1));
     }
+
     /**
+     * Verify Uint8ClampedArray length=256
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_2800
      * @tc.name testUint8ClampedArrayFromOne028
      * @tc.desc Verify Uint8ClampedArray length=256
@@ -469,7 +526,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(parent);
     assertEqual(256, arr.length());
     }
+
     /**
+     * Verify ArrayLike<number> 127.5 half-even 128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_2900
      * @tc.name testUint8ClampedArrayFromOne029
      * @tc.desc Verify ArrayLike<number> 127.5 half-even 128
@@ -484,7 +543,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(128, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> 128.5 half-even 128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_3000
      * @tc.name testUint8ClampedArrayFromOne030
      * @tc.desc Verify ArrayLike<number> 128.5 half-even 128
@@ -499,7 +560,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(128, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> 0.5 half-even 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_3100
      * @tc.name testUint8ClampedArrayFromOne031
      * @tc.desc Verify ArrayLike<number> 0.5 half-even 0
@@ -514,7 +577,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_3200
      * @tc.name testUint8ClampedArrayFromOne032
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
@@ -529,7 +594,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 1 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_3300
      * @tc.name testUint8ClampedArrayFromOne033
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 1 for from(src)
@@ -544,7 +611,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(1, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> NaN clamp 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_3400
      * @tc.name testUint8ClampedArrayFromOne034
      * @tc.desc Verify ArrayLike<number> NaN clamp 0
@@ -559,7 +628,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> Infinity clamp 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_3500
      * @tc.name testUint8ClampedArrayFromOne035
      * @tc.desc Verify ArrayLike<number> Infinity clamp 255
@@ -574,7 +645,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> -Infinity clamp 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_3600
      * @tc.name testUint8ClampedArrayFromOne036
      * @tc.desc Verify ArrayLike<number> -Infinity clamp 0
@@ -589,7 +662,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> -0 clamp 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_3700
      * @tc.name testUint8ClampedArrayFromOne037
      * @tc.desc Verify ArrayLike<number> -0 clamp 0
@@ -604,7 +679,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> 1e9 clamp 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_3800
      * @tc.name testUint8ClampedArrayFromOne038
      * @tc.desc Verify ArrayLike<number> 1e9 clamp 255
@@ -619,7 +696,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> -1e9 clamp 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_3900
      * @tc.name testUint8ClampedArrayFromOne039
      * @tc.desc Verify ArrayLike<number> -1e9 clamp 0
@@ -634,7 +713,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> Number.MAX_VALUE clamp 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_4000
      * @tc.name testUint8ClampedArrayFromOne040
      * @tc.desc Verify ArrayLike<number> Number.MAX_VALUE clamp 255
@@ -649,7 +730,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> Number.MIN_VALUE clamp 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_4100
      * @tc.name testUint8ClampedArrayFromOne041
      * @tc.desc Verify ArrayLike<number> Number.MIN_VALUE clamp 0
@@ -664,7 +747,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_4200
      * @tc.name testUint8ClampedArrayFromOne042
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
@@ -681,7 +766,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(255, arr.get(3));
     assertEqual(255, arr.get(4));
     }
+
     /**
+     * Verify Uint8ClampedArray.from yields length 4 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_4300
      * @tc.name testUint8ClampedArrayFromOne043
      * @tc.desc Verify Uint8ClampedArray.from yields length 4 for from(src)
@@ -696,7 +783,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(4, arr.length());
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 127 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_4400
      * @tc.name testUint8ClampedArrayFromOne044
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 127 for from(src)
@@ -711,7 +800,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(127, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 128 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_4500
      * @tc.name testUint8ClampedArrayFromOne045
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 128 for from(src)
@@ -726,7 +817,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(128, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> 254.5 half-even 254
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_4600
      * @tc.name testUint8ClampedArrayFromOne046
      * @tc.desc Verify ArrayLike<number> 254.5 half-even 254
@@ -741,7 +834,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(254, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_4700
      * @tc.name testUint8ClampedArrayFromOne047
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(src)
@@ -756,7 +851,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_4800
      * @tc.name testUint8ClampedArrayFromOne048
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(src)
@@ -771,7 +868,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify ArrayLike<number> element 20
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_4900
      * @tc.name testUint8ClampedArrayFromOne049
      * @tc.desc Verify ArrayLike<number> element 20
@@ -786,7 +885,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     assertEqual(20, arr.get(1));
     }
+
     /**
+     * Verify Uint8ClampedArray.from yields length 0 for from(set)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_5000
      * @tc.name testUint8ClampedArrayFromOne050
      * @tc.desc Verify Uint8ClampedArray.from yields length 0 for from(set)
@@ -801,7 +902,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set);
     assertEqual(0, arr.length());
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_5100
      * @tc.name testUint8ClampedArrayFromOne051
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set)
@@ -817,7 +920,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_5200
      * @tc.name testUint8ClampedArrayFromOne052
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set)
@@ -833,7 +938,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Iterable<number> Set 256.0 clamp 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_5300
      * @tc.name testUint8ClampedArrayFromOne053
      * @tc.desc Verify Iterable<number> Set 256.0 clamp 255
@@ -849,7 +956,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Iterable<number> Set -1.0 clamp 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_5400
      * @tc.name testUint8ClampedArrayFromOne054
      * @tc.desc Verify Iterable<number> Set -1.0 clamp 0
@@ -865,7 +974,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Iterable<number> Set NaN clamp 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_5500
      * @tc.name testUint8ClampedArrayFromOne055
      * @tc.desc Verify Iterable<number> Set NaN clamp 0
@@ -881,7 +992,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Iterable<number> Set Infinity clamp 255
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_5600
      * @tc.name testUint8ClampedArrayFromOne056
      * @tc.desc Verify Iterable<number> Set Infinity clamp 255
@@ -897,7 +1010,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Iterable<number> Set 10 20 30
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_5700
      * @tc.name testUint8ClampedArrayFromOne057
      * @tc.desc Verify Iterable<number> Set 10 20 30
@@ -917,7 +1032,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(20, arr.get(1));
     assertEqual(30, arr.get(2));
     }
+
     /**
+     * Verify Iterable<number> Set length=4
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_5800
      * @tc.name testUint8ClampedArrayFromOne058
      * @tc.desc Verify Iterable<number> Set length=4
@@ -936,7 +1053,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set);
     assertEqual(4, arr.length());
     }
+
     /**
+     * Verify Iterable<number> Set dedup length=1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_5900
      * @tc.name testUint8ClampedArrayFromOne059
      * @tc.desc Verify Iterable<number> Set dedup length=1
@@ -955,7 +1074,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(1, arr.length());
     assertEqual(5, arr.get(0));
     }
+
     /**
+     * Verify Iterable<number> Set 127.5 128
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_6000
      * @tc.name testUint8ClampedArrayFromOne060
      * @tc.desc Verify Iterable<number> Set 127.5 128
@@ -971,7 +1092,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set);
     assertEqual(128, arr.get(0));
     }
+
     /**
+     * Verify from preserves the value and length of a Set source
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_6100
      * @tc.name testUint8ClampedArrayFromOne061
      * @tc.desc Verify from preserves the value and length of a Set source
@@ -988,7 +1111,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(1, arr.length());
     assertEqual(1, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 1 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_6200
      * @tc.name testUint8ClampedArrayFromOne062
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 1 for from(set, (v: number, k: )
@@ -1006,7 +1131,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(1, arr.get(0));
     assertEqual(2, arr.get(1));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 20 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_6300
      * @tc.name testUint8ClampedArrayFromOne063
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 20 for from(set, (v: number, k: )
@@ -1020,11 +1147,15 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Set<Number> set = new LinkedHashSet<>();
     set.add(10.0);
     set.add(20.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v * 2.0);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v * 2.0);
     assertEqual(20, arr.get(0));
     assertEqual(40, arr.get(1));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_6400
      * @tc.name testUint8ClampedArrayFromOne064
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k: )
@@ -1037,10 +1168,14 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     void testUint8ClampedArrayFromOne064() {
     Set<Number> set = new LinkedHashSet<>();
     set.add(1.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> 256.0);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> 256.0);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_6500
      * @tc.name testUint8ClampedArrayFromOne065
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
@@ -1053,10 +1188,14 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     void testUint8ClampedArrayFromOne065() {
     Set<Number> set = new LinkedHashSet<>();
     set.add(1.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> -1.0);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> -1.0);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_6600
      * @tc.name testUint8ClampedArrayFromOne066
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
@@ -1069,10 +1208,14 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     void testUint8ClampedArrayFromOne066() {
     Set<Number> set = new LinkedHashSet<>();
     set.add(1.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> Double.NaN);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> Double.NaN);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_6700
      * @tc.name testUint8ClampedArrayFromOne067
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k: )
@@ -1085,10 +1228,14 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     void testUint8ClampedArrayFromOne067() {
     Set<Number> set = new LinkedHashSet<>();
     set.add(1.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> Double.POSITIVE_INFINITY);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> Double.POSITIVE_INFINITY);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_6800
      * @tc.name testUint8ClampedArrayFromOne068
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
@@ -1101,10 +1248,14 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     void testUint8ClampedArrayFromOne068() {
     Set<Number> set = new LinkedHashSet<>();
     set.add(1.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> -Double.POSITIVE_INFINITY);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> -Double.POSITIVE_INFINITY);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 128 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_6900
      * @tc.name testUint8ClampedArrayFromOne069
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 128 for from(set, (v: number, k: )
@@ -1117,10 +1268,14 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     void testUint8ClampedArrayFromOne069() {
     Set<Number> set = new LinkedHashSet<>();
     set.add(1.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> 127.5);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> 127.5);
     assertEqual(128, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 128 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_7000
      * @tc.name testUint8ClampedArrayFromOne070
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 128 for from(set, (v: number, k: )
@@ -1133,10 +1288,14 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     void testUint8ClampedArrayFromOne070() {
     Set<Number> set = new LinkedHashSet<>();
     set.add(1.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> 128.5);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> 128.5);
     assertEqual(128, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_7100
      * @tc.name testUint8ClampedArrayFromOne071
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
@@ -1156,7 +1315,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(1, arr.get(1));
     assertEqual(2, arr.get(2));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 107 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_7200
      * @tc.name testUint8ClampedArrayFromOne072
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 107 for from(set, (v: number, k: )
@@ -1170,11 +1331,15 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Set<Number> set = new LinkedHashSet<>();
     set.add(7.0);
     set.add(8.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v + 100.0);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v + 100.0);
     assertEqual(107, arr.get(0));
     assertEqual(108, arr.get(1));
     }
+
     /**
+     * Verify Uint8ClampedArray.from propagates Error thrown by mapfn for Set input
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_7300
      * @tc.name testUint8ClampedArrayFromOne073
      * @tc.desc Verify Uint8ClampedArray.from propagates Error thrown by mapfn for Set input
@@ -1189,14 +1354,16 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     set.add(1.0);
     try {
     Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> {
-    throw new Error("mapfn error");
+    return BasTest.throwTestError("mapfn error");
         });
     fail();
     } catch (Error e) {
     assertEqual("Error", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify Uint8ClampedArray.from propagates TypeError thrown by mapfn for Set input
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_7400
      * @tc.name testUint8ClampedArrayFromOne074
      * @tc.desc Verify Uint8ClampedArray.from propagates TypeError thrown by mapfn for Set input
@@ -1218,7 +1385,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual("TypeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify Uint8ClampedArray.from propagates RangeError thrown by mapfn for Set input
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_7500
      * @tc.name testUint8ClampedArrayFromOne075
      * @tc.desc Verify Uint8ClampedArray.from propagates RangeError thrown by mapfn for Set input
@@ -1240,7 +1409,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify Uint8ClampedArray.from on empty Set does not call mapfn and returns empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_7600
      * @tc.name testUint8ClampedArrayFromOne076
      * @tc.desc Verify Uint8ClampedArray.from on empty Set does not call mapfn and returns empty array
@@ -1260,7 +1431,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     assertEqual(0, called[0]);
     assertEqual(0, arr.length());
     }
+
     /**
+     * Verify Uint8ClampedArray.from calls mapfn once per Set element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_7700
      * @tc.name testUint8ClampedArrayFromOne077
      * @tc.desc Verify Uint8ClampedArray.from calls mapfn once per Set element
@@ -1282,7 +1455,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
         });
     assertEqual(3, called[0]);
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_7800
      * @tc.name testUint8ClampedArrayFromOne078
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 255 for from(set, (v: number, k: )
@@ -1295,10 +1470,14 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     void testUint8ClampedArrayFromOne078() {
     Set<Number> set = new LinkedHashSet<>();
     set.add(200.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v + 128.0);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v + 128.0);
     assertEqual(255, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_7900
      * @tc.name testUint8ClampedArrayFromOne079
      * @tc.desc Verify Uint8ClampedArray.from element at arr[0] equals 0 for from(set, (v: number, k: )
@@ -1311,10 +1490,14 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     void testUint8ClampedArrayFromOne079() {
     Set<Number> set = new LinkedHashSet<>();
     set.add(100.0);
-    Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v - 200.0);
+    Uint8ClampedArray arr = Uint8ClampedArray.from(
+        set,
+        (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v - 200.0);
     assertEqual(0, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from yields length 5 for from(set, (v: number, k: )
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_8000
      * @tc.name testUint8ClampedArrayFromOne080
      * @tc.desc Verify Uint8ClampedArray.from yields length 5 for from(set, (v: number, k: )
@@ -1334,7 +1517,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(set, (Uint8ClampedArray.Uint8ClampedArrayDoubleMapper2) (v, k) -> v);
     assertEqual(5, arr.length());
     }
+
     /**
+     * Verify from snapshots an Array source at construction time
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_8100
      * @tc.name testUint8ClampedArrayFromOne081
      * @tc.desc Verify from snapshots an Array source at construction time
@@ -1350,7 +1535,9 @@ public class Uint8ClampedArrayFrom01Test extends BasTest {
     src.set(0, 9);
     assertEqual(1, arr.get(0));
     }
+
     /**
+     * Verify Uint8ClampedArray.from yields BYTES_PER_ELEMENT 1 for from(src)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8_CLAMPED_ARRAY_FROM_ONE_8200
      * @tc.name testUint8ClampedArrayFromOne082
      * @tc.desc Verify Uint8ClampedArray.from yields BYTES_PER_ELEMENT 1 for from(src)
