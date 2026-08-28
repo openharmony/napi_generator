@@ -32,16 +32,16 @@ public class Uint8ArrayEveryTest extends BasTest {
     private static int everyThrowCount = 0;
 
     private static boolean everyThrowOnFirst(int v) {
-    throw new Error("fail");
+    return BasTest.throwTestError("fail");
     }
 
     private static boolean everyThrowAlways(int v) {
-    throw new Error();
+    return BasTest.throwTestError("");
     }
 
     private static boolean everyThrowIfLarge(int v) {
     if (v > 15) {
-    throw new Error("large");
+    return BasTest.throwTestError("large");
     }
     return true;
     }
@@ -49,7 +49,7 @@ public class Uint8ArrayEveryTest extends BasTest {
     private static boolean everyThrowAtLast(int v) {
     everyThrowIdx++;
     if (everyThrowIdx == 3) {
-    throw new Error("fail");
+    return BasTest.throwTestError("fail");
     }
     return true;
     }
@@ -57,16 +57,18 @@ public class Uint8ArrayEveryTest extends BasTest {
     private static boolean everyThrowAtSecond(int v) {
     everyThrowIdx++;
     if (everyThrowIdx == 2) {
-    throw new Error("fail");
+    return BasTest.throwTestError("fail");
     }
     return true;
     }
 
     private static boolean everyThrowAndCount(int v) {
     everyThrowCount++;
-    throw new Error("stop");
+    return BasTest.throwTestError("stop");
     }
+
     /**
+     * Verify every with one required parameter predicate executes normally
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0010
      * @tc.name testUint8ArrayEvery001
      * @tc.desc Verify every with one required parameter predicate executes normally
@@ -81,7 +83,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify new Uint8Array() empty array every returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0020
      * @tc.name testUint8ArrayEvery002
      * @tc.desc Verify new Uint8Array() empty array every returns true
@@ -96,7 +100,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify new Uint8Array(0) empty array every returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0030
      * @tc.name testUint8ArrayEvery003
      * @tc.desc Verify new Uint8Array(0) empty array every returns true
@@ -111,7 +117,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify Uint8Array.of() empty array every returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0040
      * @tc.name testUint8ArrayEvery004
      * @tc.desc Verify Uint8Array.of() empty array every returns true
@@ -126,7 +134,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify new Uint8Array(new ArrayBuffer(0)) empty buffer view every returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0050
      * @tc.name testUint8ArrayEvery005
      * @tc.desc Verify new Uint8Array(new ArrayBuffer(0)) empty buffer view every returns true
@@ -142,7 +152,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify slice(0, 0) empty slice every returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0060
      * @tc.name testUint8ArrayEvery006
      * @tc.desc Verify slice(0, 0) empty slice every returns true
@@ -158,7 +170,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify new Uint8Array(0.0) float length 0 empty array every returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0070
      * @tc.name testUint8ArrayEvery007
      * @tc.desc Verify new Uint8Array(0.0) float length 0 empty array every returns true
@@ -173,7 +187,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify empty array predicate never called returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0080
      * @tc.name testUint8ArrayEvery008
      * @tc.desc Verify empty array predicate never called returns true
@@ -193,7 +209,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     assertFalse(called[0]);
     assertTrue(result);
     }
+
     /**
+     * Verify [0] element value 0 predicate >= 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0090
      * @tc.name testUint8ArrayEvery009
      * @tc.desc Verify [0] element value 0 predicate >= 0 returns true
@@ -208,7 +226,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v >= 0);
     assertTrue(result);
     }
+
     /**
+     * Verify [0] element value 0 predicate === 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0100
      * @tc.name testUint8ArrayEvery010
      * @tc.desc Verify [0] element value 0 predicate === 0 returns true
@@ -223,7 +243,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 0);
     assertTrue(result);
     }
+
     /**
+     * Verify [255] element value 255 predicate === 255 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0110
      * @tc.name testUint8ArrayEvery011
      * @tc.desc Verify [255] element value 255 predicate === 255 returns true
@@ -238,7 +260,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 255);
     assertTrue(result);
     }
+
     /**
+     * Verify [0] element value 0 predicate > 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0120
      * @tc.name testUint8ArrayEvery012
      * @tc.desc Verify [0] element value 0 predicate > 0 returns false
@@ -253,7 +277,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [0] element value 0 predicate < 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0130
      * @tc.name testUint8ArrayEvery013
      * @tc.desc Verify [0] element value 0 predicate < 0 returns false
@@ -268,7 +294,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v < 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [255] element value 255 predicate > 255 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0140
      * @tc.name testUint8ArrayEvery014
      * @tc.desc Verify [255] element value 255 predicate > 255 returns false
@@ -283,7 +311,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 255);
     assertFalse(result);
     }
+
     /**
+     * Verify [127] element value 127 predicate > 127 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0150
      * @tc.name testUint8ArrayEvery015
      * @tc.desc Verify [127] element value 127 predicate > 127 returns false
@@ -298,7 +328,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 127);
     assertFalse(result);
     }
+
     /**
+     * Verify [128] element value 128 predicate < 128 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0160
      * @tc.name testUint8ArrayEvery016
      * @tc.desc Verify [128] element value 128 predicate < 128 returns false
@@ -313,7 +345,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v < 128);
     assertFalse(result);
     }
+
     /**
+     * Verify [1,2,3,4,5] all elements > 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0170
      * @tc.name testUint8ArrayEvery017
      * @tc.desc Verify [1,2,3,4,5] all elements > 0 returns true
@@ -328,7 +362,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify [10,20,30] all elements <= 30 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0180
      * @tc.name testUint8ArrayEvery018
      * @tc.desc Verify [10,20,30] all elements <= 30 returns true
@@ -343,7 +379,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v <= 30);
     assertTrue(result);
     }
+
     /**
+     * Verify [5,10,15] all elements % 5 === 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0190
      * @tc.name testUint8ArrayEvery019
      * @tc.desc Verify [5,10,15] all elements % 5 === 0 returns true
@@ -358,7 +396,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v % 5 == 0);
     assertTrue(result);
     }
+
     /**
+     * Verify [0,0,0] all elements === 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0200
      * @tc.name testUint8ArrayEvery020
      * @tc.desc Verify [0,0,0] all elements === 0 returns true
@@ -373,7 +413,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 0);
     assertTrue(result);
     }
+
     /**
+     * Verify [1,1,1] all elements === 1 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0210
      * @tc.name testUint8ArrayEvery021
      * @tc.desc Verify [1,1,1] all elements === 1 returns true
@@ -388,7 +430,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 1);
     assertTrue(result);
     }
+
     /**
+     * Verify [2,4,6,8] all elements % 2 === 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0220
      * @tc.name testUint8ArrayEvery022
      * @tc.desc Verify [2,4,6,8] all elements % 2 === 0 returns true
@@ -403,7 +447,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v % 2 == 0);
     assertTrue(result);
     }
+
     /**
+     * Verify [255,255,255] all elements < 256 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0230
      * @tc.name testUint8ArrayEvery023
      * @tc.desc Verify [255,255,255] all elements < 256 returns true
@@ -418,7 +464,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v < 256);
     assertTrue(result);
     }
+
     /**
+     * Verify [0,128,255] all elements <= 255 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0240
      * @tc.name testUint8ArrayEvery024
      * @tc.desc Verify [0,128,255] all elements <= 255 returns true
@@ -433,7 +481,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v <= 255);
     assertTrue(result);
     }
+
     /**
+     * Verify [100,200,250] all elements > 50 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0250
      * @tc.name testUint8ArrayEvery025
      * @tc.desc Verify [100,200,250] all elements > 50 returns true
@@ -448,7 +498,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 50);
     assertTrue(result);
     }
+
     /**
+     * Verify [10,20,30] all elements >= 10 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0260
      * @tc.name testUint8ArrayEvery026
      * @tc.desc Verify [10,20,30] all elements >= 10 returns true
@@ -463,7 +515,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v >= 10);
     assertTrue(result);
     }
+
     /**
+     * Verify [1,2,3] all elements >= 1 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0270
      * @tc.name testUint8ArrayEvery027
      * @tc.desc Verify [1,2,3] all elements >= 1 returns true
@@ -478,7 +532,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v >= 1);
     assertTrue(result);
     }
+
     /**
+     * Verify [1,2,3] all elements <= 3 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0280
      * @tc.name testUint8ArrayEvery028
      * @tc.desc Verify [1,2,3] all elements <= 3 returns true
@@ -493,7 +549,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v <= 3);
     assertTrue(result);
     }
+
     /**
+     * Verify [0,127,128,255] all elements < 256 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0290
      * @tc.name testUint8ArrayEvery029
      * @tc.desc Verify [0,127,128,255] all elements < 256 returns true
@@ -508,7 +566,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v < 256);
     assertTrue(result);
     }
+
     /**
+     * Verify [0,127,128,255] all elements > -1 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0300
      * @tc.name testUint8ArrayEvery030
      * @tc.desc Verify [0,127,128,255] all elements > -1 returns true
@@ -523,7 +583,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > -1);
     assertTrue(result);
     }
+
     /**
+     * Verify [0,1,2] first element 0 not satisfy > 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0310
      * @tc.name testUint8ArrayEvery031
      * @tc.desc Verify [0,1,2] first element 0 not satisfy > 0 returns false
@@ -538,7 +600,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [1,0,2] middle element 0 not satisfy > 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0320
      * @tc.name testUint8ArrayEvery032
      * @tc.desc Verify [1,0,2] middle element 0 not satisfy > 0 returns false
@@ -553,7 +617,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [1,2,0] last element 0 not satisfy > 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0330
      * @tc.name testUint8ArrayEvery033
      * @tc.desc Verify [1,2,0] last element 0 not satisfy > 0 returns false
@@ -568,7 +634,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [10,20,3] last element 3 not satisfy > 5 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0340
      * @tc.name testUint8ArrayEvery034
      * @tc.desc Verify [10,20,3] last element 3 not satisfy > 5 returns false
@@ -583,7 +651,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 5);
     assertFalse(result);
     }
+
     /**
+     * Verify [10,5,10] middle element 5 not satisfy >= 10 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0350
      * @tc.name testUint8ArrayEvery035
      * @tc.desc Verify [10,5,10] middle element 5 not satisfy >= 10 returns false
@@ -598,7 +668,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v >= 10);
     assertFalse(result);
     }
+
     /**
+     * Verify [5,10,10] first element 5 not satisfy >= 10 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0360
      * @tc.name testUint8ArrayEvery036
      * @tc.desc Verify [5,10,10] first element 5 not satisfy >= 10 returns false
@@ -613,7 +685,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v >= 10);
     assertFalse(result);
     }
+
     /**
+     * Verify [1,2,30] last element 30 not satisfy <= 20 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0370
      * @tc.name testUint8ArrayEvery037
      * @tc.desc Verify [1,2,30] last element 30 not satisfy <= 20 returns false
@@ -628,7 +702,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v <= 20);
     assertFalse(result);
     }
+
     /**
+     * Verify [5,10,15] first element 5 not satisfy > 10 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0380
      * @tc.name testUint8ArrayEvery038
      * @tc.desc Verify [5,10,15] first element 5 not satisfy > 10 returns false
@@ -643,7 +719,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 10);
     assertFalse(result);
     }
+
     /**
+     * Verify [5,10,15] second element 10 not satisfy < 10 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0390
      * @tc.name testUint8ArrayEvery039
      * @tc.desc Verify [5,10,15] second element 10 not satisfy < 10 returns false
@@ -658,7 +736,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v < 10);
     assertFalse(result);
     }
+
     /**
+     * Verify [10,20,30] only first element === 10 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0400
      * @tc.name testUint8ArrayEvery040
      * @tc.desc Verify [10,20,30] only first element === 10 returns false
@@ -673,7 +753,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 10);
     assertFalse(result);
     }
+
     /**
+     * Verify [100,200,250] first element 100 not satisfy > 200 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0410
      * @tc.name testUint8ArrayEvery041
      * @tc.desc Verify [100,200,250] first element 100 not satisfy > 200 returns false
@@ -688,7 +770,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 200);
     assertFalse(result);
     }
+
     /**
+     * Verify [1,2,3] first element 1 not satisfy > 1 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0420
      * @tc.name testUint8ArrayEvery042
      * @tc.desc Verify [1,2,3] first element 1 not satisfy > 1 returns false
@@ -703,7 +787,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 1);
     assertFalse(result);
     }
+
     /**
+     * Verify [1,2,3] last element 3 not satisfy < 3 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0430
      * @tc.name testUint8ArrayEvery043
      * @tc.desc Verify [1,2,3] last element 3 not satisfy < 3 returns false
@@ -718,7 +804,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v < 3);
     assertFalse(result);
     }
+
     /**
+     * Verify [0,255,0,255] element 0 not satisfy > 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0440
      * @tc.name testUint8ArrayEvery044
      * @tc.desc Verify [0,255,0,255] element 0 not satisfy > 0 returns false
@@ -733,7 +821,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [0,255,0,255] element 255 not satisfy === 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0450
      * @tc.name testUint8ArrayEvery045
      * @tc.desc Verify [0,255,0,255] element 255 not satisfy === 0 returns false
@@ -748,7 +838,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [255,255,255] all elements 255 not satisfy > 255 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0460
      * @tc.name testUint8ArrayEvery046
      * @tc.desc Verify [255,255,255] all elements 255 not satisfy > 255 returns false
@@ -763,7 +855,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 255);
     assertFalse(result);
     }
+
     /**
+     * Verify [0,0,0] all elements 0 not satisfy > 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0470
      * @tc.name testUint8ArrayEvery047
      * @tc.desc Verify [0,0,0] all elements 0 not satisfy > 0 returns false
@@ -778,7 +872,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertFalse(result);
     }
+
     /**
+     * Verify predicate first element index is 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0480
      * @tc.name testUint8ArrayEvery048
      * @tc.desc Verify predicate first element index is 0
@@ -795,7 +891,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     return false;
         });
     }
+
     /**
+     * Verify predicate last element index is length - 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0490
      * @tc.name testUint8ArrayEvery049
      * @tc.desc Verify predicate last element index is length - 1
@@ -814,7 +912,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     });
     assertEqual(2, lastIndex[0]);
     }
+
     /**
+     * Verify predicate index from 0 increments by 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0500
      * @tc.name testUint8ArrayEvery050
      * @tc.desc Verify predicate index from 0 increments by 1
@@ -833,7 +933,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     return true;
         });
     }
+
     /**
+     * Verify index === 0 condition only first element satisfies returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0510
      * @tc.name testUint8ArrayEvery051
      * @tc.desc Verify index === 0 condition only first element satisfies returns false
@@ -848,7 +950,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v, idx) -> idx == 0);
     assertFalse(result);
     }
+
     /**
+     * Verify index === length-1 condition only last element satisfies returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0520
      * @tc.name testUint8ArrayEvery052
      * @tc.desc Verify index === length-1 condition only last element satisfies returns false
@@ -863,7 +967,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v, idx) -> idx == 2);
     assertFalse(result);
     }
+
     /**
+     * Verify index < 2 condition on 4 element array returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0530
      * @tc.name testUint8ArrayEvery053
      * @tc.desc Verify index < 2 condition on 4 element array returns false
@@ -878,7 +984,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v, idx) -> idx < 2);
     assertFalse(result);
     }
+
     /**
+     * Verify predicate array parameter reference equals original array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0540
      * @tc.name testUint8ArrayEvery054
      * @tc.desc Verify predicate array parameter reference equals original array
@@ -897,7 +1005,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     });
     assertEqual(arr, ref[0]);
     }
+
     /**
+     * Verify predicate array.length equals original array length
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0550
      * @tc.name testUint8ArrayEvery055
      * @tc.desc Verify predicate array.length equals original array length
@@ -916,7 +1026,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     });
     assertEqual(3, len[0]);
     }
+
     /**
+     * Verify predicate array[index] access equals element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0560
      * @tc.name testUint8ArrayEvery056
      * @tc.desc Verify predicate array[index] access equals element
@@ -933,7 +1045,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     return true;
         });
     }
+
     /**
+     * Verify predicate array is Uint8Array instance
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0570
      * @tc.name testUint8ArrayEvery057
      * @tc.desc Verify predicate array is Uint8Array instance
@@ -952,7 +1066,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     });
     assertTrue(isUint8[0]);
     }
+
     /**
+     * Verify first element not satisfy predicate only called 1 time
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0580
      * @tc.name testUint8ArrayEvery058
      * @tc.desc Verify first element not satisfy predicate only called 1 time
@@ -971,7 +1087,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     });
     assertEqual(1, count[0]);
     }
+
     /**
+     * Verify all satisfy predicate called length times
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0590
      * @tc.name testUint8ArrayEvery059
      * @tc.desc Verify all satisfy predicate called length times
@@ -990,7 +1108,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     });
     assertEqual(3, count[0]);
     }
+
     /**
+     * Verify last element not satisfy predicate called length times
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0600
      * @tc.name testUint8ArrayEvery060
      * @tc.desc Verify last element not satisfy predicate called length times
@@ -1009,7 +1129,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     });
     assertEqual(3, count[0]);
     }
+
     /**
+     * Verify empty array predicate called 0 times
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0610
      * @tc.name testUint8ArrayEvery061
      * @tc.desc Verify empty array predicate called 0 times
@@ -1028,7 +1150,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     });
     assertEqual(0, count[0]);
     }
+
     /**
+     * Verify second element not satisfy predicate called 2 times
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0620
      * @tc.name testUint8ArrayEvery062
      * @tc.desc Verify second element not satisfy predicate called 2 times
@@ -1047,7 +1171,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     });
     assertEqual(2, count[0]);
     }
+
     /**
+     * Verify [0,127,128,255] all elements >= 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0630
      * @tc.name testUint8ArrayEvery063
      * @tc.desc Verify [0,127,128,255] all elements >= 0 returns true
@@ -1062,7 +1188,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v >= 0);
     assertTrue(result);
     }
+
     /**
+     * Verify [0,127,128,255] exists element <= 127 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0640
      * @tc.name testUint8ArrayEvery064
      * @tc.desc Verify [0,127,128,255] exists element <= 127 returns false
@@ -1077,7 +1205,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 127);
     assertFalse(result);
     }
+
     /**
+     * Verify [0,127,128,255] exists element >= 128 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0650
      * @tc.name testUint8ArrayEvery065
      * @tc.desc Verify [0,127,128,255] exists element >= 128 returns false
@@ -1092,7 +1222,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v < 128);
     assertFalse(result);
     }
+
     /**
+     * Verify [0,127,128,255] exists odd value 127 even condition returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0660
      * @tc.name testUint8ArrayEvery066
      * @tc.desc Verify [0,127,128,255] exists odd value 127 even condition returns false
@@ -1107,7 +1239,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v % 2 == 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [0,255] all elements < 256 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0670
      * @tc.name testUint8ArrayEvery067
      * @tc.desc Verify [0,255] all elements < 256 returns true
@@ -1122,7 +1256,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v < 256);
     assertTrue(result);
     }
+
     /**
+     * Verify [0,255] all elements >= 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0680
      * @tc.name testUint8ArrayEvery068
      * @tc.desc Verify [0,255] all elements >= 0 returns true
@@ -1137,7 +1273,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v >= 0);
     assertTrue(result);
     }
+
     /**
+     * Verify 100 elements all > 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0690
      * @tc.name testUint8ArrayEvery069
      * @tc.desc Verify 100 elements all > 0 returns true
@@ -1149,12 +1287,15 @@ public class Uint8ArrayEveryTest extends BasTest {
     @Test
     void testUint8ArrayEvery069() {
     Uint8Array arr = new Uint8Array(100);
-    for (int i = 0; i < 100; i++) { arr.set(i, i + 1);
+    for (int i = 0; i < 100; i++) {
+        arr.set(i, i + 1);
     }
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify 100 elements first is 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0700
      * @tc.name testUint8ArrayEvery070
      * @tc.desc Verify 100 elements first is 0 returns false
@@ -1166,13 +1307,16 @@ public class Uint8ArrayEveryTest extends BasTest {
     @Test
     void testUint8ArrayEvery070() {
     Uint8Array arr = new Uint8Array(100);
-    for (int i = 0; i < 100; i++) { arr.set(i, 1);
+    for (int i = 0; i < 100; i++) {
+        arr.set(i, 1);
     }
     arr.set(0, 0);
     boolean result = arr.every((v) -> v > 0);
     assertFalse(result);
     }
+
     /**
+     * Verify 100 elements last is 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0710
      * @tc.name testUint8ArrayEvery071
      * @tc.desc Verify 100 elements last is 0 returns false
@@ -1184,13 +1328,16 @@ public class Uint8ArrayEveryTest extends BasTest {
     @Test
     void testUint8ArrayEvery071() {
     Uint8Array arr = new Uint8Array(100);
-    for (int i = 0; i < 100; i++) { arr.set(i, 1);
+    for (int i = 0; i < 100; i++) {
+        arr.set(i, 1);
     }
     arr.set(99, 0);
     boolean result = arr.every((v) -> v > 0);
     assertFalse(result);
     }
+
     /**
+     * Verify from ArrayBuffer construction all elements >= 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0720
      * @tc.name testUint8ArrayEvery072
      * @tc.desc Verify from ArrayBuffer construction all elements >= 0 returns true
@@ -1209,7 +1356,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v >= 0);
     assertTrue(result);
     }
+
     /**
+     * Verify copy construction all elements > 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0730
      * @tc.name testUint8ArrayEvery073
      * @tc.desc Verify copy construction all elements > 0 returns true
@@ -1225,7 +1374,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify Uint8Array.of construction multiple elements all > 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0740
      * @tc.name testUint8ArrayEvery074
      * @tc.desc Verify Uint8Array.of construction multiple elements all > 0 returns true
@@ -1240,7 +1391,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify new Uint8Array(5) default zero fill all >= 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0750
      * @tc.name testUint8ArrayEvery075
      * @tc.desc Verify new Uint8Array(5) default zero fill all >= 0 returns true
@@ -1255,7 +1408,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v >= 0);
     assertTrue(result);
     }
+
     /**
+     * Verify all satisfy condition returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0760
      * @tc.name testUint8ArrayEvery076
      * @tc.desc Verify all satisfy condition returns true
@@ -1270,7 +1425,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v % 2 == 0);
     assertTrue(result);
     }
+
     /**
+     * Verify partial not satisfy condition returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0770
      * @tc.name testUint8ArrayEvery077
      * @tc.desc Verify partial not satisfy condition returns false
@@ -1285,7 +1442,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v % 2 == 0);
     assertFalse(result);
     }
+
     /**
+     * Verify single element all satisfy condition returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0780
      * @tc.name testUint8ArrayEvery078
      * @tc.desc Verify single element all satisfy condition returns true
@@ -1300,7 +1459,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 10);
     assertTrue(result);
     }
+
     /**
+     * Verify single element not satisfy condition returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0790
      * @tc.name testUint8ArrayEvery079
      * @tc.desc Verify single element not satisfy condition returns false
@@ -1315,7 +1476,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 0);
     assertFalse(result);
     }
+
     /**
+     * Verify multiple elements mixed boundary values all satisfy condition returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0800
      * @tc.name testUint8ArrayEvery080
      * @tc.desc Verify multiple elements mixed boundary values all satisfy condition returns true
@@ -1330,7 +1493,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 0 || v == 255);
     assertTrue(result);
     }
+
     /**
+     * Verify predicate throws Error on first element propagates
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0810
      * @tc.name testUint8ArrayEvery081
      * @tc.desc Verify predicate throws Error on first element propagates
@@ -1349,7 +1514,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     assertEqual("Error", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify predicate throws Error on last element propagates
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0820
      * @tc.name testUint8ArrayEvery082
      * @tc.desc Verify predicate throws Error on last element propagates
@@ -1369,7 +1536,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     assertEqual("Error", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify predicate throws Error on second element propagates
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0830
      * @tc.name testUint8ArrayEvery083
      * @tc.desc Verify predicate throws Error on second element propagates
@@ -1389,7 +1558,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     assertEqual("Error", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify empty array predicate throws Error but never called returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0840
      * @tc.name testUint8ArrayEvery084
      * @tc.desc Verify empty array predicate throws Error but never called returns true
@@ -1404,7 +1575,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every(Uint8ArrayEveryTest::everyThrowAlways);
     assertTrue(result);
     }
+
     /**
+     * Verify predicate conditionally throws Error after condition check
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0850
      * @tc.name testUint8ArrayEvery085
      * @tc.desc Verify predicate conditionally throws Error after condition check
@@ -1423,7 +1596,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     assertEqual("Error", e.getClass().getSimpleName());
     }
     }
+
     /**
+     * Verify predicate throws Error stops calling subsequent elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0860
      * @tc.name testUint8ArrayEvery086
      * @tc.desc Verify predicate throws Error stops calling subsequent elements
@@ -1443,7 +1618,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     }
     assertEqual(1, everyThrowCount);
     }
+
     /**
+     * Verify [0xFF] value 255 predicate === 255 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0870
      * @tc.name testUint8ArrayEvery087
      * @tc.desc Verify [0xFF] value 255 predicate === 255 returns true
@@ -1458,7 +1635,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 255);
     assertTrue(result);
     }
+
     /**
+     * Verify [0x00] value 0 predicate >= 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0880
      * @tc.name testUint8ArrayEvery088
      * @tc.desc Verify [0x00] value 0 predicate >= 0 returns true
@@ -1473,7 +1652,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v >= 0);
     assertTrue(result);
     }
+
     /**
+     * Verify [0b11111111] binary 255 predicate === 255 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0890
      * @tc.name testUint8ArrayEvery089
      * @tc.desc Verify [0b11111111] binary 255 predicate === 255 returns true
@@ -1488,7 +1669,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 255);
     assertTrue(result);
     }
+
     /**
+     * Verify [0o377] octal 255 predicate === 255 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0900
      * @tc.name testUint8ArrayEvery090
      * @tc.desc Verify [0o377] octal 255 predicate === 255 returns true
@@ -1503,7 +1686,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 255);
     assertTrue(result);
     }
+
     /**
+     * Verify [0x80, 0xFF] hexadecimal mix all > 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0910
      * @tc.name testUint8ArrayEvery091
      * @tc.desc Verify [0x80, 0xFF] hexadecimal mix all > 0 returns true
@@ -1518,7 +1703,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify [100,100,100] all same === 100 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0920
      * @tc.name testUint8ArrayEvery092
      * @tc.desc Verify [100,100,100] all same === 100 returns true
@@ -1533,7 +1720,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 100);
     assertTrue(result);
     }
+
     /**
+     * Verify [100,100,100] all same !== 100 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0930
      * @tc.name testUint8ArrayEvery093
      * @tc.desc Verify [100,100,100] all same !== 100 returns false
@@ -1548,7 +1737,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v != 100);
     assertFalse(result);
     }
+
     /**
+     * Verify [200,200,200] all same > 199 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0940
      * @tc.name testUint8ArrayEvery094
      * @tc.desc Verify [200,200,200] all same > 199 returns true
@@ -1563,7 +1754,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 199);
     assertTrue(result);
     }
+
     /**
+     * Verify [200,200,200] all same > 200 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0950
      * @tc.name testUint8ArrayEvery095
      * @tc.desc Verify [200,200,200] all same > 200 returns false
@@ -1578,7 +1771,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 200);
     assertFalse(result);
     }
+
     /**
+     * Verify [0,0,0] all elements < 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0960
      * @tc.name testUint8ArrayEvery096
      * @tc.desc Verify [0,0,0] all elements < 0 returns false
@@ -1593,7 +1788,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v < 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [255,255,255] all elements === 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0970
      * @tc.name testUint8ArrayEvery097
      * @tc.desc Verify [255,255,255] all elements === 0 returns false
@@ -1608,7 +1805,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v == 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [255,255,255] all elements > 0 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0980
      * @tc.name testUint8ArrayEvery098
      * @tc.desc Verify [255,255,255] all elements > 0 returns true
@@ -1623,7 +1822,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 0);
     assertTrue(result);
     }
+
     /**
+     * Verify [127,128] all elements > 126 and < 129 returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_0990
      * @tc.name testUint8ArrayEvery099
      * @tc.desc Verify [127,128] all elements > 126 and < 129 returns true
@@ -1638,7 +1839,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v > 126 && v < 129);
     assertTrue(result);
     }
+
     /**
+     * Verify [127,128] odd condition 128 even not satisfy returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1000
      * @tc.name testUint8ArrayEvery100
      * @tc.desc Verify [127,128] odd condition 128 even not satisfy returns false
@@ -1653,7 +1856,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v % 2 == 1);
     assertFalse(result);
     }
+
     /**
+     * Verify [10,10,10,10] index < 2 on 4 elements returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1010
      * @tc.name testUint8ArrayEvery101
      * @tc.desc Verify [10,10,10,10] index < 2 on 4 elements returns false
@@ -1668,7 +1873,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v, idx) -> idx < 2);
     assertFalse(result);
     }
+
     /**
+     * Verify [10,10,10,10] index >= 2 on 4 elements returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1020
      * @tc.name testUint8ArrayEvery102
      * @tc.desc Verify [10,10,10,10] index >= 2 on 4 elements returns false
@@ -1683,7 +1890,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v, idx) -> idx >= 2);
     assertFalse(result);
     }
+
     /**
+     * Verify [5,5,5,5,5] all index in [0,5) range returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1030
      * @tc.name testUint8ArrayEvery103
      * @tc.desc Verify [5,5,5,5,5] all index in [0,5) range returns true
@@ -1698,7 +1907,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v, idx) -> idx >= 0 && idx < 5);
     assertTrue(result);
     }
+
     /**
+     * Verify [5,5,5,5,5] index < 4 fails at index 4 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1040
      * @tc.name testUint8ArrayEvery104
      * @tc.desc Verify [5,5,5,5,5] index < 4 fails at index 4 returns false
@@ -1713,7 +1924,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v, idx) -> idx < 4);
     assertFalse(result);
     }
+
     /**
+     * Verify [0,127] even condition fails at 127 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1050
      * @tc.name testUint8ArrayEvery105
      * @tc.desc Verify [0,127] even condition fails at 127 returns false
@@ -1728,7 +1941,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v) -> v % 2 == 0);
     assertFalse(result);
     }
+
     /**
+     * Verify [1,2,3,4,5] predicate v === i + 1 all match returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1060
      * @tc.name testUint8ArrayEvery106
      * @tc.desc Verify [1,2,3,4,5] predicate v === i + 1 all match returns true
@@ -1743,7 +1958,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v, idx) -> v == idx + 1);
     assertTrue(result);
     }
+
     /**
+     * Verify [1,2,3,4,5] predicate v === i fails at index 0 returns false
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1070
      * @tc.name testUint8ArrayEvery107
      * @tc.desc Verify [1,2,3,4,5] predicate v === i fails at index 0 returns false
@@ -1758,7 +1975,9 @@ public class Uint8ArrayEveryTest extends BasTest {
     boolean result = arr.every((v, idx) -> v == idx);
     assertFalse(result);
     }
+
     /**
+     * Verify [1,2,3,4,5] predicate v > i all match returns true
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_EVERY_1080
      * @tc.name testUint8ArrayEvery108
      * @tc.desc Verify [1,2,3,4,5] predicate v > i all match returns true

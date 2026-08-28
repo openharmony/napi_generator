@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Uint8ArrayIndexOf2Test extends BasTest {
     /**
+     * Verify typeof return value is number when indexOf succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0010
      * @tc.name testUint8ArrayIndexOf001
      * @tc.desc Verify typeof return value is number when indexOf succeeds
@@ -42,7 +43,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(20);
     assertEqual(1, idx);
     }
+
     /**
+     * Verify typeof return value is number when indexOf fails
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0020
      * @tc.name testUint8ArrayIndexOf002
      * @tc.desc Verify typeof return value is number when indexOf fails
@@ -57,7 +60,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(99);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify return value is not NaN when indexOf succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0030
      * @tc.name testUint8ArrayIndexOf003
      * @tc.desc Verify return value is not NaN when indexOf succeeds
@@ -72,7 +77,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(20);
     assertEqual(1, idx);
     }
+
     /**
+     * Verify return value is not NaN when indexOf fails (-1 is a valid number)
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0040
      * @tc.name testUint8ArrayIndexOf004
      * @tc.desc Verify return value is not NaN when indexOf fails (-1 is a valid number)
@@ -87,7 +94,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(99);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify return value is >= 0 when indexOf succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0050
      * @tc.name testUint8ArrayIndexOf005
      * @tc.desc Verify return value is >= 0 when indexOf succeeds
@@ -102,7 +111,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(20);
     assertTrue(idx >= 0);
     }
+
     /**
+     * Verify return value equals -1 when indexOf fails
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0060
      * @tc.name testUint8ArrayIndexOf006
      * @tc.desc Verify return value equals -1 when indexOf fails
@@ -117,7 +128,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(99);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify typeof return value is still number when fromIndex is explicitly provided
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0070
      * @tc.name testUint8ArrayIndexOf007
      * @tc.desc Verify typeof return value is still number when fromIndex is explicitly provided
@@ -132,7 +145,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(20, 1);
     assertTrue(BasTest.isInteger(idx));
     }
+
     /**
+     * Verify typeof return value is number when indexOf is called on empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0080
      * @tc.name testUint8ArrayIndexOf008
      * @tc.desc Verify typeof return value is number when indexOf is called on empty array
@@ -147,7 +162,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10);
     assertTrue(BasTest.isInteger(idx));
     }
+
     /**
+     * Verify indexOf returns 0 when searching first element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0090
      * @tc.name testUint8ArrayIndexOf009
      * @tc.desc Verify indexOf returns 0 when searching first element
@@ -162,7 +179,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify indexOf returns 1 when searching middle element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0100
      * @tc.name testUint8ArrayIndexOf010
      * @tc.desc Verify indexOf returns 1 when searching middle element
@@ -177,7 +196,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(20);
     assertEqual(1, idx);
     }
+
     /**
+     * Verify indexOf returns 2 when searching last element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0110
      * @tc.name testUint8ArrayIndexOf011
      * @tc.desc Verify indexOf returns 2 when searching last element
@@ -192,7 +213,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(30);
     assertEqual(2, idx);
     }
+
     /**
+     * Verify indexOf returns 2 when searching middle element in a 5-element array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0120
      * @tc.name testUint8ArrayIndexOf012
      * @tc.desc Verify indexOf returns 2 when searching middle element in a 5-element array
@@ -207,7 +230,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(3);
     assertEqual(2, idx);
     }
+
     /**
+     * Verify indexOf returns 4 when searching last element in a 5-element array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0130
      * @tc.name testUint8ArrayIndexOf013
      * @tc.desc Verify indexOf returns 4 when searching last element in a 5-element array
@@ -222,7 +247,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(5);
     assertEqual(4, idx);
     }
+
     /**
+     * Verify indexOf uint8 MIN value 0 returns correct index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0140
      * @tc.name testUint8ArrayIndexOf014
      * @tc.desc Verify indexOf uint8 MIN value 0 returns correct index
@@ -237,7 +264,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(0);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify indexOf uint8 MAX value 255 returns correct index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0150
      * @tc.name testUint8ArrayIndexOf015
      * @tc.desc Verify indexOf uint8 MAX value 255 returns correct index
@@ -252,7 +281,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(255);
     assertEqual(2, idx);
     }
+
     /**
+     * Verify indexOf uint8 middle value 128 returns correct index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0160
      * @tc.name testUint8ArrayIndexOf016
      * @tc.desc Verify indexOf uint8 middle value 128 returns correct index
@@ -267,7 +298,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(128);
     assertEqual(1, idx);
     }
+
     /**
+     * Verify indexOf on single-element array returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0170
      * @tc.name testUint8ArrayIndexOf017
      * @tc.desc Verify indexOf on single-element array returns 0
@@ -282,7 +315,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(42);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify indexOf on 100-element array returns 0 when searching first position
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0180
      * @tc.name testUint8ArrayIndexOf018
      * @tc.desc Verify indexOf on 100-element array returns 0 when searching first position
@@ -298,7 +333,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(99);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify indexOf on 100-element array returns 50 when searching middle position
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0190
      * @tc.name testUint8ArrayIndexOf019
      * @tc.desc Verify indexOf on 100-element array returns 50 when searching middle position
@@ -314,7 +351,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(88);
     assertEqual(50, idx);
     }
+
     /**
+     * Verify indexOf on 100-element array returns 99 when searching last position
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0200
      * @tc.name testUint8ArrayIndexOf020
      * @tc.desc Verify indexOf on 100-element array returns 99 when searching last position
@@ -330,7 +369,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(77);
     assertEqual(99, idx);
     }
+
     /**
+     * Verify 0x80 hex literal as searchElement succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0210
      * @tc.name testUint8ArrayIndexOf021
      * @tc.desc Verify 0x80 hex literal as searchElement succeeds
@@ -345,7 +386,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(0x80);
     assertEqual(1, idx);
     }
+
     /**
+     * Verify 0xFF hex literal as searchElement succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0220
      * @tc.name testUint8ArrayIndexOf022
      * @tc.desc Verify 0xFF hex literal as searchElement succeeds
@@ -360,7 +403,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(0xFF);
     assertEqual(2, idx);
     }
+
     /**
+     * Verify 0x00 hex literal as searchElement succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0230
      * @tc.name testUint8ArrayIndexOf023
      * @tc.desc Verify 0x00 hex literal as searchElement succeeds
@@ -375,7 +420,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(0x00);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify indexOf returns first occurrence index for duplicate elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0240
      * @tc.name testUint8ArrayIndexOf024
      * @tc.desc Verify indexOf returns first occurrence index for duplicate elements
@@ -390,7 +437,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify indexOf returns first occurrence index when duplicates appear in middle
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0250
      * @tc.name testUint8ArrayIndexOf025
      * @tc.desc Verify indexOf returns first occurrence index when duplicates appear in middle
@@ -405,7 +454,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10);
     assertEqual(1, idx);
     }
+
     /**
+     * Verify indexOf returns 0 when searching an array of three identical elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0260
      * @tc.name testUint8ArrayIndexOf026
      * @tc.desc Verify indexOf returns 0 when searching an array of three identical elements
@@ -420,7 +471,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(7);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify using arr[0] as searchElement succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0270
      * @tc.name testUint8ArrayIndexOf027
      * @tc.desc Verify using arr[0] as searchElement succeeds
@@ -436,7 +489,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(searchElement);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify using arr[length-1] as searchElement succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0280
      * @tc.name testUint8ArrayIndexOf028
      * @tc.desc Verify using arr[length-1] as searchElement succeeds
@@ -452,7 +507,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(searchElement);
     assertEqual(arr.length() - 1, idx);
     }
+
     /**
+     * Verify 0b11111111 binary literal 255 as searchElement succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0290
      * @tc.name testUint8ArrayIndexOf029
      * @tc.desc Verify 0b11111111 binary literal 255 as searchElement succeeds
@@ -467,7 +524,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(0b11111111);
     assertEqual(2, idx);
     }
+
     /**
+     * Verify 0o377 octal literal 255 as searchElement succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0300
      * @tc.name testUint8ArrayIndexOf030
      * @tc.desc Verify 0o377 octal literal 255 as searchElement succeeds
@@ -482,7 +541,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(0377);
     assertEqual(2, idx);
     }
+
     /**
+     * Verify 1e1 scientific notation 10 as searchElement succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0310
      * @tc.name testUint8ArrayIndexOf031
      * @tc.desc Verify 1e1 scientific notation 10 as searchElement succeeds
@@ -497,7 +558,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(1e1);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify 2e1 scientific notation 20 as searchElement succeeds
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0320
      * @tc.name testUint8ArrayIndexOf032
      * @tc.desc Verify 2e1 scientific notation 20 as searchElement succeeds
@@ -512,7 +575,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(2e1);
     assertEqual(1, idx);
     }
+
     /**
+     * Verify indexOf return value can be used as array index to access element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0330
      * @tc.name testUint8ArrayIndexOf033
      * @tc.desc Verify indexOf return value can be used as array index to access element
@@ -527,7 +592,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(20);
     assertEqual(20, arr.at((int) (idx)));
     }
+
     /**
+     * Verify calling indexOf twice returns the same index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0340
      * @tc.name testUint8ArrayIndexOf034
      * @tc.desc Verify calling indexOf twice returns the same index
@@ -543,7 +610,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx2 = arr.indexOf(20);
     assertEqual(idx2, idx1);
     }
+
     /**
+     * Verify -0 as searchElement finds value 0 successfully
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0350
      * @tc.name testUint8ArrayIndexOf035
      * @tc.desc Verify -0 as searchElement finds value 0 successfully
@@ -558,7 +627,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(-0);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify 0.0 float as searchElement finds value 0 successfully
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0360
      * @tc.name testUint8ArrayIndexOf036
      * @tc.desc Verify 0.0 float as searchElement finds value 0 successfully
@@ -573,7 +644,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(0.0);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify indexOf on array filled with same value returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0370
      * @tc.name testUint8ArrayIndexOf037
      * @tc.desc Verify indexOf on array filled with same value returns 0
@@ -591,7 +664,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(100);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify indexOf on empty array returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0380
      * @tc.name testUint8ArrayIndexOf038
      * @tc.desc Verify indexOf on empty array returns -1
@@ -606,7 +681,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with value out of uint8 range returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0390
      * @tc.name testUint8ArrayIndexOf039
      * @tc.desc Verify indexOf with value out of uint8 range returns -1
@@ -621,7 +698,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(256);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with negative value returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0400
      * @tc.name testUint8ArrayIndexOf040
      * @tc.desc Verify indexOf with negative value returns -1
@@ -636,7 +715,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(-1);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with 257 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0410
      * @tc.name testUint8ArrayIndexOf041
      * @tc.desc Verify indexOf with 257 returns -1
@@ -651,7 +732,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(257);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with -2 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0420
      * @tc.name testUint8ArrayIndexOf042
      * @tc.desc Verify indexOf with -2 returns -1
@@ -666,7 +749,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(-2);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with 1000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0430
      * @tc.name testUint8ArrayIndexOf043
      * @tc.desc Verify indexOf with 1000 returns -1
@@ -681,7 +766,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(1000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with -100 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0440
      * @tc.name testUint8ArrayIndexOf044
      * @tc.desc Verify indexOf with -100 returns -1
@@ -696,7 +783,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(-100);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with 10000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0450
      * @tc.name testUint8ArrayIndexOf045
      * @tc.desc Verify indexOf with 10000 returns -1
@@ -711,7 +800,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with -1000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0460
      * @tc.name testUint8ArrayIndexOf046
      * @tc.desc Verify indexOf with -1000 returns -1
@@ -726,7 +817,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(-1000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with 100000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0470
      * @tc.name testUint8ArrayIndexOf047
      * @tc.desc Verify indexOf with 100000 returns -1
@@ -741,7 +834,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(100000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with -100000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0480
      * @tc.name testUint8ArrayIndexOf048
      * @tc.desc Verify indexOf with -100000 returns -1
@@ -756,7 +851,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(-100000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with 1000000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0490
      * @tc.name testUint8ArrayIndexOf049
      * @tc.desc Verify indexOf with 1000000 returns -1
@@ -771,7 +868,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(1000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with -1000000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0500
      * @tc.name testUint8ArrayIndexOf050
      * @tc.desc Verify indexOf with -1000000 returns -1
@@ -786,7 +885,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(-1000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with 10000000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0510
      * @tc.name testUint8ArrayIndexOf051
      * @tc.desc Verify indexOf with 10000000 returns -1
@@ -801,7 +902,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with -10000000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0520
      * @tc.name testUint8ArrayIndexOf052
      * @tc.desc Verify indexOf with -10000000 returns -1
@@ -816,7 +919,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(-10000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with 100000000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0530
      * @tc.name testUint8ArrayIndexOf053
      * @tc.desc Verify indexOf with 100000000 returns -1
@@ -831,7 +936,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(100000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with -100000000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0540
      * @tc.name testUint8ArrayIndexOf054
      * @tc.desc Verify indexOf with -100000000 returns -1
@@ -846,7 +953,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(-100000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with 1000000000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0550
      * @tc.name testUint8ArrayIndexOf055
      * @tc.desc Verify indexOf with 1000000000 returns -1
@@ -861,7 +970,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(1000000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with -1000000000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0560
      * @tc.name testUint8ArrayIndexOf056
      * @tc.desc Verify indexOf with -1000000000 returns -1
@@ -876,7 +987,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(-1000000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify indexOf with 10000000000 returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0570
      * @tc.name testUint8ArrayIndexOf057
      * @tc.desc Verify indexOf with 10000000000 returns -1
@@ -891,7 +1004,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     long idx = arr.indexOf(10000000000L);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=0 searching first element returns index 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0580
      * @tc.name testUint8ArrayIndexOf058
      * @tc.desc Verify fromIndex=0 searching first element returns index 0
@@ -906,7 +1021,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 0);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=1 skipping first element searching middle element returns index 1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0590
      * @tc.name testUint8ArrayIndexOf059
      * @tc.desc Verify fromIndex=1 skipping first element searching middle element returns index 1
@@ -921,7 +1038,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(20, 1);
     assertEqual(1, idx);
     }
+
     /**
+     * Verify fromIndex=2 skipping first two elements searching last element returns index 2
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0600
      * @tc.name testUint8ArrayIndexOf060
      * @tc.desc Verify fromIndex=2 skipping first two elements searching last element returns index 2
@@ -936,7 +1055,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(30, 2);
     assertEqual(2, idx);
     }
+
     /**
+     * Verify fromIndex=1 searching first element returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0610
      * @tc.name testUint8ArrayIndexOf061
      * @tc.desc Verify fromIndex=1 searching first element returns -1
@@ -951,7 +1072,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 1);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=2 searching middle element returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0620
      * @tc.name testUint8ArrayIndexOf062
      * @tc.desc Verify fromIndex=2 searching middle element returns -1
@@ -966,7 +1089,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(20, 2);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=3 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0630
      * @tc.name testUint8ArrayIndexOf063
      * @tc.desc Verify fromIndex=3 searching all elements returns -1
@@ -981,7 +1106,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 3);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=100 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0640
      * @tc.name testUint8ArrayIndexOf064
      * @tc.desc Verify fromIndex=100 searching all elements returns -1
@@ -996,7 +1123,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 100);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=1000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0650
      * @tc.name testUint8ArrayIndexOf065
      * @tc.desc Verify fromIndex=1000 searching all elements returns -1
@@ -1011,7 +1140,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 1000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=10000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0660
      * @tc.name testUint8ArrayIndexOf066
      * @tc.desc Verify fromIndex=10000 searching all elements returns -1
@@ -1026,7 +1157,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 10000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=100000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0670
      * @tc.name testUint8ArrayIndexOf067
      * @tc.desc Verify fromIndex=100000 searching all elements returns -1
@@ -1041,7 +1174,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 100000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=1000000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0680
      * @tc.name testUint8ArrayIndexOf068
      * @tc.desc Verify fromIndex=1000000 searching all elements returns -1
@@ -1056,7 +1191,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 1000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=10000000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0690
      * @tc.name testUint8ArrayIndexOf069
      * @tc.desc Verify fromIndex=10000000 searching all elements returns -1
@@ -1071,7 +1208,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 10000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=100000000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0700
      * @tc.name testUint8ArrayIndexOf070
      * @tc.desc Verify fromIndex=100000000 searching all elements returns -1
@@ -1086,7 +1225,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 100000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=1000000000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0710
      * @tc.name testUint8ArrayIndexOf071
      * @tc.desc Verify fromIndex=1000000000 searching all elements returns -1
@@ -1101,7 +1242,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 1000000000);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=10000000000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0720
      * @tc.name testUint8ArrayIndexOf072
      * @tc.desc Verify fromIndex=10000000000 searching all elements returns -1
@@ -1116,7 +1259,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, (int) 4);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=100000000000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0730
      * @tc.name testUint8ArrayIndexOf073
      * @tc.desc Verify fromIndex=100000000000 searching all elements returns -1
@@ -1131,7 +1276,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, (int) 5);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=1000000000000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0740
      * @tc.name testUint8ArrayIndexOf074
      * @tc.desc Verify fromIndex=1000000000000 searching all elements returns -1
@@ -1146,7 +1293,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, (int) 6);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=10000000000000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0750
      * @tc.name testUint8ArrayIndexOf075
      * @tc.desc Verify fromIndex=10000000000000 searching all elements returns -1
@@ -1161,7 +1310,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, (int) 7);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=100000000000000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0760
      * @tc.name testUint8ArrayIndexOf076
      * @tc.desc Verify fromIndex=100000000000000 searching all elements returns -1
@@ -1176,7 +1327,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, (int) 8);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=1000000000000000 searching all elements returns -1
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0770
      * @tc.name testUint8ArrayIndexOf077
      * @tc.desc Verify fromIndex=1000000000000000 searching all elements returns -1
@@ -1191,7 +1344,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, (int) 9);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify fromIndex=-1 searching from end returns correct index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0780
      * @tc.name testUint8ArrayIndexOf078
      * @tc.desc Verify fromIndex=-1 searching from end returns correct index
@@ -1206,7 +1361,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(30, -1);
     assertEqual(2, idx);
     }
+
     /**
+     * Verify fromIndex=-2 searching from second-to-last position returns correct index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0790
      * @tc.name testUint8ArrayIndexOf079
      * @tc.desc Verify fromIndex=-2 searching from second-to-last position returns correct index
@@ -1221,7 +1378,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(20, -2);
     assertEqual(1, idx);
     }
+
     /**
+     * Verify fromIndex=-3 searching from third-to-last position returns correct index
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0800
      * @tc.name testUint8ArrayIndexOf080
      * @tc.desc Verify fromIndex=-3 searching from third-to-last position returns correct index
@@ -1236,7 +1395,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -3);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-4 searching from fourth-to-last (clamped to 0) returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0810
      * @tc.name testUint8ArrayIndexOf081
      * @tc.desc Verify fromIndex=-4 searching from fourth-to-last (clamped to 0) returns 0
@@ -1251,7 +1412,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -4);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-100 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0820
      * @tc.name testUint8ArrayIndexOf082
      * @tc.desc Verify fromIndex=-100 (far negative, clamped to 0) searching returns 0
@@ -1266,7 +1429,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -100);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-1000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0830
      * @tc.name testUint8ArrayIndexOf083
      * @tc.desc Verify fromIndex=-1000 (far negative, clamped to 0) searching returns 0
@@ -1281,7 +1446,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -1000);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-10000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0840
      * @tc.name testUint8ArrayIndexOf084
      * @tc.desc Verify fromIndex=-10000 (far negative, clamped to 0) searching returns 0
@@ -1296,7 +1463,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -10000);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-100000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0850
      * @tc.name testUint8ArrayIndexOf085
      * @tc.desc Verify fromIndex=-100000 (far negative, clamped to 0) searching returns 0
@@ -1311,7 +1480,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -100000);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-1000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0860
      * @tc.name testUint8ArrayIndexOf086
      * @tc.desc Verify fromIndex=-1000000 (far negative, clamped to 0) searching returns 0
@@ -1326,7 +1497,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -1000000);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-10000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0870
      * @tc.name testUint8ArrayIndexOf087
      * @tc.desc Verify fromIndex=-10000000 (far negative, clamped to 0) searching returns 0
@@ -1341,7 +1514,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -10000000);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-100000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0880
      * @tc.name testUint8ArrayIndexOf088
      * @tc.desc Verify fromIndex=-100000000 (far negative, clamped to 0) searching returns 0
@@ -1356,7 +1531,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -100000000);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-1000000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0890
      * @tc.name testUint8ArrayIndexOf089
      * @tc.desc Verify fromIndex=-1000000000 (far negative, clamped to 0) searching returns 0
@@ -1371,7 +1548,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -1000000000);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-10000000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0900
      * @tc.name testUint8ArrayIndexOf090
      * @tc.desc Verify fromIndex=-10000000000 (far negative, clamped to 0) searching returns 0
@@ -1386,7 +1565,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -(int) 3);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-100000000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0910
      * @tc.name testUint8ArrayIndexOf091
      * @tc.desc Verify fromIndex=-100000000000 (far negative, clamped to 0) searching returns 0
@@ -1401,7 +1582,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -(int) 3);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-1000000000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0920
      * @tc.name testUint8ArrayIndexOf092
      * @tc.desc Verify fromIndex=-1000000000000 (far negative, clamped to 0) searching returns 0
@@ -1416,7 +1599,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -(int) 3);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-10000000000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0930
      * @tc.name testUint8ArrayIndexOf093
      * @tc.desc Verify fromIndex=-10000000000000 (far negative, clamped to 0) searching returns 0
@@ -1431,7 +1616,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -(int) 4);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-100000000000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0940
      * @tc.name testUint8ArrayIndexOf094
      * @tc.desc Verify fromIndex=-100000000000000 (far negative, clamped to 0) searching returns 0
@@ -1446,7 +1633,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -(int) 5);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-1000000000000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0950
      * @tc.name testUint8ArrayIndexOf095
      * @tc.desc Verify fromIndex=-1000000000000000 (far negative, clamped to 0) searching returns 0
@@ -1461,7 +1650,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -(int) 6);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-10000000000000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0960
      * @tc.name testUint8ArrayIndexOf096
      * @tc.desc Verify fromIndex=-10000000000000000 (far negative, clamped to 0) searching returns 0
@@ -1476,7 +1667,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -(int) 7);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify fromIndex=-100000000000000000 (far negative, clamped to 0) searching returns 0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0970
      * @tc.name testUint8ArrayIndexOf097
      * @tc.desc Verify fromIndex=-100000000000000000 (far negative, clamped to 0) searching returns 0
@@ -1491,7 +1684,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, -(int) 8);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify length unchanged after successful indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0980
      * @tc.name testUint8ArrayIndexOf098
      * @tc.desc Verify length unchanged after successful indexOf
@@ -1507,7 +1702,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     arr.indexOf(20);
     assertEqual(origLen, arr.length());
     }
+
     /**
+     * Verify length unchanged after unsuccessful indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_0990
      * @tc.name testUint8ArrayIndexOf099
      * @tc.desc Verify length unchanged after unsuccessful indexOf
@@ -1523,7 +1720,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     arr.indexOf(99);
     assertEqual(origLen, arr.length());
     }
+
     /**
+     * Verify length unchanged after indexOf on empty array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1000
      * @tc.name testUint8ArrayIndexOf100
      * @tc.desc Verify length unchanged after indexOf on empty array
@@ -1539,7 +1738,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     arr.indexOf(10);
     assertEqual(origLen, arr.length());
     }
+
     /**
+     * Verify length unchanged after indexOf on 100-element array
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1010
      * @tc.name testUint8ArrayIndexOf101
      * @tc.desc Verify length unchanged after indexOf on 100-element array
@@ -1555,7 +1756,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     arr.indexOf(10);
     assertEqual(origLen, arr.length());
     }
+
     /**
+     * Verify length unchanged after indexOf with positive fromIndex
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1020
      * @tc.name testUint8ArrayIndexOf102
      * @tc.desc Verify length unchanged after indexOf with positive fromIndex
@@ -1571,7 +1774,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     arr.indexOf(20, 1);
     assertEqual(origLen, arr.length());
     }
+
     /**
+     * Verify length unchanged after indexOf with negative fromIndex
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1030
      * @tc.name testUint8ArrayIndexOf103
      * @tc.desc Verify length unchanged after indexOf with negative fromIndex
@@ -1587,7 +1792,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     arr.indexOf(30, -1);
     assertEqual(origLen, arr.length());
     }
+
     /**
+     * Verify array elements unchanged after successful indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1040
      * @tc.name testUint8ArrayIndexOf104
      * @tc.desc Verify array elements unchanged after successful indexOf
@@ -1605,7 +1812,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     assertEqual(origArr.get(i), arr.get(i));
     }
     }
+
     /**
+     * Verify array elements unchanged after unsuccessful indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1050
      * @tc.name testUint8ArrayIndexOf105
      * @tc.desc Verify array elements unchanged after unsuccessful indexOf
@@ -1623,7 +1832,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     assertEqual(origArr.get(i), arr.get(i));
     }
     }
+
     /**
+     * Verify indexOf on single-element array after indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1060
      * @tc.name testUint8ArrayIndexOf106
      * @tc.desc Verify indexOf on single-element array after indexOf
@@ -1638,7 +1849,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     arr.indexOf(10);
     assertEqual(1, arr.length());
     }
+
     /**
+     * Verify 100-element array elements unchanged after indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1070
      * @tc.name testUint8ArrayIndexOf107
      * @tc.desc Verify 100-element array elements unchanged after indexOf
@@ -1662,7 +1875,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     assertEqual(origArr.get(i), arr.get(i));
     }
     }
+
     /**
+     * Verify elements unchanged after indexOf with positive fromIndex
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1080
      * @tc.name testUint8ArrayIndexOf108
      * @tc.desc Verify elements unchanged after indexOf with positive fromIndex
@@ -1680,7 +1895,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     assertEqual(origArr.get(i), arr.get(i));
     }
     }
+
     /**
+     * Verify elements unchanged after indexOf with negative fromIndex
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1090
      * @tc.name testUint8ArrayIndexOf109
      * @tc.desc Verify elements unchanged after indexOf with negative fromIndex
@@ -1698,7 +1915,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     assertEqual(origArr.get(i), arr.get(i));
     }
     }
+
     /**
+     * Verify elements unchanged after indexOf with duplicate elements
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1100
      * @tc.name testUint8ArrayIndexOf110
      * @tc.desc Verify elements unchanged after indexOf with duplicate elements
@@ -1716,7 +1935,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     assertEqual(origArr.get(i), arr.get(i));
     }
     }
+
     /**
+     * Verify single-element array unchanged after indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1110
      * @tc.name testUint8ArrayIndexOf111
      * @tc.desc Verify single-element array unchanged after indexOf
@@ -1734,7 +1955,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     assertEqual(origArr.get(i), arr.get(i));
     }
     }
+
     /**
+     * Verify ArrayBuffer view byteOffset unchanged after indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1120
      * @tc.name testUint8ArrayIndexOf112
      * @tc.desc Verify ArrayBuffer view byteOffset unchanged after indexOf
@@ -1751,7 +1974,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     arr.indexOf(10);
     assertEqual(origByteOffset, arr.byteOffset());
     }
+
     /**
+     * Verify ArrayBuffer view buffer unchanged after indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1130
      * @tc.name testUint8ArrayIndexOf113
      * @tc.desc Verify ArrayBuffer view buffer unchanged after indexOf
@@ -1768,7 +1993,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     arr.indexOf(20);
     assertEqual(origBuffer, arr.buffer());
     }
+
     /**
+     * Verify ArrayBuffer view elements unchanged after indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1140
      * @tc.name testUint8ArrayIndexOf114
      * @tc.desc Verify ArrayBuffer view elements unchanged after indexOf
@@ -1790,7 +2017,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     assertEqual(origArr.get(i), arr.get(i));
     }
     }
+
     /**
+     * Verify ArrayBuffer view elements unchanged after unsuccessful indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1150
      * @tc.name testUint8ArrayIndexOf115
      * @tc.desc Verify ArrayBuffer view elements unchanged after unsuccessful indexOf
@@ -1812,7 +2041,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     assertEqual(origArr.get(i), arr.get(i));
     }
     }
+
     /**
+     * Verify ArrayBuffer view indexOf with negative fromIndex
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1160
      * @tc.name testUint8ArrayIndexOf116
      * @tc.desc Verify ArrayBuffer view indexOf with negative fromIndex
@@ -1831,7 +2062,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(30, -1);
     assertEqual(2, idx);
     }
+
     /**
+     * Verify ArrayBuffer view indexOf with fromIndex=0
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1170
      * @tc.name testUint8ArrayIndexOf117
      * @tc.desc Verify ArrayBuffer view indexOf with fromIndex=0
@@ -1850,7 +2083,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 0);
     assertEqual(0, idx);
     }
+
     /**
+     * Verify ArrayBuffer view indexOf with fromIndex=1 skips first element
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1180
      * @tc.name testUint8ArrayIndexOf118
      * @tc.desc Verify ArrayBuffer view indexOf with fromIndex=1 skips first element
@@ -1869,7 +2104,9 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     int idx = arr.indexOf(10, 1);
     assertEqual(-1, idx);
     }
+
     /**
+     * Verify ArrayBuffer view byteOffset unchanged after indexOf
      * @tc.number SUB_COMMONLIBRARY_UTIL_UINT8ARRAY_INDEX_OF2_1190
      * @tc.name testUint8ArrayIndexOf119
      * @tc.desc Verify ArrayBuffer view byteOffset unchanged after indexOf
