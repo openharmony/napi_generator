@@ -24,11 +24,11 @@ import basetype.common.ClassCastError;
 import org.junit.jupiter.api.Test;
 
 /**
- * Uint8Array$SetTest —— Int16Array 方法族测试。
+ * Uint8ArraySetTest —— Int16Array 方法族测试。
  *
  * @since 2026-08-26
  */
-public class Uint8Array$SetTest extends BasTest {
+public class Uint8ArraySetTest extends BasTest {
 
     @Test
     void testUint8ArraySet001() {
@@ -785,7 +785,7 @@ public class Uint8Array$SetTest extends BasTest {
     void testUint8ArraySet086() {
     Uint8Array arr = Uint8Array.of(0, 0, 0);
     try {
-    arr.set(1, (Double) null);
+    arr.setBoxed(1, null);
     fail();
     } catch (ClassCastError e) {
     assertEqual("ClassCastError", e.getClass().getSimpleName());
@@ -796,7 +796,7 @@ public class Uint8Array$SetTest extends BasTest {
     void testUint8ArraySet087() {
     Uint8Array arr = Uint8Array.of(0, 0, 0);
     try {
-    arr.set(1, (Double) null);
+    arr.setBoxed(1, null);
     fail();
     } catch (ClassCastError e) {
     assertEqual("ClassCastError", e.getClass().getSimpleName());
