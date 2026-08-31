@@ -18,7 +18,7 @@ package basetype.uint8array;
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.Uint8Array;
-import basetype.common.RangeError;
+import basetype.common.Error;
 
 import org.junit.jupiter.api.Test;
 
@@ -1104,7 +1104,7 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     arr.findIndex((v) -> {
     return BasTest.throwTestError("callback error");
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1133,7 +1133,7 @@ public class Uint8ArrayFindIndex01Test extends BasTest {
     }
     return false;
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }

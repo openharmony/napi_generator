@@ -18,7 +18,7 @@ package basetype.uint8array;
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.Uint8Array;
-import basetype.common.RangeError;
+import basetype.common.Error;
 
 import org.junit.jupiter.api.Test;
 
@@ -1384,7 +1384,7 @@ public class Uint8ArrayJoinTest extends BasTest {
     boolean threw = false;
     try {
     arr.join();
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }

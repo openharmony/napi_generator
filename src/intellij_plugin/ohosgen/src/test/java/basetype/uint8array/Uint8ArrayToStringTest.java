@@ -20,7 +20,7 @@ import basetype.common.BasTest;
 import basetype.common.EntryResult;
 import basetype.common.Int32Array;
 import basetype.common.Uint8Array;
-import basetype.common.RangeError;
+import basetype.common.Error;
 
 import org.junit.jupiter.api.Test;
 
@@ -1874,7 +1874,7 @@ public class Uint8ArrayToStringTest extends BasTest {
     boolean threw = false;
     try {
     String.valueOf(arr);
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }

@@ -18,8 +18,8 @@ package basetype.uint8array;
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.EntryResult;
+import basetype.common.Error;
 import basetype.common.Uint8Array;
-import basetype.common.RangeError;
 
 import org.junit.jupiter.api.Test;
 
@@ -1092,7 +1092,7 @@ public class Uint8ArrayEntriesTest extends BasTest {
     try {
     Uint8Array.EntriesIterator iter = arr.entries();
     iter.next();
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1117,7 +1117,7 @@ public class Uint8ArrayEntriesTest extends BasTest {
     try {
     Uint8Array.EntriesIterator iter = arr.entries();
     iter.next();
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1145,7 +1145,7 @@ public class Uint8ArrayEntriesTest extends BasTest {
     while (!e.done) {
     BasTest.throwTestError("");
     }
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }

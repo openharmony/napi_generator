@@ -18,7 +18,7 @@ package basetype.uint8array;
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.Uint8Array;
-import basetype.common.RangeError;
+import basetype.common.Error;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -64,7 +64,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
     boolean threw = false;
     try {
     arr.reverse();
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1354,7 +1354,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
     boolean threw = false;
     try {
     arr.reverse();
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1594,7 +1594,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
     boolean threw = false;
     try {
     arr.reverse();
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1624,7 +1624,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
     boolean threw = false;
     try {
     arr.reverse();
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1648,7 +1648,7 @@ public class Uint8ArrayReverse02Test extends BasTest {
     boolean threw = false;
     try {
     arr.reverse();
-    } catch (RangeError e) {
+    } catch (Error e) {
     threw = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }

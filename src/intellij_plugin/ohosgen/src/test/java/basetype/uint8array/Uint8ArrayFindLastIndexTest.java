@@ -19,7 +19,6 @@ import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.Error;
 import basetype.common.Uint8Array;
-import basetype.common.RangeError;
 
 import org.junit.jupiter.api.Test;
 
@@ -745,7 +744,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
     return false;
         });
     fail();
-    } catch (RangeError e) {
+    } catch (Error e) {
     assertEqual(1, callCount[0]);
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -775,7 +774,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
     return false;
         });
     fail();
-    } catch (RangeError e) {
+    } catch (Error e) {
     assertEqual(3, callCount[0]);
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -805,7 +804,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
     return false;
         });
     fail();
-    } catch (RangeError e) {
+    } catch (Error e) {
     assertEqual(3, callCount[0]);
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -835,7 +834,7 @@ public class Uint8ArrayFindLastIndexTest extends BasTest {
     return value == 2;
         });
     fail();
-    } catch (RangeError e) {
+    } catch (Error e) {
     assertEqual(4, callCount[0]);
     assertEqual("Error", e.getClass().getSimpleName());
     }

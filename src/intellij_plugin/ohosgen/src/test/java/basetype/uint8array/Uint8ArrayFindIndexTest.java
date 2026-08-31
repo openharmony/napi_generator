@@ -18,7 +18,7 @@ package basetype.uint8array;
 import basetype.common.ArrayBuffer;
 import basetype.common.BasTest;
 import basetype.common.Uint8Array;
-import basetype.common.RangeError;
+import basetype.common.Error;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -598,7 +598,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     arr.findIndex((value) -> {
     return BasTest.throwTestError("test error");
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     assertEqual("test error", e.getMessage());
@@ -614,7 +614,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     arr.findIndex((value) -> {
     return BasTest.throwTestError("string error");
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     assertEqual("string error", e.getMessage());
@@ -630,7 +630,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     arr.findIndex((value) -> {
     return BasTest.throwTestError("42");
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     assertEqual("42", e.getMessage());
@@ -651,7 +651,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     }
     return false;
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -672,7 +672,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     }
     return false;
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -693,7 +693,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     }
     return false;
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -874,7 +874,7 @@ public class Uint8ArrayFindIndexTest extends BasTest {
     arr.findIndex((value) -> {
     return BasTest.throwTestError("test error");
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }

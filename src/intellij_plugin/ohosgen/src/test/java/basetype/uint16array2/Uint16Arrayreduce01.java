@@ -18,7 +18,6 @@ package basetype.uint16array2;
 import basetype.common.BasTest;
 import basetype.common.Error;
 import basetype.common.Uint16Array;
-import basetype.common.RangeError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -463,7 +462,7 @@ public class Uint16Arrayreduce01 extends BasTest {
     return prev + curr;
     }, 0);
     fail();
-    } catch (RangeError e) {
+    } catch (Error e) {
     assertEqual(3, iteratedCount[0]);
     assertEqual("Error", e.getClass().getSimpleName());
     assertEqual("stop", e.getMessage());

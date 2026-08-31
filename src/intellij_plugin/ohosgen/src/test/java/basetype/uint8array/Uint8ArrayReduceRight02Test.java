@@ -1472,7 +1472,7 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     boolean[] hasError = {false};
     try {
     new Uint8Array().reduceRight((p, c, index, array) -> p + c);
-    } catch (RangeError e) {
+    } catch (TypeError e) {
     hasError[0] = true;
     assertEqual("basetype.common.TypeError", BasTest.className(e));
     }
@@ -1521,7 +1521,7 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     arr.reduceRight((p, c, index, array) -> {
     return BasTest.throwTestError("stop");
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     assertEqual(3, arr.length());
     assertEqual("Error", e.getClass().getSimpleName());
     assertEqualInt(10, arr.get(0));
@@ -1672,7 +1672,7 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     return p + c;
         });
     fail();
-    } catch (RangeError e) {
+    } catch (TypeError e) {
     assertEqual(0, sideEffect[0]);
     assertEqual("basetype.common.TypeError", BasTest.className(e));
     }
@@ -1700,7 +1700,7 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     }
     return p + c;
         });
-    } catch (RangeError e) {
+    } catch (Error e) {
     assertEqualInt(99, arr.get(2));
     assertEqual("Error", e.getClass().getSimpleName());
     }

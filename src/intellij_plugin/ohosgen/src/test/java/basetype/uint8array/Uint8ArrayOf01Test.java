@@ -17,7 +17,7 @@ package basetype.uint8array;
 
 import basetype.common.BasTest;
 import basetype.common.Uint8Array;
-import basetype.common.RangeError;
+import basetype.common.Error;
 
 import org.junit.jupiter.api.Test;
 
@@ -1429,7 +1429,7 @@ public class Uint8ArrayOf01Test extends BasTest {
     boolean caught = false;
     try {
     Uint8Array arr = Uint8Array.of();
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }

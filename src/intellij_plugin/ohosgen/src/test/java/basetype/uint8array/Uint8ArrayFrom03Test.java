@@ -16,8 +16,9 @@
 package basetype.uint8array;
 
 import basetype.common.BasTest;
-import basetype.common.RangeError;
+import basetype.common.ClassCastError;
 import basetype.common.Uint8Array;
+import basetype.common.Error;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -1173,7 +1174,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     int[] src = null;
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (ClassCastError e) {
     caught[0] = true;
     assertEqual("ClassCastError", e.getClass().getSimpleName());
     }
@@ -1197,7 +1198,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     int[] src = null;
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (ClassCastError e) {
     caught[0] = true;
     assertEqual("ClassCastError", e.getClass().getSimpleName());
     }
@@ -1221,7 +1222,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     List<Integer> src = java.util.Arrays.asList(1, 2);
     basetype.common.ClassCastError.raise();
-    } catch (RangeError e) {
+    } catch (ClassCastError e) {
     caught[0] = true;
     assertEqual("ClassCastError", e.getClass().getSimpleName());
     }
@@ -1245,7 +1246,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     List<Integer> src = java.util.Arrays.asList(1, 2);
     basetype.common.ClassCastError.raise();
-    } catch (RangeError e) {
+    } catch (ClassCastError e) {
     caught[0] = true;
     assertEqual("ClassCastError", e.getClass().getSimpleName());
     }
@@ -1269,7 +1270,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     int[] src = new int[] {1, 2, 3};
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1293,7 +1294,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     int[] src = new int[] {};
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1317,7 +1318,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     List<Integer> src = new ArrayList<>();
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1341,7 +1342,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     Set<Integer> src = new LinkedHashSet<>();
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1365,7 +1366,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     Uint8Array src = new Uint8Array();
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1389,7 +1390,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     double[] src = new double[] {1.0, 2.0, 3.0};
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1416,7 +1417,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     src.add(2);
     src.add(3);
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1440,7 +1441,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1464,7 +1465,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     List<Integer> src = java.util.Arrays.asList(1, 2, 3);
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1488,7 +1489,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     List<Integer> src = java.util.Arrays.asList(1, 2, 3);
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1512,7 +1513,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     List<Integer> src = java.util.Arrays.asList(1, 2);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1536,7 +1537,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     List<Integer> src = java.util.Arrays.asList(1, 2);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1560,7 +1561,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     int[] src = new int[] {0, 128, 255};
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1584,7 +1585,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     int[] src = new int[] {256, 300, 400};
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1608,7 +1609,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     try {
     int[] src = new int[] {-1, -128, -256};
     Uint8Array result = Uint8Array.from(src);
-    } catch (RangeError e) {
+    } catch (Error e) {
     caught[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }

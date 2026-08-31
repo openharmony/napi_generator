@@ -1348,7 +1348,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
     return prev + curr;
     }, 0);
     fail();
-    } catch (RangeError e) {
+    } catch (Error e) {
     assertEqual(2, processedCount[0]);
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -1371,7 +1371,7 @@ public class Uint8ArrayReduce01Test extends BasTest {
     boolean[] errorThrown = {false};
     try {
     arr.reduce((prev, curr, index, array) -> prev + curr, 0);
-    } catch (RangeError e) {
+    } catch (Error e) {
     errorThrown[0] = true;
     assertEqual("Error", e.getClass().getSimpleName());
     }

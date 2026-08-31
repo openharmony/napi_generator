@@ -406,7 +406,7 @@ public class Uint16Arraysort01 extends BasTest {
     return BasTest.throwTestError("abort");
         });
     fail();
-    } catch (RangeError e) {
+    } catch (Error e) {
     assertTrue(called[0]);
     assertEqual("Error", e.getClass().getSimpleName());
     }
@@ -435,7 +435,7 @@ public class Uint16Arraysort01 extends BasTest {
     return BasTest.throwTestError("side");
         });
     fail();
-    } catch (RangeError e) {
+    } catch (Error e) {
     assertEqual(99, sideEffect[0]);
     assertEqual("Error", e.getClass().getSimpleName());
     }
