@@ -91,7 +91,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     void testUint8ClampedArrayUnderIterator006() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42});
     Uint8ClampedArray.KeyIterator it = arr.values();
-    assertEqual(42, it.next().value.intValue());
+    assertEqualInt(42, it.next().value);
     }
 
     @Test
@@ -168,7 +168,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     Uint8ClampedArray.KeyIterator itA = arr.values();
     Uint8ClampedArray.KeyIterator itB = arr.values();
     itA.next();
-    assertEqual(10, itB.next().value.intValue());
+    assertEqualInt(10, itB.next().value);
     }
 
     @Test
@@ -181,14 +181,14 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     }
     assertEqual(5, arr.length());
     assertEqual(3, sub.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(4, arr.get(3));
-    assertEqual(5, arr.get(4));
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
-    assertEqual(4, sub.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(4, arr.get(3));
+    assertEqualInt(5, arr.get(4));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
+    assertEqualInt(4, sub.get(2));
     }
 
     @Test
@@ -368,9 +368,9 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     }
     assertEqual(3, arr.length());
     assertEqual(0, sub.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -378,8 +378,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray.KeyIterator itA = arr.values();
     Uint8ClampedArray.KeyIterator itB = arr.values();
-    assertEqual(10, itA.next().value.intValue());
-    assertEqual(10, itB.next().value.intValue());
+    assertEqualInt(10, itA.next().value);
+    assertEqualInt(10, itB.next().value);
     }
 
     @Test
@@ -392,8 +392,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     @Test
     void testUint8ClampedArrayUnderIterator034() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {88});
-    assertEqual(88, arr.values().next().value);
-    assertEqual(88, arr.values().next().value);
+    assertEqualInt(88, arr.values().next().value);
+    assertEqualInt(88, arr.values().next().value);
     }
 
     @Test
@@ -421,7 +421,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray.KeyIterator it = arr.values();
     it.next();
-    assertEqual(20, it.next().value.intValue());
+    assertEqualInt(20, it.next().value);
     }
 
     @Test
@@ -430,7 +430,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     Uint8ClampedArray.KeyIterator it = arr.values();
     it.next();
     it.next();
-    assertEqual(30, it.next().value.intValue());
+    assertEqualInt(30, it.next().value);
     }
 
     @Test
@@ -562,7 +562,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     sum += x;
     }
     assertEqual(6, sum);
-    assertEqual(1, arr.get(0));
+    assertEqualInt(1, arr.get(0));
     }
 
     @Test
@@ -573,7 +573,7 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     sum += x;
     }
     assertEqual(6, sum);
-    assertEqual(3, arr.get(2));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -606,8 +606,8 @@ public class Uint8ClampedArrayUnderIteratorTest extends BasTest {
     count++;
     }
     assertEqual(3, sub.length());
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
-    assertEqual(4, sub.get(2));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
+    assertEqualInt(4, sub.get(2));
     }
 }

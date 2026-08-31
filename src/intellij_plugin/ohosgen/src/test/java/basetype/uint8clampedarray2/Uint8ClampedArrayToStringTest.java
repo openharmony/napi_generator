@@ -456,9 +456,9 @@ public class Uint8ClampedArrayToStringTest extends BasTest {
     void testUint8ClampedArrayToString070() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     String.valueOf(arr);
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(30, arr.get(2));
     }
 
     @Test
@@ -486,8 +486,8 @@ public class Uint8ClampedArrayToStringTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20});
     assertEqual(2, arr.length());
     assertEqual(2, String.valueOf(arr).indexOf(","));
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
     }
 
     @Test
@@ -560,12 +560,12 @@ public class Uint8ClampedArrayToStringTest extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 3);
     assertEqual(4, arr.length());
     assertEqual(2, sub.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(4, arr.get(3));
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(4, arr.get(3));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
     }
 
     @Test
@@ -609,8 +609,8 @@ public class Uint8ClampedArrayToStringTest extends BasTest {
     Uint8ClampedArray sub = parent.subarray(1, 3);
     parent.set(1, 99);
     assertEqual(2, sub.length());
-    assertEqual(99, sub.get(0));
-    assertEqual(3, sub.get(1));
+    assertEqualInt(99, sub.get(0));
+    assertEqualInt(3, sub.get(1));
     }
 
     @Test
@@ -619,8 +619,8 @@ public class Uint8ClampedArrayToStringTest extends BasTest {
     Uint8ClampedArray sub = parent.subarray(1, 3);
     sub.set(0, 88);
     assertEqual(2, sub.length());
-    assertEqual(88, sub.get(0));
-    assertEqual(3, sub.get(1));
+    assertEqualInt(88, sub.get(0));
+    assertEqualInt(3, sub.get(1));
     }
 
     @Test
