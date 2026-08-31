@@ -732,7 +732,7 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     Uint8ClampedArray.EntriesIterator it = arr.entries();
     EntryResult r = it.next();
     int idx = r.value[0];
-    assertEqual(r.value[1], arr.get(idx));
+    assertEqualInt(r.value[1], arr.get(idx));
     }
 
     /**
@@ -751,11 +751,11 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray.EntriesIterator it = arr.entries();
     for (int[] pair : it) {
-        // 空块：语义上不执行任何操作
+        continue;
     }
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     /**
@@ -968,7 +968,7 @@ public class Uint8ClampedArrayEntriesTest extends BasTest {
     EntryResult r = it.next();
     assertEqual(1, r.value[0]);
     assertEqual(2, r.value[1]);
-    assertEqual(3, arr.get(0));
+    assertEqualInt(3, arr.get(0));
     }
 
     /**

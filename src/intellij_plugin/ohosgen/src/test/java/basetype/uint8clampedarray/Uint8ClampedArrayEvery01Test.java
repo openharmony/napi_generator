@@ -769,7 +769,7 @@ public class Uint8ClampedArrayEvery01Test extends BasTest {
         lastIdx.set(0, i);
         return e < 2;
     });
-    assertEqual(1, lastIdx.get(0));
+    assertEqualInt(1, lastIdx.get(0));
     assertFalse(r);
     }
 
@@ -1707,10 +1707,10 @@ public class Uint8ClampedArrayEvery01Test extends BasTest {
     indices.add(i);
     return true;
         });
-    assertEqual(0, indices.get(0));
-    assertEqual(1, indices.get(1));
-    assertEqual(2, indices.get(2));
-    assertEqual(3, indices.get(3));
+    assertEqualInt(0, indices.get(0));
+    assertEqualInt(1, indices.get(1));
+    assertEqualInt(2, indices.get(2));
+    assertEqualInt(3, indices.get(3));
     }
 
     /**

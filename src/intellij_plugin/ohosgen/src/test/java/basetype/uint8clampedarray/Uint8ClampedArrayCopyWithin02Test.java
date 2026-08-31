@@ -43,8 +43,8 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray r = arr.copyWithin(0, 3);
     assertEqual(arr, r);
-    assertEqual(4, arr.get(0));
-    assertEqual(5, arr.get(1));
+    assertEqualInt(4, arr.get(0));
+    assertEqualInt(5, arr.get(1));
     }
 
     /**
@@ -62,7 +62,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo002() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.copyWithin(0, 1);
-    assertEqual(20, r.get(0));
+    assertEqualInt(20, r.get(0));
     }
 
     /**
@@ -81,9 +81,9 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5, 6});
     Uint8ClampedArray r = arr.copyWithin(0, 2, 5);
     assertEqual(arr, r);
-    assertEqual(3, arr.get(0));
-    assertEqual(5, arr.get(2));
-    assertEqual(4, arr.get(3));
+    assertEqualInt(3, arr.get(0));
+    assertEqualInt(5, arr.get(2));
+    assertEqualInt(4, arr.get(3));
     }
 
     /**
@@ -121,7 +121,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {100});
     Uint8ClampedArray r = arr.copyWithin(0, 0);
     assertEqual(arr, r);
-    assertEqual(100, arr.get(0));
+    assertEqualInt(100, arr.get(0));
     }
 
     /**
@@ -140,8 +140,8 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.copyWithin(0, 3, 1);
     assertEqual(arr, r);
-    assertEqual(1, arr.get(0));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(3, arr.get(2));
     }
 
     /**
@@ -160,8 +160,8 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.copyWithin(-2, 0);
     assertEqual(arr, r);
-    assertEqual(1, arr.get(2));
-    assertEqual(2, arr.get(3));
+    assertEqualInt(1, arr.get(2));
+    assertEqualInt(2, arr.get(3));
     }
 
     /**
@@ -179,7 +179,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo008() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 6, 7, 8});
     Uint8ClampedArray r = arr.copyWithin(0, -2);
-    assertEqual(7, r.get(0));
+    assertEqualInt(7, r.get(0));
     }
 
     /**
@@ -198,9 +198,9 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {9, 10, 11, 12});
     Uint8ClampedArray r = arr.copyWithin(0, 1, -1);
     assertEqual(arr, r);
-    assertEqual(10, arr.get(0));
-    assertEqual(11, arr.get(1));
-    assertEqual(11, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(11, arr.get(1));
+    assertEqualInt(11, arr.get(2));
     }
 
     /**
@@ -219,9 +219,9 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.copyWithin(0, 1);
     assertEqual(arr, r);
-    assertEqual(2, arr.get(0));
-    assertEqual(3, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(2, arr.get(0));
+    assertEqualInt(3, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     /**
@@ -239,7 +239,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo011() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {1e2, 0, 0, 0, 0});
     arr.copyWithin(2, 0, 1);
-    assertEqual(100, arr.get(2));
+    assertEqualInt(100, arr.get(2));
     }
 
     /**
@@ -409,7 +409,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     a.set(2, 30);
     a.set(3, 40);
     a.copyWithin(0, 2);
-    assertEqual(30, b.get(0));
+    assertEqualInt(30, b.get(0));
     }
 
     /**
@@ -427,8 +427,8 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo021() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.copyWithin(0, 2);
-    assertEqual(arr.get(0).intValue(), r.get(0));
-    assertEqual(arr.get(1).intValue(), r.get(1));
+    assertEqual(arr.get(0).intValue(), r.get(0).intValue());
+    assertEqual(arr.get(1).intValue(), r.get(1).intValue());
     }
 
     /**
@@ -446,7 +446,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo022() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     Uint8ClampedArray r = arr.copyWithin(0, 1, 1);
-    assertEqual(7, r.get(0));
+    assertEqualInt(7, r.get(0));
     }
 
     /**
@@ -464,7 +464,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo023() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     Uint8ClampedArray r = arr.copyWithin(0, 1, 1);
-    assertEqual(8, r.get(1));
+    assertEqualInt(8, r.get(1));
     }
 
     /**
@@ -482,7 +482,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo024() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     Uint8ClampedArray r = arr.copyWithin(0, 1, 1);
-    assertEqual(9, r.get(2));
+    assertEqualInt(9, r.get(2));
     }
 
     /**
@@ -507,7 +507,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     a.set(3, 4);
     a.set(4, 5);
     a.copyWithin(0, 3);
-    assertEqual(4, b.get(0));
+    assertEqualInt(4, b.get(0));
     }
 
     /**
@@ -532,7 +532,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     a.set(3, 4);
     a.set(4, 5);
     a.copyWithin(0, 3);
-    assertEqual(5, b.get(1));
+    assertEqualInt(5, b.get(1));
     }
 
     /**
@@ -557,7 +557,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     a.set(3, 4);
     a.set(4, 5);
     a.copyWithin(0, 3);
-    assertEqual(3, b.get(2));
+    assertEqualInt(3, b.get(2));
     }
 
     /**
@@ -595,7 +595,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo029() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 0, 200, 0});
     arr.copyWithin(0, 2, 3);
-    assertEqual(200, arr.get(0));
+    assertEqualInt(200, arr.get(0));
     }
 
     /**
@@ -613,7 +613,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo030() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 0, 64, 0});
     arr.copyWithin(0, 2, 3);
-    assertEqual(64, arr.get(0));
+    assertEqualInt(64, arr.get(0));
     }
 
     /**
@@ -655,7 +655,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
         arr.set(i, i);
     }
     Uint8ClampedArray r = arr.copyWithin(0, 128);
-    assertEqual(128, r.get(0));
+    assertEqualInt(128, r.get(0));
     }
 
     /**
@@ -676,7 +676,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
         arr.set(i, i);
     }
     Uint8ClampedArray r = arr.copyWithin(0, 128);
-    assertEqual(255, r.get(127));
+    assertEqualInt(255, r.get(127));
     }
 
     /**
@@ -697,7 +697,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
         arr.set(i, i);
     }
     Uint8ClampedArray r = arr.copyWithin(0, 128);
-    assertEqual(128, r.get(128));
+    assertEqualInt(128, r.get(128));
     }
 
     /**
@@ -769,7 +769,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo038() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0x80, 0, 0, 0, 0});
     arr.copyWithin(2, 0, 1);
-    assertEqual(128, arr.get(2));
+    assertEqualInt(128, arr.get(2));
     }
 
     /**
@@ -787,7 +787,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo039() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0xFF, 0, 0, 0, 0});
     arr.copyWithin(2, 0, 1);
-    assertEqual(255, arr.get(2));
+    assertEqualInt(255, arr.get(2));
     }
 
     /**
@@ -805,7 +805,7 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo040() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0b11111111, 0, 0, 0, 0});
     arr.copyWithin(2, 0, 1);
-    assertEqual(255, arr.get(2));
+    assertEqualInt(255, arr.get(2));
     }
 
     /**
@@ -823,6 +823,6 @@ public class Uint8ClampedArrayCopyWithin02Test extends BasTest {
     void testUint8ClampedArrayCopyWithinTwo041() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0377, 0, 0, 0, 0});
     arr.copyWithin(2, 0, 1);
-    assertEqual(255, arr.get(2));
+    assertEqualInt(255, arr.get(2));
     }
 }

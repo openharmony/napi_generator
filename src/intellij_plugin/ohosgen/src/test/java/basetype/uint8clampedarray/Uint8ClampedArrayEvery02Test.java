@@ -205,7 +205,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     boolean r = arr.every((e, i, a) -> true);
     assertTrue(r);
-    assertEqual(10, arr.get(0));
+    assertEqualInt(10, arr.get(0));
     }
 
     /**
@@ -224,7 +224,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     boolean r = arr.every((e, i, a) -> true);
     assertTrue(r);
-    assertEqual(20, arr.get(1));
+    assertEqualInt(20, arr.get(1));
     }
 
     /**
@@ -243,7 +243,7 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     boolean r = arr.every((e, i, a) -> true);
     assertTrue(r);
-    assertEqual(30, arr.get(2));
+    assertEqualInt(30, arr.get(2));
     }
 
     /**
@@ -302,9 +302,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     boolean r = arr.every((e, i, a) -> false);
     assertFalse(r);
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(30, arr.get(2));
     }
 
     /**
@@ -488,9 +488,9 @@ public class Uint8ClampedArrayEvery02Test extends BasTest {
     } catch (Error e) {
     assertEqual("Error", e.getClass().getSimpleName());
     }
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(30, arr.get(2));
     }
 
     /**

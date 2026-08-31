@@ -170,7 +170,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     void testUint8ClampedArrayConstructorSeven008() {
     List<Number> src = java.util.Arrays.asList(5);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(5, arr.get(0));
+    assertEqualInt(5, arr.get(0));
     }
 
     /**
@@ -188,7 +188,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     void testUint8ClampedArrayConstructorSeven009() {
     List<Number> src = java.util.Arrays.asList(15);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(15, arr.get(0));
+    assertEqualInt(15, arr.get(0));
     }
 
     /**
@@ -206,7 +206,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     void testUint8ClampedArrayConstructorSeven010() {
     List<Number> src = java.util.Arrays.asList(31);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(31, arr.get(0));
+    assertEqualInt(31, arr.get(0));
     }
 
     /**
@@ -224,7 +224,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     void testUint8ClampedArrayConstructorSeven011() {
     List<Number> src = java.util.Arrays.asList(32);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(32, arr.get(0));
+    assertEqualInt(32, arr.get(0));
     }
 
     /**
@@ -242,7 +242,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     void testUint8ClampedArrayConstructorSeven012() {
     List<Number> src = java.util.Arrays.asList(63);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(63, arr.get(0));
+    assertEqualInt(63, arr.get(0));
     }
 
     /**
@@ -260,7 +260,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     void testUint8ClampedArrayConstructorSeven013() {
     List<Number> src = java.util.Arrays.asList(65);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(65, arr.get(0));
+    assertEqualInt(65, arr.get(0));
     }
 
     /**
@@ -278,7 +278,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     void testUint8ClampedArrayConstructorSeven014() {
     List<Number> src = java.util.Arrays.asList(0x10);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(16, arr.get(0));
+    assertEqualInt(16, arr.get(0));
     }
 
     /**
@@ -296,7 +296,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     void testUint8ClampedArrayConstructorSeven015() {
     List<Number> src = java.util.Arrays.asList(017);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(15, arr.get(0));
+    assertEqualInt(15, arr.get(0));
     }
 
     /**
@@ -314,7 +314,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     void testUint8ClampedArrayConstructorSeven016() {
     List<Number> src = java.util.Arrays.asList(0b101);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(5, arr.get(0));
+    assertEqualInt(5, arr.get(0));
     }
 
     /**
@@ -332,9 +332,9 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     void testUint8ClampedArrayConstructorSeven017() {
     List<Number> src = java.util.Arrays.asList(0x10, 017, 0b101);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(16, arr.get(0));
-    assertEqual(15, arr.get(1));
-    assertEqual(5, arr.get(2));
+    assertEqualInt(16, arr.get(0));
+    assertEqualInt(15, arr.get(1));
+    assertEqualInt(5, arr.get(2));
     }
 
     /**
@@ -353,7 +353,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     int v = -100;
     List<Number> src = java.util.Arrays.asList(v);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     /**
@@ -372,7 +372,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     int v = -50;
     List<Number> src = java.util.Arrays.asList(v);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     /**
@@ -391,7 +391,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     int v = -10;
     List<Number> src = java.util.Arrays.asList(v);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     /**
@@ -410,7 +410,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     List<Number> src = java.util.Arrays.asList(10, 20, 30);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     arr.set(0, 99);
-    assertEqual(99, arr.get(0));
+    assertEqualInt(99, arr.get(0));
     }
 
     /**
@@ -429,7 +429,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     List<Number> src = java.util.Arrays.asList(10, 20, 30);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     arr.set(0, 300);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     /**
@@ -448,7 +448,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     List<Number> src = java.util.Arrays.asList(10, 20);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     arr.set(0, -5);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     /**
@@ -467,7 +467,7 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     List<Number> src = java.util.Arrays.asList(1, 2, 3);
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     arr.set(0, 99);
-    assertEqual(1, src.get(0));
+    assertEqualInt(1, src.get(0));
     }
 
     /**
@@ -489,6 +489,6 @@ public class Uint8ClampedArrayConstructor07Test extends BasTest {
     }
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     assertEqual(256, arr.length());
-    assertEqual(0, arr.get(100));
+    assertEqualInt(0, arr.get(100));
     }
 }
