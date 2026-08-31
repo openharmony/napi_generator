@@ -49,8 +49,8 @@ public class Uint8ClampedArrayProperties02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray s = arr.slice(0, 2);
     assertEqual(2, s.length());
-    assertEqual(1, s.get(0));
-    assertEqual(2, s.get(1));
+    assertEqualInt(1, s.get(0));
+    assertEqualInt(2, s.get(1));
     }
 
     @Test
@@ -73,8 +73,8 @@ public class Uint8ClampedArrayProperties02Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 3);
     assertEqual(2, sub.length());
     assertEqual(2, sub.byteLength());
-    assertEqual(20, sub.get(0));
-    assertEqual(30, sub.get(1));
+    assertEqualInt(20, sub.get(0));
+    assertEqualInt(30, sub.get(1));
     }
 
     @Test
@@ -82,10 +82,10 @@ public class Uint8ClampedArrayProperties02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40, 50});
     Uint8ClampedArray sub = arr.subarray(1);
     assertEqual(4, sub.length());
-    assertEqual(20, sub.get(0));
-    assertEqual(30, sub.get(1));
-    assertEqual(40, sub.get(2));
-    assertEqual(50, sub.get(3));
+    assertEqualInt(20, sub.get(0));
+    assertEqualInt(30, sub.get(1));
+    assertEqualInt(40, sub.get(2));
+    assertEqualInt(50, sub.get(3));
     }
 
     @Test
@@ -94,11 +94,11 @@ public class Uint8ClampedArrayProperties02Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray();
     assertEqual(5, sub.length());
     assertEqual(sub.length(), sub.byteLength());
-    assertEqual(10, sub.get(0));
-    assertEqual(20, sub.get(1));
-    assertEqual(30, sub.get(2));
-    assertEqual(40, sub.get(3));
-    assertEqual(50, sub.get(4));
+    assertEqualInt(10, sub.get(0));
+    assertEqualInt(20, sub.get(1));
+    assertEqualInt(30, sub.get(2));
+    assertEqualInt(40, sub.get(3));
+    assertEqualInt(50, sub.get(4));
     }
 
     @Test
@@ -412,9 +412,9 @@ public class Uint8ClampedArrayProperties02Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 4);
     assertEqual(3, sub.length());
     assertEqual(arr.BYTES_PER_ELEMENT, sub.BYTES_PER_ELEMENT);
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
-    assertEqual(4, sub.get(2));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
+    assertEqualInt(4, sub.get(2));
     }
 
     @Test
@@ -475,8 +475,8 @@ public class Uint8ClampedArrayProperties02Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 3);
     assertEqual(2, sub.length());
     assertEqual(arr.getClass().getSimpleName(), sub.getClass().getSimpleName());
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
     }
 
     @Test
@@ -512,8 +512,8 @@ public class Uint8ClampedArrayProperties02Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 3);
     assertEqual(2, sub.length());
     assertEqual(arr.buffer().byteLength(), sub.buffer().byteLength());
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
     }
 
     @Test
@@ -574,8 +574,8 @@ public class Uint8ClampedArrayProperties02Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 3);
     assertEqual(2, sub.length());
     assertEqual(arr.buffer(), sub.buffer());
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
     }
 
     @Test
@@ -585,10 +585,10 @@ public class Uint8ClampedArrayProperties02Test extends BasTest {
     Uint8ClampedArray sub2 = sub1.subarray(1, 3);
     assertEqual(4, sub1.length());
     assertEqual(arr.buffer(), sub1.buffer());
-    assertEqual(2, sub1.get(0));
-    assertEqual(3, sub1.get(1));
-    assertEqual(4, sub1.get(2));
-    assertEqual(5, sub1.get(3));
+    assertEqualInt(2, sub1.get(0));
+    assertEqualInt(3, sub1.get(1));
+    assertEqualInt(4, sub1.get(2));
+    assertEqualInt(5, sub1.get(3));
     }
 
     @Test

@@ -203,7 +203,7 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     int r = arr.lastIndexOf(3, 2);
     assertEqual(2, r);
-    assertEqual(3, arr.get(2));
+    assertEqualInt(3, arr.get(2));
     }
 
     /**
@@ -222,7 +222,7 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {9, 8, 7});
     int r = arr.lastIndexOf(9, -2);
     assertEqual(0, r);
-    assertEqual(9, arr.get(0));
+    assertEqualInt(9, arr.get(0));
     }
 
     /**
@@ -514,7 +514,7 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     Uint8ClampedArray sub = parent.subarray(0, 2);
     int r = sub.lastIndexOf(2);
     assertEqual(1, r);
-    assertEqual(2, parent.get(1));
+    assertEqualInt(2, parent.get(1));
     }
 
     /**
@@ -557,7 +557,7 @@ public class Uint8ClampedArrayLastIndexOf02Test extends BasTest {
     b.set(0, 99);
     int r = a.lastIndexOf(9);
     assertEqual(0, r);
-    assertEqual(99, b.get(0));
+    assertEqualInt(99, b.get(0));
     }
 
     /**

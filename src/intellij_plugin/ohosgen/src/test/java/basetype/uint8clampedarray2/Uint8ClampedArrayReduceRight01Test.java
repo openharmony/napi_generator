@@ -61,9 +61,9 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
         order.add(i);
         return p;
         }, 0);
-    assertEqual(2, order.get(0));
-    assertEqual(1, order.get(1));
-    assertEqual(0, order.get(2));
+    assertEqualInt(2, order.get(0));
+    assertEqualInt(1, order.get(1));
+    assertEqualInt(0, order.get(2));
     }
 
     @Test
@@ -74,9 +74,9 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
         values.add(c);
         return p;
         }, 0);
-    assertEqual(7, values.get(0));
-    assertEqual(6, values.get(1));
-    assertEqual(5, values.get(2));
+    assertEqualInt(7, values.get(0));
+    assertEqualInt(6, values.get(1));
+    assertEqualInt(5, values.get(2));
     }
 
     @Test
@@ -349,9 +349,9 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
         return p;
         }, new java.util.ArrayList<>());
     assertEqual(3, r.size());
-    assertEqual(3, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(3, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -536,9 +536,9 @@ public class Uint8ClampedArrayReduceRight01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     ArrayBuffer bufBefore = arr.buffer();
     arr.reduceRight((p, c, i, a) -> p + c, 0);
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     assertEqual(bufBefore, arr.buffer());
     }
 

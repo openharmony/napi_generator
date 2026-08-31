@@ -42,7 +42,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
     void testUint8ClampedArrayFullTwo001() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 3.5);
-    assertEqual(4, arr.get(0));
+    assertEqualInt(4, arr.get(0));
     }
 
     /**
@@ -60,7 +60,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
     void testUint8ClampedArrayFullTwo002() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 200.5);
-    assertEqual(200, arr.get(0));
+    assertEqualInt(200, arr.get(0));
     }
 
     /**
@@ -78,7 +78,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
     void testUint8ClampedArrayFullTwo003() {
     Uint8ClampedArray arr = new Uint8ClampedArray(1);
     arr.set(0, 201.5);
-    assertEqual(202, arr.get(0));
+    assertEqualInt(202, arr.get(0));
     }
 
     /**
@@ -117,7 +117,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
     Uint8ClampedArray a = new Uint8ClampedArray(buf);
     Uint8ClampedArray b = new Uint8ClampedArray(buf);
     a.set(0, 99);
-    assertEqual(99, b.get(0));
+    assertEqualInt(99, b.get(0));
     }
 
     /**
@@ -138,8 +138,8 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
     Uint8ClampedArray b = new Uint8ClampedArray(buf, 2, 2);
     a.set(0, 11);
     b.set(0, 22);
-    assertEqual(11, a.get(0));
-    assertEqual(22, b.get(0));
+    assertEqualInt(11, a.get(0));
+    assertEqualInt(22, b.get(0));
     }
 
     /**
@@ -231,8 +231,8 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf);
     arr.set(0, 50);
     arr.set(1, 200);
-    assertEqual(50, arr.get(0));
-    assertEqual(200, arr.get(1));
+    assertEqualInt(50, arr.get(0));
+    assertEqualInt(200, arr.get(1));
     }
 
     /**
@@ -336,7 +336,7 @@ public class Uint8ClampedArrayFull02Test extends BasTest {
     void testUint8ClampedArrayFullTwo017() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(1, 2, 3);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(3, arr.get(2));
     }
 }

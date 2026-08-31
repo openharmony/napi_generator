@@ -50,9 +50,9 @@ public class Uint8ClampedArrayProperties03Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray s = arr.slice(1, 4);
     assertEqual(3, s.length());
-    assertEqual(2, s.get(0));
-    assertEqual(3, s.get(1));
-    assertEqual(4, s.get(2));
+    assertEqualInt(2, s.get(0));
+    assertEqualInt(3, s.get(1));
+    assertEqualInt(4, s.get(2));
     }
 
     @Test
@@ -92,8 +92,8 @@ public class Uint8ClampedArrayProperties03Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 3);
     assertEqual(2, sub.length());
     assertEqual("Uint8ClampedArray", sub.getClass().getSimpleName());
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
     }
 
     @Test
@@ -135,9 +135,9 @@ public class Uint8ClampedArrayProperties03Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     ArrayBuffer tmp = arr.buffer();
     assertEqual(3, tmp.byteLength());
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(30, arr.get(2));
     }
 
     @Test
@@ -441,7 +441,7 @@ public class Uint8ClampedArrayProperties03Test extends BasTest {
     void testUint8ClampedArrayPropertiesThree058() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(256);
     assertEqual(1, arr.length());
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
@@ -454,7 +454,7 @@ public class Uint8ClampedArrayProperties03Test extends BasTest {
     void testUint8ClampedArrayPropertiesThree060() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(-1);
     assertEqual(1, arr.length());
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -500,8 +500,8 @@ public class Uint8ClampedArrayProperties03Test extends BasTest {
     Uint8ClampedArray sub = arr.subarray(1, 3);
     assertEqual(2, sub.length());
     assertEqual(1, sub.BYTES_PER_ELEMENT);
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
     }
 
     @Test

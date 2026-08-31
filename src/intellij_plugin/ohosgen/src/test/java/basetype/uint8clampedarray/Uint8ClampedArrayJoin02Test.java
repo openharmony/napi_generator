@@ -241,9 +241,9 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     void testUint8ClampedArrayJoinTwo012() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     assertEqual("1,2,3", arr.join(","));
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     /**
@@ -379,8 +379,8 @@ public class Uint8ClampedArrayJoin02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray sub = arr.subarray(1, 3);
     assertEqual("2,3", sub.join(","));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     /**

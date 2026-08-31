@@ -84,7 +84,7 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42});
     Uint8ClampedArray.KeyIterator it = arr.keys();
     IteratorResult r1 = it.next();
-    assertEqual(0, r1.value);
+    assertEqual(0, r1.value.intValue());
     assertFalse(r1.done);
     IteratorResult r2 = it.next();
     assertNull(r2.value);
@@ -107,7 +107,7 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {99});
     Uint8ClampedArray.KeyIterator it = arr.values();
     IteratorResult r = it.next();
-    assertEqual(99, r.value);
+    assertEqual(99, r.value.intValue());
     assertFalse(r.done);
     }
 
@@ -126,9 +126,9 @@ public class Uint8ClampedArrayFull06Test extends BasTest {
     void testUint8ClampedArrayFullSix005() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 5, 5});
     arr.fill(-1e9);
-    assertEqual(0, arr.get(0));
-    assertEqual(0, arr.get(1));
-    assertEqual(0, arr.get(2));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(0, arr.get(1));
+    assertEqualInt(0, arr.get(2));
     }
 
     /**

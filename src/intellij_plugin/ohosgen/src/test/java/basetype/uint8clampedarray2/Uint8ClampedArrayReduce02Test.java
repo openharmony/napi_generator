@@ -38,9 +38,9 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     arr.reduce((p, c, index, array) -> p + c, 0);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -170,10 +170,10 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     return p + c;
         });
     assertEqual(4, idxs.size());
-    assertEqual(1, idxs.get(0));
-    assertEqual(4, idxs.get(3));
-    assertEqual(2, idxs.get(1));
-    assertEqual(3, idxs.get(2));
+    assertEqualInt(1, idxs.get(0));
+    assertEqualInt(4, idxs.get(3));
+    assertEqualInt(2, idxs.get(1));
+    assertEqualInt(3, idxs.get(2));
     }
 
     @Test
@@ -184,9 +184,9 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     seenPrev.add(p);
     return p * 2 + c;
         });
-    assertEqual(1, seenPrev.get(0));
-    assertEqual(4, seenPrev.get(1));
-    assertEqual(11, seenPrev.get(2));
+    assertEqualInt(1, seenPrev.get(0));
+    assertEqualInt(4, seenPrev.get(1));
+    assertEqualInt(11, seenPrev.get(2));
     }
 
     @Test
@@ -409,7 +409,7 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
         });
     assertEqual(expected.size(), seen.size());
     for (int k = 0; k < expected.size(); k = k + 1) {
-    assertEqual(expected.get(k).intValue(), seen.get(k));
+    assertEqual(expected.get(k).intValue(), seen.get(k).intValue());
     }
     }
 
@@ -733,9 +733,9 @@ public class Uint8ClampedArrayReduce02Test extends BasTest {
     void testUint8ClampedArrayReduceTwo073() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     arr.reduce((p, c, i, a) -> p + c);
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(30, arr.get(2));
     }
 
     @Test

@@ -429,7 +429,7 @@ public class Uint8ClampedArrayProperties01Test extends BasTest {
     void testUint8ClampedArrayPropertiesOne059() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(0);
     assertEqual(1, arr.length());
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -442,11 +442,11 @@ public class Uint8ClampedArrayProperties01Test extends BasTest {
     void testUint8ClampedArrayPropertiesOne061() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(1, 2, 3, 4, 5);
     assertEqual(5, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(4, arr.get(3));
-    assertEqual(5, arr.get(4));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(4, arr.get(3));
+    assertEqualInt(5, arr.get(4));
     }
 
     @Test
@@ -684,16 +684,16 @@ public class Uint8ClampedArrayProperties01Test extends BasTest {
     void testUint8ClampedArrayPropertiesOne095() {
     Uint8ClampedArray arr = Uint8ClampedArray.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     assertEqual(10, arr.length());
-    assertEqual(0, arr.get(0));
-    assertEqual(1, arr.get(1));
-    assertEqual(2, arr.get(2));
-    assertEqual(3, arr.get(3));
-    assertEqual(4, arr.get(4));
-    assertEqual(5, arr.get(5));
-    assertEqual(6, arr.get(6));
-    assertEqual(7, arr.get(7));
-    assertEqual(8, arr.get(8));
-    assertEqual(9, arr.get(9));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(1, arr.get(1));
+    assertEqualInt(2, arr.get(2));
+    assertEqualInt(3, arr.get(3));
+    assertEqualInt(4, arr.get(4));
+    assertEqualInt(5, arr.get(5));
+    assertEqualInt(6, arr.get(6));
+    assertEqualInt(7, arr.get(7));
+    assertEqualInt(8, arr.get(8));
+    assertEqualInt(9, arr.get(9));
     }
 
     @Test

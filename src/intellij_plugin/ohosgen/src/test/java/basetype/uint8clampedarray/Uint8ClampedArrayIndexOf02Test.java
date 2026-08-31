@@ -181,7 +181,7 @@ public class Uint8ClampedArrayIndexOf02Test extends BasTest {
     void testUint8ClampedArrayIndexOfTwo009() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {11, 22, 33});
     assertEqual(1, arr.indexOf(22));
-    assertEqual(11, arr.get(0));
+    assertEqualInt(11, arr.get(0));
     }
 
     /**
@@ -258,7 +258,7 @@ public class Uint8ClampedArrayIndexOf02Test extends BasTest {
     void testUint8ClampedArrayIndexOfTwo013() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     int r = arr.indexOf(8);
-    assertEqual(8, arr.get(r));
+    assertEqualInt(8, arr.get(r));
     }
 
     /**
@@ -315,7 +315,7 @@ public class Uint8ClampedArrayIndexOf02Test extends BasTest {
     void testUint8ClampedArrayIndexOfTwo016() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {100, 150, 200});
     int idx = arr.indexOf(150);
-    assertEqual(150, arr.get(idx));
+    assertEqualInt(150, arr.get(idx));
     }
 
     /**
@@ -350,7 +350,7 @@ public class Uint8ClampedArrayIndexOf02Test extends BasTest {
     void testUint8ClampedArrayIndexOfTwo018() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {50, 60, 70, 80});
     int r = arr.indexOf(70);
-    assertEqual(70, arr.get(r));
+    assertEqualInt(70, arr.get(r));
     }
 
     /**
@@ -368,7 +368,7 @@ public class Uint8ClampedArrayIndexOf02Test extends BasTest {
     void testUint8ClampedArrayIndexOfTwo019() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {9, 9, 9});
     int r = arr.indexOf(9);
-    assertEqual(9, arr.get(r));
+    assertEqualInt(9, arr.get(r));
     }
 
     /**
@@ -386,7 +386,7 @@ public class Uint8ClampedArrayIndexOf02Test extends BasTest {
     void testUint8ClampedArrayIndexOfTwo020() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     int r = arr.indexOf(30);
-    assertEqual(30, arr.at(r));
+    assertEqualInt(30, arr.at(r));
     }
 
     /**
