@@ -41,8 +41,8 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String s = arr.toLocaleString();
     assertEqual(2, arr.length());
     assertEqual(1, s.indexOf(","));
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
     }
 
     @Test
@@ -62,9 +62,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String s = arr.toLocaleString("en-US");
     assertEqual(3, arr.length());
     assertEqual(1, s.indexOf(","));
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -73,9 +73,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String s = arr.toLocaleString("en-US", null);
     assertEqual(3, arr.length());
     assertEqual(1, s.indexOf(","));
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -105,9 +105,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String s = arr.toLocaleString("en-US");
     assertEqual(3, arr.length());
     assertEqual(3, s.indexOf(","));
-    assertEqual(255, arr.get(0));
-    assertEqual(255, arr.get(1));
-    assertEqual(255, arr.get(2));
+    assertEqualInt(255, arr.get(0));
+    assertEqualInt(255, arr.get(1));
+    assertEqualInt(255, arr.get(2));
     }
 
     @Test
@@ -116,9 +116,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString();
     assertEqual(3, arr.length());
     assertEqual(1, r.indexOf(","));
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -141,8 +141,8 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("en-US");
     assertEqual(2, arr.length());
     assertEqual(1, r.indexOf(","));
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
     }
 
     @Test
@@ -151,8 +151,8 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString(null, null);
     assertEqual(2, arr.length());
     assertEqual(1, r.indexOf(","));
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
     }
 
     @Test
@@ -161,9 +161,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString();
     assertEqual(3, arr.length());
     assertEqual(3, r.indexOf(","));
-    assertEqual(255, arr.get(0));
-    assertEqual(255, arr.get(1));
-    assertEqual(255, arr.get(2));
+    assertEqualInt(255, arr.get(0));
+    assertEqualInt(255, arr.get(1));
+    assertEqualInt(255, arr.get(2));
     }
 
     @Test
@@ -172,10 +172,10 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString();
     assertEqual(4, arr.length());
     assertEqual(1, r.indexOf(","));
-    assertEqual(0, arr.get(0));
-    assertEqual(0, arr.get(1));
-    assertEqual(0, arr.get(2));
-    assertEqual(0, arr.get(3));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(0, arr.get(1));
+    assertEqualInt(0, arr.get(2));
+    assertEqualInt(0, arr.get(3));
     }
 
     @Test
@@ -185,9 +185,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r2 = arr.toLocaleString();
     assertEqual(3, arr.length());
     assertEqual(r2, r1);
-    assertEqual(7, arr.get(0));
-    assertEqual(8, arr.get(1));
-    assertEqual(9, arr.get(2));
+    assertEqualInt(7, arr.get(0));
+    assertEqualInt(8, arr.get(1));
+    assertEqualInt(9, arr.get(2));
     assertEqual("7,8,9", r1);
     }
 
@@ -218,7 +218,7 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("en-US");
     assertEqual(1, arr.length());
     assertTrue(r.indexOf("255") >= 0);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
@@ -227,7 +227,7 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("en-US");
     assertEqual(1, arr.length());
     assertEqual('0', r.charAt(0));
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     assertEqual("0", r);
     }
 
@@ -237,7 +237,7 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("en-US");
     assertEqual(1, arr.length());
     assertTrue(r.indexOf("0") >= 0);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -246,7 +246,7 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("en-US");
     assertEqual(3, r.length());
     assertEqual(1, arr.length());
-    assertEqual(100, arr.get(0));
+    assertEqualInt(100, arr.get(0));
     assertEqual("100", r);
     }
 
@@ -262,7 +262,7 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     void testUint8ClampedArrayToLocaleStringOne026() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {11, 22, 33});
     arr.toLocaleString();
-    assertEqual(11, arr.get(0));
+    assertEqualInt(11, arr.get(0));
     }
 
     @Test
@@ -280,12 +280,12 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     sub.toLocaleString();
     assertEqual(4, parent.length());
     assertEqual(2, sub.length());
-    assertEqual(10, parent.get(0));
-    assertEqual(20, parent.get(1));
-    assertEqual(30, parent.get(2));
-    assertEqual(40, parent.get(3));
-    assertEqual(20, sub.get(0));
-    assertEqual(30, sub.get(1));
+    assertEqualInt(10, parent.get(0));
+    assertEqualInt(20, parent.get(1));
+    assertEqualInt(30, parent.get(2));
+    assertEqualInt(40, parent.get(3));
+    assertEqualInt(20, sub.get(0));
+    assertEqualInt(30, sub.get(1));
     }
 
     @Test
@@ -295,11 +295,11 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     sub.toLocaleString();
     assertEqual(3, parent.length());
     assertEqual(2, sub.length());
-    assertEqual(10, parent.get(0));
-    assertEqual(20, parent.get(1));
-    assertEqual(30, parent.get(2));
-    assertEqual(10, sub.get(0));
-    assertEqual(20, sub.get(1));
+    assertEqualInt(10, parent.get(0));
+    assertEqualInt(20, parent.get(1));
+    assertEqualInt(30, parent.get(2));
+    assertEqualInt(10, sub.get(0));
+    assertEqualInt(20, sub.get(1));
     }
 
     @Test
@@ -309,9 +309,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = sub.toLocaleString();
     assertEqual(3, parent.length());
     assertEqual(0, sub.length());
-    assertEqual(1, parent.get(0));
-    assertEqual(2, parent.get(1));
-    assertEqual(3, parent.get(2));
+    assertEqualInt(1, parent.get(0));
+    assertEqualInt(2, parent.get(1));
+    assertEqualInt(3, parent.get(2));
     }
 
     @Test
@@ -344,7 +344,7 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     Uint8ClampedArray sli = parent.slice(1, 3);
     sli.toLocaleString();
     assertEqual(2, sli.length());
-    assertEqual(6, sli.get(0));
+    assertEqualInt(6, sli.get(0));
     }
 
     @Test
@@ -362,9 +362,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String b = String.valueOf(arr);
     assertEqual(b.length(), a.length());
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     assertEqual("1,2,3", a);
     }
 
@@ -374,9 +374,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("zh-CN");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -385,9 +385,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("de-DE");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -396,9 +396,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("ar");
     assertTrue(r.length() >= 3);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -407,9 +407,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("ja-JP");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -418,9 +418,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("fr-FR");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -429,9 +429,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("ko-KR");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -440,9 +440,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("ru-RU");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -451,9 +451,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("en-GB");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -462,9 +462,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("en");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -473,9 +473,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("zh");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -484,9 +484,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("EN-US");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -495,9 +495,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("en-us");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -506,9 +506,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("en-US-u-nu-arab");
     assertTrue(r.length() >= 3);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
@@ -517,9 +517,9 @@ public class Uint8ClampedArrayToLocaleString01Test extends BasTest {
     String r = arr.toLocaleString("en-US-u-nu-latn");
     assertTrue(r.length() >= 5);
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test

@@ -33,9 +33,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(3, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(3, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(1, r.length());
-    assertEqual(42, r.get(0));
+    assertEqualInt(42, r.get(0));
     }
 
     @Test
@@ -58,16 +58,16 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(10, r.length());
-    assertEqual(10, r.get(0));
-    assertEqual(9, r.get(1));
-    assertEqual(8, r.get(2));
-    assertEqual(7, r.get(3));
-    assertEqual(6, r.get(4));
-    assertEqual(5, r.get(5));
-    assertEqual(4, r.get(6));
-    assertEqual(3, r.get(7));
-    assertEqual(2, r.get(8));
-    assertEqual(1, r.get(9));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(9, r.get(1));
+    assertEqualInt(8, r.get(2));
+    assertEqualInt(7, r.get(3));
+    assertEqualInt(6, r.get(4));
+    assertEqualInt(5, r.get(5));
+    assertEqualInt(4, r.get(6));
+    assertEqualInt(3, r.get(7));
+    assertEqualInt(2, r.get(8));
+    assertEqualInt(1, r.get(9));
     }
 
     @Test
@@ -78,9 +78,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     }
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(255, r.length());
-    assertEqual(254, r.get(0));
-    assertEqual(127, r.get(127));
-    assertEqual(0, r.get(254));
+    assertEqualInt(254, r.get(0));
+    assertEqualInt(127, r.get(127));
+    assertEqualInt(0, r.get(254));
     }
 
     @Test
@@ -91,9 +91,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     }
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(1024, r.length());
-    assertEqual(arr.get(1023).intValue(), r.get(0));
-    assertEqual(arr.get(511).intValue(), r.get(512));
-    assertEqual(arr.get(0).intValue(), r.get(1023));
+    assertEqual(arr.get(1023).intValue(), r.get(0).intValue());
+    assertEqual(arr.get(511).intValue(), r.get(512).intValue());
+    assertEqual(arr.get(0).intValue(), r.get(1023).intValue());
     }
 
     @Test
@@ -101,10 +101,10 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0, 0, 0, 0});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(4, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(0, r.get(1));
-    assertEqual(0, r.get(2));
-    assertEqual(0, r.get(3));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(0, r.get(1));
+    assertEqualInt(0, r.get(2));
+    assertEqualInt(0, r.get(3));
     }
 
     @Test
@@ -112,9 +112,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {256, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(255, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(255, r.get(2));
     }
 
     @Test
@@ -122,9 +122,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {-1, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(0, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(0, r.get(2));
     }
 
     @Test
@@ -132,9 +132,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {127.5, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(128, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(128, r.get(2));
     }
 
     @Test
@@ -142,9 +142,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {128.5, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(128, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(128, r.get(2));
     }
 
     @Test
@@ -152,9 +152,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {Double.NaN, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(0, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(0, r.get(2));
     }
 
     @Test
@@ -162,9 +162,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {Double.POSITIVE_INFINITY, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(255, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(255, r.get(2));
     }
 
     @Test
@@ -172,9 +172,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {-Double.POSITIVE_INFINITY, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(0, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(0, r.get(2));
     }
 
     @Test
@@ -182,9 +182,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {0.9, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -192,9 +192,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {0.4, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(0, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(0, r.get(2));
     }
 
     @Test
@@ -202,9 +202,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {0.5, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(0, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(0, r.get(2));
     }
 
     @Test
@@ -212,12 +212,12 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, arr.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(3, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(3, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -225,9 +225,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.toReversed();
     assertNotEqual(arr, r);
-    assertEqual(3, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(3, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -236,9 +236,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray r1 = arr.toReversed();
     Uint8ClampedArray r2 = arr.toReversed();
     assertNotEqual(r2, r1);
-    assertEqual(3, r2.get(0));
-    assertEqual(2, r2.get(1));
-    assertEqual(1, r2.get(2));
+    assertEqualInt(3, r2.get(0));
+    assertEqualInt(2, r2.get(1));
+    assertEqualInt(1, r2.get(2));
     }
 
     @Test
@@ -246,12 +246,12 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.toReversed();
     r.set(0, 99);
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(99, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(99, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -260,9 +260,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray r = arr.toReversed();
     arr.set(0, 200);
     assertEqual(3, r.length());
-    assertEqual(3, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(3, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -270,7 +270,7 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {42});
     Uint8ClampedArray r = arr.toReversed();
     assertNotEqual(arr.buffer(), r.buffer());
-    assertEqual(42, r.get(0));
+    assertEqualInt(42, r.get(0));
     }
 
     @Test
@@ -280,12 +280,12 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     r.set(0, 99);
     Uint8ClampedArray view = new Uint8ClampedArray(arr.buffer());
     assertEqual(3, view.length());
-    assertEqual(1, view.get(0));
-    assertEqual(2, view.get(1));
-    assertEqual(3, view.get(2));
-    assertEqual(99, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(1, view.get(0));
+    assertEqualInt(2, view.get(1));
+    assertEqualInt(3, view.get(2));
+    assertEqualInt(99, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -298,10 +298,10 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     arr.set(3, 4);
     Uint8ClampedArray r = arr.toReversed();
     assertNotEqual(buf, r.buffer());
-    assertEqual(4, r.get(0));
-    assertEqual(3, r.get(1));
-    assertEqual(2, r.get(2));
-    assertEqual(1, r.get(3));
+    assertEqualInt(4, r.get(0));
+    assertEqualInt(3, r.get(1));
+    assertEqualInt(2, r.get(2));
+    assertEqualInt(1, r.get(3));
     }
 
     @Test
@@ -314,10 +314,10 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     arr.set(3, 40);
     Uint8ClampedArray r = arr.toReversed();
     assertNotEqual(buf, r.buffer());
-    assertEqual(40, r.get(0));
-    assertEqual(30, r.get(1));
-    assertEqual(20, r.get(2));
-    assertEqual(10, r.get(3));
+    assertEqualInt(40, r.get(0));
+    assertEqualInt(30, r.get(1));
+    assertEqualInt(20, r.get(2));
+    assertEqualInt(10, r.get(3));
     }
 
     @Test
@@ -325,10 +325,10 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.toReversed().toReversed();
     assertEqual(4, r.length());
-    assertEqual(1, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(3, r.get(2));
-    assertEqual(4, r.get(3));
+    assertEqualInt(1, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(3, r.get(2));
+    assertEqualInt(4, r.get(3));
     }
 
     @Test
@@ -336,10 +336,10 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 10, 15, 20});
     Uint8ClampedArray r = arr.toReversed().toReversed().toReversed();
     assertEqual(4, r.length());
-    assertEqual(20, r.get(0));
-    assertEqual(15, r.get(1));
-    assertEqual(10, r.get(2));
-    assertEqual(5, r.get(3));
+    assertEqualInt(20, r.get(0));
+    assertEqualInt(15, r.get(1));
+    assertEqualInt(10, r.get(2));
+    assertEqualInt(5, r.get(3));
     }
 
     @Test
@@ -347,9 +347,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.of(10, 20, 30);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(30, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(10, r.get(2));
+    assertEqualInt(30, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(10, r.get(2));
     }
 
     @Test
@@ -357,11 +357,11 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(5);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(5, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(0, r.get(1));
-    assertEqual(0, r.get(2));
-    assertEqual(0, r.get(3));
-    assertEqual(0, r.get(4));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(0, r.get(1));
+    assertEqualInt(0, r.get(2));
+    assertEqualInt(0, r.get(3));
+    assertEqualInt(0, r.get(4));
     }
 
     @Test
@@ -373,9 +373,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     arr.set(2, 3);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(3, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(3, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -388,10 +388,10 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     arr.set(3, 40);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(4, r.length());
-    assertEqual(40, r.get(0));
-    assertEqual(30, r.get(1));
-    assertEqual(20, r.get(2));
-    assertEqual(10, r.get(3));
+    assertEqualInt(40, r.get(0));
+    assertEqualInt(30, r.get(1));
+    assertEqualInt(20, r.get(2));
+    assertEqualInt(10, r.get(3));
     }
 
     @Test
@@ -400,10 +400,10 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2, 4);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(0, r.byteOffset());
-    assertEqual(0, r.get(0));
-    assertEqual(0, r.get(1));
-    assertEqual(0, r.get(2));
-    assertEqual(0, r.get(3));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(0, r.get(1));
+    assertEqualInt(0, r.get(2));
+    assertEqualInt(0, r.get(3));
     }
 
     @Test
@@ -412,9 +412,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(src);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(9, r.get(0));
-    assertEqual(8, r.get(1));
-    assertEqual(7, r.get(2));
+    assertEqualInt(9, r.get(0));
+    assertEqualInt(8, r.get(1));
+    assertEqualInt(7, r.get(2));
     }
 
     @Test
@@ -423,10 +423,10 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     arr.fill(7);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(4, r.length());
-    assertEqual(7, r.get(0));
-    assertEqual(7, r.get(1));
-    assertEqual(7, r.get(2));
-    assertEqual(7, r.get(3));
+    assertEqualInt(7, r.get(0));
+    assertEqualInt(7, r.get(1));
+    assertEqualInt(7, r.get(2));
+    assertEqualInt(7, r.get(3));
     }
 
     @Test
@@ -435,9 +435,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     arr.set(0, 99);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(3, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(99, r.get(2));
+    assertEqualInt(3, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(99, r.get(2));
     }
 
     @Test
@@ -447,17 +447,17 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray r = sub.toReversed();
     assertEqual(5, arr.length());
     assertEqual(3, sub.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(4, arr.get(3));
-    assertEqual(5, arr.get(4));
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
-    assertEqual(4, sub.get(2));
-    assertEqual(4, r.get(0));
-    assertEqual(3, r.get(1));
-    assertEqual(2, r.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(4, arr.get(3));
+    assertEqualInt(5, arr.get(4));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
+    assertEqualInt(4, sub.get(2));
+    assertEqualInt(4, r.get(0));
+    assertEqualInt(3, r.get(1));
+    assertEqualInt(2, r.get(2));
     }
 
     @Test
@@ -467,17 +467,17 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray r = sub.toReversed();
     assertEqual(5, arr.length());
     assertEqual(3, sub.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(4, arr.get(3));
-    assertEqual(5, arr.get(4));
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
-    assertEqual(4, sub.get(2));
-    assertEqual(4, r.get(0));
-    assertEqual(3, r.get(1));
-    assertEqual(2, r.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(4, arr.get(3));
+    assertEqualInt(5, arr.get(4));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
+    assertEqualInt(4, sub.get(2));
+    assertEqualInt(4, r.get(0));
+    assertEqualInt(3, r.get(1));
+    assertEqualInt(2, r.get(2));
     }
 
     @Test
@@ -486,9 +486,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray sl = arr.slice(0, 3);
     Uint8ClampedArray r = sl.toReversed();
     assertEqual(3, r.length());
-    assertEqual(3, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(3, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -496,8 +496,8 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(2, r.length());
-    assertEqual(1, r.get(1));
-    assertEqual(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(2, r.get(0));
     }
 
     @Test
@@ -508,9 +508,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     }
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(255, r.length());
-    assertEqual(254, r.get(0));
-    assertEqual(127, r.get(127));
-    assertEqual(0, r.get(254));
+    assertEqualInt(254, r.get(0));
+    assertEqualInt(127, r.get(127));
+    assertEqualInt(0, r.get(254));
     }
 
     @Test
@@ -518,9 +518,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(256);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(256, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(0, r.get(128));
-    assertEqual(0, r.get(255));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(0, r.get(128));
+    assertEqualInt(0, r.get(255));
     }
 
     @Test
@@ -528,9 +528,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(1024, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(0, r.get(512));
-    assertEqual(0, r.get(1023));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(0, r.get(512));
+    assertEqualInt(0, r.get(1023));
     }
 
     @Test
@@ -538,9 +538,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {255, 255, 255});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(255, r.get(2));
-    assertEqual(255, r.get(0));
-    assertEqual(255, r.get(1));
+    assertEqualInt(255, r.get(2));
+    assertEqualInt(255, r.get(0));
+    assertEqualInt(255, r.get(1));
     }
 
     @Test
@@ -548,9 +548,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {255, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(255, r.get(2));
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
+    assertEqualInt(255, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
     }
 
     @Test
@@ -558,9 +558,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {127, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(127, r.get(2));
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
+    assertEqualInt(127, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
     }
 
     @Test
@@ -568,9 +568,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {128, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(128, r.get(2));
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
+    assertEqualInt(128, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
     }
 
     @Test
@@ -578,9 +578,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {1e9, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(255, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(255, r.get(2));
     }
 
     @Test
@@ -588,9 +588,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {-1e9, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(0, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(0, r.get(2));
     }
 
     @Test
@@ -598,9 +598,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0xFF, 0x00, 0x10});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(0x10, r.get(0));
-    assertEqual(0, r.get(1));
-    assertEqual(0xFF, r.get(2));
+    assertEqualInt(0x10, r.get(0));
+    assertEqualInt(0, r.get(1));
+    assertEqualInt(0xFF, r.get(2));
     }
 
     @Test
@@ -608,9 +608,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {017, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(15, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(15, r.get(2));
     }
 
     @Test
@@ -618,9 +618,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {0b1010, 1, 2});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(1, r.get(1));
-    assertEqual(10, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(1, r.get(1));
+    assertEqualInt(10, r.get(2));
     }
 
     @Test
@@ -628,11 +628,11 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(arr.byteLength(), r.byteLength());
-    assertEqual(5, r.get(0));
-    assertEqual(4, r.get(1));
-    assertEqual(3, r.get(2));
-    assertEqual(2, r.get(3));
-    assertEqual(1, r.get(4));
+    assertEqualInt(5, r.get(0));
+    assertEqualInt(4, r.get(1));
+    assertEqualInt(3, r.get(2));
+    assertEqualInt(2, r.get(3));
+    assertEqualInt(1, r.get(4));
     }
 
     @Test
@@ -640,9 +640,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(1, r.BYTES_PER_ELEMENT);
-    assertEqual(3, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(3, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -657,8 +657,8 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {99});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(1, arr.length());
-    assertEqual(99, arr.get(0));
-    assertEqual(99, r.get(0));
+    assertEqualInt(99, arr.get(0));
+    assertEqualInt(99, r.get(0));
     }
 
     @Test
@@ -673,7 +673,7 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1});
     Uint8ClampedArray r = arr.toReversed();
     assertNotEqual(arr, r);
-    assertEqual(1, r.get(0));
+    assertEqualInt(1, r.get(0));
     }
 
     @Test
@@ -682,11 +682,11 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray r = arr.toReversed();
     r.set(0, 100);
     assertEqual(3, arr.length());
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(100, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(100, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -701,14 +701,14 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(4, r.length());
-    assertEqual(arr.get(3).intValue(), r.get(0));
-    assertEqual(40, r.get(0));
-    assertEqual(arr.get(2).intValue(), r.get(1));
-    assertEqual(30, r.get(1));
-    assertEqual(arr.get(1).intValue(), r.get(2));
-    assertEqual(20, r.get(2));
-    assertEqual(arr.get(0).intValue(), r.get(3));
-    assertEqual(10, r.get(3));
+    assertEqual(arr.get(3).intValue(), r.get(0).intValue());
+    assertEqualInt(40, r.get(0));
+    assertEqual(arr.get(2).intValue(), r.get(1).intValue());
+    assertEqualInt(30, r.get(1));
+    assertEqual(arr.get(1).intValue(), r.get(2).intValue());
+    assertEqualInt(20, r.get(2));
+    assertEqual(arr.get(0).intValue(), r.get(3).intValue());
+    assertEqualInt(10, r.get(3));
     }
 
     @Test
@@ -716,11 +716,11 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(5);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(5, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(0, r.get(1));
-    assertEqual(0, r.get(2));
-    assertEqual(0, r.get(3));
-    assertEqual(0, r.get(4));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(0, r.get(1));
+    assertEqualInt(0, r.get(2));
+    assertEqualInt(0, r.get(3));
+    assertEqualInt(0, r.get(4));
     }
 
     @Test
@@ -729,10 +729,10 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(buf, 2, 4);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(4, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(0, r.get(1));
-    assertEqual(0, r.get(2));
-    assertEqual(0, r.get(3));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(0, r.get(1));
+    assertEqualInt(0, r.get(2));
+    assertEqualInt(0, r.get(3));
     }
 
     @Test
@@ -741,10 +741,10 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     arr.fill(7);
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(4, r.length());
-    assertEqual(7, r.get(0));
-    assertEqual(7, r.get(1));
-    assertEqual(7, r.get(2));
-    assertEqual(7, r.get(3));
+    assertEqualInt(7, r.get(0));
+    assertEqualInt(7, r.get(1));
+    assertEqualInt(7, r.get(2));
+    assertEqualInt(7, r.get(3));
     }
 
     @Test
@@ -754,17 +754,17 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray r = sub.toReversed();
     assertEqual(5, arr.length());
     assertEqual(3, sub.length());
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(4, arr.get(3));
-    assertEqual(5, arr.get(4));
-    assertEqual(2, sub.get(0));
-    assertEqual(3, sub.get(1));
-    assertEqual(4, sub.get(2));
-    assertEqual(4, r.get(0));
-    assertEqual(3, r.get(1));
-    assertEqual(2, r.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(4, arr.get(3));
+    assertEqualInt(5, arr.get(4));
+    assertEqualInt(2, sub.get(0));
+    assertEqualInt(3, sub.get(1));
+    assertEqualInt(4, sub.get(2));
+    assertEqualInt(4, r.get(0));
+    assertEqualInt(3, r.get(1));
+    assertEqualInt(2, r.get(2));
     }
 
     @Test
@@ -773,11 +773,11 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray r = arr.toReversed();
     r.slice(0, 2);
     assertEqual(5, r.length());
-    assertEqual(5, r.get(0));
-    assertEqual(4, r.get(1));
-    assertEqual(3, r.get(2));
-    assertEqual(2, r.get(3));
-    assertEqual(1, r.get(4));
+    assertEqualInt(5, r.get(0));
+    assertEqualInt(4, r.get(1));
+    assertEqualInt(3, r.get(2));
+    assertEqualInt(2, r.get(3));
+    assertEqualInt(1, r.get(4));
     }
 
     @Test
@@ -785,8 +785,8 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {Double.MAX_VALUE, 50});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(2, r.length());
-    assertEqual(50, r.get(0));
-    assertEqual(255, r.get(1));
+    assertEqualInt(50, r.get(0));
+    assertEqualInt(255, r.get(1));
     }
 
     @Test
@@ -794,8 +794,8 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new double[] {Double.MIN_VALUE, 50});
     Uint8ClampedArray r = arr.toReversed();
     assertEqual(2, r.length());
-    assertEqual(50, r.get(0));
-    assertEqual(0, r.get(1));
+    assertEqualInt(50, r.get(0));
+    assertEqualInt(0, r.get(1));
     }
 
     @Test
@@ -804,9 +804,9 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray r = arr.toReversed();
     r.set(0, 256);
     assertEqual(3, r.length());
-    assertEqual(255, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(255, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 
     @Test
@@ -815,8 +815,8 @@ public class Uint8ClampedArrayToReversedTest extends BasTest {
     Uint8ClampedArray r = arr.toReversed();
     r.set(0, -1);
     assertEqual(3, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(1, r.get(2));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(1, r.get(2));
     }
 }
