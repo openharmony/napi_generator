@@ -115,7 +115,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne005() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
-    assertEqual(7, r.get(0));
+    assertEqualInt(7, r.get(0));
     }
 
     /**
@@ -133,7 +133,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne006() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {7, 8, 9});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
-    assertEqual(9, r.get(2));
+    assertEqualInt(9, r.get(2));
     }
 
     /**
@@ -332,7 +332,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne017() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> i == 0);
-    assertEqual(10, r.get(0));
+    assertEqualInt(10, r.get(0));
     }
 
     /**
@@ -350,7 +350,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne018() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> i == a.length() - 1);
-    assertEqual(30, r.get(0));
+    assertEqualInt(30, r.get(0));
     }
 
     /**
@@ -462,7 +462,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne024() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     Uint8ClampedArray r = arr.filter((v, i, a) -> i == 0);
-    assertEqual(1, r.get(0));
+    assertEqualInt(1, r.get(0));
     }
 
     /**
@@ -480,7 +480,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne025() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2});
     Uint8ClampedArray r = arr.filter((v, i, a) -> i == 1);
-    assertEqual(2, r.get(0));
+    assertEqualInt(2, r.get(0));
     }
 
     /**
@@ -583,8 +583,8 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     }
     Uint8ClampedArray r = arr.filter((v, i, a) -> v > 100);
     assertEqual(4, r.length());
-    assertEqual(120, r.get(0));
-    assertEqual(210, r.get(3));
+    assertEqualInt(120, r.get(0));
+    assertEqualInt(210, r.get(3));
     }
 
     /**
@@ -879,7 +879,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne046() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 3);
-    assertEqual(3, r.get(0));
+    assertEqualInt(3, r.get(0));
     }
 
     /**
@@ -897,7 +897,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne047() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 3);
-    assertEqual(4, r.get(1));
+    assertEqualInt(4, r.get(1));
     }
 
     /**
@@ -915,7 +915,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne048() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40, 50});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 20);
-    assertEqual(30, r.get(1));
+    assertEqualInt(30, r.get(1));
     }
 
     /**
@@ -933,7 +933,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne049() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 1, 6, 2, 7, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 5);
-    assertEqual(5, r.get(0));
+    assertEqualInt(5, r.get(0));
     }
 
     /**
@@ -951,7 +951,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne050() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 1, 6, 2, 7, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 5);
-    assertEqual(6, r.get(1));
+    assertEqualInt(6, r.get(1));
     }
 
     /**
@@ -969,7 +969,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne051() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {5, 1, 6, 2, 7, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 5);
-    assertEqual(7, r.get(2));
+    assertEqualInt(7, r.get(2));
     }
 
     /**
@@ -988,7 +988,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v == 2);
     assertEqual(1, r.length());
-    assertEqual(2, r.get(0));
+    assertEqualInt(2, r.get(0));
     }
 
     /**
@@ -1006,7 +1006,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne053() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 20);
-    assertEqual(20, r.get(0));
+    assertEqualInt(20, r.get(0));
     }
 
     /**
@@ -1042,7 +1042,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     void testUint8ClampedArrayFilterOne055() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     arr.filter((v, i, a) -> v > 2);
-    assertEqual(1, arr.get(0));
+    assertEqualInt(1, arr.get(0));
     }
 
     /**
@@ -1079,7 +1079,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
     r.set(0, 99);
-    assertEqual(10, arr.get(0));
+    assertEqualInt(10, arr.get(0));
     }
 
     /**
@@ -1098,7 +1098,7 @@ public class Uint8ClampedArrayFilter01Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.filter((v, i, a) -> true);
     arr.set(0, 99);
-    assertEqual(10, r.get(0));
+    assertEqualInt(10, r.get(0));
     }
 
     /**

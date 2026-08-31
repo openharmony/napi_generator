@@ -625,11 +625,11 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         indices.add(i);
         });
-    assertEqual(0, indices.get(0));
-    assertEqual(1, indices.get(1));
-    assertEqual(2, indices.get(2));
-    assertEqual(3, indices.get(3));
-    assertEqual(4, indices.get(4));
+    assertEqualInt(0, indices.get(0));
+    assertEqualInt(1, indices.get(1));
+    assertEqualInt(2, indices.get(2));
+    assertEqualInt(3, indices.get(3));
+    assertEqualInt(4, indices.get(4));
     }
 
     /**
@@ -1331,7 +1331,7 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
             arr.set(1, 99);
     }
         });
-    assertEqual(99, arr.get(1));
+    assertEqualInt(99, arr.get(1));
     }
 
     /**
@@ -1382,7 +1382,7 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     }
     });
     assertEqual(10, firstVal[0]);
-    assertEqual(200, arr.get(0));
+    assertEqualInt(200, arr.get(0));
     }
 
     /**
@@ -1430,7 +1430,7 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
             arr.set(1, 256);
     }
         });
-    assertEqual(255, arr.get(1));
+    assertEqualInt(255, arr.get(1));
     }
 
     /**
@@ -1452,7 +1452,7 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
             arr.set(1, -1);
     }
         });
-    assertEqual(0, arr.get(1));
+    assertEqualInt(0, arr.get(1));
     }
 
     /**
@@ -1470,9 +1470,9 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     void testUint8ClampedArrayForEachOne065() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     arr.forEach((v, i, a) -> {});
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     assertEqual(3, arr.length());
     }
 
@@ -1591,10 +1591,10 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     arr.forEach((v, i, a) -> {
         seen.add(v);
         });
-    assertEqual(5, seen.get(0));
-    assertEqual(10, seen.get(1));
-    assertEqual(15, seen.get(2));
-    assertEqual(20, seen.get(3));
+    assertEqualInt(5, seen.get(0));
+    assertEqualInt(10, seen.get(1));
+    assertEqualInt(15, seen.get(2));
+    assertEqualInt(20, seen.get(3));
     }
 
     /**
@@ -1638,9 +1638,9 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     sub.forEach((v, i, a) -> {
         sub.set(i, 99);
         });
-    assertEqual(99, parent.get(1));
-    assertEqual(99, parent.get(2));
-    assertEqual(99, parent.get(3));
+    assertEqualInt(99, parent.get(1));
+    assertEqualInt(99, parent.get(2));
+    assertEqualInt(99, parent.get(3));
     }
 
     /**
@@ -1661,8 +1661,8 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     sub.forEach((v, i, a) -> {
         sub.set(i, 99);
         });
-    assertEqual(1, parent.get(0));
-    assertEqual(5, parent.get(4));
+    assertEqualInt(1, parent.get(0));
+    assertEqualInt(5, parent.get(4));
     }
 
     /**
@@ -1683,9 +1683,9 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
     s.forEach((v, i, a) -> {
         s.set(i, 77);
         });
-    assertEqual(1, parent.get(0));
-    assertEqual(2, parent.get(1));
-    assertEqual(3, parent.get(2));
+    assertEqualInt(1, parent.get(0));
+    assertEqualInt(2, parent.get(1));
+    assertEqualInt(3, parent.get(2));
     }
 
     /**
@@ -1708,7 +1708,7 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
             parent.set(1, 88);
     }
         });
-    assertEqual(88, sub.get(0));
+    assertEqualInt(88, sub.get(0));
     }
 
     /**
@@ -1829,7 +1829,7 @@ public class Uint8ClampedArrayForEach01Test extends BasTest {
         });
     arr.fill(9);
     assertEqual(3, cnt[0]);
-    assertEqual(9, arr.get(0));
+    assertEqualInt(9, arr.get(0));
     }
 
     /**

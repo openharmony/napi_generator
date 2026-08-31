@@ -594,10 +594,10 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
         arr.set(i, 100);
         });
     Uint8ClampedArray reader = new Uint8ClampedArray(buf);
-    assertEqual(100, reader.get(0));
-    assertEqual(100, reader.get(1));
-    assertEqual(100, reader.get(2));
-    assertEqual(100, reader.get(3));
+    assertEqualInt(100, reader.get(0));
+    assertEqualInt(100, reader.get(1));
+    assertEqualInt(100, reader.get(2));
+    assertEqualInt(100, reader.get(3));
     }
 
     /**
@@ -619,8 +619,8 @@ public class Uint8ClampedArrayForEach02Test extends BasTest {
     firstView.forEach((v, i, a) -> {
         firstView.set(i, 50);
         });
-    assertEqual(50, secondView.get(0));
-    assertEqual(50, secondView.get(3));
+    assertEqualInt(50, secondView.get(0));
+    assertEqualInt(50, secondView.get(3));
     }
 
     /**

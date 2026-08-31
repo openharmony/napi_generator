@@ -518,9 +518,9 @@ public class Uint8ClampedArrayFindIndexTest extends BasTest {
     void testUint8ClampedArrayFindIndex026() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     arr.findIndex((v, i, a) -> v == 2);
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     /**
@@ -1754,9 +1754,9 @@ public class Uint8ClampedArrayFindIndexTest extends BasTest {
         seen.add(v);
         return false;
     });
-    assertEqual(10, seen.get(0));
-    assertEqual(20, seen.get(1));
-    assertEqual(30, seen.get(2));
+    assertEqualInt(10, seen.get(0));
+    assertEqualInt(20, seen.get(1));
+    assertEqualInt(30, seen.get(2));
     }
 
     /**

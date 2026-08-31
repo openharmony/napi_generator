@@ -308,11 +308,11 @@ public class Uint8ClampedArrayFindLastIndex02Test extends BasTest {
     Uint8ClampedArray sub = parent.subarray(1, 4);
     int idx = sub.findLastIndex((v, i, a) -> v == 30);
     assertEqual(1, idx);
-    assertEqual(10, parent.get(0));
-    assertEqual(20, parent.get(1));
-    assertEqual(30, parent.get(2));
-    assertEqual(40, parent.get(3));
-    assertEqual(50, parent.get(4));
+    assertEqualInt(10, parent.get(0));
+    assertEqualInt(20, parent.get(1));
+    assertEqualInt(30, parent.get(2));
+    assertEqualInt(40, parent.get(3));
+    assertEqualInt(50, parent.get(4));
     }
 
     /**
@@ -356,7 +356,7 @@ public class Uint8ClampedArrayFindLastIndex02Test extends BasTest {
     parent.set(2, 99);
     int idx = slice.findLastIndex((v, i, a) -> v == 30);
     assertEqual(1, idx);
-    assertEqual(30, slice.get(1));
+    assertEqualInt(30, slice.get(1));
     }
 
     /**

@@ -170,7 +170,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 2);
     Uint8ClampedArray mapped = r.map((v, i, a) -> v + 10);
-    assertEqual(12, mapped.get(0));
+    assertEqualInt(12, mapped.get(0));
     }
 
     /**
@@ -286,7 +286,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 20);
     Uint8ClampedArray.KeyIterator it = r.values();
     IteratorResult first = it.next();
-    assertEqual(20, first.value);
+    assertEqual(20, first.value.intValue());
     }
 
     /**
@@ -365,9 +365,9 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 2);
     assertEqual(3, r.length());
-    assertEqual(2, r.get(0));
-    assertEqual(3, r.get(1));
-    assertEqual(4, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(3, r.get(1));
+    assertEqualInt(4, r.get(2));
     }
 
     /**
@@ -440,7 +440,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     void testUint8ClampedArrayFilterTwo021() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 2);
-    assertEqual(4, r.find((v) -> v == 4));
+    assertEqualInt(4, r.find((v) -> v == 4));
     }
 
     /**
@@ -476,7 +476,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     void testUint8ClampedArrayFilterTwo023() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 2);
-    assertEqual(2, r.at(0));
+    assertEqualInt(2, r.at(0));
     }
 
     /**
@@ -494,7 +494,7 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     void testUint8ClampedArrayFilterTwo024() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4});
     Uint8ClampedArray r = arr.filter((v, i, a) -> v >= 2);
-    assertEqual(4, r.at(-1));
+    assertEqualInt(4, r.at(-1));
     }
 
     /**
@@ -532,6 +532,6 @@ public class Uint8ClampedArrayFilter02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30, 40});
     Uint8ClampedArray.Uint8ClampedArrayFinder fn = (v, i, a) -> v % 20 == 0;
     Uint8ClampedArray r = arr.filter(fn);
-    assertEqual(20, r.get(0));
+    assertEqualInt(20, r.get(0));
     }
 }

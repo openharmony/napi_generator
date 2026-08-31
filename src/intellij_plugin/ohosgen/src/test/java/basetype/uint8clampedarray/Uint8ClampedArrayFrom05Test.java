@@ -42,9 +42,9 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
     Uint8ClampedArray r = Uint8ClampedArray.from(
         new int[] {1,
         2, 3}, (Uint8ClampedArray.Uint8ClampedArrayMapper2) (v, k) -> v + 1);
-    assertEqual(2, r.get(0));
-    assertEqual(3, r.get(1));
-    assertEqual(4, r.get(2));
+    assertEqualInt(2, r.get(0));
+    assertEqualInt(3, r.get(1));
+    assertEqualInt(4, r.get(2));
     }
 
     /**
@@ -63,9 +63,9 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
     Uint8ClampedArray r = Uint8ClampedArray.from(
         new Uint8ClampedArray(new int[] {10,
         20, 30}), (Uint8ClampedArray.Uint8ClampedArrayMapper2) (v, k) -> v + k);
-    assertEqual(10, r.get(0));
-    assertEqual(21, r.get(1));
-    assertEqual(32, r.get(2));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(21, r.get(1));
+    assertEqualInt(32, r.get(2));
     }
 
     /**
@@ -101,8 +101,8 @@ public class Uint8ClampedArrayFrom05Test extends BasTest {
     void testUint8ClampedArrayFromFive004() {
     Uint8ClampedArray r = Uint8ClampedArray.from(new int[] {0, 0, 0});
     r.fill(123);
-    assertEqual(123, r.get(0));
-    assertEqual(123, r.get(2));
+    assertEqualInt(123, r.get(0));
+    assertEqualInt(123, r.get(2));
     }
 
     /**
