@@ -943,9 +943,6 @@ public class Int16Array implements IntArrayView {
         }
 
     /**
-     * 字符串形式（同 join()），对应 toString 语义。
-     */
-    /**
      * 字符串形式，对应 toString 语义。
      *
      * @return 返回值说明。
@@ -1805,9 +1802,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
     }
 
     /**
-     * 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Int16Comparator {
@@ -1821,9 +1815,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         double compare(int a, int b);
         }
 
-    /**
-     * 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -1840,9 +1831,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         }
 
     /**
-     * 回调接口：谓词的无参数形式。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Int16Finder0 {
@@ -1854,9 +1842,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         boolean test();
         }
 
-    /**
-     * 回调接口：谓词的 (value) 单参数形式。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -1870,9 +1855,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         boolean test(int value);
         }
 
-    /**
-     * 回调接口：谓词的 (value, index) 双参数形式。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -1888,9 +1870,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         }
 
     /**
-     * 回调接口：forEach 的处理器 (value, index, array)。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Int16Consumer {
@@ -1905,9 +1884,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         }
 
     /**
-     * 回调接口：处理器的 (value) 单参数形式。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Int16Consumer1 {
@@ -1919,9 +1895,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         void accept(int value);
         }
 
-    /**
-     * 回调接口：处理器的 (value, index) 双参数形式。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -1935,9 +1908,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         void accept(int value, int index);
         }
 
-    /**
-     * 回调接口：map 的映射器 (value, index, array)。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -1954,9 +1924,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         }
 
     /**
-     * 回调接口：映射器的 (value) 单参数形式。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Int16Mapper1 {
@@ -1969,9 +1936,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         int apply(int value);
         }
 
-    /**
-     * 回调接口：映射器的 (value, index) 双参数形式。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -1986,9 +1950,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         int apply(int value, int index);
         }
 
-    /**
-     * 回调接口：布尔累计归约器（every 式归约场景）。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2024,9 +1985,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         }
 
     /**
-     * 回调接口：字符串归约器（reduceRight 字符串累计场景）。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Int16StringReducer {
@@ -2042,9 +2000,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         String apply(String acc, int value, int index, Int16Array array);
         }
 
-    /**
-     * 回调接口：long 累计归约器（大数 seed 场景）。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2148,9 +2103,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         }
 
     /**
-     * 回调接口：reduce 的归约器 (acc, value, index, array)。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Int16Reducer {
@@ -2167,9 +2119,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         }
 
     /**
-     * 回调接口：归约器的 (acc, value) 双参数形式。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Int16Reducer2 {
@@ -2183,9 +2132,6 @@ boolean currency = opts != null && "currency".equals(opts.getStyle());
         int apply(int acc, int value);
         }
 
-    /**
-     * 回调接口：归约器的 (acc, value, index) 三参数形式。
-     */
     /**
      * 回调接口：函数式接口定义。
      */

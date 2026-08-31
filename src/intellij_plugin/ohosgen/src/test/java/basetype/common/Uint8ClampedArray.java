@@ -1071,9 +1071,6 @@ public class Uint8ClampedArray implements IntArrayView {
         }
 
     /**
-     * 字符串形式（同 join()），对应 toString 语义。
-     */
-    /**
      * 字符串形式，对应 toString 语义。
      *
      * @return 返回值说明。
@@ -1163,7 +1160,8 @@ public class Uint8ClampedArray implements IntArrayView {
         return body;
         }
 
-    private static String formatPlain(long amount, IntlOptions opts, String lc, boolean percent) {
+    private static String formatPlain(long amountIn, IntlOptions opts, String lc, boolean percent) {
+        long amount = amountIn;
         int fracDigits = 0;
         int minSig = opts == null ? 0 : opts.getMinimumSignificantDigits();
         if (minSig > 0) {
@@ -1930,7 +1928,7 @@ public class Uint8ClampedArray implements IntArrayView {
      * @param end 参数说明。
      * @return 返回值说明。
      */
-public Uint8ClampedArray copyWithin(double target, double start, double end) {
+    public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return copyWithin(toIndexD(target, length), toIndexD(start, length), toIndexD(end, length));
         }
 
@@ -2063,6 +2061,10 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
 
     /**
      * 从数值集合映射构造，对应 from(iterable, mapFn) 语义。
+     *
+     * @param values 参数说明。
+     * @param cb 参数说明。
+     * @return 返回值说明。
      */
     public static Uint8ClampedArray from(java.util.Collection<? extends Number> values,
             Uint8ClampedArrayDoubleMapper2 cb) {
@@ -2255,9 +2257,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         }
 
     /**
-     * 回调接口：double 源值映射器（from(double[], cb) 回调接收转换前值）。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Uint8ClampedArrayDoubleMapper1 {
@@ -2270,9 +2269,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         double apply(double value);
         }
 
-    /**
-     * 回调接口：函数式接口定义。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2469,9 +2465,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
     }
 
     /**
-     * 回调接口：sort 的比较器 (a, b)（double 返回值兼容 Infinity 语义）。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Uint8ClampedArrayComparator {
@@ -2485,9 +2478,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         double compare(int a, int b);
         }
 
-    /**
-     * 回调接口：find/findIndex/some/every/filter 的谓词 (value, index, array)。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2504,9 +2494,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         }
 
     /**
-     * 回调接口：谓词的无参数形式。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Uint8ClampedArrayFinder0 {
@@ -2518,9 +2505,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         boolean test();
         }
 
-    /**
-     * 回调接口：谓词的 (value) 单参数形式。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2534,9 +2518,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         boolean test(int value);
         }
 
-    /**
-     * 回调接口：谓词的 (value, index) 双参数形式。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2552,9 +2533,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         }
 
     /**
-     * 回调接口：forEach 的处理器 (value, index, array)。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Uint8ClampedArrayConsumer {
@@ -2569,9 +2547,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         }
 
     /**
-     * 回调接口：处理器的 (value) 单参数形式。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Uint8ClampedArrayConsumer1 {
@@ -2583,9 +2558,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         void accept(int value);
         }
 
-    /**
-     * 回调接口：处理器的 (value, index) 双参数形式。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2599,9 +2571,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         void accept(int value, int index);
         }
 
-    /**
-     * 回调接口：map 的映射器 (value, index, array)。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2618,9 +2587,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         }
 
     /**
-     * 回调接口：映射器的 (value) 单参数形式。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Uint8ClampedArrayMapper1 {
@@ -2633,9 +2599,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         int apply(int value);
         }
 
-    /**
-     * 回调接口：映射器的 (value, index) 双参数形式。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2650,9 +2613,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         int apply(int value, int index);
         }
 
-    /**
-     * 回调接口：布尔累计归约器（every 式归约场景）。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2706,9 +2666,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         }
 
     /**
-     * 回调接口：字符串归约器（reduceRight 字符串累计场景）。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Int16StringReducer {
@@ -2724,9 +2681,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         String apply(String acc, int value, int index, Uint8ClampedArray array);
         }
 
-    /**
-     * 回调接口：long 累计归约器（大数 seed 场景）。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2797,9 +2751,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         }
 
     /**
-     * List 累计的归约回调（数组归约场景，如 reduceRight<number[]>）。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Int16ListReducer {
@@ -2851,9 +2802,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         return acc;
         }
 
-    /**
-     * 双精度累计的归约回调（prev 可含小数/Infinity/NaN）。
-     */
     /**
      * 回调接口：函数式接口定义。
      */
@@ -2977,9 +2925,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         }
 
     /**
-     * 回调接口：reduce 的归约器 (acc, value, index, array)。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Uint8ClampedArrayReducer {
@@ -2996,9 +2941,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         }
 
     /**
-     * 回调接口：归约器的 (acc, value) 双参数形式。
-     */
-    /**
      * 回调接口：函数式接口定义。
      */
     public interface Uint8ClampedArrayReducer2 {
@@ -3012,9 +2954,6 @@ public Uint8ClampedArray copyWithin(double target, double start, double end) {
         int apply(int acc, int value);
         }
 
-    /**
-     * 回调接口：归约器的 (acc, value, index) 三参数形式。
-     */
     /**
      * 回调接口：函数式接口定义。
      */

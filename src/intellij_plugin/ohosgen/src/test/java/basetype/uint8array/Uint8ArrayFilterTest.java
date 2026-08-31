@@ -60,8 +60,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v) -> v > 3);
     assertEqual(2, result.length());
-    assertEqual(4, result.at(0));
-    assertEqual(5, result.at(1));
+    assertEqualInt(4, result.at(0));
+    assertEqualInt(5, result.at(1));
     }
 
     /**
@@ -116,8 +116,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 128, 255});
     Uint8Array result = arr.filter((v) -> v >= 128);
     assertEqual(2, result.length());
-    assertEqual(128, result.at(0));
-    assertEqual(255, result.at(1));
+    assertEqualInt(128, result.at(0));
+    assertEqualInt(255, result.at(1));
     }
 
     /**
@@ -136,8 +136,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 128, 255});
     Uint8Array result = arr.filter((v) -> v < 128);
     assertEqual(2, result.length());
-    assertEqual(0, result.at(0));
-    assertEqual(127, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(127, result.at(1));
     }
 
     /**
@@ -156,7 +156,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 128, 255});
     Uint8Array result = arr.filter((v) -> v == 128);
     assertEqual(1, result.length());
-    assertEqual(128, result.at(0));
+    assertEqualInt(128, result.at(0));
     }
 
     /**
@@ -175,7 +175,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 128, 255});
     Uint8Array result = arr.filter((v) -> v == 0);
     assertEqual(1, result.length());
-    assertEqual(0, result.at(0));
+    assertEqualInt(0, result.at(0));
     }
 
     /**
@@ -194,7 +194,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 127, 128, 255});
     Uint8Array result = arr.filter((v) -> v == 255);
     assertEqual(1, result.length());
-    assertEqual(255, result.at(0));
+    assertEqualInt(255, result.at(0));
     }
 
     /**
@@ -213,7 +213,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {5});
     Uint8Array result = arr.filter((v) -> v == 5);
     assertEqual(1, result.length());
-    assertEqual(5, result.at(0));
+    assertEqualInt(5, result.at(0));
     }
 
     /**
@@ -304,8 +304,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {100, 200, 100, 200});
     Uint8Array result = arr.filter((v) -> v == 100);
     assertEqual(2, result.length());
-    assertEqual(100, result.at(0));
-    assertEqual(100, result.at(1));
+    assertEqualInt(100, result.at(0));
+    assertEqualInt(100, result.at(1));
     }
 
     /**
@@ -324,8 +324,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {100, 200, 100, 200});
     Uint8Array result = arr.filter((v) -> v == 200);
     assertEqual(2, result.length());
-    assertEqual(200, result.at(0));
-    assertEqual(200, result.at(1));
+    assertEqualInt(200, result.at(0));
+    assertEqualInt(200, result.at(1));
     }
 
     /**
@@ -344,7 +344,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v > 254);
     assertEqual(1, result.length());
-    assertEqual(255, result.at(0));
+    assertEqualInt(255, result.at(0));
     }
 
     /**
@@ -363,7 +363,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v < 1);
     assertEqual(1, result.length());
-    assertEqual(0, result.at(0));
+    assertEqualInt(0, result.at(0));
     }
 
     /**
@@ -382,8 +382,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v >= 254);
     assertEqual(2, result.length());
-    assertEqual(254, result.at(0));
-    assertEqual(255, result.at(1));
+    assertEqualInt(254, result.at(0));
+    assertEqualInt(255, result.at(1));
     }
 
     /**
@@ -402,8 +402,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v <= 1);
     assertEqual(2, result.length());
-    assertEqual(0, result.at(0));
-    assertEqual(1, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(1, result.at(1));
     }
 
     /**
@@ -422,9 +422,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v != 0);
     assertEqual(3, result.length());
-    assertEqual(1, result.at(0));
-    assertEqual(254, result.at(1));
-    assertEqual(255, result.at(2));
+    assertEqualInt(1, result.at(0));
+    assertEqualInt(254, result.at(1));
+    assertEqualInt(255, result.at(2));
     }
 
     /**
@@ -443,9 +443,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v != 255);
     assertEqual(3, result.length());
-    assertEqual(0, result.at(0));
-    assertEqual(1, result.at(1));
-    assertEqual(254, result.at(2));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(1, result.at(1));
+    assertEqualInt(254, result.at(2));
     }
 
     /**
@@ -464,8 +464,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v > 127);
     assertEqual(2, result.length());
-    assertEqual(254, result.at(0));
-    assertEqual(255, result.at(1));
+    assertEqualInt(254, result.at(0));
+    assertEqualInt(255, result.at(1));
     }
 
     /**
@@ -484,8 +484,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v < 128);
     assertEqual(2, result.length());
-    assertEqual(0, result.at(0));
-    assertEqual(1, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(1, result.at(1));
     }
 
     /**
@@ -504,8 +504,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v >= 128);
     assertEqual(2, result.length());
-    assertEqual(254, result.at(0));
-    assertEqual(255, result.at(1));
+    assertEqualInt(254, result.at(0));
+    assertEqualInt(255, result.at(1));
     }
 
     /**
@@ -524,8 +524,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v <= 127);
     assertEqual(2, result.length());
-    assertEqual(0, result.at(0));
-    assertEqual(1, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(1, result.at(1));
     }
 
     /**
@@ -544,9 +544,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v > 0);
     assertEqual(3, result.length());
-    assertEqual(1, result.at(0));
-    assertEqual(254, result.at(1));
-    assertEqual(255, result.at(2));
+    assertEqualInt(1, result.at(0));
+    assertEqualInt(254, result.at(1));
+    assertEqualInt(255, result.at(2));
     }
 
     /**
@@ -565,9 +565,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v < 255);
     assertEqual(3, result.length());
-    assertEqual(0, result.at(0));
-    assertEqual(1, result.at(1));
-    assertEqual(254, result.at(2));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(1, result.at(1));
+    assertEqualInt(254, result.at(2));
     }
 
     /**
@@ -658,7 +658,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v >= 255);
     assertEqual(1, result.length());
-    assertEqual(255, result.at(0));
+    assertEqualInt(255, result.at(0));
     }
 
     /**
@@ -677,7 +677,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v <= 0);
     assertEqual(1, result.length());
-    assertEqual(0, result.at(0));
+    assertEqualInt(0, result.at(0));
     }
 
     /**
@@ -696,8 +696,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v > 1);
     assertEqual(2, result.length());
-    assertEqual(254, result.at(0));
-    assertEqual(255, result.at(1));
+    assertEqualInt(254, result.at(0));
+    assertEqualInt(255, result.at(1));
     }
 
     /**
@@ -716,8 +716,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v < 254);
     assertEqual(2, result.length());
-    assertEqual(0, result.at(0));
-    assertEqual(1, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(1, result.at(1));
     }
 
     /**
@@ -736,9 +736,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v >= 1);
     assertEqual(3, result.length());
-    assertEqual(1, result.at(0));
-    assertEqual(254, result.at(1));
-    assertEqual(255, result.at(2));
+    assertEqualInt(1, result.at(0));
+    assertEqualInt(254, result.at(1));
+    assertEqualInt(255, result.at(2));
     }
 
     /**
@@ -757,9 +757,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 254, 255});
     Uint8Array result = arr.filter((v) -> v <= 254);
     assertEqual(3, result.length());
-    assertEqual(0, result.at(0));
-    assertEqual(1, result.at(1));
-    assertEqual(254, result.at(2));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(1, result.at(1));
+    assertEqualInt(254, result.at(2));
     }
 
     /**
@@ -778,7 +778,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i == 0);
     assertEqual(1, result.length());
-    assertEqual(10, result.at(0));
+    assertEqualInt(10, result.at(0));
     }
 
     /**
@@ -797,7 +797,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i == 2);
     assertEqual(1, result.length());
-    assertEqual(30, result.at(0));
+    assertEqualInt(30, result.at(0));
     }
 
     /**
@@ -816,8 +816,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i > 1);
     assertEqual(2, result.length());
-    assertEqual(30, result.at(0));
-    assertEqual(40, result.at(1));
+    assertEqualInt(30, result.at(0));
+    assertEqualInt(40, result.at(1));
     }
 
     /**
@@ -836,8 +836,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i < 2);
     assertEqual(2, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(20, result.at(1));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(20, result.at(1));
     }
 
     /**
@@ -856,7 +856,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i >= 3);
     assertEqual(1, result.length());
-    assertEqual(40, result.at(0));
+    assertEqualInt(40, result.at(0));
     }
 
     /**
@@ -875,8 +875,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i <= 1);
     assertEqual(2, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(20, result.at(1));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(20, result.at(1));
     }
 
     /**
@@ -895,9 +895,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i != 0);
     assertEqual(3, result.length());
-    assertEqual(20, result.at(0));
-    assertEqual(30, result.at(1));
-    assertEqual(40, result.at(2));
+    assertEqualInt(20, result.at(0));
+    assertEqualInt(30, result.at(1));
+    assertEqualInt(40, result.at(2));
     }
 
     /**
@@ -916,9 +916,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i != 3);
     assertEqual(3, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(20, result.at(1));
-    assertEqual(30, result.at(2));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(20, result.at(1));
+    assertEqualInt(30, result.at(2));
     }
 
     /**
@@ -937,7 +937,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i > 2);
     assertEqual(1, result.length());
-    assertEqual(40, result.at(0));
+    assertEqualInt(40, result.at(0));
     }
 
     /**
@@ -956,9 +956,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i < 3);
     assertEqual(3, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(20, result.at(1));
-    assertEqual(30, result.at(2));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(20, result.at(1));
+    assertEqualInt(30, result.at(2));
     }
 
     /**
@@ -977,8 +977,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i >= 2);
     assertEqual(2, result.length());
-    assertEqual(30, result.at(0));
-    assertEqual(40, result.at(1));
+    assertEqualInt(30, result.at(0));
+    assertEqualInt(40, result.at(1));
     }
 
     /**
@@ -997,9 +997,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i <= 2);
     assertEqual(3, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(20, result.at(1));
-    assertEqual(30, result.at(2));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(20, result.at(1));
+    assertEqualInt(30, result.at(2));
     }
 
     /**
@@ -1018,9 +1018,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i != 1);
     assertEqual(3, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(30, result.at(1));
-    assertEqual(40, result.at(2));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(30, result.at(1));
+    assertEqualInt(40, result.at(2));
     }
 
     /**
@@ -1039,9 +1039,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i != 2);
     assertEqual(3, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(20, result.at(1));
-    assertEqual(40, result.at(2));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(20, result.at(1));
+    assertEqualInt(40, result.at(2));
     }
 
     /**
@@ -1060,9 +1060,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i > 0);
     assertEqual(3, result.length());
-    assertEqual(20, result.at(0));
-    assertEqual(30, result.at(1));
-    assertEqual(40, result.at(2));
+    assertEqualInt(20, result.at(0));
+    assertEqualInt(30, result.at(1));
+    assertEqualInt(40, result.at(2));
     }
 
     /**
@@ -1081,7 +1081,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i < 1);
     assertEqual(1, result.length());
-    assertEqual(10, result.at(0));
+    assertEqualInt(10, result.at(0));
     }
 
     /**
@@ -1100,9 +1100,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i >= 1);
     assertEqual(3, result.length());
-    assertEqual(20, result.at(0));
-    assertEqual(30, result.at(1));
-    assertEqual(40, result.at(2));
+    assertEqualInt(20, result.at(0));
+    assertEqualInt(30, result.at(1));
+    assertEqualInt(40, result.at(2));
     }
 
     /**
@@ -1121,7 +1121,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i <= 0);
     assertEqual(1, result.length());
-    assertEqual(10, result.at(0));
+    assertEqualInt(10, result.at(0));
     }
 
     /**
@@ -1140,8 +1140,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i % 2 == 0);
     assertEqual(2, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(30, result.at(1));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(30, result.at(1));
     }
 
     /**
@@ -1160,8 +1160,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> i % 2 == 1);
     assertEqual(2, result.length());
-    assertEqual(20, result.at(0));
-    assertEqual(40, result.at(1));
+    assertEqualInt(20, result.at(0));
+    assertEqualInt(40, result.at(1));
     }
 
     /**
@@ -1180,7 +1180,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {5, 10, 15, 20});
     Uint8Array result = arr.filter((v, i) -> i == 0);
     assertEqual(1, result.length());
-    assertEqual(5, result.at(0));
+    assertEqualInt(5, result.at(0));
     }
 
     /**
@@ -1199,7 +1199,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {5, 10, 15, 20});
     Uint8Array result = arr.filter((v, i) -> i == 3);
     assertEqual(1, result.length());
-    assertEqual(20, result.at(0));
+    assertEqualInt(20, result.at(0));
     }
 
     /**
@@ -1254,8 +1254,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> i >= 3);
     assertEqual(2, result.length());
-    assertEqual(4, result.at(0));
-    assertEqual(5, result.at(1));
+    assertEqualInt(4, result.at(0));
+    assertEqualInt(5, result.at(1));
     }
 
     /**
@@ -1274,8 +1274,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> i <= 1);
     assertEqual(2, result.length());
-    assertEqual(1, result.at(0));
-    assertEqual(2, result.at(1));
+    assertEqualInt(1, result.at(0));
+    assertEqualInt(2, result.at(1));
     }
 
     /**
@@ -1312,8 +1312,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = arr.filter((v, i) -> i != 1);
     assertEqual(2, result.length());
-    assertEqual(1, result.at(0));
-    assertEqual(3, result.at(1));
+    assertEqualInt(1, result.at(0));
+    assertEqualInt(3, result.at(1));
     }
 
     /**
@@ -1332,7 +1332,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> v > 2 && i < 3);
     assertEqual(1, result.length());
-    assertEqual(3, result.at(0));
+    assertEqualInt(3, result.at(0));
     }
 
     /**
@@ -1351,7 +1351,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> v < 4 && i > 1);
     assertEqual(1, result.length());
-    assertEqual(3, result.at(0));
+    assertEqualInt(3, result.at(0));
     }
 
     /**
@@ -1370,9 +1370,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> v > 1 && i != 2);
     assertEqual(3, result.length());
-    assertEqual(2, result.at(0));
-    assertEqual(4, result.at(1));
-    assertEqual(5, result.at(2));
+    assertEqualInt(2, result.at(0));
+    assertEqualInt(4, result.at(1));
+    assertEqualInt(5, result.at(2));
     }
 
     /**
@@ -1391,9 +1391,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> v < 5 && i > 0);
     assertEqual(3, result.length());
-    assertEqual(2, result.at(0));
-    assertEqual(3, result.at(1));
-    assertEqual(4, result.at(2));
+    assertEqualInt(2, result.at(0));
+    assertEqualInt(3, result.at(1));
+    assertEqualInt(4, result.at(2));
     }
 
     /**
@@ -1412,10 +1412,10 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> v > 0 && i < 4);
     assertEqual(4, result.length());
-    assertEqual(1, result.at(0));
-    assertEqual(2, result.at(1));
-    assertEqual(3, result.at(2));
-    assertEqual(4, result.at(3));
+    assertEqualInt(1, result.at(0));
+    assertEqualInt(2, result.at(1));
+    assertEqualInt(3, result.at(2));
+    assertEqualInt(4, result.at(3));
     }
 
     /**
@@ -1434,8 +1434,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> v > 2 && i < 4);
     assertEqual(2, result.length());
-    assertEqual(3, result.at(0));
-    assertEqual(4, result.at(1));
+    assertEqualInt(3, result.at(0));
+    assertEqualInt(4, result.at(1));
     }
 
     /**
@@ -1454,8 +1454,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> v < 4 && i != 0);
     assertEqual(2, result.length());
-    assertEqual(2, result.at(0));
-    assertEqual(3, result.at(1));
+    assertEqualInt(2, result.at(0));
+    assertEqualInt(3, result.at(1));
     }
 
     /**
@@ -1528,8 +1528,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 5, 10});
     Uint8Array result = arr.filter((v, i) -> v > i * 3);
     assertEqual(2, result.length());
-    assertEqual(5, result.at(0));
-    assertEqual(10, result.at(1));
+    assertEqualInt(5, result.at(0));
+    assertEqualInt(10, result.at(1));
     }
 
     /**
@@ -1638,8 +1638,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 50, 100, 150, 200, 250});
     Uint8Array result = arr.filter((v, i) -> v > 0 && v < 250);
     assertEqual(4, result.length());
-    assertEqual(50, result.at(0));
-    assertEqual(200, result.at(3));
+    assertEqualInt(50, result.at(0));
+    assertEqualInt(200, result.at(3));
     }
 
     /**
@@ -1658,8 +1658,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 50, 100, 150, 200, 250});
     Uint8Array result = arr.filter((v, i) -> v == 0 || v == 250);
     assertEqual(2, result.length());
-    assertEqual(0, result.at(0));
-    assertEqual(250, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(250, result.at(1));
     }
 
     /**
@@ -1678,8 +1678,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     Uint8Array result = arr.filter((v, i) -> !(v > 20));
     assertEqual(2, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(20, result.at(1));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(20, result.at(1));
     }
 
     /**
@@ -1698,7 +1698,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 2});
     Uint8Array result = arr.filter((v, i) -> v > 0 && i < 2);
     assertEqual(1, result.length());
-    assertEqual(1, result.at(0));
+    assertEqualInt(1, result.at(0));
     }
 
     /**
@@ -1753,8 +1753,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> v % 2 == 0);
     assertEqual(2, result.length());
-    assertEqual(2, result.at(0));
-    assertEqual(4, result.at(1));
+    assertEqualInt(2, result.at(0));
+    assertEqualInt(4, result.at(1));
     }
 
     /**
@@ -1773,8 +1773,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v, i) -> v % 2 == 1);
     assertEqual(3, result.length());
-    assertEqual(1, result.at(0));
-    assertEqual(5, result.at(2));
+    assertEqualInt(1, result.at(0));
+    assertEqualInt(5, result.at(2));
     }
 
     /**
@@ -1793,8 +1793,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 5, 10, 15, 20});
     Uint8Array result = arr.filter((v, i) -> v > 5 && v < 20);
     assertEqual(2, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(15, result.at(1));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(15, result.at(1));
     }
 
     /**
@@ -1813,9 +1813,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 10, 20, 30, 40, 50});
     Uint8Array result = arr.filter((v, i) -> v == 10 || v == 30 || v == 50);
     assertEqual(3, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(30, result.at(1));
-    assertEqual(50, result.at(2));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(30, result.at(1));
+    assertEqualInt(50, result.at(2));
     }
 
     /**
@@ -1852,8 +1852,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
     Uint8Array result = arr.filter((v, i) -> v > 0 && i < 4);
     assertEqual(4, result.length());
-    assertEqual(10, result.at(0));
-    assertEqual(40, result.at(3));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(40, result.at(3));
     }
 
     /**
@@ -1891,7 +1891,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     int threshold = 2;
     Uint8Array result = arr.filter((v) -> v > threshold);
     assertEqual(1, result.length());
-    assertEqual(3, result.at(0));
+    assertEqualInt(3, result.at(0));
     }
 
     /**
@@ -1910,7 +1910,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 255});
     Uint8Array result = arr.filter((v) -> v == 0xFF);
     assertEqual(1, result.length());
-    assertEqual(255, result.at(0));
+    assertEqualInt(255, result.at(0));
     }
 
     /**
@@ -1929,7 +1929,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {127, 128});
     Uint8Array result = arr.filter((v) -> v == 0x80);
     assertEqual(1, result.length());
-    assertEqual(128, result.at(0));
+    assertEqualInt(128, result.at(0));
     }
 
     /**
@@ -1948,7 +1948,7 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 255});
     Uint8Array result = arr.filter((v) -> v == 0b11111111);
     assertEqual(1, result.length());
-    assertEqual(255, result.at(0));
+    assertEqualInt(255, result.at(0));
     }
 
     /**
@@ -2021,9 +2021,9 @@ public class Uint8ArrayFilterTest extends BasTest {
     void testUint8ArrayFilter103() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     arr.filter((v) -> v > 0);
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     /**
@@ -2077,8 +2077,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     void testUint8ArrayFilter106() {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = arr.filter((v) -> v > 1);
-    assertEqual(2, result.at(0));
-    assertEqual(3, result.at(-1));
+    assertEqualInt(2, result.at(0));
+    assertEqualInt(3, result.at(-1));
     }
 
     /**
@@ -2115,8 +2115,8 @@ public class Uint8ArrayFilterTest extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = arr.filter((v) -> v > 2);
     assertEqual(3, result.length());
-    assertEqual(3, result.get(0));
-    assertEqual(4, result.get(1));
-    assertEqual(5, result.get(2));
+    assertEqualInt(3, result.get(0));
+    assertEqualInt(4, result.get(1));
+    assertEqualInt(5, result.get(2));
     }
 }

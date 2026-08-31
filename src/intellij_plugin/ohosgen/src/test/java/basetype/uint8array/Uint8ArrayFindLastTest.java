@@ -48,7 +48,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 5;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -68,7 +68,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 1;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -88,7 +88,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 0;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -108,7 +108,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 255;
         });
-    assertEqual(255, result);
+    assertEqualInt(255, result);
     }
 
     /**
@@ -128,7 +128,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 127;
         });
-    assertEqual(127, result);
+    assertEqualInt(127, result);
     }
 
     /**
@@ -148,7 +148,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v > 200;
         });
-    assertEqual(255, result);
+    assertEqualInt(255, result);
     }
 
     /**
@@ -168,7 +168,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v < 100;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -188,7 +188,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 0x00;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -208,7 +208,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 100;
         });
-    assertEqual(100, result);
+    assertEqualInt(100, result);
     }
 
     /**
@@ -228,7 +228,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 200;
         });
-    assertEqual(200, result);
+    assertEqualInt(200, result);
     }
 
     /**
@@ -248,7 +248,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 0;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -268,7 +268,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 255;
         });
-    assertEqual(255, result);
+    assertEqualInt(255, result);
     }
 
     /**
@@ -288,7 +288,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v >= 4;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -308,7 +308,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v <= 3;
         });
-    assertEqual(3, result);
+    assertEqualInt(3, result);
     }
 
     /**
@@ -328,7 +328,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v != 3;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -348,7 +348,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v > 0;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -368,7 +368,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 0;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -388,7 +388,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v % 2 != 0;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -408,7 +408,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v > 200;
         });
-    assertEqual(255, result);
+    assertEqualInt(255, result);
     }
 
     /**
@@ -428,7 +428,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v < 200;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -448,7 +448,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i == 0;
         });
-    assertEqual(10, result);
+    assertEqualInt(10, result);
     }
 
     /**
@@ -468,7 +468,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i == 2;
         });
-    assertEqual(30, result);
+    assertEqualInt(30, result);
     }
 
     /**
@@ -488,7 +488,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i == 4;
         });
-    assertEqual(50, result);
+    assertEqualInt(50, result);
     }
 
     /**
@@ -508,7 +508,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i < 2;
         });
-    assertEqual(20, result);
+    assertEqualInt(20, result);
     }
 
     /**
@@ -528,7 +528,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i >= 3;
         });
-    assertEqual(50, result);
+    assertEqualInt(50, result);
     }
 
     /**
@@ -548,7 +548,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i != 4;
         });
-    assertEqual(40, result);
+    assertEqualInt(40, result);
     }
 
     /**
@@ -568,7 +568,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i == 1 || i == 3;
         });
-    assertEqual(40, result);
+    assertEqualInt(40, result);
     }
 
     /**
@@ -588,7 +588,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i > 0;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -608,7 +608,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i < 4;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -628,7 +628,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i >= 0;
         });
-    assertEqual(30, result);
+    assertEqualInt(30, result);
     }
 
     /**
@@ -648,7 +648,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i, a) -> {
         return a.length() == 3;
         });
-    assertEqual(3, result);
+    assertEqualInt(3, result);
     }
 
     /**
@@ -668,7 +668,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i, a) -> {
         return a == arr;
         });
-    assertEqual(3, result);
+    assertEqualInt(3, result);
     }
 
     /**
@@ -688,7 +688,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i, a) -> {
         return a.get(0) == 1;
         });
-    assertEqual(3, result);
+    assertEqualInt(3, result);
     }
 
     /**
@@ -708,7 +708,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i, a) -> {
         return a.get(a.length() - 1) == 5;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -728,7 +728,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i, a) -> {
         return v > 0 && a.length() == 3;
         });
-    assertEqual(3, result);
+    assertEqualInt(3, result);
     }
 
     /**
@@ -748,7 +748,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return v > 3 && i < 4;
         });
-    assertEqual(4, result);
+    assertEqualInt(4, result);
     }
 
     /**
@@ -768,7 +768,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return v == 1 && i == 3;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -788,7 +788,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i, a) -> {
         return v == 2 && a.get(i + 1) == 3;
         });
-    assertEqual(2, result);
+    assertEqualInt(2, result);
     }
 
     /**
@@ -808,7 +808,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i >= 2 && v >= 4;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -828,7 +828,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i < 4 && v < 5;
         });
-    assertEqual(4, result);
+    assertEqualInt(4, result);
     }
 
     /**
@@ -848,7 +848,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i, a) -> {
         return a.get(i) == v;
         });
-    assertEqual(3, result);
+    assertEqualInt(3, result);
     }
 
     /**
@@ -868,7 +868,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i, a) -> {
         return a.get(0) == v;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -888,7 +888,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v >= 3;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -908,7 +908,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((index) -> {
         return true;
         });
-    assertEqual(3, result);
+    assertEqualInt(3, result);
     }
 
     /**
@@ -928,7 +928,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((index) -> {
         return true;
         });
-    assertEqual(42, result);
+    assertEqualInt(42, result);
     }
 
     /**
@@ -948,7 +948,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 0;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -968,7 +968,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 0;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -1009,8 +1009,8 @@ public class Uint8ArrayFindLastTest extends BasTest {
     arr.findLast((v) -> {
         return v > 3;
         });
-    assertEqual(1, arr.get(0));
-    assertEqual(5, arr.get(4));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(5, arr.get(4));
     }
 
     /**
@@ -1205,7 +1205,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v > 3;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -1225,7 +1225,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v > 4;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -1245,7 +1245,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v < 3;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -1265,7 +1265,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v < 4;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -1285,7 +1285,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v < 5;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -1305,7 +1305,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v > 3;
         });
-    assertEqual(4, result);
+    assertEqualInt(4, result);
     }
 
     /**
@@ -1325,7 +1325,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 2;
         });
-    assertEqual(2, result);
+    assertEqualInt(2, result);
     }
 
     /**
@@ -1345,7 +1345,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 1;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -1365,7 +1365,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v < 3;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -1385,7 +1385,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v >= 2;
         });
-    assertEqual(2, result);
+    assertEqualInt(2, result);
     }
 
     /**
@@ -1405,7 +1405,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 5;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -1425,7 +1425,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 3;
         });
-    assertEqual(3, result);
+    assertEqualInt(3, result);
     }
 
     /**
@@ -1445,7 +1445,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 1;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -1465,7 +1465,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 1;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -1485,7 +1485,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v >= 1;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -1505,7 +1505,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 1;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -1525,7 +1525,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 1;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -1545,7 +1545,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 1;
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     /**
@@ -1565,7 +1565,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i % 2 == 0;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -1588,7 +1588,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 99;
         });
-    assertEqual(99, result);
+    assertEqualInt(99, result);
     }
 
     /**
@@ -1611,7 +1611,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v > 98;
         });
-    assertEqual(99, result);
+    assertEqualInt(99, result);
     }
 
     /**
@@ -1634,7 +1634,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return i == 50;
         });
-    assertEqual(50, result);
+    assertEqualInt(50, result);
     }
 
     /**
@@ -1655,7 +1655,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v > 25;
         });
-    assertEqual(50, result);
+    assertEqualInt(50, result);
     }
 
     /**
@@ -1681,7 +1681,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 30;
         });
-    assertEqual(30, result);
+    assertEqualInt(30, result);
     }
 
     /**
@@ -1702,7 +1702,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v % 10 == 0;
         });
-    assertEqual(20, result);
+    assertEqualInt(20, result);
     }
 
     /**
@@ -1725,7 +1725,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 0xFF;
         });
-    assertEqual(255, result);
+    assertEqualInt(255, result);
     }
 
     /**
@@ -1746,7 +1746,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     };
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     Integer result = arr.findLast(isGreaterThan3);
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     };
 
     /**
@@ -1767,7 +1767,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v > threshold;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -1787,7 +1787,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v) -> {
         return v == 0xFF;
         });
-    assertEqual(255, result);
+    assertEqualInt(255, result);
     }
 
     /**
@@ -1807,7 +1807,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return v > 0 && i % 2 == 0;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     /**
@@ -1827,7 +1827,7 @@ public class Uint8ArrayFindLastTest extends BasTest {
     Integer result = arr.findLast((v, i) -> {
         return v < 5 && i % 2 == 1;
         });
-    assertEqual(4, result);
+    assertEqualInt(4, result);
     }
 
     /**
@@ -1848,6 +1848,6 @@ public class Uint8ArrayFindLastTest extends BasTest {
     int x = a.get(0);
     return v > 3;
         });
-    assertEqual(1, arr.get(0));
+    assertEqualInt(1, arr.get(0));
     }
 }

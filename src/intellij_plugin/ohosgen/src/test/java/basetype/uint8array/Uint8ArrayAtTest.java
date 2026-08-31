@@ -59,7 +59,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt002() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(30, arr.at(2));
+    assertEqualInt(30, arr.at(2));
     }
 
     /**
@@ -76,7 +76,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt003() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(50, arr.at(4));
+    assertEqualInt(50, arr.at(4));
     }
 
     /**
@@ -127,7 +127,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt006() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(10, arr.at(0x0));
+    assertEqualInt(10, arr.at(0x0));
     }
 
     /**
@@ -144,7 +144,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt007() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(20, arr.at(0x1));
+    assertEqualInt(20, arr.at(0x1));
     }
 
     /**
@@ -161,7 +161,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt008() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(50, arr.at(0x4));
+    assertEqualInt(50, arr.at(0x4));
     }
 
     /**
@@ -195,7 +195,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt010() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(10, arr.at(0b0));
+    assertEqualInt(10, arr.at(0b0));
     }
 
     /**
@@ -212,7 +212,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt011() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(20, arr.at(0b1));
+    assertEqualInt(20, arr.at(0b1));
     }
 
     /**
@@ -229,7 +229,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt012() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(50, arr.at(0b100));
+    assertEqualInt(50, arr.at(0b100));
     }
 
     /**
@@ -246,7 +246,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt013() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(10, arr.at(00));
+    assertEqualInt(10, arr.at(00));
     }
 
     /**
@@ -263,7 +263,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt014() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(20, arr.at(01));
+    assertEqualInt(20, arr.at(01));
     }
 
     /**
@@ -280,7 +280,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt015() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
-    assertEqual(50, arr.at(04));
+    assertEqualInt(50, arr.at(04));
     }
 
     /**
@@ -297,7 +297,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt016() {
     Uint8Array arr = new Uint8Array(new int[] {42});
-    assertEqual(42, arr.at(0));
+    assertEqualInt(42, arr.at(0));
     }
 
     /**
@@ -331,7 +331,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt018() {
     Uint8Array arr = new Uint8Array(new int[] {42});
-    assertEqual(42, arr.at(-1));
+    assertEqualInt(42, arr.at(-1));
     }
 
     /**
@@ -399,7 +399,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt022() {
     Uint8Array arr = new Uint8Array(new int[] {100, 200});
-    assertEqual(100, arr.at(0));
+    assertEqualInt(100, arr.at(0));
     }
 
     /**
@@ -416,7 +416,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt023() {
     Uint8Array arr = new Uint8Array(new int[] {100, 200});
-    assertEqual(200, arr.at(1));
+    assertEqualInt(200, arr.at(1));
     }
 
     /**
@@ -467,7 +467,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt026() {
     Uint8Array arr = new Uint8Array(10);
-    assertEqual(0, arr.at(0));
+    assertEqualInt(0, arr.at(0));
     }
 
     /**
@@ -484,7 +484,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt027() {
     Uint8Array arr = new Uint8Array(10);
-    assertEqual(0, arr.at(9));
+    assertEqualInt(0, arr.at(9));
     }
 
     /**
@@ -536,7 +536,7 @@ public class Uint8ArrayAtTest extends BasTest {
     void testUint8ArrayAt030() {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(10, arr.at(0));
+    assertEqualInt(10, arr.at(0));
     }
 
     /**
@@ -554,7 +554,7 @@ public class Uint8ArrayAtTest extends BasTest {
     void testUint8ArrayAt031() {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(30, arr.at(2));
+    assertEqualInt(30, arr.at(2));
     }
 
     /**
@@ -593,7 +593,7 @@ public class Uint8ArrayAtTest extends BasTest {
     arr.set(0, 10);
     arr.set(1, 20);
     arr.set(2, 30);
-    assertEqual(10, arr.at(0));
+    assertEqualInt(10, arr.at(0));
     }
 
     /**
@@ -614,7 +614,7 @@ public class Uint8ArrayAtTest extends BasTest {
     arr.set(0, 10);
     arr.set(1, 20);
     arr.set(2, 30);
-    assertEqual(30, arr.at(2));
+    assertEqualInt(30, arr.at(2));
     }
 
     /**
@@ -652,7 +652,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt036() {
     Uint8Array arr = new Uint8Array(new int[] {100, 200, 300});
-    assertEqual(100, arr.at(0));
+    assertEqualInt(100, arr.at(0));
     }
 
     /**
@@ -669,7 +669,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt037() {
     Uint8Array arr = new Uint8Array(new int[] {100, 200, 300});
-    assertEqual(44, arr.at(2));
+    assertEqualInt(44, arr.at(2));
     }
 
     /**
@@ -706,7 +706,7 @@ public class Uint8ArrayAtTest extends BasTest {
     arr.set(0, 10);
     arr.set(1, 20);
     arr.set(2, 30);
-    assertEqual(10, arr.at(0));
+    assertEqualInt(10, arr.at(0));
     }
 
     /**
@@ -726,7 +726,7 @@ public class Uint8ArrayAtTest extends BasTest {
     arr.set(0, 10);
     arr.set(1, 20);
     arr.set(2, 30);
-    assertEqual(30, arr.at(2));
+    assertEqualInt(30, arr.at(2));
     }
 
     /**
@@ -869,7 +869,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt048() {
     Uint8Array arr = new Uint8Array(new int[] {0, 128, 255});
-    assertEqual(0, arr.at(0));
+    assertEqualInt(0, arr.at(0));
     }
 
     /**
@@ -886,7 +886,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt049() {
     Uint8Array arr = new Uint8Array(new int[] {0, 128, 255});
-    assertEqual(128, arr.at(1));
+    assertEqualInt(128, arr.at(1));
     }
 
     /**
@@ -903,7 +903,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt050() {
     Uint8Array arr = new Uint8Array(new int[] {0, 128, 255});
-    assertEqual(255, arr.at(2));
+    assertEqualInt(255, arr.at(2));
     }
 
     /**
@@ -920,7 +920,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt051() {
     Uint8Array arr = new Uint8Array(new int[] {1, 254});
-    assertEqual(1, arr.at(0));
+    assertEqualInt(1, arr.at(0));
     }
 
     /**
@@ -937,7 +937,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt052() {
     Uint8Array arr = new Uint8Array(new int[] {1, 254});
-    assertEqual(254, arr.at(1));
+    assertEqualInt(254, arr.at(1));
     }
 
     /**
@@ -954,7 +954,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt053() {
     Uint8Array arr = new Uint8Array(new int[] {255});
-    assertEqual(255, arr.at(0));
+    assertEqualInt(255, arr.at(0));
     }
 
     /**
@@ -971,7 +971,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt054() {
     Uint8Array arr = new Uint8Array(new int[] {255});
-    assertEqual(255, arr.at(-1));
+    assertEqualInt(255, arr.at(-1));
     }
 
     /**
@@ -988,7 +988,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt055() {
     Uint8Array arr = new Uint8Array(new int[] {0});
-    assertEqual(0, arr.at(0));
+    assertEqualInt(0, arr.at(0));
     }
 
     /**
@@ -1005,7 +1005,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt056() {
     Uint8Array arr = new Uint8Array(new int[] {0});
-    assertEqual(0, arr.at(-1));
+    assertEqualInt(0, arr.at(-1));
     }
 
     /**
@@ -1022,7 +1022,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt057() {
     Uint8Array arr = new Uint8Array(new int[] {127});
-    assertEqual(127, arr.at(0));
+    assertEqualInt(127, arr.at(0));
     }
 
     /**
@@ -1039,7 +1039,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt058() {
     Uint8Array arr = new Uint8Array(new int[] {127});
-    assertEqual(127, arr.at(-1));
+    assertEqualInt(127, arr.at(-1));
     }
 
     /**
@@ -1056,7 +1056,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt059() {
     Uint8Array arr = new Uint8Array(new int[] {128});
-    assertEqual(128, arr.at(0));
+    assertEqualInt(128, arr.at(0));
     }
 
     /**
@@ -1073,7 +1073,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt060() {
     Uint8Array arr = new Uint8Array(new int[] {128});
-    assertEqual(128, arr.at(-1));
+    assertEqualInt(128, arr.at(-1));
     }
 
     /**
@@ -1090,7 +1090,7 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt061() {
     Uint8Array arr = new Uint8Array(new int[] {1});
-    assertEqual(1, arr.at(0));
+    assertEqualInt(1, arr.at(0));
     }
 
     /**
@@ -1107,6 +1107,6 @@ public class Uint8ArrayAtTest extends BasTest {
     @Test
     void testUint8ArrayAt062() {
     Uint8Array arr = new Uint8Array(new int[] {1});
-    assertEqual(1, arr.at(-1));
+    assertEqualInt(1, arr.at(-1));
     }
 }

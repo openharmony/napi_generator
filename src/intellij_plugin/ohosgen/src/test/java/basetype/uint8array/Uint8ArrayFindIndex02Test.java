@@ -957,7 +957,7 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     void testUint8ArrayFindIndex051() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
     arr.findIndex((value) -> value == 30);
-    assertEqual(10, arr.get(0));
+    assertEqualInt(10, arr.get(0));
     }
 
     /**
@@ -975,7 +975,7 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     void testUint8ArrayFindIndex052() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
     arr.findIndex((value) -> value == 30);
-    assertEqual(30, arr.get(2));
+    assertEqualInt(30, arr.get(2));
     }
 
     /**
@@ -993,7 +993,7 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     void testUint8ArrayFindIndex053() {
     Uint8Array arr = Uint8Array.of(10, 20, 30, 40, 50);
     arr.findIndex((value) -> value == 30);
-    assertEqual(50, arr.get(4));
+    assertEqualInt(50, arr.get(4));
     }
 
     /**
@@ -1011,8 +1011,8 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     void testUint8ArrayFindIndex054() {
     Uint8Array arr = Uint8Array.of(255, 254, 253, 0);
     arr.findIndex((value) -> value > 300);
-    assertEqual(255, arr.get(0));
-    assertEqual(0, arr.get(3));
+    assertEqualInt(255, arr.get(0));
+    assertEqualInt(0, arr.get(3));
     }
 
     /**
@@ -1030,9 +1030,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     void testUint8ArrayFindIndex055() {
     Uint8Array arr = Uint8Array.of(128, 64, 32, 16);
     arr.findIndex((value) -> value == 128);
-    assertEqual(64, arr.get(1));
-    assertEqual(32, arr.get(2));
-    assertEqual(16, arr.get(3));
+    assertEqualInt(64, arr.get(1));
+    assertEqualInt(32, arr.get(2));
+    assertEqualInt(16, arr.get(3));
     }
 
     /**
@@ -1050,10 +1050,10 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     void testUint8ArrayFindIndex056() {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 99);
     arr.findIndex((value) -> value == 99);
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(4, arr.get(3));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(4, arr.get(3));
     }
 
     /**
@@ -1072,10 +1072,10 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     Uint8Array arr = Uint8Array.of(11, 22, 33, 44);
     arr.findIndex((value) -> value > 20);
     arr.findIndex((value) -> value < 40);
-    assertEqual(11, arr.get(0));
-    assertEqual(22, arr.get(1));
-    assertEqual(33, arr.get(2));
-    assertEqual(44, arr.get(3));
+    assertEqualInt(11, arr.get(0));
+    assertEqualInt(22, arr.get(1));
+    assertEqualInt(33, arr.get(2));
+    assertEqualInt(44, arr.get(3));
     }
 
     /**
@@ -1094,11 +1094,11 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     Uint8Array arr = Uint8Array.of(1, 2, 3, 4, 5);
     Uint8Array sub = arr.subarray(1, 4);
     sub.findIndex((value) -> value == 2);
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
-    assertEqual(4, arr.get(3));
-    assertEqual(5, arr.get(4));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
+    assertEqualInt(4, arr.get(3));
+    assertEqualInt(5, arr.get(4));
     }
 
     /**
@@ -1122,10 +1122,10 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     arr.set(3, 40);
     arr.findIndex((value) -> value == 30);
     Uint8Array check = new Uint8Array(buf);
-    assertEqual(10, check.get(0));
-    assertEqual(20, check.get(1));
-    assertEqual(30, check.get(2));
-    assertEqual(40, check.get(3));
+    assertEqualInt(10, check.get(0));
+    assertEqualInt(20, check.get(1));
+    assertEqualInt(30, check.get(2));
+    assertEqualInt(40, check.get(3));
     }
 
     /**
@@ -1143,7 +1143,7 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     void testUint8ArrayFindIndex060() {
     Uint8Array arr = Uint8Array.of(77);
     arr.findIndex((value) -> value == 77);
-    assertEqual(77, arr.get(0));
+    assertEqualInt(77, arr.get(0));
     }
 
     /**
@@ -1161,9 +1161,9 @@ public class Uint8ArrayFindIndex02Test extends BasTest {
     void testUint8ArrayFindIndex061() {
     Uint8Array arr = Uint8Array.of(0, 127, 255);
     arr.findIndex((value) -> value > 100);
-    assertEqual(0, arr.get(0));
-    assertEqual(127, arr.get(1));
-    assertEqual(255, arr.get(2));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(127, arr.get(1));
+    assertEqualInt(255, arr.get(2));
     }
 
     /**

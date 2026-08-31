@@ -24,11 +24,19 @@ public class EntryResult {
 
     /**
      * value 字段。
+     *
+     * @param value 参数说明。
+     * @param done 参数说明。
+     * @return 返回值说明。
      */
     public final int[] value;
 
     /**
      * done 字段。
+     *
+     * @param value 参数说明。
+     * @param done 参数说明。
+     * @return 返回值说明。
      */
     public final boolean done;
 

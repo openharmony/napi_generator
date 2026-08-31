@@ -42,9 +42,6 @@ public class Float32Array implements IntArrayView {
         }
 
     /**
-     * 读取元素（向零截断为 int，对应拷贝构造的 ToIntegerOrInfinity 前值）。
-     */
-    /**
      * 按索引读取元素，对应 get 语义。
      *
      * @param index 参数说明。

@@ -173,7 +173,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom007() {
     int[] src = new int[] {0};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     /**
@@ -191,7 +191,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom008() {
     int[] src = new int[] {255};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));
+    assertEqualInt(255, result.get(0));
     }
 
     /**
@@ -209,7 +209,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom009() {
     int[] src = new int[] {127};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(127, result.get(0));
+    assertEqualInt(127, result.get(0));
     }
 
     /**
@@ -227,7 +227,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom010() {
     int[] src = new int[] {128};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(128, result.get(0));
+    assertEqualInt(128, result.get(0));
     }
 
     /**
@@ -263,7 +263,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom012() {
     int[] src = new int[] {256};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     /**
@@ -281,7 +281,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom013() {
     int[] src = new int[] {-1};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));
+    assertEqualInt(255, result.get(0));
     }
 
     /**
@@ -299,7 +299,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom014() {
     int[] src = new int[] {-128};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(128, result.get(0));
+    assertEqualInt(128, result.get(0));
     }
 
     /**
@@ -389,7 +389,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom019() {
     double[] src = new double[] {2147483647};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));
+    assertEqualInt(255, result.get(0));
     }
 
     /**
@@ -407,7 +407,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom020() {
     double[] src = new double[] {Integer.MIN_VALUE};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     /**
@@ -425,7 +425,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom021() {
     int[] src = new int[] {-0};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     /**
@@ -444,7 +444,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     int[] src = new int[] {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
     Uint8Array result = Uint8Array.from(src);
     assertEqual(10, result.length());
-    assertEqual(100, result.get(9));
+    assertEqualInt(100, result.get(9));
     }
 
     /**
@@ -480,7 +480,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom024() {
     Uint8Array src = Uint8Array.of(42);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(42, result.get(0));
+    assertEqualInt(42, result.get(0));
     }
 
     /**
@@ -535,7 +535,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     Uint8Array result = Uint8Array.from(src);
     src.set(0, 99);
-    assertEqual(1, result.get(0));
+    assertEqualInt(1, result.get(0));
     }
 
     /**
@@ -556,7 +556,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     src.set(99, 10);
     Uint8Array result = Uint8Array.from(src);
     assertEqual(100, result.length());
-    assertEqual(5, result.get(0));
+    assertEqualInt(5, result.get(0));
     }
 
     /**
@@ -664,7 +664,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom034() {
     int[] src = new int[] {3};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(3, result.get(0));
+    assertEqualInt(3, result.get(0));
     }
 
     /**
@@ -682,7 +682,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom035() {
     int[] src = new int[] {0xFF};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));
+    assertEqualInt(255, result.get(0));
     }
 
     /**
@@ -702,7 +702,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     set.add(42);
     Uint8Array result = Uint8Array.from(set);
     assertEqual(1, result.length());
-    assertEqual(42, result.get(0));
+    assertEqualInt(42, result.get(0));
     }
 
     /**
@@ -1217,7 +1217,7 @@ public class Uint8ArrayFrom01Test extends BasTest {
     void testUint8ArrayFrom062() {
     Uint8Array src = Uint8Array.of(1, 2, 3);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(1, result.get(0));
+    assertEqualInt(1, result.get(0));
     }
 
     /**

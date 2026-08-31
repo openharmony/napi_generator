@@ -469,7 +469,7 @@ public class Uint8ArrayAttribute02Test extends BasTest {
     Uint8Array arr1 = new Uint8Array(buf);
     Uint8Array arr2 = new Uint8Array(buf);
     arr1.set(5, 200);
-    assertEqual(200, arr2.get(5));
+    assertEqualInt(200, arr2.get(5));
     }
 
     /**

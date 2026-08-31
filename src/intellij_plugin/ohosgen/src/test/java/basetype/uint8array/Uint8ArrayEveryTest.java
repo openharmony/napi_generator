@@ -1097,7 +1097,7 @@ public class Uint8ArrayEveryTest extends BasTest {
     void testUint8ArrayEvery056() {
     Uint8Array arr = Uint8Array.of(42, 99, 7);
     arr.every((v, idx, a) -> {
-    assertEqual(v, a.get(idx));
+    assertEqualInt(v, a.get(idx));
     return true;
         });
     }

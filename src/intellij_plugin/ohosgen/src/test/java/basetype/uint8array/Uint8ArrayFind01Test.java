@@ -46,7 +46,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     Integer result = arr.find((v, i, a) -> {
         return v == 20;
         });
-    assertEqual(20, result);
+    assertEqualInt(20, result);
     }
 
     /**
@@ -65,7 +65,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array.Uint8ArrayFinder cb = (v, i, a) -> v == 30;
     Integer result = arr.find(cb);
-    assertEqual(30, result);
+    assertEqualInt(30, result);
     }
 
     /**
@@ -85,7 +85,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     Integer result = arr.find((v, i, a) -> {
         return v == 0;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     /**
@@ -105,7 +105,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     Integer result = arr.find((v, i, a) -> {
         return v == 255;
         });
-    assertEqual(255, result);
+    assertEqualInt(255, result);
     }
 
     /**
@@ -125,7 +125,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     Integer result = arr.find((v, i, a) -> {
         return v == 128;
         });
-    assertEqual(128, result);
+    assertEqualInt(128, result);
     }
 
     /**
@@ -145,7 +145,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     Integer result = arr.find((v, i, a) -> {
         return v == 127;
         });
-    assertEqual(127, result);
+    assertEqualInt(127, result);
     }
 
     /**
@@ -467,7 +467,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     Integer result = arr.find((v, i, a) -> {
         return v == 77;
         });
-    assertEqual(77, result);
+    assertEqualInt(77, result);
     }
 
     /**
@@ -578,9 +578,9 @@ public class Uint8ArrayFind01Test extends BasTest {
     return;
         });
     assertEqual(5, visited.size());
-    assertEqual(1, visited.get(0));
-    assertEqual(2, visited.get(1));
-    assertEqual(3, visited.get(2));
+    assertEqualInt(1, visited.get(0));
+    assertEqualInt(2, visited.get(1));
+    assertEqualInt(3, visited.get(2));
     }
 
     /**
@@ -603,9 +603,9 @@ public class Uint8ArrayFind01Test extends BasTest {
     return;
         });
     assertEqual(5, visited.size());
-    assertEqual(5, visited.get(0));
-    assertEqual(4, visited.get(1));
-    assertEqual(3, visited.get(2));
+    assertEqualInt(5, visited.get(0));
+    assertEqualInt(4, visited.get(1));
+    assertEqualInt(3, visited.get(2));
     }
 
     /**
@@ -628,9 +628,9 @@ public class Uint8ArrayFind01Test extends BasTest {
     return;
         });
     assertEqual(3, visited.size());
-    assertEqual(0, visited.get(0));
-    assertEqual(128, visited.get(1));
-    assertEqual(255, visited.get(2));
+    assertEqualInt(0, visited.get(0));
+    assertEqualInt(128, visited.get(1));
+    assertEqualInt(255, visited.get(2));
     }
 
     /**
@@ -1054,11 +1054,11 @@ public class Uint8ArrayFind01Test extends BasTest {
     return;
         });
     assertEqual(5, indices.size());
-    assertEqual(0, indices.get(0));
-    assertEqual(1, indices.get(1));
-    assertEqual(2, indices.get(2));
-    assertEqual(3, indices.get(3));
-    assertEqual(4, indices.get(4));
+    assertEqualInt(0, indices.get(0));
+    assertEqualInt(1, indices.get(1));
+    assertEqualInt(2, indices.get(2));
+    assertEqualInt(3, indices.get(3));
+    assertEqualInt(4, indices.get(4));
     }
 
     /**
@@ -1491,7 +1491,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     Integer result = arr.find((v, i, a) -> {
         return v == target;
         });
-    assertEqual(4, result);
+    assertEqualInt(4, result);
     }
 
     /**
@@ -1529,7 +1529,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     Integer result = arr.find((v, i, a) -> {
         return v >= 128 && v < 192;
         });
-    assertEqual(150, result);
+    assertEqualInt(150, result);
     }
 
     /**
@@ -1549,7 +1549,7 @@ public class Uint8ArrayFind01Test extends BasTest {
     Integer result = arr.find((v, i, a) -> {
         return v % 2 == 1;
         });
-    assertEqual(7, result);
+    assertEqualInt(7, result);
     }
 
     /**
@@ -1713,11 +1713,11 @@ public class Uint8ArrayFind01Test extends BasTest {
     return;
         });
     assertEqual(5, modified.size());
-    assertEqual(2, modified.get(0));
-    assertEqual(4, modified.get(1));
-    assertEqual(6, modified.get(2));
-    assertEqual(8, modified.get(3));
-    assertEqual(10, modified.get(4));
+    assertEqualInt(2, modified.get(0));
+    assertEqualInt(4, modified.get(1));
+    assertEqualInt(6, modified.get(2));
+    assertEqualInt(8, modified.get(3));
+    assertEqualInt(10, modified.get(4));
     }
 
     /**

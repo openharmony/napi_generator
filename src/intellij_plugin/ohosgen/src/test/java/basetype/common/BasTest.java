@@ -17,7 +17,7 @@ package basetype.common;
 
 /**
  * 断言辅助基类：把 ETS hypium expect(...).assertXxx(...) 桥接到 JUnit5 断言，
- * 提供 (int, Integer) 等重载，避免装箱/拆箱导致的 assertEquals 重载歧义。
+ * 提供常用基本类型重载；Integer 第二参请用 assertEqualInt 避免 G.OBJ.05。
  * 测试类继承本类以直接使用 assertEqual/assertTrue 等断言方法。
  *
  * @since 2026-08-26
@@ -39,6 +39,17 @@ public class BasTest {
 
     private static Error newTestError(String message) {
         return new Error(message);
+    }
+
+    /**
+     * 断言 int 与 Integer 相等（避免与 assertEqual(Object, Object) 歧义）。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
+     */
+    public static void assertEqualInt(int expected, Number actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(
+                expected, actual == null ? null : actual.intValue());
     }
 
     /**
@@ -69,16 +80,6 @@ public class BasTest {
      */
     public static void assertEqual(long expected, int actual) {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
-        }
-
-    /**
-     * 断言两值相等。
-     *
-     * @param expected 参数说明。
-     * @param actual 参数说明。
-     */
-    public static void assertEqual(int expected, Integer actual) {
-        org.junit.jupiter.api.Assertions.assertEquals(expected, (int) actual);
         }
 
     /**

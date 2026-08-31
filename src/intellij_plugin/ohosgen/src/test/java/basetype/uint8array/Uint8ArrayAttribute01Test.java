@@ -238,7 +238,7 @@ public class Uint8ArrayAttribute01Test extends BasTest {
     src.set(0, 10);
     Uint8Array arr = new Uint8Array(src);
     arr.set(0, 20);
-    assertEqual(10, src.get(0));
+    assertEqualInt(10, src.get(0));
     }
 
     /**
