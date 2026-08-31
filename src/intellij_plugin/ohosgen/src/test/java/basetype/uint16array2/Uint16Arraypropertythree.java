@@ -33,7 +33,7 @@ public class Uint16Arraypropertythree extends BasTest {
     Uint16Array arr = new Uint16Array(3);
     assertEqual(3, arr.length());
     assertEqual(6, arr.byteLength());
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -303,7 +303,7 @@ public class Uint16Arraypropertythree extends BasTest {
     Uint16Array a = new Uint16Array(b, 0, 4);
     Uint16Array v = new Uint16Array(b, 4, 2);
     a.set(2, 22);
-    assertEqual(22, v.get(0));
+    assertEqualInt(22, v.get(0));
     }
 
     @Test
@@ -364,7 +364,7 @@ public class Uint16Arraypropertythree extends BasTest {
     Uint16Array v = new Uint16Array(b, 2, 3);
     assertEqual(all.buffer(), v.buffer());
     v.set(2, 33);
-    assertEqual(33, all.get(3));
+    assertEqualInt(33, all.get(3));
     }
 
     @Test
@@ -389,7 +389,7 @@ public class Uint16Arraypropertythree extends BasTest {
     Uint16Array root = Uint16Array.of(1, 2, 3, 4, 5);
     Uint16Array nested = root.subarray(1, 4).subarray(1, 2);
     root.set(2, 30);
-    assertEqual(30, nested.get(0));
+    assertEqualInt(30, nested.get(0));
     }
 
     @Test
@@ -399,7 +399,7 @@ public class Uint16Arraypropertythree extends BasTest {
     Uint16Array nested = left.subarray(1, 2);
     Uint16Array sibling = root.subarray(2, 5);
     nested.set(0, 33);
-    assertEqual(33, sibling.get(0));
+    assertEqualInt(33, sibling.get(0));
     }
 
     @Test
@@ -533,7 +533,7 @@ public class Uint16Arraypropertythree extends BasTest {
     ArrayBuffer b = new ArrayBuffer(12);
     Uint16Array root = new Uint16Array(b, 4);
     root.set(0, 11);
-    assertEqual(11, new Uint16Array(b).get(2));
+    assertEqualInt(11, new Uint16Array(b).get(2));
     assertEqual(4, root.length());
     }
 

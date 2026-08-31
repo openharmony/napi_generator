@@ -55,7 +55,7 @@ public class Uint16ArrayFindTwo extends BasTest {
     void testUint16ArrayFindTwo022() {
     Uint16Array all = Uint16Array.of(1, 2, 3, 4);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
-    assertEqual(2, view.find((value) -> value > 1));
+    assertEqualInt(2, view.find((value) -> value > 1));
     }
 
     @Test

@@ -45,7 +45,7 @@ public class Uint16ArrayMapTwo extends BasTest {
     Uint16Array source = Uint16Array.of(1, 2);
     Uint16Array result = source.map((value) -> value);
     result.set(0, 99);
-    assertEqual(1, source.at(0));
+    assertEqualInt(1, source.at(0));
     }
 
     @Test
@@ -74,25 +74,25 @@ public class Uint16ArrayMapTwo extends BasTest {
     @Test
     void testUint16ArrayMapTwo024() {
     Uint16Array result = Uint16Array.of(1).map((value) -> -1);
-    assertEqual(65535, result.at(0));
+    assertEqualInt(65535, result.at(0));
     }
 
     @Test
     void testUint16ArrayMapTwo025() {
     Uint16Array result = Uint16Array.of(1).map((value) -> 65536);
-    assertEqual(0, result.at(0));
+    assertEqualInt(0, result.at(0));
     }
 
     @Test
     void testUint16ArrayMapTwo026() {
     Uint16Array result = Uint16Array.of(1).map((value) -> (int) (9.8));
-    assertEqual(9, result.at(0));
+    assertEqualInt(9, result.at(0));
     }
 
     @Test
     void testUint16ArrayMapTwo027() {
     Uint16Array result = Uint16Array.of(1).map((value) -> (int) (Double.NaN));
-    assertEqual(0, result.at(0));
+    assertEqualInt(0, result.at(0));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class Uint16ArrayMapTwo extends BasTest {
         }
         return value;
     });
-    assertEqual(20, result.at(1));
+    assertEqualInt(20, result.at(1));
     }
 
     @Test
@@ -116,8 +116,8 @@ public class Uint16ArrayMapTwo extends BasTest {
         }
         return value;
     });
-    assertEqual(1, result.at(0));
-    assertEqual(90, source.at(0));
+    assertEqualInt(1, result.at(0));
+    assertEqualInt(90, source.at(0));
     }
 
     @Test
@@ -132,7 +132,7 @@ public class Uint16ArrayMapTwo extends BasTest {
         }
         return value;
     });
-    assertEqual(44, result.at(1));
+    assertEqualInt(44, result.at(1));
     }
 
     @Test
@@ -142,8 +142,8 @@ public class Uint16ArrayMapTwo extends BasTest {
     all.set(new Uint16Array(new int[] {1, 2, 3, 4, 5}));
     Uint16Array view = new Uint16Array(buffer, 4, 2);
     Uint16Array result = view.map((value) -> value * 2);
-    assertEqual(6, result.at(0));
-    assertEqual(8, result.at(1));
+    assertEqualInt(6, result.at(0));
+    assertEqualInt(8, result.at(1));
     }
 
     @Test
@@ -161,16 +161,16 @@ public class Uint16ArrayMapTwo extends BasTest {
     @Test
     void testUint16ArrayMapTwo033() {
     Uint16Array result = Uint16Array.of(10, 10, 10).map((value, index) -> value + index);
-    assertEqual(10, result.at(0));
-    assertEqual(12, result.at(2));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(12, result.at(2));
     }
 
     @Test
     void testUint16ArrayMapTwo034() {
     Uint16Array source = Uint16Array.of(2, 4);
     source.map((value) -> value * 3);
-    assertEqual(2, source.at(0));
-    assertEqual(4, source.at(1));
+    assertEqualInt(2, source.at(0));
+    assertEqualInt(4, source.at(1));
     }
 
     @Test
@@ -188,7 +188,7 @@ public class Uint16ArrayMapTwo extends BasTest {
         array.set(index, 99);
         return value;
         });
-    assertEqual(99, source.at(0));
-    assertEqual(1, result.at(0));
+    assertEqualInt(99, source.at(0));
+    assertEqualInt(1, result.at(0));
     }
 }

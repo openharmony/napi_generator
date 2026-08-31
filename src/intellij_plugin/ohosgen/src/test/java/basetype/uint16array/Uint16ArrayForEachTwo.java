@@ -74,7 +74,7 @@ public class Uint16ArrayForEachTwo extends BasTest {
         array.set(1, 20);
     }
         });
-    assertEqual(20, seen.get(1));
+    assertEqualInt(20, seen.get(1));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class Uint16ArrayForEachTwo extends BasTest {
     }
         });
     assertEqual(3, count[0]);
-    assertEqual(99, arr.at(0));
+    assertEqualInt(99, arr.at(0));
     }
 
     @Test

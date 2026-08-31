@@ -42,8 +42,8 @@ public class Uint16ArrayFromTwo extends BasTest {
     @Test
     void testUint16ArrayFromTwo014() {
     Uint16Array result = Uint16Array.from(new double[] {1.0, 2.0}, (value) -> value + 65535);
-    assertEqual(0, result.at(0));
-    assertEqual(1, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(1, result.at(1));
     }
 
     @Test
@@ -67,10 +67,10 @@ public class Uint16ArrayFromTwo extends BasTest {
     result.set(1, 77);
     assertEqual(2, result.length());
     assertEqual(0, result.byteOffset());
-    assertEqual(20, result.at(0));
-    assertEqual(30, backing.at(2));
+    assertEqualInt(20, result.at(0));
+    assertEqualInt(30, backing.at(2));
     result.set(0, 88);
-    assertEqual(99, source.at(0));
+    assertEqualInt(99, source.at(0));
     }
 
     @Test
@@ -84,9 +84,9 @@ public class Uint16ArrayFromTwo extends BasTest {
     assertEqual(-1, observed.get(0).doubleValue());
     assertEqual(65536, observed.get(1).doubleValue());
     assertEqual(3.9, observed.get(2).doubleValue());
-    assertEqual(65535, result.at(0));
-    assertEqual(0, result.at(1));
-    assertEqual(3, result.at(2));
+    assertEqualInt(65535, result.at(0));
+    assertEqualInt(0, result.at(1));
+    assertEqualInt(3, result.at(2));
     }
 
     @Test
@@ -104,8 +104,8 @@ public class Uint16ArrayFromTwo extends BasTest {
         });
     assertEqual(3, count[0]);
     assertEqual(3, result.length());
-    assertEqual(1, result.at(0));
-    assertEqual(2, result.at(1));
+    assertEqualInt(1, result.at(0));
+    assertEqualInt(2, result.at(1));
     assertEqual(3, source.size());
     }
 

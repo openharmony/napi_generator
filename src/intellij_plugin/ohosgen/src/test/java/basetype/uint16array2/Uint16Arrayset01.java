@@ -36,7 +36,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int val = 42;
     target.set(0, val);
-    assertEqual(42, target.get(0));
+    assertEqualInt(42, target.get(0));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int val = 0;
     target.set(0, val);
-    assertEqual(0, target.get(0));
+    assertEqualInt(0, target.get(0));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int val = 65536;
     target.set(0, val);
-    assertEqual(0, target.get(0));
+    assertEqualInt(0, target.get(0));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int val = -1;
     target.set(0, val);
-    assertEqual(65535, target.get(0));
+    assertEqualInt(65535, target.get(0));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int val = -65536;
     target.set(0, val);
-    assertEqual(0, target.get(0));
+    assertEqualInt(0, target.get(0));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int val = 0x10000;
     target.set(0, val);
-    assertEqual(0, target.get(0));
+    assertEqualInt(0, target.get(0));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int val = 0xFFFF;
     target.set(0, val);
-    assertEqual(65535, target.get(0));
+    assertEqualInt(65535, target.get(0));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int val = 65536 * 2;
     target.set(0, val);
-    assertEqual(0, target.get(0));
+    assertEqualInt(0, target.get(0));
     }
 
     @Test
@@ -125,7 +125,7 @@ public class Uint16Arrayset01 extends BasTest {
     int val = 555;
     target.set(0, val);
     Integer result = target.get(0);
-    assertEqual(555, result);
+    assertEqualInt(555, result);
     }
 
     @Test
@@ -135,8 +135,8 @@ public class Uint16Arrayset01 extends BasTest {
     target.set(1, 20);
     target.set(2, 30);
     target.set(1, 99);
-    assertEqual(10, target.get(0));
-    assertEqual(30, target.get(2));
+    assertEqualInt(10, target.get(0));
+    assertEqualInt(30, target.get(2));
     }
 
     @Test
@@ -147,11 +147,11 @@ public class Uint16Arrayset01 extends BasTest {
     target.set(2, 3);
     target.set(3, 4);
     target.set(4, 5);
-    assertEqual(1, target.get(0));
-    assertEqual(2, target.get(1));
-    assertEqual(3, target.get(2));
-    assertEqual(4, target.get(3));
-    assertEqual(5, target.get(4));
+    assertEqualInt(1, target.get(0));
+    assertEqualInt(2, target.get(1));
+    assertEqualInt(3, target.get(2));
+    assertEqualInt(4, target.get(3));
+    assertEqualInt(5, target.get(4));
     }
 
     @Test
@@ -171,7 +171,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     target.set(0, 100);
     target.set(0, 200);
-    assertEqual(200, target.get(0));
+    assertEqualInt(200, target.get(0));
     }
 
     @Test
@@ -180,12 +180,12 @@ public class Uint16Arrayset01 extends BasTest {
     double v1 = 3.14;
     double v2 = 65535.9;
     target.set(0, v1);
-    assertEqual(3, target.get(0));
+    assertEqualInt(3, target.get(0));
     target.set(0, v2);
-    assertEqual(65535, target.get(0));
+    assertEqualInt(65535, target.get(0));
     int v3 = (int) (-0.5);
     target.set(0, v3);
-    assertEqual(0, target.get(0));
+    assertEqualInt(0, target.get(0));
     }
 
     @Test
@@ -193,7 +193,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int val = 100000;
     target.set(0, val);
-    assertEqual(34464, target.get(0));
+    assertEqualInt(34464, target.get(0));
     }
 
     @Test
@@ -201,7 +201,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int val = 0x1FFFE;
     target.set(0, val);
-    assertEqual(65534, target.get(0));
+    assertEqualInt(65534, target.get(0));
     }
 
     @Test
@@ -209,8 +209,8 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {10, 20};
     target.set(source, 1);
-    assertEqual(10, target.get(1));
-    assertEqual(20, target.get(2));
+    assertEqualInt(10, target.get(1));
+    assertEqualInt(20, target.get(2));
     }
 
     @Test
@@ -218,8 +218,8 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {1, 2};
     target.set(source, 0);
-    assertEqual(1, target.get(0));
-    assertEqual(2, target.get(1));
+    assertEqualInt(1, target.get(0));
+    assertEqualInt(2, target.get(1));
     }
 
     @Test
@@ -242,9 +242,9 @@ public class Uint16Arrayset01 extends BasTest {
     target.set(2, 30);
     int[] source = new int[] {};
     target.set(source, 0);
-    assertEqual(10, target.get(0));
-    assertEqual(20, target.get(1));
-    assertEqual(30, target.get(2));
+    assertEqualInt(10, target.get(0));
+    assertEqualInt(20, target.get(1));
+    assertEqualInt(30, target.get(2));
     }
 
     @Test
@@ -252,7 +252,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {99};
     target.set(source, 1);
-    assertEqual(99, target.get(1));
+    assertEqualInt(99, target.get(1));
     }
 
     @Test
@@ -260,9 +260,9 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(4);
     int[] source = new int[] {1, 2, 3};
     target.set(source, 0);
-    assertEqual(1, target.get(0));
-    assertEqual(2, target.get(1));
-    assertEqual(3, target.get(2));
+    assertEqualInt(1, target.get(0));
+    assertEqualInt(2, target.get(1));
+    assertEqualInt(3, target.get(2));
     }
 
     @Test
@@ -270,8 +270,8 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {0, 0};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    assertEqual(0, target.get(1));
+    assertEqualInt(0, target.get(0));
+    assertEqualInt(0, target.get(1));
     }
 
     @Test
@@ -279,7 +279,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {65536};
     target.set(source, 0);
-    assertEqual(0, target.get(0));
+    assertEqualInt(0, target.get(0));
     }
 
     @Test
@@ -287,7 +287,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {-1};
     target.set(source, 0);
-    assertEqual(65535, target.get(0));
+    assertEqualInt(65535, target.get(0));
     }
 
     @Test
@@ -295,9 +295,9 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(5);
     int[] source = new int[] {1, 2};
     target.set(source, 0);
-    assertEqual(1, target.get(0));
-    assertEqual(2, target.get(1));
-    assertEqual(0, target.get(2));
+    assertEqualInt(1, target.get(0));
+    assertEqualInt(2, target.get(1));
+    assertEqualInt(0, target.get(2));
     }
 
     @Test
@@ -305,10 +305,10 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(4);
     int[] source = new int[] {10, 20, 30};
     target.set(source, 1);
-    assertEqual(0, target.get(0));
-    assertEqual(10, target.get(1));
-    assertEqual(20, target.get(2));
-    assertEqual(30, target.get(3));
+    assertEqualInt(0, target.get(0));
+    assertEqualInt(10, target.get(1));
+    assertEqualInt(20, target.get(2));
+    assertEqualInt(30, target.get(3));
     }
 
     @Test
@@ -318,10 +318,10 @@ public class Uint16Arrayset01 extends BasTest {
     target.set(1, 200);
     int[] source = new int[] {10, 20};
     target.set(source, 2);
-    assertEqual(100, target.get(0));
-    assertEqual(200, target.get(1));
-    assertEqual(10, target.get(2));
-    assertEqual(20, target.get(3));
+    assertEqualInt(100, target.get(0));
+    assertEqualInt(200, target.get(1));
+    assertEqualInt(10, target.get(2));
+    assertEqualInt(20, target.get(3));
     }
 
     @Test
@@ -330,8 +330,8 @@ public class Uint16Arrayset01 extends BasTest {
     target.set(4, 999);
     int[] source = new int[] {1, 2, 3};
     target.set(source, 0);
-    assertEqual(0, target.get(3));
-    assertEqual(999, target.get(4));
+    assertEqualInt(0, target.get(3));
+    assertEqualInt(999, target.get(4));
     }
 
     @Test
@@ -351,7 +351,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     int[] source = new int[] {777};
     target.set(source, 2);
-    assertEqual(777, target.get(2));
+    assertEqualInt(777, target.get(2));
     }
 
     @Test
@@ -376,8 +376,8 @@ public class Uint16Arrayset01 extends BasTest {
     i++;
     }
     target.set(source, 0);
-    assertEqual(0, target.get(0));
-    assertEqual(99, target.get(99));
+    assertEqualInt(0, target.get(0));
+    assertEqualInt(99, target.get(99));
     }
 
     @Test
@@ -385,9 +385,9 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     Uint16Array source = Uint16Array.of(10, 20, 30);
     target.set(source);
-    assertEqual(10, target.get(0));
-    assertEqual(20, target.get(1));
-    assertEqual(30, target.get(2));
+    assertEqualInt(10, target.get(0));
+    assertEqualInt(20, target.get(1));
+    assertEqualInt(30, target.get(2));
     }
 
     @Test
@@ -395,7 +395,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(3);
     Uint16Array source = Uint16Array.of(42);
     target.set(source);
-    assertEqual(42, target.get(0));
+    assertEqualInt(42, target.get(0));
     }
 
     @Test
@@ -406,9 +406,9 @@ public class Uint16Arrayset01 extends BasTest {
     target.set(2, 99);
     Uint16Array source = Uint16Array.of(0, 0, 0);
     target.set(source);
-    assertEqual(0, target.get(0));
-    assertEqual(0, target.get(1));
-    assertEqual(0, target.get(2));
+    assertEqualInt(0, target.get(0));
+    assertEqualInt(0, target.get(1));
+    assertEqualInt(0, target.get(2));
     }
 
     @Test
@@ -416,8 +416,8 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(2);
     Uint16Array source = Uint16Array.of(65535, 65535);
     target.set(source);
-    assertEqual(65535, target.get(0));
-    assertEqual(65535, target.get(1));
+    assertEqualInt(65535, target.get(0));
+    assertEqualInt(65535, target.get(1));
     }
 
     @Test
@@ -425,10 +425,10 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array target = new Uint16Array(4);
     Uint16Array source = Uint16Array.of(0, 65535, 32768, 1);
     target.set(source);
-    assertEqual(0, target.get(0));
-    assertEqual(65535, target.get(1));
-    assertEqual(32768, target.get(2));
-    assertEqual(1, target.get(3));
+    assertEqualInt(0, target.get(0));
+    assertEqualInt(65535, target.get(1));
+    assertEqualInt(32768, target.get(2));
+    assertEqualInt(1, target.get(3));
     }
 
     @Test
@@ -441,11 +441,11 @@ public class Uint16Arrayset01 extends BasTest {
     target.set(4, 500);
     Uint16Array source = Uint16Array.of(1, 2);
     target.set(source);
-    assertEqual(1, target.get(0));
-    assertEqual(2, target.get(1));
-    assertEqual(300, target.get(2));
-    assertEqual(400, target.get(3));
-    assertEqual(500, target.get(4));
+    assertEqualInt(1, target.get(0));
+    assertEqualInt(2, target.get(1));
+    assertEqualInt(300, target.get(2));
+    assertEqualInt(400, target.get(3));
+    assertEqualInt(500, target.get(4));
     }
 
     @Test
@@ -469,9 +469,9 @@ public class Uint16Arrayset01 extends BasTest {
     srcView.set(2, 333);
     Uint16Array target = new Uint16Array(3);
     target.set(srcView);
-    assertEqual(111, target.get(0));
-    assertEqual(222, target.get(1));
-    assertEqual(333, target.get(2));
+    assertEqualInt(111, target.get(0));
+    assertEqualInt(222, target.get(1));
+    assertEqualInt(333, target.get(2));
     }
 
     @Test
@@ -480,10 +480,10 @@ public class Uint16Arrayset01 extends BasTest {
     target.set(3, 999);
     Uint16Array source = Uint16Array.of(1, 2, 3);
     target.set(source);
-    assertEqual(1, target.get(0));
-    assertEqual(2, target.get(1));
-    assertEqual(3, target.get(2));
-    assertEqual(999, target.get(3));
+    assertEqualInt(1, target.get(0));
+    assertEqualInt(2, target.get(1));
+    assertEqualInt(3, target.get(2));
+    assertEqualInt(999, target.get(3));
     }
 
     @Test
@@ -523,9 +523,9 @@ public class Uint16Arrayset01 extends BasTest {
     target.set(2, 30);
     Uint16Array emptySrc = new Uint16Array(0);
     target.set(emptySrc);
-    assertEqual(10, target.get(0));
-    assertEqual(20, target.get(1));
-    assertEqual(30, target.get(2));
+    assertEqualInt(10, target.get(0));
+    assertEqualInt(20, target.get(1));
+    assertEqualInt(30, target.get(2));
     }
 
     @Test
@@ -588,7 +588,7 @@ public class Uint16Arrayset01 extends BasTest {
     void testUint16ArraySetPart1057() {
     Uint16Array a = new Uint16Array(1);
     a.set(0, 65535);
-    assertEqual(65535, a.get(0));
+    assertEqualInt(65535, a.get(0));
     }
 
     @Test
@@ -606,7 +606,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array x = new Uint16Array(b, 0, 3);
     Uint16Array y = new Uint16Array(b, 2, 2);
     x.set(1, 88);
-    assertEqual(88, y.get(0));
+    assertEqualInt(88, y.get(0));
     }
 
     @Test
@@ -704,7 +704,7 @@ public class Uint16Arrayset01 extends BasTest {
     Uint16Array a = new Uint16Array(1);
     int v = 50000;
     a.set(0, v);
-    assertEqual(50000, a.get(0));
+    assertEqualInt(50000, a.get(0));
     }
 
     @Test
@@ -767,14 +767,14 @@ public class Uint16Arrayset01 extends BasTest {
     void testUint16ArraySetPart1076() {
     Uint16Array a = new Uint16Array(1);
     a.set(0, 196613);
-    assertEqual(5, a.get(0));
+    assertEqualInt(5, a.get(0));
     }
 
     @Test
     void testUint16ArraySetPart1077() {
     Uint16Array a = new Uint16Array(1);
     a.set(0, -65537.9);
-    assertEqual(65535, a.get(0));
+    assertEqualInt(65535, a.get(0));
     }
 
     @Test

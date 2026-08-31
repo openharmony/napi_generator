@@ -49,17 +49,17 @@ public class Uint16ArrayFilterTwo extends BasTest {
     @Test
     void testUint16ArrayFilterTwo016() {
     Uint16Array result = Uint16Array.of(3, 1, 2).filter((value) -> true);
-    assertEqual(3, result.at(0));
-    assertEqual(2, result.at(2));
+    assertEqualInt(3, result.at(0));
+    assertEqualInt(2, result.at(2));
     }
 
     @Test
     void testUint16ArrayFilterTwo017() {
     Uint16Array result = Uint16Array.of(2, 1, 2, 2).filter((value) -> value == 2);
     assertEqual(3, result.length());
-    assertEqual(2, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(2, result.get(2));
+    assertEqualInt(2, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(2, result.get(2));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class Uint16ArrayFilterTwo extends BasTest {
     Uint16Array source = Uint16Array.of(1, 2);
     Uint16Array result = source.filter((value) -> true);
     result.set(0, 9);
-    assertEqual(1, source.at(0));
+    assertEqualInt(1, source.at(0));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class Uint16ArrayFilterTwo extends BasTest {
         }
         return value > 10;
     });
-    assertEqual(20, result.at(0));
+    assertEqualInt(20, result.at(0));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class Uint16ArrayFilterTwo extends BasTest {
         }
         return value > 10;
     });
-    assertEqual(40, result.at(0));
+    assertEqualInt(40, result.at(0));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class Uint16ArrayFilterTwo extends BasTest {
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
     Uint16Array result = view.filter((value) -> value > 1);
     assertEqual(2, result.length());
-    assertEqual(2, result.at(0));
+    assertEqualInt(2, result.at(0));
     }
 
     @Test
@@ -148,14 +148,14 @@ public class Uint16ArrayFilterTwo extends BasTest {
     void testUint16ArrayFilterTwo025() {
     Uint16Array result = Uint16Array.of(0, 32768, 65535).filter((value) -> value == 0 || value == 65535);
     assertEqual(2, result.length());
-    assertEqual(65535, result.at(1));
+    assertEqualInt(65535, result.at(1));
     }
 
     @Test
     void testUint16ArrayFilterTwo026() {
     Uint16Array source = Uint16Array.of(4, 5);
     source.filter((value) -> value > 0);
-    assertEqual(4, source.at(0));
-    assertEqual(5, source.at(1));
+    assertEqualInt(4, source.at(0));
+    assertEqualInt(5, source.at(1));
     }
 }

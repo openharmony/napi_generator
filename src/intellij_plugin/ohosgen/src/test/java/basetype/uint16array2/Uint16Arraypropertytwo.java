@@ -366,7 +366,7 @@ public class Uint16Arraypropertytwo extends BasTest {
     Uint16Array arr = new Uint16Array(buf, 0, 2);
     DataView view = new DataView(buf);
     view.setUint16(0, 0x1234, true);
-    assertEqual(0x1234, arr.get(0));
+    assertEqualInt(0x1234, arr.get(0));
     }
 
     @Test
@@ -463,7 +463,7 @@ public class Uint16Arraypropertytwo extends BasTest {
     @Test
     void testUint16Arraypropertytwo062() {
     Uint16Array a = Uint16Array.of(65535);
-    assertEqual(65535, a.get(0));
+    assertEqualInt(65535, a.get(0));
     assertEqual(1, a.length());
     }
 

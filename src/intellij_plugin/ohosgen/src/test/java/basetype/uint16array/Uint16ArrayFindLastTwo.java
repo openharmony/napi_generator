@@ -31,7 +31,7 @@ public class Uint16ArrayFindLastTwo extends BasTest {
 
     @Test
     void testUint16ArrayFindLastTwo014() {
-    assertEqual(6, Uint16Array.of(2, 4, 6).findLast((value) -> value % 2 == 0));
+    assertEqualInt(6, Uint16Array.of(2, 4, 6).findLast((value) -> value % 2 == 0));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class Uint16ArrayFindLastTwo extends BasTest {
     void testUint16ArrayFindLastTwo018() {
     Uint16Array all = Uint16Array.of(9, 2, 3, 8);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
-    assertEqual(3, view.findLast((value) -> value < 9));
+    assertEqualInt(3, view.findLast((value) -> value < 9));
     }
 
     @Test
@@ -94,6 +94,6 @@ public class Uint16ArrayFindLastTwo extends BasTest {
 
     @Test
     void testUint16ArrayFindLastTwo020() {
-    assertEqual(65535, Uint16Array.of(65534, 0, 65535).findLast((value) -> value >= 65534));
+    assertEqualInt(65535, Uint16Array.of(65534, 0, 65535).findLast((value) -> value >= 65534));
     }
 }

@@ -66,21 +66,21 @@ public class Uint16Arrayoverallone extends BasTest {
     void testUint16Arrayoverallone006() {
     double[] src = new double[] {-1.0};
     Uint16Array arr = new Uint16Array(src);
-    assertEqual(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone007() {
     double[] src = new double[] {65536.0};
     Uint16Array arr = new Uint16Array(src);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone008() {
     double[] src = new double[] {Double.POSITIVE_INFINITY};
     Uint16Array arr = new Uint16Array(src);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -136,77 +136,77 @@ public class Uint16Arrayoverallone extends BasTest {
     @Test
     void testUint16Arrayoverallone016() {
     Uint16Array arr = Uint16Array.of(10, 20, 30);
-    assertEqual(10, arr.get(0));
+    assertEqualInt(10, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone017() {
     Uint16Array arr = new Uint16Array(1);
     arr.set(0, -1);
-    assertEqual(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone018() {
     Uint16Array arr = new Uint16Array(1);
     arr.set(0, Double.NaN);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone019() {
     Uint16Array arr = new Uint16Array(1);
     arr.set(0, Double.POSITIVE_INFINITY);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone020() {
     Uint16Array arr = Uint16Array.of(10, 20);
     Uint16Array result = arr.with(0, 65535);
-    assertEqual(65535, result.get(0));
+    assertEqualInt(65535, result.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone021() {
     Uint16Array arr = Uint16Array.of(10, 20);
     Uint16Array result = arr.with(0, 65536);
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone022() {
     Uint16Array arr = Uint16Array.of(10, 20);
     Uint16Array result = arr.with(0, 0xFFFF);
-    assertEqual(65535, result.get(0));
+    assertEqualInt(65535, result.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone023() {
     Uint16Array arr = new Uint16Array(1);
     arr.set(0, 0);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone024() {
     Uint16Array arr = new Uint16Array(1);
     arr.set(0, 65535);
-    assertEqual(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone025() {
     Uint16Array arr = new Uint16Array(1);
     arr.set(0, 65536);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone026() {
     Uint16Array arr = new Uint16Array(1);
     arr.set(0, 0xFFFF);
-    assertEqual(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(0));
     }
 
     @Test
@@ -214,8 +214,8 @@ public class Uint16Arrayoverallone extends BasTest {
     Uint16Array arr = new Uint16Array(2);
     Uint16Array source = Uint16Array.of(10, 20);
     arr.set(source);
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
     }
 
     @Test
@@ -223,7 +223,7 @@ public class Uint16Arrayoverallone extends BasTest {
     Uint16Array arr = new Uint16Array(2);
     Uint16Array source = Uint16Array.of(10, 20);
     arr.set(source, 0);
-    assertEqual(10, arr.get(0));
+    assertEqualInt(10, arr.get(0));
     }
 
     @Test
@@ -231,42 +231,42 @@ public class Uint16Arrayoverallone extends BasTest {
     Uint16Array arr = new Uint16Array(3);
     Uint16Array source = Uint16Array.of(10, 20);
     arr.set(source, 1);
-    assertEqual(0, arr.get(0));
-    assertEqual(10, arr.get(1));
-    assertEqual(20, arr.get(2));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(10, arr.get(1));
+    assertEqualInt(20, arr.get(2));
     }
 
     @Test
     void testUint16Arrayoverallone030() {
     Uint16Array arr = new Uint16Array(3);
     arr.fill(65535);
-    assertEqual(65535, arr.get(0));
-    assertEqual(65535, arr.get(1));
+    assertEqualInt(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(1));
     }
 
     @Test
     void testUint16Arrayoverallone031() {
     Uint16Array arr = new Uint16Array(2);
     arr.fill(-1);
-    assertEqual(65535, arr.get(0));
-    assertEqual(65535, arr.get(1));
+    assertEqualInt(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(1));
     }
 
     @Test
     void testUint16Arrayoverallone032() {
     Uint16Array arr = new Uint16Array(2);
     arr.fill(0xFFFF);
-    assertEqual(65535, arr.get(0));
-    assertEqual(65535, arr.get(1));
+    assertEqualInt(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(1));
     }
 
     @Test
     void testUint16Arrayoverallone033() {
     Uint16Array arr = new Uint16Array(3);
     arr.fill(5, 1);
-    assertEqual(0, arr.get(0));
-    assertEqual(5, arr.get(1));
-    assertEqual(5, arr.get(2));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(5, arr.get(1));
+    assertEqualInt(5, arr.get(2));
     }
 
     @Test
@@ -310,8 +310,8 @@ public class Uint16Arrayoverallone extends BasTest {
     Uint16Array arr = Uint16Array.of(11, 22, 33);
     Uint16Array result = arr.slice(0, 2);
     assertEqual(2, result.length());
-    assertEqual(11, result.get(0));
-    assertEqual(22, result.get(1));
+    assertEqualInt(11, result.get(0));
+    assertEqualInt(22, result.get(1));
     }
 
     @Test
@@ -319,8 +319,8 @@ public class Uint16Arrayoverallone extends BasTest {
     Uint16Array arr = Uint16Array.of(9, 18, 27);
     Uint16Array result = arr.subarray(0, 2);
     assertEqual(2, result.length());
-    assertEqual(9, result.get(0));
-    assertEqual(18, result.get(1));
+    assertEqualInt(9, result.get(0));
+    assertEqualInt(18, result.get(1));
     }
 
     @Test
@@ -341,9 +341,9 @@ public class Uint16Arrayoverallone extends BasTest {
     void testUint16Arrayoverallone044() {
     Uint16Array arr = Uint16Array.of(10, 30, 20);
     arr.sort((a, b) -> a < b ? 1 : (a > b ? -1 : 0));
-    assertEqual(30, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(10, arr.get(2));
+    assertEqualInt(30, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(10, arr.get(2));
     }
 
     @Test
@@ -387,9 +387,9 @@ public class Uint16Arrayoverallone extends BasTest {
     void testUint16Arrayoverallone049() {
     Uint16Array arr = Uint16Array.of(4, 8, 12);
     Uint16Array result = arr.map((value) -> value + 1);
-    assertEqual(5, result.get(0));
-    assertEqual(9, result.get(1));
-    assertEqual(13, result.get(2));
+    assertEqualInt(5, result.get(0));
+    assertEqualInt(9, result.get(1));
+    assertEqualInt(13, result.get(2));
     }
 
     @Test
@@ -397,8 +397,8 @@ public class Uint16Arrayoverallone extends BasTest {
     Uint16Array arr = Uint16Array.of(2, 12, 22);
     Uint16Array result = arr.filter((value) -> value > 10);
     assertEqual(2, result.length());
-    assertEqual(12, result.get(0));
-    assertEqual(22, result.get(1));
+    assertEqualInt(12, result.get(0));
+    assertEqualInt(22, result.get(1));
     }
 
     @Test
@@ -473,15 +473,15 @@ public class Uint16Arrayoverallone extends BasTest {
     void testUint16Arrayoverallone059() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
     arr.copyWithin(0, 1, 2);
-    assertEqual(2, arr.get(0));
+    assertEqualInt(2, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone060() {
     Uint16Array arr = Uint16Array.of(5, 10, 15, 20);
     arr.copyWithin(0, 2);
-    assertEqual(15, arr.get(0));
-    assertEqual(20, arr.get(1));
+    assertEqualInt(15, arr.get(0));
+    assertEqualInt(20, arr.get(1));
     }
 
     @Test
@@ -495,29 +495,29 @@ public class Uint16Arrayoverallone extends BasTest {
     void testUint16Arrayoverallone062() {
     Uint16Array arr = Uint16Array.of(4, 8, 12);
     arr.reverse();
-    assertEqual(12, arr.get(0));
-    assertEqual(8, arr.get(1));
-    assertEqual(4, arr.get(2));
+    assertEqualInt(12, arr.get(0));
+    assertEqualInt(8, arr.get(1));
+    assertEqualInt(4, arr.get(2));
     }
 
     @Test
     void testUint16Arrayoverallone063() {
     Uint16Array arr = Uint16Array.of(2, 6, 10);
     Uint16Array result = arr.toReversed();
-    assertEqual(10, result.get(0));
-    assertEqual(6, result.get(1));
-    assertEqual(2, result.get(2));
-    assertEqual(2, arr.get(0));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(6, result.get(1));
+    assertEqualInt(2, result.get(2));
+    assertEqualInt(2, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone064() {
     Uint16Array arr = Uint16Array.of(30, 10, 20);
     Uint16Array result = arr.toSorted();
-    assertEqual(10, result.get(0));
-    assertEqual(20, result.get(1));
-    assertEqual(30, result.get(2));
-    assertEqual(30, arr.get(0));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(20, result.get(1));
+    assertEqualInt(30, result.get(2));
+    assertEqualInt(30, arr.get(0));
     }
 
     @Test
@@ -568,37 +568,37 @@ public class Uint16Arrayoverallone extends BasTest {
     void testUint16Arrayoverallone072() {
     int[] src = new int[] {0, 65535};
     Uint16Array arr = new Uint16Array(src);
-    assertEqual(0, arr.get(0));
-    assertEqual(65535, arr.get(1));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(65535, arr.get(1));
     }
 
     @Test
     void testUint16Arrayoverallone073() {
     int[] src = new int[] {-1};
     Uint16Array arr = new Uint16Array(src);
-    assertEqual(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone074() {
     int[] src = new int[] {65536};
     Uint16Array arr = new Uint16Array(src);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone075() {
     int[] src = new int[] {0xFFFF};
     Uint16Array arr = new Uint16Array(src);
-    assertEqual(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(0));
     }
 
     @Test
     void testUint16Arrayoverallone076() {
     double[] src = new double[] {0.0, 65535.0};
     Uint16Array arr = new Uint16Array(src);
-    assertEqual(0, arr.get(0));
-    assertEqual(65535, arr.get(1));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(65535, arr.get(1));
     }
 
     @Test
@@ -624,6 +624,6 @@ public class Uint16Arrayoverallone extends BasTest {
     @Test
     void testUint16Arrayoverallone080() {
     Uint16Array arr = Uint16Array.of(0);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 }

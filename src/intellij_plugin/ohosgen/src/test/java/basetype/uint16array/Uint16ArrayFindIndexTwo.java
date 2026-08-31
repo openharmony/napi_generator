@@ -40,7 +40,7 @@ public class Uint16ArrayFindIndexTwo extends BasTest {
 
     @Test
     void testUint16ArrayFindIndexTwo035() {
-    assertEqual(1, Uint16Array.of(2, 4, 6).findIndex((value) -> value >= 4));
+    assertEqualInt(1, Uint16Array.of(2, 4, 6).findIndex((value) -> value >= 4));
     }
 
     @Test
@@ -70,6 +70,6 @@ public class Uint16ArrayFindIndexTwo extends BasTest {
     void testUint16ArrayFindIndexTwo038() {
     Uint16Array all = Uint16Array.of(1, 2, 3, 4);
     Uint16Array view = new Uint16Array(all.buffer(), 2, 2);
-    assertEqual(1, view.findIndex((value) -> value == 3));
+    assertEqualInt(1, view.findIndex((value) -> value == 3));
     }
 }

@@ -125,7 +125,7 @@ public class Uint16Arraypropertyone extends BasTest {
     Uint16Array arr = new Uint16Array(buf);
     assertEqual(3, arr.length());
     assertEqual(6, arr.byteLength());
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -150,9 +150,9 @@ public class Uint16Arraypropertyone extends BasTest {
     assertEqual(buf, arr.buffer());
     arr.set(0, 1234);
     Uint16Array sharedView = new Uint16Array(buf);
-    assertEqual(1234, sharedView.get(0));
+    assertEqualInt(1234, sharedView.get(0));
     sharedView.set(1, 5678);
-    assertEqual(5678, arr.get(1));
+    assertEqualInt(5678, arr.get(1));
     }
 
     @Test
@@ -174,7 +174,7 @@ public class Uint16Arraypropertyone extends BasTest {
     Uint16Array src = new Uint16Array(3);
     Uint16Array arr = new Uint16Array(src);
     src.set(0, 123);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     assertNotEqual(src.buffer(), arr.buffer());
     }
 

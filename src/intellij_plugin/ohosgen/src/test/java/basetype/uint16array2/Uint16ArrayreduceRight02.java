@@ -337,9 +337,9 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     indices.add(idx);
     return prev + curr;
         });
-    assertEqual(2, indices.get(0));
-    assertEqual(1, indices.get(1));
-    assertEqual(0, indices.get(2));
+    assertEqualInt(2, indices.get(0));
+    assertEqualInt(1, indices.get(1));
+    assertEqualInt(0, indices.get(2));
     }
 
     @Test
@@ -381,8 +381,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     prevValues.add(prev);
     return prev + curr;
         });
-    assertEqual(30, prevValues.get(0));
-    assertEqual(50, prevValues.get(1));
+    assertEqualInt(30, prevValues.get(0));
+    assertEqualInt(50, prevValues.get(1));
     }
 
     @Test
@@ -393,8 +393,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     currValues.add(curr);
     return prev + curr;
         });
-    assertEqual(20, currValues.get(0));
-    assertEqual(10, currValues.get(1));
+    assertEqualInt(20, currValues.get(0));
+    assertEqualInt(10, currValues.get(1));
     }
 
     @Test
@@ -507,7 +507,7 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     }
     return prev + curr;
         });
-    assertEqual(99, arr.get(0));
+    assertEqualInt(99, arr.get(0));
     }
 
     @Test
@@ -518,8 +518,8 @@ public class Uint16ArrayreduceRight02 extends BasTest {
     lengths.add(a.length());
     return prev + curr;
         });
-    assertEqual(3, lengths.get(0));
-    assertEqual(3, lengths.get(1));
+    assertEqualInt(3, lengths.get(0));
+    assertEqualInt(3, lengths.get(1));
     }
 
     @Test

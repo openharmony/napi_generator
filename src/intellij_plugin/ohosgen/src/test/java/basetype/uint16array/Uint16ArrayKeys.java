@@ -46,9 +46,9 @@ public class Uint16ArrayKeys extends BasTest {
     @Test
     void testUint16ArrayKeys047() {
     Uint16Array.KeyIterator iterator = Uint16Array.of(5, 6, 7).keys();
-    assertEqual(0, iterator.next().value.intValue());
-    assertEqual(1, iterator.next().value.intValue());
-    assertEqual(2, iterator.next().value.intValue());
+    assertEqualInt(0, iterator.next().value);
+    assertEqualInt(1, iterator.next().value);
+    assertEqualInt(2, iterator.next().value);
     }
 
     @Test
@@ -56,8 +56,8 @@ public class Uint16ArrayKeys extends BasTest {
     Uint16Array arr = Uint16Array.of(1, 2);
     Uint16Array.KeyIterator iterator = arr.keys();
     arr.set(0, 99);
-    assertEqual(0, iterator.next().value.intValue());
-    assertEqual(1, iterator.next().value.intValue());
+    assertEqualInt(0, iterator.next().value);
+    assertEqualInt(1, iterator.next().value);
     }
 
     @Test
@@ -65,8 +65,8 @@ public class Uint16ArrayKeys extends BasTest {
     ArrayBuffer buffer = new ArrayBuffer(10);
     Uint16Array view = new Uint16Array(buffer, 4, 2);
     Uint16Array.KeyIterator iterator = view.keys();
-    assertEqual(0, iterator.next().value.intValue());
-    assertEqual(1, iterator.next().value.intValue());
+    assertEqualInt(0, iterator.next().value);
+    assertEqualInt(1, iterator.next().value);
     }
 
     @Test
@@ -75,8 +75,8 @@ public class Uint16ArrayKeys extends BasTest {
     Uint16Array.KeyIterator first = arr.keys();
     Uint16Array.KeyIterator second = arr.keys();
     first.next();
-    assertEqual(1, first.next().value.intValue());
-    assertEqual(0, second.next().value.intValue());
+    assertEqualInt(1, first.next().value);
+    assertEqualInt(0, second.next().value);
     }
 
     @Test
@@ -98,8 +98,8 @@ public class Uint16ArrayKeys extends BasTest {
         keys.add(key);
     }
     assertEqual(3, keys.size());
-    assertEqual(0, keys.get(0));
-    assertEqual(1, keys.get(1));
-    assertEqual(2, keys.get(2));
+    assertEqualInt(0, keys.get(0));
+    assertEqualInt(1, keys.get(1));
+    assertEqualInt(2, keys.get(2));
     }
 }

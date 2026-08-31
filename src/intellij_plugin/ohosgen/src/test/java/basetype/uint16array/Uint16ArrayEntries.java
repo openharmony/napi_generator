@@ -46,9 +46,9 @@ public class Uint16ArrayEntries extends BasTest {
     @Test
     void testUint16ArrayEntries035() {
     Uint16Array.EntriesIterator iterator = Uint16Array.of(8, 9, 10).entries();
-    assertEqual(0, iterator.next().value[0]);
-    assertEqual(1, iterator.next().value[0]);
-    assertEqual(2, iterator.next().value[0]);
+    assertEqualInt(0, iterator.next().value[0]);
+    assertEqualInt(1, iterator.next().value[0]);
+    assertEqualInt(2, iterator.next().value[0]);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class Uint16ArrayEntries extends BasTest {
     Uint16Array.EntriesIterator iterator = arr.entries();
     iterator.next();
     alias.set(1, 66);
-    assertEqual(66, iterator.next().value[1]);
+    assertEqualInt(66, iterator.next().value[1]);
     }
 
     @Test
@@ -91,8 +91,8 @@ public class Uint16ArrayEntries extends BasTest {
     Uint16Array.EntriesIterator first = arr.entries();
     Uint16Array.EntriesIterator second = arr.entries();
     first.next();
-    assertEqual(1, first.next().value[0]);
-    assertEqual(0, second.next().value[0]);
+    assertEqualInt(1, first.next().value[0]);
+    assertEqualInt(0, second.next().value[0]);
     }
 
     @Test
@@ -101,7 +101,7 @@ public class Uint16ArrayEntries extends BasTest {
     Uint16Array.EntriesIterator iterator = arr.entries();
     iterator.next();
     arr.fill(50, 1);
-    assertEqual(50, iterator.next().value[1]);
+    assertEqualInt(50, iterator.next().value[1]);
     }
 
     @Test
