@@ -1526,9 +1526,9 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     a.set(1, 0x00);
     a.set(2, 0x80);
     a.toLocaleString();
-    assertEqual(255, a.get(0));
-    assertEqual(0, a.get(1));
-    assertEqual(128, a.get(2));
+    assertEqualInt(255, a.get(0));
+    assertEqualInt(0, a.get(1));
+    assertEqualInt(128, a.get(2));
     }
 
     /**
@@ -1547,7 +1547,7 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     Uint8Array a = new Uint8Array(5);
     a.toLocaleString("de-DE");
     for (int i = 0; i < 5; i++) {
-    assertEqual(0, a.get(i));
+    assertEqualInt(0, a.get(i));
     }
     }
 
@@ -1572,10 +1572,10 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     view.set(3, 0x78);
     view.toLocaleString();
     Uint8Array check = new Uint8Array(buf);
-    assertEqual(0x12, check.get(0));
-    assertEqual(0x34, check.get(1));
-    assertEqual(0x56, check.get(2));
-    assertEqual(0x78, check.get(3));
+    assertEqualInt(0x12, check.get(0));
+    assertEqualInt(0x34, check.get(1));
+    assertEqualInt(0x56, check.get(2));
+    assertEqualInt(0x78, check.get(3));
     }
 
     /**
@@ -1603,10 +1603,10 @@ public class Uint8ArrayToLocaleString02Test extends BasTest {
     secondView.set(2, 70);
     secondView.set(3, 80);
     firstView.toLocaleString("fr-FR");
-    assertEqual(50, secondView.get(0));
-    assertEqual(60, secondView.get(1));
-    assertEqual(70, secondView.get(2));
-    assertEqual(80, secondView.get(3));
+    assertEqualInt(50, secondView.get(0));
+    assertEqualInt(60, secondView.get(1));
+    assertEqualInt(70, secondView.get(2));
+    assertEqualInt(80, secondView.get(3));
     }
 
     /**
