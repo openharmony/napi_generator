@@ -123,7 +123,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     double[] arr = new double[] {1.0, 2.0, 3.0};
     Uint8Array r1 = Uint8Array.from(fa);
     Uint8Array r2 = Uint8Array.from(arr);
-    assertEqual(r2.get(0).intValue(), r1.get(0));
+    assertEqual(r2.get(0).intValue(), r1.get(0).intValue());
     }
 
     /**
@@ -146,7 +146,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     Uint8Array u = Uint8Array.of(1, 2, 3);
     Uint8Array r1 = Uint8Array.from(s);
     Uint8Array r2 = Uint8Array.from(u);
-    assertEqual(r2.get(1).intValue(), r1.get(1));
+    assertEqual(r2.get(1).intValue(), r1.get(1).intValue());
     }
 
     /**
@@ -236,7 +236,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom011() {
     int[] src = new int[] {0};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     /**
@@ -254,7 +254,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom012() {
     double[] src = new double[] {0.0};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     /**
@@ -272,7 +272,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom013() {
     int[] src = new int[] {255};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));
+    assertEqualInt(255, result.get(0));
     }
 
     /**
@@ -290,7 +290,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom014() {
     double[] src = new double[] {255.9};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));
+    assertEqualInt(255, result.get(0));
     }
 
     /**
@@ -308,7 +308,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom015() {
     int[] src = new int[] {128};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(128, result.get(0));
+    assertEqualInt(128, result.get(0));
     }
 
     /**
@@ -326,7 +326,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom016() {
     double[] src = new double[] {128.5};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(128, result.get(0));
+    assertEqualInt(128, result.get(0));
     }
 
     /**
@@ -344,7 +344,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom017() {
     int[] src = new int[] {256};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     /**
@@ -362,7 +362,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom018() {
     double[] src = new double[] {256.0};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     /**
@@ -381,7 +381,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     Set<Integer> src = new LinkedHashSet<>();
     src.add(127);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(127, result.get(0));
+    assertEqualInt(127, result.get(0));
     }
 
     /**
@@ -400,7 +400,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     Set<Integer> src = new LinkedHashSet<>();
     src.add(256);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     /**
@@ -420,7 +420,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     double[] arr = new double[] {10.0, 20.0, 30.0};
     Uint8Array r1 = Uint8Array.from(src);
     Uint8Array r2 = Uint8Array.from(arr);
-    assertEqual(r2.get(2).intValue(), r1.get(2));
+    assertEqual(r2.get(2).intValue(), r1.get(2).intValue());
     }
 
     /**
@@ -441,9 +441,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     src.add(1);
     src.add(9);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(5, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(9, result.get(2));
+    assertEqualInt(5, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(9, result.get(2));
     }
 
     /**
@@ -485,7 +485,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom024() {
     double[] src = new double[] {-1.0};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));
+    assertEqualInt(255, result.get(0));
     }
 
     /**
@@ -503,7 +503,7 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom025() {
     int[] src = new int[] {-1};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(255, result.get(0));
+    assertEqualInt(255, result.get(0));
     }
 
     /**
@@ -627,8 +627,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     s.add(0);
     Uint8Array r3 = Uint8Array.from(s);
     Uint8Array r4 = Uint8Array.from(Uint8Array.of(0, 0, 0));
-    assertEqual(r2.get(0).intValue(), r1.get(0));
-    assertEqual(r4.get(0).intValue(), r3.get(0));
+    assertEqual(r2.get(0).intValue(), r1.get(0).intValue());
+    assertEqual(r4.get(0).intValue(), r3.get(0).intValue());
     }
 
     /**
@@ -650,8 +650,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     s.add(255);
     Uint8Array r3 = Uint8Array.from(s);
     Uint8Array r4 = Uint8Array.from(Uint8Array.of(255, 255, 255));
-    assertEqual(r2.get(0).intValue(), r1.get(0));
-    assertEqual(r4.get(0).intValue(), r3.get(0));
+    assertEqual(r2.get(0).intValue(), r1.get(0).intValue());
+    assertEqual(r4.get(0).intValue(), r3.get(0).intValue());
     }
 
     /**
@@ -673,8 +673,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     s.add(128);
     Uint8Array r3 = Uint8Array.from(s);
     Uint8Array r4 = Uint8Array.from(Uint8Array.of(128, 128, 128));
-    assertEqual(r2.get(0).intValue(), r1.get(0));
-    assertEqual(r4.get(0).intValue(), r3.get(0));
+    assertEqual(r2.get(0).intValue(), r1.get(0).intValue());
+    assertEqual(r4.get(0).intValue(), r3.get(0).intValue());
     }
 
     /**
@@ -692,9 +692,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom033() {
     List<Integer> src = java.util.Arrays.asList(1, 2, 3);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    assertEqual(2, result.at(0));
-    assertEqual(4, result.at(1));
-    assertEqual(6, result.at(2));
+    assertEqualInt(2, result.at(0));
+    assertEqualInt(4, result.at(1));
+    assertEqualInt(6, result.at(2));
     }
 
     /**
@@ -712,9 +712,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom034() {
     List<Integer> src = java.util.Arrays.asList(10, 20, 30);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v + k);
-    assertEqual(10, result.get(0));
-    assertEqual(21, result.get(1));
-    assertEqual(32, result.get(2));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(21, result.get(1));
+    assertEqualInt(32, result.get(2));
     }
 
     /**
@@ -732,8 +732,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom035() {
     List<Integer> src = java.util.Arrays.asList((int) (10), (int) (20));
     Uint8Array result = Uint8Array.from(src, (v, k) -> v + k);
-    assertEqual(10, result.at(0));
-    assertEqual(21, result.at(1));
+    assertEqualInt(10, result.at(0));
+    assertEqualInt(21, result.at(1));
     }
 
     /**
@@ -751,9 +751,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom036() {
     List<Integer> src = java.util.Arrays.asList(5, 10, 15);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(5, result.at(0));
-    assertEqual(10, result.at(1));
-    assertEqual(15, result.at(2));
+    assertEqualInt(5, result.at(0));
+    assertEqualInt(10, result.at(1));
+    assertEqualInt(15, result.at(2));
     }
 
     /**
@@ -771,9 +771,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom037() {
     List<Integer> src = java.util.Arrays.asList(5, 10, 15);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(5, result.get(0));
-    assertEqual(10, result.get(1));
-    assertEqual(15, result.get(2));
+    assertEqualInt(5, result.get(0));
+    assertEqualInt(10, result.get(1));
+    assertEqualInt(15, result.get(2));
     }
 
     /**
@@ -791,8 +791,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom038() {
     double[] src = new double[] {1.5, 2.7};
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    assertEqual(3, result.at(0));
-    assertEqual(5, result.at(1));
+    assertEqualInt(3, result.at(0));
+    assertEqualInt(5, result.at(1));
     }
 
     /**
@@ -810,8 +810,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom039() {
     double[] src = new double[] {1.5, 2.7};
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    assertEqual(3, result.get(0));
-    assertEqual(5, result.get(1));
+    assertEqualInt(3, result.get(0));
+    assertEqualInt(5, result.get(1));
     }
 
     /**
@@ -829,8 +829,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom040() {
     List<Integer> src = java.util.Arrays.asList(200, 100);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    assertEqual(144, result.at(0));
-    assertEqual(200, result.at(1));
+    assertEqualInt(144, result.at(0));
+    assertEqualInt(200, result.at(1));
     }
 
     /**
@@ -848,8 +848,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom041() {
     List<Integer> src = java.util.Arrays.asList(200, 100);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    assertEqual(144, result.get(0));
-    assertEqual(200, result.get(1));
+    assertEqualInt(144, result.get(0));
+    assertEqualInt(200, result.get(1));
     }
 
     /**
@@ -867,8 +867,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom042() {
     List<Integer> src = java.util.Arrays.asList(10, 20);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v - 15);
-    assertEqual(251, result.at(0));
-    assertEqual(5, result.at(1));
+    assertEqualInt(251, result.at(0));
+    assertEqualInt(5, result.at(1));
     }
 
     /**
@@ -886,8 +886,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom043() {
     List<Integer> src = java.util.Arrays.asList(10, 20);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v - 15);
-    assertEqual(251, result.get(0));
-    assertEqual(5, result.get(1));
+    assertEqualInt(251, result.get(0));
+    assertEqualInt(5, result.get(1));
     }
 
     /**
@@ -905,8 +905,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom044() {
     List<Integer> src = java.util.Arrays.asList(5, 10);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v - v);
-    assertEqual(0, result.at(0));
-    assertEqual(0, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(0, result.at(1));
     }
 
     /**
@@ -924,8 +924,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom045() {
     List<Integer> src = java.util.Arrays.asList(5, 10);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v - v);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
     }
 
     /**
@@ -943,8 +943,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom046() {
     List<Integer> src = java.util.Arrays.asList(128, 127);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    assertEqual(0, result.at(0));
-    assertEqual(254, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(254, result.at(1));
     }
 
     /**
@@ -962,8 +962,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom047() {
     List<Integer> src = java.util.Arrays.asList(128, 127);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    assertEqual(0, result.get(0));
-    assertEqual(254, result.get(1));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(254, result.get(1));
     }
 
     /**
@@ -981,8 +981,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom048() {
     List<Integer> src = java.util.Arrays.asList(64, 63);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    assertEqual(128, result.at(0));
-    assertEqual(126, result.at(1));
+    assertEqualInt(128, result.at(0));
+    assertEqualInt(126, result.at(1));
     }
 
     /**
@@ -1000,8 +1000,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom049() {
     List<Integer> src = java.util.Arrays.asList(64, 63);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v * 2);
-    assertEqual(128, result.get(0));
-    assertEqual(126, result.get(1));
+    assertEqualInt(128, result.get(0));
+    assertEqualInt(126, result.get(1));
     }
 
     /**
@@ -1019,8 +1019,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom050() {
     List<Integer> src = java.util.Arrays.asList(255, 0);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v + 1);
-    assertEqual(0, result.at(0));
-    assertEqual(1, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(1, result.at(1));
     }
 
     /**
@@ -1038,8 +1038,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom051() {
     List<Integer> src = java.util.Arrays.asList(255, 0);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v + 1);
-    assertEqual(0, result.get(0));
-    assertEqual(1, result.get(1));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(1, result.get(1));
     }
 
     /**
@@ -1057,8 +1057,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom052() {
     List<Integer> src = java.util.Arrays.asList(0, 1);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v - 1);
-    assertEqual(255, result.at(0));
-    assertEqual(0, result.at(1));
+    assertEqualInt(255, result.at(0));
+    assertEqualInt(0, result.at(1));
     }
 
     /**
@@ -1076,8 +1076,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom053() {
     List<Integer> src = java.util.Arrays.asList(0, 1);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v - 1);
-    assertEqual(255, result.get(0));
-    assertEqual(0, result.get(1));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(0, result.get(1));
     }
 
     /**
@@ -1095,8 +1095,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom054() {
     List<Integer> src = java.util.Arrays.asList(200, 100);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v + 100);
-    assertEqual(44, result.at(0));
-    assertEqual(200, result.at(1));
+    assertEqualInt(44, result.at(0));
+    assertEqualInt(200, result.at(1));
     }
 
     /**
@@ -1114,8 +1114,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom055() {
     List<Integer> src = java.util.Arrays.asList(200, 100);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v + 100);
-    assertEqual(44, result.get(0));
-    assertEqual(200, result.get(1));
+    assertEqualInt(44, result.get(0));
+    assertEqualInt(200, result.get(1));
     }
 
     /**
@@ -1133,8 +1133,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom056() {
     List<Integer> src = java.util.Arrays.asList(50, 100);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v - 100);
-    assertEqual(206, result.at(0));
-    assertEqual(0, result.at(1));
+    assertEqualInt(206, result.at(0));
+    assertEqualInt(0, result.at(1));
     }
 
     /**
@@ -1152,8 +1152,8 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom057() {
     List<Integer> src = java.util.Arrays.asList(50, 100);
     Uint8Array result = Uint8Array.from(src, (v, k) -> v - 100);
-    assertEqual(206, result.get(0));
-    assertEqual(0, result.get(1));
+    assertEqualInt(206, result.get(0));
+    assertEqualInt(0, result.get(1));
     }
 
     /**
@@ -1854,9 +1854,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom089() {
     int[] src = new int[] {10, 20, 30};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(10, result.get(0));
-    assertEqual(20, result.get(1));
-    assertEqual(30, result.get(2));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(20, result.get(1));
+    assertEqualInt(30, result.get(2));
     }
 
     /**
@@ -1874,9 +1874,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom090() {
     double[] src = new double[] {10.0, 20.0, 30.0};
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(10, result.get(0));
-    assertEqual(20, result.get(1));
-    assertEqual(30, result.get(2));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(20, result.get(1));
+    assertEqualInt(30, result.get(2));
     }
 
     /**
@@ -1897,9 +1897,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     src.add(20);
     src.add(30);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(10, result.get(0));
-    assertEqual(20, result.get(1));
-    assertEqual(30, result.get(2));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(20, result.get(1));
+    assertEqualInt(30, result.get(2));
     }
 
     /**
@@ -1917,9 +1917,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom092() {
     Uint8Array src = Uint8Array.of(10, 20, 30);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(10, result.get(0));
-    assertEqual(20, result.get(1));
-    assertEqual(30, result.get(2));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(20, result.get(1));
+    assertEqualInt(30, result.get(2));
     }
 
     /**
@@ -1937,9 +1937,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom093() {
     List<Integer> src = java.util.Arrays.asList(10, 20, 30);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(10, result.get(0));
-    assertEqual(20, result.get(1));
-    assertEqual(30, result.get(2));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(20, result.get(1));
+    assertEqualInt(30, result.get(2));
     }
 
     /**
@@ -1957,9 +1957,9 @@ public class Uint8ArrayFrom03Test extends BasTest {
     void testUint8ArrayFrom094() {
     List<Integer> src = java.util.Arrays.asList(10, 20, 30);
     Uint8Array result = Uint8Array.from(src);
-    assertEqual(10, result.get(0));
-    assertEqual(20, result.get(1));
-    assertEqual(30, result.get(2));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(20, result.get(1));
+    assertEqualInt(30, result.get(2));
     }
 
     /**

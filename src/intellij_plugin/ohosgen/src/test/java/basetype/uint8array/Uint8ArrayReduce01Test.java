@@ -1177,9 +1177,9 @@ public class Uint8ArrayReduce01Test extends BasTest {
     void testUint8ArrayReduce063() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     arr.reduce((prev, curr, index, array) -> prev + curr, 0);
-    assertEqual(10, arr.at(0));
-    assertEqual(20, arr.at(1));
-    assertEqual(30, arr.at(2));
+    assertEqualInt(10, arr.at(0));
+    assertEqualInt(20, arr.at(1));
+    assertEqualInt(30, arr.at(2));
     }
 
     /**

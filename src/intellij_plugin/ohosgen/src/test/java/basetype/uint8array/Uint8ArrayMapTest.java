@@ -351,10 +351,10 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap015() {
     Uint8Array src = new Uint8Array(4);
     Uint8Array result = src.map((v, i, a) -> i);
-    assertEqual(0, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(2, result.get(2));
-    assertEqual(3, result.get(3));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(2, result.get(2));
+    assertEqualInt(3, result.get(3));
     }
 
     /**
@@ -394,10 +394,10 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap017() {
     Uint8Array src = new Uint8Array(4);
     Uint8Array result = src.map((v, i, a) -> i * 64);
-    assertEqual(0, result.get(0));
-    assertEqual(64, result.get(1));
-    assertEqual(128, result.get(2));
-    assertEqual(192, result.get(3));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(64, result.get(1));
+    assertEqualInt(128, result.get(2));
+    assertEqualInt(192, result.get(3));
     }
 
     /**
@@ -531,9 +531,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap023() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 0);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -551,9 +551,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap024() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 1);
-    assertEqual(1, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(1, result.get(2));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(1, result.get(2));
     }
 
     /**
@@ -571,9 +571,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap025() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 127);
-    assertEqual(127, result.get(0));
-    assertEqual(127, result.get(1));
-    assertEqual(127, result.get(2));
+    assertEqualInt(127, result.get(0));
+    assertEqualInt(127, result.get(1));
+    assertEqualInt(127, result.get(2));
     }
 
     /**
@@ -591,9 +591,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap026() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 128);
-    assertEqual(128, result.get(0));
-    assertEqual(128, result.get(1));
-    assertEqual(128, result.get(2));
+    assertEqualInt(128, result.get(0));
+    assertEqualInt(128, result.get(1));
+    assertEqualInt(128, result.get(2));
     }
 
     /**
@@ -611,9 +611,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap027() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 255);
-    assertEqual(255, result.get(0));
-    assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(255, result.get(1));
+    assertEqualInt(255, result.get(2));
     }
 
     /**
@@ -631,9 +631,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap028() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 256);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -651,9 +651,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap029() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> -1);
-    assertEqual(255, result.get(0));
-    assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(255, result.get(1));
+    assertEqualInt(255, result.get(2));
     }
 
     /**
@@ -671,9 +671,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap030() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> -256);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -691,9 +691,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap031() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> -257);
-    assertEqual(255, result.get(0));
-    assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(255, result.get(1));
+    assertEqualInt(255, result.get(2));
     }
 
     /**
@@ -711,9 +711,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap032() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> (int) (1.0));
-    assertEqual(1, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(1, result.get(2));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(1, result.get(2));
     }
 
     /**
@@ -731,9 +731,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap033() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> (int) (1.9));
-    assertEqual(1, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(1, result.get(2));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(1, result.get(2));
     }
 
     /**
@@ -751,9 +751,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap034() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> (int) (255.9));
-    assertEqual(255, result.get(0));
-    assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(255, result.get(1));
+    assertEqualInt(255, result.get(2));
     }
 
     /**
@@ -771,9 +771,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap035() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> (int) (-0.5));
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -791,9 +791,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap036() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> (int) (-1.5));
-    assertEqual(255, result.get(0));
-    assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(255, result.get(1));
+    assertEqualInt(255, result.get(2));
     }
 
     /**
@@ -811,9 +811,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap037() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> (int) (Double.NaN));
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -831,9 +831,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap038() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 0);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -851,9 +851,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap039() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 0);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -871,9 +871,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap040() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 0);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -891,9 +891,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap041() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 257);
-    assertEqual(1, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(1, result.get(2));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(1, result.get(2));
     }
 
     /**
@@ -911,9 +911,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap042() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 512);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -931,9 +931,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap043() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 1000);
-    assertEqual(232, result.get(0));
-    assertEqual(232, result.get(1));
-    assertEqual(232, result.get(2));
+    assertEqualInt(232, result.get(0));
+    assertEqualInt(232, result.get(1));
+    assertEqualInt(232, result.get(2));
     }
 
     /**
@@ -951,9 +951,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap044() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> -512);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -971,9 +971,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap045() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> -1000);
-    assertEqual(24, result.get(0));
-    assertEqual(24, result.get(1));
-    assertEqual(24, result.get(2));
+    assertEqualInt(24, result.get(0));
+    assertEqualInt(24, result.get(1));
+    assertEqualInt(24, result.get(2));
     }
 
     /**
@@ -991,9 +991,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap046() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 65536);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -1011,9 +1011,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap047() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> -65536);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -1031,9 +1031,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap048() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 0x100);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -1051,9 +1051,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap049() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 0xFF);
-    assertEqual(255, result.get(0));
-    assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(255, result.get(1));
+    assertEqualInt(255, result.get(2));
     }
 
     /**
@@ -1071,9 +1071,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap050() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 0x1FF);
-    assertEqual(255, result.get(0));
-    assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(255, result.get(1));
+    assertEqualInt(255, result.get(2));
     }
 
     /**
@@ -1091,9 +1091,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap051() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 0400);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -1111,9 +1111,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap052() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 0377);
-    assertEqual(255, result.get(0));
-    assertEqual(255, result.get(1));
-    assertEqual(255, result.get(2));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(255, result.get(1));
+    assertEqualInt(255, result.get(2));
     }
 
     /**
@@ -1131,9 +1131,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap053() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> 0b100000000);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     /**
@@ -1151,12 +1151,12 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap054() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v * 2);
-    assertEqual(1, src.get(0));
-    assertEqual(2, src.get(1));
-    assertEqual(3, src.get(2));
-    assertEqual(2, result.get(0));
-    assertEqual(4, result.get(1));
-    assertEqual(6, result.get(2));
+    assertEqualInt(1, src.get(0));
+    assertEqualInt(2, src.get(1));
+    assertEqualInt(3, src.get(2));
+    assertEqualInt(2, result.get(0));
+    assertEqualInt(4, result.get(1));
+    assertEqualInt(6, result.get(2));
     }
 
     /**
@@ -1211,7 +1211,7 @@ public class Uint8ArrayMapTest extends BasTest {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v * 2);
     result.set(new Uint8Array(new int[] {99}), 0);
-    assertEqual(1, src.at(0));
+    assertEqualInt(1, src.at(0));
     }
 
     /**
@@ -1283,9 +1283,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap061() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v + 100);
-    assertEqual(101, result.get(0));
-    assertEqual(102, result.get(1));
-    assertEqual(103, result.get(2));
+    assertEqualInt(101, result.get(0));
+    assertEqualInt(102, result.get(1));
+    assertEqualInt(103, result.get(2));
     }
 
     /**
@@ -1303,9 +1303,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap062() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v * 2);
-    assertEqual(2, result.get(0));
-    assertEqual(4, result.get(1));
-    assertEqual(6, result.get(2));
+    assertEqualInt(2, result.get(0));
+    assertEqualInt(4, result.get(1));
+    assertEqualInt(6, result.get(2));
     }
 
     /**
@@ -1323,9 +1323,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap063() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v - 1);
-    assertEqual(0, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(2, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(2, result.get(2));
     }
 
     /**
@@ -1343,9 +1343,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap064() {
     Uint8Array src = new Uint8Array(new int[] {2, 4, 6});
     Uint8Array result = src.map((v, i, a) -> v / 2);
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(3, result.get(2));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(3, result.get(2));
     }
 
     /**
@@ -1363,11 +1363,11 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap065() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = src.map((v, i, a) -> v % 2);
-    assertEqual(1, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(1, result.get(2));
-    assertEqual(0, result.get(3));
-    assertEqual(1, result.get(4));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(1, result.get(2));
+    assertEqualInt(0, result.get(3));
+    assertEqualInt(1, result.get(4));
     }
 
     /**
@@ -1385,11 +1385,11 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap066() {
     Uint8Array src = new Uint8Array(new int[] {0, 15, 16, 31, 32});
     Uint8Array result = src.map((v, i, a) -> v & 0x0F);
-    assertEqual(0, result.get(0));
-    assertEqual(15, result.get(1));
-    assertEqual(0, result.get(2));
-    assertEqual(15, result.get(3));
-    assertEqual(0, result.get(4));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(15, result.get(1));
+    assertEqualInt(0, result.get(2));
+    assertEqualInt(15, result.get(3));
+    assertEqualInt(0, result.get(4));
     }
 
     /**
@@ -1407,10 +1407,10 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap067() {
     Uint8Array src = new Uint8Array(new int[] {0, 1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> v | 0x80);
-    assertEqual(128, result.get(0));
-    assertEqual(129, result.get(1));
-    assertEqual(130, result.get(2));
-    assertEqual(131, result.get(3));
+    assertEqualInt(128, result.get(0));
+    assertEqualInt(129, result.get(1));
+    assertEqualInt(130, result.get(2));
+    assertEqualInt(131, result.get(3));
     }
 
     /**
@@ -1428,11 +1428,11 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap068() {
     Uint8Array src = new Uint8Array(new int[] {0, 1, 127, 128, 255});
     Uint8Array result = src.map((v, i, a) -> v ^ 0xFF);
-    assertEqual(255, result.get(0));
-    assertEqual(254, result.get(1));
-    assertEqual(128, result.get(2));
-    assertEqual(127, result.get(3));
-    assertEqual(0, result.get(4));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(254, result.get(1));
+    assertEqualInt(128, result.get(2));
+    assertEqualInt(127, result.get(3));
+    assertEqualInt(0, result.get(4));
     }
 
     /**
@@ -1450,11 +1450,11 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap069() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 4, 8, 16});
     Uint8Array result = src.map((v, i, a) -> v << 1);
-    assertEqual(2, result.get(0));
-    assertEqual(4, result.get(1));
-    assertEqual(8, result.get(2));
-    assertEqual(16, result.get(3));
-    assertEqual(32, result.get(4));
+    assertEqualInt(2, result.get(0));
+    assertEqualInt(4, result.get(1));
+    assertEqualInt(8, result.get(2));
+    assertEqualInt(16, result.get(3));
+    assertEqualInt(32, result.get(4));
     }
 
     /**
@@ -1472,11 +1472,11 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap070() {
     Uint8Array src = new Uint8Array(new int[] {2, 4, 8, 16, 32});
     Uint8Array result = src.map((v, i, a) -> v >> 1);
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(4, result.get(2));
-    assertEqual(8, result.get(3));
-    assertEqual(16, result.get(4));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(4, result.get(2));
+    assertEqualInt(8, result.get(3));
+    assertEqualInt(16, result.get(4));
     }
 
     /**
@@ -1494,11 +1494,11 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap071() {
     Uint8Array src = new Uint8Array(new int[] {0, 1, 127, 128, 255});
     Uint8Array result = src.map((v, i, a) -> ~v);
-    assertEqual(255, result.get(0));
-    assertEqual(254, result.get(1));
-    assertEqual(128, result.get(2));
-    assertEqual(127, result.get(3));
-    assertEqual(0, result.get(4));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(254, result.get(1));
+    assertEqualInt(128, result.get(2));
+    assertEqualInt(127, result.get(3));
+    assertEqualInt(0, result.get(4));
     }
 
     /**
@@ -1516,11 +1516,11 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap072() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3, 4, 5});
     Uint8Array result = src.map((v, i, a) -> (int) Math.pow(v, 2));
-    assertEqual(1, result.get(0));
-    assertEqual(4, result.get(1));
-    assertEqual(9, result.get(2));
-    assertEqual(16, result.get(3));
-    assertEqual(25, result.get(4));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(4, result.get(1));
+    assertEqualInt(9, result.get(2));
+    assertEqualInt(16, result.get(3));
+    assertEqualInt(25, result.get(4));
     }
 
     /**
@@ -1538,11 +1538,11 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap073() {
     Uint8Array src = new Uint8Array(new int[] {0, 64, 128, 192, 255});
     Uint8Array result = src.map((v, i, a) -> Math.abs(v - 128));
-    assertEqual(128, result.get(0));
-    assertEqual(64, result.get(1));
-    assertEqual(0, result.get(2));
-    assertEqual(64, result.get(3));
-    assertEqual(127, result.get(4));
+    assertEqualInt(128, result.get(0));
+    assertEqualInt(64, result.get(1));
+    assertEqualInt(0, result.get(2));
+    assertEqualInt(64, result.get(3));
+    assertEqualInt(127, result.get(4));
     }
 
     /**
@@ -1560,11 +1560,11 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap074() {
     Uint8Array src = new Uint8Array(new int[] {0, 64, 128, 129, 255});
     Uint8Array result = src.map((v, i, a) -> v > 128 ? 255 : 0);
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
-    assertEqual(255, result.get(3));
-    assertEqual(255, result.get(4));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
+    assertEqualInt(255, result.get(3));
+    assertEqualInt(255, result.get(4));
     }
 
     /**
@@ -1582,10 +1582,10 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap075() {
     Uint8Array src = new Uint8Array(new int[] {0, 1, 128, 255});
     Uint8Array result = src.map((v, i, a) -> v == 0 ? 255 : v);
-    assertEqual(255, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(128, result.get(2));
-    assertEqual(255, result.get(3));
+    assertEqualInt(255, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(128, result.get(2));
+    assertEqualInt(255, result.get(3));
     }
 
     /**
@@ -1603,11 +1603,11 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap076() {
     Uint8Array src = new Uint8Array(new int[] {0, 1, 2, 3, 4});
     Uint8Array result = src.map((v, i, a) -> ((v & 1) != 0) ? v : 0);
-    assertEqual(0, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(0, result.get(2));
-    assertEqual(3, result.get(3));
-    assertEqual(0, result.get(4));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(0, result.get(2));
+    assertEqualInt(3, result.get(3));
+    assertEqualInt(0, result.get(4));
     }
 
     /**
@@ -1625,9 +1625,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap077() {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array result = src.map((v, i, a) -> v + i);
-    assertEqual(10, result.get(0));
-    assertEqual(21, result.get(1));
-    assertEqual(32, result.get(2));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(21, result.get(1));
+    assertEqualInt(32, result.get(2));
     }
 
     /**
@@ -1645,9 +1645,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap078() {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array result = src.map((v, i, a) -> v * i);
-    assertEqual(0, result.get(0));
-    assertEqual(20, result.get(1));
-    assertEqual(60, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(20, result.get(1));
+    assertEqualInt(60, result.get(2));
     }
 
     /**
@@ -1665,9 +1665,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap079() {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array result = src.map((v, i, a) -> v + a.get(i));
-    assertEqual(20, result.get(0));
-    assertEqual(40, result.get(1));
-    assertEqual(60, result.get(2));
+    assertEqualInt(20, result.get(0));
+    assertEqualInt(40, result.get(1));
+    assertEqualInt(60, result.get(2));
     }
 
     /**
@@ -1685,9 +1685,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap080() {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array result = src.map((v, i, a) -> v + a.get((i + 1) % a.length()));
-    assertEqual(30, result.get(0));
-    assertEqual(50, result.get(1));
-    assertEqual(40, result.get(2));
+    assertEqualInt(30, result.get(0));
+    assertEqualInt(50, result.get(1));
+    assertEqualInt(40, result.get(2));
     }
 
     /**
@@ -1705,9 +1705,9 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap081() {
     Uint8Array src = new Uint8Array(new int[] {10, 20, 30});
     Uint8Array result = src.map((v, i, a) -> v + a.get((i - 1 + a.length()) % a.length()));
-    assertEqual(40, result.get(0));
-    assertEqual(30, result.get(1));
-    assertEqual(50, result.get(2));
+    assertEqualInt(40, result.get(0));
+    assertEqualInt(30, result.get(1));
+    assertEqualInt(50, result.get(2));
     }
 
     /**
@@ -1725,13 +1725,14 @@ public class Uint8ArrayMapTest extends BasTest {
     void testUint8ArrayMap082() {
     Uint8Array src = new Uint8Array(new int[] {1, 2, 3});
     Uint8Array result = src.map((v, i, a) -> {
-        if (i == 0) { a.set(new Uint8Array(new int[] {255}), 1);
+        if (i == 0) {
+            a.set(new Uint8Array(new int[] {255}), 1);
         }
         return v;
     });
-    assertEqual(1, result.get(0));
-    assertEqual(255, result.get(1));
-    assertEqual(3, result.get(2));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(255, result.get(1));
+    assertEqualInt(3, result.get(2));
     }
 
     /**
@@ -1757,9 +1758,9 @@ public class Uint8ArrayMapTest extends BasTest {
         }
         return v + sum[0];
     });
-    assertEqual(7, result.get(0));
-    assertEqual(8, result.get(1));
-    assertEqual(9, result.get(2));
+    assertEqualInt(7, result.get(0));
+    assertEqualInt(8, result.get(1));
+    assertEqualInt(9, result.get(2));
     }
 
     /**
@@ -1786,8 +1787,8 @@ public class Uint8ArrayMapTest extends BasTest {
         } }
         return v + max;
     });
-    assertEqual(4, result.get(0));
-    assertEqual(5, result.get(1));
-    assertEqual(6, result.get(2));
+    assertEqualInt(4, result.get(0));
+    assertEqualInt(5, result.get(1));
+    assertEqualInt(6, result.get(2));
     }
 }

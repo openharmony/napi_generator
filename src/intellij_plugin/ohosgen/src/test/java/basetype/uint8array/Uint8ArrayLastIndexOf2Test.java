@@ -1253,7 +1253,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf068() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     arr.lastIndexOf(20);
-    assertEqual(10, arr.at(0));
+    assertEqualInt(10, arr.at(0));
     }
 
     /**
@@ -1271,7 +1271,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf069() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     arr.lastIndexOf(20);
-    assertEqual(20, arr.at(1));
+    assertEqualInt(20, arr.at(1));
     }
 
     /**
@@ -1289,7 +1289,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf070() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     arr.lastIndexOf(20);
-    assertEqual(30, arr.at(2));
+    assertEqualInt(30, arr.at(2));
     }
 
     /**
@@ -1307,7 +1307,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     void testUint8ArrayLastIndexOf071() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     arr.lastIndexOf(99);
-    assertEqual(10, arr.at(0));
+    assertEqualInt(10, arr.at(0));
     }
 
     /**
@@ -1328,7 +1328,7 @@ public class Uint8ArrayLastIndexOf2Test extends BasTest {
     arr.set(new Uint8Array(new int[] {10}), 0);
     arr.set(new Uint8Array(new int[] {20}), 1);
     arr.lastIndexOf(20);
-    assertEqual(10, arr.at(0));
+    assertEqualInt(10, arr.at(0));
     }
 
     /**

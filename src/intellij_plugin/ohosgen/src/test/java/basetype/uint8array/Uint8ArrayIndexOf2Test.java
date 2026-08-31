@@ -623,7 +623,7 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     void testUint8ArrayIndexOf033() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30});
     int idx = arr.indexOf(20);
-    assertEqual(20, arr.at((int) (idx)));
+    assertEqualInt(20, arr.at((int) (idx)));
     }
 
     /**
@@ -1913,7 +1913,7 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     Uint8Array origArr = new Uint8Array(new int[] {10, 20, 30});
     arr.indexOf(20);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(origArr.get(i).intValue(), arr.get(i));
+    assertEqual(origArr.get(i).intValue(), arr.get(i).intValue());
     }
     }
 
@@ -1934,7 +1934,7 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     Uint8Array origArr = new Uint8Array(new int[] {10, 20, 30});
     arr.indexOf(99);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(origArr.get(i).intValue(), arr.get(i));
+    assertEqual(origArr.get(i).intValue(), arr.get(i).intValue());
     }
     }
 
@@ -1979,7 +1979,7 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     }
     arr.indexOf(50);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(origArr.get(i).intValue(), arr.get(i));
+    assertEqual(origArr.get(i).intValue(), arr.get(i).intValue());
     }
     }
 
@@ -2000,7 +2000,7 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     Uint8Array origArr = new Uint8Array(new int[] {10, 20, 30});
     arr.indexOf(20, 1);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(origArr.get(i).intValue(), arr.get(i));
+    assertEqual(origArr.get(i).intValue(), arr.get(i).intValue());
     }
     }
 
@@ -2021,7 +2021,7 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     Uint8Array origArr = new Uint8Array(new int[] {10, 20, 30});
     arr.indexOf(30, -1);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(origArr.get(i).intValue(), arr.get(i));
+    assertEqual(origArr.get(i).intValue(), arr.get(i).intValue());
     }
     }
 
@@ -2042,7 +2042,7 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     Uint8Array origArr = new Uint8Array(new int[] {10, 10, 20});
     arr.indexOf(10);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(origArr.get(i).intValue(), arr.get(i));
+    assertEqual(origArr.get(i).intValue(), arr.get(i).intValue());
     }
     }
 
@@ -2063,7 +2063,7 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     Uint8Array origArr = new Uint8Array(new int[] {42});
     arr.indexOf(42);
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(origArr.get(i).intValue(), arr.get(i));
+    assertEqual(origArr.get(i).intValue(), arr.get(i).intValue());
     }
     }
 
@@ -2128,7 +2128,7 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     Uint8Array origArr = new Uint8Array(new int[] {10, 20, 30});
     arr.indexOf(20);
     for (int i = 0; i < 3; i++) {
-    assertEqual(origArr.get(i).intValue(), arr.get(i));
+    assertEqual(origArr.get(i).intValue(), arr.get(i).intValue());
     }
     }
 
@@ -2153,7 +2153,7 @@ public class Uint8ArrayIndexOf2Test extends BasTest {
     Uint8Array origArr = new Uint8Array(new int[] {10, 20, 30});
     arr.indexOf(99);
     for (int i = 0; i < 3; i++) {
-    assertEqual(origArr.get(i).intValue(), arr.get(i));
+    assertEqual(origArr.get(i).intValue(), arr.get(i).intValue());
     }
     }
 

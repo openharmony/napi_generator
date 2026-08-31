@@ -1019,9 +1019,9 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     expectedIndex[0]--;
     return p + c;
         });
-    assertEqual(2, indices.get(0));
-    assertEqual(1, indices.get(1));
-    assertEqual(0, indices.get(2));
+    assertEqualInt(2, indices.get(0));
+    assertEqualInt(1, indices.get(1));
+    assertEqualInt(0, indices.get(2));
     }
 
     /**
@@ -1046,7 +1046,7 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     return p + c;
         });
     assertEqual(1, indices.size());
-    assertEqual(0, indices.get(0));
+    assertEqualInt(0, indices.get(0));
     }
 
     /**
@@ -1070,11 +1070,11 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     expectedIndex[0]--;
     return p + c;
         });
-    assertEqual(4, indices.get(0));
-    assertEqual(3, indices.get(1));
-    assertEqual(2, indices.get(2));
-    assertEqual(1, indices.get(3));
-    assertEqual(0, indices.get(4));
+    assertEqualInt(4, indices.get(0));
+    assertEqualInt(3, indices.get(1));
+    assertEqualInt(2, indices.get(2));
+    assertEqualInt(1, indices.get(3));
+    assertEqualInt(0, indices.get(4));
     }
 
     /**
@@ -1117,7 +1117,7 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     a.set(0, 99);
     return p + c;
         });
-    assertEqual(99, arr.get(0));
+    assertEqualInt(99, arr.get(0));
     }
 
     /**
@@ -1337,9 +1337,9 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     void testUint8ArrayReduceRight070() {
     Uint8Array arr = Uint8Array.of(10, 20, 30);
     arr.reduceRight((p, c, index, array) -> p + c);
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(30, arr.get(2));
     }
 
     /**
@@ -1524,9 +1524,9 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     } catch (RangeError e) {
     assertEqual(3, arr.length());
     assertEqual("Error", e.getClass().getSimpleName());
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(30, arr.get(2));
     }
     }
 
@@ -1701,7 +1701,7 @@ public class Uint8ArrayReduceRight02Test extends BasTest {
     return p + c;
         });
     } catch (RangeError e) {
-    assertEqual(99, arr.get(2));
+    assertEqualInt(99, arr.get(2));
     assertEqual("Error", e.getClass().getSimpleName());
     }
     }

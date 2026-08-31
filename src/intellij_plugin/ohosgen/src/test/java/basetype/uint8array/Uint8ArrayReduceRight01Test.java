@@ -1481,9 +1481,9 @@ public class Uint8ArrayReduceRight01Test extends BasTest {
         return BasTest.prepend(cur, prev);
         }, new java.util.ArrayList<>());
     assertEqual(3, result.size());
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(3, result.get(2));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(3, result.get(2));
     }
 
     /**
