@@ -36,7 +36,7 @@ public class Int16ArrayKeysTest02 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {1, 2, 3});
     Int16Array.KeyIterator iter = arr.keys();
     IteratorResult r = iter.next();
-    assertEqual(0, r.value);
+    assertEqual(0, r.value.intValue());
     }
 
     @Test
@@ -389,11 +389,11 @@ public class Int16ArrayKeysTest02 extends BasTest {
     r = iter.next();
     }
     Integer actual1 = arr.get(0);
-    assertEqual(100, actual1);
+    assertEqualInt(100, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(200, actual2);
+    assertEqualInt(200, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(300, actual3);
+    assertEqualInt(300, actual3);
     }
 
     @Test
@@ -401,6 +401,7 @@ public class Int16ArrayKeysTest02 extends BasTest {
     Int16Array arr = new Int16Array(6);
     int origLen = arr.length();
     for (Integer key : arr.keys()) {
+        continue;
     }
     int actual1 = arr.length();
     int expected1 = origLen;
@@ -412,11 +413,11 @@ public class Int16ArrayKeysTest02 extends BasTest {
     Int16Array arr = Int16Array.of(7, 14, 21);
     Int16Array.KeyIterator iter = arr.keys();
     Integer actual1 = arr.get(0);
-    assertEqual(7, actual1);
+    assertEqualInt(7, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(14, actual2);
+    assertEqualInt(14, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(21, actual3);
+    assertEqualInt(21, actual3);
     }
 
     @Test

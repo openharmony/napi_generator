@@ -56,7 +56,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     int actual1 = sub.length();
     assertEqual(1, actual1);
     Integer actual2 = sub.get((int) 0);
-    assertEqual(42, actual2);
+    assertEqualInt(42, actual2);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     int actual1 = sub.length();
     assertEqual(1, actual1);
     Integer actual2 = sub.get((int) 0);
-    assertEqual(42, actual2);
+    assertEqualInt(42, actual2);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array src = Int16Array.of(88);
     Int16Array sub = src.subarray(-32769);
     Integer actual1 = sub.get((int) 0);
-    assertEqual(88, actual1);
+    assertEqualInt(88, actual1);
     }
 
     @Test
@@ -280,7 +280,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array src = Int16Array.of(22);
     Int16Array sub = src.subarray(-1, 1);
     Integer actual1 = sub.get((int) 0);
-    assertEqual(22, actual1);
+    assertEqualInt(22, actual1);
     }
 
     @Test
@@ -322,9 +322,9 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array src = Int16Array.of(32767, 32767, 32767, 32767);
     Int16Array sub = src.subarray(0, 2);
     Integer actual1 = sub.get((int) 0);
-    assertEqual(32767, actual1);
+    assertEqualInt(32767, actual1);
     Integer actual2 = sub.get((int) 1);
-    assertEqual(32767, actual2);
+    assertEqualInt(32767, actual2);
     }
 
     @Test
@@ -333,7 +333,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array sub = src.subarray(1, 4);
     sub.set((int) 1, 0);
     Integer actual1 = src.get((int) 2);
-    assertEqual(0, actual1);
+    assertEqualInt(0, actual1);
     }
 
     @Test
@@ -341,9 +341,9 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array src = Int16Array.of(-1, -1, -1, -1, -1, -1);
     Int16Array sub = src.subarray(2, 5);
     Integer actual1 = sub.get((int) 0);
-    assertEqual(-1, actual1);
+    assertEqualInt(-1, actual1);
     Integer actual2 = sub.get((int) 2);
-    assertEqual(-1, actual2);
+    assertEqualInt(-1, actual2);
     }
 
     @Test
@@ -351,7 +351,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array src = Int16Array.of(-32768, -32768, -32768, -32768);
     Int16Array sub = src.subarray(-1);
     Integer actual1 = sub.get((int) 0);
-    assertEqual(-32768, actual1);
+    assertEqualInt(-32768, actual1);
     }
 
     @Test
@@ -360,7 +360,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array sub = src.subarray(1, 3);
     src.fill(0);
     Integer actual1 = sub.get((int) 0);
-    assertEqual(0, actual1);
+    assertEqualInt(0, actual1);
     }
 
     @Test
@@ -371,7 +371,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array sub3 = sub2.subarray(0, 2);
     sub3.set((int) 0, 99);
     Integer actual1 = src.get((int) 1);
-    assertEqual(99, actual1);
+    assertEqualInt(99, actual1);
     }
 
     @Test
@@ -381,7 +381,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array sub2 = sub1.subarray(1, 3);
     sub1.set((int) 1, 88);
     Integer actual1 = sub2.get((int) 0);
-    assertEqual(88, actual1);
+    assertEqualInt(88, actual1);
     }
 
     @Test
@@ -392,7 +392,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array sub3 = sub2.subarray(0, 2);
     src.set((int) 1, 77);
     Integer actual1 = sub3.get((int) 1);
-    assertEqual(77, actual1);
+    assertEqualInt(77, actual1);
     }
 
     @Test
@@ -432,7 +432,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array sub3 = sub2.subarray(0, 1);
     src.fill(99);
     Integer actual1 = sub3.get((int) 0);
-    assertEqual(99, actual1);
+    assertEqualInt(99, actual1);
     }
 
     @Test
@@ -497,7 +497,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array sub = src.subarray(2, 3);
     sub.set((int) 0, -32769);
     Integer actual1 = src.get((int) 2);
-    assertEqual(32767, actual1);
+    assertEqualInt(32767, actual1);
     }
 
     @Test
@@ -506,7 +506,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array sub = src.subarray(0, 1);
     sub.set((int) 0, 3.7);
     Integer actual1 = src.get((int) 0);
-    assertEqual(3, actual1);
+    assertEqualInt(3, actual1);
     }
 
     @Test
@@ -515,7 +515,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     Int16Array sub = src.subarray(1, 2);
     sub.set((int) 0, -3.7);
     Integer actual1 = src.get((int) 1);
-    assertEqual(-3, actual1);
+    assertEqualInt(-3, actual1);
     }
 
     @Test
@@ -536,7 +536,7 @@ public class Int16ArraySubarrayTest03 extends BasTest {
     int expected1 = src.length();
     assertEqual(expected1, actual1);
     Integer actual2 = sub.get((int) 0);
-    assertEqual(9, actual2);
+    assertEqualInt(9, actual2);
     }
 
     @Test

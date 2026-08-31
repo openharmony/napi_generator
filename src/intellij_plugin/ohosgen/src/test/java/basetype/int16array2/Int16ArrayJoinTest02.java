@@ -201,7 +201,7 @@ public class Int16ArrayJoinTest02 extends BasTest {
     Int16Array arr = Int16Array.of(1, 2, 3);
     arr.join();
     Integer actual1 = arr.get(0);
-    assertEqual(1, actual1);
+    assertEqualInt(1, actual1);
     }
 
     @Test
@@ -209,7 +209,7 @@ public class Int16ArrayJoinTest02 extends BasTest {
     Int16Array arr = Int16Array.of(1, 2, 3);
     arr.join("|");
     Integer actual1 = arr.get(1);
-    assertEqual(2, actual1);
+    assertEqualInt(2, actual1);
     }
 
     @Test
@@ -217,7 +217,7 @@ public class Int16ArrayJoinTest02 extends BasTest {
     Int16Array arr = Int16Array.of(1, 2, 3);
     arr.join("");
     Integer actual1 = arr.get(2);
-    assertEqual(3, actual1);
+    assertEqualInt(3, actual1);
     }
 
     @Test
@@ -251,9 +251,9 @@ public class Int16ArrayJoinTest02 extends BasTest {
     Int16Array arr = Int16Array.of(-1, 2, 3);
     arr.join("");
     Integer actual1 = arr.get(0);
-    assertEqual(-1, actual1);
+    assertEqualInt(-1, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(2, actual2);
+    assertEqualInt(2, actual2);
     }
 
     @Test

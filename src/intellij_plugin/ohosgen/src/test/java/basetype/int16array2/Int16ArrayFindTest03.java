@@ -138,7 +138,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value == 42;
         });
-    assertEqual(42, result);
+    assertEqualInt(42, result);
     }
 
     @Test
@@ -185,7 +185,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return true;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     @Test
@@ -199,7 +199,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return index >= 2;
         });
-    assertEqual(100, result);
+    assertEqualInt(100, result);
     }
 
     @Test
@@ -208,7 +208,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value == 50;
         });
-    assertEqual(50, result);
+    assertEqualInt(50, result);
     }
 
     @Test
@@ -217,7 +217,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value == -1;
         });
-    assertEqual(-1, result);
+    assertEqualInt(-1, result);
     }
 
     @Test
@@ -452,7 +452,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     return false;
         });
     Integer actual1 = arr.get(0);
-    assertEqual(0, actual1);
+    assertEqualInt(0, actual1);
     }
 
     @Test
@@ -464,7 +464,7 @@ public class Int16ArrayFindTest03 extends BasTest {
         });
         return inner != null;
     });
-    assertEqual(2, result);
+    assertEqualInt(2, result);
     }
 
     @Test
@@ -481,7 +481,7 @@ public class Int16ArrayFindTest03 extends BasTest {
         });
         return hasSix[0];
     });
-    assertEqual(3, result);
+    assertEqualInt(3, result);
     }
 
     @Test
@@ -503,7 +503,7 @@ public class Int16ArrayFindTest03 extends BasTest {
         sum[0] = sum[0] + value;
         return sum[0] > 5;
     });
-    assertEqual(3, result);
+    assertEqualInt(3, result);
     }
 
     @Test
@@ -530,7 +530,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value > 5 && value < 18;
         });
-    assertEqual(10, result);
+    assertEqualInt(10, result);
     }
 
     @Test
@@ -539,7 +539,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value < 0 || value > 150;
         });
-    assertEqual(200, result);
+    assertEqualInt(200, result);
     }
 
     @Test
@@ -548,7 +548,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return !(value == 0);
         });
-    assertEqual(1, result);
+    assertEqualInt(1, result);
     }
 
     @Test
@@ -557,7 +557,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value != 0;
         });
-    assertEqual(-5, result);
+    assertEqualInt(-5, result);
     }
 
     @Test
@@ -630,7 +630,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value == -32768;
         });
-    assertEqual(-32768, result);
+    assertEqualInt(-32768, result);
     }
 
     @Test
@@ -639,7 +639,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value == 32767;
         });
-    assertEqual(32767, result);
+    assertEqualInt(32767, result);
     }
 
     @Test
@@ -651,7 +651,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer second = arr.find((value, index, array) -> {
         return value > 7;
         });
-    assertEqual(second, first);
+    assertEqualInt(second, first);
     }
 
     @Test
@@ -661,11 +661,11 @@ public class Int16ArrayFindTest03 extends BasTest {
     return value > 5;
         });
     Integer actual1 = arr.get(0);
-    assertEqual(1, actual1);
+    assertEqualInt(1, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(2, actual2);
+    assertEqualInt(2, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(3, actual3);
+    assertEqualInt(3, actual3);
     }
 
     @Test
@@ -686,7 +686,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value > 0;
         });
-    assertEqual(2, result);
+    assertEqualInt(2, result);
     }
 
     @Test
@@ -695,7 +695,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value < 0;
         });
-    assertEqual(-2, result);
+    assertEqualInt(-2, result);
     }
 
     @Test
@@ -704,7 +704,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value != 0;
         });
-    assertEqual(5, result);
+    assertEqualInt(5, result);
     }
 
     @Test
@@ -713,7 +713,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value == 0;
         });
-    assertEqual(0, result);
+    assertEqualInt(0, result);
     }
 
     @Test
@@ -725,7 +725,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value == 25;
         });
-    assertEqual(25, result);
+    assertEqualInt(25, result);
     }
 
     @Test
@@ -734,7 +734,7 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value == 32767;
         });
-    assertEqual(32767, result);
+    assertEqualInt(32767, result);
     }
 
     @Test
@@ -754,11 +754,11 @@ public class Int16ArrayFindTest03 extends BasTest {
     assertEqual(expectedErrorName, actualErrorName);
     }
     Integer actual1 = arr.get(0);
-    assertEqual(10, actual1);
+    assertEqualInt(10, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(20, actual2);
+    assertEqualInt(20, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(30, actual3);
+    assertEqualInt(30, actual3);
     }
 
     @Test
@@ -777,6 +777,6 @@ public class Int16ArrayFindTest03 extends BasTest {
     Integer result = arr.find((value, index, array) -> {
         return value > 7;
         });
-    assertEqual(10, result);
+    assertEqualInt(10, result);
     }
 }

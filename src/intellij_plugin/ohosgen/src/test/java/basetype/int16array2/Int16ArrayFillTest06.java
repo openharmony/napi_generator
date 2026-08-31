@@ -36,10 +36,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 99;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(3);
     int expected2 = (int) 99;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -47,9 +47,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {10, 20, 30, 40, 50});
     arr.fill(88);
     Integer actual1 = arr.get(0);
-    assertEqual(88, actual1);
+    assertEqualInt(88, actual1);
     Integer actual2 = arr.get(4);
-    assertEqual(88, actual2);
+    assertEqualInt(88, actual2);
     }
 
     @Test
@@ -58,9 +58,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     int val = 77;
     arr.fill(val);
     Integer actual1 = arr.get(0);
-    assertEqual(77, actual1);
+    assertEqualInt(77, actual1);
     Integer actual2 = arr.get(2);
-    assertEqual(77, actual2);
+    assertEqualInt(77, actual2);
     }
 
     @Test
@@ -70,13 +70,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val, 2);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 10;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(2);
     int expected2 = (int) 55;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(4);
     int expected3 = (int) 55;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -84,11 +84,11 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {10, 20, 30, 40, 50});
     arr.fill(66, 1);
     Integer actual1 = arr.get(0);
-    assertEqual(10, actual1);
+    assertEqualInt(10, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(66, actual2);
+    assertEqualInt(66, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(66, actual3);
+    assertEqualInt(66, actual3);
     }
 
     @Test
@@ -98,16 +98,16 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val, 1, 3);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 10;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 44;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
     int expected3 = (int) 44;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     Integer actual4 = arr.get(3);
     int expected4 = (int) 40;
-    assertEqual(expected4, actual4);
+    assertEqualInt(expected4, actual4);
     }
 
     @Test
@@ -115,11 +115,11 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {10, 20, 30, 40, 50});
     arr.fill(33, 0, 2);
     Integer actual1 = arr.get(0);
-    assertEqual(33, actual1);
+    assertEqualInt(33, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(33, actual2);
+    assertEqualInt(33, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(30, actual3);
+    assertEqualInt(30, actual3);
     }
 
     @Test
@@ -131,10 +131,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrN.fill(0);
     Integer actual1 = arrE.get(0);
     Integer expected1 = arrN.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arrE.get(1);
     Integer expected2 = arrN.get(1);
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -144,10 +144,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 32767;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 32767;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -159,13 +159,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrN.fill(32767);
     Integer actual1 = arrE.get(0);
     Integer expected1 = arrN.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arrE.get(1);
     Integer expected2 = arrN.get(1);
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arrE.get(2);
     Integer expected3 = arrN.get(2);
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -175,10 +175,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val);
     Integer actual1 = arr.get(0);
     int expected1 = -(int) 32768;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = -(int) 32768;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -190,13 +190,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrN.fill(-32768);
     Integer actual1 = arrE.get(0);
     Integer expected1 = arrN.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arrE.get(1);
     Integer expected2 = arrN.get(1);
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arrE.get(2);
     Integer expected3 = arrN.get(2);
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -207,14 +207,14 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(99, 1, 3);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 5;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(99, actual2);
+    assertEqualInt(99, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(99, actual3);
+    assertEqualInt(99, actual3);
     Integer actual4 = arr.get(3);
     int expected4 = (int) 5;
-    assertEqual(expected4, actual4);
+    assertEqualInt(expected4, actual4);
     }
 
     @Test
@@ -225,14 +225,14 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(valE, 0, 2);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 3;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 3;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(77, actual3);
+    assertEqualInt(77, actual3);
     Integer actual4 = arr.get(3);
-    assertEqual(77, actual4);
+    assertEqualInt(77, actual4);
     }
 
     @Test
@@ -244,10 +244,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrN.fill(-100);
     Integer actual1 = arrE.get(0);
     Integer expected1 = arrN.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arrE.get(1);
     Integer expected2 = arrN.get(1);
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -259,13 +259,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrN.fill(1, 1, 2);
     Integer actual1 = arrE.get(0);
     Integer expected1 = arrN.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arrE.get(1);
     Integer expected2 = arrN.get(1);
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arrE.get(2);
     Integer expected3 = arrN.get(2);
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -275,10 +275,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 7;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(3);
     int expected2 = (int) 7;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -286,9 +286,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {10, 20, 30, 40});
     arr.fill(7);
     Integer actual1 = arr.get(0);
-    assertEqual(7, actual1);
+    assertEqualInt(7, actual1);
     Integer actual2 = arr.get(3);
-    assertEqual(7, actual2);
+    assertEqualInt(7, actual2);
     }
 
     @Test
@@ -300,13 +300,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrN.fill(42);
     Integer actual1 = arrE.get(0);
     Integer expected1 = arrN.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arrE.get(1);
     Integer expected2 = arrN.get(1);
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arrE.get(3);
     Integer expected3 = arrN.get(3);
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -316,13 +316,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val, 3);
     Integer actual1 = arr.get(2);
     int expected1 = (int) 30;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(3);
     int expected2 = (int) 8;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(4);
     int expected3 = (int) 8;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -330,11 +330,11 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {10, 20, 30, 40, 50});
     arr.fill(8, 3);
     Integer actual1 = arr.get(2);
-    assertEqual(30, actual1);
+    assertEqualInt(30, actual1);
     Integer actual2 = arr.get(3);
-    assertEqual(8, actual2);
+    assertEqualInt(8, actual2);
     Integer actual3 = arr.get(4);
-    assertEqual(8, actual3);
+    assertEqualInt(8, actual3);
     }
 
     @Test
@@ -346,10 +346,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrN.fill(99, 2);
     Integer actual1 = arrE.get(2);
     Integer expected1 = arrN.get(2);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arrE.get(4);
     Integer expected2 = arrN.get(4);
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -361,10 +361,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrExplicit.fill(val, 0);
     Integer actual1 = arrDefault.get(0);
     Integer expected1 = arrExplicit.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arrDefault.get(3);
     Integer expected2 = arrExplicit.get(3);
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -375,10 +375,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrExplicit.fill(3, 0);
     Integer actual1 = arrDefault.get(0);
     Integer expected1 = arrExplicit.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arrDefault.get(3);
     Integer expected2 = arrExplicit.get(3);
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -390,7 +390,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrUndef.fill(val, 2);
     Integer actual1 = arrOmit.get(4);
     Integer expected1 = arrUndef.get(4);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     }
 
     @Test
@@ -401,7 +401,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrUndef.fill(6, 2);
     Integer actual1 = arrOmit.get(4);
     Integer expected1 = arrUndef.get(4);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     }
 
     @Test
@@ -448,7 +448,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     boolean actual1 = ret == arr;
     assertTrue(actual1);
     Integer actual2 = ret.get(0);
-    assertEqual(99, actual2);
+    assertEqualInt(99, actual2);
     }
 
     @Test
@@ -460,7 +460,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     assertTrue(actual1);
     Integer actual2 = ret.get(0);
     int expected2 = (int) 3;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -471,10 +471,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     boolean actual1 = ret == arr;
     assertTrue(actual1);
     Integer actual2 = ret.get(0);
-    assertEqual(2, actual2);
+    assertEqualInt(2, actual2);
     Integer actual3 = ret.get(2);
     int expected3 = (int) 1;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -512,13 +512,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 42;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 42;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
     int expected3 = (int) 42;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -526,11 +526,11 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0, 0, 0});
     arr.fill(42);
     Integer actual1 = arr.get(0);
-    assertEqual(42, actual1);
+    assertEqualInt(42, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(42, actual2);
+    assertEqualInt(42, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(42, actual3);
+    assertEqualInt(42, actual3);
     }
 
     @Test
@@ -629,16 +629,16 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.set(2, (int) 99);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 10;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 10;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
     int expected3 = (int) 99;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     Integer actual4 = arr.get(3);
     int expected4 = (int) 10;
-    assertEqual(expected4, actual4);
+    assertEqualInt(expected4, actual4);
     }
 
     @Test
@@ -647,13 +647,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(10);
     arr.set(2, 99);
     Integer actual1 = arr.get(0);
-    assertEqual(10, actual1);
+    assertEqualInt(10, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(10, actual2);
+    assertEqualInt(10, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(99, actual3);
+    assertEqualInt(99, actual3);
     Integer actual4 = arr.get(3);
-    assertEqual(10, actual4);
+    assertEqualInt(10, actual4);
     }
 
     @Test
@@ -684,10 +684,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     view1.fill(val);
     Integer actual1 = view2.get(0);
     int expected1 = (int) 99;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = view2.get(1);
     int expected2 = (int) 99;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -697,9 +697,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array view2 = new Int16Array(buf, 0, 4);
     view1.fill(99);
     Integer actual1 = view2.get(0);
-    assertEqual(99, actual1);
+    assertEqualInt(99, actual1);
     Integer actual2 = view2.get(1);
-    assertEqual(99, actual2);
+    assertEqualInt(99, actual2);
     }
 
     @Test
@@ -710,13 +710,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     parent.fill(val);
     Integer actual1 = child.get(0);
     int expected1 = (int) 7;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = child.get(1);
     int expected2 = (int) 7;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = child.get(2);
     int expected3 = (int) 7;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -727,10 +727,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array child = parent.subarray(1, 3);
     Integer actual1 = child.get(0);
     int expected1 = (int) 55;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = child.get(1);
     int expected2 = (int) 55;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -739,9 +739,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     parent.fill(55);
     Int16Array child = parent.subarray(1, 3);
     Integer actual1 = child.get(0);
-    assertEqual(55, actual1);
+    assertEqualInt(55, actual1);
     Integer actual2 = child.get(1);
-    assertEqual(55, actual2);
+    assertEqualInt(55, actual2);
     }
 
     @Test
@@ -751,15 +751,15 @@ public class Int16ArrayFillTest06 extends BasTest {
     int val = (int) 33;
     child.fill(val);
     Integer actual1 = parent.get(0);
-    assertEqual(0, actual1);
+    assertEqualInt(0, actual1);
     Integer actual2 = parent.get(1);
     int expected2 = (int) 33;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = parent.get(3);
     int expected3 = (int) 33;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     Integer actual4 = parent.get(4);
-    assertEqual(0, actual4);
+    assertEqualInt(0, actual4);
     }
 
     @Test
@@ -779,19 +779,19 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val, 2, 4);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 10;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 20;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
     int expected3 = (int) 1;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     Integer actual4 = arr.get(3);
     int expected4 = (int) 1;
-    assertEqual(expected4, actual4);
+    assertEqualInt(expected4, actual4);
     Integer actual5 = arr.get(4);
     int expected5 = (int) 50;
-    assertEqual(expected5, actual5);
+    assertEqualInt(expected5, actual5);
     }
 
     @Test
@@ -803,10 +803,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     view1.fill(val, 1, 3);
     Integer actual1 = view2.get(0);
     int expected1 = (int) 77;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = view2.get(1);
     int expected2 = (int) 77;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -816,9 +816,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array view2 = new Int16Array(buf, 2, 3);
     view1.fill(77, 1, 3);
     Integer actual1 = view2.get(0);
-    assertEqual(77, actual1);
+    assertEqualInt(77, actual1);
     Integer actual2 = view2.get(1);
-    assertEqual(77, actual2);
+    assertEqualInt(77, actual2);
     }
 
     @Test
@@ -831,13 +831,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     child.fill(valC);
     Integer actual1 = parent.get(0);
     int expected1 = (int) 10;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = parent.get(2);
     int expected2 = (int) 20;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = parent.get(4);
     int expected3 = (int) 20;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -849,16 +849,16 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val2);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 8;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 8;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
     int expected3 = (int) 8;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     Integer actual4 = arr.get(3);
     int expected4 = (int) 8;
-    assertEqual(expected4, actual4);
+    assertEqualInt(expected4, actual4);
     }
 
     @Test
@@ -927,7 +927,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     assertTrue(actual1);
     Integer actual2 = arr.get(0);
     int expected2 = (int) 10;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -938,7 +938,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     boolean actual1 = arr == identBefore;
     assertTrue(actual1);
     Integer actual2 = arr.get(0);
-    assertEqual(10, actual2);
+    assertEqualInt(10, actual2);
     }
 
     @Test
@@ -948,10 +948,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val, 3, 1);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 10;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 20;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -959,9 +959,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0, 0, 0});
     arr.fill(32768);
     Integer actual1 = arr.get(0);
-    assertEqual(-32768, actual1);
+    assertEqualInt(-32768, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(-32768, actual2);
+    assertEqualInt(-32768, actual2);
     }
 
     @Test
@@ -969,9 +969,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0, 0, 0});
     arr.fill(-32769);
     Integer actual1 = arr.get(0);
-    assertEqual(32767, actual1);
+    assertEqualInt(32767, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(32767, actual2);
+    assertEqualInt(32767, actual2);
     }
 
     @Test
@@ -979,7 +979,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0, 0});
     arr.fill(65535);
     Integer actual1 = arr.get(0);
-    assertEqual(-1, actual1);
+    assertEqualInt(-1, actual1);
     }
 
     @Test
@@ -987,7 +987,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0, 0});
     arr.fill(65536);
     Integer actual1 = arr.get(0);
-    assertEqual(0, actual1);
+    assertEqualInt(0, actual1);
     }
 
     @Test
@@ -998,7 +998,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrD.fill(32767);
     Integer actual1 = arrW.get(0);
     Integer expected1 = arrD.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     }
 
     @Test
@@ -1009,10 +1009,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrZero.fill(0);
     Integer actual1 = arrNaN.get(0);
     Integer expected1 = arrZero.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arrNaN.get(1);
     Integer expected2 = arrZero.get(1);
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -1023,7 +1023,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrZero.fill(0);
     Integer actual1 = arrInf.get(0);
     Integer expected1 = arrZero.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     }
 
     @Test
@@ -1034,7 +1034,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrZero.fill(0);
     Integer actual1 = arrNInf.get(0);
     Integer expected1 = arrZero.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     }
 
     @Test
@@ -1045,7 +1045,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     arrZero.fill(0);
     Integer actual1 = arrNZero.get(0);
     Integer expected1 = arrZero.get(0);
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     }
 
     @Test
@@ -1053,7 +1053,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0});
     arr.fill(3.7);
     Integer actual1 = arr.get(0);
-    assertEqual(3, actual1);
+    assertEqualInt(3, actual1);
     }
 
     @Test
@@ -1061,7 +1061,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0});
     arr.fill(-3.7);
     Integer actual1 = arr.get(0);
-    assertEqual(-3, actual1);
+    assertEqualInt(-3, actual1);
     }
 
     @Test
@@ -1069,7 +1069,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0});
     arr.fill(32768.9);
     Integer actual1 = arr.get(0);
-    assertEqual(-32768, actual1);
+    assertEqualInt(-32768, actual1);
     }
 
     @Test
@@ -1077,7 +1077,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0});
     arr.fill(-32769.9);
     Integer actual1 = arr.get(0);
-    assertEqual(32767, actual1);
+    assertEqualInt(32767, actual1);
     }
 
     @Test
@@ -1088,10 +1088,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     int valE = (int) 32767;
     arrE.fill(valE);
     Integer actual1 = arrN.get(0);
-    assertEqual(-32768, actual1);
+    assertEqualInt(-32768, actual1);
     Integer actual2 = arrE.get(0);
     int expected2 = (int) 32767;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -1099,7 +1099,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0});
     arr.fill(32767 + 65536);
     Integer actual1 = arr.get(0);
-    assertEqual(32767, actual1);
+    assertEqualInt(32767, actual1);
     }
 
     @Test
@@ -1107,7 +1107,7 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {0});
     arr.fill(-32768 - 65536);
     Integer actual1 = arr.get(0);
-    assertEqual(-32768, actual1);
+    assertEqualInt(-32768, actual1);
     }
 
     @Test
@@ -1116,9 +1116,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     parent.fill(32768);
     Int16Array child = parent.subarray(1, 3);
     Integer actual1 = child.get(0);
-    assertEqual(-32768, actual1);
+    assertEqualInt(-32768, actual1);
     Integer actual2 = child.get(1);
-    assertEqual(-32768, actual2);
+    assertEqualInt(-32768, actual2);
     }
 
     @Test
@@ -1128,9 +1128,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     parent.set(2, 100);
     Int16Array child = parent.subarray(0, 2);
     Integer actual1 = child.get(0);
-    assertEqual(-32768, actual1);
+    assertEqualInt(-32768, actual1);
     Integer actual2 = child.get(1);
-    assertEqual(-32768, actual2);
+    assertEqualInt(-32768, actual2);
     }
 
     @Test
@@ -1141,17 +1141,17 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(32768, 2, 4);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 10;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 10;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(-32768, actual3);
+    assertEqualInt(-32768, actual3);
     Integer actual4 = arr.get(3);
-    assertEqual(-32768, actual4);
+    assertEqualInt(-32768, actual4);
     Integer actual5 = arr.get(4);
     int expected5 = (int) 10;
-    assertEqual(expected5, actual5);
+    assertEqualInt(expected5, actual5);
     }
 
     @Test
@@ -1161,17 +1161,17 @@ public class Int16ArrayFillTest06 extends BasTest {
     int valE = (int) 50;
     arr.fill(valE, 1, 3);
     Integer actual1 = arr.get(0);
-    assertEqual(-32768, actual1);
+    assertEqualInt(-32768, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 50;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
     int expected3 = (int) 50;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     Integer actual4 = arr.get(3);
-    assertEqual(-32768, actual4);
+    assertEqualInt(-32768, actual4);
     Integer actual5 = arr.get(4);
-    assertEqual(-32768, actual5);
+    assertEqualInt(-32768, actual5);
     }
 
     @Test
@@ -1184,13 +1184,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val2);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 2;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 2;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
     int expected3 = (int) 2;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -1285,10 +1285,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     assertTrue(actual1);
     Integer actual2 = arr.get(0);
     int expected2 = (int) 10;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
     int expected3 = (int) 30;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -1298,9 +1298,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     boolean actual1 = ret == arr;
     assertTrue(actual1);
     Integer actual2 = arr.get(0);
-    assertEqual(10, actual2);
+    assertEqualInt(10, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(30, actual3);
+    assertEqualInt(30, actual3);
     }
 
     @Test
@@ -1310,13 +1310,13 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val, 10);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 10;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(1);
     int expected2 = (int) 20;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     Integer actual3 = arr.get(2);
     int expected3 = (int) 30;
-    assertEqual(expected3, actual3);
+    assertEqualInt(expected3, actual3);
     }
 
     @Test
@@ -1324,11 +1324,11 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {10, 20, 30});
     arr.fill(99, 10);
     Integer actual1 = arr.get(0);
-    assertEqual(10, actual1);
+    assertEqualInt(10, actual1);
     Integer actual2 = arr.get(1);
-    assertEqual(20, actual2);
+    assertEqualInt(20, actual2);
     Integer actual3 = arr.get(2);
-    assertEqual(30, actual3);
+    assertEqualInt(30, actual3);
     }
 
     @Test
@@ -1338,10 +1338,10 @@ public class Int16ArrayFillTest06 extends BasTest {
     arr.fill(val, 3, 3);
     Integer actual1 = arr.get(0);
     int expected1 = (int) 10;
-    assertEqual(expected1, actual1);
+    assertEqualInt(expected1, actual1);
     Integer actual2 = arr.get(3);
     int expected2 = (int) 40;
-    assertEqual(expected2, actual2);
+    assertEqualInt(expected2, actual2);
     }
 
     @Test
@@ -1349,9 +1349,9 @@ public class Int16ArrayFillTest06 extends BasTest {
     Int16Array arr = new Int16Array(new int[] {10, 20, 30, 40});
     arr.fill(7, 3, 3);
     Integer actual1 = arr.get(0);
-    assertEqual(10, actual1);
+    assertEqualInt(10, actual1);
     Integer actual2 = arr.get(3);
-    assertEqual(40, actual2);
+    assertEqualInt(40, actual2);
     }
 
     @Test

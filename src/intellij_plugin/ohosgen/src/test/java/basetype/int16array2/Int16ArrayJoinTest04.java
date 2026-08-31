@@ -33,7 +33,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.join();
     Integer actual1 = arr.get(1);
-    assertEqual(20, actual1);
+    assertEqualInt(20, actual1);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class Int16ArrayJoinTest04 extends BasTest {
     Int16Array arr = Int16Array.of(10, 20, 30);
     arr.join();
     Integer actual1 = arr.get(2);
-    assertEqual(30, actual1);
+    assertEqualInt(30, actual1);
     }
 
     @Test
