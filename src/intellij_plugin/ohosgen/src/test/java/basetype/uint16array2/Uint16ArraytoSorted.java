@@ -32,10 +32,10 @@ public class Uint16ArraytoSorted extends BasTest {
     void testUint16ArrayToSorted001() {
     Uint16Array arr = Uint16Array.of(3, 1, 2);
     Uint16Array result = arr.toSorted();
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(3, result.get(2));
-    assertEqual(3, arr.get(0));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(3, result.get(2));
+    assertEqualInt(3, arr.get(0));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class Uint16ArraytoSorted extends BasTest {
     Uint16Array arr = Uint16Array.of(4, 1, 3);
     Uint16Array result = arr.toSorted();
     arr.set(0, 99);
-    assertEqual(1, result.get(0));
+    assertEqualInt(1, result.get(0));
     }
 
     @Test
@@ -127,77 +127,77 @@ public class Uint16ArraytoSorted extends BasTest {
     void testUint16ArrayToSorted013() {
     Uint16Array arr = Uint16Array.of(0);
     Uint16Array result = arr.toSorted();
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     @Test
     void testUint16ArrayToSorted014() {
     Uint16Array arr = Uint16Array.of(65535);
     Uint16Array result = arr.toSorted();
-    assertEqual(65535, result.get(0));
+    assertEqualInt(65535, result.get(0));
     }
 
     @Test
     void testUint16ArrayToSorted015() {
     Uint16Array arr = Uint16Array.of(32768);
     Uint16Array result = arr.toSorted();
-    assertEqual(32768, result.get(0));
+    assertEqualInt(32768, result.get(0));
     }
 
     @Test
     void testUint16ArrayToSorted016() {
     Uint16Array arr = Uint16Array.of(100);
     Uint16Array result = arr.toSorted();
-    assertEqual(100, result.get(0));
+    assertEqualInt(100, result.get(0));
     }
 
     @Test
     void testUint16ArrayToSorted017() {
     Uint16Array arr = Uint16Array.of(65536);
     Uint16Array result = arr.toSorted();
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     @Test
     void testUint16ArrayToSorted018() {
     Uint16Array arr = Uint16Array.of(-1);
     Uint16Array result = arr.toSorted();
-    assertEqual(65535, result.get(0));
+    assertEqualInt(65535, result.get(0));
     }
 
     @Test
     void testUint16ArrayToSorted019() {
     Uint16Array arr = Uint16Array.of(3.14);
     Uint16Array result = arr.toSorted();
-    assertEqual(3, result.get(0));
+    assertEqualInt(3, result.get(0));
     }
 
     @Test
     void testUint16ArrayToSorted020() {
     Uint16Array arr = Uint16Array.of(65535.9);
     Uint16Array result = arr.toSorted();
-    assertEqual(65535, result.get(0));
+    assertEqualInt(65535, result.get(0));
     }
 
     @Test
     void testUint16ArrayToSorted021() {
     Uint16Array arr = Uint16Array.of(0xFF);
     Uint16Array result = arr.toSorted();
-    assertEqual(255, result.get(0));
+    assertEqualInt(255, result.get(0));
     }
 
     @Test
     void testUint16ArrayToSorted022() {
     Uint16Array arr = Uint16Array.of(07777);
     Uint16Array result = arr.toSorted();
-    assertEqual(4095, result.get(0));
+    assertEqualInt(4095, result.get(0));
     }
 
     @Test
     void testUint16ArrayToSorted023() {
     Uint16Array arr = Uint16Array.of(0b10101010);
     Uint16Array result = arr.toSorted();
-    assertEqual(170, result.get(0));
+    assertEqualInt(170, result.get(0));
     }
 
     @Test
@@ -486,8 +486,8 @@ public class Uint16ArraytoSorted extends BasTest {
     }
     Uint16Array result = arr.toSorted();
     assertEqual(100, result.length());
-    assertEqual(0, result.get(0));
-    assertEqual(99, result.get(99));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(99, result.get(99));
     }
 
     @Test
@@ -499,11 +499,11 @@ public class Uint16ArraytoSorted extends BasTest {
     Uint16Array result = arr.toSorted();
     assertNotEqual(arr, result);
     assertEqual(100, result.length());
-    assertEqual(0, result.get(0));
-    assertEqual(50, result.get(50));
-    assertEqual(99, result.get(99));
-    assertEqual(99, arr.get(0));
-    assertEqual(0, arr.get(99));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(50, result.get(50));
+    assertEqualInt(99, result.get(99));
+    assertEqualInt(99, arr.get(0));
+    assertEqualInt(0, arr.get(99));
     }
 
     @Test
@@ -515,11 +515,11 @@ public class Uint16ArraytoSorted extends BasTest {
     Uint16Array result = arr.toSorted();
     assertNotEqual(arr, result);
     assertEqual(100, result.length());
-    assertEqual(42, result.get(0));
-    assertEqual(42, result.get(50));
-    assertEqual(42, result.get(99));
-    assertEqual(42, arr.get(0));
-    assertEqual(42, arr.get(99));
+    assertEqualInt(42, result.get(0));
+    assertEqualInt(42, result.get(50));
+    assertEqualInt(42, result.get(99));
+    assertEqualInt(42, arr.get(0));
+    assertEqualInt(42, arr.get(99));
     }
 
     @Test

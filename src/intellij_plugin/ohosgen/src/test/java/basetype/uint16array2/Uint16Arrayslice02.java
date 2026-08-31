@@ -33,8 +33,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30);
     Uint16Array r = src.slice();
     assertEqual(3, r.length());
-    assertEqual(10, r.get(0));
-    assertEqual(30, r.get(2));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -49,8 +49,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(0);
     assertEqual(5, r.length());
-    assertEqual(10, r.get(0));
-    assertEqual(50, r.get(4));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(50, r.get(4));
     }
 
     @Test
@@ -58,8 +58,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(1, 4);
     assertEqual(3, r.length());
-    assertEqual(20, r.get(0));
-    assertEqual(40, r.get(2));
+    assertEqualInt(20, r.get(0));
+    assertEqualInt(40, r.get(2));
     }
 
     @Test
@@ -74,8 +74,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30);
     Uint16Array r = src.slice(0, 2);
     assertEqual(2, r.length());
-    assertEqual(10, r.get(0));
-    assertEqual(20, r.get(1));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(20, r.get(1));
     }
 
     @Test
@@ -83,8 +83,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice();
     assertEqual(5, r.length());
-    assertEqual(10, r.get(0));
-    assertEqual(50, r.get(4));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(50, r.get(4));
     }
 
     @Test
@@ -92,8 +92,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(0, 5);
     assertEqual(5, r.length());
-    assertEqual(10, r.get(0));
-    assertEqual(50, r.get(4));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(50, r.get(4));
     }
 
     @Test
@@ -101,7 +101,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(0, 1);
     assertEqual(1, r.length());
-    assertEqual(10, r.get(0));
+    assertEqualInt(10, r.get(0));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(4, 5);
     assertEqual(1, r.length());
-    assertEqual(50, r.get(0));
+    assertEqualInt(50, r.get(0));
     }
 
     @Test
@@ -117,7 +117,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(2, 3);
     assertEqual(1, r.length());
-    assertEqual(30, r.get(0));
+    assertEqualInt(30, r.get(0));
     }
 
     @Test
@@ -125,8 +125,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(0, 3);
     assertEqual(3, r.length());
-    assertEqual(10, r.get(0));
-    assertEqual(30, r.get(2));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -134,8 +134,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(2, 5);
     assertEqual(3, r.length());
-    assertEqual(30, r.get(0));
-    assertEqual(50, r.get(2));
+    assertEqualInt(30, r.get(0));
+    assertEqualInt(50, r.get(2));
     }
 
     @Test
@@ -143,7 +143,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(1, 2);
     assertEqual(1, r.length());
-    assertEqual(20, r.get(0));
+    assertEqualInt(20, r.get(0));
     }
 
     @Test
@@ -151,8 +151,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(3, 5);
     assertEqual(2, r.length());
-    assertEqual(40, r.get(0));
-    assertEqual(50, r.get(1));
+    assertEqualInt(40, r.get(0));
+    assertEqualInt(50, r.get(1));
     }
 
     @Test
@@ -181,8 +181,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(-2);
     assertEqual(2, r.length());
-    assertEqual(40, r.get(0));
-    assertEqual(50, r.get(1));
+    assertEqualInt(40, r.get(0));
+    assertEqualInt(50, r.get(1));
     }
 
     @Test
@@ -190,8 +190,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(-3, -1);
     assertEqual(2, r.length());
-    assertEqual(30, r.get(0));
-    assertEqual(40, r.get(1));
+    assertEqualInt(30, r.get(0));
+    assertEqualInt(40, r.get(1));
     }
 
     @Test
@@ -199,7 +199,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(-1);
     assertEqual(1, r.length());
-    assertEqual(50, r.get(0));
+    assertEqualInt(50, r.get(0));
     }
 
     @Test
@@ -207,8 +207,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(-5);
     assertEqual(5, r.length());
-    assertEqual(10, r.get(0));
-    assertEqual(50, r.get(4));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(50, r.get(4));
     }
 
     @Test
@@ -216,8 +216,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(-3, 5);
     assertEqual(3, r.length());
-    assertEqual(30, r.get(0));
-    assertEqual(50, r.get(2));
+    assertEqualInt(30, r.get(0));
+    assertEqualInt(50, r.get(2));
     }
 
     @Test
@@ -225,8 +225,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(0, -2);
     assertEqual(3, r.length());
-    assertEqual(10, r.get(0));
-    assertEqual(30, r.get(2));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -234,8 +234,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(-4, -2);
     assertEqual(2, r.length());
-    assertEqual(20, r.get(0));
-    assertEqual(30, r.get(1));
+    assertEqualInt(20, r.get(0));
+    assertEqualInt(30, r.get(1));
     }
 
     @Test
@@ -243,7 +243,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(-2, -1);
     assertEqual(1, r.length());
-    assertEqual(40, r.get(0));
+    assertEqualInt(40, r.get(0));
     }
 
     @Test
@@ -251,7 +251,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(-10);
     assertEqual(5, r.length());
-    assertEqual(10, r.get(0));
+    assertEqualInt(10, r.get(0));
     }
 
     @Test
@@ -259,8 +259,8 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(0, 10);
     assertEqual(5, r.length());
-    assertEqual(10, r.get(0));
-    assertEqual(50, r.get(4));
+    assertEqualInt(10, r.get(0));
+    assertEqualInt(50, r.get(4));
     }
 
     @Test
@@ -291,9 +291,9 @@ public class Uint16Arrayslice02 extends BasTest {
     assertEqual("10,20,30,40,50", r.join(","));
     assertNotEqual(src.buffer(), r.buffer());
     r.set(0, 99);
-    assertEqual(10, src.get(0));
+    assertEqualInt(10, src.get(0));
     src.set(1, 88);
-    assertEqual(20, r.get(1));
+    assertEqualInt(20, r.get(1));
     }
 
     @Test
@@ -329,7 +329,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array result = src.slice();
     result.set(0, 99);
-    assertEqual(10, src.get(0));
+    assertEqualInt(10, src.get(0));
     }
 
     @Test
@@ -345,7 +345,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array result = src.slice(0, 3);
     result.set(1, 99);
-    assertEqual(20, src.get(1));
+    assertEqualInt(20, src.get(1));
     }
 
     @Test
@@ -375,7 +375,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice();
     src.set(0, 99);
-    assertEqual(10, r.get(0));
+    assertEqualInt(10, r.get(0));
     }
 
     @Test
@@ -383,7 +383,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(1, 4);
     r.set(0, 99);
-    assertEqual(20, src.get(1));
+    assertEqualInt(20, src.get(1));
     }
 
     @Test
@@ -391,7 +391,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = src.slice(1, 4);
     src.set(1, 99);
-    assertEqual(20, r.get(0));
+    assertEqualInt(20, r.get(0));
     }
 
     @Test
@@ -414,7 +414,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array r = src.slice();
     Uint16Array bufView = new Uint16Array(r.buffer());
     bufView.set(0, 99);
-    assertEqual(10, src.get(0));
+    assertEqualInt(10, src.get(0));
     }
 
     @Test
@@ -423,45 +423,45 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array r = src.slice();
     Uint16Array bufView = new Uint16Array(src.buffer());
     bufView.set(0, 99);
-    assertEqual(10, r.get(0));
+    assertEqualInt(10, r.get(0));
     }
 
     @Test
     void testUint16ArraySlicePart2050() {
     Uint16Array src = Uint16Array.of(0, 65535, 32768, 65535);
     Uint16Array r = src.slice();
-    assertEqual(0, r.get(0));
-    assertEqual(65535, r.get(1));
-    assertEqual(32768, r.get(2));
-    assertEqual(65535, r.get(3));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(65535, r.get(1));
+    assertEqualInt(32768, r.get(2));
+    assertEqualInt(65535, r.get(3));
     }
 
     @Test
     void testUint16ArraySlicePart2051() {
     Uint16Array src = Uint16Array.of(0, 65535, 32768);
     Uint16Array r = src.slice(0, 1);
-    assertEqual(0, r.get(0));
+    assertEqualInt(0, r.get(0));
     }
 
     @Test
     void testUint16ArraySlicePart2052() {
     Uint16Array src = Uint16Array.of(0, 65535, 32768);
     Uint16Array r = src.slice(1, 2);
-    assertEqual(65535, r.get(0));
+    assertEqualInt(65535, r.get(0));
     }
 
     @Test
     void testUint16ArraySlicePart2053() {
     Uint16Array src = Uint16Array.of(0, 65535, 32768);
     Uint16Array r = src.slice(2, 3);
-    assertEqual(32768, r.get(0));
+    assertEqualInt(32768, r.get(0));
     }
 
     @Test
     void testUint16ArraySlicePart2054() {
     Uint16Array src = Uint16Array.of(0, 65535, 32768);
     Uint16Array r = src.slice(-2, -1);
-    assertEqual(65535, r.get(0));
+    assertEqualInt(65535, r.get(0));
     }
 
     @Test
@@ -510,7 +510,7 @@ public class Uint16Arrayslice02 extends BasTest {
     void testUint16ArraySlicePart2061() {
     Uint16Array src = Uint16Array.of(42);
     Uint16Array r = src.slice();
-    assertEqual(42, r.get(0));
+    assertEqualInt(42, r.get(0));
     }
 
     @Test
@@ -518,7 +518,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(100, 200);
     Uint16Array r = src.slice(0, 1);
     assertEqual(1, r.length());
-    assertEqual(100, r.get(0));
+    assertEqualInt(100, r.get(0));
     }
 
     @Test
@@ -526,7 +526,7 @@ public class Uint16Arrayslice02 extends BasTest {
     Uint16Array src = Uint16Array.of(100, 200);
     Uint16Array r = src.slice(1, 2);
     assertEqual(1, r.length());
-    assertEqual(200, r.get(0));
+    assertEqualInt(200, r.get(0));
     }
 
     @Test
@@ -554,8 +554,8 @@ public class Uint16Arrayslice02 extends BasTest {
     void testUint16ArraySlicePart2067() {
     Uint16Array src = Uint16Array.of(65535, 65535, 65535);
     Uint16Array r = src.slice();
-    assertEqual(65535, r.get(0));
-    assertEqual(65535, r.get(2));
+    assertEqualInt(65535, r.get(0));
+    assertEqualInt(65535, r.get(2));
     }
 
     @Test
@@ -576,8 +576,8 @@ public class Uint16Arrayslice02 extends BasTest {
     void testUint16ArraySlicePart2070() {
     Uint16Array src = Uint16Array.of(0, 0, 0);
     Uint16Array r = src.slice();
-    assertEqual(0, r.get(0));
-    assertEqual(0, r.get(2));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(0, r.get(2));
     }
 
     @Test

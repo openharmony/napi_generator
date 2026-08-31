@@ -33,32 +33,32 @@ public class Uint16Arraysort02 extends BasTest {
     void testUint16ArraySortPart2001() {
     Uint16Array arr = Uint16Array.of(65535, 0);
     Uint16Array result = arr.sort();
-    assertEqual(0, result.get(0));
-    assertEqual(65535, result.get(1));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(65535, result.get(1));
     }
 
     @Test
     void testUint16ArraySortPart2002() {
     Uint16Array arr = Uint16Array.of(3, 1, 2);
     Uint16Array result = arr.sort((a, b) -> a < b ? 1 : (a > b ? -1 : 0));
-    assertEqual(3, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(1, result.get(2));
+    assertEqualInt(3, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(1, result.get(2));
     }
 
     @Test
     void testUint16ArraySortPart2003() {
     Uint16Array arr = Uint16Array.of(32768);
     Uint16Array result = arr.sort();
-    assertEqual(32768, result.get(0));
+    assertEqualInt(32768, result.get(0));
     }
 
     @Test
     void testUint16ArraySortPart2004() {
     Uint16Array arr = Uint16Array.of(5, 5, 5);
     Uint16Array result = arr.sort();
-    assertEqual(5, result.get(0));
-    assertEqual(5, result.get(2));
+    assertEqualInt(5, result.get(0));
+    assertEqualInt(5, result.get(2));
     }
 
     @Test
@@ -219,16 +219,16 @@ public class Uint16Arraysort02 extends BasTest {
     void testUint16ArraySortPart2027() {
     Uint16Array arr = Uint16Array.of(65535, 0);
     arr.sort((a, b) -> a < b ? -1 : (a > b ? 1 : 0));
-    assertEqual(0, arr.get(0));
-    assertEqual(65535, arr.get(1));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(65535, arr.get(1));
     }
 
     @Test
     void testUint16ArraySortPart2028() {
     Uint16Array arr = Uint16Array.of(0, 65535);
     arr.sort((a, b) -> a < b ? 1 : (a > b ? -1 : 0));
-    assertEqual(65535, arr.get(0));
-    assertEqual(0, arr.get(1));
+    assertEqualInt(65535, arr.get(0));
+    assertEqualInt(0, arr.get(1));
     }
 
     @Test
@@ -327,7 +327,7 @@ public class Uint16Arraysort02 extends BasTest {
     void testUint16ArraySortPart2041() {
     Uint16Array arr = Uint16Array.of(99);
     Uint16Array result = arr.sort();
-    assertEqual(99, result.get(0));
+    assertEqualInt(99, result.get(0));
     }
 
     @Test
@@ -337,8 +337,8 @@ public class Uint16Arraysort02 extends BasTest {
     arr.set(i, 100 - i);
     }
     Uint16Array result = arr.sort();
-    assertEqual(1, result.get(0));
-    assertEqual(100, result.get(99));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(100, result.get(99));
     }
 
     @Test
@@ -524,42 +524,42 @@ public class Uint16Arraysort02 extends BasTest {
     void testUint16ArraySortPart2062() {
     Uint16Array arr = Uint16Array.of(0);
     arr.sort();
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint16ArraySortPart2063() {
     Uint16Array arr = Uint16Array.of(65535);
     arr.sort();
-    assertEqual(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(0));
     }
 
     @Test
     void testUint16ArraySortPart2064() {
     Uint16Array arr = Uint16Array.of(32768);
     arr.sort();
-    assertEqual(32768, arr.get(0));
+    assertEqualInt(32768, arr.get(0));
     }
 
     @Test
     void testUint16ArraySortPart2065() {
     Uint16Array arr = Uint16Array.of(0, 65535);
     arr.sort();
-    assertEqual(65535, arr.get(1));
+    assertEqualInt(65535, arr.get(1));
     }
 
     @Test
     void testUint16ArraySortPart2066() {
     Uint16Array arr = Uint16Array.of(65535, 0);
     arr.sort();
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint16ArraySortPart2067() {
     Uint16Array arr = Uint16Array.of(32768, 0);
     arr.sort();
-    assertEqual(32768, arr.get(1));
+    assertEqualInt(32768, arr.get(1));
     }
 
     @Test
@@ -567,7 +567,7 @@ public class Uint16Arraysort02 extends BasTest {
     Uint16Array arr = new Uint16Array(1);
     arr.set(0, 65535.9);
     arr.sort();
-    assertEqual(65535, arr.get(0));
+    assertEqualInt(65535, arr.get(0));
     }
 
     @Test
@@ -575,15 +575,15 @@ public class Uint16Arraysort02 extends BasTest {
     Uint16Array arr = new Uint16Array(1);
     arr.set(0, 3.14);
     arr.sort();
-    assertEqual(3, arr.get(0));
+    assertEqualInt(3, arr.get(0));
     }
 
     @Test
     void testUint16ArraySortPart2070() {
     Uint16Array arr = Uint16Array.of(65535, 0, 32768);
     arr.sort();
-    assertEqual(0, arr.get(0));
-    assertEqual(0, arr.get(0) & 0xFFFF);
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(0, arr.get(0) & 0xFFFF);
     assertEqual("0,32768,65535", arr.join(","));
     }
 
@@ -592,9 +592,9 @@ public class Uint16Arraysort02 extends BasTest {
     Uint16Array arr = Uint16Array.of(3, 1, 2);
     Uint16Array result = arr.sort();
     assertEqual(arr, result);
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(3, result.get(2));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(3, result.get(2));
     }
 
     @Test
@@ -678,25 +678,25 @@ public class Uint16Arraysort02 extends BasTest {
     void testUint16ArraySortPart2081() {
     Uint16Array arr = Uint16Array.of(0, 10000, 20000, 30000, 40000, 50000, 60000, 65535);
     arr.sort((a, b) -> a < b ? 1 : (a > b ? -1 : 0));
-    assertEqual(65535, arr.get(0));
-    assertEqual(0, arr.get(7));
+    assertEqualInt(65535, arr.get(0));
+    assertEqualInt(0, arr.get(7));
     }
 
     @Test
     void testUint16ArraySortPart2082() {
     Uint16Array arr = Uint16Array.of(100, 200);
     arr.sort((a, b) -> a < b ? 1 : (a > b ? -1 : 0));
-    assertEqual(200, arr.get(0));
-    assertEqual(100, arr.get(1));
+    assertEqualInt(200, arr.get(0));
+    assertEqualInt(100, arr.get(1));
     }
 
     @Test
     void testUint16ArraySortPart2083() {
     Uint16Array arr = Uint16Array.of(3, 1, 2);
     Uint16Array result = arr.sort().sort((a, b) -> a < b ? 1 : (a > b ? -1 : 0));
-    assertEqual(3, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(1, result.get(2));
+    assertEqualInt(3, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(1, result.get(2));
     assertEqual(3, result.length());
     }
 

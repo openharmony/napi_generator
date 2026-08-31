@@ -54,9 +54,9 @@ public class Uint16Arraysome02 extends BasTest {
     arr.set(i, e * 10);
     return false;
         });
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(30, arr.get(2));
     }
 
     @Test
@@ -162,11 +162,11 @@ public class Uint16Arraysome02 extends BasTest {
     arr.set(i, e + 1);
     return false;
         });
-    assertEqual(2, arr.get(0));
-    assertEqual(3, arr.get(1));
-    assertEqual(4, arr.get(2));
-    assertEqual(5, arr.get(3));
-    assertEqual(6, arr.get(4));
+    assertEqualInt(2, arr.get(0));
+    assertEqualInt(3, arr.get(1));
+    assertEqualInt(4, arr.get(2));
+    assertEqualInt(5, arr.get(3));
+    assertEqualInt(6, arr.get(4));
     }
 
     @Test
@@ -709,7 +709,7 @@ public class Uint16Arraysome02 extends BasTest {
         return v == 30;
     });
     assertTrue(r);
-    assertEqual(30, a.get(2));
+    assertEqualInt(30, a.get(2));
     }
 
     @Test

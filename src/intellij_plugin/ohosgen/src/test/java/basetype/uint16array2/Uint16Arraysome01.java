@@ -248,7 +248,7 @@ public class Uint16Arraysome01 extends BasTest {
     if (i == 0) {
     callbackCalled[0] = true;
     assertEqual(3, a.length());
-    assertEqual(1, a.get(0));
+    assertEqualInt(1, a.get(0));
     }
     return false;
         });
@@ -339,10 +339,10 @@ public class Uint16Arraysome01 extends BasTest {
     });
     assertTrue(result);
     assertEqual(4, indices.size());
-    assertEqual(0, indices.get(0));
-    assertEqual(1, indices.get(1));
-    assertEqual(2, indices.get(2));
-    assertEqual(3, indices.get(3));
+    assertEqualInt(0, indices.get(0));
+    assertEqualInt(1, indices.get(1));
+    assertEqualInt(2, indices.get(2));
+    assertEqualInt(3, indices.get(3));
     }
 
     @Test
@@ -504,9 +504,9 @@ public class Uint16Arraysome01 extends BasTest {
     Uint16Array arr = new Uint16Array(new int[] {1, 2, 3});
     Uint16Array before = new Uint16Array(arr);
     arr.some((e) -> e > 0);
-    assertEqual(before.get(0).intValue(), arr.get(0));
-    assertEqual(before.get(1).intValue(), arr.get(1));
-    assertEqual(before.get(2).intValue(), arr.get(2));
+    assertEqual(before.get(0).intValue(), arr.get(0).intValue());
+    assertEqual(before.get(1).intValue(), arr.get(1).intValue());
+    assertEqual(before.get(2).intValue(), arr.get(2).intValue());
     }
 
     @Test

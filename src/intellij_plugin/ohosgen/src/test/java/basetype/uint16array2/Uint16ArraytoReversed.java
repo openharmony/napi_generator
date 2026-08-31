@@ -40,35 +40,35 @@ public class Uint16ArraytoReversed extends BasTest {
     void testUint16ArrayToReversed002() {
     Uint16Array arr = Uint16Array.of(0);
     Uint16Array result = arr.toReversed();
-    assertEqual(0, result.get(0));
+    assertEqualInt(0, result.get(0));
     }
 
     @Test
     void testUint16ArrayToReversed003() {
     Uint16Array arr = Uint16Array.of(65535);
     Uint16Array result = arr.toReversed();
-    assertEqual(65535, result.get(0));
+    assertEqualInt(65535, result.get(0));
     }
 
     @Test
     void testUint16ArrayToReversed004() {
     Uint16Array arr = Uint16Array.of(1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
+    assertEqualInt(1, result.get(0));
     }
 
     @Test
     void testUint16ArrayToReversed005() {
     Uint16Array arr = Uint16Array.of(32768);
     Uint16Array result = arr.toReversed();
-    assertEqual(32768, result.get(0));
+    assertEqualInt(32768, result.get(0));
     }
 
     @Test
     void testUint16ArrayToReversed006() {
     Uint16Array arr = Uint16Array.of(42);
     Uint16Array result = arr.toReversed();
-    assertEqual(42, result.get(0));
+    assertEqualInt(42, result.get(0));
     }
 
     @Test
@@ -82,294 +82,294 @@ public class Uint16ArraytoReversed extends BasTest {
     void testUint16ArrayToReversed008() {
     Uint16Array arr = Uint16Array.of(0, 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
-    assertEqual(0, result.get(1));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(0, result.get(1));
     }
 
     @Test
     void testUint16ArrayToReversed009() {
     Uint16Array arr = Uint16Array.of(1, 0);
     Uint16Array result = arr.toReversed();
-    assertEqual(0, result.get(0));
-    assertEqual(1, result.get(1));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(1, result.get(1));
     }
 
     @Test
     void testUint16ArrayToReversed010() {
     Uint16Array arr = Uint16Array.of(65535, 0);
     Uint16Array result = arr.toReversed();
-    assertEqual(0, result.get(0));
-    assertEqual(65535, result.get(1));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(65535, result.get(1));
     }
 
     @Test
     void testUint16ArrayToReversed011() {
     Uint16Array arr = Uint16Array.of(0, 65535);
     Uint16Array result = arr.toReversed();
-    assertEqual(65535, result.get(0));
-    assertEqual(0, result.get(1));
+    assertEqualInt(65535, result.get(0));
+    assertEqualInt(0, result.get(1));
     }
 
     @Test
     void testUint16ArrayToReversed012() {
     Uint16Array arr = Uint16Array.of(100, 200);
     Uint16Array result = arr.toReversed();
-    assertEqual(200, result.get(0));
-    assertEqual(100, result.get(1));
+    assertEqualInt(200, result.get(0));
+    assertEqualInt(100, result.get(1));
     }
 
     @Test
     void testUint16ArrayToReversed013() {
     Uint16Array arr = Uint16Array.of(32768, 65535);
     Uint16Array result = arr.toReversed();
-    assertEqual(65535, result.get(0));
-    assertEqual(32768, result.get(1));
+    assertEqualInt(65535, result.get(0));
+    assertEqualInt(32768, result.get(1));
     }
 
     @Test
     void testUint16ArrayToReversed014() {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     Uint16Array result = arr.toReversed();
-    assertEqual(3, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(1, result.get(2));
+    assertEqualInt(3, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(1, result.get(2));
     }
 
     @Test
     void testUint16ArrayToReversed015() {
     Uint16Array arr = Uint16Array.of(3, 2, 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(3, result.get(2));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(3, result.get(2));
     }
 
     @Test
     void testUint16ArrayToReversed016() {
     Uint16Array arr = Uint16Array.of(0, 0, 0);
     Uint16Array result = arr.toReversed();
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     @Test
     void testUint16ArrayToReversed017() {
     Uint16Array arr = Uint16Array.of(65535, 65535, 65535);
     Uint16Array result = arr.toReversed();
-    assertEqual(65535, result.get(0));
-    assertEqual(65535, result.get(1));
-    assertEqual(65535, result.get(2));
+    assertEqualInt(65535, result.get(0));
+    assertEqualInt(65535, result.get(1));
+    assertEqualInt(65535, result.get(2));
     }
 
     @Test
     void testUint16ArrayToReversed018() {
     Uint16Array arr = Uint16Array.of(0, 65535, 0);
     Uint16Array result = arr.toReversed();
-    assertEqual(0, result.get(0));
-    assertEqual(65535, result.get(1));
-    assertEqual(0, result.get(2));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(65535, result.get(1));
+    assertEqualInt(0, result.get(2));
     }
 
     @Test
     void testUint16ArrayToReversed019() {
     Uint16Array arr = Uint16Array.of(1, 2, 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(1, result.get(2));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(1, result.get(2));
     }
 
     @Test
     void testUint16ArrayToReversed020() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4);
     Uint16Array result = arr.toReversed();
-    assertEqual(4, result.get(0));
-    assertEqual(3, result.get(1));
-    assertEqual(2, result.get(2));
-    assertEqual(1, result.get(3));
+    assertEqualInt(4, result.get(0));
+    assertEqualInt(3, result.get(1));
+    assertEqualInt(2, result.get(2));
+    assertEqualInt(1, result.get(3));
     }
 
     @Test
     void testUint16ArrayToReversed021() {
     Uint16Array arr = Uint16Array.of(4, 3, 2, 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(3, result.get(2));
-    assertEqual(4, result.get(3));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(3, result.get(2));
+    assertEqualInt(4, result.get(3));
     }
 
     @Test
     void testUint16ArrayToReversed022() {
     Uint16Array arr = Uint16Array.of(0, 1, 2, 3);
     Uint16Array result = arr.toReversed();
-    assertEqual(3, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(1, result.get(2));
-    assertEqual(0, result.get(3));
+    assertEqualInt(3, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(1, result.get(2));
+    assertEqualInt(0, result.get(3));
     }
 
     @Test
     void testUint16ArrayToReversed023() {
     Uint16Array arr = Uint16Array.of(100, 200, 300, 400);
     Uint16Array result = arr.toReversed();
-    assertEqual(400, result.get(0));
-    assertEqual(300, result.get(1));
-    assertEqual(200, result.get(2));
-    assertEqual(100, result.get(3));
+    assertEqualInt(400, result.get(0));
+    assertEqualInt(300, result.get(1));
+    assertEqualInt(200, result.get(2));
+    assertEqualInt(100, result.get(3));
     }
 
     @Test
     void testUint16ArrayToReversed024() {
     Uint16Array arr = Uint16Array.of(1, 2, 2, 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(2, result.get(2));
-    assertEqual(1, result.get(3));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(2, result.get(2));
+    assertEqualInt(1, result.get(3));
     }
 
     @Test
     void testUint16ArrayToReversed025() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5);
     Uint16Array result = arr.toReversed();
-    assertEqual(5, result.get(0));
-    assertEqual(4, result.get(1));
-    assertEqual(3, result.get(2));
-    assertEqual(2, result.get(3));
-    assertEqual(1, result.get(4));
+    assertEqualInt(5, result.get(0));
+    assertEqualInt(4, result.get(1));
+    assertEqualInt(3, result.get(2));
+    assertEqualInt(2, result.get(3));
+    assertEqualInt(1, result.get(4));
     }
 
     @Test
     void testUint16ArrayToReversed026() {
     Uint16Array arr = Uint16Array.of(5, 4, 3, 2, 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(3, result.get(2));
-    assertEqual(4, result.get(3));
-    assertEqual(5, result.get(4));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(3, result.get(2));
+    assertEqualInt(4, result.get(3));
+    assertEqualInt(5, result.get(4));
     }
 
     @Test
     void testUint16ArrayToReversed027() {
     Uint16Array arr = Uint16Array.of(0, 1, 2, 3, 4);
     Uint16Array result = arr.toReversed();
-    assertEqual(4, result.get(0));
-    assertEqual(3, result.get(1));
-    assertEqual(2, result.get(2));
-    assertEqual(1, result.get(3));
-    assertEqual(0, result.get(4));
+    assertEqualInt(4, result.get(0));
+    assertEqualInt(3, result.get(1));
+    assertEqualInt(2, result.get(2));
+    assertEqualInt(1, result.get(3));
+    assertEqualInt(0, result.get(4));
     }
 
     @Test
     void testUint16ArrayToReversed028() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array result = arr.toReversed();
-    assertEqual(50, result.get(0));
-    assertEqual(40, result.get(1));
-    assertEqual(30, result.get(2));
-    assertEqual(20, result.get(3));
-    assertEqual(10, result.get(4));
+    assertEqualInt(50, result.get(0));
+    assertEqualInt(40, result.get(1));
+    assertEqualInt(30, result.get(2));
+    assertEqualInt(20, result.get(3));
+    assertEqualInt(10, result.get(4));
     }
 
     @Test
     void testUint16ArrayToReversed029() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 2, 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(3, result.get(2));
-    assertEqual(2, result.get(3));
-    assertEqual(1, result.get(4));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(3, result.get(2));
+    assertEqualInt(2, result.get(3));
+    assertEqualInt(1, result.get(4));
     }
 
     @Test
     void testUint16ArrayToReversed030() {
     Uint16Array arr = Uint16Array.of(1, 1, 2, 2, 3, 3);
     Uint16Array result = arr.toReversed();
-    assertEqual(3, result.get(0));
-    assertEqual(3, result.get(1));
-    assertEqual(2, result.get(2));
-    assertEqual(2, result.get(3));
-    assertEqual(1, result.get(4));
-    assertEqual(1, result.get(5));
+    assertEqualInt(3, result.get(0));
+    assertEqualInt(3, result.get(1));
+    assertEqualInt(2, result.get(2));
+    assertEqualInt(2, result.get(3));
+    assertEqualInt(1, result.get(4));
+    assertEqualInt(1, result.get(5));
     }
 
     @Test
     void testUint16ArrayToReversed031() {
     Uint16Array arr = Uint16Array.of(0, 0, 0, 1, 1, 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(1, result.get(2));
-    assertEqual(0, result.get(3));
-    assertEqual(0, result.get(4));
-    assertEqual(0, result.get(5));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(1, result.get(2));
+    assertEqualInt(0, result.get(3));
+    assertEqualInt(0, result.get(4));
+    assertEqualInt(0, result.get(5));
     }
 
     @Test
     void testUint16ArrayToReversed032() {
     Uint16Array arr = Uint16Array.of(6, 5, 4, 3, 2, 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
-    assertEqual(2, result.get(1));
-    assertEqual(3, result.get(2));
-    assertEqual(4, result.get(3));
-    assertEqual(5, result.get(4));
-    assertEqual(6, result.get(5));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(2, result.get(1));
+    assertEqualInt(3, result.get(2));
+    assertEqualInt(4, result.get(3));
+    assertEqualInt(5, result.get(4));
+    assertEqualInt(6, result.get(5));
     }
 
     @Test
     void testUint16ArrayToReversed033() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5, 6);
     Uint16Array result = arr.toReversed();
-    assertEqual(6, result.get(0));
-    assertEqual(5, result.get(1));
-    assertEqual(4, result.get(2));
-    assertEqual(3, result.get(3));
-    assertEqual(2, result.get(4));
-    assertEqual(1, result.get(5));
+    assertEqualInt(6, result.get(0));
+    assertEqualInt(5, result.get(1));
+    assertEqualInt(4, result.get(2));
+    assertEqualInt(3, result.get(3));
+    assertEqualInt(2, result.get(4));
+    assertEqualInt(1, result.get(5));
     }
 
     @Test
     void testUint16ArrayToReversed034() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50, 60, 70, 80);
     Uint16Array result = arr.toReversed();
-    assertEqual(80, result.get(0));
-    assertEqual(70, result.get(1));
-    assertEqual(60, result.get(2));
-    assertEqual(50, result.get(3));
-    assertEqual(40, result.get(4));
-    assertEqual(30, result.get(5));
-    assertEqual(20, result.get(6));
-    assertEqual(10, result.get(7));
+    assertEqualInt(80, result.get(0));
+    assertEqualInt(70, result.get(1));
+    assertEqualInt(60, result.get(2));
+    assertEqualInt(50, result.get(3));
+    assertEqualInt(40, result.get(4));
+    assertEqualInt(30, result.get(5));
+    assertEqualInt(20, result.get(6));
+    assertEqualInt(10, result.get(7));
     }
 
     @Test
     void testUint16ArrayToReversed035() {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     Uint16Array result = arr.toReversed();
-    assertEqual(10, result.get(0));
-    assertEqual(9, result.get(1));
-    assertEqual(8, result.get(2));
-    assertEqual(7, result.get(3));
-    assertEqual(6, result.get(4));
-    assertEqual(5, result.get(5));
-    assertEqual(4, result.get(6));
-    assertEqual(3, result.get(7));
-    assertEqual(2, result.get(8));
-    assertEqual(1, result.get(9));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(9, result.get(1));
+    assertEqualInt(8, result.get(2));
+    assertEqualInt(7, result.get(3));
+    assertEqualInt(6, result.get(4));
+    assertEqualInt(5, result.get(5));
+    assertEqualInt(4, result.get(6));
+    assertEqualInt(3, result.get(7));
+    assertEqualInt(2, result.get(8));
+    assertEqualInt(1, result.get(9));
     }
 
     @Test
     void testUint16ArrayToReversed036() {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     Uint16Array result = arr.toReversed();
-    assertEqual(3, result.get(0));
-    assertEqual(1, result.get(2));
-    assertEqual(1, arr.get(0));
+    assertEqualInt(3, result.get(0));
+    assertEqualInt(1, result.get(2));
+    assertEqualInt(1, arr.get(0));
     }
 
     @Test
@@ -401,7 +401,7 @@ public class Uint16ArraytoReversed extends BasTest {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     int first = arr.get(0);
     Uint16Array result = arr.toReversed();
-    assertEqual(first, arr.get(0));
+    assertEqualInt(first, arr.get(0));
     }
 
     @Test
@@ -409,7 +409,7 @@ public class Uint16ArraytoReversed extends BasTest {
     Uint16Array arr = Uint16Array.of(1, 2, 3);
     int last = arr.get(arr.length() - 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(last, arr.get(arr.length() - 1));
+    assertEqualInt(last, arr.get(arr.length() - 1));
     }
 
     @Test
@@ -418,7 +418,7 @@ public class Uint16ArraytoReversed extends BasTest {
     Uint16Array snapshot = Uint16Array.of(10, 20, 30, 40);
     Uint16Array result = arr.toReversed();
     for (int i = 0; i < arr.length(); i++) {
-    assertEqual(snapshot.get(i).intValue(), arr.get(i));
+    assertEqual(snapshot.get(i).intValue(), arr.get(i).intValue());
     }
     }
 
@@ -428,8 +428,8 @@ public class Uint16ArraytoReversed extends BasTest {
     Uint16Array result = arr.toReversed();
     assertEqual("1,2,3,4,5", result.join(","));
     assertNotEqual(arr, result);
-    assertEqual(5, arr.get(0));
-    assertEqual(1, arr.get(4));
+    assertEqualInt(5, arr.get(0));
+    assertEqualInt(1, arr.get(4));
     }
 
     @Test
@@ -437,11 +437,11 @@ public class Uint16ArraytoReversed extends BasTest {
     Uint16Array arr = Uint16Array.of(1, 2, 3, 4, 5);
     Uint16Array reversed = arr.toReversed();
     Uint16Array doubleReversed = reversed.toReversed();
-    assertEqual(1, doubleReversed.get(0));
-    assertEqual(2, doubleReversed.get(1));
-    assertEqual(3, doubleReversed.get(2));
-    assertEqual(4, doubleReversed.get(3));
-    assertEqual(5, doubleReversed.get(4));
+    assertEqualInt(1, doubleReversed.get(0));
+    assertEqualInt(2, doubleReversed.get(1));
+    assertEqualInt(3, doubleReversed.get(2));
+    assertEqualInt(4, doubleReversed.get(3));
+    assertEqualInt(5, doubleReversed.get(4));
     }
 
     @Test
@@ -504,9 +504,9 @@ public class Uint16ArraytoReversed extends BasTest {
     void testUint16ArrayToReversed051() {
     Uint16Array arr = Uint16Array.of(3, 1, 2);
     Uint16Array result = arr.toReversed();
-    assertEqual(2, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(3, result.get(2));
+    assertEqualInt(2, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(3, result.get(2));
     }
 
     @Test
@@ -514,9 +514,9 @@ public class Uint16ArraytoReversed extends BasTest {
     List<Integer> src = java.util.Arrays.asList(10, 20, 30);
     Uint16Array arr = new Uint16Array(src);
     Uint16Array result = arr.toReversed();
-    assertEqual(30, result.get(0));
-    assertEqual(20, result.get(1));
-    assertEqual(10, result.get(2));
+    assertEqualInt(30, result.get(0));
+    assertEqualInt(20, result.get(1));
+    assertEqualInt(10, result.get(2));
     }
 
     @Test
@@ -527,10 +527,10 @@ public class Uint16ArraytoReversed extends BasTest {
     arr.set(2, 9);
     arr.set(3, 10);
     Uint16Array result = arr.toReversed();
-    assertEqual(10, result.get(0));
-    assertEqual(9, result.get(1));
-    assertEqual(8, result.get(2));
-    assertEqual(7, result.get(3));
+    assertEqualInt(10, result.get(0));
+    assertEqualInt(9, result.get(1));
+    assertEqualInt(8, result.get(2));
+    assertEqualInt(7, result.get(3));
     }
 
     @Test
@@ -538,66 +538,66 @@ public class Uint16ArraytoReversed extends BasTest {
     Uint16Array original = Uint16Array.of(5, 15, 25);
     Uint16Array arr = new Uint16Array(original);
     Uint16Array result = arr.toReversed();
-    assertEqual(25, result.get(0));
-    assertEqual(15, result.get(1));
-    assertEqual(5, result.get(2));
+    assertEqualInt(25, result.get(0));
+    assertEqualInt(15, result.get(1));
+    assertEqualInt(5, result.get(2));
     }
 
     @Test
     void testUint16ArrayToReversed055() {
     Uint16Array arr = Uint16Array.of(0, 0, 0, 0, 0);
     Uint16Array result = arr.toReversed();
-    assertEqual(0, result.get(0));
-    assertEqual(0, result.get(4));
+    assertEqualInt(0, result.get(0));
+    assertEqualInt(0, result.get(4));
     }
 
     @Test
     void testUint16ArrayToReversed056() {
     Uint16Array arr = Uint16Array.of(65535, 65535, 65535, 65535);
     Uint16Array result = arr.toReversed();
-    assertEqual(65535, result.get(0));
-    assertEqual(65535, result.get(1));
-    assertEqual(65535, result.get(2));
-    assertEqual(65535, result.get(3));
+    assertEqualInt(65535, result.get(0));
+    assertEqualInt(65535, result.get(1));
+    assertEqualInt(65535, result.get(2));
+    assertEqualInt(65535, result.get(3));
     }
 
     @Test
     void testUint16ArrayToReversed057() {
     Uint16Array arr = Uint16Array.of(0, 65535, 32768, 1);
     Uint16Array result = arr.toReversed();
-    assertEqual(1, result.get(0));
-    assertEqual(32768, result.get(1));
-    assertEqual(65535, result.get(2));
-    assertEqual(0, result.get(3));
+    assertEqualInt(1, result.get(0));
+    assertEqualInt(32768, result.get(1));
+    assertEqualInt(65535, result.get(2));
+    assertEqualInt(0, result.get(3));
     }
 
     @Test
     void testUint16ArrayToReversed058() {
     Uint16Array arr = Uint16Array.of(65535, 0, 1, 65535);
     Uint16Array result = arr.toReversed();
-    assertEqual(65535, result.get(0));
-    assertEqual(1, result.get(1));
-    assertEqual(0, result.get(2));
-    assertEqual(65535, result.get(3));
+    assertEqualInt(65535, result.get(0));
+    assertEqualInt(1, result.get(1));
+    assertEqualInt(0, result.get(2));
+    assertEqualInt(65535, result.get(3));
     }
 
     @Test
     void testUint16ArrayToReversed059() {
     Uint16Array arr = Uint16Array.of(42, 42, 42, 42);
     Uint16Array result = arr.toReversed();
-    assertEqual(42, result.get(0));
-    assertEqual(42, result.get(1));
-    assertEqual(42, result.get(2));
-    assertEqual(42, result.get(3));
+    assertEqualInt(42, result.get(0));
+    assertEqualInt(42, result.get(1));
+    assertEqualInt(42, result.get(2));
+    assertEqualInt(42, result.get(3));
     }
 
     @Test
     void testUint16ArrayToReversed060() {
     Uint16Array arr = Uint16Array.of(16384, 32768, 49152);
     Uint16Array result = arr.toReversed();
-    assertEqual(49152, result.get(0));
-    assertEqual(32768, result.get(1));
-    assertEqual(16384, result.get(2));
+    assertEqualInt(49152, result.get(0));
+    assertEqualInt(32768, result.get(1));
+    assertEqualInt(16384, result.get(2));
     }
 
     @Test
@@ -718,7 +718,7 @@ public class Uint16ArraytoReversed extends BasTest {
     Uint16Array s = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array r = s.toReversed();
     assertEqual("50,40,30,20,10", r.join(","));
-    assertEqual(30, r.get(2));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test

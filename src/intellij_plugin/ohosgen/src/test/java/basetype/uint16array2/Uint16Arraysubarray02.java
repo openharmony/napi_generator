@@ -33,8 +33,8 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray();
     assertEqual(5, sub.length());
-    assertEqual(10, sub.get(0));
-    assertEqual(50, sub.get(4));
+    assertEqualInt(10, sub.get(0));
+    assertEqualInt(50, sub.get(4));
     }
 
     @Test
@@ -42,16 +42,16 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(0);
     assertEqual(5, sub.length());
-    assertEqual(10, sub.get(0));
-    assertEqual(50, sub.get(4));
+    assertEqualInt(10, sub.get(0));
+    assertEqualInt(50, sub.get(4));
     }
 
     @Test
     void testUint16ArraySubarrayPart2003() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(0, 5);
-    assertEqual(10, sub.get(0));
-    assertEqual(50, sub.get(4));
+    assertEqualInt(10, sub.get(0));
+    assertEqualInt(50, sub.get(4));
     }
 
     @Test
@@ -65,47 +65,47 @@ public class Uint16Arraysubarray02 extends BasTest {
     void testUint16ArraySubarrayPart2005() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(0, 10);
-    assertEqual(10, sub.get(0));
-    assertEqual(50, sub.get(4));
+    assertEqualInt(10, sub.get(0));
+    assertEqualInt(50, sub.get(4));
     }
 
     @Test
     void testUint16ArraySubarrayPart2006() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(-3);
-    assertEqual(30, sub.get(0));
-    assertEqual(50, sub.get(2));
+    assertEqualInt(30, sub.get(0));
+    assertEqualInt(50, sub.get(2));
     }
 
     @Test
     void testUint16ArraySubarrayPart2007() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(-1);
-    assertEqual(50, sub.get(0));
+    assertEqualInt(50, sub.get(0));
     }
 
     @Test
     void testUint16ArraySubarrayPart2008() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(0, -1);
-    assertEqual(10, sub.get(0));
-    assertEqual(40, sub.get(3));
+    assertEqualInt(10, sub.get(0));
+    assertEqualInt(40, sub.get(3));
     }
 
     @Test
     void testUint16ArraySubarrayPart2009() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(-4, -1);
-    assertEqual(20, sub.get(0));
-    assertEqual(40, sub.get(2));
+    assertEqualInt(20, sub.get(0));
+    assertEqualInt(40, sub.get(2));
     }
 
     @Test
     void testUint16ArraySubarrayPart2010() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(-10);
-    assertEqual(10, sub.get(0));
-    assertEqual(50, sub.get(4));
+    assertEqualInt(10, sub.get(0));
+    assertEqualInt(50, sub.get(4));
     }
 
     @Test
@@ -119,16 +119,16 @@ public class Uint16Arraysubarray02 extends BasTest {
     void testUint16ArraySubarrayPart2012() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(1);
-    assertEqual(20, sub.get(0));
-    assertEqual(50, sub.get(3));
+    assertEqualInt(20, sub.get(0));
+    assertEqualInt(50, sub.get(3));
     }
 
     @Test
     void testUint16ArraySubarrayPart2013() {
     Uint16Array arr = Uint16Array.of(49152, 7, 32001, 88, 605, 17003);
     Uint16Array sub = arr.subarray(0, 3);
-    assertEqual(49152, sub.get(0));
-    assertEqual(32001, sub.get(2));
+    assertEqualInt(49152, sub.get(0));
+    assertEqualInt(32001, sub.get(2));
     }
 
     @Test
@@ -142,99 +142,99 @@ public class Uint16Arraysubarray02 extends BasTest {
     void testUint16ArraySubarrayPart2015() {
     Uint16Array arr = Uint16Array.of(901, 65534, 42, 17000, 3, 808);
     Uint16Array sub = arr.subarray();
-    assertEqual(901, sub.get(0));
-    assertEqual(808, sub.get(5));
+    assertEqualInt(901, sub.get(0));
+    assertEqualInt(808, sub.get(5));
     }
 
     @Test
     void testUint16ArraySubarrayPart2016() {
     Uint16Array arr = Uint16Array.of(60001, 14, 4095, 222, 50000, 71);
     Uint16Array sub = arr.subarray(1, 4);
-    assertEqual(14, sub.get(0));
-    assertEqual(222, sub.get(2));
+    assertEqualInt(14, sub.get(0));
+    assertEqualInt(222, sub.get(2));
     }
 
     @Test
     void testUint16ArraySubarrayPart2017() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(1, 4);
-    assertEqual(20, sub.get(0));
-    assertEqual(30, sub.get(1));
-    assertEqual(40, sub.get(2));
+    assertEqualInt(20, sub.get(0));
+    assertEqualInt(30, sub.get(1));
+    assertEqualInt(40, sub.get(2));
     }
 
     @Test
     void testUint16ArraySubarrayPart2018() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(0, 1);
-    assertEqual(10, sub.get(0));
+    assertEqualInt(10, sub.get(0));
     }
 
     @Test
     void testUint16ArraySubarrayPart2019() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(3, 5);
-    assertEqual(40, sub.get(0));
-    assertEqual(50, sub.get(1));
+    assertEqualInt(40, sub.get(0));
+    assertEqualInt(50, sub.get(1));
     }
 
     @Test
     void testUint16ArraySubarrayPart2020() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(-3);
-    assertEqual(30, sub.get(0));
-    assertEqual(40, sub.get(1));
-    assertEqual(50, sub.get(2));
+    assertEqualInt(30, sub.get(0));
+    assertEqualInt(40, sub.get(1));
+    assertEqualInt(50, sub.get(2));
     }
 
     @Test
     void testUint16ArraySubarrayPart2021() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(-4, -1);
-    assertEqual(20, sub.get(0));
-    assertEqual(30, sub.get(1));
-    assertEqual(40, sub.get(2));
+    assertEqualInt(20, sub.get(0));
+    assertEqualInt(30, sub.get(1));
+    assertEqualInt(40, sub.get(2));
     }
 
     @Test
     void testUint16ArraySubarrayPart2022() {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(0, 3);
-    assertEqual(10, sub.get(0));
-    assertEqual(20, sub.get(1));
-    assertEqual(30, sub.get(2));
+    assertEqualInt(10, sub.get(0));
+    assertEqualInt(20, sub.get(1));
+    assertEqualInt(30, sub.get(2));
     }
 
     @Test
     void testUint16ArraySubarrayPart2023() {
     Uint16Array arr = Uint16Array.of(100, 200, 300);
     Uint16Array sub = arr.subarray(1, 3);
-    assertEqual(200, sub.get(0));
-    assertEqual(300, sub.get(1));
+    assertEqualInt(200, sub.get(0));
+    assertEqualInt(300, sub.get(1));
     }
 
     @Test
     void testUint16ArraySubarrayPart2024() {
     Uint16Array arr = Uint16Array.of(65535, 0, 32768);
     Uint16Array sub = arr.subarray(0, 3);
-    assertEqual(65535, sub.get(0));
-    assertEqual(0, sub.get(1));
-    assertEqual(32768, sub.get(2));
+    assertEqualInt(65535, sub.get(0));
+    assertEqualInt(0, sub.get(1));
+    assertEqualInt(32768, sub.get(2));
     }
 
     @Test
     void testUint16ArraySubarrayPart2025() {
     Uint16Array arr = Uint16Array.of(42);
     Uint16Array sub = arr.subarray(0);
-    assertEqual(42, sub.get(0));
+    assertEqualInt(42, sub.get(0));
     }
 
     @Test
     void testUint16ArraySubarrayPart2026() {
     Uint16Array arr = Uint16Array.of(7, 7, 7, 7);
     Uint16Array sub = arr.subarray(0, 2);
-    assertEqual(7, sub.get(0));
-    assertEqual(7, sub.get(1));
+    assertEqualInt(7, sub.get(0));
+    assertEqualInt(7, sub.get(1));
     }
 
     @Test
@@ -442,9 +442,9 @@ public class Uint16Arraysubarray02 extends BasTest {
     assertEqual(2, sub.byteOffset());
     assertEqual(arr.buffer(), sub.buffer());
     sub.set(0, 99);
-    assertEqual(99, arr.get(1));
+    assertEqualInt(99, arr.get(1));
     arr.set(2, 88);
-    assertEqual(88, sub.get(1));
+    assertEqualInt(88, sub.get(1));
     }
 
     @Test
@@ -455,9 +455,9 @@ public class Uint16Arraysubarray02 extends BasTest {
     assertEqual("30,40,50", sub.join(","));
     assertEqual(arr.buffer(), sub.buffer());
     sub.set(0, 77);
-    assertEqual(77, arr.get(2));
+    assertEqualInt(77, arr.get(2));
     arr.set(3, 66);
-    assertEqual(66, sub.get(1));
+    assertEqualInt(66, sub.get(1));
     }
 
     @Test
@@ -494,9 +494,9 @@ public class Uint16Arraysubarray02 extends BasTest {
     assertEqual("10,20,30,40,50", sub.join(","));
     assertEqual(arr.buffer(), sub.buffer());
     sub.set(0, 99);
-    assertEqual(99, arr.get(0));
+    assertEqualInt(99, arr.get(0));
     arr.set(4, 88);
-    assertEqual(88, sub.get(4));
+    assertEqualInt(88, sub.get(4));
     }
 
     @Test
@@ -509,9 +509,9 @@ public class Uint16Arraysubarray02 extends BasTest {
     assertEqual(arr.buffer(), s1.buffer());
     assertEqual(arr.buffer(), s2.buffer());
     s1.set(0, 99);
-    assertEqual(99, arr.get(0));
+    assertEqualInt(99, arr.get(0));
     arr.set(4, 88);
-    assertEqual(88, s2.get(1));
+    assertEqualInt(88, s2.get(1));
     }
 
     @Test
@@ -533,7 +533,7 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(1, 4);
     sub.set(0, 99);
-    assertEqual(99, arr.get(1));
+    assertEqualInt(99, arr.get(1));
     }
 
     @Test
@@ -541,7 +541,7 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(1, 4);
     arr.set(2, 88);
-    assertEqual(88, sub.get(1));
+    assertEqualInt(88, sub.get(1));
     }
 
     @Test
@@ -549,7 +549,7 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(0, 2);
     sub.set(1, 77);
-    assertEqual(77, arr.get(1));
+    assertEqualInt(77, arr.get(1));
     }
 
     @Test
@@ -557,7 +557,7 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(0, 2);
     arr.set(4, 66);
-    assertEqual(20, sub.get(1));
+    assertEqualInt(20, sub.get(1));
     }
 
     @Test
@@ -566,7 +566,7 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array s1 = arr.subarray(0, 3);
     Uint16Array s2 = arr.subarray(1, 4);
     s1.set(2, 55);
-    assertEqual(55, s2.get(1));
+    assertEqualInt(55, s2.get(1));
     }
 
     @Test
@@ -575,7 +575,7 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array sub1 = arr.subarray(0, 4);
     Uint16Array sub2 = sub1.subarray(1, 3);
     sub2.set(0, 44);
-    assertEqual(44, arr.get(1));
+    assertEqualInt(44, arr.get(1));
     }
 
     @Test
@@ -585,9 +585,9 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array sub2 = sub1.subarray(1, 3);
     assertEqual(arr.buffer(), sub2.buffer());
     sub2.set(0, 44);
-    assertEqual(44, arr.get(1));
+    assertEqualInt(44, arr.get(1));
     arr.set(2, 55);
-    assertEqual(55, sub2.get(1));
+    assertEqualInt(55, sub2.get(1));
     }
 
     @Test
@@ -595,7 +595,7 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array arr = Uint16Array.of(10, 20, 30, 40, 50);
     Uint16Array sub = arr.subarray(-3);
     sub.set(0, 33);
-    assertEqual(33, arr.get(2));
+    assertEqualInt(33, arr.get(2));
     }
 
     @Test
@@ -618,9 +618,9 @@ public class Uint16Arraysubarray02 extends BasTest {
     Uint16Array sub = arr.subarray();
     assertEqual(arr.buffer(), sub.buffer());
     sub.set(0, 99);
-    assertEqual(99, arr.get(0));
+    assertEqualInt(99, arr.get(0));
     arr.set(4, 88);
-    assertEqual(88, sub.get(4));
+    assertEqualInt(88, sub.get(4));
     }
 
     @Test
