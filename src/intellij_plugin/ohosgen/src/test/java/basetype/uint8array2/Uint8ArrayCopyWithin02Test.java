@@ -96,7 +96,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     Uint8Array result = arr.copyWithin(0, 2, 4);
     arr.set(0, 99);
-    assertEqual(99, result.get(0));
+    assertEqualInt(99, result.get(0));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     Uint8Array result = arr.copyWithin(0, -3, -1);
     result.set(1, 88);
-    assertEqual(88, arr.get(1));
+    assertEqualInt(88, arr.get(1));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     Uint8Array result = arr.copyWithin(2, 0, 3);
     arr.set(4, 77);
-    assertEqual(77, result.get(4));
+    assertEqualInt(77, result.get(4));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     Uint8Array result = arr.copyWithin(0, 2);
     result.set(5, 66);
-    assertEqual(66, arr.get(5));
+    assertEqualInt(66, arr.get(5));
     }
 
     @Test
@@ -128,7 +128,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     Uint8Array result = arr.copyWithin(100, 0);
     result.set(0, 55);
-    assertEqual(55, arr.get(0));
+    assertEqualInt(55, arr.get(0));
     }
 
     @Test
@@ -136,7 +136,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     Uint8Array result = arr.copyWithin(-100, 0, 2);
     arr.set(3, 44);
-    assertEqual(44, result.get(3));
+    assertEqualInt(44, result.get(3));
     }
 
     @Test
@@ -144,8 +144,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, 0, 6);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -153,8 +153,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, 2);
     assertEqual(6, arr.length());
-    assertEqual(30, arr.get(0));
-    assertEqual(60, arr.get(3));
+    assertEqualInt(30, arr.get(0));
+    assertEqualInt(60, arr.get(3));
     }
 
     @Test
@@ -162,8 +162,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(2, 0, 2);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(2));
-    assertEqual(20, arr.get(3));
+    assertEqualInt(10, arr.get(2));
+    assertEqualInt(20, arr.get(3));
     }
 
     @Test
@@ -171,8 +171,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, 1, 3);
     assertEqual(6, arr.length());
-    assertEqual(20, arr.get(0));
-    assertEqual(30, arr.get(1));
+    assertEqualInt(20, arr.get(0));
+    assertEqualInt(30, arr.get(1));
     }
 
     @Test
@@ -180,8 +180,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(1, 3, 5);
     assertEqual(6, arr.length());
-    assertEqual(40, arr.get(1));
-    assertEqual(50, arr.get(2));
+    assertEqualInt(40, arr.get(1));
+    assertEqualInt(50, arr.get(2));
     }
 
     @Test
@@ -189,8 +189,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 2, 3, 4, 5});
     arr.copyWithin(0, 3);
     assertEqual(6, arr.length());
-    assertEqual(3, arr.get(0));
-    assertEqual(5, arr.get(2));
+    assertEqualInt(3, arr.get(0));
+    assertEqualInt(5, arr.get(2));
     }
 
     @Test
@@ -198,8 +198,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 2, 3, 4, 5});
     arr.copyWithin(3, 0);
     assertEqual(6, arr.length());
-    assertEqual(0, arr.get(3));
-    assertEqual(2, arr.get(5));
+    assertEqualInt(0, arr.get(3));
+    assertEqualInt(2, arr.get(5));
     }
 
     @Test
@@ -207,8 +207,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 2, 3, 4, 5});
     arr.copyWithin(0, 2, 4);
     assertEqual(6, arr.length());
-    assertEqual(2, arr.get(0));
-    assertEqual(3, arr.get(1));
+    assertEqualInt(2, arr.get(0));
+    assertEqualInt(3, arr.get(1));
     }
 
     @Test
@@ -216,8 +216,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, 6);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -225,8 +225,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(6, 0);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -234,8 +234,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, 0, 0);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -243,8 +243,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(3, 3, 3);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -252,7 +252,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     arr.copyWithin(1, 0, 1);
     assertEqual(4, arr.length());
-    assertEqual(10, arr.get(1));
+    assertEqualInt(10, arr.get(1));
     }
 
     @Test
@@ -260,8 +260,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     arr.copyWithin(0, 1, 1);
     assertEqual(4, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(40, arr.get(3));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(40, arr.get(3));
     }
 
     @Test
@@ -276,7 +276,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {42});
     arr.copyWithin(0, 0, 1);
     assertEqual(1, arr.length());
-    assertEqual(42, arr.get(0));
+    assertEqualInt(42, arr.get(0));
     }
 
     @Test
@@ -284,8 +284,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {5, 5, 5, 5});
     arr.copyWithin(1, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(5, arr.get(1));
-    assertEqual(5, arr.get(2));
+    assertEqualInt(5, arr.get(1));
+    assertEqualInt(5, arr.get(2));
     }
 
     @Test
@@ -293,8 +293,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 2, 3, 4});
     arr.copyWithin(1, 0);
     assertEqual(4, arr.length());
-    assertEqual(1, arr.get(1));
-    assertEqual(3, arr.get(3));
+    assertEqualInt(1, arr.get(1));
+    assertEqualInt(3, arr.get(3));
     }
 
     @Test
@@ -302,8 +302,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, -2);
     assertEqual(6, arr.length());
-    assertEqual(50, arr.get(0));
-    assertEqual(60, arr.get(1));
+    assertEqualInt(50, arr.get(0));
+    assertEqualInt(60, arr.get(1));
     }
 
     @Test
@@ -311,8 +311,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 2, 3, 4, 5});
     arr.copyWithin(-2, 0, 2);
     assertEqual(6, arr.length());
-    assertEqual(0, arr.get(4));
-    assertEqual(1, arr.get(5));
+    assertEqualInt(0, arr.get(4));
+    assertEqualInt(1, arr.get(5));
     }
 
     @Test
@@ -320,8 +320,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, -3, -1);
     assertEqual(6, arr.length());
-    assertEqual(40, arr.get(0));
-    assertEqual(50, arr.get(1));
+    assertEqualInt(40, arr.get(0));
+    assertEqualInt(50, arr.get(1));
     }
 
     @Test
@@ -329,8 +329,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, 0, -1);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(50, arr.get(4));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(50, arr.get(4));
     }
 
     @Test
@@ -338,8 +338,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(-3, -5, -1);
     assertEqual(6, arr.length());
-    assertEqual(20, arr.get(3));
-    assertEqual(40, arr.get(5));
+    assertEqualInt(20, arr.get(3));
+    assertEqualInt(40, arr.get(5));
     }
 
     @Test
@@ -347,7 +347,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, -1);
     assertEqual(6, arr.length());
-    assertEqual(60, arr.get(0));
+    assertEqualInt(60, arr.get(0));
     }
 
     @Test
@@ -355,7 +355,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(-1, 0, 1);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(5));
+    assertEqualInt(10, arr.get(5));
     }
 
     @Test
@@ -363,8 +363,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(-4, -5, -1);
     assertEqual(6, arr.length());
-    assertEqual(20, arr.get(2));
-    assertEqual(50, arr.get(5));
+    assertEqualInt(20, arr.get(2));
+    assertEqualInt(50, arr.get(5));
     }
 
     @Test
@@ -372,8 +372,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, -1, -1);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -381,8 +381,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
     arr.copyWithin(1, -6);
     assertEqual(5, arr.length());
-    assertEqual(10, arr.get(1));
-    assertEqual(40, arr.get(4));
+    assertEqualInt(10, arr.get(1));
+    assertEqualInt(40, arr.get(4));
     }
 
     @Test
@@ -390,8 +390,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, 100);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -399,8 +399,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(100, 0);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -408,8 +408,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, 0, 100);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -417,8 +417,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(-100, 0, 2);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
     }
 
     @Test
@@ -426,8 +426,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, -100);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -435,8 +435,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, 0, -100);
     assertEqual(6, arr.length());
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -444,8 +444,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50});
     arr.copyWithin(3, 1, 8);
     assertEqual(5, arr.length());
-    assertEqual(20, arr.get(3));
-    assertEqual(30, arr.get(4));
+    assertEqualInt(20, arr.get(3));
+    assertEqualInt(30, arr.get(4));
     }
 
     @Test
@@ -490,8 +490,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40});
     arr.copyWithin(0, 2, 4);
     assertEqual(4, arr.length());
-    assertEqual(30, arr.get(0));
-    assertEqual(40, arr.get(1));
+    assertEqualInt(30, arr.get(0));
+    assertEqualInt(40, arr.get(1));
     }
 
     @Test
@@ -534,8 +534,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     view1.set(4, 50);
     view1.set(5, 60);
     view1.copyWithin(0, 2, 4);
-    assertEqual(30, view2.get(0));
-    assertEqual(40, view2.get(1));
+    assertEqualInt(30, view2.get(0));
+    assertEqualInt(40, view2.get(1));
     }
 
     @Test
@@ -551,7 +551,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     view1.set(5, 60);
     view1.copyWithin(0, 2, 4);
     view1.set(0, 99);
-    assertEqual(99, view2.get(0));
+    assertEqualInt(99, view2.get(0));
     }
 
     @Test
@@ -594,16 +594,16 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     void testUint8ArrayCopyWithin02_066() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(2, 0, 4);
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
     }
 
     @Test
     void testUint8ArrayCopyWithin02_067() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, 2, 4);
-    assertEqual(50, arr.get(4));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(50, arr.get(4));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -617,16 +617,16 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     void testUint8ArrayCopyWithin02_069() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(0, -3, -1);
-    assertEqual(30, arr.get(2));
-    assertEqual(40, arr.get(3));
+    assertEqualInt(30, arr.get(2));
+    assertEqualInt(40, arr.get(3));
     }
 
     @Test
     void testUint8ArrayCopyWithin02_070() {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     arr.copyWithin(2, 0, 3);
-    assertEqual(10, arr.get(0));
-    assertEqual(60, arr.get(5));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(60, arr.get(5));
     }
 
     @Test
@@ -634,7 +634,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     Uint8Array result = arr.copyWithin(0, 2, 4);
     result.set(0, 77);
-    assertEqual(77, arr.get(0));
+    assertEqualInt(77, arr.get(0));
     }
 
     @Test
@@ -642,15 +642,15 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {10, 20, 30, 40, 50, 60});
     Uint8Array result = arr.copyWithin(0, 2, 4);
     arr.set(1, 88);
-    assertEqual(88, result.get(1));
+    assertEqualInt(88, result.get(1));
     }
 
     @Test
     void testUint8ArrayCopyWithin02_073() {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 2, 3, 4, 5});
     arr.copyWithin(0, 2, 4);
-    assertEqual(4, arr.get(4));
-    assertEqual(5, arr.get(5));
+    assertEqualInt(4, arr.get(4));
+    assertEqualInt(5, arr.get(5));
     }
 
     @Test
@@ -658,8 +658,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0, 1, 2, 3});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(0, arr.get(0));
-    assertEqual(1, arr.get(1));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(1, arr.get(1));
     }
 
     @Test
@@ -667,8 +667,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {255, 1, 2, 3});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(255, arr.get(0));
-    assertEqual(1, arr.get(1));
+    assertEqualInt(255, arr.get(0));
+    assertEqualInt(1, arr.get(1));
     }
 
     @Test
@@ -676,8 +676,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0x1FF, 5, 6, 7});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(255, arr.get(0));
-    assertEqual(5, arr.get(1));
+    assertEqualInt(255, arr.get(0));
+    assertEqualInt(5, arr.get(1));
     }
 
     @Test
@@ -685,8 +685,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {-1, 2, 3, 4});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(255, arr.get(0));
-    assertEqual(2, arr.get(1));
+    assertEqualInt(255, arr.get(0));
+    assertEqualInt(2, arr.get(1));
     }
 
     @Test
@@ -694,8 +694,8 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0xFF, 1, 2, 3});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(255, arr.get(0));
-    assertEqual(1, arr.get(1));
+    assertEqualInt(255, arr.get(0));
+    assertEqualInt(1, arr.get(1));
     }
 
     @Test
@@ -717,7 +717,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {0x100, 3, 4, 5});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -725,7 +725,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {257, 4, 5, 6});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(1, arr.get(0));
+    assertEqualInt(1, arr.get(0));
     }
 
     @Test
@@ -761,7 +761,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {3, 7, 0, 0});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(3, arr.get(0));
+    assertEqualInt(3, arr.get(0));
     }
 
     @Test
@@ -769,7 +769,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {2, 7, 0, 0});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(2, arr.get(0));
+    assertEqualInt(2, arr.get(0));
     }
 
     @Test
@@ -777,7 +777,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {-0, 100, 0, 0});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -785,7 +785,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new double[] {Double.NaN, 50, 0, 0});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -793,7 +793,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new double[] {Double.POSITIVE_INFINITY, 30, 0, 0});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -801,7 +801,7 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new double[] {Double.NEGATIVE_INFINITY, 20, 0, 0});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -844,6 +844,6 @@ public class Uint8ArrayCopyWithin02Test extends BasTest {
     Uint8Array arr = new Uint8Array(new int[] {1, 7, 0, 0});
     arr.copyWithin(0, 0, 2);
     assertEqual(4, arr.length());
-    assertEqual(1, arr.get(0));
+    assertEqualInt(1, arr.get(0));
     }
 }

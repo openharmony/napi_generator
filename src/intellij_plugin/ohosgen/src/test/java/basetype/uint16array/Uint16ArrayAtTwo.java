@@ -37,9 +37,9 @@ public class Uint16ArrayAtTwo extends BasTest {
     dataView.setUint16(6, 456, true);
     dataView.setUint16(8, 789, true);
     Uint16Array view = new Uint16Array(buffer, 4, 2);
-    assertEqual(123, view.at(0));
-    assertEqual(456, view.at(1));
-    assertEqual(456, view.at(-1));
+    assertEqualInt(123, view.at(0));
+    assertEqualInt(456, view.at(1));
+    assertEqualInt(456, view.at(-1));
     assertNull(view.at(2));
     assertNull(view.at(-3));
     }

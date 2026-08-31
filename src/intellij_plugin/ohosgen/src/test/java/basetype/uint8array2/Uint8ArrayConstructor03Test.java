@@ -193,19 +193,19 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     @Test
     void testUint8ArrayConstructor03_024() {
     Uint8Array arr = new Uint8Array(5.0);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_025() {
     Uint8Array arr = new Uint8Array(5.0);
-    assertEqual(0, arr.get(4));
+    assertEqualInt(0, arr.get(4));
     }
 
     @Test
     void testUint8ArrayConstructor03_026() {
     Uint8Array arr = new Uint8Array(1.0);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
@@ -252,156 +252,156 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     void testUint8ArrayConstructor03_032() {
     List<Integer> src = java.util.Arrays.asList(0);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_033() {
     List<Integer> src = java.util.Arrays.asList(255);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_034() {
     List<Integer> src = java.util.Arrays.asList(256);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_035() {
     List<Integer> src = java.util.Arrays.asList(-1);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_036() {
     List<Integer> src = java.util.Arrays.asList(-128);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(128, arr.get(0));
+    assertEqualInt(128, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_037() {
     List<Integer> src = java.util.Arrays.asList(1000);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(232, arr.get(0));
+    assertEqualInt(232, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_038() {
     List<Integer> src = java.util.Arrays.asList(-1000);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(24, arr.get(0));
+    assertEqualInt(24, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_039() {
     List<Integer> src = java.util.Arrays.asList(0x7F);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(127, arr.get(0));
+    assertEqualInt(127, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_040() {
     List<Integer> src = java.util.Arrays.asList(0xFF);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_041() {
     List<Integer> src = java.util.Arrays.asList(0377);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_042() {
     List<Integer> src = java.util.Arrays.asList(0b11111111);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_043() {
     List<Integer> src = java.util.Arrays.asList(-0);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor03_044() {
     List<Integer> src = java.util.Arrays.asList(0, 128, 255);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(0, arr.get(0));
-    assertEqual(128, arr.get(1));
-    assertEqual(255, arr.get(2));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(128, arr.get(1));
+    assertEqualInt(255, arr.get(2));
     }
 
     @Test
     void testUint8ArrayConstructor03_045() {
     List<Integer> src = java.util.Arrays.asList(1, 2, 3, 4, 5);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(5, arr.get(4));
+    assertEqualInt(5, arr.get(4));
     }
 
     @Test
     void testUint8ArrayConstructor03_046() {
     List<Integer> src = java.util.Arrays.asList(127, 128);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(127, arr.get(0));
-    assertEqual(128, arr.get(1));
+    assertEqualInt(127, arr.get(0));
+    assertEqualInt(128, arr.get(1));
     }
 
     @Test
     void testUint8ArrayConstructor03_047() {
     List<Integer> src = java.util.Arrays.asList(0, 0, 0);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(0, arr.get(2));
+    assertEqualInt(0, arr.get(2));
     }
 
     @Test
     void testUint8ArrayConstructor03_048() {
     List<Integer> src = java.util.Arrays.asList(255, 255, 255);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(255, arr.get(1));
+    assertEqualInt(255, arr.get(1));
     }
 
     @Test
     void testUint8ArrayConstructor03_049() {
     List<Integer> src = java.util.Arrays.asList(1, -1, 1, -1);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(255, arr.get(1));
-    assertEqual(255, arr.get(3));
+    assertEqualInt(255, arr.get(1));
+    assertEqualInt(255, arr.get(3));
     }
 
     @Test
     void testUint8ArrayConstructor03_050() {
     List<Integer> src = java.util.Arrays.asList(255, 256, 257);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(255, arr.get(0));
-    assertEqual(0, arr.get(1));
-    assertEqual(1, arr.get(2));
+    assertEqualInt(255, arr.get(0));
+    assertEqualInt(0, arr.get(1));
+    assertEqualInt(1, arr.get(2));
     }
 
     @Test
     void testUint8ArrayConstructor03_051() {
     List<Integer> src = java.util.Arrays.asList(0, 256);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(0, arr.get(1));
+    assertEqualInt(0, arr.get(1));
     }
 
     @Test
     void testUint8ArrayConstructor03_052() {
     List<Integer> src = java.util.Arrays.asList(256, -1, 300, -50);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(0, arr.get(0));
-    assertEqual(255, arr.get(1));
-    assertEqual(44, arr.get(2));
-    assertEqual(206, arr.get(3));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(255, arr.get(1));
+    assertEqualInt(44, arr.get(2));
+    assertEqualInt(206, arr.get(3));
     }
 
     @Test
@@ -460,16 +460,16 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     void testUint8ArrayConstructor03_059() {
     List<Integer> src = java.util.Arrays.asList(0, 1, 2);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(0, arr.get(0));
-    assertEqual(1, arr.get(1));
-    assertEqual(2, arr.get(2));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(1, arr.get(1));
+    assertEqualInt(2, arr.get(2));
     }
 
     @Test
     void testUint8ArrayConstructor03_060() {
     List<Integer> src = java.util.Arrays.asList(127);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(127, arr.get(0));
+    assertEqualInt(127, arr.get(0));
     assertEqual(1, arr.length());
     }
 
@@ -477,9 +477,9 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     void testUint8ArrayConstructor03_061() {
     List<Integer> src = java.util.Arrays.asList(10, 20, 30);
     Uint8Array arr = new Uint8Array(src);
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(30, arr.get(2));
     assertEqual(3, arr.length());
     }
 
@@ -501,7 +501,7 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     void testUint8ArrayConstructor03_064() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf, 2, 2);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     assertEqual(2, arr.length());
     }
 
@@ -614,10 +614,10 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     void testUint8ArrayConstructor03_080() {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf, 0, 4);
-    assertEqual(0, arr.get(0));
-    assertEqual(0, arr.get(1));
-    assertEqual(0, arr.get(2));
-    assertEqual(0, arr.get(3));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(0, arr.get(1));
+    assertEqualInt(0, arr.get(2));
+    assertEqualInt(0, arr.get(3));
     }
 
     @Test
@@ -625,7 +625,7 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf, 0, 4);
     arr.set(0, 0xAB);
-    assertEqual(0xAB, arr.get(0));
+    assertEqualInt(0xAB, arr.get(0));
     }
 
     @Test
@@ -633,7 +633,7 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf, 0, 4);
     arr.set(0, 0xFF);
-    assertEqual(0xFF, arr.get(0));
+    assertEqualInt(0xFF, arr.get(0));
     }
 
     @Test
@@ -641,7 +641,7 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     ArrayBuffer buf = new ArrayBuffer(4);
     Uint8Array arr = new Uint8Array(buf, 0, 4);
     arr.set(0, 0x00);
-    assertEqual(0x00, arr.get(0));
+    assertEqualInt(0x00, arr.get(0));
     }
 
     @Test
@@ -705,7 +705,7 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     Uint8Array arr = new Uint8Array(buf, 0, 4);
     arr.set(0, 0xAB);
     Uint8Array checkArr = new Uint8Array(buf, 0, 4);
-    assertEqual(0xAB, checkArr.get(0));
+    assertEqualInt(0xAB, checkArr.get(0));
     }
 
     @Test
@@ -714,7 +714,7 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     Uint8Array baseArr = new Uint8Array(buf, 0, 4);
     baseArr.set(1, 0xCD);
     Uint8Array view = new Uint8Array(buf, 0, 4);
-    assertEqual(0xCD, view.get(1));
+    assertEqualInt(0xCD, view.get(1));
     }
 
     @Test
@@ -726,10 +726,10 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     front.set(1, 20);
     back.set(0, 30);
     back.set(1, 40);
-    assertEqual(10, front.get(0));
-    assertEqual(20, front.get(1));
-    assertEqual(30, back.get(0));
-    assertEqual(40, back.get(1));
+    assertEqualInt(10, front.get(0));
+    assertEqualInt(20, front.get(1));
+    assertEqualInt(30, back.get(0));
+    assertEqualInt(40, back.get(1));
     }
 
     @Test
@@ -738,9 +738,9 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     Uint8Array whole = new Uint8Array(buf, 0, 4);
     Uint8Array partial = new Uint8Array(buf, 1, 2);
     whole.set(1, 0x77);
-    assertEqual(0x77, partial.get(0));
+    assertEqualInt(0x77, partial.get(0));
     partial.set(1, 0x88);
-    assertEqual(0x88, whole.get(2));
+    assertEqualInt(0x88, whole.get(2));
     }
 
     @Test
@@ -751,7 +751,7 @@ public class Uint8ArrayConstructor03Test extends BasTest {
     firstHalf.set(3, 0x11);
     secondHalf.set(0, 0x22);
     Uint8Array check = new Uint8Array(buf, 0, 8);
-    assertEqual(0x11, check.get(3));
-    assertEqual(0x22, check.get(4));
+    assertEqualInt(0x11, check.get(3));
+    assertEqualInt(0x22, check.get(4));
     }
 }

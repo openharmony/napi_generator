@@ -232,17 +232,17 @@ public class Uint8ArrayConstructor02Test extends BasTest {
     @Test
     void testUint8ArrayConstructor02_031() {
     Uint8Array arr = new Uint8Array(3);
-    assertEqual(0, arr.get(0));
-    assertEqual(0, arr.get(1));
-    assertEqual(0, arr.get(2));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(0, arr.get(1));
+    assertEqualInt(0, arr.get(2));
     }
 
     @Test
     void testUint8ArrayConstructor02_032() {
     Uint8Array arr = new Uint8Array(100);
-    assertEqual(0, arr.get(0));
-    assertEqual(0, arr.get(49));
-    assertEqual(0, arr.get(99));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(0, arr.get(49));
+    assertEqualInt(0, arr.get(99));
     }
 
     @Test
@@ -270,105 +270,105 @@ public class Uint8ArrayConstructor02Test extends BasTest {
     void testUint8ArrayConstructor02_036() {
     double[] nums = new double[] {0.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_037() {
     double[] nums = new double[] {255.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_038() {
     double[] nums = new double[] {1.0, 2.0, 3.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(1, arr.get(0));
-    assertEqual(2, arr.get(1));
-    assertEqual(3, arr.get(2));
+    assertEqualInt(1, arr.get(0));
+    assertEqualInt(2, arr.get(1));
+    assertEqualInt(3, arr.get(2));
     }
 
     @Test
     void testUint8ArrayConstructor02_039() {
     double[] nums = new double[] {0.0, 127.0, 128.0, 255.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
-    assertEqual(127, arr.get(1));
-    assertEqual(128, arr.get(2));
-    assertEqual(255, arr.get(3));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(127, arr.get(1));
+    assertEqualInt(128, arr.get(2));
+    assertEqualInt(255, arr.get(3));
     }
 
     @Test
     void testUint8ArrayConstructor02_040() {
     double[] nums = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(5));
-    assertEqual(0, arr.get(9));
+    assertEqualInt(0, arr.get(5));
+    assertEqualInt(0, arr.get(9));
     }
 
     @Test
     void testUint8ArrayConstructor02_041() {
     double[] nums = new double[] {255.0, 255.0, 255.0, 255.0, 255.0, 255.0, 255.0, 255.0, 255.0, 255.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(255, arr.get(0));
-    assertEqual(255, arr.get(9));
+    assertEqualInt(255, arr.get(0));
+    assertEqualInt(255, arr.get(9));
     }
 
     @Test
     void testUint8ArrayConstructor02_042() {
     double[] nums = new double[] {0x10, 0xFF, 0x80};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(16, arr.get(0));
-    assertEqual(255, arr.get(1));
-    assertEqual(128, arr.get(2));
+    assertEqualInt(16, arr.get(0));
+    assertEqualInt(255, arr.get(1));
+    assertEqualInt(128, arr.get(2));
     }
 
     @Test
     void testUint8ArrayConstructor02_043() {
     double[] nums = new double[] {0b1111, 0b10101010};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(15, arr.get(0));
-    assertEqual(170, arr.get(1));
+    assertEqualInt(15, arr.get(0));
+    assertEqualInt(170, arr.get(1));
     }
 
     @Test
     void testUint8ArrayConstructor02_044() {
     double[] nums = new double[] {077, 0200};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(63, arr.get(0));
-    assertEqual(128, arr.get(1));
+    assertEqualInt(63, arr.get(0));
+    assertEqualInt(128, arr.get(1));
     }
 
     @Test
     void testUint8ArrayConstructor02_045() {
     double[] nums = new double[] {1e2, 1.5e2};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(100, arr.get(0));
-    assertEqual(150, arr.get(1));
+    assertEqualInt(100, arr.get(0));
+    assertEqualInt(150, arr.get(1));
     }
 
     @Test
     void testUint8ArrayConstructor02_046() {
     double[] nums = new double[] {3.14, 2.718};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(3, arr.get(0));
-    assertEqual(2, arr.get(1));
+    assertEqualInt(3, arr.get(0));
+    assertEqualInt(2, arr.get(1));
     }
 
     @Test
     void testUint8ArrayConstructor02_047() {
     double[] nums = new double[] {-0.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_048() {
     double[] nums = new double[] {+0.0, +127.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
-    assertEqual(127, arr.get(1));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(127, arr.get(1));
     }
 
     @Test
@@ -391,45 +391,45 @@ public class Uint8ArrayConstructor02Test extends BasTest {
     void testUint8ArrayConstructor02_050() {
     double[] nums = new double[] {0.0, 255.0, 0.0, 255.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
-    assertEqual(255, arr.get(1));
-    assertEqual(0, arr.get(2));
-    assertEqual(255, arr.get(3));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(255, arr.get(1));
+    assertEqualInt(0, arr.get(2));
+    assertEqualInt(255, arr.get(3));
     }
 
     @Test
     void testUint8ArrayConstructor02_051() {
     double[] nums = new double[] {0.001, 0.999, 254.999, 255.001};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
-    assertEqual(0, arr.get(1));
-    assertEqual(254, arr.get(2));
-    assertEqual(255, arr.get(3));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(0, arr.get(1));
+    assertEqualInt(254, arr.get(2));
+    assertEqualInt(255, arr.get(3));
     }
 
     @Test
     void testUint8ArrayConstructor02_052() {
     double[] nums = new double[] {256.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_053() {
     double[] nums = new double[] {-1.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_054() {
     double[] nums = new double[] {256.0, -1.0, 128.0, 0.0, 255.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
-    assertEqual(255, arr.get(1));
-    assertEqual(128, arr.get(2));
-    assertEqual(0, arr.get(3));
-    assertEqual(255, arr.get(4));
+    assertEqualInt(0, arr.get(0));
+    assertEqualInt(255, arr.get(1));
+    assertEqualInt(128, arr.get(2));
+    assertEqualInt(0, arr.get(3));
+    assertEqualInt(255, arr.get(4));
     }
 
     @Test
@@ -473,7 +473,7 @@ public class Uint8ArrayConstructor02Test extends BasTest {
     double[] nums = new double[] {100.0, 200.0};
     Uint8Array arr = new Uint8Array(nums);
     nums[0] = 999.0;
-    assertEqual(100, arr.get(0));
+    assertEqualInt(100, arr.get(0));
     }
 
     @Test
@@ -487,119 +487,119 @@ public class Uint8ArrayConstructor02Test extends BasTest {
     void testUint8ArrayConstructor02_062() {
     double[] nums = new double[] {257.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(1, arr.get(0));
+    assertEqualInt(1, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_063() {
     double[] nums = new double[] {511.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_064() {
     double[] nums = new double[] {512.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_065() {
     double[] nums = new double[] {1000.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(232, arr.get(0));
+    assertEqualInt(232, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_066() {
     double[] nums = new double[] {-2.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(254, arr.get(0));
+    assertEqualInt(254, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_067() {
     double[] nums = new double[] {-255.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(1, arr.get(0));
+    assertEqualInt(1, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_068() {
     double[] nums = new double[] {-256.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_069() {
     double[] nums = new double[] {-300.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(212, arr.get(0));
+    assertEqualInt(212, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_070() {
     double[] nums = new double[] {3.14};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(3, arr.get(0));
+    assertEqualInt(3, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_071() {
     double[] nums = new double[] {0.5};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_072() {
     double[] nums = new double[] {127.5};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(127, arr.get(0));
+    assertEqualInt(127, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_073() {
     double[] nums = new double[] {255.9};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(255, arr.get(0));
+    assertEqualInt(255, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_074() {
     double[] nums = new double[] {256.9};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_075() {
     double[] nums = new double[] {-0.5};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_076() {
     double[] nums = new double[] {-127.5};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(129, arr.get(0));
+    assertEqualInt(129, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_077() {
     double[] nums = new double[] {1e10};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(0, arr.get(0));
+    assertEqualInt(0, arr.get(0));
     }
 
     @Test
     void testUint8ArrayConstructor02_078() {
     double[] nums = new double[] {42.0};
     Uint8Array arr = new Uint8Array(nums);
-    assertEqual(42, arr.get(0));
+    assertEqualInt(42, arr.get(0));
     }
 
     @Test
@@ -828,7 +828,7 @@ public class Uint8ArrayConstructor02Test extends BasTest {
     Uint8Array arr = new Uint8Array(buf, 0.0);
     DataView view = new DataView(buf);
     view.setUint8(0, 77);
-    assertEqual(77, arr.get(0));
+    assertEqualInt(77, arr.get(0));
     }
 
     @Test
@@ -837,7 +837,7 @@ public class Uint8ArrayConstructor02Test extends BasTest {
     Uint8Array arr1 = new Uint8Array(buf, 0.0);
     Uint8Array arr2 = new Uint8Array(buf, 0.0);
     arr1.set(1, 33);
-    assertEqual(33, arr2.get(1));
+    assertEqualInt(33, arr2.get(1));
     }
 
     @Test
@@ -847,7 +847,7 @@ public class Uint8ArrayConstructor02Test extends BasTest {
     Uint8Array offset = new Uint8Array(buf, 4.0);
     base.set(3, 11);
     base.set(4, 22);
-    assertEqual(22, offset.get(0));
+    assertEqualInt(22, offset.get(0));
     }
 
     @Test
@@ -857,9 +857,9 @@ public class Uint8ArrayConstructor02Test extends BasTest {
     Uint8Array high = new Uint8Array(buf, 3.0);
     low.set(2, 99);
     high.set(0, 88);
-    assertEqual(99, low.get(2));
-    assertEqual(88, high.get(0));
-    assertEqual(88, low.get(3));
+    assertEqualInt(99, low.get(2));
+    assertEqualInt(88, high.get(0));
+    assertEqualInt(88, low.get(3));
     }
 
     @Test

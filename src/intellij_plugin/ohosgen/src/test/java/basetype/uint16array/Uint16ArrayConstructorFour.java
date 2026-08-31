@@ -37,7 +37,7 @@ public class Uint16ArrayConstructorFour extends BasTest {
     Uint16Array first = new Uint16Array(buffer);
     Uint16Array second = new Uint16Array(buffer);
     first.set(2, 42);
-    assertEqual(42, second.at(2));
+    assertEqualInt(42, second.at(2));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class Uint16ArrayConstructorFour extends BasTest {
     Uint16Array first = new Uint16Array(buffer, 0, 3);
     Uint16Array second = new Uint16Array(buffer, 2, 3);
     first.set(1, 77);
-    assertEqual(77, second.at(0));
+    assertEqualInt(77, second.at(0));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class Uint16ArrayConstructorFour extends BasTest {
     Uint16Array first = new Uint16Array(buffer, 0, 2);
     Uint16Array second = new Uint16Array(buffer, 4, 2);
     first.set(1, 55);
-    assertEqual(0, second.at(0));
+    assertEqualInt(0, second.at(0));
     }
 
     @Test
@@ -132,7 +132,7 @@ public class Uint16ArrayConstructorFour extends BasTest {
     } catch (RangeError e) {
     assertEqual("RangeError", e.getClass().getSimpleName());
     }
-    assertEqual(12, existing.at(0));
+    assertEqualInt(12, existing.at(0));
     }
 
     @Test
@@ -151,8 +151,8 @@ public class Uint16ArrayConstructorFour extends BasTest {
     void testUint16ArrayConstructorFour032() {
     Uint16Array source = Uint16Array.of(1, 2, 3);
     Uint16Array copy = new Uint16Array(source);
-    assertEqual(1, copy.at(0));
-    assertEqual(3, copy.at(2));
+    assertEqualInt(1, copy.at(0));
+    assertEqualInt(3, copy.at(2));
     }
 
     @Test
@@ -160,7 +160,7 @@ public class Uint16ArrayConstructorFour extends BasTest {
     Uint16Array source = Uint16Array.of(1, 2);
     Uint16Array copy = new Uint16Array(source);
     copy.set(0, 9);
-    assertEqual(1, source.at(0));
+    assertEqualInt(1, source.at(0));
     }
 
     @Test
@@ -168,31 +168,31 @@ public class Uint16ArrayConstructorFour extends BasTest {
     Uint16Array source = Uint16Array.of(1, 2);
     Uint16Array copy = new Uint16Array(source);
     source.set(1, 8);
-    assertEqual(2, copy.at(1));
+    assertEqualInt(2, copy.at(1));
     }
 
     @Test
     void testUint16ArrayConstructorFour035() {
     double[] source = new double[] {-1.0, -2.0};
     Uint16Array result = new Uint16Array(source);
-    assertEqual(65535, result.at(0));
-    assertEqual(65534, result.at(1));
+    assertEqualInt(65535, result.at(0));
+    assertEqualInt(65534, result.at(1));
     }
 
     @Test
     void testUint16ArrayConstructorFour036() {
     double[] source = new double[] {65536.0, 65537.0};
     Uint16Array result = new Uint16Array(source);
-    assertEqual(0, result.at(0));
-    assertEqual(1, result.at(1));
+    assertEqualInt(0, result.at(0));
+    assertEqualInt(1, result.at(1));
     }
 
     @Test
     void testUint16ArrayConstructorFour037() {
     double[] source = new double[] {1.9, 2.9};
     Uint16Array result = new Uint16Array(source);
-    assertEqual(1, result.at(0));
-    assertEqual(2, result.at(1));
+    assertEqualInt(1, result.at(0));
+    assertEqualInt(2, result.at(1));
     }
 
     @Test
@@ -219,10 +219,10 @@ public class Uint16ArrayConstructorFour extends BasTest {
     backing.set(1, 99);
     assertEqual(2, copy.length());
     assertEqual(0, copy.byteOffset());
-    assertEqual(20, copy.at(0));
-    assertEqual(30, copy.at(1));
+    assertEqualInt(20, copy.at(0));
+    assertEqualInt(30, copy.at(1));
     copy.set(0, 88);
-    assertEqual(99, source.at(0));
+    assertEqualInt(99, source.at(0));
     }
 
     @Test
