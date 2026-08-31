@@ -35,9 +35,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 255.9);
     assertEqual(3, r.length());
-    assertEqual(255, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(255, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -45,9 +45,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, -0.5);
     assertEqual(3, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -55,9 +55,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 99.49);
     assertEqual(3, r.length());
-    assertEqual(99, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(99, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -65,9 +65,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 4.5);
     assertEqual(3, r.length());
-    assertEqual(4, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(4, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -75,9 +75,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, -0.4);
     assertEqual(3, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -85,9 +85,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 256.4);
     assertEqual(3, r.length());
-    assertEqual(255, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(255, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -95,9 +95,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, -0.0);
     assertEqual(3, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -105,9 +105,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, Double.MAX_VALUE);
     assertEqual(3, r.length());
-    assertEqual(255, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(255, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -115,9 +115,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, Double.MIN_VALUE);
     assertEqual(3, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -125,9 +125,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 9007199254740991L);
     assertEqual(3, r.length());
-    assertEqual(255, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(255, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -135,9 +135,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 2.220446049250313E-16);
     assertEqual(3, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -145,9 +145,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 2147483648.0);
     assertEqual(3, r.length());
-    assertEqual(255, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(255, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -155,9 +155,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 65535.0);
     assertEqual(3, r.length());
-    assertEqual(255, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(255, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -165,9 +165,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, -65535.0);
     assertEqual(3, r.length());
-    assertEqual(0, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -175,9 +175,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 0x80);
     assertEqual(3, r.length());
-    assertEqual(128, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(128, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -185,9 +185,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 0xFF);
     assertEqual(3, r.length());
-    assertEqual(255, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(255, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -195,16 +195,16 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 1e2);
     assertEqual(3, r.length());
-    assertEqual(100, r.get(0));
-    assertEqual(20, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(100, r.get(0));
+    assertEqualInt(20, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
     void testUint8ClampedArrayWithTwo018() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     arr.with(0, 99.0);
-    assertEqual(10, arr.get(0));
+    assertEqualInt(10, arr.get(0));
     }
 
     @Test
@@ -212,9 +212,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray r = arr.with(0, 99.0).with(1, 88.0);
     assertEqual(3, r.length());
-    assertEqual(99, r.get(0));
-    assertEqual(88, r.get(1));
-    assertEqual(30, r.get(2));
+    assertEqualInt(99, r.get(0));
+    assertEqualInt(88, r.get(1));
+    assertEqualInt(30, r.get(2));
     }
 
     @Test
@@ -233,9 +233,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
     Uint8ClampedArray r = arr.with(512, 999.0);
     assertEqual(1024, r.length());
-    assertEqual(255, r.get(512));
-    assertEqual(0, r.get(0));
-    assertEqual(0, r.get(1023));
+    assertEqualInt(255, r.get(512));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(0, r.get(1023));
     }
 
     @Test
@@ -243,16 +243,16 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(1024);
     Uint8ClampedArray r = arr.with(1023, -999.0);
     assertEqual(1024, r.length());
-    assertEqual(0, r.get(1023));
-    assertEqual(0, r.get(0));
-    assertEqual(0, r.get(512));
+    assertEqualInt(0, r.get(1023));
+    assertEqualInt(0, r.get(0));
+    assertEqualInt(0, r.get(512));
     }
 
     @Test
     void testUint8ClampedArrayWithTwo022() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {100});
     arr.with(0, 999.0);
-    assertEqual(100, arr.get(0));
+    assertEqualInt(100, arr.get(0));
     }
 
     @Test
@@ -268,9 +268,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray w = arr.with(0, 99);
     assertEqual(3, w.length());
-    assertEqual(99, w.get(0));
-    assertEqual(2, w.get(1));
-    assertEqual(3, w.get(2));
+    assertEqualInt(99, w.get(0));
+    assertEqualInt(2, w.get(1));
+    assertEqualInt(3, w.get(2));
     }
 
     @Test
@@ -285,9 +285,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray w = arr.with(0, 99);
     assertEqual(3, w.buffer().byteLength());
-    assertEqual(99, w.get(0));
-    assertEqual(2, w.get(1));
-    assertEqual(3, w.get(2));
+    assertEqualInt(99, w.get(0));
+    assertEqualInt(2, w.get(1));
+    assertEqualInt(3, w.get(2));
     }
 
     @Test
@@ -295,9 +295,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray w = arr.with(0, Double.POSITIVE_INFINITY);
     assertEqual(3, w.length());
-    assertEqual(255, w.get(0));
-    assertEqual(20, w.get(1));
-    assertEqual(30, w.get(2));
+    assertEqualInt(255, w.get(0));
+    assertEqualInt(20, w.get(1));
+    assertEqualInt(30, w.get(2));
     }
 
     @Test
@@ -305,9 +305,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray w = arr.with(0, -Double.POSITIVE_INFINITY);
     assertEqual(3, w.length());
-    assertEqual(0, w.get(0));
-    assertEqual(20, w.get(1));
-    assertEqual(30, w.get(2));
+    assertEqualInt(0, w.get(0));
+    assertEqualInt(20, w.get(1));
+    assertEqualInt(30, w.get(2));
     }
 
     @Test
@@ -315,9 +315,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray w = arr.with(0, Double.NaN);
     assertEqual(3, w.length());
-    assertEqual(0, w.get(0));
-    assertEqual(20, w.get(1));
-    assertEqual(30, w.get(2));
+    assertEqualInt(0, w.get(0));
+    assertEqualInt(20, w.get(1));
+    assertEqualInt(30, w.get(2));
     }
 
     @Test
@@ -325,9 +325,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray w = arr.with(0, 1e9);
     assertEqual(3, w.length());
-    assertEqual(255, w.get(0));
-    assertEqual(20, w.get(1));
-    assertEqual(30, w.get(2));
+    assertEqualInt(255, w.get(0));
+    assertEqualInt(20, w.get(1));
+    assertEqualInt(30, w.get(2));
     }
 
     @Test
@@ -335,9 +335,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray w = arr.with(0, -1e9);
     assertEqual(3, w.length());
-    assertEqual(0, w.get(0));
-    assertEqual(20, w.get(1));
-    assertEqual(30, w.get(2));
+    assertEqualInt(0, w.get(0));
+    assertEqualInt(20, w.get(1));
+    assertEqualInt(30, w.get(2));
     }
 
     @Test
@@ -345,9 +345,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray w = arr.with(0, 0377);
     assertEqual(3, w.length());
-    assertEqual(255, w.get(0));
-    assertEqual(20, w.get(1));
-    assertEqual(30, w.get(2));
+    assertEqualInt(255, w.get(0));
+    assertEqualInt(20, w.get(1));
+    assertEqualInt(30, w.get(2));
     }
 
     @Test
@@ -355,9 +355,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray w = arr.with(0, 0b11111111);
     assertEqual(3, w.length());
-    assertEqual(255, w.get(0));
-    assertEqual(20, w.get(1));
-    assertEqual(30, w.get(2));
+    assertEqualInt(255, w.get(0));
+    assertEqualInt(20, w.get(1));
+    assertEqualInt(30, w.get(2));
     }
 
     @Test
@@ -365,9 +365,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray w = arr.with(0, -1);
     assertEqual(3, w.length());
-    assertEqual(0, w.get(0));
-    assertEqual(20, w.get(1));
-    assertEqual(30, w.get(2));
+    assertEqualInt(0, w.get(0));
+    assertEqualInt(20, w.get(1));
+    assertEqualInt(30, w.get(2));
     }
 
     @Test
@@ -375,9 +375,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     Uint8ClampedArray w = arr.with(0, 256);
     assertEqual(3, w.length());
-    assertEqual(255, w.get(0));
-    assertEqual(20, w.get(1));
-    assertEqual(30, w.get(2));
+    assertEqualInt(255, w.get(0));
+    assertEqualInt(20, w.get(1));
+    assertEqualInt(30, w.get(2));
     }
 
     @Test
@@ -386,9 +386,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     arr.set(0, 99);
     Uint8ClampedArray w = arr.with(1, 88);
     assertEqual(3, w.length());
-    assertEqual(99, w.get(0));
-    assertEqual(88, w.get(1));
-    assertEqual(3, w.get(2));
+    assertEqualInt(99, w.get(0));
+    assertEqualInt(88, w.get(1));
+    assertEqualInt(3, w.get(2));
     }
 
     @Test
@@ -397,10 +397,10 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     arr.fill(7);
     Uint8ClampedArray w = arr.with(0, 99);
     assertEqual(4, w.length());
-    assertEqual(99, w.get(0));
-    assertEqual(7, w.get(1));
-    assertEqual(7, w.get(2));
-    assertEqual(7, w.get(3));
+    assertEqualInt(99, w.get(0));
+    assertEqualInt(7, w.get(1));
+    assertEqualInt(7, w.get(2));
+    assertEqualInt(7, w.get(3));
     }
 
     @Test
@@ -409,9 +409,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     arr.reverse();
     Uint8ClampedArray w = arr.with(0, 99);
     assertEqual(3, w.length());
-    assertEqual(99, w.get(0));
-    assertEqual(20, w.get(1));
-    assertEqual(10, w.get(2));
+    assertEqualInt(99, w.get(0));
+    assertEqualInt(20, w.get(1));
+    assertEqualInt(10, w.get(2));
     }
 
     @Test
@@ -420,9 +420,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     arr.sort();
     Uint8ClampedArray w = arr.with(0, 99);
     assertEqual(3, w.length());
-    assertEqual(99, w.get(0));
-    assertEqual(2, w.get(1));
-    assertEqual(3, w.get(2));
+    assertEqualInt(99, w.get(0));
+    assertEqualInt(2, w.get(1));
+    assertEqualInt(3, w.get(2));
     }
 
     @Test
@@ -430,9 +430,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.of(1, 2, 3);
     Uint8ClampedArray w = arr.with(0, 99);
     assertEqual(3, w.length());
-    assertEqual(99, w.get(0));
-    assertEqual(2, w.get(1));
-    assertEqual(3, w.get(2));
+    assertEqualInt(99, w.get(0));
+    assertEqualInt(2, w.get(1));
+    assertEqualInt(3, w.get(2));
     }
 
     @Test
@@ -441,9 +441,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = Uint8ClampedArray.from(src);
     Uint8ClampedArray w = arr.with(1, 88);
     assertEqual(3, w.length());
-    assertEqual(1, w.get(0));
-    assertEqual(88, w.get(1));
-    assertEqual(3, w.get(2));
+    assertEqualInt(1, w.get(0));
+    assertEqualInt(88, w.get(1));
+    assertEqualInt(3, w.get(2));
     }
 
     @Test
@@ -463,14 +463,14 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray w2 = arr.with(2, 88);
     assertEqual(4, w1.length());
     assertEqual(4, w2.length());
-    assertEqual(99, w1.get(0));
-    assertEqual(2, w1.get(1));
-    assertEqual(3, w1.get(2));
-    assertEqual(4, w1.get(3));
-    assertEqual(1, w2.get(0));
-    assertEqual(2, w2.get(1));
-    assertEqual(88, w2.get(2));
-    assertEqual(4, w2.get(3));
+    assertEqualInt(99, w1.get(0));
+    assertEqualInt(2, w1.get(1));
+    assertEqualInt(3, w1.get(2));
+    assertEqualInt(4, w1.get(3));
+    assertEqualInt(1, w2.get(0));
+    assertEqualInt(2, w2.get(1));
+    assertEqualInt(88, w2.get(2));
+    assertEqualInt(4, w2.get(3));
     }
 
     @Test
@@ -478,11 +478,11 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray w = arr.with(4, 99);
     assertEqual(5, w.length());
-    assertEqual(1, w.get(0));
-    assertEqual(2, w.get(1));
-    assertEqual(3, w.get(2));
-    assertEqual(4, w.get(3));
-    assertEqual(99, w.get(4));
+    assertEqualInt(1, w.get(0));
+    assertEqualInt(2, w.get(1));
+    assertEqualInt(3, w.get(2));
+    assertEqualInt(4, w.get(3));
+    assertEqualInt(99, w.get(4));
     }
 
     @Test
@@ -490,7 +490,7 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1});
     Uint8ClampedArray w = arr.with(0, 99);
     assertEqual(1, w.length());
-    assertEqual(99, w.get(0));
+    assertEqualInt(99, w.get(0));
     }
 
     @Test
@@ -501,9 +501,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
         return x * 2;
         });
     assertEqual(3, m.length());
-    assertEqual(100, m.get(0));
-    assertEqual(40, m.get(1));
-    assertEqual(60, m.get(2));
+    assertEqualInt(100, m.get(0));
+    assertEqualInt(40, m.get(1));
+    assertEqualInt(60, m.get(2));
     }
 
     @Test
@@ -514,7 +514,7 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
         return x > 40;
         });
     assertEqual(1, f.length());
-    assertEqual(50, f.get(0));
+    assertEqualInt(50, f.get(0));
     }
 
     @Test
@@ -523,8 +523,8 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray w = arr.with(0, 99);
     Uint8ClampedArray sub = w.subarray(0, 2);
     assertEqual(2, sub.length());
-    assertEqual(99, sub.get(0));
-    assertEqual(20, sub.get(1));
+    assertEqualInt(99, sub.get(0));
+    assertEqualInt(20, sub.get(1));
     }
 
     @Test
@@ -533,9 +533,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray w = arr.with(0, 99);
     Uint8ClampedArray r = w.toReversed();
     assertEqual(3, r.length());
-    assertEqual(3, r.get(0));
-    assertEqual(2, r.get(1));
-    assertEqual(99, r.get(2));
+    assertEqualInt(3, r.get(0));
+    assertEqualInt(2, r.get(1));
+    assertEqualInt(99, r.get(2));
     }
 
     @Test
@@ -544,9 +544,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray w = arr.with(0, 99);
     Uint8ClampedArray s = w.toSorted();
     assertEqual(3, s.length());
-    assertEqual(1, s.get(0));
-    assertEqual(2, s.get(1));
-    assertEqual(99, s.get(2));
+    assertEqualInt(1, s.get(0));
+    assertEqualInt(2, s.get(1));
+    assertEqualInt(99, s.get(2));
     }
 
     @Test
@@ -555,8 +555,8 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray w = arr.with(0, 99);
     Uint8ClampedArray s = w.slice(0, 2);
     assertEqual(2, s.length());
-    assertEqual(99, s.get(0));
-    assertEqual(2, s.get(1));
+    assertEqualInt(99, s.get(0));
+    assertEqualInt(2, s.get(1));
     }
 
     @Test
@@ -579,11 +579,11 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray w = arr.with(2, 99);
     assertEqual(arr.length(), w.length());
-    assertEqual(1, w.get(0));
-    assertEqual(2, w.get(1));
-    assertEqual(99, w.get(2));
-    assertEqual(4, w.get(3));
-    assertEqual(5, w.get(4));
+    assertEqualInt(1, w.get(0));
+    assertEqualInt(2, w.get(1));
+    assertEqualInt(99, w.get(2));
+    assertEqualInt(4, w.get(3));
+    assertEqualInt(5, w.get(4));
     }
 
     @Test
@@ -591,20 +591,20 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3, 4, 5});
     Uint8ClampedArray w = arr.with(2, 99);
     assertEqual(arr.byteLength(), w.byteLength());
-    assertEqual(1, w.get(0));
-    assertEqual(2, w.get(1));
-    assertEqual(99, w.get(2));
-    assertEqual(4, w.get(3));
-    assertEqual(5, w.get(4));
+    assertEqualInt(1, w.get(0));
+    assertEqualInt(2, w.get(1));
+    assertEqualInt(99, w.get(2));
+    assertEqualInt(4, w.get(3));
+    assertEqualInt(5, w.get(4));
     }
 
     @Test
     void testUint8ClampedArrayWithTwo056() {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {10, 20, 30});
     arr.with(0, 99);
-    assertEqual(10, arr.get(0));
-    assertEqual(20, arr.get(1));
-    assertEqual(30, arr.get(2));
+    assertEqualInt(10, arr.get(0));
+    assertEqualInt(20, arr.get(1));
+    assertEqualInt(30, arr.get(2));
     }
 
     @Test
@@ -649,9 +649,9 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray arr = new Uint8ClampedArray(new int[] {1, 2, 3});
     Uint8ClampedArray r = arr.with(-2, 99);
     assertEqual(3, r.length());
-    assertEqual(1, r.get(0));
-    assertEqual(99, r.get(1));
-    assertEqual(3, r.get(2));
+    assertEqualInt(1, r.get(0));
+    assertEqualInt(99, r.get(1));
+    assertEqualInt(3, r.get(2));
     }
 
     @Test
@@ -672,8 +672,8 @@ public class Uint8ClampedArrayWith02Test extends BasTest {
     Uint8ClampedArray sub2 = sub1.subarray(1, 3);
     Uint8ClampedArray w = sub2.with(0, 99);
     assertEqual(2, w.length());
-    assertEqual(99, w.get(0));
-    assertEqual(40, w.get(1));
-    assertEqual(30, sub2.get(0));
+    assertEqualInt(99, w.get(0));
+    assertEqualInt(40, w.get(1));
+    assertEqualInt(30, sub2.get(0));
     }
 }
