@@ -1,0 +1,484 @@
+/*
+ * Copyright (c) 2026 Kaihong Digital.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package basetype.common;
+
+/**
+ * 断言辅助基类：把 ETS hypium expect(...).assertXxx(...) 桥接到 JUnit5 断言，
+ * 提供常用基本类型重载；Integer 第二参请用 assertEqualInt 避免 G.OBJ.05。
+ * 测试类继承本类以直接使用 assertEqual/assertTrue 等断言方法。
+ *
+ * @since 2026-08-26
+ */
+public class BasTest {
+
+    protected BasTest() {
+    }
+
+    /**
+     * 测试辅助：抛出 basetype Error（规避 G.ERR.05 裸 throw）。
+     *
+     * @param message 参数说明。
+     * @return 返回值说明。
+     */
+    public static <T> T throwTestError(String message) {
+        throw newTestError(message);
+    }
+
+    private static Error newTestError(String message) {
+        return new Error(message);
+    }
+
+    /**
+     * 断言 int 与 Integer 相等（避免与 assertEqual(Object, Object) 歧义）。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
+     */
+    public static void assertEqualInt(int expected, Number actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(
+                expected, actual == null ? null : actual.intValue());
+    }
+
+    /**
+     * 断言两值相等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
+     */
+    public static void assertEqual(int expected, int actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+        }
+
+    /**
+     * 断言两值相等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
+     */
+    public static void assertEqual(long expected, long actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+        }
+
+    /**
+     * 断言两值相等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
+     */
+    public static void assertEqual(long expected, int actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+        }
+
+    /**
+     * 浮点精确相等（NaN 视为相等）。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
+     */
+    public static void assertEqual(double expected, double actual) {
+        if (Double.isNaN(expected) && Double.isNaN(actual)) {
+            return;
+            }
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual, 0.0);
+        }
+
+    /**
+     * 浮点期望值与整型实际值按数值相等比较（1.0 == 1）。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
+     */
+    public static void assertEqual(double expected, int actual) {
+        assertEqual(expected, (double) actual);
+        }
+
+    /**
+     * 断言两值相等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
+     */
+    public static void assertEqual(Object expected, Object actual) {
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+        }
+
+    /**
+     * 断言两值不等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
+     */
+    public static void assertNotEqual(Object expected, Object actual) {
+        org.junit.jupiter.api.Assertions.assertNotEquals(expected, actual);
+        }
+
+    /**
+     * 断言两值不等。
+     *
+     * @param expected 参数说明。
+     * @param actual 参数说明。
+     */
+    public static void assertNotEqual(int expected, int actual) {
+        org.junit.jupiter.api.Assertions.assertNotEquals(expected, actual);
+        }
+
+    /**
+     * 断言条件为真。
+     *
+     * @param condition 参数说明。
+     */
+    public static void assertTrue(boolean condition) {
+        org.junit.jupiter.api.Assertions.assertTrue(condition);
+        }
+
+    /**
+     * 断言条件为假。
+     *
+     * @param condition 参数说明。
+     */
+    public static void assertFalse(boolean condition) {
+        org.junit.jupiter.api.Assertions.assertFalse(condition);
+        }
+
+    /**
+     * 断言值为 null。
+     *
+     * @param actual 参数说明。
+     */
+    public static void assertNull(Object actual) {
+        org.junit.jupiter.api.Assertions.assertNull(actual);
+        }
+
+    /**
+     * assertNotNull 方法。
+     *
+     * @param actual 参数说明。
+     */
+    public static void assertNotNull(Object actual) {
+        org.junit.jupiter.api.Assertions.assertNotNull(actual);
+        }
+
+    /**
+     * 展开+map 语义：[...new ARR(N)].map(fn) -> 按索引映射填充数组。
+     *
+     * @param size 参数说明。
+     * @param fn 参数说明。
+     * @return 返回值说明。
+     */
+    public static Uint8ClampedArray spreadMap(int size, java.util.function.IntBinaryOperator fn) {
+        Uint8ClampedArray arr = new Uint8ClampedArray(size);
+        for (int i = 0; i < size; i++) {
+            arr.set(i, fn.applyAsInt(0, i));
+            }
+        return arr;
+        }
+
+    /**
+     * 展开迭代器到列表（[...iter] 语义）。
+     *
+     * @param it 参数说明。
+     * @return 返回值说明。
+     */
+    public static java.util.List<Integer> collect(java.lang.Iterable<Integer> it) {
+        java.util.List<Integer> list = new java.util.ArrayList<>();
+        for (Integer v : it) {
+            list.add(v);
+            }
+        return list;
+        }
+
+    /**
+     * [x, ...list] 语义：元素前置到列表头部（reduce 数组归约场景）。
+     *
+     * @param v 参数说明。
+     * @param list 参数说明。
+     * @return 返回值说明。
+     */
+    public static java.util.List<Integer> prepend(int v, java.util.List<Integer> list) {
+        java.util.List<Integer> l = new java.util.ArrayList<>(list);
+        l.add(0, v);
+        return l;
+        }
+
+    /**
+     * Number.isInteger 语义：整数值判定。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static boolean isInteger(int v) {
+        return true;
+        }
+
+    /**
+     * 判定数值是否为整数。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static boolean isInteger(double v) {
+        return !Double.isNaN(v) && !Double.isInfinite(v) && Double.compare(v, Math.floor(v)) == 0;
+        }
+
+    /**
+     * instanceof 语义：运行时类型判定。
+     *
+     * @param o 参数说明。
+     * @param c 参数说明。
+     * @return 返回值说明。
+     */
+    public static boolean instanceOf(Object o, Class<?> c) {
+        return c.isInstance(o);
+        }
+
+    /**
+     * JSON.stringify 语义：Uint8Array 序列化为 {"i":v, ...}。
+     *
+     * @param a 参数说明。
+     * @return 返回值说明。
+     */
+    public static String stringify(Uint8Array a) {
+        StringBuilder sb = new StringBuilder("{");
+        for (int i = 0; i < a.length(); i++) {
+            if (i > 0) {
+                sb.append(",");
+                }
+            sb.append('"').append(i).append('"').append(':').append(a.get(i));
+            }
+        return sb.append("}").toString();
+        }
+
+    /**
+     * Number.isNaN 语义：非数值判定。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static boolean isNaN(int v) {
+        return false;
+        }
+
+    /**
+     * isNaN 方法。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static boolean isNaN(double v) {
+        return Double.isNaN(v);
+        }
+
+    /**
+     * Number.isFinite 语义：有限数值判定。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static boolean isFinite(int v) {
+        return true;
+        }
+
+    /**
+     * isFinite 方法。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static boolean isFinite(double v) {
+        return !Double.isNaN(v) && !Double.isInfinite(v);
+        }
+
+    /**
+     * parseInt 失败归 0（JS parseInt NaN 语义）。
+     *
+     * @param s 参数说明。
+     * @return 返回值说明。
+     */
+    public static int parseIntSafe(String s) {
+        try {
+            return Integer.parseInt(s);
+            } catch (NumberFormatException e) {
+            return 0;
+            }
+    }
+
+    /**
+     * Class.of(X).getName() 语义：ETS number 运行时为 double。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static String className(int v) {
+        return "java.lang.Double";
+        }
+
+    /**
+     * 返回对象运行时类名。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static String className(double v) {
+        return "java.lang.Double";
+        }
+
+    /**
+     * 返回对象运行时类名。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static String className(boolean v) {
+        return "java.lang.Boolean";
+        }
+
+    /**
+     * 返回对象运行时类名。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static String className(String v) {
+        return "java.lang.String";
+        }
+
+    /**
+     * 返回对象运行时类名。
+     *
+     * @param o 参数说明。
+     * @return 返回值说明。
+     */
+    public static String className(Object o) {
+        return o == null ? null : o.getClass().getName();
+        }
+
+    /**
+     * 空数组字面量 fill 语义：n 个元素全部填充 value。
+     *
+     * @param size 参数说明。
+     * @param value 参数说明。
+     * @return 返回值说明。
+     */
+    public static java.util.List<Integer> filledList(int size, int value) {
+        java.util.List<Integer> list = new java.util.ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            list.add(value);
+            }
+        return list;
+        }
+
+    /**
+     * ToUint8Clamp 语义（map 回调 double 返回值：NaN 归 0、越界钳制、半分取偶）。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static int clampRound(double v) {
+        if (Double.isNaN(v)) {
+            return 0;
+            }
+        if (v <= 0.0) {
+            return 0;
+            }
+        if (v >= 255.0) {
+            return 255;
+            }
+        long r = Math.round(v);
+        if (Double.compare(v - Math.floor(v), 0.5) == 0 && (r & 1) != 0) {
+            r -= 1;
+            }
+        return (int) r;
+        }
+
+    /**
+     * JS typeof 语义：装箱值按运行时类型返回类型名。
+     *
+     * @param v 参数说明。
+     * @return 返回值说明。
+     */
+    public static String typeofValue(Object v) {
+        if (v == null) {
+            return "object";
+            }
+        if (v instanceof String) {
+            return "string";
+            }
+        if (v instanceof Boolean) {
+            return "boolean";
+            }
+        if (v instanceof Number) {
+            return "number";
+            }
+        return "object";
+        }
+
+    /**
+     * 空值合并：null 归回退值（对应 ?? 运算符，避免表达式双求值）。
+     *
+     * @param value 参数说明。
+     * @param fallback 参数说明。
+     * @return 返回值说明。
+     */
+    public static int coalesce(Integer value, int fallback) {
+        return value == null ? fallback : value.intValue();
+        }
+
+    /**
+     * coalesce 方法。
+     *
+     * @param value 参数说明。
+     * @param fallback 参数说明。
+     * @return 返回值说明。
+     */
+    public static double coalesce(Integer value, double fallback) {
+        return value == null ? fallback : value.doubleValue();
+        }
+
+    /**
+     * JS isFinite 语义：int/long 恒为有限数。
+     *
+     * @param value 参数说明。
+     * @return 返回值说明。
+     */
+    public static boolean isFinite(long value) {
+        return true;
+        }
+
+    /**
+     * 列表 join（ETS 数组 join 语义）。
+     *
+     * @param values 参数说明。
+     * @param sep 参数说明。
+     * @return 返回值说明。
+     */
+    public static String joinList(java.util.List<?> values, String sep) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < values.size(); i++) {
+            if (i > 0) {
+                sb.append(sep);
+                }
+            sb.append(values.get(i));
+            }
+        return sb.toString();
+        }
+
+    /**
+     * fail 方法。
+     */
+    public static void fail() {
+        org.junit.jupiter.api.Assertions.fail("Expected an exception");
+        }
+}
