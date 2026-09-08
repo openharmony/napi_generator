@@ -24,6 +24,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import shutil
 import subprocess
@@ -100,8 +101,7 @@ def sync_static_haps(src: Path, product: str, pattern: str = "*Static*.hap") -> 
     tc.mkdir(parents=True, exist_ok=True)
     n = 0
     for f in sorted(haps.glob(pattern)):
-        dest = tc / f.name
-        shutil.copy2(f, dest)
+        shutil.copy2(f, tc / f.name)
         n += 1
     print(f"synced {n} HAP(s): {haps}/{pattern} -> {tc}")
     return n
@@ -113,107 +113,74 @@ def cmd_sync_haps(args: argparse.Namespace) -> int:
     return 0 if n >= 0 else 1
 
 
+def _run_single_suite_build(src: Path, product: str, target: str, dry_run: bool) -> int:
+    if ":" not in target and not target.startswith("test/"):
+        print(
+            "单套件请传 --build-target，例如:\n"
+            "  test/xts/acts/web/web_life_cycle/component_life_cycle_static:"
+            "ActsWebComponentLifeCycleStaticTest",
+            file=sys.stderr,
+        )
+        return 1
+    env = dict(os.environ)
+    env["XTS_SUITENAME"] = "acts"
+    env["XTS_SUITETYPE"] = "hap_static"
+    cmd = [
+        "./build.sh",
+        f"--product-name={product}",
+        "--gn-args=build_xts=true",
+        "--gn-args=is_standard_system=true",
+        f"--build-target={target}",
+    ]
+    print(f"cwd={src}")
+    print(" ".join(cmd))
+    if dry_run:
+        return 0
+    return subprocess.run(cmd, cwd=src, env=env).returncode
+
+
+def _run_subsystem_build(src: Path, product: str, system_size: str, subsystem: str, dry_run: bool) -> int:
+    build_py = acts_dir(src) / "build.py"
+    if not build_py.is_file():
+        print(f"未找到 {build_py}", file=sys.stderr)
+        return 1
+    cmd = [
+        sys.executable,
+        str(build_py),
+        f"product_name={product}",
+        f"system_size={system_size}",
+        "xts_suitetype=hap_static",
+        f"target_subsystem={subsystem}",
+    ]
+    print(f"cwd={acts_dir(src)}")
+    print(" ".join(cmd))
+    if dry_run:
+        return 0
+    return subprocess.run(cmd, cwd=acts_dir(src)).returncode
+
+
 def cmd_build_static(args: argparse.Namespace) -> int:
-    """
-    优先：test/xts/acts/build.py product_name=... xts_suitetype=hap_static target_subsystem=...
-    若指定 --suite：走源码根 build.sh + XTS_SUITETYPE=hap_static --build-target
-    """
+    """编 hap_static：单套件走 build.sh，否则走 acts/build.py。"""
     src = resolve_src_root(args.src_dir)
     product = args.product
     if args.suite:
-        # 单套件：需要相对 test/xts/acts 的 gn target；允许用户直接传完整 target
         target = args.build_target or args.suite
-        if ":" not in target and not target.startswith("test/"):
-            print(
-                "单套件请传 --build-target，例如:\n"
-                "  test/xts/acts/web/web_life_cycle/component_life_cycle_static:"
-                "ActsWebComponentLifeCycleStaticTest",
-                file=sys.stderr,
-            )
-            return 1
-        env = dict(**{k: v for k, v in __import__("os").environ.items()})
-        env["XTS_SUITENAME"] = "acts"
-        env["XTS_SUITETYPE"] = "hap_static"
-        cmd = [
-            "./build.sh",
-            f"--product-name={product}",
-            "--gn-args=build_xts=true",
-            "--gn-args=is_standard_system=true",
-            f"--build-target={target}",
-        ]
-        print(f"cwd={src}")
-        print(" ".join(cmd))
-        if args.dry_run:
-            return 0
-        ret = subprocess.run(cmd, cwd=src, env=env)
-        if ret.returncode != 0:
-            return ret.returncode
+        rc = _run_single_suite_build(src, product, target, args.dry_run)
     else:
-        build_py = acts_dir(src) / "build.py"
-        if not build_py.is_file():
-            print(f"未找到 {build_py}", file=sys.stderr)
-            return 1
-        cmd = [
-            sys.executable,
-            str(build_py),
-            f"product_name={product}",
-            f"system_size={args.system_size}",
-            "xts_suitetype=hap_static",
-            f"target_subsystem={args.subsystem}",
-        ]
-        print(f"cwd={acts_dir(src)}")
-        print(" ".join(cmd))
-        if args.dry_run:
-            return 0
-        ret = subprocess.run(cmd, cwd=acts_dir(src))
-        if ret.returncode != 0:
-            return ret.returncode
-
+        rc = _run_subsystem_build(
+            src, product, args.system_size, args.subsystem, args.dry_run
+        )
+    if rc != 0:
+        return rc
     if not args.no_sync:
         sync_static_haps(src, product)
     return 0
 
 
-def cmd_pipeline(args: argparse.Namespace) -> int:
-    src = resolve_src_root(args.src_dir)
-    if args.patch_sleep:
-        ns = argparse.Namespace(
-            src_dir=str(src),
-            web_dir=args.web_dir,
-            subsystem=args.subsystem,
-            ms=args.ms,
-        )
-        rc = cmd_patch_sleep(ns)
-        if rc != 0:
-            return rc
-
-    if not args.skip_build:
-        ns = argparse.Namespace(
-            src_dir=str(src),
-            product=args.product,
-            system_size=args.system_size,
-            subsystem=args.subsystem,
-            suite=args.suite_build,
-            build_target=args.build_target,
-            dry_run=False,
-            no_sync=False,
-        )
-        rc = cmd_build_static(ns)
-        if rc != 0:
-            return rc
-
-    if args.skip_run:
-        print("skip compare run (--skip-run)")
-        return 0
-
-    if not args.sn:
-        print("pipeline 跑对比需要 --sn <device>", file=sys.stderr)
-        return 1
-
-    compare_py = SCRIPT_DIR / "compare_dyn_static.py"
+def _build_compare_run_cmd(args: argparse.Namespace, src: Path) -> list[str]:
     cmd = [
         sys.executable,
-        str(compare_py),
+        str(SCRIPT_DIR / "compare_dyn_static.py"),
         "run",
         "--src-dir",
         str(src),
@@ -232,6 +199,44 @@ def cmd_pipeline(args: argparse.Namespace) -> int:
         cmd.extend(["--limit", str(args.limit)])
     if args.paired_only:
         cmd.append("--paired-only")
+    return cmd
+
+
+def cmd_pipeline(args: argparse.Namespace) -> int:
+    src = resolve_src_root(args.src_dir)
+    if args.patch_sleep:
+        rc = cmd_patch_sleep(
+            argparse.Namespace(
+                src_dir=str(src),
+                web_dir=args.web_dir,
+                subsystem=args.subsystem,
+                ms=args.ms,
+            )
+        )
+        if rc != 0:
+            return rc
+    if not args.skip_build:
+        rc = cmd_build_static(
+            argparse.Namespace(
+                src_dir=str(src),
+                product=args.product,
+                system_size=args.system_size,
+                subsystem=args.subsystem,
+                suite=args.suite_build,
+                build_target=args.build_target,
+                dry_run=False,
+                no_sync=False,
+            )
+        )
+        if rc != 0:
+            return rc
+    if args.skip_run:
+        print("skip compare run (--skip-run)")
+        return 0
+    if not args.sn:
+        print("pipeline 跑对比需要 --sn <device>", file=sys.stderr)
+        return 1
+    cmd = _build_compare_run_cmd(args, src)
     print(" ".join(cmd))
     return subprocess.run(cmd).returncode
 

@@ -32,7 +32,7 @@ import subprocess
 import sys
 import time
 import xml.etree.ElementTree as ET
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 
@@ -101,7 +101,7 @@ def parse_suite_name(build_gn: Path) -> str | None:
     text = build_gn.read_text(encoding="utf-8", errors="ignore")
     m = re.search(r'ohos_js_app(?:_static)?_suite\("([^"]+)"\)', text)
     if m:
-        chunk = text[m.end() : m.end() + 1200]
+        chunk = text[m.end():m.end() + 1200]
         hm = SUITE_HAP_RE.search(chunk)
         return hm.group(1) if hm else m.group(1)
     m = SUITE_HAP_RE.search(text)
@@ -125,6 +125,27 @@ def extract_cases(suite_dir: Path) -> list[CaseRef]:
     return cases
 
 
+def _pair_cases(
+    dyn_cases: list[CaseRef], sta_cases: list[CaseRef]
+) -> tuple[list[tuple[CaseRef, CaseRef]], list[CaseRef], list[CaseRef]]:
+    dmap: dict[str, list[CaseRef]] = {}
+    smap: dict[str, list[CaseRef]] = {}
+    for c in dyn_cases:
+        dmap.setdefault(c.key, []).append(c)
+    for c in sta_cases:
+        smap.setdefault(c.key, []).append(c)
+    paired: list[tuple[CaseRef, CaseRef]] = []
+    for key in sorted(set(dmap) & set(smap)):
+        dlist = dmap.get(key) or []
+        slist = smap.get(key) or []
+        n = min(len(dlist), len(slist))
+        for i in range(n):
+            paired.append((dlist[i], slist[i]))
+    dyn_only = [c for k, vs in dmap.items() if k not in smap for c in vs]
+    sta_only = [c for k, vs in smap.items() if k not in dmap for c in vs]
+    return paired, dyn_only, sta_only
+
+
 def discover_suite_pairs(web_dir: Path) -> list[SuitePair]:
     pairs: list[SuitePair] = []
     static_dirs = sorted(
@@ -140,22 +161,7 @@ def discover_suite_pairs(web_dir: Path) -> list[SuitePair]:
         sta_suite = parse_suite_name(sd / "BUILD.gn")
         if not dyn_suite or not sta_suite:
             continue
-        dyn_cases = extract_cases(dd)
-        sta_cases = extract_cases(sd)
-        dmap: dict[str, list[CaseRef]] = {}
-        smap: dict[str, list[CaseRef]] = {}
-        for c in dyn_cases:
-            dmap.setdefault(c.key, []).append(c)
-        for c in sta_cases:
-            smap.setdefault(c.key, []).append(c)
-        paired: list[tuple[CaseRef, CaseRef]] = []
-        for key in sorted(set(dmap) & set(smap)):
-            # 同名多条时按出现顺序 1:1 对齐
-            n = min(len(dmap[key]), len(smap[key]))
-            for i in range(n):
-                paired.append((dmap[key][i], smap[key][i]))
-        dyn_only = [c for k, vs in dmap.items() if k not in smap for c in vs]
-        sta_only = [c for k, vs in smap.items() if k not in dmap for c in vs]
+        paired, dyn_only, sta_only = _pair_cases(extract_cases(dd), extract_cases(sd))
         pairs.append(
             SuitePair(
                 dyn_dir=str(dd.relative_to(web_dir)),
@@ -174,7 +180,6 @@ def load_report_cases(report_dir: Path) -> dict[str, dict]:
     """name -> {time, pass, message, suite}"""
     xml_path = report_dir / "summary_report.xml"
     if not xml_path.is_file():
-        # 兼容 result/*.xml
         result = report_dir / "result"
         if result.is_dir():
             cases: dict[str, dict] = {}
@@ -183,6 +188,15 @@ def load_report_cases(report_dir: Path) -> dict[str, dict]:
             return cases
         raise FileNotFoundError(f"summary_report.xml not found: {report_dir}")
     return _parse_junit_xml(xml_path)
+
+
+def _testcase_passed(tc: ET.Element) -> bool:
+    result = (tc.get("result") or "").lower()
+    if result == "false":
+        return False
+    if tc.find("failure") is not None or tc.find("error") is not None:
+        return False
+    return result in ("true", "pass", "passed", "")
 
 
 def _parse_junit_xml(xml_path: Path) -> dict[str, dict]:
@@ -197,15 +211,10 @@ def _parse_junit_xml(xml_path: Path) -> dict[str, dict]:
             name = tc.get("name") or ""
             cases[name] = {
                 "time": float(tc.get("time") or 0),
-                "pass": (tc.get("result") or "").lower() in ("true", "pass", "passed", ""),
+                "pass": _testcase_passed(tc),
                 "message": (tc.get("message") or "")[:200],
                 "suite": suite_name,
             }
-            # hypium: failure child => fail
-            if tc.find("failure") is not None or tc.find("error") is not None:
-                cases[name]["pass"] = False
-            if tc.get("result") == "false":
-                cases[name]["pass"] = False
     return cases
 
 
@@ -268,40 +277,7 @@ def build_ta_for_paired(pair: SuitePair, side: str) -> str | None:
     return "class:" + ",".join(items)
 
 
-def cmd_stats(args: argparse.Namespace) -> int:
-    src = resolve_src_root(Path(args.src_dir) if args.src_dir else None)
-    web = Path(args.web_dir) if args.web_dir else default_web_dir(src)
-    if not web.is_dir():
-        print(f"web 目录不存在: {web}", file=sys.stderr)
-        return 1
-    pairs = discover_suite_pairs(web)
-    if args.suite:
-        pairs = [p for p in pairs if args.suite in (p.dyn_suite, p.sta_suite)]
-
-    total_paired = sum(len(p.paired) for p in pairs)
-    total_dyn_only = sum(len(p.dyn_only) for p in pairs)
-    total_sta_only = sum(len(p.sta_only) for p in pairs)
-    with_pairs = sum(1 for p in pairs if p.paired)
-
-    print(f"web_dir: {web}")
-    print(f"suite_pairs (dir foo <-> foo_static): {len(pairs)}")
-    print(f"suite_pairs_with_>=1_case: {with_pairs}")
-    print(f"case_pairs: {total_paired}")
-    print(f"dyn_only_cases: {total_dyn_only}")
-    print(f"sta_only_cases: {total_sta_only}")
-
-    out_dir = Path(args.output) if args.output else (web / ".." / ".." / ".." / ".." / "out")
-    # 默认写到 acts 旁或 cwd
-    if args.output:
-        out_base = Path(args.output)
-    else:
-        out_base = src / "out" / args.product / "suites" / "acts" / "acts" / "reports" / "dyn_static_pair_stats"
-    out_base.mkdir(parents=True, exist_ok=True)
-    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    csv_path = out_base / f"case_pairs_{stamp}.csv"
-    json_path = out_base / f"suite_pairs_{stamp}.json"
-    md_path = out_base / f"summary_{stamp}.md"
-
+def _write_case_pairs_csv(csv_path: Path, pairs: list[SuitePair]) -> None:
     with csv_path.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(
@@ -331,6 +307,17 @@ def cmd_stats(args: argparse.Namespace) -> int:
                     ]
                 )
 
+
+def _write_stats_json_md(
+    json_path: Path,
+    md_path: Path,
+    web: Path,
+    pairs: list[SuitePair],
+    total_paired: int,
+    total_dyn_only: int,
+    total_sta_only: int,
+    with_pairs: int,
+) -> None:
     payload = {
         "web_dir": str(web),
         "suite_pairs": len(pairs),
@@ -351,7 +338,6 @@ def cmd_stats(args: argparse.Namespace) -> int:
         ],
     }
     json_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
-
     lines = [
         "# Web 动态/静态用例配对统计",
         "",
@@ -370,9 +356,62 @@ def cmd_stats(args: argparse.Namespace) -> int:
             f"| {p.dyn_suite} | {p.sta_suite} | {len(p.paired)} | {len(p.dyn_only)} | {len(p.sta_only)} |"
         )
     md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _write_stats_outputs(
+    web: Path,
+    src: Path,
+    product: str,
+    pairs: list[SuitePair],
+    out_arg: str | None,
+) -> None:
+    total_paired = sum(len(p.paired) for p in pairs)
+    total_dyn_only = sum(len(p.dyn_only) for p in pairs)
+    total_sta_only = sum(len(p.sta_only) for p in pairs)
+    with_pairs = sum(1 for p in pairs if p.paired)
+    print(f"web_dir: {web}")
+    print(f"suite_pairs (dir foo <-> foo_static): {len(pairs)}")
+    print(f"suite_pairs_with_>=1_case: {with_pairs}")
+    print(f"case_pairs: {total_paired}")
+    print(f"dyn_only_cases: {total_dyn_only}")
+    print(f"sta_only_cases: {total_sta_only}")
+
+    out_base = (
+        Path(out_arg)
+        if out_arg
+        else src / "out" / product / "suites" / "acts" / "acts" / "reports" / "dyn_static_pair_stats"
+    )
+    out_base.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    csv_path = out_base / f"case_pairs_{stamp}.csv"
+    json_path = out_base / f"suite_pairs_{stamp}.json"
+    md_path = out_base / f"summary_{stamp}.md"
+    _write_case_pairs_csv(csv_path, pairs)
+    _write_stats_json_md(
+        json_path,
+        md_path,
+        web,
+        pairs,
+        total_paired,
+        total_dyn_only,
+        total_sta_only,
+        with_pairs,
+    )
     print(f"wrote: {csv_path}")
     print(f"wrote: {json_path}")
     print(f"wrote: {md_path}")
+
+
+def cmd_stats(args: argparse.Namespace) -> int:
+    src = resolve_src_root(Path(args.src_dir) if args.src_dir else None)
+    web = Path(args.web_dir) if args.web_dir else default_web_dir(src)
+    if not web.is_dir():
+        print(f"web 目录不存在: {web}", file=sys.stderr)
+        return 1
+    pairs = discover_suite_pairs(web)
+    if args.suite:
+        pairs = [p for p in pairs if args.suite in (p.dyn_suite, p.sta_suite)]
+    _write_stats_outputs(web, src, args.product, pairs, args.output)
     return 0
 
 
@@ -488,6 +527,143 @@ def cmd_compare(args: argparse.Namespace) -> int:
     return 0
 
 
+def _filter_run_pairs(args: argparse.Namespace, web: Path) -> list[SuitePair]:
+    pairs = discover_suite_pairs(web)
+    if args.suite:
+        pairs = [p for p in pairs if args.suite in (p.dyn_suite, p.sta_suite)]
+    if args.only_paired_suites:
+        pairs = [p for p in pairs if p.paired]
+    if args.limit and args.limit > 0:
+        pairs = pairs[: args.limit]
+    return pairs
+
+
+def _safe_load_report(report_dir: Path) -> dict[str, dict]:
+    try:
+        return load_report_cases(report_dir)
+    except FileNotFoundError as e:
+        print(f"[warn] {e}", flush=True)
+        return {}
+
+
+def _artifacts_ready(tc: Path, suite: str, side: str) -> bool:
+    hap = tc / f"{suite}.hap"
+    js = tc / f"{suite}.json"
+    if hap.is_file() and js.is_file():
+        return True
+    print(
+        f"[skip] missing {side} artifact hap={hap.is_file()} json={js.is_file()} ({suite})",
+        flush=True,
+    )
+    return False
+
+
+def _append_run_records(
+    session: dict,
+    pair: SuitePair,
+    rp_dyn: Path,
+    rp_sta: Path,
+    rc_d: int,
+    rc_s: int,
+    t0: float,
+    t1: float,
+    t2: float,
+) -> None:
+    session["runs"].append(
+        {
+            "dyn_suite": pair.dyn_suite,
+            "sta_suite": pair.sta_suite,
+            "side": "dyn",
+            "report": str(rp_dyn),
+            "rc": rc_d,
+            "wall_sec": round(t1 - t0, 3),
+        }
+    )
+    session["runs"].append(
+        {
+            "dyn_suite": pair.dyn_suite,
+            "sta_suite": pair.sta_suite,
+            "side": "sta",
+            "report": str(rp_sta),
+            "rc": rc_s,
+            "wall_sec": round(t2 - t1, 3),
+        }
+    )
+
+
+def _run_one_pair(
+    acts: Path,
+    sn: str,
+    tc: Path,
+    session_dir: Path,
+    session: dict,
+    pair: SuitePair,
+    idx: int,
+    total: int,
+    paired_only: bool,
+    dyn_all: dict[str, dict],
+    sta_all: dict[str, dict],
+    all_pairs: list[SuitePair],
+) -> None:
+    print(
+        f"\n===== [{idx}/{total}] {pair.dyn_suite} <-> {pair.sta_suite} "
+        f"(paired={len(pair.paired)}) =====",
+        flush=True,
+    )
+    if not _artifacts_ready(tc, pair.dyn_suite, "dyn"):
+        return
+    if not _artifacts_ready(tc, pair.sta_suite, "sta"):
+        return
+
+    ta_dyn = build_ta_for_paired(pair, "dyn") if paired_only else None
+    ta_sta = build_ta_for_paired(pair, "sta") if paired_only else None
+    if paired_only and (ta_dyn is None or ta_sta is None):
+        print("[warn] describe 缺失，退化为整套执行", flush=True)
+        ta_dyn = ta_sta = None
+
+    rp_dyn = session_dir / f"{pair.dyn_suite}"
+    rp_sta = session_dir / f"{pair.sta_suite}"
+    t0 = time.time()
+    rc_d, _ = run_xdevice(acts, pair.dyn_suite, sn, rp_dyn, ta_dyn)
+    t1 = time.time()
+    rc_s, _ = run_xdevice(acts, pair.sta_suite, sn, rp_sta, ta_sta)
+    t2 = time.time()
+
+    dc = _safe_load_report(rp_dyn)
+    sc = _safe_load_report(rp_sta)
+    dyn_all.update(dc)
+    sta_all.update(sc)
+    _append_run_records(session, pair, rp_dyn, rp_sta, rc_d, rc_s, t0, t1, t2)
+    (session_dir / "session.json").write_text(
+        json.dumps(session, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
+    print_compare_summary(compare_case_times([pair], dc, sc))
+    write_compare_csv(
+        session_dir / "compare_latest.csv",
+        compare_case_times(all_pairs, dyn_all, sta_all),
+    )
+
+
+def _finalize_run_session(
+    session_dir: Path,
+    session: dict,
+    pairs: list[SuitePair],
+    dyn_all: dict[str, dict],
+    sta_all: dict[str, dict],
+) -> int:
+    rows = compare_case_times(pairs, dyn_all, sta_all)
+    out_csv = session_dir / "compare.csv"
+    write_compare_csv(out_csv, rows)
+    (session_dir / "session.json").write_text(
+        json.dumps(session, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
+    print("\n===== FINAL =====")
+    print_compare_summary(rows)
+    print(f"session: {session_dir}")
+    print(f"wrote: {out_csv}")
+    return 0
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     src = resolve_src_root(Path(args.src_dir) if args.src_dir else None)
     web = Path(args.web_dir) if args.web_dir else default_web_dir(src)
@@ -500,14 +676,7 @@ def cmd_run(args: argparse.Namespace) -> int:
         print(f"ACTS 目录不存在: {acts}", file=sys.stderr)
         return 1
 
-    pairs = discover_suite_pairs(web)
-    if args.suite:
-        pairs = [p for p in pairs if args.suite in (p.dyn_suite, p.sta_suite)]
-    if args.only_paired_suites:
-        pairs = [p for p in pairs if p.paired]
-    if args.limit and args.limit > 0:
-        pairs = pairs[: args.limit]
-
+    pairs = _filter_run_pairs(args, web)
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     session_dir = acts / "reports" / f"dyn_static_cmp_{stamp}"
     session_dir.mkdir(parents=True, exist_ok=True)
@@ -519,99 +688,15 @@ def cmd_run(args: argparse.Namespace) -> int:
         "paired_filter": bool(args.paired_only),
         "runs": [],
     }
-
     tc = acts / "testcases"
     dyn_all: dict[str, dict] = {}
     sta_all: dict[str, dict] = {}
-
-    for idx, p in enumerate(pairs, 1):
-        print(f"\n===== [{idx}/{len(pairs)}] {p.dyn_suite} <-> {p.sta_suite} "
-              f"(paired={len(p.paired)}) =====", flush=True)
-        dyn_hap = tc / f"{p.dyn_suite}.hap"
-        sta_hap = tc / f"{p.sta_suite}.hap"
-        dyn_json = tc / f"{p.dyn_suite}.json"
-        sta_json = tc / f"{p.sta_suite}.json"
-        if not dyn_hap.is_file() or not dyn_json.is_file():
-            print(
-                f"[skip] missing dyn artifact hap={dyn_hap.is_file()} "
-                f"json={dyn_json.is_file()} ({p.dyn_suite})",
-                flush=True,
-            )
-            continue
-        if not sta_hap.is_file() or not sta_json.is_file():
-            print(
-                f"[skip] missing sta artifact hap={sta_hap.is_file()} "
-                f"json={sta_json.is_file()} ({p.sta_suite})",
-                flush=True,
-            )
-            continue
-
-        ta_dyn = build_ta_for_paired(p, "dyn") if args.paired_only else None
-        ta_sta = build_ta_for_paired(p, "sta") if args.paired_only else None
-        if args.paired_only and (ta_dyn is None or ta_sta is None):
-            print("[warn] describe 缺失，退化为整套执行", flush=True)
-            ta_dyn = ta_sta = None
-
-        rp_dyn = session_dir / f"{p.dyn_suite}"
-        rp_sta = session_dir / f"{p.sta_suite}"
-        t0 = time.time()
-        rc_d, _ = run_xdevice(acts, p.dyn_suite, sn, rp_dyn, ta_dyn)
-        t1 = time.time()
-        rc_s, _ = run_xdevice(acts, p.sta_suite, sn, rp_sta, ta_sta)
-        t2 = time.time()
-
-        try:
-            dc = load_report_cases(rp_dyn)
-            dyn_all.update(dc)
-        except FileNotFoundError as e:
-            print(f"[warn] {e}", flush=True)
-            dc = {}
-        try:
-            sc = load_report_cases(rp_sta)
-            sta_all.update(sc)
-        except FileNotFoundError as e:
-            print(f"[warn] {e}", flush=True)
-            sc = {}
-
-        session["runs"].append(
-            {
-                "dyn_suite": p.dyn_suite,
-                "sta_suite": p.sta_suite,
-                "side": "dyn",
-                "report": str(rp_dyn),
-                "rc": rc_d,
-                "wall_sec": round(t1 - t0, 3),
-            }
+    for idx, pair in enumerate(pairs, 1):
+        _run_one_pair(
+            acts, sn, tc, session_dir, session, pair, idx, len(pairs),
+            bool(args.paired_only), dyn_all, sta_all, pairs,
         )
-        session["runs"].append(
-            {
-                "dyn_suite": p.dyn_suite,
-                "sta_suite": p.sta_suite,
-                "side": "sta",
-                "report": str(rp_sta),
-                "rc": rc_s,
-                "wall_sec": round(t2 - t1, 3),
-            }
-        )
-        # 增量写出
-        (session_dir / "session.json").write_text(
-            json.dumps(session, indent=2, ensure_ascii=False), encoding="utf-8"
-        )
-        rows = compare_case_times([p], dc, sc)
-        write_compare_csv(session_dir / "compare_latest.csv", compare_case_times(pairs, dyn_all, sta_all))
-        print_compare_summary(rows)
-
-    rows = compare_case_times(pairs, dyn_all, sta_all)
-    out_csv = session_dir / "compare.csv"
-    write_compare_csv(out_csv, rows)
-    (session_dir / "session.json").write_text(
-        json.dumps(session, indent=2, ensure_ascii=False), encoding="utf-8"
-    )
-    print("\n===== FINAL =====")
-    print_compare_summary(rows)
-    print(f"session: {session_dir}")
-    print(f"wrote: {out_csv}")
-    return 0
+    return _finalize_run_session(session_dir, session, pairs, dyn_all, sta_all)
 
 
 def cmd_help(_: argparse.Namespace) -> int:

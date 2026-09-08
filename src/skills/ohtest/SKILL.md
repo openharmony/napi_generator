@@ -246,7 +246,7 @@ python3 src/skills/ohtest/find_actstest.py -o /path/to/all_acts.md
 SKILL=/mnt/vdb/gitcode/master/src/napi_generator/src/skills/ohtest
 OHBUILD=/mnt/vdb/gitcode/master/src/napi_generator/src/skills/ohbuild
 SRC=/mnt/vdb/gitcode/master/src
-SN=192.168.10.142:8710   # 换成你的设备
+SN=192.168.10.142:8710   # replace with the device serial
 
 # A. 统计有多少动静态可对应用例
 python3 $SKILL/compare_dyn_static.py stats --src-dir $SRC

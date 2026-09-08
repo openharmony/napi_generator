@@ -453,6 +453,7 @@ def show_help() -> None:
   python3 ohbuild.py build-acts-static --subsystem web --src-dir /path/to/src
 """)
 
+
 def main() -> int:
     args = sys.argv[1:]
     if not args or args[0] in ("help", "-h", "--help"):
