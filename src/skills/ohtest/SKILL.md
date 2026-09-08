@@ -1,6 +1,6 @@
 ---
 name: ohtest
-description: "OpenHarmony 测试辅助：ohtest.py 按 .d.ts 生成 ohosTest（四类边界）；uitest_gen.py 按 .ets 生成 UITest；fuzztest/find_fuzztest、find_actstest/actstest、coverage_analysis、coverage_gap_tests。详见各脚本与正文。"
+description: "OpenHarmony 测试辅助：ohtest.py 按 .d.ts 生成 ohosTest；uitest_gen；fuzz/find；find_actstest/actstest；dyn_static_workflow+compare_dyn_static（编静态 HAP、压 sleep、动静态配对耗时对比）；coverage_analysis/coverage_gap_tests。详见各脚本与正文。"
 author: "Created by user"
 created: "2026-01-28"
 version: "1.0.0"
@@ -21,6 +21,8 @@ version: "1.0.0"
 | 跑 fuzz | `python3 src/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest -p rk3568` | 「编译并跑这个 fuzz 目标」 |
 | 扫 fuzz 套件 | `python3 src/skills/ohtest/find_fuzztest.py` | 「仓库里有哪些 fuzztest」 |
 | ACTS | `python3 src/skills/ohtest/actstest.py run <SuiteName>` | 「在 out 里跑指定 ACTS suite」 |
+| 编静态+动静态对比 | `python3 src/skills/ohtest/dyn_static_workflow.py help` | 「编 web 静态 HAP 并对比动静态耗时」 |
+| 动静态对比 | `python3 src/skills/ohtest/compare_dyn_static.py stats\|run\|compare --src-dir <src>` | 「统计 web 动静态可对应用例并对比耗时」 |
 | 覆盖率 | `python3 src/skills/ohtest/coverage_analysis.py run -t <部件> -p rk3568` | 「拉覆盖率并分析」 |
 
 ## 功能说明
@@ -217,6 +219,74 @@ python3 src/skills/ohtest/find_actstest.py -o /path/to/all_acts.md
 ```
 
 输出表格列：**目录 | 子系统 | 部件 | 测试套件名 | hap_name | 编译对象**。
+
+---
+
+## 动态 / 静态用例：编译 + 配对耗时对比
+
+脚本目录（相对 OpenHarmony **src** 或 napi_generator 布局）：
+
+`napi_generator/src/skills/ohtest/`
+
+| 脚本 | 作用 |
+|------|------|
+| `dyn_static_workflow.py` | **一站式**：`patch-sleep` / `build-static` / `sync-haps` / `pipeline` |
+| `compare_dyn_static.py` | 配对统计 `stats`、设备跑测对比 `run`、已有报告 `compare` |
+| `../ohbuild/ohbuild.py build-acts-static` | 仅编译子系统 `hap_static`（也可） |
+
+### 配对规则
+
+- 目录：同父目录 `name` ↔ `name_static`（两侧有 `BUILD.gn`）
+- 套件：优先 `ohos_js_app(_static)_suite` / `hap_name`
+- 用例：`it('...')`；静态名去掉 `Static` 后与动态名相同则配对
+
+### 推荐用法（编静态 + 对比）
+
+```bash
+SKILL=/mnt/vdb/gitcode/master/src/napi_generator/src/skills/ohtest
+OHBUILD=/mnt/vdb/gitcode/master/src/napi_generator/src/skills/ohbuild
+SRC=/mnt/vdb/gitcode/master/src
+SN=192.168.10.142:8710   # replace with the device serial
+
+# A. 统计有多少动静态可对应用例
+python3 $SKILL/compare_dyn_static.py stats --src-dir $SRC
+
+# B. 编译 web 静态 HAP，并同步到 acts/testcases
+python3 $SKILL/dyn_static_workflow.py build-static --src-dir $SRC --subsystem web
+# 等价：python3 $OHBUILD/ohbuild.py build-acts-static --subsystem web --src-dir $SRC
+
+# C. 设备上只跑可对应用例，出耗时差 CSV
+python3 $SKILL/compare_dyn_static.py run --src-dir $SRC --sn $SN --paired-only
+
+# D. 一键（可选先把静态 msSleep 全改成 1，再编再对比）
+python3 $SKILL/dyn_static_workflow.py pipeline --src-dir $SRC --sn $SN \
+  --patch-sleep --paired-only
+```
+
+### 分步子命令
+
+```bash
+# 仅改 sleep（默认 msSleep(1)）
+python3 $SKILL/dyn_static_workflow.py patch-sleep --src-dir $SRC
+
+# 仅同步 HAP
+python3 $SKILL/dyn_static_workflow.py sync-haps --src-dir $SRC
+
+# 只对比某一对套件 / 限制套件数
+python3 $SKILL/compare_dyn_static.py run --src-dir $SRC --sn $SN \
+  --suite ActsWebComponentLifeCycleTest --paired-only
+python3 $SKILL/dyn_static_workflow.py pipeline --src-dir $SRC --sn $SN \
+  --skip-build --paired-only --limit 5
+```
+
+输出：
+
+- 配对表：`out/<product>/suites/acts/acts/reports/dyn_static_pair_stats/`
+- 耗时对比：`out/<product>/suites/acts/acts/reports/dyn_static_cmp_<stamp>/compare.csv`
+
+### 何时使用
+
+- 「编 web 静态用例」「hap_static」「动静态用例对比耗时」「把 msSleep 改成 1 再对比」
 
 ---
 

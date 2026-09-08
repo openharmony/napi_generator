@@ -1,6 +1,6 @@
 ---
 name: ohbuild
-description: "OpenHarmony build skill: fuzz tests (list/build/verify-coverage gn-args), component fuzztest, and ACTS suite build via build-acts (test/xts/acts/build.sh). Use when users need fuzz or ACTS compilation from OH src."
+description: "OpenHarmony build skill: fuzz tests (list/build/verify-coverage gn-args), component fuzztest, ACTS suite build via build-acts, and hap_static subsystem build via build-acts-static. Use when users need fuzz or ACTS compilation from OH src."
 author: "Created by user"
 created: "2026-02-02"
 version: "1.0.0"
@@ -21,6 +21,7 @@ version: "1.0.0"
 | 部件全 fuzz | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py build-component-fuzztest battery_statistics` | 「把该部件所有 fuzztest 编出来」 |
 | 查覆盖率参数 | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py verify-coverage power_manager` | 「power_manager 开覆盖率要配什么 gn-args」 |
 | 编 ACTS suite | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py build-acts ActsAACommandPrintSyncTest --src-dir ~/ohos/61release/src` | 「在 acts 目录编某个 ACTS 套件」「多个 suite 用逗号」 |
+| 编静态 HAP | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py build-acts-static --subsystem web --src-dir <src>` | 「编 web 静态 ACTS HAP」「hap_static」 |
 | 帮助 | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py help` | 「ohbuild 子命令怎么用」 |
 
 ### `build-acts`（ACTS 编译）
@@ -36,6 +37,17 @@ version: "1.0.0"
 | `--product-name` | 默认 `rk3568` |
 | `--system-size` | 默认 `standard` |
 | `--no-run` | 只打印将执行的命令，不真正执行 |
+
+### `build-acts-static`（子系统 hap_static）
+
+在 **`test/xts/acts`** 执行 `build.py ... xts_suitetype=hap_static target_subsystem=<子系统>`，编完后把 `out/<product>/suites/haps/*Static*.hap` 拷到 `acts/testcases`。
+
+```bash
+python3 <napi_generator>/src/skills/ohbuild/ohbuild.py build-acts-static \
+  --subsystem web --src-dir /path/to/src
+```
+
+动静态对比请配合 **ohtest** 的 `dyn_static_workflow.py` / `compare_dyn_static.py`。
 
 ---
 
