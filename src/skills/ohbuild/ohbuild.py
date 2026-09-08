@@ -10,11 +10,13 @@ Usage:
     python3 ohbuild.py build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]  编译部件全部 fuzztest
     python3 ohbuild.py verify-coverage [模块名] [--product-name rk3568]  编译后验证是否有模块相关 gcno 文件
     python3 ohbuild.py build-acts <suite名> [--src-dir PATH] [--product-name rk3568] [--system-size standard] [--no-run]  编译 ACTS 指定 suite；--src-dir 指定工程 src 根（如 ~/ohos/6.1release/src）
+    python3 ohbuild.py build-acts-static [--subsystem web] [--src-dir PATH] [--product-name rk3568] [--no-run] [--no-sync]  编译子系统 hap_static HAP
     python3 ohbuild.py help
 """
 
 import json
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -374,6 +376,57 @@ def cmd_build_acts(
     return ret.returncode
 
 
+def cmd_build_acts_static(
+    subsystem: str = "web",
+    product_name: str = "rk3568",
+    system_size: str = "standard",
+    run: bool = True,
+    src_dir: Optional[Path] = None,
+    no_sync: bool = False,
+) -> int:
+    """
+    编译 ACTS 子系统静态 HAP：test/xts/acts/build.py + xts_suitetype=hap_static。
+    成功后默认把 suites/haps/*Static*.hap 同步到 acts/testcases。
+    """
+    src_root = Path(src_dir).expanduser().resolve() if src_dir else SRC_ROOT
+    acts_build_dir = get_acts_build_dir(src_root)
+    build_py = acts_build_dir / "build.py"
+    if not build_py.is_file():
+        print(f"未找到 build.py: {build_py}", file=sys.stderr)
+        return 1
+    cmd = [
+        sys.executable,
+        str(build_py),
+        f"product_name={product_name}",
+        f"system_size={system_size}",
+        "xts_suitetype=hap_static",
+        f"target_subsystem={subsystem}",
+    ]
+    print(f"工程 src 根: {src_root}")
+    print(f"工作目录: {acts_build_dir}")
+    print(f"执行命令: {' '.join(cmd)}")
+    if not run:
+        print("（--no-run：未执行）")
+        return 0
+    ret = subprocess.run(cmd, cwd=acts_build_dir)
+    if ret.returncode != 0:
+        return ret.returncode
+    if no_sync:
+        return 0
+    haps = src_root / "out" / product_name / "suites" / "haps"
+    tc = src_root / "out" / product_name / "suites" / "acts" / "acts" / "testcases"
+    if not haps.is_dir():
+        print(f"警告: haps 目录不存在 {haps}", file=sys.stderr)
+        return 0
+    tc.mkdir(parents=True, exist_ok=True)
+    n = 0
+    for f in sorted(haps.glob("*Static*.hap")):
+        shutil.copy2(f, tc / f.name)
+        n += 1
+    print(f"已同步 {n} 个 *Static*.hap -> {tc}")
+    return 0
+
+
 def show_help() -> None:
     """打印帮助信息。"""
     print(f"""OH Build Skill v{VERSION}
@@ -383,6 +436,7 @@ def show_help() -> None:
   python3 ohbuild.py build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]  打印编译部件全部 fuzztest 的命令
   python3 ohbuild.py verify-coverage [模块名] [--product-name rk3568]  编译后验证是否有模块相关 gcno 文件
   python3 ohbuild.py build-acts <suite名> [--src-dir PATH] [--product-name rk3568] [--system-size standard] [--no-run]  编译 ACTS，多 suite 用逗号分隔；--src-dir 指定工程 src 根
+  python3 ohbuild.py build-acts-static [--subsystem web] [--src-dir PATH] [--product-name rk3568] [--no-run] [--no-sync]  编译子系统 hap_static 并同步 HAP
   python3 ohbuild.py help  显示本帮助
 
 示例:
@@ -396,8 +450,8 @@ def show_help() -> None:
   python3 ohbuild.py build-acts AACommand07,AACommand08,ActsAACommandTest --src-dir ~/ohos/61release/src
   python3 ohbuild.py build-acts ActsAACommandPrintOneTest --src-dir ~/ohos/6.1release/src
   python3 ohbuild.py build-acts ActsAACommandPrintSyncTest --product-name rk3568 --no-run
+  python3 ohbuild.py build-acts-static --subsystem web --src-dir /path/to/src
 """)
-
 
 def main() -> int:
     args = sys.argv[1:]
@@ -502,6 +556,49 @@ def main() -> int:
             system_size=system_size,
             run=run,
             src_dir=src_dir,
+        )
+
+    if cmd == "build-acts-static":
+        subsystem = "web"
+        product_name = "rk3568"
+        system_size = "standard"
+        run = True
+        src_dir = None
+        no_sync = False
+        i = 1
+        while i < len(args):
+            if args[i] == "--subsystem" and i + 1 < len(args):
+                subsystem = args[i + 1]
+                i += 2
+                continue
+            if args[i] == "--src-dir" and i + 1 < len(args):
+                src_dir = Path(args[i + 1]).expanduser().resolve()
+                i += 2
+                continue
+            if args[i] == "--product-name" and i + 1 < len(args):
+                product_name = args[i + 1]
+                i += 2
+                continue
+            if args[i] == "--system-size" and i + 1 < len(args):
+                system_size = args[i + 1]
+                i += 2
+                continue
+            if args[i] == "--no-run":
+                run = False
+                i += 1
+                continue
+            if args[i] == "--no-sync":
+                no_sync = True
+                i += 1
+                continue
+            i += 1
+        return cmd_build_acts_static(
+            subsystem=subsystem,
+            product_name=product_name,
+            system_size=system_size,
+            run=run,
+            src_dir=src_dir,
+            no_sync=no_sync,
         )
 
     print(f"未知命令: {args[0]}", file=sys.stderr)
