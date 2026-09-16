@@ -1,72 +1,63 @@
-# 简介
+# Introduction
 
-**napi-generator**初始目标为提供基于OpenHarmony标准系统,推出一些提升开发效率的NAPI框架代码生成工具。工作范围：
+**napi-generator** initially aims to provide NAPI framework code generation tools based on the OpenHarmony standard system to improve development efficiency. Scope of work:
 
-1. 针对开发人员、主流操作系统的IDE平台，提供NAPI框架代码生成工具
-2. 提供使用范例
-3. 提供持续的改进优化
+1. Provide NAPI framework code generation tools for developers and IDE platforms on mainstream operating systems
+2. Provide usage examples
+3. Provide continuous improvement and optimization
 
+**Work Objectives**:
 
+| Work Objective | Status | Remarks |
+| -------------- | ------ | ------- |
+| NAPI Generation Tool | V1.4.1 | Supports small-scale automatic generation. Basic feature set: can generate corresponding code from simple dts or h files |
+| TS Generation Tool (h2dts) | V1.0.0 | Provides command line, VSCode and IntelliJ plugins. Basic feature set: can convert simple h files to dts files |
+| Gn Generation Tool (cmake2gn) | V1.0.0 | Basic feature set: can automatically generate gn files in an environment with cmake compilation, but may have issues with multi-project references and other dependencies |
+| Service Generation Tool (h2sa) | V1.0.0 | Basic feature set: generates SA service framework code from h files, including Ability registration, proxy/stub class implementation, MessageParcel data packet construction, Service subsystem compilation and service configuration files |
+| API Platform Dependency Analysis Scan Tool | V1.0.0 | Scans third-party libraries for interfaces not included in OpenHarmony source code and outputs result.xlsx document |
+| HCS Visualization Tool | V1.0.0 | See: drivers_hdf_core/framework/tools/hcs-view |
+| IDL Generation Tool | V1.0.0 | See: drivers_hdf_core/framework/tools/idl-gen |
+| Provide Usage Examples | | See the content under the example directory in this repository |
 
-**工作目标**：
+**Architecture Diagram**
 
-| 工作目标                | 完成情况 | 备注                                                         |
-| ----------------------- | -------- | ------------------------------------------------------------ |
-| NAPI生成工具            | V1.4.1版 | 可进行小规模的自动生成，基本功能集：可通过简单dts或h文件生成对应代码 |
-| TS生成工具（h2dts）     | V1.0.0版 | 提供命令行和VSCode及Ideal插件，基本功能集：可将简单的h文件转换为dts文件 |
-| Gn生成工具（cmake2gn）  | V1.0.0版 | 基本功能集：在具备cmake编译的环境下能实现gn文件的自动生成，但是有多工程引用及其余依赖情况可能存在问题 |
-| Service生成工具（h2sa） | V1.0.0版 | 基本功能集：通过h文件生成sa服务框架代码，包括Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及服务配置文件 |
-| API平台依赖分析扫描工具 | V1.0.0版 | 扫描三方库中包含OpenHarmony源码不包含的接口，并输出result.xlsx文档 |
-| HCS可视化工具           | V1.0.0版 | 详情参看：drivers_hdf_core/framework/tools/hcs-view          |
-| IDL生成工具             | V1.0.0版 | 详情参看：drivers_hdf_core/framework/tools/idl-gen           |
-| 提供使用范例            |          | 详情参看本仓example下的内容                                  |
-|                         |          |                                                              |
-|                         |          |                                                              |
+![Architecture Diagram](./figures/arch.png)
 
+**Module Descriptions**
 
-
-**架构图**
-
-![架构图](./figures/arch.png)
-
-
-
-**具体模块说明**
-
-- dts2cpp工具可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。
+- The dts2cpp tool can generate NAPI framework code, business code framework, GN files, etc. with one click based on the ts (typescript) interface files under the user-specified path.
 
   [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/dts2cpp/dts2cpp_README_ZH.md)
 
-  [版本说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/dts2cpp/docs/release-notes)
+  [Release Notes](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/dts2cpp/docs/release-notes)
 
-- h2dts工具可以根据定义在c++头文件中的接口，生成type-script语言的ts接口文件。
+- The h2dts tool can generate type-script language ts interface files based on interfaces defined in c++ header files.
 
   [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2dts/h2dts_README_ZH.md)
 
-  [版本说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2dts/docs/release-notes/ts_Gen-1.0.md) 
+  [Release Notes](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2dts/docs/release-notes/ts_Gen-1.0.md)
 
-- cmake2gn工具可以根据三方库的CMakeLists.txt文件，编译转换生成BUILD.gn脚本文件。
+- The cmake2gn tool can compile and convert the CMakeLists.txt file of third-party libraries to generate BUILD.gn script files.
 
   [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/cmake2gn/cmake2gn_README_ZH.md)
 
-  [版本说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/cmake2gn/docs/release-notes/gn-gen-release-notes-0.0.2.md)  
+  [Release Notes](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/cmake2gn/docs/release-notes/gn-gen-release-notes-0.0.2.md)
 
-- h2sa工具可以根据一个定义远程方法的.h头文件，生成整个Service框架的代码，包含Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及开机自启动相关配置文件。
+- The h2sa tool can generate the entire Service framework code based on a .h header file that defines remote methods, including Ability registration, proxy/stub class implementation, MessageParcel data packet construction, Service subsystem compilation and boot auto-start related configuration files.
 
   [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2sa/README_ZH.md)
 
-  [版本说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2sa/docs/release-notes/Service-1.0.md)  
+  [Release Notes](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2sa/docs/release-notes/Service-1.0.md)
 
-- h2dtscpp工具可以根据定义在c++头文件中的接口，生成type-script语言的ts接口文件、NAPI框架代码、和自动化测试用例代码。
+- The h2dtscpp tool can generate type-script language ts interface files, NAPI framework code, and automated test case code based on interfaces defined in c++ header files.
 
   [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2dtscpp/h2dtscpp_README_ZH.md)
 
-- scan工具，它可以扫描三方库中包含OpenHarmony源码不包含的接口，并输出result.xlsx文档。
+- The scan tool can scan third-party libraries for interfaces not included in OpenHarmony source code and output result.xlsx document.
 
   [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/tool/api/scan_README_ZH.md)
 
-
-**相关仓**
+**Related Repositories**
 
 [napi](https://gitee.com/openharmony/arkui_napi)
 [safwk](https://gitee.com/openharmony/systemabilitymgr_safwk)
