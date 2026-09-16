@@ -1,5 +1,5 @@
 {
-    "name": "@ohos/napi_generator",
+    "name": "napi_generator",
     "description": "napi generator",
     "homePage":"https://gitee.com/openharmony",
     "version": "1.4",
