@@ -55,7 +55,9 @@ def do_commit(message: str, cwd: Path, author_env: dict | None = None) -> int:
     # 消息文件放仓库内（git commit -F 拒绝 /tmp 等 repo 外路径，worktree 场景必现）
     msgfile = cwd / f".tmp_commit_msg_{os.getpid()}"
     msgfile.write_text(msg, encoding="utf-8")
-    rc, out, err = sh(f"git commit -sm -F {msgfile}", cwd)
+    r = subprocess.run(["git", "commit", "-s", "-F", str(msgfile)],
+                       cwd=str(cwd), capture_output=True, text=True)
+    rc, out, err = r.returncode, r.stdout, r.stderr
     msgfile.unlink(missing_ok=True)
     if rc != 0:
         print(f"COMMIT FAIL: {err or out}")
