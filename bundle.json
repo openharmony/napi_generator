@@ -1,0 +1,17 @@
+{
+    "name": "@ohos/napi_generator",
+    "description": "napi generator",
+    "homePage":"https://gitee.com/openharmony",
+    "version": "1.4",
+    "license": "Apache License 2.0",
+    "repository":"https://gitee.com/openharmony/napi_generator",
+    "supplier": "Organization: OpenHarmony",
+    "publishAs": "code-segment",
+    "segment": {
+        "destPath": "napi_generator"
+    },
+    "dirs": {},
+    "scripts": {},
+    "component": {
+    }
+}
