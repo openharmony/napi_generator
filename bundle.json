@@ -1,5 +1,5 @@
 {
-    "name": "napi_generator",
+    "name": "@ohos/napi_generator",
     "description": "napi generator",
     "homePage":"https://gitee.com/openharmony",
     "version": "1.4",
@@ -13,5 +13,21 @@
     "dirs": {},
     "scripts": {},
     "component": {
+        "name": "napi_generator",
+        "subsystem": "developtools",
+        "syscap": [],
+        "features": [],
+        "adapted_system_type": ["standard"],
+        "rom": "0KB",
+        "ram": "0KB",
+        "deps": {
+        "components": [],
+        "third_party": []
+        },
+        "build": {
+        "sub_component": [],
+        "inner_kits": [],
+        "test": []
+        }
     }
 }
