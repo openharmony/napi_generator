@@ -1,21 +1,18 @@
-# 开发指导手册
+# Development Guide
 
-### 简介
+### Introduction
 
-**napi-generator**初始目标为提供基于OpenHarmony标准系统,推出一些提升开发效率的NAPI框架代码生成工具。工作范围：
+**napi-generator** initially aims to provide NAPI framework code generation tools based on the OpenHarmony standard system to improve development efficiency. Scope of work:
 
-1. 针对开发人员、主流操作系统的IDE平台，提供NAPI框架代码生成工具
-2. 提供使用范例
-3. 提供持续的改进优化
+1. Provide NAPI framework code generation tools for developers and IDE platforms on mainstream operating systems
+2. Provide usage examples
+3. Provide continuous improvement and optimization
 
+### Architecture Diagram
 
+![Architecture Diagram](https://gitee.com/openharmony/napi_generator/raw/master/figures/arch.png)
 
-### 架构图
-
-![架构图](https://gitee.com/openharmony/napi_generator/raw/master/figures/arch.png)
-
-
-### 文件结构
+### File Structure
 ```
 napi_generator
 ├── docs
@@ -29,31 +26,30 @@ napi_generator
 ├── src
 └── test
 ```
-* docs: 文档，包括使用说明和开发指导
-* example：样例，包括文本样例和应用开发样例
-* FAQ.md: 常见问题说明
-* figures：图例，文档里包括的图片
-* LICENSE：版权说明
-* OAT.xml: 开源审视配置，参看[OAT开源审查工具](https://gitee.com/openharmony-sig/tools_oat)
-* README.md: 仓说明文件
-* release-motes: 版本发布说明
-* src: 源码
-* test：测试工具
+* docs: Documentation, including usage instructions and development guide
+* example: Examples, including text examples and application development examples
+* FAQ.md: Frequently asked questions
+* figures: Figures, images included in the documentation
+* LICENSE: Copyright notice
+* OAT.xml: Open source review configuration, see [OAT Open Source Review Tool](https://gitee.com/openharmony-sig/tools_oat)
+* README.md: Repository description file
+* release-notes: Version release notes
+* src: Source code
+* test: Test tools
 
-
-### 各个模块介绍
-##### 命令行生成工具介绍
+### Module Introduction
+##### Command Line Generation Tools
 * [cmake2gn](../src/cli/cmake2gn/docs/guide/DEVELOP_ZH.md)
 * [dts2cpp](../src/cli/dts2cpp/docs/guide/DEVELOP_ZH.md)
 * [h2dts](../src/cli/h2dts/docs/guide/DEVELOP_ZH.md)
 * [h2sa](../src/cli/h2sa/docs/guide/DEVELOP_ZH.md)
-##### Intellij插件介绍
+##### IntelliJ Plugins
 * [assist](../src/intellij_plugin/assist/assist_tools_IntelliJ_plugin/docs/guide/DEVELOP_ZH.md)
 * [dts2cpp](../src/intellij_plugin/dts2cpp/napi_IntelliJ_plugin/docs/guide/DEVELOP_ZH.md)
 * [h2dts](../src/intellij_plugin/h2dts/ts_IntelliJ_plugin/docs/guide/DEVELOP_ZH.md)
-##### API扫描工具介绍
+##### API Scanning Tools
 * [api](../src/tool/api/api_scan_IntelliJ_plugin/docs/DEVELOP_ZH.md)
-##### Vscode插件介绍
+##### VSCode Plugins
 * [dts2cpp](../src/vscode_plugin/readme.md)
 * [h2dts](../src/vscode_plugin/readme.md)
 * [h2dtscpp](../src/vscode_plugin/readme.md)

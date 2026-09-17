@@ -27,7 +27,8 @@ def sh(cmd: str, cwd: Path) -> str:
 
 
 for _g in ("/root/aiSkill/.claude/skills/ohos-gate-compliance/scripts/checkers",
-            "/root/aiSkill/napi_generator/src/skills/ohos-gate-compliance/scripts/checkers"):
+            "/root/aiSkill/napi_generator/src/skills/ohos-gate-compliance/scripts/checkers",
+            str(Path(__file__).resolve().parents[3] / "skills/ohos-gate-compliance/scripts/checkers")):
     if Path(_g).is_dir():
         sys.path.insert(0, _g)
         break
