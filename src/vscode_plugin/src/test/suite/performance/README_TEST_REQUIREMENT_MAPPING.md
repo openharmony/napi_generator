@@ -4837,3 +4837,903 @@
 | 4499 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0050` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 8 的转换结果与性能。 |
 | 4500 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0051` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 9 的转换结果与性能。 |
 | 4501 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0052` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 10 的转换结果与性能。 |
+| 4502 | `conversion_cclass.part10.test.ts` | `c_class_0248` | 功能测试 | 3/4 | : h2dts parseClass：扩充-virtual 纯虚函数 的解析结果与性能。 |
+| 4503 | `conversion_cclass.part10.test.ts` | `c_class_0249` | 功能测试 | 3/4 | : h2dts parseClass：扩充-explicit 构造函数 的解析结果与性能。 |
+| 4504 | `conversion_cclass.part10.test.ts` | `c_class_0250` | 功能测试 | 3/4 | : h2dts parseClass：扩充-vector iterator 成员 的解析结果与性能。 |
+| 4505 | `conversion_cclass.part10.test.ts` | `c_class_0251` | 功能测试 | 3/4 | : h2dts parseClass：扩充-static 工厂方法 的解析结果与性能。 |
+| 4506 | `conversion_cclass.part11.test.ts` | `c_class_0252` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R2-friend 声明 的解析结果与性能。 |
+| 4507 | `conversion_cclass.part11.test.ts` | `c_class_0253` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R2-const 方法 的解析结果与性能。 |
+| 4508 | `conversion_cclass.part11.test.ts` | `c_class_0254` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R2-三容器成员 的解析结果与性能。 |
+| 4509 | `conversion_cclass.part11.test.ts` | `c_class_0255` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R2-多继承 的解析结果与性能。 |
+| 4510 | `conversion_cclass.part11.test.ts` | `c_class_0256` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R2-运算符重载 的解析结果与性能。 |
+| 4511 | `conversion_cclass.part12.test.ts` | `c_class_0257` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R3-抽象类 的解析结果与性能。 |
+| 4512 | `conversion_cclass.part12.test.ts` | `c_class_0258` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R3-嵌套类 的解析结果与性能。 |
+| 4513 | `conversion_cclass.part13.test.ts` | `c_class_0259` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R3-抽象类 的解析结果与性能。 |
+| 4514 | `conversion_cclass.part13.test.ts` | `c_class_0260` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R3-嵌套类 的解析结果与性能。 |
+| 4515 | `conversion_cclass.part14.test.ts` | `c_class_0261` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R4-Service 类 的解析结果与性能。 |
+| 4516 | `conversion_cclass.part14.test.ts` | `c_class_0262` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R4-Buffer 类 的解析结果与性能。 |
+| 4517 | `conversion_cclass.part14.test.ts` | `c_class_0263` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R4-Pair 类 的解析结果与性能。 |
+| 4518 | `conversion_cclass.part15.test.ts` | `c_class_0264` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R5-链表节点 class 的解析结果与性能。 |
+| 4519 | `conversion_cclass.part15.test.ts` | `c_class_0265` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R5-配置 class 的解析结果与性能。 |
+| 4520 | `conversion_cclass.part15.test.ts` | `c_class_0266` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R5-计时器 class 的解析结果与性能。 |
+| 4521 | `conversion_cclass.part16.test.ts` | `c_class_0267` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R5-链表节点 class 的解析结果与性能。 |
+| 4522 | `conversion_cclass.part16.test.ts` | `c_class_0268` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R5-配置 class 的解析结果与性能。 |
+| 4523 | `conversion_cclass.part16.test.ts` | `c_class_0269` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R5-计时器 class 的解析结果与性能。 |
+| 4524 | `conversion_cenum.part12.test.ts` | `c_enum_0254` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-typedef enum 三值 的解析结果与性能。 |
+| 4525 | `conversion_cenum.part12.test.ts` | `c_enum_0255` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-位标志 enum 的解析结果与性能。 |
+| 4526 | `conversion_cenum.part12.test.ts` | `c_enum_0256` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-namespace 内 enum 的解析结果与性能。 |
+| 4527 | `conversion_cenum.part13.test.ts` | `c_enum_0257` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-R2-状态机 enum 的解析结果与性能。 |
+| 4528 | `conversion_cenum.part13.test.ts` | `c_enum_0258` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-R2-RGB hex enum 的解析结果与性能。 |
+| 4529 | `conversion_cenum.part13.test.ts` | `c_enum_0259` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-R2-namespace enum 的解析结果与性能。 |
+| 4530 | `conversion_cenum.part14.test.ts` | `c_enum_0260` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-R3-季节 enum 的解析结果与性能。 |
+| 4531 | `conversion_cenum.part15.test.ts` | `c_enum_0261` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-R3-季节 enum 的解析结果与性能。 |
+| 4532 | `conversion_cenum.part16.test.ts` | `c_enum_0262` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-R4-Token enum 的解析结果与性能。 |
+| 4533 | `conversion_cenum.part17.test.ts` | `c_enum_0263` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-R5-运算符 enum 的解析结果与性能。 |
+| 4534 | `conversion_cenum.part18.test.ts` | `c_enum_0264` | 功能测试 | 3/4 | : h2dts parseEnum：扩充-R5-运算符 enum 的解析结果与性能。 |
+| 4535 | `conversion_cfunc.part24.test.ts` | `c_func_1153` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-template 函数声明 的解析结果与性能。 |
+| 4536 | `conversion_cfunc.part24.test.ts` | `c_func_1154` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-constexpr 函数 的解析结果与性能。 |
+| 4537 | `conversion_cfunc.part24.test.ts` | `c_func_1155` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-noexcept 函数 的解析结果与性能。 |
+| 4538 | `conversion_cfunc.part24.test.ts` | `c_func_1156` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-iterator 双参数 的解析结果与性能。 |
+| 4539 | `conversion_cfunc.part24.test.ts` | `c_func_1157` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-map<vector> 引用返回 的解析结果与性能。 |
+| 4540 | `conversion_cfunc.part25.test.ts` | `c_func_1158` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R2-inline 函数 的解析结果与性能。 |
+| 4541 | `conversion_cfunc.part25.test.ts` | `c_func_1159` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R2-static 函数 的解析结果与性能。 |
+| 4542 | `conversion_cfunc.part25.test.ts` | `c_func_1160` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R2-纯虚函数 的解析结果与性能。 |
+| 4543 | `conversion_cfunc.part25.test.ts` | `c_func_1161` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R2-vector 引用参数 的解析结果与性能。 |
+| 4544 | `conversion_cfunc.part25.test.ts` | `c_func_1162` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R2-initializer_list 参数 的解析结果与性能。 |
+| 4545 | `conversion_cfunc.part25.test.ts` | `c_func_1163` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R2-trailing return 的解析结果与性能。 |
+| 4546 | `conversion_cfunc.part25.test.ts` | `c_func_1164` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R2-pair 返回 的解析结果与性能。 |
+| 4547 | `conversion_cfunc.part26.test.ts` | `c_func_1165` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R3-template 函数 的解析结果与性能。 |
+| 4548 | `conversion_cfunc.part26.test.ts` | `c_func_1166` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R3-constexpr 函数 的解析结果与性能。 |
+| 4549 | `conversion_cfunc.part26.test.ts` | `c_func_1167` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R3-noexcept 函数 的解析结果与性能。 |
+| 4550 | `conversion_cfunc.part26.test.ts` | `c_func_1168` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R3-nodiscard 函数 的解析结果与性能。 |
+| 4551 | `conversion_cfunc.part27.test.ts` | `c_func_1169` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R3-template 函数 的解析结果与性能。 |
+| 4552 | `conversion_cfunc.part27.test.ts` | `c_func_1170` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R3-constexpr 函数 的解析结果与性能。 |
+| 4553 | `conversion_cfunc.part27.test.ts` | `c_func_1171` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R3-noexcept 函数 的解析结果与性能。 |
+| 4554 | `conversion_cfunc.part27.test.ts` | `c_func_1172` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R3-nodiscard 函数 的解析结果与性能。 |
+| 4555 | `conversion_cfunc.part28.test.ts` | `c_func_1173` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int` 的解析结果与性能。 |
+| 4556 | `conversion_cfunc.part28.test.ts` | `c_func_1174` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int[4]` 的解析结果与性能。 |
+| 4557 | `conversion_cfunc.part28.test.ts` | `c_func_1175` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int[8]` 的解析结果与性能。 |
+| 4558 | `conversion_cfunc.part28.test.ts` | `c_func_1176` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int[16]` 的解析结果与性能。 |
+| 4559 | `conversion_cfunc.part28.test.ts` | `c_func_1177` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int[32]` 的解析结果与性能。 |
+| 4560 | `conversion_cfunc.part28.test.ts` | `c_func_1178` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `double` 的解析结果与性能。 |
+| 4561 | `conversion_cfunc.part28.test.ts` | `c_func_1179` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `double[4]` 的解析结果与性能。 |
+| 4562 | `conversion_cfunc.part28.test.ts` | `c_func_1180` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `double[8]` 的解析结果与性能。 |
+| 4563 | `conversion_cfunc.part28.test.ts` | `c_func_1181` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `double[16]` 的解析结果与性能。 |
+| 4564 | `conversion_cfunc.part28.test.ts` | `c_func_1182` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `double[32]` 的解析结果与性能。 |
+| 4565 | `conversion_cfunc.part28.test.ts` | `c_func_1183` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `float` 的解析结果与性能。 |
+| 4566 | `conversion_cfunc.part28.test.ts` | `c_func_1184` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `float[4]` 的解析结果与性能。 |
+| 4567 | `conversion_cfunc.part28.test.ts` | `c_func_1185` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `float[8]` 的解析结果与性能。 |
+| 4568 | `conversion_cfunc.part28.test.ts` | `c_func_1186` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `float[16]` 的解析结果与性能。 |
+| 4569 | `conversion_cfunc.part28.test.ts` | `c_func_1187` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `float[32]` 的解析结果与性能。 |
+| 4570 | `conversion_cfunc.part28.test.ts` | `c_func_1188` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `bool` 的解析结果与性能。 |
+| 4571 | `conversion_cfunc.part28.test.ts` | `c_func_1189` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `bool[4]` 的解析结果与性能。 |
+| 4572 | `conversion_cfunc.part28.test.ts` | `c_func_1190` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `bool[8]` 的解析结果与性能。 |
+| 4573 | `conversion_cfunc.part28.test.ts` | `c_func_1191` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `bool[16]` 的解析结果与性能。 |
+| 4574 | `conversion_cfunc.part28.test.ts` | `c_func_1192` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `bool[32]` 的解析结果与性能。 |
+| 4575 | `conversion_cfunc.part28.test.ts` | `c_func_1193` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `char` 的解析结果与性能。 |
+| 4576 | `conversion_cfunc.part28.test.ts` | `c_func_1194` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `char[4]` 的解析结果与性能。 |
+| 4577 | `conversion_cfunc.part28.test.ts` | `c_func_1195` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `char[8]` 的解析结果与性能。 |
+| 4578 | `conversion_cfunc.part28.test.ts` | `c_func_1196` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `char[16]` 的解析结果与性能。 |
+| 4579 | `conversion_cfunc.part28.test.ts` | `c_func_1197` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `char[32]` 的解析结果与性能。 |
+| 4580 | `conversion_cfunc.part28.test.ts` | `c_func_1198` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `short` 的解析结果与性能。 |
+| 4581 | `conversion_cfunc.part28.test.ts` | `c_func_1199` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `short[4]` 的解析结果与性能。 |
+| 4582 | `conversion_cfunc.part28.test.ts` | `c_func_1200` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `short[8]` 的解析结果与性能。 |
+| 4583 | `conversion_cfunc.part28.test.ts` | `c_func_1201` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `short[16]` 的解析结果与性能。 |
+| 4584 | `conversion_cfunc.part28.test.ts` | `c_func_1202` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `short[32]` 的解析结果与性能。 |
+| 4585 | `conversion_cfunc.part28.test.ts` | `c_func_1203` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `long` 的解析结果与性能。 |
+| 4586 | `conversion_cfunc.part28.test.ts` | `c_func_1204` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `long[4]` 的解析结果与性能。 |
+| 4587 | `conversion_cfunc.part28.test.ts` | `c_func_1205` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `long[8]` 的解析结果与性能。 |
+| 4588 | `conversion_cfunc.part28.test.ts` | `c_func_1206` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `long[16]` 的解析结果与性能。 |
+| 4589 | `conversion_cfunc.part28.test.ts` | `c_func_1207` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `long[32]` 的解析结果与性能。 |
+| 4590 | `conversion_cfunc.part29.test.ts` | `c_func_1208` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `long long` 的解析结果与性能。 |
+| 4591 | `conversion_cfunc.part29.test.ts` | `c_func_1209` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `long long[4]` 的解析结果与性能。 |
+| 4592 | `conversion_cfunc.part29.test.ts` | `c_func_1210` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `long long[8]` 的解析结果与性能。 |
+| 4593 | `conversion_cfunc.part29.test.ts` | `c_func_1211` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `long long[16]` 的解析结果与性能。 |
+| 4594 | `conversion_cfunc.part29.test.ts` | `c_func_1212` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `long long[32]` 的解析结果与性能。 |
+| 4595 | `conversion_cfunc.part29.test.ts` | `c_func_1213` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned int` 的解析结果与性能。 |
+| 4596 | `conversion_cfunc.part29.test.ts` | `c_func_1214` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned int[4]` 的解析结果与性能。 |
+| 4597 | `conversion_cfunc.part29.test.ts` | `c_func_1215` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned int[8]` 的解析结果与性能。 |
+| 4598 | `conversion_cfunc.part29.test.ts` | `c_func_1216` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned int[16]` 的解析结果与性能。 |
+| 4599 | `conversion_cfunc.part29.test.ts` | `c_func_1217` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned int[32]` 的解析结果与性能。 |
+| 4600 | `conversion_cfunc.part29.test.ts` | `c_func_1218` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned char` 的解析结果与性能。 |
+| 4601 | `conversion_cfunc.part29.test.ts` | `c_func_1219` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned char[4]` 的解析结果与性能。 |
+| 4602 | `conversion_cfunc.part29.test.ts` | `c_func_1220` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned char[8]` 的解析结果与性能。 |
+| 4603 | `conversion_cfunc.part29.test.ts` | `c_func_1221` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned char[16]` 的解析结果与性能。 |
+| 4604 | `conversion_cfunc.part29.test.ts` | `c_func_1222` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned char[32]` 的解析结果与性能。 |
+| 4605 | `conversion_cfunc.part29.test.ts` | `c_func_1223` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned short` 的解析结果与性能。 |
+| 4606 | `conversion_cfunc.part29.test.ts` | `c_func_1224` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned short[4]` 的解析结果与性能。 |
+| 4607 | `conversion_cfunc.part29.test.ts` | `c_func_1225` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned short[8]` 的解析结果与性能。 |
+| 4608 | `conversion_cfunc.part29.test.ts` | `c_func_1226` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned short[16]` 的解析结果与性能。 |
+| 4609 | `conversion_cfunc.part29.test.ts` | `c_func_1227` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned short[32]` 的解析结果与性能。 |
+| 4610 | `conversion_cfunc.part29.test.ts` | `c_func_1228` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned long` 的解析结果与性能。 |
+| 4611 | `conversion_cfunc.part29.test.ts` | `c_func_1229` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned long[4]` 的解析结果与性能。 |
+| 4612 | `conversion_cfunc.part29.test.ts` | `c_func_1230` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned long[8]` 的解析结果与性能。 |
+| 4613 | `conversion_cfunc.part29.test.ts` | `c_func_1231` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned long[16]` 的解析结果与性能。 |
+| 4614 | `conversion_cfunc.part29.test.ts` | `c_func_1232` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `unsigned long[32]` 的解析结果与性能。 |
+| 4615 | `conversion_cfunc.part29.test.ts` | `c_func_1233` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `size_t` 的解析结果与性能。 |
+| 4616 | `conversion_cfunc.part29.test.ts` | `c_func_1234` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `size_t[4]` 的解析结果与性能。 |
+| 4617 | `conversion_cfunc.part29.test.ts` | `c_func_1235` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `size_t[8]` 的解析结果与性能。 |
+| 4618 | `conversion_cfunc.part29.test.ts` | `c_func_1236` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `size_t[16]` 的解析结果与性能。 |
+| 4619 | `conversion_cfunc.part29.test.ts` | `c_func_1237` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `size_t[32]` 的解析结果与性能。 |
+| 4620 | `conversion_cfunc.part29.test.ts` | `c_func_1238` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int8_t` 的解析结果与性能。 |
+| 4621 | `conversion_cfunc.part29.test.ts` | `c_func_1239` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int8_t[4]` 的解析结果与性能。 |
+| 4622 | `conversion_cfunc.part29.test.ts` | `c_func_1240` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int8_t[8]` 的解析结果与性能。 |
+| 4623 | `conversion_cfunc.part29.test.ts` | `c_func_1241` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int8_t[16]` 的解析结果与性能。 |
+| 4624 | `conversion_cfunc.part29.test.ts` | `c_func_1242` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int8_t[32]` 的解析结果与性能。 |
+| 4625 | `conversion_cfunc.part30.test.ts` | `c_func_1243` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint8_t` 的解析结果与性能。 |
+| 4626 | `conversion_cfunc.part30.test.ts` | `c_func_1244` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint8_t[4]` 的解析结果与性能。 |
+| 4627 | `conversion_cfunc.part30.test.ts` | `c_func_1245` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint8_t[8]` 的解析结果与性能。 |
+| 4628 | `conversion_cfunc.part30.test.ts` | `c_func_1246` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint8_t[16]` 的解析结果与性能。 |
+| 4629 | `conversion_cfunc.part30.test.ts` | `c_func_1247` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint8_t[32]` 的解析结果与性能。 |
+| 4630 | `conversion_cfunc.part30.test.ts` | `c_func_1248` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int16_t` 的解析结果与性能。 |
+| 4631 | `conversion_cfunc.part30.test.ts` | `c_func_1249` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int16_t[4]` 的解析结果与性能。 |
+| 4632 | `conversion_cfunc.part30.test.ts` | `c_func_1250` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int16_t[8]` 的解析结果与性能。 |
+| 4633 | `conversion_cfunc.part30.test.ts` | `c_func_1251` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int16_t[16]` 的解析结果与性能。 |
+| 4634 | `conversion_cfunc.part30.test.ts` | `c_func_1252` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int16_t[32]` 的解析结果与性能。 |
+| 4635 | `conversion_cfunc.part30.test.ts` | `c_func_1253` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint16_t` 的解析结果与性能。 |
+| 4636 | `conversion_cfunc.part30.test.ts` | `c_func_1254` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint16_t[4]` 的解析结果与性能。 |
+| 4637 | `conversion_cfunc.part30.test.ts` | `c_func_1255` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint16_t[8]` 的解析结果与性能。 |
+| 4638 | `conversion_cfunc.part30.test.ts` | `c_func_1256` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint16_t[16]` 的解析结果与性能。 |
+| 4639 | `conversion_cfunc.part30.test.ts` | `c_func_1257` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint16_t[32]` 的解析结果与性能。 |
+| 4640 | `conversion_cfunc.part30.test.ts` | `c_func_1258` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int32_t` 的解析结果与性能。 |
+| 4641 | `conversion_cfunc.part30.test.ts` | `c_func_1259` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int32_t[4]` 的解析结果与性能。 |
+| 4642 | `conversion_cfunc.part30.test.ts` | `c_func_1260` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int32_t[8]` 的解析结果与性能。 |
+| 4643 | `conversion_cfunc.part30.test.ts` | `c_func_1261` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int32_t[16]` 的解析结果与性能。 |
+| 4644 | `conversion_cfunc.part30.test.ts` | `c_func_1262` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int32_t[32]` 的解析结果与性能。 |
+| 4645 | `conversion_cfunc.part30.test.ts` | `c_func_1263` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint32_t` 的解析结果与性能。 |
+| 4646 | `conversion_cfunc.part30.test.ts` | `c_func_1264` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint32_t[4]` 的解析结果与性能。 |
+| 4647 | `conversion_cfunc.part30.test.ts` | `c_func_1265` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint32_t[8]` 的解析结果与性能。 |
+| 4648 | `conversion_cfunc.part30.test.ts` | `c_func_1266` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint32_t[16]` 的解析结果与性能。 |
+| 4649 | `conversion_cfunc.part30.test.ts` | `c_func_1267` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `uint32_t[32]` 的解析结果与性能。 |
+| 4650 | `conversion_cfunc.part30.test.ts` | `c_func_1268` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int64_t` 的解析结果与性能。 |
+| 4651 | `conversion_cfunc.part30.test.ts` | `c_func_1269` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int64_t[4]` 的解析结果与性能。 |
+| 4652 | `conversion_cfunc.part30.test.ts` | `c_func_1270` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int64_t[8]` 的解析结果与性能。 |
+| 4653 | `conversion_cfunc.part30.test.ts` | `c_func_1271` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int64_t[16]` 的解析结果与性能。 |
+| 4654 | `conversion_cfunc.part30.test.ts` | `c_func_1272` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R4-数组参数 `int64_t[32]` 的解析结果与性能。 |
+| 4655 | `conversion_cfunc.part31.test.ts` | `c_func_1273` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5ref` 的解析结果与性能。 |
+| 4656 | `conversion_cfunc.part31.test.ts` | `c_func_1274` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5cref` 的解析结果与性能。 |
+| 4657 | `conversion_cfunc.part31.test.ts` | `c_func_1275` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5ptr` 的解析结果与性能。 |
+| 4658 | `conversion_cfunc.part31.test.ts` | `c_func_1276` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5cptr` 的解析结果与性能。 |
+| 4659 | `conversion_cfunc.part31.test.ts` | `c_func_1277` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5dbl` 的解析结果与性能。 |
+| 4660 | `conversion_cfunc.part31.test.ts` | `c_func_1278` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `template<typename T> void r5tpl` 的解析结果与性能。 |
+| 4661 | `conversion_cfunc.part31.test.ts` | `c_func_1279` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `template<class U> void r5tpl2` 的解析结果与性能。 |
+| 4662 | `conversion_cfunc.part31.test.ts` | `c_func_1280` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5arr2d` 的解析结果与性能。 |
+| 4663 | `conversion_cfunc.part31.test.ts` | `c_func_1281` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5arr3d` 的解析结果与性能。 |
+| 4664 | `conversion_cfunc.part31.test.ts` | `c_func_1282` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5mix` 的解析结果与性能。 |
+| 4665 | `conversion_cfunc.part31.test.ts` | `c_func_1283` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5vec` 的解析结果与性能。 |
+| 4666 | `conversion_cfunc.part31.test.ts` | `c_func_1284` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `bool r5map` 的解析结果与性能。 |
+| 4667 | `conversion_cfunc.part31.test.ts` | `c_func_1285` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5set` 的解析结果与性能。 |
+| 4668 | `conversion_cfunc.part31.test.ts` | `c_func_1286` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `int r5pair` 的解析结果与性能。 |
+| 4669 | `conversion_cfunc.part31.test.ts` | `c_func_1287` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5opt` 的解析结果与性能。 |
+| 4670 | `conversion_cfunc.part31.test.ts` | `c_func_1288` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5shared` 的解析结果与性能。 |
+| 4671 | `conversion_cfunc.part31.test.ts` | `c_func_1289` | 功能测试 | 3/4 | : h2dts parseFunction：扩充-R5-高级签名 `void r5tuple` 的解析结果与性能。 |
+| 4672 | `conversion_cnamespace.part03.test.ts` | `c_namespace_0040` | 功能测试 | 3/4 | : h2dts parseClass：扩充-三层嵌套 namespace 的解析结果与性能。 |
+| 4673 | `conversion_cnamespace.part03.test.ts` | `c_namespace_0041` | 功能测试 | 3/4 | : h2dts parseClass：扩充-namespace 内 enum+struct+class 的解析结果与性能。 |
+| 4674 | `conversion_cnamespace.part03.test.ts` | `c_namespace_0042` | 功能测试 | 3/4 | : h2dts parseClass：扩充-namespace using alias 跨层 的解析结果与性能。 |
+| 4675 | `conversion_cnamespace.part04.test.ts` | `c_namespace_0043` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R2-双层 namespace class 的解析结果与性能。 |
+| 4676 | `conversion_cnamespace.part04.test.ts` | `c_namespace_0044` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R2-using alias 多类型 的解析结果与性能。 |
+| 4677 | `conversion_cnamespace.part04.test.ts` | `c_namespace_0045` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R2-函数指针 typedef 的解析结果与性能。 |
+| 4678 | `conversion_cnamespace.part04.test.ts` | `c_namespace_0046` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R2-namespace 多方法 的解析结果与性能。 |
+| 4679 | `conversion_cnamespace.part05.test.ts` | `c_namespace_0047` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R3-网络 namespace 的解析结果与性能。 |
+| 4680 | `conversion_cnamespace.part05.test.ts` | `c_namespace_0048` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R3-template class 的解析结果与性能。 |
+| 4681 | `conversion_cnamespace.part06.test.ts` | `c_namespace_0049` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R3-网络 namespace 的解析结果与性能。 |
+| 4682 | `conversion_cnamespace.part06.test.ts` | `c_namespace_0050` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R3-template class 的解析结果与性能。 |
+| 4683 | `conversion_cnamespace.part07.test.ts` | `c_namespace_0051` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R4-namespace-class 的解析结果与性能。 |
+| 4684 | `conversion_cnamespace.part07.test.ts` | `c_namespace_0052` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R4-namespace-func 的解析结果与性能。 |
+| 4685 | `conversion_cnamespace.part07.test.ts` | `c_namespace_0053` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R4-namespace-class 的解析结果与性能。 |
+| 4686 | `conversion_cnamespace.part07.test.ts` | `c_namespace_0054` | 功能测试 | 3/4 | : h2dts parseClass：扩充-R4-namespace-func 的解析结果与性能。 |
+| 4687 | `conversion_cnamespace.part08.test.ts` | `c_namespace_0055` | 功能测试 | 3/4 | : h2dts parse：扩充-R5-三层 namespace 的解析结果与性能。 |
+| 4688 | `conversion_cnamespace.part08.test.ts` | `c_namespace_0056` | 功能测试 | 3/4 | : h2dts parse：扩充-R5-三层 namespace 的解析结果与性能。 |
+| 4689 | `conversion_cnamespace.part08.test.ts` | `c_namespace_0057` | 功能测试 | 3/4 | : h2dts parse：扩充-R5-三层 namespace 的解析结果与性能。 |
+| 4690 | `conversion_cnamespace.part08.test.ts` | `c_namespace_0058` | 功能测试 | 3/4 | : h2dts parse：扩充-R5-三层 namespace 的解析结果与性能。 |
+| 4691 | `conversion_cnamespace.part08.test.ts` | `c_namespace_0059` | 功能测试 | 3/4 | : h2dts parse：扩充-R5-三层 namespace 的解析结果与性能。 |
+| 4692 | `conversion_cnamespace.part08.test.ts` | `c_namespace_0060` | 功能测试 | 3/4 | : h2dts parse：扩充-R5-三层 namespace 的解析结果与性能。 |
+| 4693 | `conversion_cnamespace.part08.test.ts` | `c_namespace_0061` | 功能测试 | 3/4 | : h2dts parse：扩充-R5-三层 namespace 的解析结果与性能。 |
+| 4694 | `conversion_cnamespace.part08.test.ts` | `c_namespace_0062` | 功能测试 | 3/4 | : h2dts parse：扩充-R5-三层 namespace 的解析结果与性能。 |
+| 4695 | `conversion_cstruct.part08.test.ts` | `c_struct_0186` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-static 成员 struct 的解析结果与性能。 |
+| 4696 | `conversion_cstruct.part08.test.ts` | `c_struct_0187` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-函数指针成员 struct 的解析结果与性能。 |
+| 4697 | `conversion_cstruct.part08.test.ts` | `c_struct_0188` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-vector+map 成员 struct 的解析结果与性能。 |
+| 4698 | `conversion_cstruct.part08.test.ts` | `c_struct_0189` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-typedef 匿名 struct 的解析结果与性能。 |
+| 4699 | `conversion_cstruct.part09.test.ts` | `c_struct_0190` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R2-矩形 struct 的解析结果与性能。 |
+| 4700 | `conversion_cstruct.part09.test.ts` | `c_struct_0191` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R2-矩阵 struct 的解析结果与性能。 |
+| 4701 | `conversion_cstruct.part09.test.ts` | `c_struct_0192` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R2-链表节点 struct 的解析结果与性能。 |
+| 4702 | `conversion_cstruct.part09.test.ts` | `c_struct_0193` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R2-配置 struct 的解析结果与性能。 |
+| 4703 | `conversion_cstruct.part09.test.ts` | `c_struct_0194` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R2-缓冲区 struct 的解析结果与性能。 |
+| 4704 | `conversion_cstruct.part10.test.ts` | `c_struct_0195` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R3-3D 点 struct 的解析结果与性能。 |
+| 4705 | `conversion_cstruct.part10.test.ts` | `c_struct_0196` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R3-日期 struct 的解析结果与性能。 |
+| 4706 | `conversion_cstruct.part10.test.ts` | `c_struct_0197` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R3-二叉树节点 struct 的解析结果与性能。 |
+| 4707 | `conversion_cstruct.part11.test.ts` | `c_struct_0198` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R3-3D 点 struct 的解析结果与性能。 |
+| 4708 | `conversion_cstruct.part11.test.ts` | `c_struct_0199` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R3-日期 struct 的解析结果与性能。 |
+| 4709 | `conversion_cstruct.part11.test.ts` | `c_struct_0200` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R3-二叉树节点 struct 的解析结果与性能。 |
+| 4710 | `conversion_cstruct.part12.test.ts` | `c_struct_0201` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R4-RGBA struct 的解析结果与性能。 |
+| 4711 | `conversion_cstruct.part12.test.ts` | `c_struct_0202` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R4-TimeVal struct 的解析结果与性能。 |
+| 4712 | `conversion_cstruct.part13.test.ts` | `c_struct_0203` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R5-3x3 矩阵 struct 的解析结果与性能。 |
+| 4713 | `conversion_cstruct.part13.test.ts` | `c_struct_0204` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R5-矩形 struct 的解析结果与性能。 |
+| 4714 | `conversion_cstruct.part13.test.ts` | `c_struct_0205` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R5-主机 struct 的解析结果与性能。 |
+| 4715 | `conversion_cstruct.part14.test.ts` | `c_struct_0206` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R5-3x3 矩阵 struct 的解析结果与性能。 |
+| 4716 | `conversion_cstruct.part14.test.ts` | `c_struct_0207` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R5-矩形 struct 的解析结果与性能。 |
+| 4717 | `conversion_cstruct.part14.test.ts` | `c_struct_0208` | 功能测试 | 3/4 | : h2dts parseStruct：扩充-R5-主机 struct 的解析结果与性能。 |
+| 4718 | `conversion_cunion.part05.test.ts` | `c_union_0100` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-typedef union 简写 的解析结果与性能。 |
+| 4719 | `conversion_cunion.part05.test.ts` | `c_union_0101` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-三成员 union 的解析结果与性能。 |
+| 4720 | `conversion_cunion.part05.test.ts` | `c_union_0102` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-匿名 struct 成员 union 的解析结果与性能。 |
+| 4721 | `conversion_cunion.part05.test.ts` | `c_union_0103` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-long long 成员 union 的解析结果与性能。 |
+| 4722 | `conversion_cunion.part05.test.ts` | `c_union_0104` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-bool+int+string |
+| 4723 | `conversion_cunion.part06.test.ts` | `c_union_0105` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R2-整型族 union 的解析结果与性能。 |
+| 4724 | `conversion_cunion.part06.test.ts` | `c_union_0106` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R2-指针族 union 的解析结果与性能。 |
+| 4725 | `conversion_cunion.part06.test.ts` | `c_union_0107` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R2-浮点族 union 的解析结果与性能。 |
+| 4726 | `conversion_cunion.part06.test.ts` | `c_union_0108` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R2-string 族 union 的解析结果与性能。 |
+| 4727 | `conversion_cunion.part07.test.ts` | `c_union_0109` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R3-Variant union 的解析结果与性能。 |
+| 4728 | `conversion_cunion.part07.test.ts` | `c_union_0110` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R3-字节数组 union 的解析结果与性能。 |
+| 4729 | `conversion_cunion.part08.test.ts` | `c_union_0111` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R3-Variant union 的解析结果与性能。 |
+| 4730 | `conversion_cunion.part08.test.ts` | `c_union_0112` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R3-字节数组 union 的解析结果与性能。 |
+| 4731 | `conversion_cunion.part09.test.ts` | `c_union_0113` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R4-16字节 union 的解析结果与性能。 |
+| 4732 | `conversion_cunion.part09.test.ts` | `c_union_0114` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R4-三数值 union 的解析结果与性能。 |
+| 4733 | `conversion_cunion.part09.test.ts` | `c_union_0115` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R4-指针整型 union 的解析结果与性能。 |
+| 4734 | `conversion_cunion.part10.test.ts` | `c_union_0116` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R5-32字节 union 的解析结果与性能。 |
+| 4735 | `conversion_cunion.part10.test.ts` | `c_union_0117` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R5-多宽度 union 的解析结果与性能。 |
+| 4736 | `conversion_cunion.part10.test.ts` | `c_union_0118` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R5-指针地址 union 的解析结果与性能。 |
+| 4737 | `conversion_cunion.part10.test.ts` | `c_union_0119` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R5-颜色 union 的解析结果与性能。 |
+| 4738 | `conversion_cunion.part11.test.ts` | `c_union_0120` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R5-32字节 union 的解析结果与性能。 |
+| 4739 | `conversion_cunion.part11.test.ts` | `c_union_0121` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R5-多宽度 union 的解析结果与性能。 |
+| 4740 | `conversion_cunion.part11.test.ts` | `c_union_0122` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R5-指针地址 union 的解析结果与性能。 |
+| 4741 | `conversion_cunion.part11.test.ts` | `c_union_0123` | 功能测试 | 3/4 | : h2dts parseUnion：扩充-R5-颜色 union 的解析结果与性能。 |
+| 4742 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0221` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::vector<int64_t>` → `number[]` 的生成结果与性能。 |
+| 4743 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0222` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::vector<unsigned>` → `number[]` 的生成结果与性能。 |
+| 4744 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0223` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::vector<bool>` → `boolean[]` 的生成结果与性能。 |
+| 4745 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0224` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::vector<char>` → `string[]` 的生成结果与性能。 |
+| 4746 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0225` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::vector<wchar_t>` → `string[]` 的生成结果与性能。 |
+| 4747 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0226` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::vector<char8_t>` → `string[]` 的生成结果与性能。 |
+| 4748 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0227` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::vector<char16_t>` → `string[]` 的生成结果与性能。 |
+| 4749 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0228` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::vector<char32_t>` → `string[]` 的生成结果与性能。 |
+| 4750 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0229` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<int>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4751 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0230` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<size_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4752 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0231` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<double>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4753 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0232` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<float>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4754 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0233` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4755 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0234` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<short>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4756 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0235` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<uint8_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4757 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0236` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<uint16_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4758 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0237` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<uint32_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4759 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0238` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<uint64_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4760 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0239` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<int8_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4761 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0240` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<int16_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4762 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0241` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<int32_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4763 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0242` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<int64_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4764 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0243` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<unsigned>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4765 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0244` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<bool>::iterator` → `IterableIterator<boolean[]>` 的生成结果与性能。 |
+| 4766 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0245` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<char>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4767 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0246` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<wchar_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4768 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0247` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<char8_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4769 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0248` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<char16_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4770 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0249` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<char32_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4771 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0250` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<int, 10>` → `number[]` 的生成结果与性能。 |
+| 4772 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0251` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<size_t, 10>` → `number[]` 的生成结果与性能。 |
+| 4773 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0252` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<double, 10>` → `number[]` 的生成结果与性能。 |
+| 4774 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0253` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<float, 10>` → `number[]` 的生成结果与性能。 |
+| 4775 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0254` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<long, 10>` → `number[]` 的生成结果与性能。 |
+| 4776 | `conversion_h2dts_gen.part08.test.ts` | `h2dts_gen_0255` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<short, 10>` → `number[]` 的生成结果与性能。 |
+| 4777 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0256` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<uint8_t, 10>` → `number[]` 的生成结果与性能。 |
+| 4778 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0257` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<uint16_t, 10>` → `number[]` 的生成结果与性能。 |
+| 4779 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0258` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<uint32_t, 10>` → `number[]` 的生成结果与性能。 |
+| 4780 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0259` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<uint64_t, 10>` → `number[]` 的生成结果与性能。 |
+| 4781 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0260` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<int8_t, 10>` → `number[]` 的生成结果与性能。 |
+| 4782 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0261` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<int16_t, 10>` → `number[]` 的生成结果与性能。 |
+| 4783 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0262` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<int32_t, 10>` → `number[]` 的生成结果与性能。 |
+| 4784 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0263` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<int64_t, 10>` → `number[]` 的生成结果与性能。 |
+| 4785 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0264` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<unsigned, 10>` → `number[]` 的生成结果与性能。 |
+| 4786 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0265` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<bool, 10>` → `boolean[]` 的生成结果与性能。 |
+| 4787 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0266` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<char, 10>` → `string[]` 的生成结果与性能。 |
+| 4788 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0267` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<wchar_t, 10>` → `string[]` 的生成结果与性能。 |
+| 4789 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0268` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<char8_t, 10>` → `string[]` 的生成结果与性能。 |
+| 4790 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0269` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<char16_t, 10>` → `string[]` 的生成结果与性能。 |
+| 4791 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0270` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<char32_t, 10>` → `string[]` 的生成结果与性能。 |
+| 4792 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0271` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<int, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4793 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0272` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<size_t, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4794 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0273` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<double, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4795 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0274` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<float, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4796 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0275` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<long, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4797 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0276` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<short, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4798 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0277` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<uint8_t, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4799 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0278` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<uint16_t, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4800 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0279` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<uint32_t, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4801 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0280` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<uint64_t, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4802 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0281` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<int8_t, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4803 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0282` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<int16_t, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4804 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0283` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<int32_t, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4805 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0284` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<int64_t, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4806 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0285` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<unsigned, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4807 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0286` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<bool, 10>::iterator` → `IterableIterator<boolean[]>` 的生成结果与性能。 |
+| 4808 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0287` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<char, 10>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4809 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0288` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<wchar_t, 10>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4810 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0289` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<char8_t, 10>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4811 | `conversion_h2dts_gen.part09.test.ts` | `h2dts_gen_0290` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<char16_t, 10>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4812 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0431` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::stack<int64_t>` → `number[]` 的生成结果与性能。 |
+| 4813 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0432` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::stack<unsigned>` → `number[]` 的生成结果与性能。 |
+| 4814 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0433` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::stack<bool>` → `boolean[]` 的生成结果与性能。 |
+| 4815 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0434` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::stack<char>` → `string[]` 的生成结果与性能。 |
+| 4816 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0435` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::stack<wchar_t>` → `string[]` 的生成结果与性能。 |
+| 4817 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0436` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::stack<char8_t>` → `string[]` 的生成结果与性能。 |
+| 4818 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0437` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::stack<char16_t>` → `string[]` 的生成结果与性能。 |
+| 4819 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0438` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::stack<char32_t>` → `string[]` 的生成结果与性能。 |
+| 4820 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0439` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<int>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4821 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0440` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<size_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4822 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0441` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<double>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4823 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0442` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<float>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4824 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0443` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4825 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0444` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<short>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4826 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0445` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<uint8_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4827 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0446` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<uint16_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4828 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0447` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<uint32_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4829 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0448` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<uint64_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4830 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0449` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<int8_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4831 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0450` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<int16_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4832 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0451` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<int32_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4833 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0452` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<int64_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4834 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0453` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<unsigned>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4835 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0454` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<bool>::iterator` → `IterableIterator<boolean[]>` 的生成结果与性能。 |
+| 4836 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0455` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<char>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4837 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0456` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<wchar_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4838 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0457` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<char8_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4839 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0458` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<char16_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4840 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0459` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<char32_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4841 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0460` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<int>` → `number[]` 的生成结果与性能。 |
+| 4842 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0461` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<size_t>` → `number[]` 的生成结果与性能。 |
+| 4843 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0462` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<double>` → `number[]` 的生成结果与性能。 |
+| 4844 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0463` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<float>` → `number[]` 的生成结果与性能。 |
+| 4845 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0464` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<long>` → `number[]` 的生成结果与性能。 |
+| 4846 | `conversion_h2dts_gen.part14.test.ts` | `h2dts_gen_0465` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<short>` → `number[]` 的生成结果与性能。 |
+| 4847 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0466` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<uint8_t>` → `number[]` 的生成结果与性能。 |
+| 4848 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0467` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<uint16_t>` → `number[]` 的生成结果与性能。 |
+| 4849 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0468` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<uint32_t>` → `number[]` 的生成结果与性能。 |
+| 4850 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0469` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<uint64_t>` → `number[]` 的生成结果与性能。 |
+| 4851 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0470` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<int8_t>` → `number[]` 的生成结果与性能。 |
+| 4852 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0471` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<int16_t>` → `number[]` 的生成结果与性能。 |
+| 4853 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0472` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<int32_t>` → `number[]` 的生成结果与性能。 |
+| 4854 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0473` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<int64_t>` → `number[]` 的生成结果与性能。 |
+| 4855 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0474` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<unsigned>` → `number[]` 的生成结果与性能。 |
+| 4856 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0475` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<bool>` → `boolean[]` 的生成结果与性能。 |
+| 4857 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0476` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<char>` → `string[]` 的生成结果与性能。 |
+| 4858 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0477` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<wchar_t>` → `string[]` 的生成结果与性能。 |
+| 4859 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0478` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<char8_t>` → `string[]` 的生成结果与性能。 |
+| 4860 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0479` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<char16_t>` → `string[]` 的生成结果与性能。 |
+| 4861 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0480` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<char32_t>` → `string[]` 的生成结果与性能。 |
+| 4862 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0481` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<int>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4863 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0482` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<size_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4864 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0483` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<double>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4865 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0484` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<float>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4866 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0485` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4867 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0486` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<short>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4868 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0487` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<uint8_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4869 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0488` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<uint16_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4870 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0489` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<uint32_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4871 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0490` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<uint64_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4872 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0491` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<int8_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4873 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0492` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<int16_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4874 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0493` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<int32_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4875 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0494` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<int64_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4876 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0495` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<unsigned>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4877 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0496` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<bool>::iterator` → `IterableIterator<boolean[]>` 的生成结果与性能。 |
+| 4878 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0497` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<char>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4879 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0498` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<wchar_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4880 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0499` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<char8_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4881 | `conversion_h2dts_gen.part15.test.ts` | `h2dts_gen_0500` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<char16_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4882 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0501` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<char32_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4883 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0502` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<int>` → `number[]` 的生成结果与性能。 |
+| 4884 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0503` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<size_t>` → `number[]` 的生成结果与性能。 |
+| 4885 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0504` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<double>` → `number[]` 的生成结果与性能。 |
+| 4886 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0505` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<float>` → `number[]` 的生成结果与性能。 |
+| 4887 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0506` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<long>` → `number[]` 的生成结果与性能。 |
+| 4888 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0507` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<short>` → `number[]` 的生成结果与性能。 |
+| 4889 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0508` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<uint8_t>` → `number[]` 的生成结果与性能。 |
+| 4890 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0509` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<uint16_t>` → `number[]` 的生成结果与性能。 |
+| 4891 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0510` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<uint32_t>` → `number[]` 的生成结果与性能。 |
+| 4892 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0511` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<uint64_t>` → `number[]` 的生成结果与性能。 |
+| 4893 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0512` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<int8_t>` → `number[]` 的生成结果与性能。 |
+| 4894 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0513` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<int16_t>` → `number[]` 的生成结果与性能。 |
+| 4895 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0514` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<int32_t>` → `number[]` 的生成结果与性能。 |
+| 4896 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0515` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<int64_t>` → `number[]` 的生成结果与性能。 |
+| 4897 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0516` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<unsigned>` → `number[]` 的生成结果与性能。 |
+| 4898 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0517` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<bool>` → `boolean[]` 的生成结果与性能。 |
+| 4899 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0518` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<char>` → `string[]` 的生成结果与性能。 |
+| 4900 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0519` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<wchar_t>` → `string[]` 的生成结果与性能。 |
+| 4901 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0520` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<char8_t>` → `string[]` 的生成结果与性能。 |
+| 4902 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0521` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<char16_t>` → `string[]` 的生成结果与性能。 |
+| 4903 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0522` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<char32_t>` → `string[]` 的生成结果与性能。 |
+| 4904 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0523` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<int>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4905 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0524` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<size_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4906 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0525` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<double>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4907 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0526` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<float>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4908 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0527` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4909 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0528` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<short>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4910 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0529` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<uint8_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4911 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0530` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<uint16_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4912 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0531` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<uint32_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4913 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0532` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<uint64_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4914 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0533` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<int8_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4915 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0534` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<int16_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4916 | `conversion_h2dts_gen.part16.test.ts` | `h2dts_gen_0535` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<int32_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4917 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0536` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<int64_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4918 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0537` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<unsigned>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4919 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0538` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<bool>::iterator` → `IterableIterator<boolean[]>` 的生成结果与性能。 |
+| 4920 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0539` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<char>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4921 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0540` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<wchar_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4922 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0541` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<char8_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4923 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0542` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<char16_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4924 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0543` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<char32_t>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4925 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0544` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<int>` → `number[]` 的生成结果与性能。 |
+| 4926 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0545` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<size_t>` → `number[]` 的生成结果与性能。 |
+| 4927 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0546` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<double>` → `number[]` 的生成结果与性能。 |
+| 4928 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0547` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<float>` → `number[]` 的生成结果与性能。 |
+| 4929 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0548` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<long>` → `number[]` 的生成结果与性能。 |
+| 4930 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0549` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<short>` → `number[]` 的生成结果与性能。 |
+| 4931 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0550` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<uint8_t>` → `number[]` 的生成结果与性能。 |
+| 4932 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0551` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<uint16_t>` → `number[]` 的生成结果与性能。 |
+| 4933 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0552` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<uint32_t>` → `number[]` 的生成结果与性能。 |
+| 4934 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0553` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<uint64_t>` → `number[]` 的生成结果与性能。 |
+| 4935 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0554` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<int8_t>` → `number[]` 的生成结果与性能。 |
+| 4936 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0555` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<int16_t>` → `number[]` 的生成结果与性能。 |
+| 4937 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0556` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<int32_t>` → `number[]` 的生成结果与性能。 |
+| 4938 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0557` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<int64_t>` → `number[]` 的生成结果与性能。 |
+| 4939 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0558` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<unsigned>` → `number[]` 的生成结果与性能。 |
+| 4940 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0559` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<bool>` → `boolean[]` 的生成结果与性能。 |
+| 4941 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0560` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<char>` → `string[]` 的生成结果与性能。 |
+| 4942 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0561` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<wchar_t>` → `string[]` 的生成结果与性能。 |
+| 4943 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0562` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<char8_t>` → `string[]` 的生成结果与性能。 |
+| 4944 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0563` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<char16_t>` → `string[]` 的生成结果与性能。 |
+| 4945 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0564` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::priority_queue<char32_t>` → `string[]` 的生成结果与性能。 |
+| 4946 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0565` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::priority_queue<int>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4947 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0566` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::priority_queue<size_t>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4948 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0567` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::priority_queue<double>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4949 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0568` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::priority_queue<float>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4950 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0569` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::priority_queue<long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4951 | `conversion_h2dts_gen.part17.test.ts` | `h2dts_gen_0570` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::priority_queue<short>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4952 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_0991` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `int |
+| 4953 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_0992` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::vector<int |
+| 4954 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_0993` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<std::string>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4955 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_0994` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<char |
+| 4956 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_0995` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<long long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4957 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_0996` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<unsigned short>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4958 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_0997` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<unsigned long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4959 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_0998` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<unsigned long long>::iterator` → `IterableIterator<number[]>` 的生... |
+| 4960 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_0999` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::vector<int |
+| 4961 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1000` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<std::string, 10>` → `string[]` 的生成结果与性能。 |
+| 4962 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1001` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<char |
+| 4963 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1002` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<long long, 10>` → `number[]` 的生成结果与性能。 |
+| 4964 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1003` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<unsigned short, 10>` → `number[]` 的生成结果与性能。 |
+| 4965 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1004` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<unsigned long, 10>` → `number[]` 的生成结果与性能。 |
+| 4966 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1005` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<unsigned long long, 10>` → `number[]` 的生成结果与性能。 |
+| 4967 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1006` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::array<int |
+| 4968 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1007` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<std::string, 10>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4969 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1008` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<char |
+| 4970 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1009` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<long long, 10>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4971 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1010` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<unsigned short, 10>::iterator` → `IterableIterator<number[]>` 的生成... |
+| 4972 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1011` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<unsigned long, 10>::iterator` → `IterableIterator<number[]>` 的生成结... |
+| 4973 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1012` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<unsigned long long, 10>::iterator` → `IterableIterator<number[]>`... |
+| 4974 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1013` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::array<int |
+| 4975 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1014` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::deque<std::string>` → `string[]` 的生成结果与性能。 |
+| 4976 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1015` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::deque<char |
+| 4977 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1016` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::deque<long long>` → `number[]` 的生成结果与性能。 |
+| 4978 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1017` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::deque<unsigned short>` → `number[]` 的生成结果与性能。 |
+| 4979 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1018` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::deque<unsigned long>` → `number[]` 的生成结果与性能。 |
+| 4980 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1019` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::deque<unsigned long long>` → `number[]` 的生成结果与性能。 |
+| 4981 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1020` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::deque<int |
+| 4982 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1021` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::deque<std::string>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4983 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1022` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::deque<char |
+| 4984 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1023` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::deque<long long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4985 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1024` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::deque<unsigned short>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4986 | `conversion_h2dts_gen.part30.test.ts` | `h2dts_gen_1025` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::deque<unsigned long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4987 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1061` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::stack<unsigned long long>` → `number[]` 的生成结果与性能。 |
+| 4988 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1062` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::stack<int |
+| 4989 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1063` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<std::string>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 4990 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1064` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<char |
+| 4991 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1065` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<long long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4992 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1066` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<unsigned short>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4993 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1067` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<unsigned long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 4994 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1068` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<unsigned long long>::iterator` → `IterableIterator<number[]>` 的生成... |
+| 4995 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1069` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::stack<int |
+| 4996 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1070` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<std::string>` → `string[]` 的生成结果与性能。 |
+| 4997 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1071` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<char |
+| 4998 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1072` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<long long>` → `number[]` 的生成结果与性能。 |
+| 4999 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1073` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<unsigned short>` → `number[]` 的生成结果与性能。 |
+| 5000 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1074` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<unsigned long>` → `number[]` 的生成结果与性能。 |
+| 5001 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1075` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<unsigned long long>` → `number[]` 的生成结果与性能。 |
+| 5002 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1076` | 功能测试 | 3 | : h2dts gen：扩充-basic 类型 `std::queue<int |
+| 5003 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1077` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<std::string>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 5004 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1078` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<char |
+| 5005 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1079` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<long long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 5006 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1080` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<unsigned short>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 5007 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1081` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<unsigned long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 5008 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1082` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<unsigned long long>::iterator` → `IterableIterator<number[]>` 的生成... |
+| 5009 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1083` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::queue<int |
+| 5010 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1084` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<std::string>` → `string[]` 的生成结果与性能。 |
+| 5011 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1085` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<char |
+| 5012 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1086` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<long long>` → `number[]` 的生成结果与性能。 |
+| 5013 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1087` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<unsigned short>` → `number[]` 的生成结果与性能。 |
+| 5014 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1088` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<unsigned long>` → `number[]` 的生成结果与性能。 |
+| 5015 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1089` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<unsigned long long>` → `number[]` 的生成结果与性能。 |
+| 5016 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1090` | 功能测试 | 3 | : h2dts gen：扩充-Array 类型 `std::valarray<int |
+| 5017 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1091` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<std::string>::iterator` → `IterableIterator<string[]>` 的生成结果与性能。 |
+| 5018 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1092` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<char |
+| 5019 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1093` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<long long>::iterator` → `IterableIterator<number[]>` 的生成结果与性能。 |
+| 5020 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1094` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<unsigned short>::iterator` → `IterableIterator<number[]>` 的生成结... |
+| 5021 | `conversion_h2dts_gen.part32.test.ts` | `h2dts_gen_1095` | 功能测试 | 3 | : h2dts gen：扩充-iterator 类型 `std::valarray<unsigned long>::iterator` → `IterableIterator<number[]>` 的生成结果... |
+| 5022 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1283` | 功能测试 | 3 | : h2dts gen：扩充-genDtsFile 混合场景 `r3mix01` 的生成结果与性能。 |
+| 5023 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1284` | 功能测试 | 3 | : h2dts gen：扩充-genDtsFile 混合场景 `r3mix02` 的生成结果与性能。 |
+| 5024 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1285` | 功能测试 | 3 | : h2dts gen：扩充-genDtsFile 混合场景 `r3mix03` 的生成结果与性能。 |
+| 5025 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1286` | 功能测试 | 3 | : h2dts gen：扩充-genDtsFile 混合场景 `r3mix04` 的生成结果与性能。 |
+| 5026 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1287` | 功能测试 | 3 | : h2dts gen：扩充-genDtsFile 混合场景 `r3mix05` 的生成结果与性能。 |
+| 5027 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1288` | 功能测试 | 3 | : h2dts gen：扩充-genDtsFile 混合场景 `r3mix06` 的生成结果与性能。 |
+| 5028 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1289` | 功能测试 | 3 | : h2dts gen：扩充-genDtsFile 混合场景 `r3mix07` 的生成结果与性能。 |
+| 5029 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1290` | 功能测试 | 3 | : h2dts gen：扩充-genDtsFile 混合场景 `r3mix08` 的生成结果与性能。 |
+| 5030 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1291` | 功能测试 | 3 | : h2dts gen：扩充-R3-getDtsStructs 场景 的生成结果与性能。 |
+| 5031 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1292` | 功能测试 | 3 | : h2dts gen：扩充-R3-getDtsStructs 场景 的生成结果与性能。 |
+| 5032 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1293` | 功能测试 | 3 | : h2dts gen：扩充-R3-getDtsEnum 场景 的生成结果与性能。 |
+| 5033 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1294` | 功能测试 | 3 | : h2dts gen：扩充-R3-getDtsEnum 场景 的生成结果与性能。 |
+| 5034 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1295` | 功能测试 | 3 | : h2dts gen：扩充-R3-getDtsUnions 场景 的生成结果与性能。 |
+| 5035 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1296` | 功能测试 | 3 | : h2dts gen：扩充-R3-getDtsFunction 场景 的生成结果与性能。 |
+| 5036 | `conversion_h2dts_gen.part40.test.ts` | `h2dts_gen_1297` | 功能测试 | 3 | : h2dts gen：扩充-R3-getDtsFunction 场景 的生成结果与性能。 |
+| 5037 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1333` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<unsigned>` 的生成结果与性能。 |
+| 5038 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1334` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<bool>` 的生成结果与性能。 |
+| 5039 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1335` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<char>` 的生成结果与性能。 |
+| 5040 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1336` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<wchar_t>` 的生成结果与性能。 |
+| 5041 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1337` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<char8_t>` 的生成结果与性能。 |
+| 5042 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1338` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<char16_t>` 的生成结果与性能。 |
+| 5043 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1339` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<char32_t>` 的生成结果与性能。 |
+| 5044 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1340` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<int>::iterator` 的生成结果与性能。 |
+| 5045 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1341` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<size_t>::iterator` 的生成结果与性能。 |
+| 5046 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1342` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<double>::iterator` 的生成结果与性能。 |
+| 5047 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1343` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<float>::iterator` 的生成结果与性能。 |
+| 5048 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1344` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<long>::iterator` 的生成结果与性能。 |
+| 5049 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1345` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<short>::iterator` 的生成结果与性能。 |
+| 5050 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1346` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<uint8_t>::iterator` 的生成结果与性能。 |
+| 5051 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1347` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<uint16_t>::iterator` 的生成结果与性能。 |
+| 5052 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1348` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<uint32_t>::iterator` 的生成结果与性能。 |
+| 5053 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1349` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<uint64_t>::iterator` 的生成结果与性能。 |
+| 5054 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1350` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<int8_t>::iterator` 的生成结果与性能。 |
+| 5055 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1351` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<int16_t>::iterator` 的生成结果与性能。 |
+| 5056 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1352` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<int32_t>::iterator` 的生成结果与性能。 |
+| 5057 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1353` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<int64_t>::iterator` 的生成结果与性能。 |
+| 5058 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1354` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<unsigned>::iterator` 的生成结果与性能。 |
+| 5059 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1355` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<bool>::iterator` 的生成结果与性能。 |
+| 5060 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1356` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<char>::iterator` 的生成结果与性能。 |
+| 5061 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1357` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<wchar_t>::iterator` 的生成结果与性能。 |
+| 5062 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1358` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<char8_t>::iterator` 的生成结果与性能。 |
+| 5063 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1359` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<char16_t>::iterator` 的生成结果与性能。 |
+| 5064 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1360` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::vector<char32_t>::iterator` 的生成结果与性能。 |
+| 5065 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1361` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::deque<int>` 的生成结果与性能。 |
+| 5066 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1362` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::deque<size_t>` 的生成结果与性能。 |
+| 5067 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1363` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::deque<double>` 的生成结果与性能。 |
+| 5068 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1364` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::deque<float>` 的生成结果与性能。 |
+| 5069 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1365` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::deque<long>` 的生成结果与性能。 |
+| 5070 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1366` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::deque<short>` 的生成结果与性能。 |
+| 5071 | `conversion_h2dts_gen.part42.test.ts` | `h2dts_gen_1367` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::deque<uint8_t>` 的生成结果与性能。 |
+| 5072 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1473` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<uint16_t>::iterator` 的生成结果与性能。 |
+| 5073 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1474` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<uint32_t>::iterator` 的生成结果与性能。 |
+| 5074 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1475` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<uint64_t>::iterator` 的生成结果与性能。 |
+| 5075 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1476` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<int8_t>::iterator` 的生成结果与性能。 |
+| 5076 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1477` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<int16_t>::iterator` 的生成结果与性能。 |
+| 5077 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1478` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<int32_t>::iterator` 的生成结果与性能。 |
+| 5078 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1479` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<int64_t>::iterator` 的生成结果与性能。 |
+| 5079 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1480` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<unsigned>::iterator` 的生成结果与性能。 |
+| 5080 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1481` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<bool>::iterator` 的生成结果与性能。 |
+| 5081 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1482` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<char>::iterator` 的生成结果与性能。 |
+| 5082 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1483` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<wchar_t>::iterator` 的生成结果与性能。 |
+| 5083 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1484` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<char8_t>::iterator` 的生成结果与性能。 |
+| 5084 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1485` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<char16_t>::iterator` 的生成结果与性能。 |
+| 5085 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1486` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::forward_list<char32_t>::iterator` 的生成结果与性能。 |
+| 5086 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1487` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<int>` 的生成结果与性能。 |
+| 5087 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1488` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<size_t>` 的生成结果与性能。 |
+| 5088 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1489` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<double>` 的生成结果与性能。 |
+| 5089 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1490` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<float>` 的生成结果与性能。 |
+| 5090 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1491` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<long>` 的生成结果与性能。 |
+| 5091 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1492` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<short>` 的生成结果与性能。 |
+| 5092 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1493` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<uint8_t>` 的生成结果与性能。 |
+| 5093 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1494` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<uint16_t>` 的生成结果与性能。 |
+| 5094 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1495` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<uint32_t>` 的生成结果与性能。 |
+| 5095 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1496` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<uint64_t>` 的生成结果与性能。 |
+| 5096 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1497` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<int8_t>` 的生成结果与性能。 |
+| 5097 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1498` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<int16_t>` 的生成结果与性能。 |
+| 5098 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1499` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<int32_t>` 的生成结果与性能。 |
+| 5099 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1500` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<int64_t>` 的生成结果与性能。 |
+| 5100 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1501` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<unsigned>` 的生成结果与性能。 |
+| 5101 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1502` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<bool>` 的生成结果与性能。 |
+| 5102 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1503` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<char>` 的生成结果与性能。 |
+| 5103 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1504` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<wchar_t>` 的生成结果与性能。 |
+| 5104 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1505` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<char8_t>` 的生成结果与性能。 |
+| 5105 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1506` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<char16_t>` 的生成结果与性能。 |
+| 5106 | `conversion_h2dts_gen.part46.test.ts` | `h2dts_gen_1507` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<char32_t>` 的生成结果与性能。 |
+| 5107 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1508` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<int>::iterator` 的生成结果与性能。 |
+| 5108 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1509` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<size_t>::iterator` 的生成结果与性能。 |
+| 5109 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1510` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<double>::iterator` 的生成结果与性能。 |
+| 5110 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1511` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<float>::iterator` 的生成结果与性能。 |
+| 5111 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1512` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<long>::iterator` 的生成结果与性能。 |
+| 5112 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1513` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<short>::iterator` 的生成结果与性能。 |
+| 5113 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1514` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<uint8_t>::iterator` 的生成结果与性能。 |
+| 5114 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1515` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<uint16_t>::iterator` 的生成结果与性能。 |
+| 5115 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1516` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<uint32_t>::iterator` 的生成结果与性能。 |
+| 5116 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1517` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<uint64_t>::iterator` 的生成结果与性能。 |
+| 5117 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1518` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<int8_t>::iterator` 的生成结果与性能。 |
+| 5118 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1519` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<int16_t>::iterator` 的生成结果与性能。 |
+| 5119 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1520` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<int32_t>::iterator` 的生成结果与性能。 |
+| 5120 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1521` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<int64_t>::iterator` 的生成结果与性能。 |
+| 5121 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1522` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<unsigned>::iterator` 的生成结果与性能。 |
+| 5122 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1523` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<bool>::iterator` 的生成结果与性能。 |
+| 5123 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1524` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<char>::iterator` 的生成结果与性能。 |
+| 5124 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1525` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<wchar_t>::iterator` 的生成结果与性能。 |
+| 5125 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1526` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<char8_t>::iterator` 的生成结果与性能。 |
+| 5126 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1527` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<char16_t>::iterator` 的生成结果与性能。 |
+| 5127 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1528` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::stack<char32_t>::iterator` 的生成结果与性能。 |
+| 5128 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1529` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<int>` 的生成结果与性能。 |
+| 5129 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1530` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<size_t>` 的生成结果与性能。 |
+| 5130 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1531` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<double>` 的生成结果与性能。 |
+| 5131 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1532` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<float>` 的生成结果与性能。 |
+| 5132 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1533` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<long>` 的生成结果与性能。 |
+| 5133 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1534` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<short>` 的生成结果与性能。 |
+| 5134 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1535` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<uint8_t>` 的生成结果与性能。 |
+| 5135 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1536` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<uint16_t>` 的生成结果与性能。 |
+| 5136 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1537` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<uint32_t>` 的生成结果与性能。 |
+| 5137 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1538` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<uint64_t>` 的生成结果与性能。 |
+| 5138 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1539` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<int8_t>` 的生成结果与性能。 |
+| 5139 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1540` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<int16_t>` 的生成结果与性能。 |
+| 5140 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1541` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<int32_t>` 的生成结果与性能。 |
+| 5141 | `conversion_h2dts_gen.part47.test.ts` | `h2dts_gen_1542` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<int64_t>` 的生成结果与性能。 |
+| 5142 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1543` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<unsigned>` 的生成结果与性能。 |
+| 5143 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1544` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<bool>` 的生成结果与性能。 |
+| 5144 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1545` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<char>` 的生成结果与性能。 |
+| 5145 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1546` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<wchar_t>` 的生成结果与性能。 |
+| 5146 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1547` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<char8_t>` 的生成结果与性能。 |
+| 5147 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1548` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<char16_t>` 的生成结果与性能。 |
+| 5148 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1549` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<char32_t>` 的生成结果与性能。 |
+| 5149 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1550` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<int>::iterator` 的生成结果与性能。 |
+| 5150 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1551` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<size_t>::iterator` 的生成结果与性能。 |
+| 5151 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1552` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<double>::iterator` 的生成结果与性能。 |
+| 5152 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1553` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<float>::iterator` 的生成结果与性能。 |
+| 5153 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1554` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<long>::iterator` 的生成结果与性能。 |
+| 5154 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1555` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<short>::iterator` 的生成结果与性能。 |
+| 5155 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1556` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<uint8_t>::iterator` 的生成结果与性能。 |
+| 5156 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1557` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<uint16_t>::iterator` 的生成结果与性能。 |
+| 5157 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1558` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<uint32_t>::iterator` 的生成结果与性能。 |
+| 5158 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1559` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<uint64_t>::iterator` 的生成结果与性能。 |
+| 5159 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1560` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<int8_t>::iterator` 的生成结果与性能。 |
+| 5160 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1561` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<int16_t>::iterator` 的生成结果与性能。 |
+| 5161 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1562` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<int32_t>::iterator` 的生成结果与性能。 |
+| 5162 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1563` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<int64_t>::iterator` 的生成结果与性能。 |
+| 5163 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1564` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<unsigned>::iterator` 的生成结果与性能。 |
+| 5164 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1565` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<bool>::iterator` 的生成结果与性能。 |
+| 5165 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1566` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<char>::iterator` 的生成结果与性能。 |
+| 5166 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1567` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<wchar_t>::iterator` 的生成结果与性能。 |
+| 5167 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1568` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<char8_t>::iterator` 的生成结果与性能。 |
+| 5168 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1569` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<char16_t>::iterator` 的生成结果与性能。 |
+| 5169 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1570` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::queue<char32_t>::iterator` 的生成结果与性能。 |
+| 5170 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1571` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::valarray<int>` 的生成结果与性能。 |
+| 5171 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1572` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::valarray<size_t>` 的生成结果与性能。 |
+| 5172 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1573` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::valarray<double>` 的生成结果与性能。 |
+| 5173 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1574` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::valarray<float>` 的生成结果与性能。 |
+| 5174 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1575` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::valarray<long>` 的生成结果与性能。 |
+| 5175 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1576` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::valarray<short>` 的生成结果与性能。 |
+| 5176 | `conversion_h2dts_gen.part48.test.ts` | `h2dts_gen_1577` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::valarray<uint8_t>` 的生成结果与性能。 |
+| 5177 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1613` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<int>` 的生成结果与性能。 |
+| 5178 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1614` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<size_t>` 的生成结果与性能。 |
+| 5179 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1615` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<double>` 的生成结果与性能。 |
+| 5180 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1616` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<float>` 的生成结果与性能。 |
+| 5181 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1617` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<long>` 的生成结果与性能。 |
+| 5182 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1618` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<short>` 的生成结果与性能。 |
+| 5183 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1619` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<uint8_t>` 的生成结果与性能。 |
+| 5184 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1620` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<uint16_t>` 的生成结果与性能。 |
+| 5185 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1621` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<uint32_t>` 的生成结果与性能。 |
+| 5186 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1622` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<uint64_t>` 的生成结果与性能。 |
+| 5187 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1623` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<int8_t>` 的生成结果与性能。 |
+| 5188 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1624` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<int16_t>` 的生成结果与性能。 |
+| 5189 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1625` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<int32_t>` 的生成结果与性能。 |
+| 5190 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1626` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<int64_t>` 的生成结果与性能。 |
+| 5191 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1627` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<unsigned>` 的生成结果与性能。 |
+| 5192 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1628` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<bool>` 的生成结果与性能。 |
+| 5193 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1629` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<char>` 的生成结果与性能。 |
+| 5194 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1630` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<wchar_t>` 的生成结果与性能。 |
+| 5195 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1631` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<char8_t>` 的生成结果与性能。 |
+| 5196 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1632` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<char16_t>` 的生成结果与性能。 |
+| 5197 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1633` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<char32_t>` 的生成结果与性能。 |
+| 5198 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1634` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<int>::iterator` 的生成结果与性能。 |
+| 5199 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1635` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<size_t>::iterator` 的生成结果与性能。 |
+| 5200 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1636` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<double>::iterator` 的生成结果与性能。 |
+| 5201 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1637` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<float>::iterator` 的生成结果与性能。 |
+| 5202 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1638` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<long>::iterator` 的生成结果与性能。 |
+| 5203 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1639` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<short>::iterator` 的生成结果与性能。 |
+| 5204 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1640` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<uint8_t>::iterator` 的生成结果与性能。 |
+| 5205 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1641` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<uint16_t>::iterator` 的生成结果与性能。 |
+| 5206 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1642` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<uint32_t>::iterator` 的生成结果与性能。 |
+| 5207 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1643` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<uint64_t>::iterator` 的生成结果与性能。 |
+| 5208 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1644` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<int8_t>::iterator` 的生成结果与性能。 |
+| 5209 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1645` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<int16_t>::iterator` 的生成结果与性能。 |
+| 5210 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1646` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<int32_t>::iterator` 的生成结果与性能。 |
+| 5211 | `conversion_h2dts_gen.part50.test.ts` | `h2dts_gen_1647` | 功能测试 | 3 | : h2dts gen：扩充-R4-双参数 `int`+`std::priority_queue<int64_t>::iterator` 的生成结果与性能。 |
+| 5212 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1788` | 功能测试 | 3 | : h2dts gen：扩充-R4-三参数基本类型组合 的生成结果与性能。 |
+| 5213 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1789` | 功能测试 | 3 | : h2dts gen：扩充-R4-三参数基本类型组合 的生成结果与性能。 |
+| 5214 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1790` | 功能测试 | 3 | : h2dts gen：扩充-R4-三参数基本类型组合 的生成结果与性能。 |
+| 5215 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1791` | 功能测试 | 3 | : h2dts gen：扩充-R4-三参数基本类型组合 的生成结果与性能。 |
+| 5216 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1792` | 功能测试 | 3 | : h2dts gen：扩充-R4-三参数基本类型组合 的生成结果与性能。 |
+| 5217 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1793` | 功能测试 | 3 | : h2dts gen：扩充-R4-三参数基本类型组合 的生成结果与性能。 |
+| 5218 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1794` | 功能测试 | 3 | : h2dts gen：扩充-R4-三参数基本类型组合 的生成结果与性能。 |
+| 5219 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1795` | 功能测试 | 3 | : h2dts gen：扩充-R4-三参数基本类型组合 的生成结果与性能。 |
+| 5220 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1796` | 功能测试 | 3 | : h2dts gen：扩充-R4-三参数基本类型组合 的生成结果与性能。 |
+| 5221 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1797` | 功能测试 | 3 | : h2dts gen：扩充-R4-三参数基本类型组合 的生成结果与性能。 |
+| 5222 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1798` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`size_t` 的生成结果与性能。 |
+| 5223 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1799` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`double` 的生成结果与性能。 |
+| 5224 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1800` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`float` 的生成结果与性能。 |
+| 5225 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1801` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`short` 的生成结果与性能。 |
+| 5226 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1802` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`long` 的生成结果与性能。 |
+| 5227 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1803` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`uint8_t` 的生成结果与性能。 |
+| 5228 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1804` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`uint16_t` 的生成结果与性能。 |
+| 5229 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1805` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`uint32_t` 的生成结果与性能。 |
+| 5230 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1806` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`uint64_t` 的生成结果与性能。 |
+| 5231 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1807` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`int8_t` 的生成结果与性能。 |
+| 5232 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1808` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`int16_t` 的生成结果与性能。 |
+| 5233 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1809` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`int32_t` 的生成结果与性能。 |
+| 5234 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1810` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`int64_t` 的生成结果与性能。 |
+| 5235 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1811` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`unsigned` 的生成结果与性能。 |
+| 5236 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1812` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`bool` 的生成结果与性能。 |
+| 5237 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1813` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`char` 的生成结果与性能。 |
+| 5238 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1814` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`wchar_t` 的生成结果与性能。 |
+| 5239 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1815` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`char8_t` 的生成结果与性能。 |
+| 5240 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1816` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`char16_t` 的生成结果与性能。 |
+| 5241 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1817` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`char32_t` 的生成结果与性能。 |
+| 5242 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1818` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::string::iterator` 的生成结果与性能。 |
+| 5243 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1819` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<int>` 的生成结果与性能。 |
+| 5244 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1820` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<size_t>` 的生成结果与性能。 |
+| 5245 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1821` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<double>` 的生成结果与性能。 |
+| 5246 | `conversion_h2dts_gen.part55.test.ts` | `h2dts_gen_1822` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<float>` 的生成结果与性能。 |
+| 5247 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1823` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<long>` 的生成结果与性能。 |
+| 5248 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1824` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<short>` 的生成结果与性能。 |
+| 5249 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1825` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<uint8_t>` 的生成结果与性能。 |
+| 5250 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1826` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<uint16_t>` 的生成结果与性能。 |
+| 5251 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1827` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<uint32_t>` 的生成结果与性能。 |
+| 5252 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1828` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<uint64_t>` 的生成结果与性能。 |
+| 5253 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1829` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<int8_t>` 的生成结果与性能。 |
+| 5254 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1830` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<int16_t>` 的生成结果与性能。 |
+| 5255 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1831` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<int32_t>` 的生成结果与性能。 |
+| 5256 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1832` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<int64_t>` 的生成结果与性能。 |
+| 5257 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1833` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<unsigned>` 的生成结果与性能。 |
+| 5258 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1834` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<bool>` 的生成结果与性能。 |
+| 5259 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1835` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<char>` 的生成结果与性能。 |
+| 5260 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1836` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<wchar_t>` 的生成结果与性能。 |
+| 5261 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1837` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<char8_t>` 的生成结果与性能。 |
+| 5262 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1838` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<char16_t>` 的生成结果与性能。 |
+| 5263 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1839` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::vector<char32_t>` 的生成结果与性能。 |
+| 5264 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1840` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<int>` 的生成结果与性能。 |
+| 5265 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1841` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<size_t>` 的生成结果与性能。 |
+| 5266 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1842` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<double>` 的生成结果与性能。 |
+| 5267 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1843` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<float>` 的生成结果与性能。 |
+| 5268 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1844` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<long>` 的生成结果与性能。 |
+| 5269 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1845` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<short>` 的生成结果与性能。 |
+| 5270 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1846` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<uint8_t>` 的生成结果与性能。 |
+| 5271 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1847` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<uint16_t>` 的生成结果与性能。 |
+| 5272 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1848` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<uint32_t>` 的生成结果与性能。 |
+| 5273 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1849` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<uint64_t>` 的生成结果与性能。 |
+| 5274 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1850` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<int8_t>` 的生成结果与性能。 |
+| 5275 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1851` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<int16_t>` 的生成结果与性能。 |
+| 5276 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1852` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<int32_t>` 的生成结果与性能。 |
+| 5277 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1853` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<int64_t>` 的生成结果与性能。 |
+| 5278 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1854` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<unsigned>` 的生成结果与性能。 |
+| 5279 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1855` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<bool>` 的生成结果与性能。 |
+| 5280 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1856` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<char>` 的生成结果与性能。 |
+| 5281 | `conversion_h2dts_gen.part56.test.ts` | `h2dts_gen_1857` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::deque<wchar_t>` 的生成结果与性能。 |
+| 5282 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1893` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::forward_list<int16_t>` 的生成结果与性能。 |
+| 5283 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1894` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::forward_list<int32_t>` 的生成结果与性能。 |
+| 5284 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1895` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::forward_list<int64_t>` 的生成结果与性能。 |
+| 5285 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1896` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::forward_list<unsigned>` 的生成结果与性能。 |
+| 5286 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1897` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::forward_list<bool>` 的生成结果与性能。 |
+| 5287 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1898` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::forward_list<char>` 的生成结果与性能。 |
+| 5288 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1899` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::forward_list<wchar_t>` 的生成结果与性能。 |
+| 5289 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1900` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::forward_list<char8_t>` 的生成结果与性能。 |
+| 5290 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1901` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::forward_list<char16_t>` 的生成结果与性能。 |
+| 5291 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1902` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::forward_list<char32_t>` 的生成结果与性能。 |
+| 5292 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1903` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<int>` 的生成结果与性能。 |
+| 5293 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1904` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<size_t>` 的生成结果与性能。 |
+| 5294 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1905` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<double>` 的生成结果与性能。 |
+| 5295 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1906` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<float>` 的生成结果与性能。 |
+| 5296 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1907` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<long>` 的生成结果与性能。 |
+| 5297 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1908` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<short>` 的生成结果与性能。 |
+| 5298 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1909` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<uint8_t>` 的生成结果与性能。 |
+| 5299 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1910` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<uint16_t>` 的生成结果与性能。 |
+| 5300 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1911` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<uint32_t>` 的生成结果与性能。 |
+| 5301 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1912` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<uint64_t>` 的生成结果与性能。 |
+| 5302 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1913` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<int8_t>` 的生成结果与性能。 |
+| 5303 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1914` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<int16_t>` 的生成结果与性能。 |
+| 5304 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1915` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<int32_t>` 的生成结果与性能。 |
+| 5305 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1916` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<int64_t>` 的生成结果与性能。 |
+| 5306 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1917` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<unsigned>` 的生成结果与性能。 |
+| 5307 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1918` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<bool>` 的生成结果与性能。 |
+| 5308 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1919` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<char>` 的生成结果与性能。 |
+| 5309 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1920` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<wchar_t>` 的生成结果与性能。 |
+| 5310 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1921` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<char8_t>` 的生成结果与性能。 |
+| 5311 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1922` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<char16_t>` 的生成结果与性能。 |
+| 5312 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1923` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::stack<char32_t>` 的生成结果与性能。 |
+| 5313 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1924` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<int>` 的生成结果与性能。 |
+| 5314 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1925` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<size_t>` 的生成结果与性能。 |
+| 5315 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1926` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<double>` 的生成结果与性能。 |
+| 5316 | `conversion_h2dts_gen.part58.test.ts` | `h2dts_gen_1927` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<float>` 的生成结果与性能。 |
+| 5317 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1928` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<long>` 的生成结果与性能。 |
+| 5318 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1929` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<short>` 的生成结果与性能。 |
+| 5319 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1930` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<uint8_t>` 的生成结果与性能。 |
+| 5320 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1931` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<uint16_t>` 的生成结果与性能。 |
+| 5321 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1932` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<uint32_t>` 的生成结果与性能。 |
+| 5322 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1933` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<uint64_t>` 的生成结果与性能。 |
+| 5323 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1934` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<int8_t>` 的生成结果与性能。 |
+| 5324 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1935` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<int16_t>` 的生成结果与性能。 |
+| 5325 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1936` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<int32_t>` 的生成结果与性能。 |
+| 5326 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1937` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<int64_t>` 的生成结果与性能。 |
+| 5327 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1938` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<unsigned>` 的生成结果与性能。 |
+| 5328 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1939` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<bool>` 的生成结果与性能。 |
+| 5329 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1940` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<char>` 的生成结果与性能。 |
+| 5330 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1941` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<wchar_t>` 的生成结果与性能。 |
+| 5331 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1942` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<char8_t>` 的生成结果与性能。 |
+| 5332 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1943` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<char16_t>` 的生成结果与性能。 |
+| 5333 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1944` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::queue<char32_t>` 的生成结果与性能。 |
+| 5334 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1945` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<int>` 的生成结果与性能。 |
+| 5335 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1946` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<size_t>` 的生成结果与性能。 |
+| 5336 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1947` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<double>` 的生成结果与性能。 |
+| 5337 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1948` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<float>` 的生成结果与性能。 |
+| 5338 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1949` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<long>` 的生成结果与性能。 |
+| 5339 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1950` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<short>` 的生成结果与性能。 |
+| 5340 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1951` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<uint8_t>` 的生成结果与性能。 |
+| 5341 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1952` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<uint16_t>` 的生成结果与性能。 |
+| 5342 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1953` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<uint32_t>` 的生成结果与性能。 |
+| 5343 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1954` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<uint64_t>` 的生成结果与性能。 |
+| 5344 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1955` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<int8_t>` 的生成结果与性能。 |
+| 5345 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1956` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<int16_t>` 的生成结果与性能。 |
+| 5346 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1957` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<int32_t>` 的生成结果与性能。 |
+| 5347 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1958` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<int64_t>` 的生成结果与性能。 |
+| 5348 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1959` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<unsigned>` 的生成结果与性能。 |
+| 5349 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1960` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<bool>` 的生成结果与性能。 |
+| 5350 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1961` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<char>` 的生成结果与性能。 |
+| 5351 | `conversion_h2dts_gen.part59.test.ts` | `h2dts_gen_1962` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<wchar_t>` 的生成结果与性能。 |
+| 5352 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1963` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<char8_t>` 的生成结果与性能。 |
+| 5353 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1964` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<char16_t>` 的生成结果与性能。 |
+| 5354 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1965` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::valarray<char32_t>` 的生成结果与性能。 |
+| 5355 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1966` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<int>` 的生成结果与性能。 |
+| 5356 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1967` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<size_t>` 的生成结果与性能。 |
+| 5357 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1968` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<double>` 的生成结果与性能。 |
+| 5358 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1969` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<float>` 的生成结果与性能。 |
+| 5359 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1970` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<long>` 的生成结果与性能。 |
+| 5360 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1971` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<short>` 的生成结果与性能。 |
+| 5361 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1972` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<uint8_t>` 的生成结果与性能。 |
+| 5362 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1973` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<uint16_t>` 的生成结果与性能。 |
+| 5363 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1974` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<uint32_t>` 的生成结果与性能。 |
+| 5364 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1975` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<uint64_t>` 的生成结果与性能。 |
+| 5365 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1976` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<int8_t>` 的生成结果与性能。 |
+| 5366 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1977` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<int16_t>` 的生成结果与性能。 |
+| 5367 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1978` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<int32_t>` 的生成结果与性能。 |
+| 5368 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1979` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<int64_t>` 的生成结果与性能。 |
+| 5369 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1980` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<unsigned>` 的生成结果与性能。 |
+| 5370 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1981` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<bool>` 的生成结果与性能。 |
+| 5371 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1982` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<char>` 的生成结果与性能。 |
+| 5372 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1983` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<wchar_t>` 的生成结果与性能。 |
+| 5373 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1984` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<char8_t>` 的生成结果与性能。 |
+| 5374 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1985` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<char16_t>` 的生成结果与性能。 |
+| 5375 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1986` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::priority_queue<char32_t>` 的生成结果与性能。 |
+| 5376 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1987` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<int>` 的生成结果与性能。 |
+| 5377 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1988` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<size_t>` 的生成结果与性能。 |
+| 5378 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1989` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<double>` 的生成结果与性能。 |
+| 5379 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1990` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<float>` 的生成结果与性能。 |
+| 5380 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1991` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<long>` 的生成结果与性能。 |
+| 5381 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1992` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<short>` 的生成结果与性能。 |
+| 5382 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1993` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<uint8_t>` 的生成结果与性能。 |
+| 5383 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1994` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<uint16_t>` 的生成结果与性能。 |
+| 5384 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1995` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<uint32_t>` 的生成结果与性能。 |
+| 5385 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1996` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<uint64_t>` 的生成结果与性能。 |
+| 5386 | `conversion_h2dts_gen.part60.test.ts` | `h2dts_gen_1997` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<int8_t>` 的生成结果与性能。 |
+| 5387 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_1998` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<int16_t>` 的生成结果与性能。 |
+| 5388 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_1999` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<int32_t>` 的生成结果与性能。 |
+| 5389 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2000` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<int64_t>` 的生成结果与性能。 |
+| 5390 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2001` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<unsigned>` 的生成结果与性能。 |
+| 5391 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2002` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<bool>` 的生成结果与性能。 |
+| 5392 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2003` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<char>` 的生成结果与性能。 |
+| 5393 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2004` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<wchar_t>` 的生成结果与性能。 |
+| 5394 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2005` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<char8_t>` 的生成结果与性能。 |
+| 5395 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2006` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<char16_t>` 的生成结果与性能。 |
+| 5396 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2007` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::set<char32_t>` 的生成结果与性能。 |
+| 5397 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2008` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::unordered_set<int>` 的生成结果与性能。 |
+| 5398 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2009` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::unordered_set<size_t>` 的生成结果与性能。 |
+| 5399 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2010` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::unordered_set<double>` 的生成结果与性能。 |
+| 5400 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2011` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::unordered_set<float>` 的生成结果与性能。 |
+| 5401 | `conversion_h2dts_gen.part61.test.ts` | `h2dts_gen_2012` | 功能测试 | 3 | : h2dts gen：扩充-R4-class 双成员 `int`+`std::unordered_set<long>` 的生成结果与性能。 |
