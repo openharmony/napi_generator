@@ -8,8 +8,8 @@
 
 ## 覆盖统计
 
-- 纳入测试文件数：**111**
-- 纳入用例总数：**4501**（dts2cpp 2289 + C Parse 1975 + H2DTS Gen 185 + H2DTSCPP Gen 52）
+- 纳入测试文件数：**297**
+- 纳入用例总数：**7685**（dts2cpp 2618 + C Parse 2215 + H2DTS Gen 2349 + H2DTSCPP Gen 503）
 - 统计方式：扫描所有 `*.test.ts` 文件中的 `test(...)` 声明（与 `@tc.number` 逐块一一对应，全量查重 0 重名）。
 
 ## 文件纳入清单
@@ -4633,4 +4633,3 @@
 | 4499 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0050` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 8 的转换结果与性能。 |
 | 4500 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0051` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 9 的转换结果与性能。 |
 | 4501 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0052` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 10 的转换结果与性能。 |
-
